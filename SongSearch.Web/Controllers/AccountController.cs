@@ -1,127 +1,369 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Security.Principal;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
+using SongSearch.Web.Services;
 using SongSearch.Web.Models;
 
+// see if this shows up, yup it does!
 namespace SongSearch.Web.Controllers {
 
+	/// <summary>
+	/// 
+	/// </summary>
 	[HandleError]
 	public class AccountController : Controller {
 
-		public IFormsAuthenticationService FormsService { get; set; }
-		public IMembershipService MembershipService { get; set; }
+		IFormsAuthenticationService _fs;
+		IMembershipService _ms;
+		IUserManagementService _ums;
+		IAccountService _accs;
 
 		protected override void Initialize(RequestContext requestContext) {
-			if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
-			if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
+			if (_fs == null) { _fs = new FormsAuthenticationService(); }
+			if (_ms == null) { _ms = new MembershipService(); }
+			if (_ums == null) { _ums = new UserManagementService(requestContext.HttpContext.User.Identity.Name); }
+			if (_accs == null) { _accs = new AccountService(); }
 
 			base.Initialize(requestContext);
+
 		}
 
-		// **************************************
-		// URL: /Account/LogOn
-		// **************************************
+		protected override void OnActionExecuting(ActionExecutingContext filterContext) {
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
 
-		public ActionResult LogOn() {
-			return View();
+			base.OnActionExecuting(filterContext);
+		}
+
+
+		// **************************************
+		// URL: /Account/LogIn
+		// **************************************
+		[ValidateOnlyIncomingValues]
+		public ActionResult LogIn(LogOnModel model) {
+			model.NavigationLocation = "Account";
+			return View(model);
 		}
 
 		[HttpPost]
-		public ActionResult LogOn(LogOnModel model, string returnUrl) {
+		public ActionResult LogIn(LogOnModel model, string returnUrl) {
+
 			if (ModelState.IsValid) {
-				if (MembershipService.ValidateUser(model.UserName, model.Password)) {
-					FormsService.SignIn(model.UserName, model.RememberMe);
+				if (_accs.UserIsValid(model.Email, model.Password))
+				//if (_ms.UserIsValid(model.Email, model.Password))
+				{
+
+					_fs.SignIn(model.Email, model.RememberMe);
+
+
 					if (!String.IsNullOrEmpty(returnUrl)) {
 						return Redirect(returnUrl);
 					} else {
 						return RedirectToAction("Index", "Home");
 					}
 				} else {
-					ModelState.AddModelError("", "The user name or password provided is incorrect.");
+					ModelState.AddModelError("", Errors.LoginFailed.Text());
 				}
+
 			}
 
-			// If we got this far, something failed, redisplay form
+			//something failed
+			ModelState.AddModelError("", Errors.LoginFailed.Text());
+
+			model.NavigationLocation = "Account";
+
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+
 			return View(model);
 		}
 
-		// **************************************
-		// URL: /Account/LogOff
-		// **************************************
 
-		public ActionResult LogOff() {
-			FormsService.SignOut();
 
-			return RedirectToAction("Index", "Home");
+		// **************************************
+		// URL: /Account/LogOut
+		// **************************************
+		public ActionResult LogOut() {
+
+			_fs.SignOut();
+			
+			Session.Abandon();
+
+			return RedirectToAction("LogIn", "Account");
 		}
+
 
 		// **************************************
 		// URL: /Account/Register
-		// **************************************
+		// **************************************        
+		public ActionResult Register(string id, string em) {
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["inviteId"] = id;
+			ViewData["email"] = em;
 
-		public ActionResult Register() {
-			ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
-			return View();
+
+			_fs.SignOut();
+
+			Session.Abandon();
+
+			var vm = new RegisterModel() {
+
+				NavigationLocation = "Register",
+				InviteId = id,
+				Email = em
+
+			};
+			return View(vm);
 		}
 
 		[HttpPost]
 		public ActionResult Register(RegisterModel model) {
-			if (ModelState.IsValid) {
-				// Attempt to register the user
-				MembershipCreateStatus createStatus = MembershipService.CreateUser(model.UserName, model.Password, model.Email);
 
-				if (createStatus == MembershipCreateStatus.Success) {
-					FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
-					return RedirectToAction("Index", "Home");
+			//set username to email address
+			//model.UserName = model.Email;
+
+			if (ModelState.IsValid) {
+				if (_accs.UserExists(model.Email)) {
+					ModelState.AddModelError("Email", Errors.UserAlreadyRegistered.Text());
 				} else {
-					ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
+
+					// Check invitation code
+					var inv = _ums.GetInvitation(model.InviteId, model.Email);
+
+					if (inv != null) {
+						switch (inv.InvitationStatus) {
+							case (int)InvitationStatusCodes.Open: {
+									model.Invitation = inv;
+
+									// Attempt to register the myUser
+									//MembershipCreateStatus createStatus = _ms.CreateUser(model.Email, model.Password, model.Email);
+
+									if (_ms.RegisterUser(model))//MembershipCreateStatus.Success)
+									{
+										_fs.SignIn(model.Email, false /* createPersistentCookie */);
+										
+										return RedirectToAction("Index", "Home");
+									} else {   //TODO: createStatus enums
+										ModelState.AddModelError("Email", Errors.UserCreationFailed.Text());//AccountValidation.ErrorCodeToString(createStatus));
+									}
+
+									break;
+								}
+							case (int)InvitationStatusCodes.Registered: {
+									ModelState.AddModelError("InviteId", Errors.InviteCodeAlreadyUsed.Text());
+									break;
+								}
+
+							case (int)InvitationStatusCodes.Expired: {
+									ModelState.AddModelError("InviteId", Errors.InviteCodeExpired.Text());
+									break;
+								}
+						}
+					} else {
+						ModelState.AddModelError("InviteId", Errors.InviteCodeNoMatch.Text());
+					}
 				}
+
 			}
 
 			// If we got this far, something failed, redisplay form
-			ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
+			model.NavigationLocation = "Register";
+
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+
 			return View(model);
 		}
-
 		// **************************************
 		// URL: /Account/ChangePassword
 		// **************************************
-
-		[Authorize]
+		[RequireMinRole]
 		public ActionResult ChangePassword() {
-			ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
-			return View();
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+
+			var vm = new UpdateProfileModel() { NavigationLocation = "Account" };
+
+			return View(vm);
 		}
 
-		[Authorize]
+		[RequireMinRole]
 		[HttpPost]
-		public ActionResult ChangePassword(ChangePasswordModel model) {
+		[ValidateOnlyIncomingValues]
+		public ActionResult ChangePassword(UpdateProfileModel model) {
+
 			if (ModelState.IsValid) {
-				if (MembershipService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword)) {
+				if (_ms.UpdateProfile(model)) {
+					//_accs.UpdateCurrentUserInSession();
 					return RedirectToAction("ChangePasswordSuccess");
 				} else {
-					ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+					ModelState.AddModelError("", Errors.PasswordChangeFailed.Text());
 				}
 			}
 
 			// If we got this far, something failed, redisplay form
-			ViewData["PasswordLength"] = MembershipService.MinPasswordLength;
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			model.NavigationLocation = "Account";
 			return View(model);
 		}
 
 		// **************************************
 		// URL: /Account/ChangePasswordSuccess
-		// **************************************
-
+		// **************************************        
+		[RequireMinRole]
 		public ActionResult ChangePasswordSuccess() {
+			string email = User.Identity.Name;
+
+			try {
+				Mail.SendMail(
+					Settings.AdminEmailAddress.Text(),
+					email,
+					Messages.PasswordChangeSuccessSubjectLine.Text(),
+					Messages.PasswordChangeSuccess.Text()
+					);
+			}
+			catch { }
+			var vm = new UpdateProfileModel() { NavigationLocation = "Account" };
+			return View(vm);
+		}
+
+
+		// **************************************
+		// URL: /Account/UpdateProfile
+		// **************************************
+		[RequireMinRole]
+		public ActionResult UpdateProfile() {
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+
+			var vm = new UpdateProfileModel() { NavigationLocation = "Account" };
+
+			return View(vm);
+		}
+
+		[RequireMinRole]
+		[HttpPost]
+		[ValidateOnlyIncomingValues]
+		public ActionResult UpdateProfile(UpdateProfileModel model) {
+			if (ModelState.IsValid) {
+				if (_ms.UpdateProfile(model)) {
+					//UserData.UpdateSession();
+					return RedirectToAction("UpdateProfileSuccess");
+				} else {
+					ModelState.AddModelError("", Errors.PasswordChangeFailed.Text());
+				}
+			}
+
+			// If we got this far, something failed, redisplay form
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			model.NavigationLocation = "Account";
+			return View(model);
+		}
+
+		// **************************************
+		// URL: /Account/UpdateProfileSuccess
+		// **************************************        
+		[RequireMinRole]
+		public ActionResult UpdateProfileSuccess() {
+			//string email = User.Identity.Name;
+
+			//try
+			//{
+			//    _cas.SendMail(
+			//        Settings.AdminEmailAddress.Text(), 
+			//        email, 
+			//        Messages.PasswordChangeSuccessSubjectLine.Text(), 
+			//        Messages.PasswordChangeSuccess.Text()
+			//        );
+			//}
+			//catch { }
+			UpdateProfileModel vm = new UpdateProfileModel() { NavigationLocation = "Account" };
+			return View(vm);
+		}
+
+
+		// **************************************
+		// URL: /Account/ResetPassword
+		// **************************************        
+		public ActionResult ResetPassword() {
+			var model = new ResetPasswordModel() {
+				NavigationLocation = "Account"
+			};
+
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+
+			return View(model);
+		}
+
+		[HttpPost]
+		[ValidateOnlyIncomingValues]
+		public ActionResult ResetPassword(ResetPasswordModel model) {
+
+			if (ModelState.IsValid) {
+				model.ResetCode = model.Email.PasswordHashString();
+
+
+				//Send email
+				if (_ms.ResetPasswordProcessRequest(model)) {
+					try {
+						string link = String.Format(@"<a href='{0}/Account/ResetPasswordRespond/{1}?rc={2}'>visit our Password Reset page</a>",
+							Settings.BaseUrl.Text(),
+							model.Email,
+							model.ResetCode);
+						string msg = String.Format(Messages.PasswordResetRequestLink.Text(), link);
+
+						Mail.SendMail(
+							Settings.AdminEmailAddress.Text(),
+							model.Email,
+							Messages.PasswordResetRequestSubjectLine.Text(),
+							String.Format("{0} {1}", Messages.PasswordResetRequest.Text(), msg)
+
+							);
+					}
+					catch { }
+
+					return RedirectToAction("ResetPasswordSuccess");
+				} else {
+					ModelState.AddModelError("", Errors.PasswordResetFailed.Text());
+				}
+			}
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			model.NavigationLocation = "Account";
+
+			return View(model);
+		}
+
+		// **************************************
+		// URL: /Account/ResetPasswordSuccess
+		// **************************************        
+		public ActionResult ResetPasswordSuccess() {
 			return View();
 		}
+
+		public ActionResult ResetPasswordRespond(string id, string rc) {
+			var model = new ResetPasswordModel() {
+				NavigationLocation = "Account",
+				Email = id,
+				ResetCode = rc
+			};
+
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			model.NavigationLocation = "Account";
+
+			return View(model);
+		}
+
+		[HttpPost]
+		public ActionResult ResetPasswordRespond(ResetPasswordModel model) {
+			if (_ms.ResetPassword(model)) {
+				return RedirectToAction("LogIn", "Account");
+			} else {
+				ModelState.AddModelError("", Errors.PasswordResetFailed.Text());
+			}
+
+			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			model.NavigationLocation = "Account";
+
+			return View(model);
+
+		}
+
+
 
 	}
 }

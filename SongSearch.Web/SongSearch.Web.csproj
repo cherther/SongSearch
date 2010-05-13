@@ -33,9 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AntiXSSLibrary, Version=3.1.3524.16873, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\FordMusic\ExternalAssemblies\AntiXSSLibrary.dll</HintPath>
+    <Reference Include="AntiXSSLibrary">
+      <HintPath>..\..\mvcstarter\lib\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\FordMusic\ExternalAssemblies\Ionic.Zip.dll</HintPath>
@@ -44,9 +43,8 @@
     <Reference Include="MvcUserControlHtmlHelpers">
       <HintPath>..\..\FordMusic\ExternalAssemblies\MvcUserControlHtmlHelpers.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=1.0.0.505, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\FordMusic\ExternalAssemblies\NLog.dll</HintPath>
+    <Reference Include="NLog">
+      <HintPath>..\..\mvcstarter\lib\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -89,10 +87,15 @@
     </Compile>
     <Compile Include="Helpers\Configuration.cs" />
     <Compile Include="Helpers\Connections.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Helpers\SystemSettings.cs" />
+    <Compile Include="Helpers\UserExtensions.cs" />
+    <Compile Include="Infrastructure\Mailer\SendMail.cs" />
+    <Compile Include="Models\ModelExtensions.cs" />
+    <Compile Include="Services\AccountService.cs" />
     <Compile Include="Infrastructure\Authentication\AuthorizeAttribute.cs" />
-    <Compile Include="Infrastructure\Authentication\FormsAuthentication.cs" />
-    <Compile Include="Infrastructure\Authentication\IFormsAuthentication.cs" />
+    <Compile Include="Infrastructure\Authentication\FormsAuthenticationService.cs" />
+    <Compile Include="Infrastructure\Authentication\IFormsAuthenticationService.cs" />
     <Compile Include="Infrastructure\Authentication\IMembershipService.cs" />
     <Compile Include="Infrastructure\Authentication\MembershipService.cs" />
     <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />
@@ -111,6 +114,8 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AccountData.cs" />
+    <Compile Include="Services\UserManagementService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
@@ -159,6 +164,7 @@
     <EntityDeploy Include="Infrastructure\Storage\EF\SongSearch.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SongSearch.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>SongSearch.Web.Data</CustomToolNamespace>
     </EntityDeploy>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

@@ -18,23 +18,22 @@ using System.Runtime.Serialization;
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
 
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_CartContents_Contents", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.Content), "CartContents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.CartContent), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_CartItems_Carts", "Carts", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.Cart), "CartContents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.CartContent), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_Contents_Catalogs", "Catalogs", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.Catalog), "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.Content), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_UsersCatalogs_Catalogs", "Catalogs", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.Catalog), "UsersCatalogs", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.UsersCatalog), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_ContentRights_Contents", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.Content), "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.ContentRight), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_ContentRights_RightsHolders", "RightsHolders", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.RightsHolder), "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.ContentRight), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_Users_Invitations", "Invitations", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Infrastructure.Storage.EF.Invitation), "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.User), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_Users_Roles", "Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.Role), "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.User), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_UsersCatalogs_Roles", "Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.Role), "UsersCatalogs", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.UsersCatalog), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_UsersCatalogs_Users", "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Infrastructure.Storage.EF.User), "UsersCatalogs", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.UsersCatalog), true)]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "ContentRightTerritories", "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.ContentRight), "Territories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.Territory))]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "ContentTags", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.Content), "Tags", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.Tag))]
-[assembly: EdmRelationshipAttribute("SongSearchModel", "FK_Users_ParentUsers", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Infrastructure.Storage.EF.User), "ChildUser", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Infrastructure.Storage.EF.User), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Contents_Catalogs", "Catalogs", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Catalog), "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentRights_Contents", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Content), "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRight), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Roles", "Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Role), "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentRightTerritories", "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRight), "Territories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Territory))]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentTags", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), "Tags", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Tag))]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_ParentUsers", "ChildUser", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.User), "ParentUser", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.Invitation), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "CartContents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), "Cart", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Cart))]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Carts_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Cart", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Cart), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Catalogs", "Catalog", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Catalog), "UserCatalogRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserCatalogRole), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Roles", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Role), "UserCatalogRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserCatalogRole), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "UserCatalogRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserCatalogRole), true)]
 
 #endregion
 
-namespace SongSearch.Web.Infrastructure.Storage.EF
+namespace SongSearch.Web.Data
 {
     #region Contexts
     
@@ -81,22 +80,6 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         #endregion
     
         #region ObjectSet Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<CartContent> CartContents
-        {
-            get
-            {
-                if ((_CartContents == null))
-                {
-                    _CartContents = base.CreateObjectSet<CartContent>("CartContents");
-                }
-                return _CartContents;
-            }
-        }
-        private ObjectSet<CartContent> _CartContents;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -165,38 +148,6 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Invitation> Invitations
-        {
-            get
-            {
-                if ((_Invitations == null))
-                {
-                    _Invitations = base.CreateObjectSet<Invitation>("Invitations");
-                }
-                return _Invitations;
-            }
-        }
-        private ObjectSet<Invitation> _Invitations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<RightsHolder> RightsHolders
-        {
-            get
-            {
-                if ((_RightsHolders == null))
-                {
-                    _RightsHolders = base.CreateObjectSet<RightsHolder>("RightsHolders");
-                }
-                return _RightsHolders;
-            }
-        }
-        private ObjectSet<RightsHolder> _RightsHolders;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Role> Roles
         {
             get
@@ -261,29 +212,37 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<UsersCatalog> UsersCatalogs
+        public ObjectSet<Invitation> Invitations
         {
             get
             {
-                if ((_UsersCatalogs == null))
+                if ((_Invitations == null))
                 {
-                    _UsersCatalogs = base.CreateObjectSet<UsersCatalog>("UsersCatalogs");
+                    _Invitations = base.CreateObjectSet<Invitation>("Invitations");
                 }
-                return _UsersCatalogs;
+                return _Invitations;
             }
         }
-        private ObjectSet<UsersCatalog> _UsersCatalogs;
+        private ObjectSet<Invitation> _Invitations;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UserCatalogRole> UserCatalogRoles
+        {
+            get
+            {
+                if ((_UserCatalogRoles == null))
+                {
+                    _UserCatalogRoles = base.CreateObjectSet<UserCatalogRole>("UserCatalogRoles");
+                }
+                return _UserCatalogRoles;
+            }
+        }
+        private ObjectSet<UserCatalogRole> _UserCatalogRoles;
 
         #endregion
         #region AddTo Methods
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the CartContents EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToCartContents(CartContent cartContent)
-        {
-            base.AddObject("CartContents", cartContent);
-        }
     
         /// <summary>
         /// Deprecated Method for adding a new object to the Carts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
@@ -315,22 +274,6 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         public void AddToContents(Content content)
         {
             base.AddObject("Contents", content);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Invitations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToInvitations(Invitation invitation)
-        {
-            base.AddObject("Invitations", invitation);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the RightsHolders EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToRightsHolders(RightsHolder rightsHolder)
-        {
-            base.AddObject("RightsHolders", rightsHolder);
         }
     
         /// <summary>
@@ -366,11 +309,19 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the UsersCatalogs EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Invitations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToUsersCatalogs(UsersCatalog usersCatalog)
+        public void AddToInvitations(Invitation invitation)
         {
-            base.AddObject("UsersCatalogs", usersCatalog);
+            base.AddObject("Invitations", invitation);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UserCatalogRoles EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUserCatalogRoles(UserCatalogRole userCatalogRole)
+        {
+            base.AddObject("UserCatalogRoles", userCatalogRole);
         }
 
         #endregion
@@ -384,7 +335,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="Cart")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="Cart")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Cart : EntityObject
@@ -618,169 +569,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_CartItems_Carts", "CartContents")]
-        public EntityCollection<CartContent> CartContents
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "CartContents", "Content")]
+        public EntityCollection<Content> Contents
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CartContent>("SongSearchModel.FK_CartItems_Carts", "CartContents");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Content>("SongSearch.Web.Data.Model.CartContents", "Content");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CartContent>("SongSearchModel.FK_CartItems_Carts", "CartContents", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="CartContent")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class CartContent : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new CartContent object.
-        /// </summary>
-        /// <param name="cartId">Initial value of the CartId property.</param>
-        /// <param name="contentId">Initial value of the ContentId property.</param>
-        /// <param name="addedOn">Initial value of the AddedOn property.</param>
-        public static CartContent CreateCartContent(global::System.Int32 cartId, global::System.Int32 contentId, global::System.DateTime addedOn)
-        {
-            CartContent cartContent = new CartContent();
-            cartContent.CartId = cartId;
-            cartContent.ContentId = contentId;
-            cartContent.AddedOn = addedOn;
-            return cartContent;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 CartId
-        {
-            get
-            {
-                return _CartId;
-            }
-            set
-            {
-                if (_CartId != value)
-                {
-                    OnCartIdChanging(value);
-                    ReportPropertyChanging("CartId");
-                    _CartId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("CartId");
-                    OnCartIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _CartId;
-        partial void OnCartIdChanging(global::System.Int32 value);
-        partial void OnCartIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ContentId
-        {
-            get
-            {
-                return _ContentId;
-            }
-            set
-            {
-                if (_ContentId != value)
-                {
-                    OnContentIdChanging(value);
-                    ReportPropertyChanging("ContentId");
-                    _ContentId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ContentId");
-                    OnContentIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _ContentId;
-        partial void OnContentIdChanging(global::System.Int32 value);
-        partial void OnContentIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime AddedOn
-        {
-            get
-            {
-                return _AddedOn;
-            }
-            set
-            {
-                OnAddedOnChanging(value);
-                ReportPropertyChanging("AddedOn");
-                _AddedOn = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("AddedOn");
-                OnAddedOnChanged();
-            }
-        }
-        private global::System.DateTime _AddedOn;
-        partial void OnAddedOnChanging(global::System.DateTime value);
-        partial void OnAddedOnChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_CartContents_Contents", "Contents")]
-        public Content Content
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearchModel.FK_CartContents_Contents", "Contents").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearchModel.FK_CartContents_Contents", "Contents").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Content> ContentReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearchModel.FK_CartContents_Contents", "Contents");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Content>("SongSearchModel.FK_CartContents_Contents", "Contents", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Content>("SongSearch.Web.Data.Model.CartContents", "Content", value);
                 }
             }
         }
@@ -791,16 +591,16 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_CartItems_Carts", "Carts")]
-        public Cart Cart
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Carts_Users", "User")]
+        public User User
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cart>("SongSearchModel.FK_CartItems_Carts", "Carts").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Carts_Users", "User").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cart>("SongSearchModel.FK_CartItems_Carts", "Carts").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Carts_Users", "User").Value = value;
             }
         }
         /// <summary>
@@ -808,17 +608,17 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<Cart> CartReference
+        public EntityReference<User> UserReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Cart>("SongSearchModel.FK_CartItems_Carts", "Carts");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Carts_Users", "User");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Cart>("SongSearchModel.FK_CartItems_Carts", "Carts", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Carts_Users", "User", value);
                 }
             }
         }
@@ -829,7 +629,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="Catalog")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="Catalog")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Catalog : EntityObject
@@ -913,18 +713,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_Contents_Catalogs", "Contents")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Contents_Catalogs", "Contents")]
         public EntityCollection<Content> Contents
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Content>("SongSearchModel.FK_Contents_Catalogs", "Contents");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Content>("SongSearch.Web.Data.Model.FK_Contents_Catalogs", "Contents");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Content>("SongSearchModel.FK_Contents_Catalogs", "Contents", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Content>("SongSearch.Web.Data.Model.FK_Contents_Catalogs", "Contents", value);
                 }
             }
         }
@@ -935,18 +735,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_UsersCatalogs_Catalogs", "UsersCatalogs")]
-        public EntityCollection<UsersCatalog> UsersCatalogs
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Catalogs", "UserCatalogRole")]
+        public EntityCollection<UserCatalogRole> UserCatalogRoles
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UsersCatalog>("SongSearchModel.FK_UsersCatalogs_Catalogs", "UsersCatalogs");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserCatalogRole>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Catalogs", "UserCatalogRole");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UsersCatalog>("SongSearchModel.FK_UsersCatalogs_Catalogs", "UsersCatalogs", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserCatalogRole>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Catalogs", "UserCatalogRole", value);
                 }
             }
         }
@@ -957,7 +757,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="Content")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="Content")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Content : EntityObject
@@ -1491,38 +1291,16 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_CartContents_Contents", "CartContents")]
-        public EntityCollection<CartContent> CartContents
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CartContent>("SongSearchModel.FK_CartContents_Contents", "CartContents");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CartContent>("SongSearchModel.FK_CartContents_Contents", "CartContents", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_Contents_Catalogs", "Catalogs")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Contents_Catalogs", "Catalogs")]
         public Catalog Catalog
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearchModel.FK_Contents_Catalogs", "Catalogs").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearch.Web.Data.Model.FK_Contents_Catalogs", "Catalogs").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearchModel.FK_Contents_Catalogs", "Catalogs").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearch.Web.Data.Model.FK_Contents_Catalogs", "Catalogs").Value = value;
             }
         }
         /// <summary>
@@ -1534,13 +1312,13 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearchModel.FK_Contents_Catalogs", "Catalogs");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearch.Web.Data.Model.FK_Contents_Catalogs", "Catalogs");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Catalog>("SongSearchModel.FK_Contents_Catalogs", "Catalogs", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Catalog>("SongSearch.Web.Data.Model.FK_Contents_Catalogs", "Catalogs", value);
                 }
             }
         }
@@ -1551,18 +1329,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_ContentRights_Contents", "ContentRights")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentRights_Contents", "ContentRights")]
         public EntityCollection<ContentRight> ContentRights
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRight>("SongSearchModel.FK_ContentRights_Contents", "ContentRights");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRight>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "ContentRights");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRight>("SongSearchModel.FK_ContentRights_Contents", "ContentRights", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRight>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "ContentRights", value);
                 }
             }
         }
@@ -1573,18 +1351,40 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "ContentTags", "Tags")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentTags", "Tags")]
         public EntityCollection<Tag> Tags
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Tag>("SongSearchModel.ContentTags", "Tags");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Tag>("SongSearch.Web.Data.Model.ContentTags", "Tags");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Tag>("SongSearchModel.ContentTags", "Tags", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Tag>("SongSearch.Web.Data.Model.ContentTags", "Tags", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "CartContents", "Cart")]
+        public EntityCollection<Cart> Carts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Cart>("SongSearch.Web.Data.Model.CartContents", "Cart");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Cart>("SongSearch.Web.Data.Model.CartContents", "Cart", value);
                 }
             }
         }
@@ -1595,7 +1395,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="ContentRight")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="ContentRight")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class ContentRight : EntityObject
@@ -1610,7 +1410,8 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         /// <param name="rightsTypeId">Initial value of the RightsTypeId property.</param>
         /// <param name="rightsHolderId">Initial value of the RightsHolderId property.</param>
         /// <param name="rightsHolderShare">Initial value of the RightsHolderShare property.</param>
-        public static ContentRight CreateContentRight(global::System.Int32 contentRightId, global::System.Int32 contentId, global::System.Int32 rightsTypeId, global::System.Int32 rightsHolderId, global::System.Decimal rightsHolderShare)
+        /// <param name="rightsHolderName">Initial value of the RightsHolderName property.</param>
+        public static ContentRight CreateContentRight(global::System.Int32 contentRightId, global::System.Int32 contentId, global::System.Int32 rightsTypeId, global::System.Int32 rightsHolderId, global::System.Decimal rightsHolderShare, global::System.String rightsHolderName)
         {
             ContentRight contentRight = new ContentRight();
             contentRight.ContentRightId = contentRightId;
@@ -1618,6 +1419,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
             contentRight.RightsTypeId = rightsTypeId;
             contentRight.RightsHolderId = rightsHolderId;
             contentRight.RightsHolderShare = rightsHolderShare;
+            contentRight.RightsHolderName = rightsHolderName;
             return contentRight;
         }
 
@@ -1746,6 +1548,30 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         private global::System.Decimal _RightsHolderShare;
         partial void OnRightsHolderShareChanging(global::System.Decimal value);
         partial void OnRightsHolderShareChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String RightsHolderName
+        {
+            get
+            {
+                return _RightsHolderName;
+            }
+            set
+            {
+                OnRightsHolderNameChanging(value);
+                ReportPropertyChanging("RightsHolderName");
+                _RightsHolderName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("RightsHolderName");
+                OnRightsHolderNameChanged();
+            }
+        }
+        private global::System.String _RightsHolderName;
+        partial void OnRightsHolderNameChanging(global::System.String value);
+        partial void OnRightsHolderNameChanged();
 
         #endregion
     
@@ -1757,16 +1583,16 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_ContentRights_Contents", "Contents")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentRights_Contents", "Contents")]
         public Content Content
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearchModel.FK_ContentRights_Contents", "Contents").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "Contents").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearchModel.FK_ContentRights_Contents", "Contents").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "Contents").Value = value;
             }
         }
         /// <summary>
@@ -1778,13 +1604,13 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearchModel.FK_ContentRights_Contents", "Contents");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "Contents");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Content>("SongSearchModel.FK_ContentRights_Contents", "Contents", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "Contents", value);
                 }
             }
         }
@@ -1795,56 +1621,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_ContentRights_RightsHolders", "RightsHolders")]
-        public RightsHolder RightsHolder
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RightsHolder>("SongSearchModel.FK_ContentRights_RightsHolders", "RightsHolders").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RightsHolder>("SongSearchModel.FK_ContentRights_RightsHolders", "RightsHolders").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<RightsHolder> RightsHolderReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RightsHolder>("SongSearchModel.FK_ContentRights_RightsHolders", "RightsHolders");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RightsHolder>("SongSearchModel.FK_ContentRights_RightsHolders", "RightsHolders", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "ContentRightTerritories", "Territories")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentRightTerritories", "Territories")]
         public EntityCollection<Territory> Territories
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Territory>("SongSearchModel.ContentRightTerritories", "Territories");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Territory>("SongSearch.Web.Data.Model.ContentRightTerritories", "Territories");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Territory>("SongSearchModel.ContentRightTerritories", "Territories", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Territory>("SongSearch.Web.Data.Model.ContentRightTerritories", "Territories", value);
                 }
             }
         }
@@ -1855,7 +1643,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="Invitation")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="Invitation")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Invitation : EntityObject
@@ -2017,18 +1805,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_Users_Invitations", "Users")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "User")]
         public EntityCollection<User> Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearchModel.FK_Users_Invitations", "Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_Invitations", "User");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearchModel.FK_Users_Invitations", "Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_Invitations", "User", value);
                 }
             }
         }
@@ -2039,113 +1827,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="RightsHolder")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class RightsHolder : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new RightsHolder object.
-        /// </summary>
-        /// <param name="rightsHolderId">Initial value of the RightsHolderId property.</param>
-        /// <param name="rightsHolderName">Initial value of the RightsHolderName property.</param>
-        public static RightsHolder CreateRightsHolder(global::System.Int32 rightsHolderId, global::System.String rightsHolderName)
-        {
-            RightsHolder rightsHolder = new RightsHolder();
-            rightsHolder.RightsHolderId = rightsHolderId;
-            rightsHolder.RightsHolderName = rightsHolderName;
-            return rightsHolder;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 RightsHolderId
-        {
-            get
-            {
-                return _RightsHolderId;
-            }
-            set
-            {
-                if (_RightsHolderId != value)
-                {
-                    OnRightsHolderIdChanging(value);
-                    ReportPropertyChanging("RightsHolderId");
-                    _RightsHolderId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("RightsHolderId");
-                    OnRightsHolderIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _RightsHolderId;
-        partial void OnRightsHolderIdChanging(global::System.Int32 value);
-        partial void OnRightsHolderIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String RightsHolderName
-        {
-            get
-            {
-                return _RightsHolderName;
-            }
-            set
-            {
-                OnRightsHolderNameChanging(value);
-                ReportPropertyChanging("RightsHolderName");
-                _RightsHolderName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("RightsHolderName");
-                OnRightsHolderNameChanged();
-            }
-        }
-        private global::System.String _RightsHolderName;
-        partial void OnRightsHolderNameChanging(global::System.String value);
-        partial void OnRightsHolderNameChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_ContentRights_RightsHolders", "ContentRights")]
-        public EntityCollection<ContentRight> ContentRights
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRight>("SongSearchModel.FK_ContentRights_RightsHolders", "ContentRights");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRight>("SongSearchModel.FK_ContentRights_RightsHolders", "ContentRights", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="Role")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="Role")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Role : EntityObject
@@ -2229,18 +1911,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_Users_Roles", "Users")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_Roles", "Users")]
         public EntityCollection<User> Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearchModel.FK_Users_Roles", "Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_Roles", "Users");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearchModel.FK_Users_Roles", "Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_Roles", "Users", value);
                 }
             }
         }
@@ -2251,18 +1933,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_UsersCatalogs_Roles", "UsersCatalogs")]
-        public EntityCollection<UsersCatalog> UsersCatalogs
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Roles", "UserCatalogRole")]
+        public EntityCollection<UserCatalogRole> UserCatalogRoles
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UsersCatalog>("SongSearchModel.FK_UsersCatalogs_Roles", "UsersCatalogs");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserCatalogRole>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Roles", "UserCatalogRole");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UsersCatalog>("SongSearchModel.FK_UsersCatalogs_Roles", "UsersCatalogs", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserCatalogRole>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Roles", "UserCatalogRole", value);
                 }
             }
         }
@@ -2273,7 +1955,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="Tag")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="Tag")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Tag : EntityObject
@@ -2381,18 +2063,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "ContentTags", "Contents")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentTags", "Contents")]
         public EntityCollection<Content> Contents
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Content>("SongSearchModel.ContentTags", "Contents");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Content>("SongSearch.Web.Data.Model.ContentTags", "Contents");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Content>("SongSearchModel.ContentTags", "Contents", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Content>("SongSearch.Web.Data.Model.ContentTags", "Contents", value);
                 }
             }
         }
@@ -2403,7 +2085,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="Territory")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="Territory")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class Territory : EntityObject
@@ -2513,18 +2195,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "ContentRightTerritories", "ContentRights")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentRightTerritories", "ContentRights")]
         public EntityCollection<ContentRight> ContentRights
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRight>("SongSearchModel.ContentRightTerritories", "ContentRights");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRight>("SongSearch.Web.Data.Model.ContentRightTerritories", "ContentRights");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRight>("SongSearchModel.ContentRightTerritories", "ContentRights", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRight>("SongSearch.Web.Data.Model.ContentRightTerritories", "ContentRights", value);
                 }
             }
         }
@@ -2535,7 +2217,7 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="User")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="User")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
     public partial class User : EntityObject
@@ -2821,54 +2503,16 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_Users_Invitations", "Invitations")]
-        public Invitation Invitation
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearchModel.FK_Users_Invitations", "Invitations").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearchModel.FK_Users_Invitations", "Invitations").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Invitation> InvitationReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearchModel.FK_Users_Invitations", "Invitations");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Invitation>("SongSearchModel.FK_Users_Invitations", "Invitations", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_Users_Roles", "Roles")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_Roles", "Roles")]
         public Role Role
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearchModel.FK_Users_Roles", "Roles").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearch.Web.Data.Model.FK_Users_Roles", "Roles").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearchModel.FK_Users_Roles", "Roles").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearch.Web.Data.Model.FK_Users_Roles", "Roles").Value = value;
             }
         }
         /// <summary>
@@ -2880,13 +2524,13 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearchModel.FK_Users_Roles", "Roles");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearch.Web.Data.Model.FK_Users_Roles", "Roles");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Role>("SongSearchModel.FK_Users_Roles", "Roles", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Role>("SongSearch.Web.Data.Model.FK_Users_Roles", "Roles", value);
                 }
             }
         }
@@ -2897,18 +2541,18 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_UsersCatalogs_Users", "UsersCatalogs")]
-        public EntityCollection<UsersCatalog> UsersCatalogs
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_ParentUsers", "ParentUser")]
+        public EntityCollection<User> ChildUsers
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UsersCatalog>("SongSearchModel.FK_UsersCatalogs_Users", "UsersCatalogs");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ParentUser");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UsersCatalog>("SongSearchModel.FK_UsersCatalogs_Users", "UsersCatalogs", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ParentUser", value);
                 }
             }
         }
@@ -2919,38 +2563,16 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_Users_ParentUsers", "ChildUser")]
-        public EntityCollection<User> ParentUser
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_ParentUsers", "ChildUser")]
+        public User ParentUser
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearchModel.FK_Users_ParentUsers", "ChildUser");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ChildUser").Value;
             }
             set
             {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearchModel.FK_Users_ParentUsers", "ChildUser", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_Users_ParentUsers", "User")]
-        public User ChildUsers
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearchModel.FK_Users_ParentUsers", "User").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearchModel.FK_Users_ParentUsers", "User").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ChildUser").Value = value;
             }
         }
         /// <summary>
@@ -2958,17 +2580,99 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<User> ChildUsersReference
+        public EntityReference<User> ParentUserReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearchModel.FK_Users_ParentUsers", "User");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ChildUser");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearchModel.FK_Users_ParentUsers", "User", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ChildUser", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation")]
+        public Invitation Invitation
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Invitation> InvitationReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Carts_Users", "Cart")]
+        public EntityCollection<Cart> Carts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Cart>("SongSearch.Web.Data.Model.FK_Carts_Users", "Cart");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Cart>("SongSearch.Web.Data.Model.FK_Carts_Users", "Cart", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Users", "UserCatalogRole")]
+        public EntityCollection<UserCatalogRole> UserCatalogRoles
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserCatalogRole>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Users", "UserCatalogRole");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserCatalogRole>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Users", "UserCatalogRole", value);
                 }
             }
         }
@@ -2979,28 +2683,26 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearchModel", Name="UsersCatalog")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="UserCatalogRole")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class UsersCatalog : EntityObject
+    public partial class UserCatalogRole : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new UsersCatalog object.
+        /// Create a new UserCatalogRole object.
         /// </summary>
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="catalogId">Initial value of the CatalogId property.</param>
-        /// <param name="territoryId">Initial value of the TerritoryId property.</param>
         /// <param name="roleId">Initial value of the RoleId property.</param>
-        public static UsersCatalog CreateUsersCatalog(global::System.Int32 userId, global::System.Int32 catalogId, global::System.Int32 territoryId, global::System.Int32 roleId)
+        public static UserCatalogRole CreateUserCatalogRole(global::System.Int32 userId, global::System.Int32 catalogId, global::System.Int32 roleId)
         {
-            UsersCatalog usersCatalog = new UsersCatalog();
-            usersCatalog.UserId = userId;
-            usersCatalog.CatalogId = catalogId;
-            usersCatalog.TerritoryId = territoryId;
-            usersCatalog.RoleId = roleId;
-            return usersCatalog;
+            UserCatalogRole userCatalogRole = new UserCatalogRole();
+            userCatalogRole.UserId = userId;
+            userCatalogRole.CatalogId = catalogId;
+            userCatalogRole.RoleId = roleId;
+            return userCatalogRole;
         }
 
         #endregion
@@ -3063,33 +2765,6 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 TerritoryId
-        {
-            get
-            {
-                return _TerritoryId;
-            }
-            set
-            {
-                if (_TerritoryId != value)
-                {
-                    OnTerritoryIdChanging(value);
-                    ReportPropertyChanging("TerritoryId");
-                    _TerritoryId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("TerritoryId");
-                    OnTerritoryIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _TerritoryId;
-        partial void OnTerritoryIdChanging(global::System.Int32 value);
-        partial void OnTerritoryIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int32 RoleId
@@ -3121,16 +2796,16 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_UsersCatalogs_Catalogs", "Catalogs")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Catalogs", "Catalog")]
         public Catalog Catalog
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearchModel.FK_UsersCatalogs_Catalogs", "Catalogs").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Catalogs", "Catalog").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearchModel.FK_UsersCatalogs_Catalogs", "Catalogs").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Catalogs", "Catalog").Value = value;
             }
         }
         /// <summary>
@@ -3142,13 +2817,13 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearchModel.FK_UsersCatalogs_Catalogs", "Catalogs");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Catalog>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Catalogs", "Catalog");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Catalog>("SongSearchModel.FK_UsersCatalogs_Catalogs", "Catalogs", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Catalog>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Catalogs", "Catalog", value);
                 }
             }
         }
@@ -3159,16 +2834,16 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_UsersCatalogs_Roles", "Roles")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Roles", "Role")]
         public Role Role
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearchModel.FK_UsersCatalogs_Roles", "Roles").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Roles", "Role").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearchModel.FK_UsersCatalogs_Roles", "Roles").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Roles", "Role").Value = value;
             }
         }
         /// <summary>
@@ -3180,13 +2855,13 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearchModel.FK_UsersCatalogs_Roles", "Roles");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Role>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Roles", "Role");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Role>("SongSearchModel.FK_UsersCatalogs_Roles", "Roles", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Role>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Roles", "Role", value);
                 }
             }
         }
@@ -3197,16 +2872,16 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearchModel", "FK_UsersCatalogs_Users", "Users")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Users", "User")]
         public User User
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearchModel.FK_UsersCatalogs_Users", "Users").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Users", "User").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearchModel.FK_UsersCatalogs_Users", "Users").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Users", "User").Value = value;
             }
         }
         /// <summary>
@@ -3218,13 +2893,13 @@ namespace SongSearch.Web.Infrastructure.Storage.EF
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearchModel.FK_UsersCatalogs_Users", "Users");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Users", "User");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearchModel.FK_UsersCatalogs_Users", "Users", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_UsersCatalogs_Users", "User", value);
                 }
             }
         }

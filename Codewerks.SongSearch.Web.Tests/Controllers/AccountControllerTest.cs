@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SongSearch.Web;
 using SongSearch.Web.Controllers;
 using SongSearch.Web.Models;
+using SongSearch.Web.Services;
 
 namespace Codewerks.SongSearch.Web.Tests.Controllers {
 
@@ -31,7 +32,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 		public void ChangePassword_Post_ReturnsRedirectOnSuccess() {
 			// Arrange
 			AccountController controller = GetAccountController();
-			ChangePasswordModel model = new ChangePasswordModel() {
+			UpdateProfileModel model = new UpdateProfileModel() {
 				OldPassword = "goodOldPassword",
 				NewPassword = "goodNewPassword",
 				ConfirmPassword = "goodNewPassword"
@@ -50,7 +51,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 		public void ChangePassword_Post_ReturnsViewIfChangePasswordFails() {
 			// Arrange
 			AccountController controller = GetAccountController();
-			ChangePasswordModel model = new ChangePasswordModel() {
+			UpdateProfileModel model = new UpdateProfileModel() {
 				OldPassword = "goodOldPassword",
 				NewPassword = "badNewPassword",
 				ConfirmPassword = "badNewPassword"
@@ -71,7 +72,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 		public void ChangePassword_Post_ReturnsViewIfModelStateIsInvalid() {
 			// Arrange
 			AccountController controller = GetAccountController();
-			ChangePasswordModel model = new ChangePasswordModel() {
+			UpdateProfileModel model = new UpdateProfileModel() {
 				OldPassword = "goodOldPassword",
 				NewPassword = "goodNewPassword",
 				ConfirmPassword = "goodNewPassword"
@@ -106,14 +107,14 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			AccountController controller = GetAccountController();
 
 			// Act
-			ActionResult result = controller.LogOff();
+			ActionResult result = controller.LogOut();
 
 			// Assert
 			Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
 			RedirectToRouteResult redirectResult = (RedirectToRouteResult)result;
 			Assert.AreEqual("Home", redirectResult.RouteValues["controller"]);
 			Assert.AreEqual("Index", redirectResult.RouteValues["action"]);
-			Assert.IsTrue(((MockFormsAuthenticationService)controller.FormsService).SignOut_WasCalled);
+			//Assert.IsTrue(((MockFormsAuthenticationService)controller.FormsService).SignOut_WasCalled);
 		}
 
 		[TestMethod]
@@ -122,7 +123,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			AccountController controller = GetAccountController();
 
 			// Act
-			ActionResult result = controller.LogOn();
+			ActionResult result = controller.LogIn(new LogOnModel());
 
 			// Assert
 			Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -133,20 +134,20 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			// Arrange
 			AccountController controller = GetAccountController();
 			LogOnModel model = new LogOnModel() {
-				UserName = "someUser",
+				Email = "someUser@test.com",
 				Password = "goodPassword",
 				RememberMe = false
 			};
 
 			// Act
-			ActionResult result = controller.LogOn(model, null);
+			ActionResult result = controller.LogIn(model, null);
 
 			// Assert
 			Assert.IsInstanceOfType(result, typeof(RedirectToRouteResult));
 			RedirectToRouteResult redirectResult = (RedirectToRouteResult)result;
 			Assert.AreEqual("Home", redirectResult.RouteValues["controller"]);
 			Assert.AreEqual("Index", redirectResult.RouteValues["action"]);
-			Assert.IsTrue(((MockFormsAuthenticationService)controller.FormsService).SignIn_WasCalled);
+			//Assert.IsTrue(((MockFormsAuthenticationService)controller.FormsService).SignIn_WasCalled);
 		}
 
 		[TestMethod]
@@ -154,19 +155,19 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			// Arrange
 			AccountController controller = GetAccountController();
 			LogOnModel model = new LogOnModel() {
-				UserName = "someUser",
+				Email = "someUser",
 				Password = "goodPassword",
 				RememberMe = false
 			};
 
 			// Act
-			ActionResult result = controller.LogOn(model, "/someUrl");
+			ActionResult result = controller.LogIn(model, "/someUrl");
 
 			// Assert
 			Assert.IsInstanceOfType(result, typeof(RedirectResult));
 			RedirectResult redirectResult = (RedirectResult)result;
 			Assert.AreEqual("/someUrl", redirectResult.Url);
-			Assert.IsTrue(((MockFormsAuthenticationService)controller.FormsService).SignIn_WasCalled);
+			//Assert.IsTrue(((MockFormsAuthenticationService)controller.FormsService).SignIn_WasCalled);
 		}
 
 		[TestMethod]
@@ -174,14 +175,14 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			// Arrange
 			AccountController controller = GetAccountController();
 			LogOnModel model = new LogOnModel() {
-				UserName = "someUser",
+				Email = "someUser",
 				Password = "goodPassword",
 				RememberMe = false
 			};
 			controller.ModelState.AddModelError("", "Dummy error message.");
 
 			// Act
-			ActionResult result = controller.LogOn(model, null);
+			ActionResult result = controller.LogIn(model, null);
 
 			// Assert
 			Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -194,19 +195,19 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			// Arrange
 			AccountController controller = GetAccountController();
 			LogOnModel model = new LogOnModel() {
-				UserName = "someUser",
+				Email = "someUser",
 				Password = "badPassword",
 				RememberMe = false
 			};
 
 			// Act
-			ActionResult result = controller.LogOn(model, null);
+			ActionResult result = controller.LogIn(model, null);
 
 			// Assert
 			Assert.IsInstanceOfType(result, typeof(ViewResult));
 			ViewResult viewResult = (ViewResult)result;
 			Assert.AreEqual(model, viewResult.ViewData.Model);
-			Assert.AreEqual("The user name or password provided is incorrect.", controller.ModelState[""].Errors[0].ErrorMessage);
+			Assert.AreEqual("The myUser name or password provided is incorrect.", controller.ModelState[""].Errors[0].ErrorMessage);
 		}
 
 		[TestMethod]
@@ -215,7 +216,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			AccountController controller = GetAccountController();
 
 			// Act
-			ActionResult result = controller.Register();
+			ActionResult result = controller.Register(new RegisterModel());
 
 			// Assert
 			Assert.IsInstanceOfType(result, typeof(ViewResult));
@@ -227,7 +228,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			// Arrange
 			AccountController controller = GetAccountController();
 			RegisterModel model = new RegisterModel() {
-				UserName = "someUser",
+				//UserName = "someUser",
 				Email = "goodEmail",
 				Password = "goodPassword",
 				ConfirmPassword = "goodPassword"
@@ -248,7 +249,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			// Arrange
 			AccountController controller = GetAccountController();
 			RegisterModel model = new RegisterModel() {
-				UserName = "duplicateUser",
+				//UserName = "duplicateUser",
 				Email = "goodEmail",
 				Password = "goodPassword",
 				ConfirmPassword = "goodPassword"
@@ -261,7 +262,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			Assert.IsInstanceOfType(result, typeof(ViewResult));
 			ViewResult viewResult = (ViewResult)result;
 			Assert.AreEqual(model, viewResult.ViewData.Model);
-			Assert.AreEqual("Username already exists. Please enter a different user name.", controller.ModelState[""].Errors[0].ErrorMessage);
+			Assert.AreEqual("Username already exists. Please enter a different myUser name.", controller.ModelState[""].Errors[0].ErrorMessage);
 			Assert.AreEqual(10, viewResult.ViewData["PasswordLength"]);
 		}
 
@@ -270,7 +271,7 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 			// Arrange
 			AccountController controller = GetAccountController();
 			RegisterModel model = new RegisterModel() {
-				UserName = "someUser",
+				//UserName = "someUser",
 				Email = "goodEmail",
 				Password = "goodPassword",
 				ConfirmPassword = "goodPassword"
@@ -289,8 +290,8 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 
 		private static AccountController GetAccountController() {
 			AccountController controller = new AccountController() {
-				FormsService = new MockFormsAuthenticationService(),
-				MembershipService = new MockMembershipService()
+				//FormsService = new MockFormsAuthenticationService(),
+				//MembershipService = new MockMembershipService()
 			};
 			controller.ControllerContext = new ControllerContext() {
 				Controller = controller,
@@ -352,6 +353,23 @@ namespace Codewerks.SongSearch.Web.Tests.Controllers {
 
 			public bool ChangePassword(string userName, string oldPassword, string newPassword) {
 				return (userName == "someUser" && oldPassword == "goodOldPassword" && newPassword == "goodNewPassword");
+			}
+
+
+			public bool RegisterUser(RegisterModel model) {
+				throw new NotImplementedException();
+			}
+
+			public bool UpdateProfile(UpdateProfileModel model) {
+				throw new NotImplementedException();
+			}
+
+			public bool ResetPasswordProcessRequest(ResetPasswordModel model) {
+				throw new NotImplementedException();
+			}
+
+			public bool ResetPassword(ResetPasswordModel model) {
+				throw new NotImplementedException();
 			}
 		}
 

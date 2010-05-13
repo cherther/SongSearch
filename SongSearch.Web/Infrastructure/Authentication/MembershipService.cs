@@ -2,21 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SongSearch.Web.Models;
+using SongSearch.Web.Data;
+using System.Web.Security;
 
 namespace SongSearch.Web.Services {
 
-	public class AccountMembershipService : IMembershipService {
+	public class MembershipService : IMembershipService {
 
         public IAccountService AccountService { get; set; }
 
         private const int _MIN_PASSWORD_LENGTH = 5;
 
-        public AccountMembershipService()
+        public MembershipService()
         {
             if (AccountService == null) { AccountService = new AccountService(); }
         }
 
-        public int MinPasswordLength
+		//public int MinPasswordLength
+		//{
+		//    get
+		//    {
+		//        return _MIN_PASSWORD_LENGTH; // _provider.MinRequiredPasswordLength;
+		//    }
+		//}
+
+		public int MinPasswordLength
         {
             get
             {
@@ -24,15 +35,9 @@ namespace SongSearch.Web.Services {
             }
         }
 
-        public static int MIN_PASSWORD_LENGTH
-        {
-            get
-            {
-                return _MIN_PASSWORD_LENGTH; // _provider.MinRequiredPasswordLength;
-            }
-        }
-
-
+		public static int GetMinPasswordLength() {
+				return _MIN_PASSWORD_LENGTH; // _provider.MinRequiredPasswordLength;			
+		}
         public bool ValidateUser(string userName, string password)
         {
             if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
@@ -48,7 +53,7 @@ namespace SongSearch.Web.Services {
             if (String.IsNullOrEmpty(model.Password)) throw new ArgumentException("Value cannot be null or empty.", "Password");
             if (String.IsNullOrEmpty(model.InviteId)) throw new ArgumentException("Value cannot be null or empty.", "InviteId");
 
-            DisplayUser user = new DisplayUser()
+            User user = new User()
             {
                 UserName = model.Email,
                 Password = model.Password,
@@ -72,7 +77,7 @@ namespace SongSearch.Web.Services {
             try
             {
                 //MembershipUser currentUser = _provider.GetUserSimple(userName, true /* userIsOnline */);
-                DisplayUser currentUser = new DisplayUser() 
+				User currentUser = new User() 
                 { 
                         UserName = model.Email,
                         FirstName = model.FirstName,
@@ -98,9 +103,8 @@ namespace SongSearch.Web.Services {
 
             try
             {
-                DisplayUser currentUser = new DisplayUser() { UserName = model.Email, Password = model.ResetCode };
                 //reset temp password to hashed username
-                return AccountService.ResetPassword(currentUser, model.Email);
+				return AccountService.ResetPassword(model.Email, model.ResetCode, model.Email);
             }
             catch (ArgumentException)
             {
@@ -122,8 +126,7 @@ namespace SongSearch.Web.Services {
             try
             {
                 //MembershipUser currentUser = _provider.GetUserSimple(userName, true /* userIsOnline */);
-                DisplayUser currentUser = new DisplayUser() { UserName = model.Email, Password = model.ResetCode };
-                return AccountService.ResetPassword(currentUser, model.NewPassword);
+				return AccountService.ResetPassword(model.Email, model.ResetCode, model.NewPassword);
             }
             catch (ArgumentException)
             {

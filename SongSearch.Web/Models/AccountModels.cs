@@ -7,12 +7,130 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using SongSearch.Web.Data;
+using SongSearch.Web.Services;
 
 namespace SongSearch.Web.Models {
 
 	#region Models
+	// **************************************
+	// ResetPasswordModel
+	// **************************************
 	[PropertiesMustMatch("NewPassword", "ConfirmPassword", ErrorMessage = "The new password and confirmation password do not match.")]
-	public class ChangePasswordModel {
+	public class ResetPasswordModel : ViewModel {
+		[Required]
+		[DataType(DataType.EmailAddress)]
+		[DisplayName("Email address")]
+		public string Email { get; set; }
+
+		[Required]
+		[DisplayName("Reset Code")]
+		public string ResetCode { get; set; }
+
+		[Required]
+		[ValidatePasswordLength]
+		[DataType(DataType.Password)]
+		[DisplayName("New password")]
+		public string NewPassword { get; set; }
+
+		[Required]
+		[DataType(DataType.Password)]
+		[DisplayName("Confirm new password")]
+		public string ConfirmPassword { get; set; }
+
+
+	}
+	// **************************************
+	// LogOnModel
+	// **************************************
+	public class LogOnModel : ViewModel {
+		//[Required]
+		//[DisplayName("User name")]
+		//public string UserName { get; set; }
+
+		[Required]
+		[DataType(DataType.EmailAddress)]
+		[DisplayName("Email address")]
+		public string Email { get; set; }
+
+		[Required]
+		[DataType(DataType.Password)]
+		[DisplayName("Password")]
+		public string Password { get; set; }
+
+		[DisplayName("Remember me?")]
+		public bool RememberMe { get; set; }
+
+		public string ReturnUrl { get; set; }
+
+
+	}
+
+	// **************************************
+	// RegisterModel
+	// **************************************
+	[PropertiesMustMatch("Password", "ConfirmPassword", ErrorMessage = "The password and confirmation password do not match.")]
+	public class RegisterModel : ViewModel {
+		//[Required]
+		//[DisplayName("User name")]
+		//public string UserName { get; set; }
+
+		[Required]
+		[DataType(DataType.EmailAddress)]
+		[DisplayName("Email address")]
+		public string Email { get; set; }
+
+		[Required]
+		[DisplayName("Invitation Code")]
+		public string InviteId { get; set; }
+
+		[DisplayName("First Name")]
+		public string FirstName { get; set; }
+
+		[DisplayName("Last Name")]
+		public string LastName { get; set; }
+
+		[Required]
+		[ValidatePasswordLength]
+		[DataType(DataType.Password)]
+		[DisplayName("Password")]
+		public string Password { get; set; }
+
+		[Required]
+		[DataType(DataType.Password)]
+		[DisplayName("Confirm password")]
+		public string ConfirmPassword { get; set; }
+
+		public Invitation Invitation { get; set; }
+	}
+
+	// **************************************
+	// UpdateProfileModel
+	// **************************************
+	[PropertiesMustMatch("NewPassword", "ConfirmPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+	public class UpdateProfileModel : ViewModel {
+		//private IPrincipal _princ;
+
+		//public IPrincipal Principal {
+		//    get {
+		//        return _princ;
+		//    }
+		//    set {
+		//        _princ = value;
+		//        SetUserFields(_princ);
+		//    }
+		//}
+
+		[DisplayName("First Name")]
+		public string FirstName { get; set; }
+
+		[DisplayName("Last Name")]
+		public string LastName { get; set; }
+
+		[DisplayName("Download Signature (default text appended to the name of your song files)")]
+		[RegularExpression(@"[^\\/:*?""<>|]*", ErrorMessage = @"Signatures may not contain the characters \ /:*?""<>|")]
+		public string Signature { get; set; }
+
 		[Required]
 		[DataType(DataType.Password)]
 		[DisplayName("Current password")]
@@ -28,140 +146,39 @@ namespace SongSearch.Web.Models {
 		[DataType(DataType.Password)]
 		[DisplayName("Confirm new password")]
 		public string ConfirmPassword { get; set; }
-	}
 
-	public class LogOnModel {
-		[Required]
-		[DisplayName("User name")]
-		public string UserName { get; set; }
-
-		[Required]
-		[DataType(DataType.Password)]
-		[DisplayName("Password")]
-		public string Password { get; set; }
-
-		[DisplayName("Remember me?")]
-		public bool RememberMe { get; set; }
-	}
-
-	[PropertiesMustMatch("Password", "ConfirmPassword", ErrorMessage = "The password and confirmation password do not match.")]
-	public class RegisterModel {
-		[Required]
-		[DisplayName("User name")]
-		public string UserName { get; set; }
-
-		[Required]
-		[DataType(DataType.EmailAddress)]
-		[DisplayName("Email address")]
 		public string Email { get; set; }
 
-		[Required]
-		[ValidatePasswordLength]
-		[DataType(DataType.Password)]
-		[DisplayName("Password")]
-		public string Password { get; set; }
-
-		[Required]
-		[DataType(DataType.Password)]
-		[DisplayName("Confirm password")]
-		public string ConfirmPassword { get; set; }
-	}
-	#endregion
-
-	#region Services
-	// The FormsAuthentication type is sealed and contains static members, so it is difficult to
-	// unit test code that calls its members. The interface and helper class below demonstrate
-	// how to create an abstract wrapper around such a type in order to make the AccountController
-	// code unit testable.
-
-	public interface IMembershipService {
-		int MinPasswordLength { get; }
-
-		bool ValidateUser(string userName, string password);
-		MembershipCreateStatus CreateUser(string userName, string password, string email);
-		bool ChangePassword(string userName, string oldPassword, string newPassword);
 	}
 
-	public class AccountMembershipService : IMembershipService {
-		private readonly MembershipProvider _provider;
-
-		public AccountMembershipService()
-			: this(null) {
-		}
-
-		public AccountMembershipService(MembershipProvider provider) {
-			_provider = provider ?? Membership.Provider;
-		}
-
-		public int MinPasswordLength {
-			get {
-				return _provider.MinRequiredPasswordLength;
-			}
-		}
-
-		public bool ValidateUser(string userName, string password) {
-			if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
-			if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
-
-			return _provider.ValidateUser(userName, password);
-		}
-
-		public MembershipCreateStatus CreateUser(string userName, string password, string email) {
-			if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
-			if (String.IsNullOrEmpty(password)) throw new ArgumentException("Value cannot be null or empty.", "password");
-			if (String.IsNullOrEmpty(email)) throw new ArgumentException("Value cannot be null or empty.", "email");
-
-			MembershipCreateStatus status;
-			_provider.CreateUser(userName, password, email, null, null, true, null, out status);
-			return status;
-		}
-
-		public bool ChangePassword(string userName, string oldPassword, string newPassword) {
-			if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
-			if (String.IsNullOrEmpty(oldPassword)) throw new ArgumentException("Value cannot be null or empty.", "oldPassword");
-			if (String.IsNullOrEmpty(newPassword)) throw new ArgumentException("Value cannot be null or empty.", "newPassword");
-
-			// The underlying ChangePassword() will throw an exception rather
-			// than return false in certain failure scenarios.
-			try {
-				MembershipUser currentUser = _provider.GetUser(userName, true /* userIsOnline */);
-				return currentUser.ChangePassword(oldPassword, newPassword);
-			}
-			catch (ArgumentException) {
-				return false;
-			}
-			catch (MembershipPasswordException) {
-				return false;
-			}
-		}
-	}
-
-	public interface IFormsAuthenticationService {
-		void SignIn(string userName, bool createPersistentCookie);
-		void SignOut();
-	}
-
-	public class FormsAuthenticationService : IFormsAuthenticationService {
-		public void SignIn(string userName, bool createPersistentCookie) {
-			if (String.IsNullOrEmpty(userName)) throw new ArgumentException("Value cannot be null or empty.", "userName");
-
-			FormsAuthentication.SetAuthCookie(userName, createPersistentCookie);
-		}
-
-		public void SignOut() {
-			FormsAuthentication.SignOut();
-		}
-	}
 	#endregion
 
 	#region Validation
+
+	// **************************************
+	// ValidateOnlyIncomingValuesAttribute
+	// **************************************
+	public class ValidateOnlyIncomingValuesAttribute : ActionFilterAttribute {
+		public override void OnActionExecuting(ActionExecutingContext filterContext) {
+			var modelState = filterContext.Controller.ViewData.ModelState;
+			var valueProvider = filterContext.Controller.ValueProvider;
+
+			var keysWithNoIncomingValue = modelState.Keys.Where(x => !valueProvider.ContainsPrefix(x));
+			foreach (var key in keysWithNoIncomingValue)
+				modelState[key].Errors.Clear();
+		}
+	}
+
+	// **************************************
+	// AccountValidation
+	// **************************************
 	public static class AccountValidation {
 		public static string ErrorCodeToString(MembershipCreateStatus createStatus) {
 			// See http://go.microsoft.com/fwlink/?LinkID=177550 for
 			// a full list of status codes.
 			switch (createStatus) {
 				case MembershipCreateStatus.DuplicateUserName:
-					return "Username already exists. Please enter a different user name.";
+					return "Username already exists. Please enter a different myUser name.";
 
 				case MembershipCreateStatus.DuplicateEmail:
 					return "A username for that e-mail address already exists. Please enter a different e-mail address.";
@@ -179,13 +196,13 @@ namespace SongSearch.Web.Models {
 					return "The password retrieval question provided is invalid. Please check the value and try again.";
 
 				case MembershipCreateStatus.InvalidUserName:
-					return "The user name provided is invalid. Please check the value and try again.";
+					return "The myUser name provided is invalid. Please check the value and try again.";
 
 				case MembershipCreateStatus.ProviderError:
 					return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
 
 				case MembershipCreateStatus.UserRejected:
-					return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+					return "The myUser creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
 
 				default:
 					return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
@@ -193,6 +210,9 @@ namespace SongSearch.Web.Models {
 		}
 	}
 
+	// **************************************
+	// PropertiesMustMatchAttribute
+	// **************************************
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
 	public sealed class PropertiesMustMatchAttribute : ValidationAttribute {
 		private const string _defaultErrorMessage = "'{0}' and '{1}' do not match.";
@@ -226,10 +246,13 @@ namespace SongSearch.Web.Models {
 		}
 	}
 
+	// **************************************
+	// ValidatePasswordLengthAttribute
+	// **************************************
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
 	public sealed class ValidatePasswordLengthAttribute : ValidationAttribute {
 		private const string _defaultErrorMessage = "'{0}' must be at least {1} characters long.";
-		private readonly int _minCharacters = Membership.Provider.MinRequiredPasswordLength;
+		private readonly int _minCharacters = MembershipService.GetMinPasswordLength();
 
 		public ValidatePasswordLengthAttribute()
 			: base(_defaultErrorMessage) {
@@ -245,6 +268,6 @@ namespace SongSearch.Web.Models {
 			return (valueAsString != null && valueAsString.Length >= _minCharacters);
 		}
 	}
-	#endregion
 
+	#endregion
 }

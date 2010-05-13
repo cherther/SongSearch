@@ -9,7 +9,7 @@ namespace SongSearch.Web.Services
 {
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class AuthorizeAttribute : FilterAttribute, IAuthorizationFilter
+    public class RequireMinRoleAttribute : FilterAttribute, IAuthorizationFilter
     {
 
         private readonly object _typeId = new object();
@@ -91,14 +91,14 @@ namespace SongSearch.Web.Services
                 return false;
             }
 
-            //if (_rolesSplit.Length > 0 && UserIsInAnyRole(MyAccessLevels))//!_rolesSplit.Any(user.IsInRole))
+            //if (_rolesSplit.Length > 0 && UserIsInAnyRole(MyAccessLevels))//!_rolesSplit.Any(myUser.IsInRole))
             if (MyAccessLevels != null && MyAccessLevels.Count() > 0 && !user.UserIsInAnyRole(MyAccessLevels))
             {
                 return false;
             }
             
             
-            if (_accessIsSet && !user.UserIsAtLeastInRole(MinAccessLevel))//UserIsInAnyRole(MyAccessLevels))//!_rolesSplit.Any(user.IsInRole))
+            if (_accessIsSet && !user.UserIsAtLeastInRole(MinAccessLevel))//UserIsInAnyRole(MyAccessLevels))//!_rolesSplit.Any(myUser.IsInRole))
             {
                 return false;
             } 
@@ -122,8 +122,8 @@ namespace SongSearch.Web.Services
             {
                 // ** IMPORTANT **
                 // Since we're performing authorization at the action level, the authorization code runs
-                // after the output caching module. In the worst case this could allow an authorized user
-                // to cause the page to be cached, then an unauthorized user would later be served the
+                // after the output caching module. In the worst case this could allow an authorized myUser
+                // to cause the page to be cached, then an unauthorized myUser would later be served the
                 // cached page. We work around this by telling proxies not to cache the sensitive page,
                 // then we hook our custom authorization code into the caching mechanism so that we have
                 // the final say on whether a page should be served from the cache.

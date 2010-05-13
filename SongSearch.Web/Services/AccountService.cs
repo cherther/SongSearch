@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Principal;
 using System.Web;
+using SongSearch.Web.Data;
 
 namespace SongSearch.Web.Services {
 	// **************************************
@@ -8,13 +9,13 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	public interface IAccountService : IDisposable {
 
-		void RegisterUser(DisplayUser displayUser);
+		void RegisterUser(User user);
 		bool UserIsValid(string userName, string password);
 		bool UserExists(string userName);
-		bool UpdateProfile(DisplayUser displayUser, string newPassword);
-		bool ResetPassword(DisplayUser displayUser, string newPassword);
+		bool UpdateProfile(User user, string newPassword);
+		bool ResetPassword(string userName, string oldPassword, string newPassword);
 
-		void UpdateSignature(DisplayUser displayUser);
+		void UpdateSignature(string userName, string signature);
 	}
 
 
@@ -22,31 +23,27 @@ namespace SongSearch.Web.Services {
 	// AccountService
 	// **************************************
 	public class AccountService : IAccountService {
+
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
 		private ISession _session;
-		private IPrincipal _princ;
 		private bool _disposed;
-
+		//private string _activeUserIdentity;
 		
 
 		// ----------------------------------------------------------------------------
 		// (Constructor)
 		// ----------------------------------------------------------------------------
-		public AccountService() : this(HttpContext.Current.User) {}
-
-		public AccountService(IPrincipal princ) : this(new SqlSession(), princ) {}
-		public AccountService(ISession repository) : this(repository, HttpContext.Current.User) {}
-
-		public AccountService(ISession repository, IPrincipal princ) {
+		public AccountService() {
 			if (_session == null) {
-				_session = new SqlSession();
+				_session = new EFSession();
 			}
-			if (_princ == null) {
-				_princ = princ;
-			}
+
+//			_activeUserIdentity = activeUserIdentity;
+//			ActiveUser = UserData.User(activeUserIdentity);
 		}
+		
 
 		// ----------------------------------------------------------------------------
 		// (Public)
@@ -56,13 +53,13 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// RegisterUser
 		// **************************************    
-		public void RegisterUser(DisplayUser displayUser) {
+		public void RegisterUser(User user) {
 
-			var inv = _session.Single<Invitation>(i => i.InvitationId.ToString() == displayUser.Invitation.InvitationId.ToString());
+			var inv = _session.Single<Invitation>(i => i.InvitationId.ToString().Equals(user.Invitation.InvitationId.ToString()));
 
 			if (inv != null) {
 				inv.InvitationStatus = (int) InvitationStatusCodes.Registered;
-				CreateUser(displayUser);
+				CreateUser(user);
 				_session.CommitChanges();
 				inv = null;
 			}
@@ -85,7 +82,7 @@ namespace SongSearch.Web.Services {
 		// UserExists
 		// **************************************    
 		public bool UserExists(string userName) {
-			var user = _session.Single<User>(u => u.UserName.ToUpper().Equals(userName.ToUpper()));
+			var user = GetDbUser(userName); 
 			bool exists = user != null ? true : false;
 			user = null;
 
@@ -95,26 +92,25 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateProfile
 		// **************************************    
-		public bool UpdateProfile(DisplayUser displayUser, string newPassword) {
-			var user = GetDbUser(displayUser);
-			if (user == null) {
-				return false;
+		public bool UpdateProfile(User user, string newPassword) {
+
+			var dbuser = GetDbUser(user); 
+			
+			if (!String.IsNullOrEmpty(user.FirstName))
+				dbuser.FirstName = user.FirstName;
+			if (!String.IsNullOrEmpty(user.LastName))
+				dbuser.LastName = user.LastName;
+			if (!String.IsNullOrEmpty(user.Signature))
+				dbuser.Signature = user.Signature;
+
+			if (!String.IsNullOrEmpty(newPassword) && PasswordHashMatches(user.Password, user.Password)) {
+				dbuser.Password = newPassword.PasswordHashString();
 			}
 
-			if (!String.IsNullOrEmpty(displayUser.FirstName))
-				user.FirstName = displayUser.FirstName;
-			if (!String.IsNullOrEmpty(displayUser.LastName))
-				user.LastName = displayUser.LastName;
-			if (!String.IsNullOrEmpty(displayUser.Signature))
-				user.Signature = displayUser.Signature;
-
-			if (!String.IsNullOrEmpty(newPassword) && PasswordHashMatches(user.Password, displayUser.Password)) {
-				user.Password = newPassword.PasswordHashString();
-			}
-
+			_session.Update<User>(dbuser);
 			_session.CommitChanges();
 
-			user = null;
+			dbuser = null;
 
 			return true;
 		}
@@ -123,14 +119,13 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// ResetPassword
 		// **************************************    
-		public bool ResetPassword(DisplayUser displayUser, string newPassword) {
-			var user = GetDbUser(displayUser.UserName);
-			if (user == null) {
-				return false;
-			}
+		public bool ResetPassword(string userName, string oldPassword, string newPassword) {
 
-			if (displayUser.Password.Equals(user.UserName.PasswordHashString())) {
+			var user = GetDbUser(userName); 
+			
+			if (user.Password.Equals(oldPassword.PasswordHashString())) {
 				user.Password = newPassword.PasswordHashString();
+				_session.Update<User>(user);
 				_session.CommitChanges();
 				user = null;
 				return true;
@@ -145,12 +140,11 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateSignature
 		// **************************************    
-		public void UpdateSignature(DisplayUser displayUser) {
-			var user = GetDbUser(displayUser.UserName);
-			if (user == null) {
-				throw new ArgumentException();
-			}
-			user.Signature = displayUser.Signature;
+		public void UpdateSignature(string userName, string signature) {
+
+			var user = GetDbUser(userName); 
+			user.Signature = signature;
+			_session.Update<User>(user);
 			_session.CommitChanges();
 			user = null;
 		}
@@ -165,40 +159,25 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetDbUser
 		// **************************************    
-		private User GetDbUser(DisplayUser displayUser) {
-			return GetDbUser(displayUser.UserName);
+		private User GetDbUser(User user) {
+			return GetDbUser(user.UserName);
 		}
 		private User GetDbUser(string userName) {
-			return _session.Single<User>(u => u.UserName.ToUpper().Equals(userName.ToUpper()));
+			return _session.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
 		}
 
 		// **************************************
 		// CreateUser
 		// **************************************
-		private void CreateUser(DisplayUser displayUser) {
-			var user = new User
-			           	{
-			           		UserName = displayUser.UserName,
-			           		Password = displayUser.Password.PasswordHashString(),
-			           		FirstName = displayUser.FirstName ?? "",
-			           		LastName = displayUser.LastName ?? "",
-			           		ParentUserId = displayUser.ParentUserId.HasValue ? displayUser.ParentUserId.Value : 1,
-			           		InvitationId = displayUser.Invitation.InvitationId
-			           	};
+		private void CreateUser(User user) {
 
-			var ur = new UsersRole
-			         	{
-			         		UserId = user.UserId,
-			         		RoleId = (int) AccessLevels.Client
-			         	};
-
-			user.UsersRoles.Add(ur);
+			user.Password = user.Password.PasswordHashString();
+			user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
+			user.RoleId = (int) Roles.Client;
 
 			_session.Add<User>(user);
 
 			user = null;
-			ur = null;
-			//return user.UserId;
 		}
 
 		// **************************************
@@ -220,22 +199,12 @@ namespace SongSearch.Web.Services {
 
 		private void Dispose(bool disposing) {
 			if (!_disposed) {
-				// If disposing equals true, dispose all managed
-				// and unmanaged resources.if (disposing)
 				{
 					if (_session != null) {
 						_session.Dispose();
 						_session = null;
-					}
-					if (_princ != null) {
-						_princ = null;
-					}
+					}					
 				}
-
-				// Call the appropriate methods to clean up
-				// unmanaged resources here.
-				//CloseHandle(handle);
-				//handle = IntPtr.Zero;
 
 				_disposed = true;
 			}

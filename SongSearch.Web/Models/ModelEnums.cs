@@ -1,4 +1,6 @@
-﻿namespace SongSearch.Web.Services {
+﻿using System.Linq;
+
+namespace SongSearch.Web.Services {
 
 	// **************************************
 	// AccessLevels
@@ -98,6 +100,12 @@
 			       		(int) Roles.Plugger,
 			       		(int) Roles.Client
 			       	};
+		}
+		public static int GetBestMatchForRole(this int[] roles, int roleId) {
+
+			return !roles.Contains(roleId) ?
+								(int)Roles.Client :
+								roleId;
 		}
 	}
 }
