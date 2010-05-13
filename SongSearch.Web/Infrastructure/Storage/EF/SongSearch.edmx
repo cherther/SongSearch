@@ -1,0 +1,991 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SongSearch2Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="SongSearch2ModelStoreContainer">
+          <EntitySet Name="CartContents" EntityType="SongSearch2Model.Store.CartContents" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Carts" EntityType="SongSearch2Model.Store.Carts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Catalogs" EntityType="SongSearch2Model.Store.Catalogs" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContentRights" EntityType="SongSearch2Model.Store.ContentRights" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContentRightTerritories" EntityType="SongSearch2Model.Store.ContentRightTerritories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Contents" EntityType="SongSearch2Model.Store.Contents" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContentTags" EntityType="SongSearch2Model.Store.ContentTags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Invitations" EntityType="SongSearch2Model.Store.Invitations" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RightsHolders" EntityType="SongSearch2Model.Store.RightsHolders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="SongSearch2Model.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Tags" EntityType="SongSearch2Model.Store.Tags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Territories" EntityType="SongSearch2Model.Store.Territories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="SongSearch2Model.Store.Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UsersCatalogs" EntityType="SongSearch2Model.Store.UsersCatalogs" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_CartContents_Contents" Association="SongSearch2Model.Store.FK_CartContents_Contents">
+            <End Role="Contents" EntitySet="Contents" />
+            <End Role="CartContents" EntitySet="CartContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartItems_Carts" Association="SongSearch2Model.Store.FK_CartItems_Carts">
+            <End Role="Carts" EntitySet="Carts" />
+            <End Role="CartContents" EntitySet="CartContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentRights_Contents" Association="SongSearch2Model.Store.FK_ContentRights_Contents">
+            <End Role="Contents" EntitySet="Contents" />
+            <End Role="ContentRights" EntitySet="ContentRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentRights_RightsHolders" Association="SongSearch2Model.Store.FK_ContentRights_RightsHolders">
+            <End Role="RightsHolders" EntitySet="RightsHolders" />
+            <End Role="ContentRights" EntitySet="ContentRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentRightTerritories_ContentRights" Association="SongSearch2Model.Store.FK_ContentRightTerritories_ContentRights">
+            <End Role="ContentRights" EntitySet="ContentRights" />
+            <End Role="ContentRightTerritories" EntitySet="ContentRightTerritories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentRightTerritories_Territories" Association="SongSearch2Model.Store.FK_ContentRightTerritories_Territories">
+            <End Role="Territories" EntitySet="Territories" />
+            <End Role="ContentRightTerritories" EntitySet="ContentRightTerritories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contents_Catalogs" Association="SongSearch2Model.Store.FK_Contents_Catalogs">
+            <End Role="Catalogs" EntitySet="Catalogs" />
+            <End Role="Contents" EntitySet="Contents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentTags_Contents" Association="SongSearch2Model.Store.FK_ContentTags_Contents">
+            <End Role="Contents" EntitySet="Contents" />
+            <End Role="ContentTags" EntitySet="ContentTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentTags_Tags" Association="SongSearch2Model.Store.FK_ContentTags_Tags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="ContentTags" EntitySet="ContentTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Invitations" Association="SongSearch2Model.Store.FK_Users_Invitations">
+            <End Role="Invitations" EntitySet="Invitations" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_ParentUsers" Association="SongSearch2Model.Store.FK_Users_ParentUsers">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="SongSearch2Model.Store.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCatalogs_Catalogs" Association="SongSearch2Model.Store.FK_UsersCatalogs_Catalogs">
+            <End Role="Catalogs" EntitySet="Catalogs" />
+            <End Role="UsersCatalogs" EntitySet="UsersCatalogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCatalogs_Roles" Association="SongSearch2Model.Store.FK_UsersCatalogs_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UsersCatalogs" EntitySet="UsersCatalogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCatalogs_Users" Association="SongSearch2Model.Store.FK_UsersCatalogs_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersCatalogs" EntitySet="UsersCatalogs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CartContents">
+          <Key>
+            <PropertyRef Name="CartId" />
+            <PropertyRef Name="ContentId" />
+          </Key>
+          <Property Name="CartId" Type="int" Nullable="false" />
+          <Property Name="ContentId" Type="int" Nullable="false" />
+          <Property Name="AddedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Carts">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CartStatus" Type="smallint" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="NumberItems" Type="int" />
+          <Property Name="CompressedSize" Type="decimal" Precision="28" Scale="4" />
+          <Property Name="ArchiveName" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Catalogs">
+          <Key>
+            <PropertyRef Name="CatalogId" />
+          </Key>
+          <Property Name="CatalogId" Type="int" Nullable="false" />
+          <Property Name="CatalogName" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ContentRights">
+          <Key>
+            <PropertyRef Name="ContentRightId" />
+          </Key>
+          <Property Name="ContentRightId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContentId" Type="int" Nullable="false" />
+          <Property Name="RightsTypeId" Type="int" Nullable="false" />
+          <Property Name="RightsHolderId" Type="int" Nullable="false" />
+          <Property Name="RightsHolderShare" Type="decimal" Nullable="false" Precision="28" Scale="4" />
+        </EntityType>
+        <EntityType Name="ContentRightTerritories">
+          <Key>
+            <PropertyRef Name="ContentRightId" />
+            <PropertyRef Name="TerritoryId" />
+          </Key>
+          <Property Name="ContentRightId" Type="int" Nullable="false" />
+          <Property Name="TerritoryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contents">
+          <Key>
+            <PropertyRef Name="ContentId" />
+          </Key>
+          <Property Name="ContentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CatalogId" Type="int" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedByUserId" Type="int" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="IsControlledAllIn" Type="bit" Nullable="false" />
+          <Property Name="HasPreviewAsset" Type="bit" Nullable="false" />
+          <Property Name="HasFullAsset" Type="bit" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="300" />
+          <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="300" />
+          <Property Name="Writers" Type="nvarchar" MaxLength="500" />
+          <Property Name="PopCharts" Type="int" />
+          <Property Name="CountryCharts" Type="int" />
+          <Property Name="ReleaseYear" Type="int" />
+          <Property Name="RecordLabel" Type="nvarchar" MaxLength="300" />
+          <Property Name="Lyrics" Type="nvarchar(max)" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Keywords" Type="nvarchar(max)" />
+          <Property Name="SimilarSongs" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ContentTags">
+          <Key>
+            <PropertyRef Name="ContentId" />
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="ContentId" Type="int" Nullable="false" />
+          <Property Name="TagId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invitations">
+          <Key>
+            <PropertyRef Name="InvitationId" />
+          </Key>
+          <Property Name="InvitationId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="InvitationEmailAddress" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
+          <Property Name="InvitationStatus" Type="smallint" Nullable="false" />
+          <Property Name="InvitedByUserId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RightsHolders">
+          <Key>
+            <PropertyRef Name="RightsHolderId" />
+          </Key>
+          <Property Name="RightsHolderId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RightsHolderName" Type="nvarchar" Nullable="false" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedByUserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Territories">
+          <Key>
+            <PropertyRef Name="TerritoryId" />
+          </Key>
+          <Property Name="TerritoryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TerritoryCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="TerritoryName" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="ParentUserId" Type="int" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="InvitationId" Type="uniqueidentifier" />
+          <Property Name="RegisteredOn" Type="datetime" Nullable="false" />
+          <Property Name="Signature" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="UsersCatalogs">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="CatalogId" />
+            <PropertyRef Name="TerritoryId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CatalogId" Type="int" Nullable="false" />
+          <Property Name="TerritoryId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CartContents_Contents">
+          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1" />
+          <End Role="CartContents" Type="SongSearch2Model.Store.CartContents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contents">
+              <PropertyRef Name="ContentId" />
+            </Principal>
+            <Dependent Role="CartContents">
+              <PropertyRef Name="ContentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartItems_Carts">
+          <End Role="Carts" Type="SongSearch2Model.Store.Carts" Multiplicity="1" />
+          <End Role="CartContents" Type="SongSearch2Model.Store.CartContents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carts">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="CartContents">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentRights_Contents">
+          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1" />
+          <End Role="ContentRights" Type="SongSearch2Model.Store.ContentRights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contents">
+              <PropertyRef Name="ContentId" />
+            </Principal>
+            <Dependent Role="ContentRights">
+              <PropertyRef Name="ContentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentRights_RightsHolders">
+          <End Role="RightsHolders" Type="SongSearch2Model.Store.RightsHolders" Multiplicity="1" />
+          <End Role="ContentRights" Type="SongSearch2Model.Store.ContentRights" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RightsHolders">
+              <PropertyRef Name="RightsHolderId" />
+            </Principal>
+            <Dependent Role="ContentRights">
+              <PropertyRef Name="RightsHolderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentRightTerritories_ContentRights">
+          <End Role="ContentRights" Type="SongSearch2Model.Store.ContentRights" Multiplicity="1" />
+          <End Role="ContentRightTerritories" Type="SongSearch2Model.Store.ContentRightTerritories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentRights">
+              <PropertyRef Name="ContentRightId" />
+            </Principal>
+            <Dependent Role="ContentRightTerritories">
+              <PropertyRef Name="ContentRightId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentRightTerritories_Territories">
+          <End Role="Territories" Type="SongSearch2Model.Store.Territories" Multiplicity="1" />
+          <End Role="ContentRightTerritories" Type="SongSearch2Model.Store.ContentRightTerritories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Territories">
+              <PropertyRef Name="TerritoryId" />
+            </Principal>
+            <Dependent Role="ContentRightTerritories">
+              <PropertyRef Name="TerritoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contents_Catalogs">
+          <End Role="Catalogs" Type="SongSearch2Model.Store.Catalogs" Multiplicity="1" />
+          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalogs">
+              <PropertyRef Name="CatalogId" />
+            </Principal>
+            <Dependent Role="Contents">
+              <PropertyRef Name="CatalogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentTags_Contents">
+          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1" />
+          <End Role="ContentTags" Type="SongSearch2Model.Store.ContentTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contents">
+              <PropertyRef Name="ContentId" />
+            </Principal>
+            <Dependent Role="ContentTags">
+              <PropertyRef Name="ContentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentTags_Tags">
+          <End Role="Tags" Type="SongSearch2Model.Store.Tags" Multiplicity="1" />
+          <End Role="ContentTags" Type="SongSearch2Model.Store.ContentTags" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tags">
+              <PropertyRef Name="TagId" />
+            </Principal>
+            <Dependent Role="ContentTags">
+              <PropertyRef Name="TagId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Invitations">
+          <End Role="Invitations" Type="SongSearch2Model.Store.Invitations" Multiplicity="0..1" />
+          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invitations">
+              <PropertyRef Name="InvitationId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="InvitationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_ParentUsers">
+          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="0..1" />
+          <End Role="Users1" Type="SongSearch2Model.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Users1">
+              <PropertyRef Name="ParentUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="SongSearch2Model.Store.Roles" Multiplicity="1" />
+          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCatalogs_Catalogs">
+          <End Role="Catalogs" Type="SongSearch2Model.Store.Catalogs" Multiplicity="1" />
+          <End Role="UsersCatalogs" Type="SongSearch2Model.Store.UsersCatalogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalogs">
+              <PropertyRef Name="CatalogId" />
+            </Principal>
+            <Dependent Role="UsersCatalogs">
+              <PropertyRef Name="CatalogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCatalogs_Roles">
+          <End Role="Roles" Type="SongSearch2Model.Store.Roles" Multiplicity="1" />
+          <End Role="UsersCatalogs" Type="SongSearch2Model.Store.UsersCatalogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UsersCatalogs">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCatalogs_Users">
+          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="1" />
+          <End Role="UsersCatalogs" Type="SongSearch2Model.Store.UsersCatalogs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UsersCatalogs">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SongSearchModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="SongSearchContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CartContents" EntityType="SongSearchModel.CartContent" />
+          <EntitySet Name="Carts" EntityType="SongSearchModel.Cart" />
+          <EntitySet Name="Catalogs" EntityType="SongSearchModel.Catalog" />
+          <EntitySet Name="ContentRights" EntityType="SongSearchModel.ContentRight" />
+          <EntitySet Name="Contents" EntityType="SongSearchModel.Content" />
+          <EntitySet Name="Invitations" EntityType="SongSearchModel.Invitation" />
+          <EntitySet Name="RightsHolders" EntityType="SongSearchModel.RightsHolder" />
+          <EntitySet Name="Roles" EntityType="SongSearchModel.Role" />
+          <EntitySet Name="Tags" EntityType="SongSearchModel.Tag" />
+          <EntitySet Name="Territories" EntityType="SongSearchModel.Territory" />
+          <EntitySet Name="Users" EntityType="SongSearchModel.User" />
+          <EntitySet Name="UsersCatalogs" EntityType="SongSearchModel.UsersCatalog" />
+          <AssociationSet Name="FK_CartContents_Contents" Association="SongSearchModel.FK_CartContents_Contents">
+            <End Role="Contents" EntitySet="Contents" />
+            <End Role="CartContents" EntitySet="CartContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CartItems_Carts" Association="SongSearchModel.FK_CartItems_Carts">
+            <End Role="Carts" EntitySet="Carts" />
+            <End Role="CartContents" EntitySet="CartContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contents_Catalogs" Association="SongSearchModel.FK_Contents_Catalogs">
+            <End Role="Catalogs" EntitySet="Catalogs" />
+            <End Role="Contents" EntitySet="Contents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCatalogs_Catalogs" Association="SongSearchModel.FK_UsersCatalogs_Catalogs">
+            <End Role="Catalogs" EntitySet="Catalogs" />
+            <End Role="UsersCatalogs" EntitySet="UsersCatalogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentRights_Contents" Association="SongSearchModel.FK_ContentRights_Contents">
+            <End Role="Contents" EntitySet="Contents" />
+            <End Role="ContentRights" EntitySet="ContentRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentRights_RightsHolders" Association="SongSearchModel.FK_ContentRights_RightsHolders">
+            <End Role="RightsHolders" EntitySet="RightsHolders" />
+            <End Role="ContentRights" EntitySet="ContentRights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Invitations" Association="SongSearchModel.FK_Users_Invitations">
+            <End Role="Invitations" EntitySet="Invitations" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Roles" Association="SongSearchModel.FK_Users_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCatalogs_Roles" Association="SongSearchModel.FK_UsersCatalogs_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UsersCatalogs" EntitySet="UsersCatalogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersCatalogs_Users" Association="SongSearchModel.FK_UsersCatalogs_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UsersCatalogs" EntitySet="UsersCatalogs" />
+          </AssociationSet>
+          <AssociationSet Name="ContentRightTerritories" Association="SongSearchModel.ContentRightTerritories">
+            <End Role="ContentRights" EntitySet="ContentRights" />
+            <End Role="Territories" EntitySet="Territories" />
+          </AssociationSet>
+          <AssociationSet Name="ContentTags" Association="SongSearchModel.ContentTags">
+            <End Role="Contents" EntitySet="Contents" />
+            <End Role="Tags" EntitySet="Tags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_ParentUsers" Association="SongSearchModel.FK_Users_ParentUsers">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ChildUser" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CartContent">
+          <Key>
+            <PropertyRef Name="CartId" />
+            <PropertyRef Name="ContentId" />
+          </Key>
+          <Property Name="CartId" Type="Int32" Nullable="false" />
+          <Property Name="ContentId" Type="Int32" Nullable="false" />
+          <Property Name="AddedOn" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Content" Relationship="SongSearchModel.FK_CartContents_Contents" FromRole="CartContents" ToRole="Contents" />
+          <NavigationProperty Name="Cart" Relationship="SongSearchModel.FK_CartItems_Carts" FromRole="CartContents" ToRole="Carts" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CartStatus" Type="Int16" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" />
+          <Property Name="NumberItems" Type="Int32" />
+          <Property Name="CompressedSize" Type="Decimal" Precision="28" Scale="4" />
+          <Property Name="ArchiveName" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="CartContents" Relationship="SongSearchModel.FK_CartItems_Carts" FromRole="Carts" ToRole="CartContents" />
+        </EntityType>
+        <EntityType Name="Catalog">
+          <Key>
+            <PropertyRef Name="CatalogId" />
+          </Key>
+          <Property Name="CatalogId" Type="Int32" Nullable="false" />
+          <Property Name="CatalogName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Contents" Relationship="SongSearchModel.FK_Contents_Catalogs" FromRole="Catalogs" ToRole="Contents" />
+          <NavigationProperty Name="UsersCatalogs" Relationship="SongSearchModel.FK_UsersCatalogs_Catalogs" FromRole="Catalogs" ToRole="UsersCatalogs" />
+        </EntityType>
+        <EntityType Name="ContentRight">
+          <Key>
+            <PropertyRef Name="ContentRightId" />
+          </Key>
+          <Property Name="ContentRightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContentId" Type="Int32" Nullable="false" />
+          <Property Name="RightsTypeId" Type="Int32" Nullable="false" />
+          <Property Name="RightsHolderId" Type="Int32" Nullable="false" />
+          <Property Name="RightsHolderShare" Type="Decimal" Nullable="false" Precision="28" Scale="4" />
+          <NavigationProperty Name="Content" Relationship="SongSearchModel.FK_ContentRights_Contents" FromRole="ContentRights" ToRole="Contents" />
+          <NavigationProperty Name="RightsHolder" Relationship="SongSearchModel.FK_ContentRights_RightsHolders" FromRole="ContentRights" ToRole="RightsHolders" />
+          <NavigationProperty Name="Territories" Relationship="SongSearchModel.ContentRightTerritories" FromRole="ContentRights" ToRole="Territories" />
+        </EntityType>
+        <EntityType Name="Content">
+          <Key>
+            <PropertyRef Name="ContentId" />
+          </Key>
+          <Property Name="ContentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatalogId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" />
+          <Property Name="LastUpdatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" />
+          <Property Name="IsControlledAllIn" Type="Boolean" Nullable="false" />
+          <Property Name="HasPreviewAsset" Type="Boolean" Nullable="false" />
+          <Property Name="HasFullAsset" Type="Boolean" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="Artist" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="Writers" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="PopCharts" Type="Int32" />
+          <Property Name="CountryCharts" Type="Int32" />
+          <Property Name="ReleaseYear" Type="Int32" />
+          <Property Name="RecordLabel" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="Lyrics" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Keywords" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SimilarSongs" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="CartContents" Relationship="SongSearchModel.FK_CartContents_Contents" FromRole="Contents" ToRole="CartContents" />
+          <NavigationProperty Name="Catalog" Relationship="SongSearchModel.FK_Contents_Catalogs" FromRole="Contents" ToRole="Catalogs" />
+          <NavigationProperty Name="ContentRights" Relationship="SongSearchModel.FK_ContentRights_Contents" FromRole="Contents" ToRole="ContentRights" />
+          <NavigationProperty Name="Tags" Relationship="SongSearchModel.ContentTags" FromRole="Contents" ToRole="Tags" />
+        </EntityType>
+        <EntityType Name="Invitation">
+          <Key>
+            <PropertyRef Name="InvitationId" />
+          </Key>
+          <Property Name="InvitationId" Type="Guid" Nullable="false" />
+          <Property Name="InvitationEmailAddress" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="ExpirationDate" Type="DateTime" Nullable="false" />
+          <Property Name="InvitationStatus" Type="Int16" Nullable="false" />
+          <Property Name="InvitedByUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="SongSearchModel.FK_Users_Invitations" FromRole="Invitations" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="RightsHolder">
+          <Key>
+            <PropertyRef Name="RightsHolderId" />
+          </Key>
+          <Property Name="RightsHolderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RightsHolderName" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="ContentRights" Relationship="SongSearchModel.FK_ContentRights_RightsHolders" FromRole="RightsHolders" ToRole="ContentRights" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Users" Relationship="SongSearchModel.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+          <NavigationProperty Name="UsersCatalogs" Relationship="SongSearchModel.FK_UsersCatalogs_Roles" FromRole="Roles" ToRole="UsersCatalogs" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="TagId" />
+          </Key>
+          <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TagName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <NavigationProperty Name="Contents" Relationship="SongSearchModel.ContentTags" FromRole="Tags" ToRole="Contents" />
+        </EntityType>
+        <EntityType Name="Territory">
+          <Key>
+            <PropertyRef Name="TerritoryId" />
+          </Key>
+          <Property Name="TerritoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TerritoryCode" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="TerritoryName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="ContentRights" Relationship="SongSearchModel.ContentRightTerritories" FromRole="Territories" ToRole="ContentRights" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="ParentUserId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="InvitationId" Type="Guid" />
+          <Property Name="RegisteredOn" Type="DateTime" Nullable="false" />
+          <Property Name="Signature" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Invitation" Relationship="SongSearchModel.FK_Users_Invitations" FromRole="Users" ToRole="Invitations" />
+          <NavigationProperty Name="Role" Relationship="SongSearchModel.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+          <NavigationProperty Name="UsersCatalogs" Relationship="SongSearchModel.FK_UsersCatalogs_Users" FromRole="Users" ToRole="UsersCatalogs" />
+          <NavigationProperty Name="ParentUser" Relationship="SongSearchModel.FK_Users_ParentUsers" FromRole="User" ToRole="ChildUser" />
+          <NavigationProperty Name="ChildUsers" Relationship="SongSearchModel.FK_Users_ParentUsers" FromRole="ChildUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="UsersCatalog">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="CatalogId" />
+            <PropertyRef Name="TerritoryId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CatalogId" Type="Int32" Nullable="false" />
+          <Property Name="TerritoryId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Catalog" Relationship="SongSearchModel.FK_UsersCatalogs_Catalogs" FromRole="UsersCatalogs" ToRole="Catalogs" />
+          <NavigationProperty Name="Role" Relationship="SongSearchModel.FK_UsersCatalogs_Roles" FromRole="UsersCatalogs" ToRole="Roles" />
+          <NavigationProperty Name="User" Relationship="SongSearchModel.FK_UsersCatalogs_Users" FromRole="UsersCatalogs" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_CartContents_Contents">
+          <End Role="Contents" Type="SongSearchModel.Content" Multiplicity="1" />
+          <End Role="CartContents" Type="SongSearchModel.CartContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contents">
+              <PropertyRef Name="ContentId" />
+            </Principal>
+            <Dependent Role="CartContents">
+              <PropertyRef Name="ContentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CartItems_Carts">
+          <End Role="Carts" Type="SongSearchModel.Cart" Multiplicity="1" />
+          <End Role="CartContents" Type="SongSearchModel.CartContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Carts">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="CartContents">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contents_Catalogs">
+          <End Role="Catalogs" Type="SongSearchModel.Catalog" Multiplicity="1" />
+          <End Role="Contents" Type="SongSearchModel.Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalogs">
+              <PropertyRef Name="CatalogId" />
+            </Principal>
+            <Dependent Role="Contents">
+              <PropertyRef Name="CatalogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCatalogs_Catalogs">
+          <End Role="Catalogs" Type="SongSearchModel.Catalog" Multiplicity="1" />
+          <End Role="UsersCatalogs" Type="SongSearchModel.UsersCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Catalogs">
+              <PropertyRef Name="CatalogId" />
+            </Principal>
+            <Dependent Role="UsersCatalogs">
+              <PropertyRef Name="CatalogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentRights_Contents">
+          <End Role="Contents" Type="SongSearchModel.Content" Multiplicity="1" />
+          <End Role="ContentRights" Type="SongSearchModel.ContentRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contents">
+              <PropertyRef Name="ContentId" />
+            </Principal>
+            <Dependent Role="ContentRights">
+              <PropertyRef Name="ContentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentRights_RightsHolders">
+          <End Role="RightsHolders" Type="SongSearchModel.RightsHolder" Multiplicity="1" />
+          <End Role="ContentRights" Type="SongSearchModel.ContentRight" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RightsHolders">
+              <PropertyRef Name="RightsHolderId" />
+            </Principal>
+            <Dependent Role="ContentRights">
+              <PropertyRef Name="RightsHolderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Invitations">
+          <End Role="Invitations" Type="SongSearchModel.Invitation" Multiplicity="0..1" />
+          <End Role="Users" Type="SongSearchModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invitations">
+              <PropertyRef Name="InvitationId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="InvitationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Roles">
+          <End Role="Roles" Type="SongSearchModel.Role" Multiplicity="1" />
+          <End Role="Users" Type="SongSearchModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCatalogs_Roles">
+          <End Role="Roles" Type="SongSearchModel.Role" Multiplicity="1" />
+          <End Role="UsersCatalogs" Type="SongSearchModel.UsersCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="UsersCatalogs">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersCatalogs_Users">
+          <End Role="Users" Type="SongSearchModel.User" Multiplicity="1" />
+          <End Role="UsersCatalogs" Type="SongSearchModel.UsersCatalog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UsersCatalogs">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ContentRightTerritories">
+          <End Role="ContentRights" Type="SongSearchModel.ContentRight" Multiplicity="*" />
+          <End Role="Territories" Type="SongSearchModel.Territory" Multiplicity="*" />
+        </Association>
+        <Association Name="ContentTags">
+          <End Role="Contents" Type="SongSearchModel.Content" Multiplicity="*" />
+          <End Role="Tags" Type="SongSearchModel.Tag" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_Users_ParentUsers">
+          <End Type="SongSearchModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="SongSearchModel.User" Role="ChildUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="ChildUser">
+              <PropertyRef Name="ParentUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SongSearch2ModelStoreContainer" CdmEntityContainer="SongSearchContext">
+          <EntitySetMapping Name="CartContents"><EntityTypeMapping TypeName="SongSearchModel.CartContent"><MappingFragment StoreEntitySet="CartContents">
+            <ScalarProperty Name="CartId" ColumnName="CartId" />
+            <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+            <ScalarProperty Name="AddedOn" ColumnName="AddedOn" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Carts"><EntityTypeMapping TypeName="SongSearchModel.Cart"><MappingFragment StoreEntitySet="Carts">
+            <ScalarProperty Name="CartId" ColumnName="CartId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="CartStatus" ColumnName="CartStatus" />
+            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+            <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+            <ScalarProperty Name="NumberItems" ColumnName="NumberItems" />
+            <ScalarProperty Name="CompressedSize" ColumnName="CompressedSize" />
+            <ScalarProperty Name="ArchiveName" ColumnName="ArchiveName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Catalogs"><EntityTypeMapping TypeName="SongSearchModel.Catalog"><MappingFragment StoreEntitySet="Catalogs">
+            <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
+            <ScalarProperty Name="CatalogName" ColumnName="CatalogName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="ContentRights"><EntityTypeMapping TypeName="SongSearchModel.ContentRight"><MappingFragment StoreEntitySet="ContentRights">
+            <ScalarProperty Name="ContentRightId" ColumnName="ContentRightId" />
+            <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+            <ScalarProperty Name="RightsTypeId" ColumnName="RightsTypeId" />
+            <ScalarProperty Name="RightsHolderId" ColumnName="RightsHolderId" />
+            <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearchModel.Content"><MappingFragment StoreEntitySet="Contents">
+            <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+            <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
+            <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+            <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
+            <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+            <ScalarProperty Name="IsControlledAllIn" ColumnName="IsControlledAllIn" />
+            <ScalarProperty Name="HasPreviewAsset" ColumnName="HasPreviewAsset" />
+            <ScalarProperty Name="HasFullAsset" ColumnName="HasFullAsset" />
+            <ScalarProperty Name="Title" ColumnName="Title" />
+            <ScalarProperty Name="Artist" ColumnName="Artist" />
+            <ScalarProperty Name="Writers" ColumnName="Writers" />
+            <ScalarProperty Name="PopCharts" ColumnName="PopCharts" />
+            <ScalarProperty Name="CountryCharts" ColumnName="CountryCharts" />
+            <ScalarProperty Name="ReleaseYear" ColumnName="ReleaseYear" />
+            <ScalarProperty Name="RecordLabel" ColumnName="RecordLabel" />
+            <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
+            <ScalarProperty Name="Notes" ColumnName="Notes" />
+            <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+            <ScalarProperty Name="SimilarSongs" ColumnName="SimilarSongs" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Invitations"><EntityTypeMapping TypeName="SongSearchModel.Invitation"><MappingFragment StoreEntitySet="Invitations">
+            <ScalarProperty Name="InvitationId" ColumnName="InvitationId" />
+            <ScalarProperty Name="InvitationEmailAddress" ColumnName="InvitationEmailAddress" />
+            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+            <ScalarProperty Name="InvitationStatus" ColumnName="InvitationStatus" />
+            <ScalarProperty Name="InvitedByUserId" ColumnName="InvitedByUserId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="RightsHolders"><EntityTypeMapping TypeName="SongSearchModel.RightsHolder"><MappingFragment StoreEntitySet="RightsHolders">
+            <ScalarProperty Name="RightsHolderId" ColumnName="RightsHolderId" />
+            <ScalarProperty Name="RightsHolderName" ColumnName="RightsHolderName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Roles"><EntityTypeMapping TypeName="SongSearchModel.Role"><MappingFragment StoreEntitySet="Roles">
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Tags"><EntityTypeMapping TypeName="SongSearchModel.Tag"><MappingFragment StoreEntitySet="Tags">
+            <ScalarProperty Name="TagId" ColumnName="TagId" />
+            <ScalarProperty Name="TagName" ColumnName="TagName" />
+            <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Territories"><EntityTypeMapping TypeName="SongSearchModel.Territory"><MappingFragment StoreEntitySet="Territories">
+            <ScalarProperty Name="TerritoryId" ColumnName="TerritoryId" />
+            <ScalarProperty Name="TerritoryCode" ColumnName="TerritoryCode" />
+            <ScalarProperty Name="TerritoryName" ColumnName="TerritoryName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="SongSearchModel.User"><MappingFragment StoreEntitySet="Users">
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+            <ScalarProperty Name="ParentUserId" ColumnName="ParentUserId" />
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+            <ScalarProperty Name="InvitationId" ColumnName="InvitationId" />
+            <ScalarProperty Name="RegisteredOn" ColumnName="RegisteredOn" />
+            <ScalarProperty Name="Signature" ColumnName="Signature" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UsersCatalogs"><EntityTypeMapping TypeName="SongSearchModel.UsersCatalog"><MappingFragment StoreEntitySet="UsersCatalogs">
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
+            <ScalarProperty Name="TerritoryId" ColumnName="TerritoryId" />
+            <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="ContentRightTerritories" TypeName="SongSearchModel.ContentRightTerritories" StoreEntitySet="ContentRightTerritories">
+            <EndProperty Name="ContentRights">
+              <ScalarProperty Name="ContentRightId" ColumnName="ContentRightId" />
+            </EndProperty>
+            <EndProperty Name="Territories">
+              <ScalarProperty Name="TerritoryId" ColumnName="TerritoryId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ContentTags" TypeName="SongSearchModel.ContentTags" StoreEntitySet="ContentTags">
+            <EndProperty Name="Contents">
+              <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+            </EndProperty>
+            <EndProperty Name="Tags">
+              <ScalarProperty Name="TagId" ColumnName="TagId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="SongSearch2">
+        <EntityTypeShape EntityType="SongSearchModel.CartContent" Width="1.5" PointX="5.25" PointY="5.875" Height="1.9802864583333335" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.Cart" Width="1.5" PointX="3" PointY="10.5" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.Catalog" Width="1.5" PointX="0.75" PointY="6" Height="1.7879850260416657" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.ContentRight" Width="1.5" PointX="5.25" PointY="2.625" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.Content" Width="1.5" PointX="3" PointY="4" Height="5.6340136718750031" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.Invitation" Width="1.5" PointX="1.5" PointY="19" Height="2.172587890624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.RightsHolder" Width="1.5" PointX="3" PointY="1" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.Role" Width="1.5" PointX="3.75" PointY="15.875" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.Tag" Width="1.5" PointX="5.25" PointY="12" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.Territory" Width="1.5" PointX="7.5" PointY="3" Height="1.787985026041671" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.User" Width="1.5" PointX="3.75" PointY="18.375" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearchModel.UsersCatalog" Width="1.5" PointX="6" PointY="8.625" Height="2.3648893229166674" IsExpanded="true" />
+        <AssociationConnector Association="SongSearchModel.FK_CartContents_Contents" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="6.8651432291666667" />
+          <ConnectorPoint PointX="5.25" PointY="6.8651432291666667" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_CartItems_Carts" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="10.501152846153847" />
+          <ConnectorPoint PointX="4.875" PointY="10.126152846153847" />
+          <ConnectorPoint PointX="4.875" PointY="7.39146684375" />
+          <ConnectorPoint PointX="5.25" PointY="7.39146684375" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_Contents_Catalogs" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="6.8939925130208328" />
+          <ConnectorPoint PointX="3" PointY="6.8939925130208328" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_UsersCatalogs_Catalogs" ManuallyRouted="false">
+          <ConnectorPoint PointX="1.5" PointY="7.7879850260416656" />
+          <ConnectorPoint PointX="1.5" PointY="10.067006835937502" />
+          <ConnectorPoint PointX="6" PointY="10.067006835937502" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_ContentRights_Contents" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="4.5910953776041667" />
+          <ConnectorPoint PointX="5.25" PointY="4.5910953776041667" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_ContentRights_RightsHolders" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="1.7978417968749998" />
+          <ConnectorPoint PointX="6" PointY="1.7978417968749998" />
+          <ConnectorPoint PointX="6" PointY="2.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_Users_Invitations" ManuallyRouted="false">
+          <ConnectorPoint PointX="3" PointY="20.086293945312498" />
+          <ConnectorPoint PointX="3.75" PointY="20.086293945312498" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_Users_Roles" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="17.662985026041667" />
+          <ConnectorPoint PointX="4.5" PointY="18.375" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_UsersCatalogs_Roles" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.03125" PointY="15.875" />
+          <ConnectorPoint PointX="5.03125" PointY="10.283505917968752" />
+          <ConnectorPoint PointX="6" PointY="10.283505917968752" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_UsersCatalogs_Users" ManuallyRouted="false">
+          <ConnectorPoint PointX="5.25" PointY="20.326650390624998" />
+          <ConnectorPoint PointX="7.15625" PointY="20.326650390624998" />
+          <ConnectorPoint PointX="7.15625" PointY="10.989889322916667" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.ContentRightTerritories" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="3.8939925130208355" />
+          <ConnectorPoint PointX="7.5" PointY="3.8939925130208355" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.ContentTags" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="9.5717049795673113" />
+          <ConnectorPoint PointX="4.8160744349011217" PointY="9.8877794144684312" />
+          <ConnectorPoint PointX="4.9339255650988791" PointY="10.00563054466619" />
+          <ConnectorPoint PointX="4.9375" PointY="10.009204979567311" />
+          <ConnectorPoint PointX="4.9375" PointY="12.893992513020834" />
+          <ConnectorPoint PointX="4.947916666666667" PointY="12.893992513020834" />
+          <ConnectorPoint PointX="5.114583333333333" PointY="12.893992513020834" />
+          <ConnectorPoint PointX="5.25" PointY="12.893992513020834" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearchModel.FK_Users_ParentUsers" >
+          <ConnectorPoint PointX="4.2819230769230767" PointY="22.27830078125" />
+          <ConnectorPoint PointX="4.2819230769230767" PointY="22.528300781249996" />
+          <ConnectorPoint PointX="4.7284615384615378" PointY="22.528300781249996" />
+          <ConnectorPoint PointX="4.7284615384615378" PointY="22.27830078125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
