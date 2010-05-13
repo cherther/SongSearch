@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="40a9e27a-0823-4538-a36a-f96888ebe551" name="claus@AUGUSTSRV1 2010-05-13 16:43:39" runUser="AUGUSTSRV1\claus" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="fcf5bd86-ce53-4b12-a8f7-1f9744d651d2">
+    <Deployment runDeploymentRoot="claus_AUGUSTSRV1 2010-05-13 16_43_39">
+      <DeploymentItem filename="D:\DevProjects\SongSearch\SongSearch.Web\bin\SongSearch.Web.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-05-13T16:43:39.8760943+02:00" queuing="2010-05-13T16:43:40.0121020+02:00" start="2010-05-13T16:43:40.0401036+02:00" finish="2010-05-13T16:43:42.2482299+02:00" />
+  <ResultSummary outcome="Error">
+    <Counters total="7" executed="7" passed="5" error="0" failed="2" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="AUGUSTSRV1" outcome="Error" timestamp="2010-05-13T16:43:40.7331433+02:00">
+        <Text>Class Cleanup method AccountServiceTests.Cleanup failed. Error Message: System.NotImplementedException: The method or operation is not implemented.. Stack Trace:     at SongSearch.Web.Data.EFSession.DeleteMany[T](IEnumerable`1 items) in D:\DevProjects\SongSearch\SongSearch.Web\Infrastructure\Storage\EF\EFSession.cs:line 64
+   at SongSearch.Web.Services.UserManagementService.DeleteUser(Int32 userId, Boolean takeOwnerShip) in D:\DevProjects\SongSearch\SongSearch.Web\Services\UserManagementService.cs:line 124
+   at Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests.DeleteDummyUser() in D:\DevProjects\SongSearch\Codewerks.SongSearch.Web.Tests\Services\AccountServiceTests.cs:line 156
+   at Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests.Cleanup() in D:\DevProjects\SongSearch\Codewerks.SongSearch.Web.Tests\Services\AccountServiceTests.cs:line 149
+</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Plugger_Can_Update_User_Signature" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="dd5d3388-224c-fa9a-fbf1-c14a18cb024a">
+      <Execution id="d26717dd-e862-4b7d-b116-2e63a7762c47" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Plugger_Can_Update_User_Signature" />
+    </UnitTest>
+    <UnitTest name="Can_Check_If_User_Exists" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="f8dbdc96-0372-dcf3-e5dc-fea79600ec53">
+      <Execution id="971b1f57-f321-45b8-a9a9-48c7d9ca9009" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Can_Check_If_User_Exists" />
+    </UnitTest>
+    <UnitTest name="Can_Validate_User" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="c01ecd59-549f-b493-9daa-31765063ba2e">
+      <Execution id="7881781d-f50d-4168-a8d3-fc910517a835" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Can_Validate_User" />
+    </UnitTest>
+    <UnitTest name="User_Can_Update_Password" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="12a79eb3-8091-2978-ec4a-1a438b9e5698">
+      <Execution id="66c20ed8-52ad-4344-898d-bf53387a7cfa" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="User_Can_Update_Password" />
+    </UnitTest>
+    <UnitTest name="Plugger_Cannot_Update_User_Signature" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="dc87f936-fc47-0a53-977b-aba9d005d921">
+      <Execution id="eaffb407-e416-4f72-b483-d61b1aed1e22" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Plugger_Cannot_Update_User_Signature" />
+    </UnitTest>
+    <UnitTest name="User_Can_Update_Profile" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="2545f0ac-ee15-695d-55a9-2467c05da84d">
+      <Execution id="a57b7691-e84b-4a46-bf7d-b55db5c80620" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="User_Can_Update_Profile" />
+    </UnitTest>
+    <UnitTest name="Can_Register_User" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="383df81d-0cf7-f78f-00b8-047cdd4e0106">
+      <Execution id="c8cf2971-f846-48c3-8d33-bbc4eed35a31" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Can_Register_User" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="12a79eb3-8091-2978-ec4a-1a438b9e5698" executionId="66c20ed8-52ad-4344-898d-bf53387a7cfa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="2545f0ac-ee15-695d-55a9-2467c05da84d" executionId="a57b7691-e84b-4a46-bf7d-b55db5c80620" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="383df81d-0cf7-f78f-00b8-047cdd4e0106" executionId="c8cf2971-f846-48c3-8d33-bbc4eed35a31" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c01ecd59-549f-b493-9daa-31765063ba2e" executionId="7881781d-f50d-4168-a8d3-fc910517a835" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dc87f936-fc47-0a53-977b-aba9d005d921" executionId="eaffb407-e416-4f72-b483-d61b1aed1e22" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="dd5d3388-224c-fa9a-fbf1-c14a18cb024a" executionId="d26717dd-e862-4b7d-b116-2e63a7762c47" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f8dbdc96-0372-dcf3-e5dc-fea79600ec53" executionId="971b1f57-f321-45b8-a9a9-48c7d9ca9009" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="66c20ed8-52ad-4344-898d-bf53387a7cfa" testId="12a79eb3-8091-2978-ec4a-1a438b9e5698" testName="User_Can_Update_Password" computerName="AUGUSTSRV1" duration="00:00:00.0132112" startTime="2010-05-13T16:43:40.0461040+02:00" endTime="2010-05-13T16:43:40.5711340+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="66c20ed8-52ad-4344-898d-bf53387a7cfa">
+    </UnitTestResult>
+    <UnitTestResult executionId="a57b7691-e84b-4a46-bf7d-b55db5c80620" testId="2545f0ac-ee15-695d-55a9-2467c05da84d" testName="User_Can_Update_Profile" computerName="AUGUSTSRV1" duration="00:00:00.0025696" startTime="2010-05-13T16:43:40.5721341+02:00" endTime="2010-05-13T16:43:40.5781344+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="a57b7691-e84b-4a46-bf7d-b55db5c80620">
+    </UnitTestResult>
+    <UnitTestResult executionId="c8cf2971-f846-48c3-8d33-bbc4eed35a31" testId="383df81d-0cf7-f78f-00b8-047cdd4e0106" testName="Can_Register_User" computerName="AUGUSTSRV1" duration="00:00:00.0936954" startTime="2010-05-13T16:43:40.5791345+02:00" endTime="2010-05-13T16:43:40.6751400+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="c8cf2971-f846-48c3-8d33-bbc4eed35a31">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests.Can_Register_User threw exception: 
+System.InvalidOperationException: Sequence contains more than one element</Message>
+          <StackTrace>    at System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   at System.Data.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   at System.Data.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   at System.Data.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[S](Expression expression)
+   at System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source, Expression`1 predicate)
+   at SongSearch.Web.Data.EFSession.Single[T](Expression`1 expression) in D:\DevProjects\SongSearch\SongSearch.Web\Infrastructure\Storage\EF\EFSession.cs:line 69
+   at SongSearch.Web.Services.AccountService.GetUser(String userName) in D:\DevProjects\SongSearch\SongSearch.Web\Services\AccountService.cs:line 162
+   at SongSearch.Web.Services.AccountService.UserIsValid(String userName, String password) in D:\DevProjects\SongSearch\SongSearch.Web\Services\AccountService.cs:line 79
+   at Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests.Can_Register_User() in D:\DevProjects\SongSearch\Codewerks.SongSearch.Web.Tests\Services\AccountServiceTests.cs:line 42
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="7881781d-f50d-4168-a8d3-fc910517a835" testId="c01ecd59-549f-b493-9daa-31765063ba2e" testName="Can_Validate_User" computerName="AUGUSTSRV1" duration="00:00:00.0029863" startTime="2010-05-13T16:43:40.6761400+02:00" endTime="2010-05-13T16:43:40.6821404+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7881781d-f50d-4168-a8d3-fc910517a835">
+    </UnitTestResult>
+    <UnitTestResult executionId="eaffb407-e416-4f72-b483-d61b1aed1e22" testId="dc87f936-fc47-0a53-977b-aba9d005d921" testName="Plugger_Cannot_Update_User_Signature" computerName="AUGUSTSRV1" duration="00:00:00.0027440" startTime="2010-05-13T16:43:40.6831404+02:00" endTime="2010-05-13T16:43:40.6891408+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="eaffb407-e416-4f72-b483-d61b1aed1e22">
+    </UnitTestResult>
+    <UnitTestResult executionId="d26717dd-e862-4b7d-b116-2e63a7762c47" testId="dd5d3388-224c-fa9a-fbf1-c14a18cb024a" testName="Plugger_Can_Update_User_Signature" computerName="AUGUSTSRV1" duration="00:00:00.0041009" startTime="2010-05-13T16:43:40.6891408+02:00" endTime="2010-05-13T16:43:40.6961412+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="d26717dd-e862-4b7d-b116-2e63a7762c47">
+    </UnitTestResult>
+    <UnitTestResult executionId="971b1f57-f321-45b8-a9a9-48c7d9ca9009" testId="f8dbdc96-0372-dcf3-e5dc-fea79600ec53" testName="Can_Check_If_User_Exists" computerName="AUGUSTSRV1" duration="00:00:00.0050257" startTime="2010-05-13T16:43:40.6971412+02:00" endTime="2010-05-13T16:43:40.7051417+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="971b1f57-f321-45b8-a9a9-48c7d9ca9009">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.IsTrue failed. </Message>
+          <StackTrace>   at Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests.Can_Check_If_User_Exists() in D:\DevProjects\SongSearch\Codewerks.SongSearch.Web.Tests\Services\AccountServiceTests.cs:line 68
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

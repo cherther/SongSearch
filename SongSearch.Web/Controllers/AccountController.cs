@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using SongSearch.Web.Services;
 using SongSearch.Web.Models;
+using SongSearch.Web.Data;
 
 // see if this shows up, yup it does!
 namespace SongSearch.Web.Controllers {
@@ -14,13 +15,11 @@ namespace SongSearch.Web.Controllers {
 	public class AccountController : Controller {
 
 		IFormsAuthenticationService _fs;
-		IMembershipService _ms;
 		IUserManagementService _ums;
 		IAccountService _accs;
 
 		protected override void Initialize(RequestContext requestContext) {
 			if (_fs == null) { _fs = new FormsAuthenticationService(); }
-			if (_ms == null) { _ms = new MembershipService(); }
 			if (_ums == null) { _ums = new UserManagementService(requestContext.HttpContext.User.Identity.Name); }
 			if (_accs == null) { _accs = new AccountService(); }
 
@@ -29,7 +28,7 @@ namespace SongSearch.Web.Controllers {
 		}
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext) {
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			base.OnActionExecuting(filterContext);
 		}
@@ -71,7 +70,7 @@ namespace SongSearch.Web.Controllers {
 
 			model.NavigationLocation = "Account";
 
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(model);
 		}
@@ -95,7 +94,7 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/Register
 		// **************************************        
 		public ActionResult Register(string id, string em) {
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			ViewData["inviteId"] = id;
 			ViewData["email"] = em;
 
@@ -135,13 +134,26 @@ namespace SongSearch.Web.Controllers {
 
 									// Attempt to register the myUser
 									//MembershipCreateStatus createStatus = _ms.CreateUser(model.Email, model.Password, model.Email);
+									if (String.IsNullOrEmpty(model.Email)) throw new ArgumentException("Value cannot be null or empty.", "Email");
+									if (String.IsNullOrEmpty(model.Password)) throw new ArgumentException("Value cannot be null or empty.", "Password");
+									if (String.IsNullOrEmpty(model.InviteId)) throw new ArgumentException("Value cannot be null or empty.", "InviteId");
 
-									if (_ms.RegisterUser(model))//MembershipCreateStatus.Success)
-									{
+									User user = new User() {
+										UserName = model.Email,
+										Password = model.Password,
+										FirstName = model.FirstName,
+										LastName = model.LastName,
+										ParentUserId = model.Invitation.InvitedByUserId
+									};
+
+									try {
+										_accs.RegisterUser(user, inv.InvitationId);
+
 										_fs.SignIn(model.Email, false /* createPersistentCookie */);
-										
+
 										return RedirectToAction("Index", "Home");
-									} else {   //TODO: createStatus enums
+									}
+									catch {
 										ModelState.AddModelError("Email", Errors.UserCreationFailed.Text());//AccountValidation.ErrorCodeToString(createStatus));
 									}
 
@@ -167,7 +179,7 @@ namespace SongSearch.Web.Controllers {
 			// If we got this far, something failed, redisplay form
 			model.NavigationLocation = "Register";
 
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(model);
 		}
@@ -176,7 +188,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		[RequireMinRole]
 		public ActionResult ChangePassword() {
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			var vm = new UpdateProfileModel() { NavigationLocation = "Account" };
 
@@ -189,7 +201,8 @@ namespace SongSearch.Web.Controllers {
 		public ActionResult ChangePassword(UpdateProfileModel model) {
 
 			if (ModelState.IsValid) {
-				if (_ms.UpdateProfile(model)) {
+				var user = new User() { UserName = model.Email, Password = model.OldPassword };
+				if (_accs.UpdateProfile(user, model.NewPassword)) {
 					//_accs.UpdateCurrentUserInSession();
 					return RedirectToAction("ChangePasswordSuccess");
 				} else {
@@ -198,7 +211,7 @@ namespace SongSearch.Web.Controllers {
 			}
 
 			// If we got this far, something failed, redisplay form
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
 			return View(model);
 		}
@@ -229,7 +242,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		[RequireMinRole]
 		public ActionResult UpdateProfile() {
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			var vm = new UpdateProfileModel() { NavigationLocation = "Account" };
 
@@ -241,8 +254,16 @@ namespace SongSearch.Web.Controllers {
 		[ValidateOnlyIncomingValues]
 		public ActionResult UpdateProfile(UpdateProfileModel model) {
 			if (ModelState.IsValid) {
-				if (_ms.UpdateProfile(model)) {
-					//UserData.UpdateSession();
+
+				User currentUser = new User() {
+					UserName = model.Email,
+					FirstName = model.FirstName,
+					LastName = model.LastName,
+					Signature = model.Signature,
+					Password = model.OldPassword
+				};
+				
+				if (_accs.UpdateProfile(currentUser, model.NewPassword)) {
 					return RedirectToAction("UpdateProfileSuccess");
 				} else {
 					ModelState.AddModelError("", Errors.PasswordChangeFailed.Text());
@@ -250,7 +271,7 @@ namespace SongSearch.Web.Controllers {
 			}
 
 			// If we got this far, something failed, redisplay form
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
 			return View(model);
 		}
@@ -285,7 +306,7 @@ namespace SongSearch.Web.Controllers {
 				NavigationLocation = "Account"
 			};
 
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(model);
 		}
@@ -297,10 +318,8 @@ namespace SongSearch.Web.Controllers {
 			if (ModelState.IsValid) {
 				model.ResetCode = model.Email.PasswordHashString();
 
-
 				//Send email
-				if (_ms.ResetPasswordProcessRequest(model)) {
-					try {
+
 						string link = String.Format(@"<a href='{0}/Account/ResetPasswordRespond/{1}?rc={2}'>visit our Password Reset page</a>",
 							Settings.BaseUrl.Text(),
 							model.Email,
@@ -314,15 +333,9 @@ namespace SongSearch.Web.Controllers {
 							String.Format("{0} {1}", Messages.PasswordResetRequest.Text(), msg)
 
 							);
-					}
-					catch { }
-
-					return RedirectToAction("ResetPasswordSuccess");
-				} else {
-					ModelState.AddModelError("", Errors.PasswordResetFailed.Text());
-				}
+					return RedirectToAction("ResetPasswordSuccess");				
 			}
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
 
 			return View(model);
@@ -335,6 +348,9 @@ namespace SongSearch.Web.Controllers {
 			return View();
 		}
 
+		// **************************************
+		// URL: /Account/ResetPasswordRespond
+		// **************************************        
 		public ActionResult ResetPasswordRespond(string id, string rc) {
 			var model = new ResetPasswordModel() {
 				NavigationLocation = "Account",
@@ -342,7 +358,7 @@ namespace SongSearch.Web.Controllers {
 				ResetCode = rc
 			};
 
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
+			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
 
 			return View(model);
@@ -350,20 +366,23 @@ namespace SongSearch.Web.Controllers {
 
 		[HttpPost]
 		public ActionResult ResetPasswordRespond(ResetPasswordModel model) {
-			if (_ms.ResetPassword(model)) {
+			if (
+				ModelState.IsValid && 
+				_accs.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
+				) {
+				
 				return RedirectToAction("LogIn", "Account");
+			
 			} else {
 				ModelState.AddModelError("", Errors.PasswordResetFailed.Text());
+
+				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
+				model.NavigationLocation = "Account";
+
+				return View(model);
 			}
 
-			ViewData["PasswordLength"] = _ms.MinPasswordLength;
-			model.NavigationLocation = "Account";
-
-			return View(model);
-
 		}
-
-
 
 	}
 }

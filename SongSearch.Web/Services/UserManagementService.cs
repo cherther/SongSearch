@@ -7,36 +7,6 @@ using SongSearch.Web.Models;
 
 namespace SongSearch.Web.Services {
 
-	// **************************************
-	// IUserManagementService
-	// **************************************
-	public interface IUserManagementService : IDisposable {
-
-		User ActiveUser { get; set; }
-
-		IList<User> GetMyUserHierarchy();
-		IList<Invitation> GetMyInvites(InvitationStatusCodes status);
-		User GetUserDetail(int userId);
-
-		Guid CreateNewInvitation(string inviteEmailAddress);
-		Invitation GetInvitation(string inviteId, string inviteEmailAddress);
-
-		int GetNumberOfUsersByAccessLevel(Roles role);
-		void DeleteUser(int userId, bool takeOwnerShip = true);
-		void TakeOwnerShip(int userId);
-		void TakeOwnerShip(User user);
-		void UpdateUsersRole(int userId, int roleId);
-		//void UpdateUsersRoles(int userId, int[] roleIdValues);
-		//void UpdateUserCatalogs(int userId, IDictionary<int, int> catalogRolesValues);
-		//int PromoteUserCatalogRole(int userId, int catalogId);
-
-		void UpdateUserCatalogRole(int userId, int catalogId, int roleId);
-
-		void UpdateUserRoleAllCatalogs(int userId, int roleId);
-		void UpdateCatalogRoleAllUsers(int catalogId, int roleId);
-
-	}
-
 	public class UserManagementService : IUserManagementService {
 
 		// ----------------------------------------------------------------------------
@@ -54,7 +24,7 @@ namespace SongSearch.Web.Services {
 			}
 
 			_activeUserIdentity = activeUserIdentity;
-			//ActiveUser = UserData.User(activeUserIdentity);
+			ActiveUser = AccountData.User(activeUserIdentity);
 		}
 
 		// ----------------------------------------------------------------------------
@@ -143,19 +113,13 @@ namespace SongSearch.Web.Services {
 						TakeOwnerShip(user);
 					}
 
-					foreach (var cart in user.Carts) {
-						_session.Delete<Cart>(cart);
-					}
-
 					if (user.Invitation != null) {
 						_session.Delete<Invitation>(user.Invitation);
 					}
+					//handled via cascade in db
+					//user.Carts.ToList().ForEach(x => user.Carts.Remove(x));
+					//user.UserCatalogRoles.ToList().ForEach(x => user.UserCatalogRoles.Remove(x));
 
-					_session.DeleteMany<UserCatalogRole>(user.UserCatalogRoles);
-					
-					//SqlSession.RemoveFromMyActiveCart(myUser.MyCarts);
-					//_ctx.UsersCatalogs.DeleteAllOnSubmit(myUser.UsersCatalogs);
-					//_ctx.UsersRoles.DeleteAllOnSubmit(myUser.UsersRoles);
 					_session.Delete<User>(user);
 					_session.CommitChanges();
 				}
@@ -173,7 +137,7 @@ namespace SongSearch.Web.Services {
 			user = null;
 		}
 
-		public void TakeOwnerShip(User user) {
+		private void TakeOwnerShip(User user) {
 			
 			//become the parent users
 			user.ParentUserId = ActiveUser.UserId;
@@ -295,9 +259,8 @@ namespace SongSearch.Web.Services {
 						//also remove these catalogs from any child users, really?
 						var childUsers = user.ChildUsers; // _session.All<User>().Where(u => u.ParentUserId == userId);
 						foreach (var child in childUsers) {
-							var subCatalogs = child.UserCatalogRoles.Where(c => c.CatalogId == catalogId);
-
-							_session.DeleteMany<UserCatalogRole>(subCatalogs);
+							var subCatalogs = child.UserCatalogRoles.Where(c => c.CatalogId == catalogId).ToList();
+							subCatalogs.ForEach(x => _session.Delete<UserCatalogRole>(x));
 						}
 
 					}

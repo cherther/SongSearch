@@ -61,7 +61,10 @@ namespace SongSearch.Web.Data {
 		}
 
 		public void DeleteMany<T>(IEnumerable<T> items) where T : class {
+			// is this the only way to do many?
 			throw new NotImplementedException();
+//			items.ForEach(i => GetTable<T>().DeleteObject(i));
+			
 		}
 
 		public T Single<T>(Expression<Func<T, bool>> expression) where T : class

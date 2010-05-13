@@ -96,8 +96,6 @@
     <Compile Include="Infrastructure\Authentication\AuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Infrastructure\Authentication\IFormsAuthenticationService.cs" />
-    <Compile Include="Infrastructure\Authentication\IMembershipService.cs" />
-    <Compile Include="Infrastructure\Authentication\MembershipService.cs" />
     <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />
     <Compile Include="Infrastructure\Logging\ILogger.cs" />
     <Compile Include="Infrastructure\Logging\LogUtility.cs" />
@@ -115,6 +113,8 @@
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountData.cs" />
+    <Compile Include="Services\IAccountService.cs" />
+    <Compile Include="Services\IUserManagementService.cs" />
     <Compile Include="Services\UserManagementService.cs" />
   </ItemGroup>
   <ItemGroup>

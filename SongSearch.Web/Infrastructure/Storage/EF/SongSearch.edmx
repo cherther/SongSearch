@@ -218,7 +218,9 @@
           <Property Name="Signature" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <Association Name="FK_CartContents_Contents">
-          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1" />
+          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CartContents" Type="SongSearch2Model.Store.CartContents" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contents">
@@ -230,7 +232,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_CartItems_Carts">
-          <End Role="Carts" Type="SongSearch2Model.Store.Carts" Multiplicity="1" />
+          <End Role="Carts" Type="SongSearch2Model.Store.Carts" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="CartContents" Type="SongSearch2Model.Store.CartContents" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Carts">
@@ -242,7 +246,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Carts_Users">
-          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="1" />
+          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Carts" Type="SongSearch2Model.Store.Carts" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -266,7 +272,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContentRightTerritories_ContentRights">
-          <End Role="ContentRights" Type="SongSearch2Model.Store.ContentRights" Multiplicity="1" />
+          <End Role="ContentRights" Type="SongSearch2Model.Store.ContentRights" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ContentRightTerritories" Type="SongSearch2Model.Store.ContentRightTerritories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ContentRights">
@@ -290,7 +298,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Contents_Catalogs">
-          <End Role="Catalogs" Type="SongSearch2Model.Store.Catalogs" Multiplicity="1" />
+          <End Role="Catalogs" Type="SongSearch2Model.Store.Catalogs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Catalogs">
@@ -302,7 +312,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContentTags_Contents">
-          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1" />
+          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ContentTags" Type="SongSearch2Model.Store.ContentTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contents">
@@ -314,7 +326,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ContentTags_Tags">
-          <End Role="Tags" Type="SongSearch2Model.Store.Tags" Multiplicity="1" />
+          <End Role="Tags" Type="SongSearch2Model.Store.Tags" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="ContentTags" Type="SongSearch2Model.Store.ContentTags" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tags">
@@ -362,7 +376,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UsersCatalogs_Catalogs">
-          <End Role="Catalogs" Type="SongSearch2Model.Store.Catalogs" Multiplicity="1" />
+          <End Role="Catalogs" Type="SongSearch2Model.Store.Catalogs" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UserCatalogRoles" Type="SongSearch2Model.Store.UserCatalogRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Catalogs">
@@ -386,7 +402,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UsersCatalogs_Users">
-          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="1" />
+          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="UserCatalogRoles" Type="SongSearch2Model.Store.UserCatalogRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
@@ -659,7 +677,9 @@
           <End Type="SongSearch.Web.Data.Model.Cart" Role="Cart" Multiplicity="*" />
         </Association>
         <Association Name="FK_Carts_Users">
-          <End Type="SongSearch.Web.Data.Model.User" Role="User" Multiplicity="1" />
+          <End Type="SongSearch.Web.Data.Model.User" Role="User" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="SongSearch.Web.Data.Model.Cart" Role="Cart" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
@@ -707,7 +727,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UsersCatalogs_Users">
-          <End Type="SongSearch.Web.Data.Model.User" Role="User" Multiplicity="1" />
+          <End Type="SongSearch.Web.Data.Model.User" Role="User" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="SongSearch.Web.Data.Model.UserCatalogRole" Role="UserCatalogRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">

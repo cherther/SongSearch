@@ -252,7 +252,7 @@ namespace SongSearch.Web.Models {
 	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
 	public sealed class ValidatePasswordLengthAttribute : ValidationAttribute {
 		private const string _defaultErrorMessage = "'{0}' must be at least {1} characters long.";
-		private readonly int _minCharacters = MembershipService.GetMinPasswordLength();
+		private readonly int _minCharacters = AccountService.MinPasswordLength;
 
 		public ValidatePasswordLengthAttribute()
 			: base(_defaultErrorMessage) {

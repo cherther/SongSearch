@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="b88ce7ad-0d94-4778-9c94-35f98bbb73bf" name="claus@AUGUSTSRV1 2010-05-13 16:45:40" runUser="AUGUSTSRV1\claus" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="f51de6d5-a709-4809-a24f-7d1deec13555">
+    <Deployment runDeploymentRoot="claus_AUGUSTSRV1 2010-05-13 16_45_40">
+      <DeploymentItem filename="D:\DevProjects\SongSearch\SongSearch.Web\bin\SongSearch.Web.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-05-13T16:45:40.5649973+02:00" queuing="2010-05-13T16:45:41.3680432+02:00" start="2010-05-13T16:45:41.4790495+02:00" finish="2010-05-13T16:45:53.8767587+02:00" />
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="AUGUSTSRV1" outcome="Error" timestamp="2010-05-13T16:45:53.8757586+02:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="User_Can_Update_Password" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="12a79eb3-8091-2978-ec4a-1a438b9e5698">
+      <Execution id="2343d53d-d07d-4bc9-91f2-eac0af46a344" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="User_Can_Update_Password" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="12a79eb3-8091-2978-ec4a-1a438b9e5698" executionId="2343d53d-d07d-4bc9-91f2-eac0af46a344" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="2343d53d-d07d-4bc9-91f2-eac0af46a344" testId="12a79eb3-8091-2978-ec4a-1a438b9e5698" testName="User_Can_Update_Password" computerName="AUGUSTSRV1" duration="00:00:12.2797024" startTime="2010-05-13T16:45:41.5970563+02:00" endTime="2010-05-13T16:45:53.8767587+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2343d53d-d07d-4bc9-91f2-eac0af46a344">
+    </UnitTestResult>
+  </Results>
+</TestRun>
