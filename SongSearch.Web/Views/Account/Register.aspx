@@ -1,60 +1,86 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.Models.RegisterModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.RegisterModel>" %>
 
 <asp:Content ID="registerTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Register
 </asp:Content>
+<asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
+<%
+    IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
+    menu.Add("Register", new string[4] { "Register", "Account", "", "current" });
 
+//    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
+//    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
+    
+    Html.RenderPartial("ctrlSubMenu", menu);
+        
+    %>
+    
+</asp:Content>
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Create a New Account</h2>
+<div id="content" class = "cw-outl">
+    <h3>Create a New Account</h3>
     <p>
-        Use the form below to create a new account. 
+        Use the form below to create a new account. Or, <%= Html.ActionLink("log in", "LogIn") %> if you already have an account.
     </p>
     <p>
-        Passwords are required to be a minimum of <%: ViewData["PasswordLength"] %> characters in length.
+        Passwords are required to be a minimum of <%=Html.Encode(ViewData["PasswordLength"])%> characters in length.
     </p>
-
-    <% using (Html.BeginForm()) { %>
-        <%: Html.ValidationSummary(true, "Account creation was unsuccessful. Please correct the errors and try again.") %>
-        <div>
+    <%//= Html.ValidationSummary("Account creation was unsuccessful. Please correct the errors and try again.") %>
+    <% using (Html.BeginForm("Register", "Account", null, FormMethod.Post, new { @class = "cw-form-small" }))
+       { %><%=Html.AntiForgeryToken() %>
+    
+        
             <fieldset>
                 <legend>Account Information</legend>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.UserName) %>
+                <div class="cw-fe-vert cw-fe-req">
+                    <%= Html.LabelFor(m => m.Email) %>
                 </div>
-                <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.UserName) %>
-                    <%: Html.ValidationMessageFor(m => m.UserName) %>
+                <div class="cw-fe-vert">
+                    <%= Html.TextBoxFor(m => m.Email)%>
+                    <%= Html.ValidationMessageFor(m => m.Email)%>
                 </div>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Email) %>
+                <div class="cw-fe-vert cw-fe-req">
+                    <%= Html.LabelFor(m => m.InviteId)%>
                 </div>
-                <div class="editor-field">
-                    <%: Html.TextBoxFor(m => m.Email) %>
-                    <%: Html.ValidationMessageFor(m => m.Email) %>
+                <div class="cw-fe-vert">
+                    <%= Html.TextBoxFor(m => m.InviteId)%>
+                    <%= Html.ValidationMessageFor(m => m.InviteId)%>
+                </div>                    
+                 <div class="cw-fe-vert">
+                    <%= Html.LabelFor(m => m.FirstName)%>
                 </div>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.Password) %>
+                <div class="cw-fe-vert">
+                    <%= Html.TextBoxFor(m => m.FirstName)%>
+                    <%= Html.ValidationMessageFor(m => m.FirstName)%>
+                </div>                    
+                 <div class="cw-fe-vert">
+                    <%= Html.LabelFor(m => m.LastName)%>
                 </div>
-                <div class="editor-field">
-                    <%: Html.PasswordFor(m => m.Password) %>
-                    <%: Html.ValidationMessageFor(m => m.Password) %>
+                <div class="cw-fe-vert">
+                    <%= Html.TextBoxFor(m => m.LastName)%>
+                    <%= Html.ValidationMessageFor(m => m.LastName)%>
+                </div>                    
+                <div class="cw-fe-vert cw-fe-req">
+                    <%= Html.LabelFor(m => m.Password) %>
                 </div>
-                
-                <div class="editor-label">
-                    <%: Html.LabelFor(m => m.ConfirmPassword) %>
+                <div class="cw-fe-vert">
+                    <%= Html.PasswordFor(m => m.Password)%>
+                    <%= Html.ValidationMessageFor(m => m.Password)%>
+                </div>                    
+                <div class="cw-fe-vert cw-fe-req">
+                    <%= Html.LabelFor(m => m.ConfirmPassword) %>
                 </div>
-                <div class="editor-field">
-                    <%: Html.PasswordFor(m => m.ConfirmPassword) %>
-                    <%: Html.ValidationMessageFor(m => m.ConfirmPassword) %>
-                </div>
-                
+                <div class="cw-fe-vert">
+                    <%= Html.PasswordFor(m => m.ConfirmPassword)%>
+                    <%= Html.ValidationMessageFor(m => m.ConfirmPassword)%>
+                </div>                    
                 <p>
-                    <input type="submit" value="Register" />
+                    <button type="submit" class="sexybutton sexysimple sexyblue">
+                    <span class="ok">Register</span>
+                    </button>
                 </p>
             </fieldset>
-        </div>
     <% } %>
+    
+</div>    
 </asp:Content>

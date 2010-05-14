@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace SongSearch.Web.Services {
+namespace SongSearch.Web {
 
 	// **************************************
 	// AccessLevels

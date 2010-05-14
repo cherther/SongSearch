@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using SongSearch.Web.Services;
-using SongSearch.Web.Models;
 using SongSearch.Web.Data;
 
 // see if this shows up, yup it does!
@@ -44,12 +43,16 @@ namespace SongSearch.Web.Controllers {
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult LogIn(LogOnModel model, string returnUrl) {
 
 			if (ModelState.IsValid) {
 				if (_accs.UserIsValid(model.Email, model.Password))
 				//if (_ms.UserIsValid(model.Email, model.Password))
 				{
+					var friendly = AccountData.User(model.Email).FullName();
+
+					SetFriendlyNameCookie(friendly);
 
 					_fs.SignIn(model.Email, model.RememberMe);
 
@@ -73,6 +76,12 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(model);
+		}
+
+		private void SetFriendlyNameCookie(string friendly) {
+			Response.Cookies["friendly"].Value = friendly;
+			Response.Cookies["friendly"].Expires = DateTime.Now.AddDays(30);
+			Response.Cookies["friendly"].HttpOnly = true;
 		}
 
 
@@ -114,6 +123,7 @@ namespace SongSearch.Web.Controllers {
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Register(RegisterModel model) {
 
 			//set username to email address
@@ -198,10 +208,12 @@ namespace SongSearch.Web.Controllers {
 		[RequireMinRole]
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
+		[ValidateAntiForgeryToken]
 		public ActionResult ChangePassword(UpdateProfileModel model) {
 
 			if (ModelState.IsValid) {
-				var user = new User() { UserName = model.Email, Password = model.OldPassword };
+				var userName = User.Identity.Name;
+				var user = new User() { UserName = userName, Password = model.OldPassword };
 				if (_accs.UpdateProfile(user, model.NewPassword)) {
 					//_accs.UpdateCurrentUserInSession();
 					return RedirectToAction("ChangePasswordSuccess");
@@ -244,7 +256,17 @@ namespace SongSearch.Web.Controllers {
 		public ActionResult UpdateProfile() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-			var vm = new UpdateProfileModel() { NavigationLocation = "Account" };
+			var user = AccountData.User(User.Identity.Name);
+
+			var vm = new UpdateProfileModel() { 
+				NavigationLocation = "Account", 
+				Email = User.Identity.Name,
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				ShowSignatureField = user.IsAnyAdmin(),
+				Signature = user.Signature			
+			
+			};
 
 			return View(vm);
 		}
@@ -252,18 +274,20 @@ namespace SongSearch.Web.Controllers {
 		[RequireMinRole]
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
+		[ValidateAntiForgeryToken]
 		public ActionResult UpdateProfile(UpdateProfileModel model) {
 			if (ModelState.IsValid) {
-
+				var userName = User.Identity.Name;
 				User currentUser = new User() {
-					UserName = model.Email,
+					UserName = userName, //model.Email,
 					FirstName = model.FirstName,
 					LastName = model.LastName,
-					Signature = model.Signature,
-					Password = model.OldPassword
+					Signature = model.Signature
 				};
 				
-				if (_accs.UpdateProfile(currentUser, model.NewPassword)) {
+				if (_accs.UpdateProfile(currentUser, null)) {
+					var friendly = AccountData.User(userName).FullName();
+					SetFriendlyNameCookie(friendly);
 					return RedirectToAction("UpdateProfileSuccess");
 				} else {
 					ModelState.AddModelError("", Errors.PasswordChangeFailed.Text());
@@ -313,6 +337,7 @@ namespace SongSearch.Web.Controllers {
 
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
+		[ValidateAntiForgeryToken]
 		public ActionResult ResetPassword(ResetPasswordModel model) {
 
 			if (ModelState.IsValid) {
@@ -365,6 +390,7 @@ namespace SongSearch.Web.Controllers {
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult ResetPasswordRespond(ResetPasswordModel model) {
 			if (
 				ModelState.IsValid && 

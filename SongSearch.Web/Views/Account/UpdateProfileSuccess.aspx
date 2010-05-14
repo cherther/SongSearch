@@ -1,4 +1,4 @@
-﻿<%@Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.ViewModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.ViewModel>" %>
 
 <asp:Content ID="updateProfileTitle" ContentPlaceHolderID="TitleContent" runat="server">
     Update Profile
@@ -7,8 +7,8 @@
 <%
     IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
 
-    menu.Add("My Profile", new string[4] { "UpdateProfile", "Account", "", "" });
-    menu.Add("Change Password", new string[4] { "ChangePassword", "Account", "", "current" });
+    menu.Add("My Profile", new string[4] { "UpdateProfile", "Account", "", "current" });
+    menu.Add("Change Password", new string[4] { "ChangePassword", "Account", "", "" });
     
     menu.Add("Log Out", new string[4] { "LogOut", "Account", "", "" });
 
@@ -18,13 +18,12 @@
     Html.RenderPartial("ctrlSubMenu", menu);
         
     %>
-    
-</asp:Content>
+  </asp:Content>
 <asp:Content ID="updateProfileSuccessContent" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class = "cw-outl">
-    <h2>Change Password</h2>
+    <h2>Update Profile</h2>
     <p>
-        Your password has been changed.
+        Your profile has been updated.
     </p>
     </div>
 </asp:Content>

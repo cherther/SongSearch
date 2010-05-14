@@ -1,0 +1,23 @@
+﻿/* cw.app.css  Claus Herther	codewerks.de*/
+/* reset */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td
+{ margin: 0; padding: 0; border: 0; outline: 0;	vertical-align: baseline; background: transparent;}
+html { overflow-y: scroll; }
+/* Start */
+body { font-size: 81.25%; line-height: 1.5; font-family: Tahoma, Verdana, helvetica,verdana,sans-serif; }	
+a, a:visited { /*text-decoration: none;*/ color: #0044CC; }
+h1 { font-size: 2em; font-variant:small-caps;}
+h2 { font-size: 1.375em; }
+h3 { font-size: 1.125em; }
+
+/* boxes */
+.cw-outl
+{
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+	-moz-border-radius-bottomleft:5px;
+	-moz-border-radius-bottomright:5px;
+	border: 1px solid #A6C9E2;
+	padding:0.8em 0.2em 0.2em 0.4em;
+	margin: 0.8em;
+}

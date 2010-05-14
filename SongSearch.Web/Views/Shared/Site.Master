@@ -1,40 +1,84 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@ Import Namespace="SongSearch.Web" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title><asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
-    <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="author" content="Ford Music Services" /> 
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <%=Html.CSS("cw.app")%>
+    <%=Html.CSS("cw.buttons")%>
+    <%=Html.CSS("cw.twitlogin")%>
+    <%=Html.Script("jquery-1.4.1.min.js")%>
+    <%=Html.Script("jquery-ui-1.7.2.min.js")%>
+    <%=Html.Script("jquery.tablesorter.js")%>
+    <%=Html.Script("cw.app.js")%>
+    <title>Ford Music SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
-
 <body>
-    <div class="page">
+    <script type="text/javascript">
 
-        <div id="header">
-            <div id="title">
-                <h1>My MVC Application</h1>
-            </div>
-              
-            <div id="logindisplay">
-                <% Html.RenderPartial("LogOnUserControl"); %>
-            </div> 
-            
-            <div id="menucontainer">
-            
-                <ul id="menu">              
-                    <li><%: Html.ActionLink("Home", "Index", "Home")%></li>
-                    <li><%: Html.ActionLink("About", "About", "Home")%></li>
-                </ul>
-            
-            </div>
-        </div>
+//    var _gaq = _gaq || [];
+//    _gaq.push(['_setAccount', 'UA-12019666-1']);
+//    _gaq.push(['_trackPageview']);
 
-        <div id="main">
+//    (function () {
+//	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+//	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+//	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+//    })();
+
+    </script>
+    <%=Html.Flash() %>
+    <div id="flash" style="display:none"></div>
+
+    <table>
+    <tr>
+        <td>
+            <h1><a href="/">Ford Music <span>SongSearch</span></a></h1>
+            <h3>Your professional music licensing resource</h3>
+        </td>
+        <td>
+            <% Html.RenderPartial("ctrlLogIn"); %>
+        </td> 
+    </tr>
+    <tr>
+        <td colspan="2">
+            <%// Html.RenderPartial("ctrlMainMenu"); %>
+        </td> 
+    </tr>
+    <tr>
+        <td colspan="2">
+            <asp:ContentPlaceHolder ID="SuvNavContent" runat="server" /> 
+        </td> 
+    </tr>
+    <tr>
+        <td colspan="2">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-
-            <div id="footer">
-            </div>
-        </div>
-    </div>
+	    </td> 
+    </tr>
+    
+    <tr>
+        <td>
+            &copy; <%=DateTime.Now.Year %> Ford Music Services
+	    </td>
+        <td>
+            <% Html.RenderPartial("ctrlBuildInfo"); %>
+            developed by <a href="http://www.codewerks.de/">codewerks.de</a>
+	    </td> 
+    </tr>
+    </table>    		
 </body>
+
+<%
+	if (Page.User.Identity.IsAuthenticated)
+	{
+%>
+<script type="text/javascript">    //$(document).ready(function () { //updateCartCount(); });</script>
+<%} %>
+
+<asp:ContentPlaceHolder ID="Javascripts" runat="server" />
 </html>
+

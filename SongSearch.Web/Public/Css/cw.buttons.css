@@ -1,0 +1,403 @@
+.cw-button {
+	display: inline-block;
+	margin: 0;
+	padding: 0;
+	font: bold 13px "Helvetica Neue", Helvetica, Arial, clean, sans-serif !important;
+	text-decoration: none !important;
+	text-shadow: 1px 1px 2px rgba(0,0,0,0.20);
+	background: none;
+	border: none;
+	white-space: nowrap;
+	cursor: pointer;
+	user-select: none;
+	-moz-user-select: none;
+	
+	/* Fix extra width padding in IE */
+	_width: 0;
+	overflow: visible;
+}
+
+.cw-button span {
+	display: block;						/* Prevents :active from working in IE--oh well! */
+	height: 24px;
+	padding-right: 12px;
+	background-repeat: no-repeat;
+	background-position: right top;
+}
+
+.cw-button span span {
+	padding-right: 0;
+	padding-left: 12px;
+	line-height: 24px;
+	background-position: left top;
+}
+
+.cw-button span span span {
+	padding-left: 21px;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: left center;
+	/* IE6 still requires a PNG transparency fix */ 
+	/* _background-image: none;		Or just hide icons from the undeserving IE6 */
+	/* _padding-left: 0;					Or just hide icons from the undeserving IE6 */
+}
+
+.cw-button span span span.after {
+	padding-left: 0px;
+	padding-right: 21px;
+	background-position: right center;
+	/* IE6 still requires a PNG transparency fix */ 
+	/* _padding-right: 0;					Or just hide icons from the undeserving IE6 */
+}
+
+.cw-button[disabled],
+.cw-button[disabled]:hover,
+.cw-button[disabled]:focus,
+.cw-button[disabled]:active,
+.cw-button.disabled,
+.cw-button.disabled:hover,
+.cw-button.disabled:focus,
+.cw-button.disabled:active {
+	color: #333 !important;
+	cursor: inherit;
+	text-shadow: none; 
+	opacity: 0.33;
+}
+
+.cw-button:hover span,
+.cw-button:focus span {
+	background-position: 100% -24px;
+}
+
+.cw-button:hover span span,
+.cw-button:focus span span {
+	background-position: 0% -24px;
+}
+
+.cw-button:active span {
+	background-position: 100% -48px;
+}
+
+.cw-button:active span span {
+	background-position: 0% -48px;
+}
+
+.cw-button[disabled] span,
+.cw-button.disabled span {
+	background-position: 100% -72px;
+}
+
+.cw-button[disabled] span span,
+.cw-button.disabled span span {
+	background-position: 0% -72px;
+}
+
+.cw-button:hover span span span,
+.cw-button:focus span span span,
+.cw-button:active span span span,
+.cw-button[disabled] span span span,
+.cw-button.disabled span span span {
+	background-position: left center;
+}
+
+.cw-button:hover span span span.after,
+.cw-button:focus span span span.after,
+.cw-button:active span span span.after,
+.cw-button[disabled] span span span.after,
+.cw-button.disabled span span span.after {
+	background-position: right center;
+}
+
+.cw-button img {
+	margin-right: 5px;
+	vertical-align: text-top;
+	/* IE6 Hack */
+	_margin-top: 4px;
+	_vertical-align: text-bottom;
+	/* IE6 still requires a PNG transparency fix */ 
+	/* _display: none;		Or just hide icons from the undeserving IE6 */
+}
+
+.cw-button img.after {
+	margin-right: 0;
+	margin-left: 5px;
+	/* IE6 still requires a PNG transparency fix */ 
+	/* _margin-left: 0;		Or just hide icons from the undeserving IE6 */
+}
+
+.cw-button.sexymedium	{ font-size: 15px !important; }
+.cw-button.sexylarge	{ font-size: 18px !important; }
+
+
+/*
+ * Button Skins
+ * 
+ * .PNG background images with alpha transparency are also supplied if you'd rather use them instead of the 
+ * default .GIF images. (Just beware of IE6's lack of support.) 
+ * 
+ * Additional skins can be added below. The images/skins/ButtonTemplate.psd can be used to create new skins.
+ * Prefix the skin name with "sexy" to avoid any potential conflicts with other class names. 
+ */
+
+/* Silver Button Skin (the default skin) */
+
+.cw-button,
+.cw-button.sexysilver {
+	color: #666 !important;
+}
+	
+.cw-button:hover,
+.cw-button:focus,
+.cw-button.sexysilver:hover,
+.cw-button.sexysilver:focus {
+	color: #333 !important;
+}
+	
+.cw-button span,
+.cw-button.sexysilver span {
+	background-image: url(images/skins/silver/button_right.gif);
+}
+
+.cw-button span span,
+.cw-button.sexysilver span span {
+	background-image: url(images/skins/silver/button_left.gif);
+}
+
+/* Orange Button Skin */
+
+.cw-button.sexyorange,
+.cw-button.sexyorange:hover,
+.cw-button.sexyorange:focus {
+	color: white !important;
+}
+	
+.cw-button.sexyorange[disabled],
+.cw-button.sexyorange[disabled]:hover,
+.cw-button.sexyorange[disabled]:active,
+.cw-button.sexyorange[disabled]:focus,
+.cw-button.sexyorange.disabled,
+.cw-button.sexyorange.disabled:hover,
+.cw-button.sexyorange.disabled:active,
+.cw-button.sexyorange.disabled:focus {
+	color: #333 !important;
+}
+	
+.cw-button.sexyorange span {
+	background-image: url(images/skins/orange/button_right.gif);
+}
+
+.cw-button.sexyorange span span {
+	background-image: url(images/skins/orange/button_left.gif);
+}
+
+/* Yellow Button Skin */
+
+.cw-button.sexyyellow,
+.cw-button.sexyyellow:hover,
+.cw-button.sexyyellow:focus {
+	color: #994800 !important;
+}
+	
+.cw-button.sexyyellow span {
+	background-image: url(images/skins/yellow/button_right.gif);
+}
+
+.cw-button.sexyyellow span span {
+	background-image: url(images/skins/yellow/button_left.gif);
+}
+
+
+/* 
+ * Simple Skin Buttons
+ */
+
+.cw-button.sexysimple { 
+	position: relative; 
+	padding: 5px 10px 5px;
+	font: inherit;
+	font-size: 13px !important;
+	font-style: normal !important; 
+	font-weight: bold !important; 
+	color: #fff !important;
+	line-height: 1; 
+	background-image: url(images/skins/simple/awesome-overlay-sprite.png);
+	background-repeat: repeat-x;
+	background-position: 0 0;
+	
+	/* Special effects */
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25), -2px 0 1px rgba(0,0,0,0.25); 
+	border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5); 
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+	
+	/* IE only stuff */
+	border-bottom: 1px solid transparent\9;
+	_background-image: none;
+	
+	/* Cross browser inline block hack - http://blog.mozilla.com/webdev/2009/02/20/cross-browser-inline-block/ */
+	display: -moz-inline-stack;
+	display: inline-block;
+	vertical-align: middle;
+	*display: inline !important;
+	position: relative;
+	
+	/* Force hasLayout in IE */
+	zoom: 1;
+	
+	/* Disable text selection (Firefox only)*/
+	-moz-user-select: none;
+}
+
+.cw-button.sexysimple::selection {
+	background: transparent;
+}
+
+.cw-button.sexysimple:hover,
+.cw-button.sexysimple:focus {
+	background-position: 0 -50px; 
+	color: #fff !important;
+}
+
+.cw-button.sexysimple:active { 
+	background-position: 0 -100px; 
+	-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.7); 
+	/* Unfortunately, Safari doesn't support inset yet */
+	-webkit-box-shadow: none;
+	
+	/* IE only stuff */
+	border-bottom: 0\9;
+	border-top: 1px solid #666\9;
+}
+
+.cw-button.sexysimple[disabled], 
+.cw-button.sexysimple.disabled { 
+	background-position: 0 -150px; 
+	color: #333 !important;
+	text-shadow: none; 
+}
+
+.cw-button.sexysimple[disabled]:hover,
+.cw-button.sexysimple[disabled]:focus,
+.cw-button.sexysimple[disabled]:active,
+.cw-button.sexysimple.disabled:hover,
+.cw-button.sexysimple.disabled:focus,
+.cw-button.sexysimple.disabled:active {
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5); 
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
+} 
+
+.cw-button.sexysimple span {
+	height: auto;
+	padding-left: 24px;
+	padding-right: 0;
+	background-position: left center;
+	background-repeat: no-repeat;
+	/* IE6 still requires a PNG transparency fix */ 
+	/* _padding-left: 0;		Or just hide icons from the undeserving IE6 */
+}
+
+.cw-button.sexysimple span.after {
+	padding-left: 0;
+	padding-right: 24px;
+	background-position: right center;
+	/* IE6 still requires a PNG transparency fix */ 
+	/* _padding-right: 0;		Or just hide icons from the undeserving IE6 */
+}
+
+/* Simple button colors */
+.cw-button.sexysimple					{ background-color: #333; }		/* Default */
+.cw-button.sexysimple.sexyblack		{ background-color: #333; }
+.cw-button.sexysimple.sexyred		{ background-color: #a90118; }
+.cw-button.sexysimple.sexyorange	{ background-color: #ff8a00; }
+.cw-button.sexysimple.sexyyellow	{ background-color: #ffb515; }
+.cw-button.sexysimple.sexygreen		{ background-color: #59a901; }
+.cw-button.sexysimple.sexyblue		{ background-color: #015ea9; }
+.cw-button.sexysimple.sexyteal		{ background-color: #2daebf; }
+.cw-button.sexysimple.sexymagenta	{ background-color: #a9014b; }
+.cw-button.sexysimple.sexypurple	{ background-color: #9d01a9; }
+
+/* Simple button sizes */
+.cw-button.sexysimple.sexysmall          { padding: 4px 7px 5px; font-size: 10px !important; }
+.cw-button.sexysimple.sexysmall:active   { padding: 5px 7px 4px; }
+.cw-button.sexysimple                    { /* default */ }
+.cw-button.sexysimple:active             { padding: 6px 10px 4px; }
+.cw-button.sexysimple.sexymedium         { /* default */ }
+.cw-button.sexysimple.sexymedium:active  { padding: 6px 10px 4px; }
+.cw-button.sexysimple.sexylarge          { padding: 8px 14px 8px; font-size: 14px !important; }
+.cw-button.sexysimple.sexylarge:active   { padding: 9px 14px 7px; }
+.cw-button.sexysimple.sexyxl             { padding: 8px 14px 8px; font-size: 16px !important; }
+.cw-button.sexysimple.sexyxl:active      { padding: 9px 14px 7px; }
+.cw-button.sexysimple.sexyxxl            { padding: 8px 14px 8px; font-size: 20px !important; }
+.cw-button.sexysimple.sexyxxl:active     { padding: 9px 14px 7px; }
+.cw-button.sexysimple.sexyxxxl           { padding: 8px 14px 8px; font-size: 26px !important; }
+.cw-button.sexysimple.sexyxxxl:active    { padding: 9px 14px 7px; }
+
+.cw-button.sexysimple.sexysmall[disabled]:active,
+.cw-button.sexysimple.sexysmall.disabled:active   	{ padding: 4px 7px 5px; }
+.cw-button.sexysimple[disabled]:active,
+.cw-button.sexysimple.disabled:active 	            { padding: 5px 10px 5px; }
+.cw-button.sexysimple.sexymedium[disabled]:active,
+.cw-button.sexysimple.sexymedium.disabled:active 		{ padding: 6px 10px 4px; }
+.cw-button.sexysimple.sexylarge[disabled]:active,
+.cw-button.sexysimple.sexylarge.disabled:active   	{ padding: 8px 14px 8px; }
+.cw-button.sexysimple.sexyxl[disabled]:active,
+.cw-button.sexysimple.sexyxl.disabled:active	      { padding: 8px 14px 8px; }
+.cw-button.sexysimple.sexyxxl[disabled]:active,
+.cw-button.sexysimple.sexyxxl.disabled:active 		   { padding: 8px 14px 8px; }
+.cw-button.sexysimple.sexyxxxl[disabled]:active,
+.cw-button.sexysimple.sexyxxxl.disabled:active    	{ padding: 8px 14px 8px; }
+
+
+/*
+ * Icon Definitions
+ */
+
+/* Silk Icons - http://www.famfamfam.com/lab/icons/silk/ */
+/* (Obviously not all Silk icons are defined here. Feel free to define any other icons that you may need.) */
+
+.cw-button span.ok				{ background-image: url(images/icons/silk/tick.png) !important; }
+.cw-button span.cancel			{ background-image: url(images/icons/silk/cross.png) !important; }
+.cw-button span.add				{ background-image: url(images/icons/silk/add.png) !important; }
+.cw-button span.delete			{ background-image: url(images/icons/silk/delete.png) !important; }
+.cw-button span.download		{ background-image: url(images/icons/silk/arrow_down.png) !important; }
+.cw-button span.download2		{ background-image: url(images/icons/silk/package_down.png) !important; }
+.cw-button span.upload			{ background-image: url(images/icons/silk/arrow_up.png) !important; }
+.cw-button span.search			{ background-image: url(images/icons/silk/magnifier.png) !important; }
+.cw-button span.find			{ background-image: url(images/icons/silk/find.png) !important; }
+.cw-button span.first			{ background-image: url(images/icons/silk/resultset_first.png) !important; }
+.cw-button span.prev			{ background-image: url(images/icons/silk/resultset_previous.png) !important; }
+.cw-button span.next			{ background-image: url(images/icons/silk/resultset_next.png) !important; }
+.cw-button span.last			{ background-image: url(images/icons/silk/resultset_last.png) !important; }
+.cw-button span.play			{ background-image: url(images/icons/silk/play_blue.png) !important; }
+.cw-button span.pause			{ background-image: url(images/icons/silk/pause_blue.png) !important; }
+.cw-button span.rewind			{ background-image: url(images/icons/silk/rewind_blue.png) !important; }
+.cw-button span.forward		{ background-image: url(images/icons/silk/forward_blue.png) !important; }
+.cw-button span.stop			{ background-image: url(images/icons/silk/stop_blue.png) !important; }
+.cw-button span.reload			{ background-image: url(images/icons/silk/reload.png) !important; }
+.cw-button span.sync			{ background-image: url(images/icons/silk/arrow_refresh.png) !important; }
+.cw-button span.save			{ background-image: url(images/icons/silk/disk.png) !important; }
+.cw-button span.email			{ background-image: url(images/icons/silk/email.png) !important; }
+.cw-button span.print			{ background-image: url(images/icons/silk/printer.png) !important; }
+.cw-button span.heart			{ background-image: url(images/icons/silk/heart.png) !important; }
+.cw-button span.like			{ background-image: url(images/icons/silk/thumb_up.png) !important; }
+.cw-button span.dislike		{ background-image: url(images/icons/silk/thumb_down.png) !important; }
+.cw-button span.accept			{ background-image: url(images/icons/silk/accept.png) !important; }
+.cw-button span.decline		{ background-image: url(images/icons/silk/decline.png) !important; }
+.cw-button span.help			{ background-image: url(images/icons/silk/help.png) !important; }
+.cw-button span.home			{ background-image: url(images/icons/silk/house.png) !important; }
+.cw-button span.info			{ background-image: url(images/icons/silk/information.png) !important; }
+.cw-button span.cut				{ background-image: url(images/icons/silk/cut.png) !important; }
+.cw-button span.copy			{ background-image: url(images/icons/silk/page_white_copy.png) !important; }
+.cw-button span.paste			{ background-image: url(images/icons/silk/paste_plain.png) !important; }
+.cw-button span.erase			{ background-image: url(images/icons/silk/erase.png) !important; }
+.cw-button span.undo			{ background-image: url(images/icons/silk/arrow_undo.png) !important; }
+.cw-button span.redo			{ background-image: url(images/icons/silk/arrow_redo.png) !important; }
+.cw-button span.edit			{ background-image: url(images/icons/silk/pencil.png) !important; }
+.cw-button span.calendar		{ background-image: url(images/icons/silk/date.png) !important; }
+.cw-button span.user			{ background-image: url(images/icons/silk/user.png) !important; }
+.cw-button span.settings		{ background-image: url(images/icons/silk/cog.png) !important; }
+.cw-button span.cart			{ background-image: url(images/icons/silk/cart.png) !important; }
+.cw-button span.wand			{ background-image: url(images/icons/silk/wand.png) !important; }
+.cw-button span.wrench			{ background-image: url(images/icons/silk/wrench.png) !important; }

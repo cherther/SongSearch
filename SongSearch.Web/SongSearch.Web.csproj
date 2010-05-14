@@ -89,11 +89,15 @@
     </Compile>
     <Compile Include="Helpers\Configuration.cs" />
     <Compile Include="Helpers\Connections.cs" />
+    <Compile Include="Helpers\FlashHelpers.cs" />
+    <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Helpers\VersionInfo.cs" />
     <Compile Include="Helpers\Extensions\Extensions.cs" />
     <Compile Include="Helpers\Extensions\LinqExtensions.cs" />
     <Compile Include="Helpers\Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\SystemSettings.cs" />
     <Compile Include="Helpers\Extensions\UserExtensions.cs" />
+    <Compile Include="Helpers\XssHelper.cs" />
     <Compile Include="Infrastructure\Mailer\SendMail.cs" />
     <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
     <Compile Include="Models\User.cs" />
@@ -123,13 +127,32 @@
     <Compile Include="Services\UserManagementService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Public\Css\cw.app.css" />
+    <Content Include="Public\Css\cw.twitlogin.css" />
+    <Content Include="Public\Css\cw.buttons.css" />
+    <Content Include="Public\Javascript\cw.app.js" />
     <Content Include="Public\Javascript\jquery.tablesorter.js" />
     <Content Include="Public\Javascript\jquery.tablesorter.min.js" />
     <Content Include="Public\Javascript\page-player.js" />
     <Content Include="Public\Javascript\soundmanager2-nodebug-jsmin.js" />
     <Content Include="Public\Javascript\soundmanager2.js" />
     <Content Include="Public\Javascript\swfobject.js" />
+    <Content Include="Views\Account\ChangePassword.aspx" />
+    <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Views\Account\LogIn.aspx" />
+    <Content Include="Views\Account\LogOut.aspx" />
+    <Content Include="Views\Account\Register.aspx" />
+    <Content Include="Views\Account\ResetPassword.aspx" />
+    <Content Include="Views\Account\ResetPasswordRespond.aspx" />
+    <Content Include="Views\Account\ResetPasswordSuccess.aspx" />
+    <Content Include="Views\Account\UpdateProfile.aspx" />
+    <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
+    <Content Include="Views\Shared\ctrlBuildInfo.aspx" />
+    <Content Include="Views\Shared\ctrlLogIn.aspx" />
+    <Content Include="Views\Shared\ctrlMainMenu.aspx" />
+    <Content Include="Views\Shared\ctrlSubMenu.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -149,20 +172,14 @@
     <Content Include="Public\Javascript\MicrosoftMvcAjax.debug.js" />
     <Content Include="Public\Javascript\MicrosoftMvcValidation.js" />
     <Content Include="Public\Javascript\MicrosoftMvcValidation.debug.js" />
-    <Content Include="Views\Account\ChangePassword.aspx" />
-    <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
-    <Content Include="Views\Account\LogOn.aspx" />
-    <Content Include="Views\Account\Register.aspx" />
     <Content Include="Views\Home\About.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
-    <Content Include="Views\Shared\LogOnUserControl.ascx" />
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Public\Css\" />
     <Folder Include="Public\Images\" />
   </ItemGroup>
   <ItemGroup>

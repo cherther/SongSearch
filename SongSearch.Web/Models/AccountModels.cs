@@ -10,7 +10,7 @@ using System.Web.Security;
 using SongSearch.Web.Data;
 using SongSearch.Web.Services;
 
-namespace SongSearch.Web.Models {
+namespace SongSearch.Web {
 
 	#region Models
 	// **************************************
@@ -130,6 +130,8 @@ namespace SongSearch.Web.Models {
 		[DisplayName("Download Signature (default text appended to the name of your song files)")]
 		[RegularExpression(@"[^\\/:*?""<>|]*", ErrorMessage = @"Signatures may not contain the characters \ /:*?""<>|")]
 		public string Signature { get; set; }
+
+		public bool ShowSignatureField { get; set; }
 
 		[Required]
 		[DataType(DataType.Password)]
