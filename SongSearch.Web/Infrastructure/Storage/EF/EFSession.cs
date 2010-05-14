@@ -69,12 +69,25 @@ namespace SongSearch.Web.Data {
 
 		public T Single<T>(Expression<Func<T, bool>> expression) where T : class
 		{
-			return GetTable<T>().SingleOrDefault(expression);
+			return Single(expression, "");// GetTable<T>().SingleOrDefault(expression);
+		}
+
+		public T Single<T>(Expression<Func<T, bool>> expression, string loadWith) where T : class {
+			
+			var set = GetTable<T>();
+			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
+			return set.SingleOrDefault(expression);
 		}
 
 		public IQueryable<T> All<T>() where T : class
 		{
 			return GetTable<T>().AsQueryable();
+		}
+
+		public IQueryable<T> All<T>(string loadWith) where T : class {
+			var set = GetTable<T>();
+			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
+			return set.AsQueryable();
 		}
 
 		public void Add<T>(T item) where T : class

@@ -16,6 +16,7 @@ namespace SongSearch.Web.Services {
 		IList<User> GetMyUserHierarchy();
 		IList<Invitation> GetMyInvites(InvitationStatusCodes status);
 		User GetUserDetail(int userId);
+		User GetUserDetail(string userName);
 
 		Guid CreateNewInvitation(string inviteEmailAddress);
 		Invitation GetInvitation(string inviteId, string inviteEmailAddress);

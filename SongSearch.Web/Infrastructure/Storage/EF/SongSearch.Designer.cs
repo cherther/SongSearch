@@ -23,7 +23,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Roles", "Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Role), "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentRightTerritories", "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRight), "Territories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Territory))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentTags", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), "Tags", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Tag))]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_ParentUsers", "ChildUser", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.User), "ParentUser", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.Invitation), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "CartContents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), "Cart", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Cart))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Carts_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Cart", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Cart), true)]
@@ -2531,66 +2530,6 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Role>("SongSearch.Web.Data.Model.FK_Users_Roles", "Roles", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_ParentUsers", "ParentUser")]
-        public EntityCollection<User> ChildUsers
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ParentUser");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ParentUser", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_ParentUsers", "ChildUser")]
-        public User ParentUser
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ChildUser").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ChildUser").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<User> ParentUserReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ChildUser");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_ParentUsers", "ChildUser", value);
                 }
             }
         }

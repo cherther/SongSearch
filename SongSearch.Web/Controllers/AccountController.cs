@@ -147,9 +147,9 @@ namespace SongSearch.Web.Controllers {
 									};
 
 									try {
-										_accs.RegisterUser(user, inv.InvitationId);
+										user = _accs.RegisterUser(user, inv.InvitationId);
 
-										_fs.SignIn(model.Email, false /* createPersistentCookie */);
+										_fs.SignIn(user.UserName, false /* createPersistentCookie */);
 
 										return RedirectToAction("Index", "Home");
 									}

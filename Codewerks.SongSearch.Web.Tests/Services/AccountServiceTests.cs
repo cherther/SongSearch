@@ -25,33 +25,45 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 		[TestMethod]
 		public void Can_Register_User() {
 			// Arrange
-			var password = "go1974";
 			var user = new User() {
 				UserName = _dummyuser,
 				FirstName = "New",
 				LastName = "User",
-				ParentUserId = 3,
-				Password = password
+				ParentUserId = _adminId,
+				Password = _dummypw
 			};
 			
 
 			// Act
-			_acc.RegisterUser(user, _invitationCode);
+			user = _acc.RegisterUser(user, _invitationCode);
 			_dummyId = user.UserId;
 
-			var isValid = _acc.UserIsValid(_dummyuser, password);
+			var isValid = _acc.UserIsValid(_dummyuser, _dummypw);
 			// Assert
 			Assert.IsTrue(isValid);
+			user = null;
+		}
+
+		[TestMethod]
+		public void Registered_User_Has_Invitation_Parent_User() {
+			// Arrange
+			if (_dummyId == 0) { Can_Register_User(); }
+			var user = _usr.GetUserDetail(_dummyId);
+			// Act
+			var parentId = user.ParentUser.UserId;
+			Assert.AreEqual(parentId, _adminId);
+			user = null;
 		}
 
 		[TestMethod]
 		public void Can_Validate_User() {
 			// Arrange
-			var username = "claus_herther@yahoo.com";
-			var password = "go1974";
+			//var username = "claus_herther@yahoo.com";
+			//var password = "go1974";
+			if (_dummyId == 0) { Can_Register_User(); }
 
 			// Act
-			var isValid = _acc.UserIsValid(username, password);
+			var isValid = _acc.UserIsValid(_dummyuser, _dummypw);
 			
 			// Assert
 			Assert.IsTrue(isValid);
@@ -60,9 +72,10 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 		[TestMethod]
 		public void Can_Check_If_User_Exists() {
 			// Arrange
-			
+			if (_dummyId == 0) { Can_Register_User(); }
+
 			// Act
-			var exists = _acc.UserExists(_client);
+			var exists = _acc.UserExists(_dummyuser);
 
 			// Assert
 			Assert.IsTrue(exists);
@@ -72,66 +85,93 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 		[TestMethod]
 		public void User_Can_Update_Password() {
 			// Arrange
-			var user = new User() {
-				UserName = _client,
-				Password = "rogers1"			
-			};
-			// Act
-			var good = _acc.UpdateProfile(user, "go1974");
+			if (_dummyId == 0) { Can_Register_User(); }
 
+			var user = new User() {
+				UserName = _dummyuser,
+				Password = _dummypw			
+			};
+			var newpassword = "1234567890";
+			// Act
+			_acc.UpdateProfile(user, newpassword);
+
+			var isvalid = _acc.UserIsValid(_dummyuser, newpassword);
 			// Assert
-			Assert.IsTrue(good);
+			Assert.IsTrue(isvalid);
+
+			//reset
+			user.Password = newpassword;
+			_acc.UpdateProfile(user, _dummypw);
+			user = null;
+
 		}
 
 		[TestMethod]
 		public void User_Can_Update_Profile() {
 			// Arrange
+			if (_dummyId == 0) { Can_Register_User(); }
+
+			var name = "Client " + DateTime.Now.ToLongTimeString();
+
 			var user = new User() {
-				UserName = _client,
-				FirstName = "Client",
-				LastName = "#1"
+				UserName = _dummyuser,
+				FirstName = "Test",
+				LastName = name
 			};
 			// Act
-			var good = _acc.UpdateProfile(user, "");
+			_acc.UpdateProfile(user, "");
 
+			var dbuser = _usr.GetUserDetail(_dummyuser);
 			// Assert
-			Assert.IsTrue(good);
+			Assert.AreEqual(name, dbuser.LastName);
+			user = null;
+			dbuser = null;
 		}
 
 		[TestMethod]
 		public void Plugger_Can_Update_User_Signature() {
 			// Arrange
+			var signature = "Contact Me!" + DateTime.Now.ToLongTimeString();
 			var user = new User() {
 				UserName = _plugger,
-				Signature = "Contact Me!"
+				Signature = signature
 			};
 			// Act
-			var good = _acc.UpdateProfile(user, "");
+			_acc.UpdateProfile(user, "");
 
+			var usersig = _usr.GetUserDetail(_plugger).Signature;
 			// Assert
-			Assert.IsTrue(good);
+			Assert.AreEqual(signature, usersig);
+			user = null;
 		}
 
 		[TestMethod]
-		public void Plugger_Cannot_Update_User_Signature() {
+		public void Client_Cannot_Update_User_Signature() {
 			// Arrange
+			if (_dummyId == 0) { Can_Register_User(); }
+
+			var signature = "Contact Me!" + DateTime.Now.ToLongTimeString();
 			var user = new User() {
-				UserName = _client,
-				Signature = "Contact Me!"
+				UserName = _dummyuser,
+				Signature = signature
 			};
 			// Act
-			var good = _acc.UpdateProfile(user, "");
+			_acc.UpdateProfile(user, "");
 
+			var usersig = _usr.GetUserDetail(_dummyuser).Signature;
 			// Assert
-			Assert.IsTrue(good);
+			Assert.AreNotEqual(signature, usersig);
+			user = null;
 		}
 
 		private static IAccountService _acc;
 		private static IUserManagementService _usr;
 		private static string _admin = "claus_herther@yahoo.com";
-		private static string _client = "client@yahoo.com";
+		private static int _adminId = 2;
+
 		private static string _plugger = "seller@yahoo.com";
 		private static string _dummyuser = "newuser@yahoo.com";
+		private static string _dummypw = "testing";
 		private static int _dummyId;
 		private static Guid _invitationCode = new Guid("0F9C1057-25BE-4CD0-AE60-4AF35700698A");
 
@@ -140,10 +180,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 
 			_acc = new AccountService();
 			_usr = new UserManagementService(_admin);
-			DeleteUser(11);
-			DeleteUser(12);
-			DeleteUser(13);
-			DeleteUser(14);
+			
 			ResetInvitation();
 		}
 

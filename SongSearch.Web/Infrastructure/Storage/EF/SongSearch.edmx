@@ -59,10 +59,6 @@
             <End Role="Invitations" EntitySet="Invitations" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK_Users_ParentUsers" Association="SongSearch2Model.Store.FK_Users_ParentUsers">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Users1" EntitySet="Users" />
-          </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="SongSearch2Model.Store.FK_Users_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
@@ -351,18 +347,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Users_ParentUsers">
-          <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="0..1" />
-          <End Role="Users1" Type="SongSearch2Model.Store.Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Users1">
-              <PropertyRef Name="ParentUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Users_Roles">
           <End Role="Roles" Type="SongSearch2Model.Store.Roles" Multiplicity="1" />
           <End Role="Users" Type="SongSearch2Model.Store.Users" Multiplicity="*" />
@@ -447,10 +431,6 @@
           <AssociationSet Name="ContentTags" Association="SongSearch.Web.Data.Model.ContentTags">
             <End Role="Contents" EntitySet="Contents" />
             <End Role="Tags" EntitySet="Tags" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_ParentUsers" Association="SongSearch.Web.Data.Model.FK_Users_ParentUsers">
-            <End Role="ChildUser" EntitySet="Users" />
-            <End Role="ParentUser" EntitySet="Users" />
           </AssociationSet>
           <EntitySet Name="Invitations" EntityType="SongSearch.Web.Data.Model.Invitation" />
           <AssociationSet Name="FK_Users_Invitations" Association="SongSearch.Web.Data.Model.FK_Users_Invitations">
@@ -587,12 +567,10 @@
           <Property Name="RegisteredOn" Type="DateTime" Nullable="false" />
           <Property Name="Signature" Type="String" MaxLength="1000" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Role" Relationship="SongSearch.Web.Data.Model.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
-          <NavigationProperty Name="ChildUsers" Relationship="SongSearch.Web.Data.Model.FK_Users_ParentUsers" FromRole="ChildUser" ToRole="ParentUser" />
-          <NavigationProperty Name="ParentUser" Relationship="SongSearch.Web.Data.Model.FK_Users_ParentUsers" FromRole="ParentUser" ToRole="ChildUser" />
           <NavigationProperty Name="Invitation" Relationship="SongSearch.Web.Data.Model.FK_Users_Invitations" FromRole="User" ToRole="Invitation" />
           <NavigationProperty Name="Carts" Relationship="SongSearch.Web.Data.Model.FK_Carts_Users" FromRole="User" ToRole="Cart" />
           <NavigationProperty Name="UserCatalogRoles" Relationship="SongSearch.Web.Data.Model.FK_UsersCatalogs_Users" FromRole="User" ToRole="UserCatalogRole" />
-        </EntityType>
+          </EntityType>
         <Association Name="FK_Contents_Catalogs">
           <End Role="Catalogs" Type="SongSearch.Web.Data.Model.Catalog" Multiplicity="1" />
           <End Role="Contents" Type="SongSearch.Web.Data.Model.Content" Multiplicity="*" />
@@ -636,18 +614,6 @@
         <Association Name="ContentTags">
           <End Role="Contents" Type="SongSearch.Web.Data.Model.Content" Multiplicity="*" />
           <End Role="Tags" Type="SongSearch.Web.Data.Model.Tag" Multiplicity="*" />
-        </Association>
-        <Association Name="FK_Users_ParentUsers">
-          <End Type="SongSearch.Web.Data.Model.User" Role="ChildUser" Multiplicity="0..1" />
-          <End Type="SongSearch.Web.Data.Model.User" Role="ParentUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ChildUser">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="ParentUser">
-              <PropertyRef Name="ParentUserId" />
-            </Dependent>
-          </ReferentialConstraint>
         </Association>
         <EntityType Name="Invitation">
           <Key>
@@ -888,7 +854,7 @@
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Role" Width="1.5" PointX="3.625" PointY="10.875" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Tag" Width="1.5" PointX="0.75" PointY="8.75" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Territory" Width="1.5" PointX="7.5" PointY="3" Height="1.787985026041671" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.User" Width="1.5" PointX="3.625" PointY="13.375" Height="3.9033007812499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.User" Width="1.5" PointX="3.625" PointY="13.375" Height="4.0956022135416674" IsExpanded="true" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Contents_Catalogs" ManuallyRouted="false">
           <ConnectorPoint PointX="8" PointY="10.254509335937502" />
           <ConnectorPoint PointX="3.36718875" PointY="10.254509335937502" />
@@ -910,20 +876,14 @@
           <ConnectorPoint PointX="3" PointY="9.1920068359375016" />
           <ConnectorPoint PointX="2.25" PointY="9.1920068359375016" />
         </AssociationConnector>
-        <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_ParentUsers" >
-          <ConnectorPoint PointX="4.1569230769230767" PointY="17.470602213541667" />
-          <ConnectorPoint PointX="4.1569230769230767" PointY="17.720602213541667" />
-          <ConnectorPoint PointX="4.6034615384615378" PointY="17.720602213541667" />
-          <ConnectorPoint PointX="4.6034615384615378" PointY="17.470602213541667" />
-        </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Invitation" Width="1.5" PointX="0.875" PointY="14.25" Height="2.1725878906250031" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Invitations" >
           <ConnectorPoint PointX="2.375" PointY="15.336293945312502" />
           <ConnectorPoint PointX="3.625" PointY="15.336293945312502" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.CartContents" >
-          <ConnectorPoint PointX="3.1093725" PointY="9.6340136718750031" />
-          <ConnectorPoint PointX="3.1093725" PointY="13.018992513020834" />
+          <ConnectorPoint PointX="3.152341875" PointY="9.6340136718750031" />
+          <ConnectorPoint PointX="3.152341875" PointY="13.018992513020834" />
           <ConnectorPoint PointX="2.25" PointY="13.018992513020834" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Carts_Users" >

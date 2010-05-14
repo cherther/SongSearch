@@ -43,7 +43,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// RegisterUser
 		// **************************************    
-		public void RegisterUser(User user, Guid invitationCode) {
+		public User RegisterUser(User user, Guid invitationCode) {
 
 			if (!UserExists(user.UserName)) {
 				var inv = _session.Single<Invitation>(i => i.InvitationId.Equals(invitationCode) && i.InvitationEmailAddress.Equals(user.UserName));
@@ -51,13 +51,13 @@ namespace SongSearch.Web.Services {
 				if (inv != null) {
 
 					user.Password = user.Password.PasswordHashString();
-					user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
+					user.ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : 1;
 					user.RoleId = (int)Roles.Client;
 					user.RegisteredOn = DateTime.Now;
 
 					// Get parent users catalog where parent user is at least a plugger and assign to new user in client role
 					var catalogs = _session.All<UserCatalogRole>().Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Plugger);
-					catalogs.ForEach(c => 
+					catalogs.ForEach(c =>
 						user.UserCatalogRoles.Add(new UserCatalogRole() { CatalogId = c.CatalogId, RoleId = (int)Roles.Client })
 					);
 
@@ -70,7 +70,11 @@ namespace SongSearch.Web.Services {
 					_session.CommitChanges();
 					inv = null;
 				}
+			} else {
+				user = GetUser(user);
 			}
+
+			return user;
 		}
 
 		// **************************************
@@ -110,7 +114,7 @@ namespace SongSearch.Web.Services {
 				dbuser.FirstName = user.FirstName;
 			if (!String.IsNullOrEmpty(user.LastName))
 				dbuser.LastName = user.LastName;
-			if (!String.IsNullOrEmpty(user.Signature) && user.IsAtLeastInRole(Roles.Plugger))
+			if (!String.IsNullOrEmpty(user.Signature) && dbuser.IsAtLeastInRole(Roles.Plugger))
 				dbuser.Signature = user.Signature;
 
 			if (!String.IsNullOrEmpty(newPassword) && PasswordHashMatches(dbuser.Password, user.Password)) {

@@ -86,16 +86,20 @@ namespace SongSearch.Web.Services {
 		// GetUserDetail
 		// **************************************
 		public User GetUserDetail(int userId) {
-			var user = GetUser(userId);
+			return GetUserDetail(GetUser(userId));
+		}
+		public User GetUserDetail(string userName) {
+			return GetUserDetail(GetUser(userName));
+		}
+		private User GetUserDetail(User user) {
 
 			//TODO: is this not handled via self-join?
 			user.ParentUser = user.ParentUserId.HasValue ?
-				_session.Single<User>(u => u.UserId == userId) :
+				_session.Single<User>(u => u.UserId == user.ParentUserId) :
 				null;
 
 			return user;
 		}
-
 		// **************************************
 		// DeleteUser
 		// **************************************
@@ -143,7 +147,7 @@ namespace SongSearch.Web.Services {
 			user.ParentUserId = ActiveUser.UserId;
 
 			// take over the child users
-			var childUsers = user.ChildUsers;// _session.All<User>().Where(u => u.ParentUserId == myUser.UserId);
+			var childUsers = _session.All<User>().Where(u => u.ParentUserId == user.UserId);
 			foreach (var child in childUsers) {
 				child.ParentUserId = ActiveUser.UserId;
 			}
@@ -227,25 +231,27 @@ namespace SongSearch.Web.Services {
 		// UpdateUserCatalogRole
 		// **************************************
 		public void UpdateUserCatalogRole(int userId, int catalogId, int roleId) {
-			var user = GetUser(userId);
+			var user = GetUserDetail(userId);
 			if (user != null && catalogId > 0) {
 
 				
 				var usrCatalogRole = user.UserCatalogRoles.Where(c => c.CatalogId == catalogId).SingleOrDefault();
+
 				if (usrCatalogRole == null) {
-					// new catalog role
+					if (roleId > 0) {
+						// new catalog role
 
-					// check role against enum
-					roleId = ModelEnums.GetRoles().GetBestMatchForRole(roleId);
+						// check role against enum
+						roleId = ModelEnums.GetRoles().GetBestMatchForRole(roleId);
 
-					usrCatalogRole  = 
-						new UserCatalogRole {
-							UserId = userId,
-							CatalogId = catalogId,
-							RoleId = roleId
-						};
-					_session.Add<UserCatalogRole>(usrCatalogRole);
-				
+						usrCatalogRole =
+							new UserCatalogRole {
+								UserId = userId,
+								CatalogId = catalogId,
+								RoleId = roleId
+							};
+						_session.Add<UserCatalogRole>(usrCatalogRole);
+					}
 				} else {
 				
 					if (roleId > 0) {
@@ -253,15 +259,17 @@ namespace SongSearch.Web.Services {
 						usrCatalogRole.RoleId = roleId;
 					
 					} else {
-						// revole access
-						_session.Delete<UserCatalogRole>(usrCatalogRole);
 
 						//also remove these catalogs from any child users, really?
-						var childUsers = user.ChildUsers; // _session.All<User>().Where(u => u.ParentUserId == userId);
+						var childUsers = user.GetUserHierarchy(withCatalogRoles: true);
 						foreach (var child in childUsers) {
-							var subCatalogs = child.UserCatalogRoles.Where(c => c.CatalogId == catalogId).ToList();
-							subCatalogs.ForEach(x => _session.Delete<UserCatalogRole>(x));
+							var cat = _session.Single<UserCatalogRole>(x => x.CatalogId == catalogId && x.UserId == child.UserId);
+							if (cat != null) { _session.Delete<UserCatalogRole>(cat); }
 						}
+
+						// revoke parent access
+						_session.Delete<UserCatalogRole>(usrCatalogRole);
+
 
 					}
 				}
@@ -391,7 +399,10 @@ namespace SongSearch.Web.Services {
 			var user = _session.Single<User>(u => u.UserId == userId);
 			return user;
 		}
-
+		private User GetUser(string userName) {
+			var user = _session.Single<User>(u => u.UserName == userName);
+			return user;
+		}
 		private IQueryable<User> GetUsers() {
 			var users = _session.All<User>();
 			return users;

@@ -23,6 +23,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabases>false</PublishDatabases>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -87,11 +89,14 @@
     </Compile>
     <Compile Include="Helpers\Configuration.cs" />
     <Compile Include="Helpers\Connections.cs" />
-    <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Helpers\Extensions\Extensions.cs" />
+    <Compile Include="Helpers\Extensions\LinqExtensions.cs" />
+    <Compile Include="Helpers\Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\SystemSettings.cs" />
-    <Compile Include="Helpers\UserExtensions.cs" />
+    <Compile Include="Helpers\Extensions\UserExtensions.cs" />
     <Compile Include="Infrastructure\Mailer\SendMail.cs" />
-    <Compile Include="Models\ModelExtensions.cs" />
+    <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Infrastructure\Authentication\AuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\Authentication\FormsAuthenticationService.cs" />
@@ -181,8 +186,8 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>60844</DevelopmentServerPort>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>9001</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

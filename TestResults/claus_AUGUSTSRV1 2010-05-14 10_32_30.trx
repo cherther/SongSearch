@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="c41dc8f4-6b0b-4db8-be00-eaebcf04a599" name="claus@AUGUSTSRV1 2010-05-14 10:32:30" runUser="AUGUSTSRV1\claus" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="22858318-b5a3-49f3-a70e-f4840df360e5">
+    <Deployment runDeploymentRoot="claus_AUGUSTSRV1 2010-05-14 10_32_30">
+      <DeploymentItem filename="D:\DevProjects\SongSearch\SongSearch.Web\bin\SongSearch.Web.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-05-14T10:32:30.7651713+02:00" queuing="2010-05-14T10:32:31.5812180+02:00" start="2010-05-14T10:32:31.6832238+02:00" finish="2010-05-14T10:34:09.5558218+02:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Admin_User_Can_Revoke_Catalog_Access_To_User_And_ChildUsers" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="195b2bff-14f1-429f-53f6-22f000228760">
+      <Execution id="445c1f18-4595-4e5b-a603-de5df3b6748f" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.UserManagementTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Admin_User_Can_Revoke_Catalog_Access_To_User_And_ChildUsers" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="195b2bff-14f1-429f-53f6-22f000228760" executionId="445c1f18-4595-4e5b-a603-de5df3b6748f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="445c1f18-4595-4e5b-a603-de5df3b6748f" testId="195b2bff-14f1-429f-53f6-22f000228760" testName="Admin_User_Can_Revoke_Catalog_Access_To_User_And_ChildUsers" computerName="AUGUSTSRV1" duration="00:01:35.0151098" startTime="2010-05-14T10:32:31.7812294+02:00" endTime="2010-05-14T10:34:07.9597305+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="445c1f18-4595-4e5b-a603-de5df3b6748f">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method Codewerks.SongSearch.Web.Tests.Services.UserManagementTests.Admin_User_Can_Revoke_Catalog_Access_To_User_And_ChildUsers threw exception: 
+System.InvalidOperationException: The object cannot be deleted because it was not found in the ObjectStateManager.</Message>
+          <StackTrace>    at System.Data.Objects.ObjectContext.DeleteObject(Object entity, EntitySet expectedEntitySet)
+   at System.Data.Objects.ObjectSet`1.DeleteObject(TEntity entity)
+   at SongSearch.Web.Data.EFSession.Delete[T](T item) in D:\DevProjects\SongSearch\SongSearch.Web\Infrastructure\Storage\EF\EFSession.cs:line 60
+   at SongSearch.Web.Services.UserManagementService.&lt;UpdateUserCatalogRole&gt;b__14(UserCatalogRole x) in D:\DevProjects\SongSearch\SongSearch.Web\Services\UserManagementService.cs:line 267
+   at System.Collections.Generic.List`1.ForEach(Action`1 action)
+   at SongSearch.Web.Services.UserManagementService.UpdateUserCatalogRole(Int32 userId, Int32 catalogId, Int32 roleId) in D:\DevProjects\SongSearch\SongSearch.Web\Services\UserManagementService.cs:line 267
+   at Codewerks.SongSearch.Web.Tests.Services.UserManagementTests.Admin_User_Can_Revoke_Catalog_Access_To_User_And_ChildUsers() in D:\DevProjects\SongSearch\Codewerks.SongSearch.Web.Tests\Services\UserManagementTests.cs:line 235
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

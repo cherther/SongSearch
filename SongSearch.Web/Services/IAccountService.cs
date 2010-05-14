@@ -11,7 +11,7 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	public interface IAccountService : IDisposable {
 
-		void RegisterUser(User user, Guid invitationCode);
+		User RegisterUser(User user, Guid invitationCode);
 		bool UserIsValid(string userName, string password);
 		bool UserExists(string userName);
 		bool UpdateProfile(User user, string newPassword);

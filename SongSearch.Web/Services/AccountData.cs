@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using System.Data.Entity;
 using System.Web;
 using SongSearch.Web.Data;
 
@@ -103,23 +105,32 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetUserHierarchy
 		// **************************************    
-		public static IList<User> GetUserHierarchy(this User user) {
+		public static IList<User> GetUserHierarchy(this User user, bool withCatalogRoles = false) {
 
-			using (ISession rep = new EFSession()) {
-				// Only users with same or lesser access rights
-				//var rep = fullyLoaded ? _usrMgmtSvc.GetUserRepositoryFullyLoaded() : SqlSession;
-				var users = rep.All<User>().Where(u => u.RoleId >= (int)user.RoleId);
-//				users = !roleId.HasValue ? users : users.Where(u => u.RoleId == roleId);
+			using (var ctx = new SongSearchContext(Connections.ConnectionString(ConnectionStrings.SongSearchContext))) {
+				//
+				if (withCatalogRoles)
+					ctx.ContextOptions.LazyLoadingEnabled = false;
 
-				var topLevelUsers = (
-					user.IsSuperAdmin() ?
-					users.Where(u => !u.ParentUserId.HasValue) :
-					users.Where(u => u.ParentUserId == user.UserId)
-					).ToList();
+				//		DataLoadOptions dlo = new DataLoadOptions();
 
-				var userHierarchy = topLevelUsers.AttachChildren(users.ToList());
+				//using (ISession session = new EFSession(ctx)) {
+					// Only users with same or lesser access rights
+					//var rep = fullyLoaded ? _usrMgmtSvc.GetUserRepositoryFullyLoaded() : SqlSession;
+				var set = ctx.CreateObjectSet<User>();
+				var users = (withCatalogRoles ? set.Include("UserCatalogRoles") : set).Where(u => u.RoleId >= (int)user.RoleId).ToList();
+					//				users = !roleId.HasValue ? users : users.Where(u => u.RoleId == roleId);
 
-				return userHierarchy;//SqlSession.GetUsers().Where(x => x.ParentUserId == User.UserId).Flatten();
+					var topLevelUsers = (
+						user.IsSuperAdmin() ?
+						users.Where(u => !u.ParentUserId.HasValue) :
+						users.Where(u => u.ParentUserId == user.UserId)
+						).ToList();
+
+					var userHierarchy = topLevelUsers.AttachChildren(users);
+
+					return userHierarchy;//SqlSession.GetUsers().Where(x => x.ParentUserId == User.UserId).Flatten();
+				//}
 			}
 		}
 
@@ -130,7 +141,7 @@ namespace SongSearch.Web.Services {
 			foreach (var p in parents) {
 				var parent = p;
 				var children = users.Where(u => u.ParentUserId == parent.UserId).ToList();
-				//parent.ChildUsers = AttachChildren(children, users);
+				parent.ChildUsers = AttachChildren(children, users);
 			}
 			return parents;
 		}
