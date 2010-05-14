@@ -9,7 +9,7 @@ namespace SongSearch.Web.Services
 {
 
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class RequireMinRoleAttribute : FilterAttribute, IAuthorizationFilter
+    public class RequireAuthorization : FilterAttribute, IAuthorizationFilter
     {
 
         private readonly object _typeId = new object();

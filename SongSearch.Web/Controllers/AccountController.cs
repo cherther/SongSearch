@@ -89,6 +89,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		// URL: /Account/LogOut
 		// **************************************
+		[RequireAuthorization]
 		public ActionResult LogOut() {
 
 			_fs.SignOut();
@@ -196,7 +197,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		// URL: /Account/ChangePassword
 		// **************************************
-		[RequireMinRole]
+		[RequireAuthorization]
 		public ActionResult ChangePassword() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
@@ -205,7 +206,7 @@ namespace SongSearch.Web.Controllers {
 			return View(vm);
 		}
 
-		[RequireMinRole]
+		[RequireAuthorization]
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
@@ -231,7 +232,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		// URL: /Account/ChangePasswordSuccess
 		// **************************************        
-		[RequireMinRole]
+		[RequireAuthorization]
 		public ActionResult ChangePasswordSuccess() {
 			string email = User.Identity.Name;
 
@@ -252,7 +253,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		// URL: /Account/UpdateProfile
 		// **************************************
-		[RequireMinRole]
+		[RequireAuthorization]
 		public ActionResult UpdateProfile() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
@@ -271,7 +272,7 @@ namespace SongSearch.Web.Controllers {
 			return View(vm);
 		}
 
-		[RequireMinRole]
+		[RequireAuthorization]
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
@@ -303,7 +304,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		// URL: /Account/UpdateProfileSuccess
 		// **************************************        
-		[RequireMinRole]
+		[RequireAuthorization]
 		public ActionResult UpdateProfileSuccess() {
 			//string email = User.Identity.Name;
 

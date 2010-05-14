@@ -14,15 +14,15 @@ namespace SongSearch.Web {
 	}
 
 	// **************************************
-	// AssetTypes
+	// MediaVersion
 	// **************************************    
-	public enum AssetTypes {
+	public enum MediaVersion {
 		Preview = 1,
 		FullSong
 	}
 
 	// **************************************
-	// AssetTypes
+	// MediaVersion
 	// **************************************    
 	public enum FileTypes {
 		MP3 = 1
@@ -37,9 +37,27 @@ namespace SongSearch.Web {
 		Downloaded = 2
 	}
 
+	// **************************************
+	// CartStatusCodes
+	// **************************************    
 	public enum Territories {
 		Default = 1
 	}
+
+	// **************************************
+	// CartStatusCodes
+	// **************************************    
+	public enum TagType {
+		Moods,
+		Styles,
+		Brands,
+		Gender,
+		Tempo,
+		Language,
+		SoundsLike,
+		Instruments
+	}
+
 	// **************************************
 	// InvitationStatusCodes
 	// **************************************    
@@ -47,6 +65,13 @@ namespace SongSearch.Web {
 		Open = 0,
 		Registered = 1,
 		Expired = 2
+	}
+
+	public enum SearchTypes {
+		Contains = 1,
+		HasValue = 2,
+		Range = 3,
+		Tag = 4
 	}
 
 	// **************************************

@@ -15,6 +15,25 @@
           <EntitySet Name="ContentTags" EntityType="SongSearch2Model.Store.ContentTags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Invitations" EntityType="SongSearch2Model.Store.Invitations" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="SongSearch2Model.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SearchProperties" EntityType="SongSearch2Model.Store.SearchProperties" store:Type="Tables" store:Schema="dbo" store:Name="SearchProperties">
+            <DefiningQuery>SELECT 
+      [SearchProperties].[PropertyId] AS [PropertyId], 
+      [SearchProperties].[PropertyCode] AS [PropertyCode], 
+      [SearchProperties].[PropertyCodeShort] AS [PropertyCodeShort], 
+      [SearchProperties].[PropertyName] AS [PropertyName], 
+      [SearchProperties].[SearchGroup] AS [SearchGroup], 
+      [SearchProperties].[SearchType] AS [SearchType], 
+      [SearchProperties].[SearchTypeId] AS [SearchTypeId], 
+      [SearchProperties].[DataType] AS [DataType], 
+      [SearchProperties].[PropertyType] AS [PropertyType], 
+      [SearchProperties].[LookupName] AS [LookupName], 
+      [SearchProperties].[ListName] AS [ListName], 
+      [SearchProperties].[AccessLevel] AS [AccessLevel], 
+      [SearchProperties].[IsListable] AS [IsListable], 
+      [SearchProperties].[IsCacheable] AS [IsCacheable], 
+      [SearchProperties].[IsIndexable] AS [IsIndexable]
+      FROM [dbo].[SearchProperties] AS [SearchProperties]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Tags" EntityType="SongSearch2Model.Store.Tags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Territories" EntityType="SongSearch2Model.Store.Territories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserCatalogRoles" EntityType="SongSearch2Model.Store.UserCatalogRoles" store:Type="Tables" Schema="dbo" />
@@ -134,8 +153,8 @@
           <Property Name="LastUpdatedByUserId" Type="int" Nullable="false" />
           <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="IsControlledAllIn" Type="bit" Nullable="false" />
-          <Property Name="HasPreviewAsset" Type="bit" Nullable="false" />
-          <Property Name="HasFullAsset" Type="bit" Nullable="false" />
+          <Property Name="HasMediaPreviewVersion" Type="bit" Nullable="false" />
+          <Property Name="HasMediaFullVersion" Type="bit" Nullable="false" />
           <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Writers" Type="nvarchar" MaxLength="500" />
@@ -172,6 +191,39 @@
           </Key>
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'SongSearch2.dbo.SearchProperties' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SearchProperties">
+          <Key>
+            <PropertyRef Name="PropertyId" />
+            <PropertyRef Name="PropertyCode" />
+            <PropertyRef Name="PropertyCodeShort" />
+            <PropertyRef Name="PropertyName" />
+            <PropertyRef Name="SearchType" />
+            <PropertyRef Name="DataType" />
+            <PropertyRef Name="PropertyType" />
+            <PropertyRef Name="AccessLevel" />
+            <PropertyRef Name="IsListable" />
+            <PropertyRef Name="IsCacheable" />
+            <PropertyRef Name="IsIndexable" />
+          </Key>
+          <Property Name="PropertyId" Type="int" Nullable="false" />
+          <Property Name="PropertyCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PropertyCodeShort" Type="nvarchar" Nullable="false" MaxLength="5" />
+          <Property Name="PropertyName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="SearchGroup" Type="nvarchar" MaxLength="50" />
+          <Property Name="SearchType" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SearchTypeId" Type="smallint" />
+          <Property Name="DataType" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PropertyType" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="LookupName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ListName" Type="nvarchar" MaxLength="10" />
+          <Property Name="AccessLevel" Type="smallint" Nullable="false" />
+          <Property Name="IsListable" Type="bit" Nullable="false" />
+          <Property Name="IsCacheable" Type="bit" Nullable="false" />
+          <Property Name="IsIndexable" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -458,6 +510,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="UserCatalogRole" EntitySet="UserCatalogRoles" />
           </AssociationSet>
+          <EntitySet Name="SearchProperties" EntityType="SongSearch.Web.Data.Model.SearchProperty" />
           </EntityContainer>
         <EntityType Name="Cart">
           <Key>
@@ -507,8 +560,6 @@
           <Property Name="LastUpdatedByUserId" Type="Int32" Nullable="false" />
           <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" />
           <Property Name="IsControlledAllIn" Type="Boolean" Nullable="false" />
-          <Property Name="HasPreviewAsset" Type="Boolean" Nullable="false" />
-          <Property Name="HasFullAsset" Type="Boolean" Nullable="false" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
           <Property Name="Artist" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
           <Property Name="Writers" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
@@ -524,6 +575,8 @@
           <NavigationProperty Name="ContentRights" Relationship="SongSearch.Web.Data.Model.FK_ContentRights_Contents" FromRole="Contents" ToRole="ContentRights" />
           <NavigationProperty Name="Tags" Relationship="SongSearch.Web.Data.Model.ContentTags" FromRole="Contents" ToRole="Tags" />
           <NavigationProperty Name="Carts" Relationship="SongSearch.Web.Data.Model.CartContents" FromRole="Content" ToRole="Cart" />
+          <Property Type="Boolean" Name="HasMediaPreviewVersion" Nullable="false" />
+          <Property Type="Boolean" Name="HasMediaFullVersion" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -706,6 +759,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SearchProperty">
+          <Key>
+            <PropertyRef Name="PropertyId" />
+            <PropertyRef Name="PropertyCode" />
+            <PropertyRef Name="PropertyCodeShort" />
+            <PropertyRef Name="PropertyName" />
+            <PropertyRef Name="SearchType" />
+            <PropertyRef Name="DataType" />
+            <PropertyRef Name="PropertyType" />
+            <PropertyRef Name="AccessLevel" />
+            <PropertyRef Name="IsListable" />
+            <PropertyRef Name="IsCacheable" />
+            <PropertyRef Name="IsIndexable" />
+          </Key>
+          <Property Type="Int32" Name="PropertyId" Nullable="false" />
+          <Property Type="String" Name="PropertyCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PropertyCodeShort" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PropertyName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SearchGroup" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SearchType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int16" Name="SearchTypeId" />
+          <Property Type="String" Name="DataType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PropertyType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LookupName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ListName" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="Int16" Name="AccessLevel" Nullable="false" />
+          <Property Type="Boolean" Name="IsListable" Nullable="false" />
+          <Property Type="Boolean" Name="IsCacheable" Nullable="false" />
+          <Property Type="Boolean" Name="IsIndexable" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -735,15 +818,15 @@
             <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
-            <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+            <ScalarProperty Name="HasMediaFullVersion" ColumnName="HasMediaFullVersion" />
+                <ScalarProperty Name="HasMediaPreviewVersion" ColumnName="HasMediaPreviewVersion" />
+                <ScalarProperty Name="ContentId" ColumnName="ContentId" />
             <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
             <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
             <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
             <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
             <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
             <ScalarProperty Name="IsControlledAllIn" ColumnName="IsControlledAllIn" />
-            <ScalarProperty Name="HasPreviewAsset" ColumnName="HasPreviewAsset" />
-            <ScalarProperty Name="HasFullAsset" ColumnName="HasFullAsset" />
             <ScalarProperty Name="Title" ColumnName="Title" />
             <ScalarProperty Name="Artist" ColumnName="Artist" />
             <ScalarProperty Name="Writers" ColumnName="Writers" />
@@ -826,6 +909,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SearchProperties">
+            <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SearchProperty">
+              <MappingFragment StoreEntitySet="SearchProperties">
+                <ScalarProperty Name="IsIndexable" ColumnName="IsIndexable" />
+                <ScalarProperty Name="IsCacheable" ColumnName="IsCacheable" />
+                <ScalarProperty Name="IsListable" ColumnName="IsListable" />
+                <ScalarProperty Name="AccessLevel" ColumnName="AccessLevel" />
+                <ScalarProperty Name="ListName" ColumnName="ListName" />
+                <ScalarProperty Name="LookupName" ColumnName="LookupName" />
+                <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="SearchTypeId" ColumnName="SearchTypeId" />
+                <ScalarProperty Name="SearchType" ColumnName="SearchType" />
+                <ScalarProperty Name="SearchGroup" ColumnName="SearchGroup" />
+                <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
+                <ScalarProperty Name="PropertyCodeShort" ColumnName="PropertyCodeShort" />
+                <ScalarProperty Name="PropertyCode" ColumnName="PropertyCode" />
+                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -850,19 +954,19 @@
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Cart" Width="1.5" PointX="0.75" PointY="11" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Catalog" Width="1.5" PointX="8" PointY="9.625" Height="1.7879850260416657" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentRight" Width="1.5" PointX="5.25" PointY="2.625" Height="2.5571907552083335" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="1.5" PointX="3" PointY="4" Height="5.6340136718750031" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="2" PointX="3" PointY="4" Height="5.634013671875" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Role" Width="1.5" PointX="3.625" PointY="10.875" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Tag" Width="1.5" PointX="0.75" PointY="8.75" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Territory" Width="1.5" PointX="7.5" PointY="3" Height="1.787985026041671" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.User" Width="1.5" PointX="3.625" PointY="13.375" Height="4.0956022135416674" IsExpanded="true" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Contents_Catalogs" ManuallyRouted="false">
-          <ConnectorPoint PointX="8" PointY="10.254509335937502" />
-          <ConnectorPoint PointX="3.36718875" PointY="10.254509335937502" />
-          <ConnectorPoint PointX="3.36718875" PointY="9.6340136718750031" />
+          <ConnectorPoint PointX="8" PointY="10.302584694010417" />
+          <ConnectorPoint PointX="3.410158125" PointY="10.302584694010417" />
+          <ConnectorPoint PointX="3.410158125" PointY="9.634013671875" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentRights_Contents" ManuallyRouted="false">
-          <ConnectorPoint PointX="4.5" PointY="4.5910953776041659" />
-          <ConnectorPoint PointX="5.25" PointY="4.5910953776041659" />
+          <ConnectorPoint PointX="5" PointY="4.5910953776041667" />
+          <ConnectorPoint PointX="5.25" PointY="4.5910953776041667" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Roles" ManuallyRouted="false">
           <ConnectorPoint PointX="4.375" PointY="12.662985026041667" />
@@ -873,8 +977,8 @@
           <ConnectorPoint PointX="7.5" PointY="3.8939925130208355" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentTags" ManuallyRouted="false">
-          <ConnectorPoint PointX="3" PointY="9.1920068359375016" />
-          <ConnectorPoint PointX="2.25" PointY="9.1920068359375016" />
+          <ConnectorPoint PointX="3" PointY="9.1920068359375" />
+          <ConnectorPoint PointX="2.25" PointY="9.1920068359375" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Invitation" Width="1.5" PointX="0.875" PointY="14.25" Height="2.1725878906250031" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Invitations" >
@@ -882,8 +986,8 @@
           <ConnectorPoint PointX="3.625" PointY="15.336293945312502" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.CartContents" >
-          <ConnectorPoint PointX="3.152341875" PointY="9.6340136718750031" />
-          <ConnectorPoint PointX="3.152341875" PointY="13.018992513020834" />
+          <ConnectorPoint PointX="3.1738265625000004" PointY="9.634013671875" />
+          <ConnectorPoint PointX="3.1738265625000004" PointY="13.018992513020834" />
           <ConnectorPoint PointX="2.25" PointY="13.018992513020834" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Carts_Users" >
@@ -904,6 +1008,7 @@
           <ConnectorPoint PointX="5.125" PointY="14.086293945312502" />
           <ConnectorPoint PointX="7.5" PointY="14.086293945312502" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="10.375" PointY="0.75" Height="3.9033007812500031" />
       </Diagram>
     </Diagrams>
   </Designer>

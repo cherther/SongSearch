@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -91,6 +92,7 @@
     <Compile Include="Helpers\Connections.cs" />
     <Compile Include="Helpers\FlashHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Helpers\PagedList.cs" />
     <Compile Include="Helpers\VersionInfo.cs" />
     <Compile Include="Helpers\Extensions\Extensions.cs" />
     <Compile Include="Helpers\Extensions\LinqExtensions.cs" />
@@ -100,6 +102,7 @@
     <Compile Include="Helpers\XssHelper.cs" />
     <Compile Include="Infrastructure\Mailer\SendMail.cs" />
     <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
+    <Compile Include="Models\SearchModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Infrastructure\Authentication\AuthorizeAttribute.cs" />
@@ -122,8 +125,10 @@
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountData.cs" />
+    <Compile Include="Services\ISearchService.cs" />
     <Compile Include="Services\IAccountService.cs" />
     <Compile Include="Services\IUserManagementService.cs" />
+    <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserManagementService.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +154,8 @@
     <Content Include="Views\Account\ResetPasswordSuccess.aspx" />
     <Content Include="Views\Account\UpdateProfile.aspx" />
     <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
+    <Content Include="Views\Search\Index.aspx" />
+    <Content Include="Views\Search\Results.aspx" />
     <Content Include="Views\Shared\ctrlBuildInfo.aspx" />
     <Content Include="Views\Shared\ctrlLogIn.aspx" />
     <Content Include="Views\Shared\ctrlMainMenu.aspx" />

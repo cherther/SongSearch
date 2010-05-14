@@ -239,6 +239,22 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<UserCatalogRole> _UserCatalogRoles;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SearchProperty> SearchProperties
+        {
+            get
+            {
+                if ((_SearchProperties == null))
+                {
+                    _SearchProperties = base.CreateObjectSet<SearchProperty>("SearchProperties");
+                }
+                return _SearchProperties;
+            }
+        }
+        private ObjectSet<SearchProperty> _SearchProperties;
 
         #endregion
         #region AddTo Methods
@@ -321,6 +337,14 @@ namespace SongSearch.Web.Data
         public void AddToUserCatalogRoles(UserCatalogRole userCatalogRole)
         {
             base.AddObject("UserCatalogRoles", userCatalogRole);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SearchProperties EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSearchProperties(SearchProperty searchProperty)
+        {
+            base.AddObject("SearchProperties", searchProperty);
         }
 
         #endregion
@@ -773,11 +797,11 @@ namespace SongSearch.Web.Data
         /// <param name="lastUpdatedByUserId">Initial value of the LastUpdatedByUserId property.</param>
         /// <param name="lastUpdatedOn">Initial value of the LastUpdatedOn property.</param>
         /// <param name="isControlledAllIn">Initial value of the IsControlledAllIn property.</param>
-        /// <param name="hasPreviewAsset">Initial value of the HasPreviewAsset property.</param>
-        /// <param name="hasFullAsset">Initial value of the HasFullAsset property.</param>
         /// <param name="title">Initial value of the Title property.</param>
         /// <param name="artist">Initial value of the Artist property.</param>
-        public static Content CreateContent(global::System.Int32 contentId, global::System.Int32 catalogId, global::System.Int32 createdByUserId, global::System.DateTime createdOn, global::System.Int32 lastUpdatedByUserId, global::System.DateTime lastUpdatedOn, global::System.Boolean isControlledAllIn, global::System.Boolean hasPreviewAsset, global::System.Boolean hasFullAsset, global::System.String title, global::System.String artist)
+        /// <param name="hasMediaPreviewVersion">Initial value of the HasMediaPreviewVersion property.</param>
+        /// <param name="hasMediaFullVersion">Initial value of the HasMediaFullVersion property.</param>
+        public static Content CreateContent(global::System.Int32 contentId, global::System.Int32 catalogId, global::System.Int32 createdByUserId, global::System.DateTime createdOn, global::System.Int32 lastUpdatedByUserId, global::System.DateTime lastUpdatedOn, global::System.Boolean isControlledAllIn, global::System.String title, global::System.String artist, global::System.Boolean hasMediaPreviewVersion, global::System.Boolean hasMediaFullVersion)
         {
             Content content = new Content();
             content.ContentId = contentId;
@@ -787,10 +811,10 @@ namespace SongSearch.Web.Data
             content.LastUpdatedByUserId = lastUpdatedByUserId;
             content.LastUpdatedOn = lastUpdatedOn;
             content.IsControlledAllIn = isControlledAllIn;
-            content.HasPreviewAsset = hasPreviewAsset;
-            content.HasFullAsset = hasFullAsset;
             content.Title = title;
             content.Artist = artist;
+            content.HasMediaPreviewVersion = hasMediaPreviewVersion;
+            content.HasMediaFullVersion = hasMediaFullVersion;
             return content;
         }
 
@@ -967,54 +991,6 @@ namespace SongSearch.Web.Data
         private global::System.Boolean _IsControlledAllIn;
         partial void OnIsControlledAllInChanging(global::System.Boolean value);
         partial void OnIsControlledAllInChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean HasPreviewAsset
-        {
-            get
-            {
-                return _HasPreviewAsset;
-            }
-            set
-            {
-                OnHasPreviewAssetChanging(value);
-                ReportPropertyChanging("HasPreviewAsset");
-                _HasPreviewAsset = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("HasPreviewAsset");
-                OnHasPreviewAssetChanged();
-            }
-        }
-        private global::System.Boolean _HasPreviewAsset;
-        partial void OnHasPreviewAssetChanging(global::System.Boolean value);
-        partial void OnHasPreviewAssetChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean HasFullAsset
-        {
-            get
-            {
-                return _HasFullAsset;
-            }
-            set
-            {
-                OnHasFullAssetChanging(value);
-                ReportPropertyChanging("HasFullAsset");
-                _HasFullAsset = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("HasFullAsset");
-                OnHasFullAssetChanged();
-            }
-        }
-        private global::System.Boolean _HasFullAsset;
-        partial void OnHasFullAssetChanging(global::System.Boolean value);
-        partial void OnHasFullAssetChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1279,6 +1255,54 @@ namespace SongSearch.Web.Data
         private global::System.String _SimilarSongs;
         partial void OnSimilarSongsChanging(global::System.String value);
         partial void OnSimilarSongsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasMediaPreviewVersion
+        {
+            get
+            {
+                return _HasMediaPreviewVersion;
+            }
+            set
+            {
+                OnHasMediaPreviewVersionChanging(value);
+                ReportPropertyChanging("HasMediaPreviewVersion");
+                _HasMediaPreviewVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasMediaPreviewVersion");
+                OnHasMediaPreviewVersionChanged();
+            }
+        }
+        private global::System.Boolean _HasMediaPreviewVersion;
+        partial void OnHasMediaPreviewVersionChanging(global::System.Boolean value);
+        partial void OnHasMediaPreviewVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasMediaFullVersion
+        {
+            get
+            {
+                return _HasMediaFullVersion;
+            }
+            set
+            {
+                OnHasMediaFullVersionChanging(value);
+                ReportPropertyChanging("HasMediaFullVersion");
+                _HasMediaFullVersion = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasMediaFullVersion");
+                OnHasMediaFullVersionChanged();
+            }
+        }
+        private global::System.Boolean _HasMediaFullVersion;
+        partial void OnHasMediaFullVersionChanging(global::System.Boolean value);
+        partial void OnHasMediaFullVersionChanged();
 
         #endregion
     
@@ -1949,6 +1973,447 @@ namespace SongSearch.Web.Data
         }
 
         #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="SearchProperty")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SearchProperty : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SearchProperty object.
+        /// </summary>
+        /// <param name="propertyId">Initial value of the PropertyId property.</param>
+        /// <param name="propertyCode">Initial value of the PropertyCode property.</param>
+        /// <param name="propertyCodeShort">Initial value of the PropertyCodeShort property.</param>
+        /// <param name="propertyName">Initial value of the PropertyName property.</param>
+        /// <param name="searchType">Initial value of the SearchType property.</param>
+        /// <param name="dataType">Initial value of the DataType property.</param>
+        /// <param name="propertyType">Initial value of the PropertyType property.</param>
+        /// <param name="accessLevel">Initial value of the AccessLevel property.</param>
+        /// <param name="isListable">Initial value of the IsListable property.</param>
+        /// <param name="isCacheable">Initial value of the IsCacheable property.</param>
+        /// <param name="isIndexable">Initial value of the IsIndexable property.</param>
+        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyCode, global::System.String propertyCodeShort, global::System.String propertyName, global::System.String searchType, global::System.String dataType, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable)
+        {
+            SearchProperty searchProperty = new SearchProperty();
+            searchProperty.PropertyId = propertyId;
+            searchProperty.PropertyCode = propertyCode;
+            searchProperty.PropertyCodeShort = propertyCodeShort;
+            searchProperty.PropertyName = propertyName;
+            searchProperty.SearchType = searchType;
+            searchProperty.DataType = dataType;
+            searchProperty.PropertyType = propertyType;
+            searchProperty.AccessLevel = accessLevel;
+            searchProperty.IsListable = isListable;
+            searchProperty.IsCacheable = isCacheable;
+            searchProperty.IsIndexable = isIndexable;
+            return searchProperty;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PropertyId
+        {
+            get
+            {
+                return _PropertyId;
+            }
+            set
+            {
+                if (_PropertyId != value)
+                {
+                    OnPropertyIdChanging(value);
+                    ReportPropertyChanging("PropertyId");
+                    _PropertyId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PropertyId");
+                    OnPropertyIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _PropertyId;
+        partial void OnPropertyIdChanging(global::System.Int32 value);
+        partial void OnPropertyIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PropertyCode
+        {
+            get
+            {
+                return _PropertyCode;
+            }
+            set
+            {
+                if (_PropertyCode != value)
+                {
+                    OnPropertyCodeChanging(value);
+                    ReportPropertyChanging("PropertyCode");
+                    _PropertyCode = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PropertyCode");
+                    OnPropertyCodeChanged();
+                }
+            }
+        }
+        private global::System.String _PropertyCode;
+        partial void OnPropertyCodeChanging(global::System.String value);
+        partial void OnPropertyCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PropertyCodeShort
+        {
+            get
+            {
+                return _PropertyCodeShort;
+            }
+            set
+            {
+                if (_PropertyCodeShort != value)
+                {
+                    OnPropertyCodeShortChanging(value);
+                    ReportPropertyChanging("PropertyCodeShort");
+                    _PropertyCodeShort = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PropertyCodeShort");
+                    OnPropertyCodeShortChanged();
+                }
+            }
+        }
+        private global::System.String _PropertyCodeShort;
+        partial void OnPropertyCodeShortChanging(global::System.String value);
+        partial void OnPropertyCodeShortChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PropertyName
+        {
+            get
+            {
+                return _PropertyName;
+            }
+            set
+            {
+                if (_PropertyName != value)
+                {
+                    OnPropertyNameChanging(value);
+                    ReportPropertyChanging("PropertyName");
+                    _PropertyName = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PropertyName");
+                    OnPropertyNameChanged();
+                }
+            }
+        }
+        private global::System.String _PropertyName;
+        partial void OnPropertyNameChanging(global::System.String value);
+        partial void OnPropertyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SearchGroup
+        {
+            get
+            {
+                return _SearchGroup;
+            }
+            set
+            {
+                OnSearchGroupChanging(value);
+                ReportPropertyChanging("SearchGroup");
+                _SearchGroup = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SearchGroup");
+                OnSearchGroupChanged();
+            }
+        }
+        private global::System.String _SearchGroup;
+        partial void OnSearchGroupChanging(global::System.String value);
+        partial void OnSearchGroupChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SearchType
+        {
+            get
+            {
+                return _SearchType;
+            }
+            set
+            {
+                if (_SearchType != value)
+                {
+                    OnSearchTypeChanging(value);
+                    ReportPropertyChanging("SearchType");
+                    _SearchType = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("SearchType");
+                    OnSearchTypeChanged();
+                }
+            }
+        }
+        private global::System.String _SearchType;
+        partial void OnSearchTypeChanging(global::System.String value);
+        partial void OnSearchTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int16> SearchTypeId
+        {
+            get
+            {
+                return _SearchTypeId;
+            }
+            set
+            {
+                OnSearchTypeIdChanging(value);
+                ReportPropertyChanging("SearchTypeId");
+                _SearchTypeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SearchTypeId");
+                OnSearchTypeIdChanged();
+            }
+        }
+        private Nullable<global::System.Int16> _SearchTypeId;
+        partial void OnSearchTypeIdChanging(Nullable<global::System.Int16> value);
+        partial void OnSearchTypeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DataType
+        {
+            get
+            {
+                return _DataType;
+            }
+            set
+            {
+                if (_DataType != value)
+                {
+                    OnDataTypeChanging(value);
+                    ReportPropertyChanging("DataType");
+                    _DataType = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("DataType");
+                    OnDataTypeChanged();
+                }
+            }
+        }
+        private global::System.String _DataType;
+        partial void OnDataTypeChanging(global::System.String value);
+        partial void OnDataTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PropertyType
+        {
+            get
+            {
+                return _PropertyType;
+            }
+            set
+            {
+                if (_PropertyType != value)
+                {
+                    OnPropertyTypeChanging(value);
+                    ReportPropertyChanging("PropertyType");
+                    _PropertyType = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PropertyType");
+                    OnPropertyTypeChanged();
+                }
+            }
+        }
+        private global::System.String _PropertyType;
+        partial void OnPropertyTypeChanging(global::System.String value);
+        partial void OnPropertyTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LookupName
+        {
+            get
+            {
+                return _LookupName;
+            }
+            set
+            {
+                OnLookupNameChanging(value);
+                ReportPropertyChanging("LookupName");
+                _LookupName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LookupName");
+                OnLookupNameChanged();
+            }
+        }
+        private global::System.String _LookupName;
+        partial void OnLookupNameChanging(global::System.String value);
+        partial void OnLookupNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ListName
+        {
+            get
+            {
+                return _ListName;
+            }
+            set
+            {
+                OnListNameChanging(value);
+                ReportPropertyChanging("ListName");
+                _ListName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ListName");
+                OnListNameChanged();
+            }
+        }
+        private global::System.String _ListName;
+        partial void OnListNameChanging(global::System.String value);
+        partial void OnListNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 AccessLevel
+        {
+            get
+            {
+                return _AccessLevel;
+            }
+            set
+            {
+                if (_AccessLevel != value)
+                {
+                    OnAccessLevelChanging(value);
+                    ReportPropertyChanging("AccessLevel");
+                    _AccessLevel = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("AccessLevel");
+                    OnAccessLevelChanged();
+                }
+            }
+        }
+        private global::System.Int16 _AccessLevel;
+        partial void OnAccessLevelChanging(global::System.Int16 value);
+        partial void OnAccessLevelChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsListable
+        {
+            get
+            {
+                return _IsListable;
+            }
+            set
+            {
+                if (_IsListable != value)
+                {
+                    OnIsListableChanging(value);
+                    ReportPropertyChanging("IsListable");
+                    _IsListable = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("IsListable");
+                    OnIsListableChanged();
+                }
+            }
+        }
+        private global::System.Boolean _IsListable;
+        partial void OnIsListableChanging(global::System.Boolean value);
+        partial void OnIsListableChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsCacheable
+        {
+            get
+            {
+                return _IsCacheable;
+            }
+            set
+            {
+                if (_IsCacheable != value)
+                {
+                    OnIsCacheableChanging(value);
+                    ReportPropertyChanging("IsCacheable");
+                    _IsCacheable = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("IsCacheable");
+                    OnIsCacheableChanged();
+                }
+            }
+        }
+        private global::System.Boolean _IsCacheable;
+        partial void OnIsCacheableChanging(global::System.Boolean value);
+        partial void OnIsCacheableChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsIndexable
+        {
+            get
+            {
+                return _IsIndexable;
+            }
+            set
+            {
+                if (_IsIndexable != value)
+                {
+                    OnIsIndexableChanging(value);
+                    ReportPropertyChanging("IsIndexable");
+                    _IsIndexable = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("IsIndexable");
+                    OnIsIndexableChanged();
+                }
+            }
+        }
+        private global::System.Boolean _IsIndexable;
+        partial void OnIsIndexableChanging(global::System.Boolean value);
+        partial void OnIsIndexableChanged();
+
+        #endregion
+    
     }
     
     /// <summary>
