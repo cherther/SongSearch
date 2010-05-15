@@ -22,7 +22,7 @@ namespace SongSearch.Web {
 	}
 
 	// **************************************
-	// MediaVersion
+	// FileTypes
 	// **************************************    
 	public enum FileTypes {
 		MP3 = 1
@@ -38,24 +38,24 @@ namespace SongSearch.Web {
 	}
 
 	// **************************************
-	// CartStatusCodes
+	// Territories
 	// **************************************    
 	public enum Territories {
 		Default = 1
 	}
 
 	// **************************************
-	// CartStatusCodes
+	// TagType
 	// **************************************    
 	public enum TagType {
-		Moods,
+		Moods = 1,
 		Styles,
 		Brands,
 		Gender,
 		Tempo,
-		Language,
 		SoundsLike,
-		Instruments
+		Instruments,
+		Language
 	}
 
 	// **************************************

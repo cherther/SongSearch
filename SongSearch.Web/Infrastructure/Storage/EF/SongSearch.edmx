@@ -15,25 +15,7 @@
           <EntitySet Name="ContentTags" EntityType="SongSearch2Model.Store.ContentTags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Invitations" EntityType="SongSearch2Model.Store.Invitations" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="SongSearch2Model.Store.Roles" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="SearchProperties" EntityType="SongSearch2Model.Store.SearchProperties" store:Type="Tables" store:Schema="dbo" store:Name="SearchProperties">
-            <DefiningQuery>SELECT 
-      [SearchProperties].[PropertyId] AS [PropertyId], 
-      [SearchProperties].[PropertyCode] AS [PropertyCode], 
-      [SearchProperties].[PropertyCodeShort] AS [PropertyCodeShort], 
-      [SearchProperties].[PropertyName] AS [PropertyName], 
-      [SearchProperties].[SearchGroup] AS [SearchGroup], 
-      [SearchProperties].[SearchType] AS [SearchType], 
-      [SearchProperties].[SearchTypeId] AS [SearchTypeId], 
-      [SearchProperties].[DataType] AS [DataType], 
-      [SearchProperties].[PropertyType] AS [PropertyType], 
-      [SearchProperties].[LookupName] AS [LookupName], 
-      [SearchProperties].[ListName] AS [ListName], 
-      [SearchProperties].[AccessLevel] AS [AccessLevel], 
-      [SearchProperties].[IsListable] AS [IsListable], 
-      [SearchProperties].[IsCacheable] AS [IsCacheable], 
-      [SearchProperties].[IsIndexable] AS [IsIndexable]
-      FROM [dbo].[SearchProperties] AS [SearchProperties]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="SearchProperties" EntityType="SongSearch2Model.Store.SearchProperties" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Tags" EntityType="SongSearch2Model.Store.Tags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Territories" EntityType="SongSearch2Model.Store.Territories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserCatalogRoles" EntityType="SongSearch2Model.Store.UserCatalogRoles" store:Type="Tables" Schema="dbo" />
@@ -192,31 +174,15 @@
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'SongSearch2.dbo.SearchProperties' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="SearchProperties">
           <Key>
             <PropertyRef Name="PropertyId" />
-            <PropertyRef Name="PropertyCode" />
-            <PropertyRef Name="PropertyCodeShort" />
-            <PropertyRef Name="PropertyName" />
-            <PropertyRef Name="SearchType" />
-            <PropertyRef Name="DataType" />
-            <PropertyRef Name="PropertyType" />
-            <PropertyRef Name="AccessLevel" />
-            <PropertyRef Name="IsListable" />
-            <PropertyRef Name="IsCacheable" />
-            <PropertyRef Name="IsIndexable" />
           </Key>
           <Property Name="PropertyId" Type="int" Nullable="false" />
           <Property Name="PropertyCode" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="PropertyCodeShort" Type="nvarchar" Nullable="false" MaxLength="5" />
           <Property Name="PropertyName" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="SearchGroup" Type="nvarchar" MaxLength="50" />
-          <Property Name="SearchType" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="SearchTypeId" Type="smallint" />
-          <Property Name="DataType" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="PropertyType" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="LookupName" Type="nvarchar" MaxLength="50" />
           <Property Name="ListName" Type="nvarchar" MaxLength="10" />
@@ -224,6 +190,7 @@
           <Property Name="IsListable" Type="bit" Nullable="false" />
           <Property Name="IsCacheable" Type="bit" Nullable="false" />
           <Property Name="IsIndexable" Type="bit" Nullable="false" />
+          <Property Name="IncludeInSearchMenu" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Tags">
           <Key>
@@ -231,6 +198,7 @@
           </Key>
           <Property Name="TagId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TagName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="TagTypeId" Type="smallint" Nullable="false" />
           <Property Name="CreatedByUserId" Type="int" />
         </EntityType>
         <EntityType Name="Territories">
@@ -595,6 +563,7 @@
           <Property Name="TagName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="CreatedByUserId" Type="Int32" />
           <NavigationProperty Name="Contents" Relationship="SongSearch.Web.Data.Model.ContentTags" FromRole="Tags" ToRole="Contents" />
+          <Property Type="Int16" Name="TagTypeId" Nullable="false" />
         </EntityType>
         <EntityType Name="Territory">
           <Key>
@@ -762,25 +731,12 @@
         <EntityType Name="SearchProperty">
           <Key>
             <PropertyRef Name="PropertyId" />
-            <PropertyRef Name="PropertyCode" />
-            <PropertyRef Name="PropertyCodeShort" />
-            <PropertyRef Name="PropertyName" />
-            <PropertyRef Name="SearchType" />
-            <PropertyRef Name="DataType" />
-            <PropertyRef Name="PropertyType" />
-            <PropertyRef Name="AccessLevel" />
-            <PropertyRef Name="IsListable" />
-            <PropertyRef Name="IsCacheable" />
-            <PropertyRef Name="IsIndexable" />
           </Key>
           <Property Type="Int32" Name="PropertyId" Nullable="false" />
           <Property Type="String" Name="PropertyCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PropertyCodeShort" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="PropertyName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="SearchGroup" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="SearchType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Int16" Name="SearchTypeId" />
-          <Property Type="String" Name="DataType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="PropertyType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="LookupName" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ListName" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -788,6 +744,7 @@
           <Property Type="Boolean" Name="IsListable" Nullable="false" />
           <Property Type="Boolean" Name="IsCacheable" Nullable="false" />
           <Property Type="Boolean" Name="IsIndexable" Nullable="false" />
+          <Property Type="Boolean" Name="IncludeInSearchMenu" Nullable="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -844,7 +801,8 @@
             <ScalarProperty Name="RoleName" ColumnName="RoleName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Tags"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Tag"><MappingFragment StoreEntitySet="Tags">
-            <ScalarProperty Name="TagId" ColumnName="TagId" />
+            <ScalarProperty Name="TagTypeId" ColumnName="TagTypeId" />
+                <ScalarProperty Name="TagId" ColumnName="TagId" />
             <ScalarProperty Name="TagName" ColumnName="TagName" />
             <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
@@ -912,6 +870,7 @@
           <EntitySetMapping Name="SearchProperties">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SearchProperty">
               <MappingFragment StoreEntitySet="SearchProperties">
+                <ScalarProperty Name="IncludeInSearchMenu" ColumnName="IncludeInSearchMenu" />
                 <ScalarProperty Name="IsIndexable" ColumnName="IsIndexable" />
                 <ScalarProperty Name="IsCacheable" ColumnName="IsCacheable" />
                 <ScalarProperty Name="IsListable" ColumnName="IsListable" />
@@ -919,12 +878,9 @@
                 <ScalarProperty Name="ListName" ColumnName="ListName" />
                 <ScalarProperty Name="LookupName" ColumnName="LookupName" />
                 <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
-                <ScalarProperty Name="DataType" ColumnName="DataType" />
                 <ScalarProperty Name="SearchTypeId" ColumnName="SearchTypeId" />
-                <ScalarProperty Name="SearchType" ColumnName="SearchType" />
                 <ScalarProperty Name="SearchGroup" ColumnName="SearchGroup" />
                 <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
-                <ScalarProperty Name="PropertyCodeShort" ColumnName="PropertyCodeShort" />
                 <ScalarProperty Name="PropertyCode" ColumnName="PropertyCode" />
                 <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
               </MappingFragment>
@@ -1008,7 +964,7 @@
           <ConnectorPoint PointX="5.125" PointY="14.086293945312502" />
           <ConnectorPoint PointX="7.5" PointY="14.086293945312502" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="10.375" PointY="0.75" Height="3.9033007812500031" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="10.375" PointY="0.75" Height="3.5186979166666674" />
       </Diagram>
     </Diagrams>
   </Designer>

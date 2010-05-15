@@ -75,7 +75,7 @@
                     <%= Html.ValidationMessageFor(m => m.ConfirmPassword)%>
                 </div>                    
                 <p>
-                    <button type="submit" class="sexybutton sexysimple sexyblue">
+                    <button type="submit" class="cw-button cw-simple cw-blue">
                     <span class="ok">Register</span>
                     </button>
                 </p>

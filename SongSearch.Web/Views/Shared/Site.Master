@@ -46,7 +46,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <%// Html.RenderPartial("ctrlMainMenu"); %>
+            <% Html.RenderPartial("ctrlMainMenu"); %>
         </td> 
     </tr>
     <tr>

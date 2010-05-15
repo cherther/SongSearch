@@ -125,8 +125,8 @@
 	/* _margin-left: 0;		Or just hide icons from the undeserving IE6 */
 }
 
-.cw-button.sexymedium	{ font-size: 15px !important; }
-.cw-button.sexylarge	{ font-size: 18px !important; }
+.cw-button.cw-medium	{ font-size: 15px !important; }
+.cw-button.cw-large	{ font-size: 18px !important; }
 
 
 /*
@@ -136,74 +136,74 @@
  * default .GIF images. (Just beware of IE6's lack of support.) 
  * 
  * Additional skins can be added below. The images/skins/ButtonTemplate.psd can be used to create new skins.
- * Prefix the skin name with "sexy" to avoid any potential conflicts with other class names. 
+ * Prefix the skin name with "cw-" to avoid any potential conflicts with other class names. 
  */
 
 /* Silver Button Skin (the default skin) */
 
 .cw-button,
-.cw-button.sexysilver {
+.cw-button.cw-silver {
 	color: #666 !important;
 }
 	
 .cw-button:hover,
 .cw-button:focus,
-.cw-button.sexysilver:hover,
-.cw-button.sexysilver:focus {
+.cw-button.cw-silver:hover,
+.cw-button.cw-silver:focus {
 	color: #333 !important;
 }
 	
 .cw-button span,
-.cw-button.sexysilver span {
-	background-image: url(images/skins/silver/button_right.gif);
+.cw-button.cw-silver span {
+	background-image: url(../images/skins/silver/button_right.gif);
 }
 
 .cw-button span span,
-.cw-button.sexysilver span span {
-	background-image: url(images/skins/silver/button_left.gif);
+.cw-button.cw-silver span span {
+	background-image: url(../images/skins/silver/button_left.gif);
 }
 
 /* Orange Button Skin */
 
-.cw-button.sexyorange,
-.cw-button.sexyorange:hover,
-.cw-button.sexyorange:focus {
+.cw-button.cw-orange,
+.cw-button.cw-orange:hover,
+.cw-button.cw-orange:focus {
 	color: white !important;
 }
 	
-.cw-button.sexyorange[disabled],
-.cw-button.sexyorange[disabled]:hover,
-.cw-button.sexyorange[disabled]:active,
-.cw-button.sexyorange[disabled]:focus,
-.cw-button.sexyorange.disabled,
-.cw-button.sexyorange.disabled:hover,
-.cw-button.sexyorange.disabled:active,
-.cw-button.sexyorange.disabled:focus {
+.cw-button.cw-orange[disabled],
+.cw-button.cw-orange[disabled]:hover,
+.cw-button.cw-orange[disabled]:active,
+.cw-button.cw-orange[disabled]:focus,
+.cw-button.cw-orange.disabled,
+.cw-button.cw-orange.disabled:hover,
+.cw-button.cw-orange.disabled:active,
+.cw-button.cw-orange.disabled:focus {
 	color: #333 !important;
 }
 	
-.cw-button.sexyorange span {
-	background-image: url(images/skins/orange/button_right.gif);
+.cw-button.cw-orange span {
+	background-image: url(../images/skins/orange/button_right.gif);
 }
 
-.cw-button.sexyorange span span {
-	background-image: url(images/skins/orange/button_left.gif);
+.cw-button.cw-orange span span {
+	background-image: url(../images/skins/orange/button_left.gif);
 }
 
 /* Yellow Button Skin */
 
-.cw-button.sexyyellow,
-.cw-button.sexyyellow:hover,
-.cw-button.sexyyellow:focus {
+.cw-button.cw-yellow,
+.cw-button.cw-yellow:hover,
+.cw-button.cw-yellow:focus {
 	color: #994800 !important;
 }
 	
-.cw-button.sexyyellow span {
-	background-image: url(images/skins/yellow/button_right.gif);
+.cw-button.cw-yellow span {
+	background-image: url(../images/skins/yellow/button_right.gif);
 }
 
-.cw-button.sexyyellow span span {
-	background-image: url(images/skins/yellow/button_left.gif);
+.cw-button.cw-yellow span span {
+	background-image: url(../images/skins/yellow/button_left.gif);
 }
 
 
@@ -211,7 +211,7 @@
  * Simple Skin Buttons
  */
 
-.cw-button.sexysimple { 
+.cw-button.cw-simple { 
 	position: relative; 
 	padding: 5px 10px 5px;
 	font: inherit;
@@ -220,7 +220,7 @@
 	font-weight: bold !important; 
 	color: #fff !important;
 	line-height: 1; 
-	background-image: url(images/skins/simple/awesome-overlay-sprite.png);
+	background-image: url(../images/skins/simple/awesome-overlay-sprite.png);
 	background-repeat: repeat-x;
 	background-position: 0 0;
 	
@@ -250,17 +250,17 @@
 	-moz-user-select: none;
 }
 
-.cw-button.sexysimple::selection {
+.cw-button.cw-simple::selection {
 	background: transparent;
 }
 
-.cw-button.sexysimple:hover,
-.cw-button.sexysimple:focus {
+.cw-button.cw-simple:hover,
+.cw-button.cw-simple:focus {
 	background-position: 0 -50px; 
 	color: #fff !important;
 }
 
-.cw-button.sexysimple:active { 
+.cw-button.cw-simple:active { 
 	background-position: 0 -100px; 
 	-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.7); 
 	/* Unfortunately, Safari doesn't support inset yet */
@@ -271,24 +271,24 @@
 	border-top: 1px solid #666\9;
 }
 
-.cw-button.sexysimple[disabled], 
-.cw-button.sexysimple.disabled { 
+.cw-button.cw-simple[disabled], 
+.cw-button.cw-simple.disabled { 
 	background-position: 0 -150px; 
 	color: #333 !important;
 	text-shadow: none; 
 }
 
-.cw-button.sexysimple[disabled]:hover,
-.cw-button.sexysimple[disabled]:focus,
-.cw-button.sexysimple[disabled]:active,
-.cw-button.sexysimple.disabled:hover,
-.cw-button.sexysimple.disabled:focus,
-.cw-button.sexysimple.disabled:active {
+.cw-button.cw-simple[disabled]:hover,
+.cw-button.cw-simple[disabled]:focus,
+.cw-button.cw-simple[disabled]:active,
+.cw-button.cw-simple.disabled:hover,
+.cw-button.cw-simple.disabled:focus,
+.cw-button.cw-simple.disabled:active {
 	-moz-box-shadow: 0 1px 2px rgba(0,0,0,0.5); 
 	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.5);
 } 
 
-.cw-button.sexysimple span {
+.cw-button.cw-simple span {
 	height: auto;
 	padding-left: 24px;
 	padding-right: 0;
@@ -298,7 +298,7 @@
 	/* _padding-left: 0;		Or just hide icons from the undeserving IE6 */
 }
 
-.cw-button.sexysimple span.after {
+.cw-button.cw-simple span.after {
 	padding-left: 0;
 	padding-right: 24px;
 	background-position: right center;
@@ -307,47 +307,47 @@
 }
 
 /* Simple button colors */
-.cw-button.sexysimple					{ background-color: #333; }		/* Default */
-.cw-button.sexysimple.sexyblack		{ background-color: #333; }
-.cw-button.sexysimple.sexyred		{ background-color: #a90118; }
-.cw-button.sexysimple.sexyorange	{ background-color: #ff8a00; }
-.cw-button.sexysimple.sexyyellow	{ background-color: #ffb515; }
-.cw-button.sexysimple.sexygreen		{ background-color: #59a901; }
-.cw-button.sexysimple.sexyblue		{ background-color: #015ea9; }
-.cw-button.sexysimple.sexyteal		{ background-color: #2daebf; }
-.cw-button.sexysimple.sexymagenta	{ background-color: #a9014b; }
-.cw-button.sexysimple.sexypurple	{ background-color: #9d01a9; }
+.cw-button.cw-simple					{ background-color: #333; }		/* Default */
+.cw-button.cw-simple.cw-black		{ background-color: #333; }
+.cw-button.cw-simple.cw-red		{ background-color: #a90118; }
+.cw-button.cw-simple.cw-orange	{ background-color: #ff8a00; }
+.cw-button.cw-simple.cw-yellow	{ background-color: #ffb515; }
+.cw-button.cw-simple.cw-green		{ background-color: #59a901; }
+.cw-button.cw-simple.cw-blue		{ background-color: #015ea9; }
+.cw-button.cw-simple.cw-teal		{ background-color: #2daebf; }
+.cw-button.cw-simple.cw-magenta	{ background-color: #a9014b; }
+.cw-button.cw-simple.cw-purple	{ background-color: #9d01a9; }
 
 /* Simple button sizes */
-.cw-button.sexysimple.sexysmall          { padding: 4px 7px 5px; font-size: 10px !important; }
-.cw-button.sexysimple.sexysmall:active   { padding: 5px 7px 4px; }
-.cw-button.sexysimple                    { /* default */ }
-.cw-button.sexysimple:active             { padding: 6px 10px 4px; }
-.cw-button.sexysimple.sexymedium         { /* default */ }
-.cw-button.sexysimple.sexymedium:active  { padding: 6px 10px 4px; }
-.cw-button.sexysimple.sexylarge          { padding: 8px 14px 8px; font-size: 14px !important; }
-.cw-button.sexysimple.sexylarge:active   { padding: 9px 14px 7px; }
-.cw-button.sexysimple.sexyxl             { padding: 8px 14px 8px; font-size: 16px !important; }
-.cw-button.sexysimple.sexyxl:active      { padding: 9px 14px 7px; }
-.cw-button.sexysimple.sexyxxl            { padding: 8px 14px 8px; font-size: 20px !important; }
-.cw-button.sexysimple.sexyxxl:active     { padding: 9px 14px 7px; }
-.cw-button.sexysimple.sexyxxxl           { padding: 8px 14px 8px; font-size: 26px !important; }
-.cw-button.sexysimple.sexyxxxl:active    { padding: 9px 14px 7px; }
+.cw-button.cw-simple.cw-small          { padding: 4px 7px 5px; font-size: 10px !important; }
+.cw-button.cw-simple.cw-small:active   { padding: 5px 7px 4px; }
+.cw-button.cw-simple                    { /* default */ }
+.cw-button.cw-simple:active             { padding: 6px 10px 4px; }
+.cw-button.cw-simple.cw-medium         { /* default */ }
+.cw-button.cw-simple.cw-medium:active  { padding: 6px 10px 4px; }
+.cw-button.cw-simple.cw-large          { padding: 8px 14px 8px; font-size: 14px !important; }
+.cw-button.cw-simple.cw-large:active   { padding: 9px 14px 7px; }
+.cw-button.cw-simple.cw-xl             { padding: 8px 14px 8px; font-size: 16px !important; }
+.cw-button.cw-simple.cw-xl:active      { padding: 9px 14px 7px; }
+.cw-button.cw-simple.cw-xxl            { padding: 8px 14px 8px; font-size: 20px !important; }
+.cw-button.cw-simple.cw-xxl:active     { padding: 9px 14px 7px; }
+.cw-button.cw-simple.cw-xxxl           { padding: 8px 14px 8px; font-size: 26px !important; }
+.cw-button.cw-simple.cw-xxxl:active    { padding: 9px 14px 7px; }
 
-.cw-button.sexysimple.sexysmall[disabled]:active,
-.cw-button.sexysimple.sexysmall.disabled:active   	{ padding: 4px 7px 5px; }
-.cw-button.sexysimple[disabled]:active,
-.cw-button.sexysimple.disabled:active 	            { padding: 5px 10px 5px; }
-.cw-button.sexysimple.sexymedium[disabled]:active,
-.cw-button.sexysimple.sexymedium.disabled:active 		{ padding: 6px 10px 4px; }
-.cw-button.sexysimple.sexylarge[disabled]:active,
-.cw-button.sexysimple.sexylarge.disabled:active   	{ padding: 8px 14px 8px; }
-.cw-button.sexysimple.sexyxl[disabled]:active,
-.cw-button.sexysimple.sexyxl.disabled:active	      { padding: 8px 14px 8px; }
-.cw-button.sexysimple.sexyxxl[disabled]:active,
-.cw-button.sexysimple.sexyxxl.disabled:active 		   { padding: 8px 14px 8px; }
-.cw-button.sexysimple.sexyxxxl[disabled]:active,
-.cw-button.sexysimple.sexyxxxl.disabled:active    	{ padding: 8px 14px 8px; }
+.cw-button.cw-simple.cw-small[disabled]:active,
+.cw-button.cw-simple.cw-small.disabled:active   	{ padding: 4px 7px 5px; }
+.cw-button.cw-simple[disabled]:active,
+.cw-button.cw-simple.disabled:active 	            { padding: 5px 10px 5px; }
+.cw-button.cw-simple.cw-medium[disabled]:active,
+.cw-button.cw-simple.cw-medium.disabled:active 		{ padding: 6px 10px 4px; }
+.cw-button.cw-simple.cw-large[disabled]:active,
+.cw-button.cw-simple.cw-large.disabled:active   	{ padding: 8px 14px 8px; }
+.cw-button.cw-simple.cw-xl[disabled]:active,
+.cw-button.cw-simple.cw-xl.disabled:active	      { padding: 8px 14px 8px; }
+.cw-button.cw-simple.cw-xxl[disabled]:active,
+.cw-button.cw-simple.cw-xxl.disabled:active 		   { padding: 8px 14px 8px; }
+.cw-button.cw-simple.cw-xxxl[disabled]:active,
+.cw-button.cw-simple.cw-xxxl.disabled:active    	{ padding: 8px 14px 8px; }
 
 
 /*
@@ -357,47 +357,47 @@
 /* Silk Icons - http://www.famfamfam.com/lab/icons/silk/ */
 /* (Obviously not all Silk icons are defined here. Feel free to define any other icons that you may need.) */
 
-.cw-button span.ok				{ background-image: url(images/icons/silk/tick.png) !important; }
-.cw-button span.cancel			{ background-image: url(images/icons/silk/cross.png) !important; }
-.cw-button span.add				{ background-image: url(images/icons/silk/add.png) !important; }
-.cw-button span.delete			{ background-image: url(images/icons/silk/delete.png) !important; }
-.cw-button span.download		{ background-image: url(images/icons/silk/arrow_down.png) !important; }
-.cw-button span.download2		{ background-image: url(images/icons/silk/package_down.png) !important; }
-.cw-button span.upload			{ background-image: url(images/icons/silk/arrow_up.png) !important; }
-.cw-button span.search			{ background-image: url(images/icons/silk/magnifier.png) !important; }
-.cw-button span.find			{ background-image: url(images/icons/silk/find.png) !important; }
-.cw-button span.first			{ background-image: url(images/icons/silk/resultset_first.png) !important; }
-.cw-button span.prev			{ background-image: url(images/icons/silk/resultset_previous.png) !important; }
-.cw-button span.next			{ background-image: url(images/icons/silk/resultset_next.png) !important; }
-.cw-button span.last			{ background-image: url(images/icons/silk/resultset_last.png) !important; }
-.cw-button span.play			{ background-image: url(images/icons/silk/play_blue.png) !important; }
-.cw-button span.pause			{ background-image: url(images/icons/silk/pause_blue.png) !important; }
-.cw-button span.rewind			{ background-image: url(images/icons/silk/rewind_blue.png) !important; }
-.cw-button span.forward		{ background-image: url(images/icons/silk/forward_blue.png) !important; }
-.cw-button span.stop			{ background-image: url(images/icons/silk/stop_blue.png) !important; }
-.cw-button span.reload			{ background-image: url(images/icons/silk/reload.png) !important; }
-.cw-button span.sync			{ background-image: url(images/icons/silk/arrow_refresh.png) !important; }
-.cw-button span.save			{ background-image: url(images/icons/silk/disk.png) !important; }
-.cw-button span.email			{ background-image: url(images/icons/silk/email.png) !important; }
-.cw-button span.print			{ background-image: url(images/icons/silk/printer.png) !important; }
-.cw-button span.heart			{ background-image: url(images/icons/silk/heart.png) !important; }
-.cw-button span.like			{ background-image: url(images/icons/silk/thumb_up.png) !important; }
-.cw-button span.dislike		{ background-image: url(images/icons/silk/thumb_down.png) !important; }
-.cw-button span.accept			{ background-image: url(images/icons/silk/accept.png) !important; }
-.cw-button span.decline		{ background-image: url(images/icons/silk/decline.png) !important; }
-.cw-button span.help			{ background-image: url(images/icons/silk/help.png) !important; }
-.cw-button span.home			{ background-image: url(images/icons/silk/house.png) !important; }
-.cw-button span.info			{ background-image: url(images/icons/silk/information.png) !important; }
-.cw-button span.cut				{ background-image: url(images/icons/silk/cut.png) !important; }
-.cw-button span.copy			{ background-image: url(images/icons/silk/page_white_copy.png) !important; }
-.cw-button span.paste			{ background-image: url(images/icons/silk/paste_plain.png) !important; }
-.cw-button span.erase			{ background-image: url(images/icons/silk/erase.png) !important; }
-.cw-button span.undo			{ background-image: url(images/icons/silk/arrow_undo.png) !important; }
-.cw-button span.redo			{ background-image: url(images/icons/silk/arrow_redo.png) !important; }
-.cw-button span.edit			{ background-image: url(images/icons/silk/pencil.png) !important; }
-.cw-button span.calendar		{ background-image: url(images/icons/silk/date.png) !important; }
-.cw-button span.user			{ background-image: url(images/icons/silk/user.png) !important; }
-.cw-button span.settings		{ background-image: url(images/icons/silk/cog.png) !important; }
-.cw-button span.cart			{ background-image: url(images/icons/silk/cart.png) !important; }
-.cw-button span.wand			{ background-image: url(images/icons/silk/wand.png) !important; }
-.cw-button span.wrench			{ background-image: url(images/icons/silk/wrench.png) !important; }
+.cw-button span.b-ok			{ background-image: url(../images/icons/silk/tick.png) !important; }
+.cw-button span.b-cancel		{ background-image: url(../images/icons/silk/cross.png) !important; }
+.cw-button span.b-add			{ background-image: url(../images/icons/silk/add.png) !important; }
+.cw-button span.b-delete		{ background-image: url(../images/icons/silk/delete.png) !important; }
+.cw-button span.b-download		{ background-image: url(../images/icons/silk/arrow_down.png) !important; }
+.cw-button span.b-download2		{ background-image: url(../images/icons/silk/package_down.png) !important; }
+.cw-button span.b-upload		{ background-image: url(../images/icons/silk/arrow_up.png) !important; }
+.cw-button span.b-search		{ background-image: url(../images/icons/silk/magnifier.png) !important; }
+.cw-button span.b-find			{ background-image: url(../images/icons/silk/find.png) !important; }
+.cw-button span.b-first			{ background-image: url(../images/icons/silk/resultset_first.png) !important; }
+.cw-button span.b-prev			{ background-image: url(../images/icons/silk/resultset_previous.png) !important; }
+.cw-button span.b-next			{ background-image: url(../images/icons/silk/resultset_next.png) !important; }
+.cw-button span.b-last			{ background-image: url(../images/icons/silk/resultset_last.png) !important; }
+.cw-button span.b-play			{ background-image: url(../images/icons/silk/play_blue.png) !important; }
+.cw-button span.b-pause			{ background-image: url(../images/icons/silk/pause_blue.png) !important; }
+.cw-button span.b-rewind		{ background-image: url(../images/icons/silk/rewind_blue.png) !important; }
+.cw-button span.b-forward		{ background-image: url(../images/icons/silk/forward_blue.png) !important; }
+.cw-button span.b-stop			{ background-image: url(../images/icons/silk/stop_blue.png) !important; }
+.cw-button span.b-reload		{ background-image: url(../images/icons/silk/reload.png) !important; }
+.cw-button span.b-sync			{ background-image: url(../images/icons/silk/arrow_refresh.png) !important; }
+.cw-button span.b-save			{ background-image: url(../images/icons/silk/disk.png) !important; }
+.cw-button span.b-email			{ background-image: url(../images/icons/silk/email.png) !important; }
+.cw-button span.b-print			{ background-image: url(../images/icons/silk/printer.png) !important; }
+.cw-button span.b-heart			{ background-image: url(../images/icons/silk/heart.png) !important; }
+.cw-button span.b-like			{ background-image: url(../images/icons/silk/thumb_up.png) !important; }
+.cw-button span.b-dislike		{ background-image: url(../images/icons/silk/thumb_down.png) !important; }
+.cw-button span.b-accept		{ background-image: url(../images/icons/silk/accept.png) !important; }
+.cw-button span.b-decline		{ background-image: url(../images/icons/silk/decline.png) !important; }
+.cw-button span.b-help			{ background-image: url(../images/icons/silk/help.png) !important; }
+.cw-button span.b-home			{ background-image: url(../images/icons/silk/house.png) !important; }
+.cw-button span.b-info			{ background-image: url(../images/icons/silk/information.png) !important; }
+.cw-button span.b-cut			{ background-image: url(../images/icons/silk/cut.png) !important; }
+.cw-button span.b-copy			{ background-image: url(../images/icons/silk/page_white_copy.png) !important; }
+.cw-button span.b-paste			{ background-image: url(../images/icons/silk/paste_plain.png) !important; }
+.cw-button span.b-erase			{ background-image: url(../images/icons/silk/erase.png) !important; }
+.cw-button span.b-undo			{ background-image: url(../images/icons/silk/arrow_undo.png) !important; }
+.cw-button span.b-redo			{ background-image: url(../images/icons/silk/arrow_redo.png) !important; }
+.cw-button span.b-edit			{ background-image: url(../images/icons/silk/pencil.png) !important; }
+.cw-button span.b-calendar		{ background-image: url(../images/icons/silk/date.png) !important; }
+.cw-button span.b-user			{ background-image: url(../images/icons/silk/user.png) !important; }
+.cw-button span.b-settings		{ background-image: url(../images/icons/silk/cog.png) !important; }
+.cw-button span.b-cart			{ background-image: url(../images/icons/silk/cart.png) !important; }
+.cw-button span.b-wand			{ background-image: url(../images/icons/silk/wand.png) !important; }
+.cw-button span.b-wrench		{ background-image: url(../images/icons/silk/wrench.png) !important; }

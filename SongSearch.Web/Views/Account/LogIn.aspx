@@ -51,7 +51,7 @@ Log In
                     </div>
                     <%= Html.HiddenFor(m => m.ReturnUrl)%>
                     <p>
-                    <button type="submit" class="sexybutton sexysimple sexyblue">
+                    <button type="submit" class="cw-button cw-simple cw-blue">
                     <span class="ok">Log in</span>
                     </button>
                     </p>

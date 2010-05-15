@@ -1990,29 +1990,25 @@ namespace SongSearch.Web.Data
         /// </summary>
         /// <param name="propertyId">Initial value of the PropertyId property.</param>
         /// <param name="propertyCode">Initial value of the PropertyCode property.</param>
-        /// <param name="propertyCodeShort">Initial value of the PropertyCodeShort property.</param>
         /// <param name="propertyName">Initial value of the PropertyName property.</param>
-        /// <param name="searchType">Initial value of the SearchType property.</param>
-        /// <param name="dataType">Initial value of the DataType property.</param>
         /// <param name="propertyType">Initial value of the PropertyType property.</param>
         /// <param name="accessLevel">Initial value of the AccessLevel property.</param>
         /// <param name="isListable">Initial value of the IsListable property.</param>
         /// <param name="isCacheable">Initial value of the IsCacheable property.</param>
         /// <param name="isIndexable">Initial value of the IsIndexable property.</param>
-        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyCode, global::System.String propertyCodeShort, global::System.String propertyName, global::System.String searchType, global::System.String dataType, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable)
+        /// <param name="includeInSearchMenu">Initial value of the IncludeInSearchMenu property.</param>
+        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyCode, global::System.String propertyName, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu)
         {
             SearchProperty searchProperty = new SearchProperty();
             searchProperty.PropertyId = propertyId;
             searchProperty.PropertyCode = propertyCode;
-            searchProperty.PropertyCodeShort = propertyCodeShort;
             searchProperty.PropertyName = propertyName;
-            searchProperty.SearchType = searchType;
-            searchProperty.DataType = dataType;
             searchProperty.PropertyType = propertyType;
             searchProperty.AccessLevel = accessLevel;
             searchProperty.IsListable = isListable;
             searchProperty.IsCacheable = isCacheable;
             searchProperty.IsIndexable = isIndexable;
+            searchProperty.IncludeInSearchMenu = includeInSearchMenu;
             return searchProperty;
         }
 
@@ -2049,7 +2045,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String PropertyCode
         {
@@ -2059,14 +2055,11 @@ namespace SongSearch.Web.Data
             }
             set
             {
-                if (_PropertyCode != value)
-                {
-                    OnPropertyCodeChanging(value);
-                    ReportPropertyChanging("PropertyCode");
-                    _PropertyCode = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("PropertyCode");
-                    OnPropertyCodeChanged();
-                }
+                OnPropertyCodeChanging(value);
+                ReportPropertyChanging("PropertyCode");
+                _PropertyCode = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PropertyCode");
+                OnPropertyCodeChanged();
             }
         }
         private global::System.String _PropertyCode;
@@ -2076,34 +2069,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String PropertyCodeShort
-        {
-            get
-            {
-                return _PropertyCodeShort;
-            }
-            set
-            {
-                if (_PropertyCodeShort != value)
-                {
-                    OnPropertyCodeShortChanging(value);
-                    ReportPropertyChanging("PropertyCodeShort");
-                    _PropertyCodeShort = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("PropertyCodeShort");
-                    OnPropertyCodeShortChanged();
-                }
-            }
-        }
-        private global::System.String _PropertyCodeShort;
-        partial void OnPropertyCodeShortChanging(global::System.String value);
-        partial void OnPropertyCodeShortChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String PropertyName
         {
@@ -2113,14 +2079,11 @@ namespace SongSearch.Web.Data
             }
             set
             {
-                if (_PropertyName != value)
-                {
-                    OnPropertyNameChanging(value);
-                    ReportPropertyChanging("PropertyName");
-                    _PropertyName = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("PropertyName");
-                    OnPropertyNameChanged();
-                }
+                OnPropertyNameChanging(value);
+                ReportPropertyChanging("PropertyName");
+                _PropertyName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PropertyName");
+                OnPropertyNameChanged();
             }
         }
         private global::System.String _PropertyName;
@@ -2154,33 +2117,6 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String SearchType
-        {
-            get
-            {
-                return _SearchType;
-            }
-            set
-            {
-                if (_SearchType != value)
-                {
-                    OnSearchTypeChanging(value);
-                    ReportPropertyChanging("SearchType");
-                    _SearchType = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("SearchType");
-                    OnSearchTypeChanged();
-                }
-            }
-        }
-        private global::System.String _SearchType;
-        partial void OnSearchTypeChanging(global::System.String value);
-        partial void OnSearchTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int16> SearchTypeId
@@ -2205,34 +2141,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String DataType
-        {
-            get
-            {
-                return _DataType;
-            }
-            set
-            {
-                if (_DataType != value)
-                {
-                    OnDataTypeChanging(value);
-                    ReportPropertyChanging("DataType");
-                    _DataType = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("DataType");
-                    OnDataTypeChanged();
-                }
-            }
-        }
-        private global::System.String _DataType;
-        partial void OnDataTypeChanging(global::System.String value);
-        partial void OnDataTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String PropertyType
         {
@@ -2242,14 +2151,11 @@ namespace SongSearch.Web.Data
             }
             set
             {
-                if (_PropertyType != value)
-                {
-                    OnPropertyTypeChanging(value);
-                    ReportPropertyChanging("PropertyType");
-                    _PropertyType = StructuralObject.SetValidValue(value, false);
-                    ReportPropertyChanged("PropertyType");
-                    OnPropertyTypeChanged();
-                }
+                OnPropertyTypeChanging(value);
+                ReportPropertyChanging("PropertyType");
+                _PropertyType = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PropertyType");
+                OnPropertyTypeChanged();
             }
         }
         private global::System.String _PropertyType;
@@ -2307,7 +2213,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Int16 AccessLevel
         {
@@ -2317,14 +2223,11 @@ namespace SongSearch.Web.Data
             }
             set
             {
-                if (_AccessLevel != value)
-                {
-                    OnAccessLevelChanging(value);
-                    ReportPropertyChanging("AccessLevel");
-                    _AccessLevel = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("AccessLevel");
-                    OnAccessLevelChanged();
-                }
+                OnAccessLevelChanging(value);
+                ReportPropertyChanging("AccessLevel");
+                _AccessLevel = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AccessLevel");
+                OnAccessLevelChanged();
             }
         }
         private global::System.Int16 _AccessLevel;
@@ -2334,7 +2237,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Boolean IsListable
         {
@@ -2344,14 +2247,11 @@ namespace SongSearch.Web.Data
             }
             set
             {
-                if (_IsListable != value)
-                {
-                    OnIsListableChanging(value);
-                    ReportPropertyChanging("IsListable");
-                    _IsListable = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("IsListable");
-                    OnIsListableChanged();
-                }
+                OnIsListableChanging(value);
+                ReportPropertyChanging("IsListable");
+                _IsListable = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsListable");
+                OnIsListableChanged();
             }
         }
         private global::System.Boolean _IsListable;
@@ -2361,7 +2261,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Boolean IsCacheable
         {
@@ -2371,14 +2271,11 @@ namespace SongSearch.Web.Data
             }
             set
             {
-                if (_IsCacheable != value)
-                {
-                    OnIsCacheableChanging(value);
-                    ReportPropertyChanging("IsCacheable");
-                    _IsCacheable = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("IsCacheable");
-                    OnIsCacheableChanged();
-                }
+                OnIsCacheableChanging(value);
+                ReportPropertyChanging("IsCacheable");
+                _IsCacheable = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsCacheable");
+                OnIsCacheableChanged();
             }
         }
         private global::System.Boolean _IsCacheable;
@@ -2388,7 +2285,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.Boolean IsIndexable
         {
@@ -2398,19 +2295,40 @@ namespace SongSearch.Web.Data
             }
             set
             {
-                if (_IsIndexable != value)
-                {
-                    OnIsIndexableChanging(value);
-                    ReportPropertyChanging("IsIndexable");
-                    _IsIndexable = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("IsIndexable");
-                    OnIsIndexableChanged();
-                }
+                OnIsIndexableChanging(value);
+                ReportPropertyChanging("IsIndexable");
+                _IsIndexable = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsIndexable");
+                OnIsIndexableChanged();
             }
         }
         private global::System.Boolean _IsIndexable;
         partial void OnIsIndexableChanging(global::System.Boolean value);
         partial void OnIsIndexableChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IncludeInSearchMenu
+        {
+            get
+            {
+                return _IncludeInSearchMenu;
+            }
+            set
+            {
+                OnIncludeInSearchMenuChanging(value);
+                ReportPropertyChanging("IncludeInSearchMenu");
+                _IncludeInSearchMenu = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IncludeInSearchMenu");
+                OnIncludeInSearchMenuChanged();
+            }
+        }
+        private global::System.Boolean _IncludeInSearchMenu;
+        partial void OnIncludeInSearchMenuChanging(global::System.Boolean value);
+        partial void OnIncludeInSearchMenuChanged();
 
         #endregion
     
@@ -2431,11 +2349,13 @@ namespace SongSearch.Web.Data
         /// </summary>
         /// <param name="tagId">Initial value of the TagId property.</param>
         /// <param name="tagName">Initial value of the TagName property.</param>
-        public static Tag CreateTag(global::System.Int32 tagId, global::System.String tagName)
+        /// <param name="tagTypeId">Initial value of the TagTypeId property.</param>
+        public static Tag CreateTag(global::System.Int32 tagId, global::System.String tagName, global::System.Int16 tagTypeId)
         {
             Tag tag = new Tag();
             tag.TagId = tagId;
             tag.TagName = tagName;
+            tag.TagTypeId = tagTypeId;
             return tag;
         }
 
@@ -2516,6 +2436,30 @@ namespace SongSearch.Web.Data
         private Nullable<global::System.Int32> _CreatedByUserId;
         partial void OnCreatedByUserIdChanging(Nullable<global::System.Int32> value);
         partial void OnCreatedByUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int16 TagTypeId
+        {
+            get
+            {
+                return _TagTypeId;
+            }
+            set
+            {
+                OnTagTypeIdChanging(value);
+                ReportPropertyChanging("TagTypeId");
+                _TagTypeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TagTypeId");
+                OnTagTypeIdChanged();
+            }
+        }
+        private global::System.Int16 _TagTypeId;
+        partial void OnTagTypeIdChanging(global::System.Int16 value);
+        partial void OnTagTypeIdChanged();
 
         #endregion
     

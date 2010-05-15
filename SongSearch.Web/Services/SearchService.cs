@@ -7,6 +7,15 @@ using SongSearch.Web.Data;
 namespace SongSearch.Web.Services {
 	public static class SearchService {
 
+		public static IList<SearchProperty> GetSearchMenuProperties(Roles role) {
+
+			using (ISession session = new EFSession()) {
+
+				// Get Search Properties
+				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu && x.AccessLevel >= (int)role).ToList();
+			}
+		}
+
 		public static IList<Content> SearchContent(IList<SearchField> searchFields) {
 
 			using (ISession session = new EFSession()) {

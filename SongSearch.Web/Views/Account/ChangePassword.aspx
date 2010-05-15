@@ -61,7 +61,7 @@
                 </div>
                  <p>&nbsp;</p>
                 <p>
-                   <button type="submit" class="sexybutton sexysimple sexyblue">
+                   <button type="submit" class="cw-button cw-simple cw-blue">
                     <span class="save">Change Password</span>
                     </button>
                 </p>

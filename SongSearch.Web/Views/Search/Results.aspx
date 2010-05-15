@@ -1,11 +1,16 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<IEnumerable<SongSearch.Web.Data.Content>>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.SearchViewModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Results
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+<% Html.RenderPartial("ctrlSearchMenu"); %>
+    
+<%
+    var results = Model.SearchResults;
+    
+     %>
     <h2>Results</h2>
 
     <table>
@@ -47,7 +52,7 @@
             </th>
         </tr>
 
-    <% foreach (var item in Model) { %>
+    <% foreach (var item in results) { %>
     
         <tr>
             <td>

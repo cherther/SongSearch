@@ -61,7 +61,7 @@
                 </div>
                 
                 <p>
-                    <button type="submit" class="sexybutton sexysimple sexyblue">
+                    <button type="submit" class="cw-button cw-simple cw-blue">
                     <span class="ok">Reset Password</span>
                     </button>
                 </p>

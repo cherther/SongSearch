@@ -26,7 +26,7 @@
             </div>
              <p>&nbsp;</p>
             <p>
-                <button type="submit" class="sexybutton sexysimple sexyblue">
+                <button type="submit" class="cw-button cw-simple cw-blue">
                     <span class="email">Request Password Reset</span>
                     </button>
             </p>
