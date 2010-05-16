@@ -11,6 +11,8 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization]
 	public class SearchController : Controller
     {
+
+		private const int _pageSize = 100;
         //
         // GET: /Search/
 		public ActionResult Index()
@@ -22,7 +24,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// GetAdvancedSearchMenu
 		// **************************************
-		public ActionResult Results(IList<SearchField> s) {
+		public ActionResult Results(IList<SearchField> s, int? p) {
 
 			var model = GetSearchViewModel();
 			var isValid = s.Any(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v)));
@@ -36,7 +38,7 @@ namespace SongSearch.Web.Controllers
 					)
 					).ToList();
 
-				var results = SearchService.SearchContent(searchFields, User.Identity.Name);
+				var results = SearchService.SearchContent(searchFields, User.Identity.Name, _pageSize, p);
 				model.SearchResults = results;
 				model.SearchFields = searchFields;
 				return View(model);
