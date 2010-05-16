@@ -49,6 +49,43 @@ namespace SongSearch.Web.Data {
 			return _ctx.CreateObjectSet<T>();
 		}
 
+		public IQueryable<T> All<T>() where T : class {
+			return GetTable<T>().AsQueryable();
+		}
+
+		public IQueryable<T> All<T>(string loadWith) where T : class {
+			var set = GetTable<T>();
+			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
+			return set.AsQueryable();
+		}
+
+		public IQueryable<T> All<T>(string commandText, params object[] parameters) where T : class {
+			return _ctx.ExecuteStoreQuery<T>(commandText, parameters).AsQueryable();
+		}
+
+		public T Single<T>(Expression<Func<T, bool>> expression) where T : class {
+			return Single(expression, "");// GetTable<T>().SingleOrDefault(expression);
+		}
+
+		public T Single<T>(Expression<Func<T, bool>> expression, string loadWith) where T : class {
+
+			var set = GetTable<T>();
+			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
+			return set.SingleOrDefault(expression);
+		}
+		
+		public void Add<T>(T item) where T : class {
+			GetTable<T>().AddObject(item);
+		}
+		
+		public void Add<T>(IEnumerable<T> items) where T : class {
+			throw new NotImplementedException();
+		}
+		
+		public void Update<T>(T item) where T : class {
+			//nothing needed here
+		}
+		
 		public void Delete<T>(Expression<Func<T, bool>> expression) where T : class
 		{
 			var query = All<T>().Where(expression);
@@ -64,48 +101,10 @@ namespace SongSearch.Web.Data {
 			// is this the only way to do many?
 			throw new NotImplementedException();
 //			items.ForEach(i => GetTable<T>().DeleteObject(i));
-			
 		}
 
-		public T Single<T>(Expression<Func<T, bool>> expression) where T : class
-		{
-			return Single(expression, "");// GetTable<T>().SingleOrDefault(expression);
-		}
+		
 
-		public T Single<T>(Expression<Func<T, bool>> expression, string loadWith) where T : class {
-			
-			var set = GetTable<T>();
-			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
-			return set.SingleOrDefault(expression);
-		}
-
-		public IQueryable<T> All<T>() where T : class
-		{
-			return GetTable<T>().AsQueryable();
-		}
-
-		public IQueryable<T> All<T>(string loadWith) where T : class {
-			var set = GetTable<T>();
-			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
-			return set.AsQueryable();
-		}
-
-		public void Add<T>(T item) where T : class
-		{
-			GetTable<T>().AddObject(item);
-		}
-		public void Add<T>(IEnumerable<T> items) where T : class
-		{
-			throw new NotImplementedException();
-		}
-		public void Update<T>(T item) where T : class
-		{
-			//nothing needed here
-		}
-		public void Save<T>(T item) where T : class		
-		{
-			//nothing needed here
-		}
 		#endregion
 
 

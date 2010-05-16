@@ -28,9 +28,15 @@ namespace SongSearch.Web.Controllers
 			var isValid = s.Any(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v)));
 
 			if (isValid) {
-				var searchFields = s.Where(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v))).ToList();
+				var searchFields = s.Where(x => x.V != null && 
+					x.V.Any(v => 
+					v != null && 
+					!String.IsNullOrWhiteSpace(v) 
+					&& !v.Equals(bool.FalseString, StringComparison.InvariantCultureIgnoreCase)
+					)
+					).ToList();
 
-				var results = SearchService.SearchContent(searchFields);
+				var results = SearchService.SearchContent(searchFields, User.Identity.Name);
 				model.SearchResults = results;
 				model.SearchFields = searchFields;
 				return View(model);

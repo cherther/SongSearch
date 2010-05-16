@@ -71,7 +71,8 @@ namespace SongSearch.Web {
 		Contains = 1,
 		HasValue = 2,
 		Range = 3,
-		Tag = 4
+		Tag = 4,
+		Join = 5
 	}
 
 	// **************************************

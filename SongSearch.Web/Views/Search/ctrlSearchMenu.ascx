@@ -15,7 +15,7 @@
         <%
               var i = searchMenuProperties.IndexOf(item); 
               var searchType = (SearchTypes) item.SearchTypeId;
-              var value = searchFields != null && searchFields.Count > 0 ? searchFields[i].V : new string[] {"",""};
+              var value = searchFields != null && searchFields.Count > i ? searchFields[i].V : new string[] {"",""};
               %>
         <li>
             <label><%: item.PropertyName %></label>
@@ -24,6 +24,10 @@
 
             <%switch (searchType) {%>
                 <%case SearchTypes.Contains: {%>
+                <%: Html.TextBox(String.Format("s[{0}].V", i), value[0])%>
+                <%break;%>
+                <%} %>
+                <%case SearchTypes.Join: {%>
                 <%: Html.TextBox(String.Format("s[{0}].V", i), value[0])%>
                 <%break;%>
                 <%} %>

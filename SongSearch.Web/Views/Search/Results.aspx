@@ -12,24 +12,17 @@
     
      %>
     <h2>Results</h2>
-
+    <p>Found: <%= results.Count() %></p>
     <table>
         <tr>
             <th>
                 ContentId
             </th>
             <th>
-                CatalogId
-            </th>
- 
-            <th>
                 Title
             </th>
             <th>
                 Artist
-            </th>
-            <th>
-                Writers
             </th>
             <th>
                 PopCharts
@@ -41,14 +34,7 @@
                 ReleaseYear
             </th>
             <th>
-                RecordLabel
-            </th>
-     
-            <th>
                 HasMediaPreviewVersion
-            </th>
-            <th>
-                HasMediaFullVersion
             </th>
         </tr>
 
@@ -69,9 +55,6 @@
                 <%: item.Artist %>
             </td>
             <td>
-                <%: item.Writers %>
-            </td>
-            <td>
                 <%: item.PopCharts %>
             </td>
             <td>
@@ -80,15 +63,9 @@
             <td>
                 <%: item.ReleaseYear %>
             </td>
-            <td>
-                <%: item.RecordLabel %>
-            </td>
            
             <td>
                 <%: item.HasMediaPreviewVersion %>
-            </td>
-            <td>
-                <%: item.HasMediaFullVersion %>
             </td>
         </tr>
     
@@ -96,9 +73,7 @@
 
     </table>
 
-    <p>
-        <%: Html.ActionLink("Create New", "Create") %>
-    </p>
+    
 
 </asp:Content>
 

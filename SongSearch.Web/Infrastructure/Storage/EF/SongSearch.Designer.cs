@@ -1303,6 +1303,30 @@ namespace SongSearch.Web.Data
         private global::System.Boolean _HasMediaFullVersion;
         partial void OnHasMediaFullVersionChanging(global::System.Boolean value);
         partial void OnHasMediaFullVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LicensingNotes
+        {
+            get
+            {
+                return _LicensingNotes;
+            }
+            set
+            {
+                OnLicensingNotesChanging(value);
+                ReportPropertyChanging("LicensingNotes");
+                _LicensingNotes = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LicensingNotes");
+                OnLicensingNotesChanged();
+            }
+        }
+        private global::System.String _LicensingNotes;
+        partial void OnLicensingNotesChanging(global::System.String value);
+        partial void OnLicensingNotesChanged();
 
         #endregion
     
@@ -2329,6 +2353,30 @@ namespace SongSearch.Web.Data
         private global::System.Boolean _IncludeInSearchMenu;
         partial void OnIncludeInSearchMenuChanging(global::System.Boolean value);
         partial void OnIncludeInSearchMenuChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SearchPredicate
+        {
+            get
+            {
+                return _SearchPredicate;
+            }
+            set
+            {
+                OnSearchPredicateChanging(value);
+                ReportPropertyChanging("SearchPredicate");
+                _SearchPredicate = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SearchPredicate");
+                OnSearchPredicateChanged();
+            }
+        }
+        private global::System.String _SearchPredicate;
+        partial void OnSearchPredicateChanging(global::System.String value);
+        partial void OnSearchPredicateChanged();
 
         #endregion
     

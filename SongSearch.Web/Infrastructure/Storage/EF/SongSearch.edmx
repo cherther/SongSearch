@@ -148,6 +148,7 @@
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="Keywords" Type="nvarchar(max)" />
           <Property Name="SimilarSongs" Type="nvarchar(max)" />
+          <Property Name="LicensingNotes" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ContentTags">
           <Key>
@@ -183,6 +184,7 @@
           <Property Name="PropertyName" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="SearchGroup" Type="nvarchar" MaxLength="50" />
           <Property Name="SearchTypeId" Type="smallint" />
+          <Property Name="SearchPredicate" Type="varchar" MaxLength="50" />
           <Property Name="PropertyType" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="LookupName" Type="nvarchar" MaxLength="50" />
           <Property Name="ListName" Type="nvarchar" MaxLength="10" />
@@ -545,6 +547,7 @@
           <NavigationProperty Name="Carts" Relationship="SongSearch.Web.Data.Model.CartContents" FromRole="Content" ToRole="Cart" />
           <Property Type="Boolean" Name="HasMediaPreviewVersion" Nullable="false" />
           <Property Type="Boolean" Name="HasMediaFullVersion" Nullable="false" />
+          <Property Type="String" Name="LicensingNotes" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -745,6 +748,7 @@
           <Property Type="Boolean" Name="IsCacheable" Nullable="false" />
           <Property Type="Boolean" Name="IsIndexable" Nullable="false" />
           <Property Type="Boolean" Name="IncludeInSearchMenu" Nullable="false" />
+          <Property Type="String" Name="SearchPredicate" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -775,7 +779,8 @@
             <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
-            <ScalarProperty Name="HasMediaFullVersion" ColumnName="HasMediaFullVersion" />
+            <ScalarProperty Name="LicensingNotes" ColumnName="LicensingNotes" />
+                <ScalarProperty Name="HasMediaFullVersion" ColumnName="HasMediaFullVersion" />
                 <ScalarProperty Name="HasMediaPreviewVersion" ColumnName="HasMediaPreviewVersion" />
                 <ScalarProperty Name="ContentId" ColumnName="ContentId" />
             <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
@@ -870,6 +875,7 @@
           <EntitySetMapping Name="SearchProperties">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SearchProperty">
               <MappingFragment StoreEntitySet="SearchProperties">
+                <ScalarProperty Name="SearchPredicate" ColumnName="SearchPredicate" />
                 <ScalarProperty Name="IncludeInSearchMenu" ColumnName="IncludeInSearchMenu" />
                 <ScalarProperty Name="IsIndexable" ColumnName="IsIndexable" />
                 <ScalarProperty Name="IsCacheable" ColumnName="IsCacheable" />
