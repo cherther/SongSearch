@@ -24,7 +24,7 @@ namespace SongSearch.Web {
 		public IList<SearchProperty> SearchMenuProperties { get; set; }
 		public IList<SearchField> SearchFields { get; set; }
 		public IList<Tag> SearchTags { get; set; }
-		public IList<Content> SearchResults { get; set; }
+		public PagedList<Content> SearchResults { get; set; }
 
 
 	}

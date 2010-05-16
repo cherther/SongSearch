@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Text;
 using SongSearch.Web.Data;
+using System.Data.Objects;
 
 namespace SongSearch.Web.Services {
 	public static class SearchService {
@@ -29,7 +30,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// SearchContent
 		// **************************************
-		public static IList<Content> SearchContent(IList<SearchField> searchFields, string userName, int? pageSize = null, int? pageNumber = null) {
+		public static PagedList<Content> SearchContent(IList<SearchField> searchFields, string userName, int? pageSize = null, int? pageIndex = null) {
 
 			using (ISession session = new EFSession()) {
 				
@@ -61,9 +62,10 @@ namespace SongSearch.Web.Services {
 
 									if (!startsWithSearch && !preciseSearch && search.IsMultiSearch()) {
 										foreach (var val in search) {
-											string valFormat = "%{0}%";
+											string valFormat = @"%{0}%";
+											string column = String.Concat("c.", prop.PropertyCode);
 											sbWhere.AppendLine(
-												String.Format("c.{0} {1}", prop.PropertyCode, 
+												String.Format(@"{0} {1}", column.MakeSearchableColumn(), 
 													String.Format(prop.SearchPredicate, 
 														String.Format(valFormat, val)
 														)
@@ -75,9 +77,10 @@ namespace SongSearch.Web.Services {
 									} else {
 										var val = searchableValues.First();
 
-										string valFormat = startsWithSearch ? "{0}%" : "%{0}%";
-										sbWhere.AppendLine(String.Format("c.{0} {1}", 
-											prop.PropertyCode, 
+										string valFormat = startsWithSearch ? @"{0}%" : @"%{0}%";
+										string column = String.Concat("c.", prop.PropertyCode);
+										sbWhere.AppendLine(String.Format(@"{0} {1}",
+											column.MakeSearchableColumn(), 
 												String.Format(prop.SearchPredicate,
 													String.Format(valFormat, val)
 												)));
@@ -91,15 +94,15 @@ namespace SongSearch.Web.Services {
 									var joinField = prop.PropertyCode;
 									var searchField = prop.PropertyName;
 
-									sbJoin.AppendLine(String.Format("inner join dbo.{0} r_{1} on c.{1} = r_{1}.{1}", joinTable, joinField));
-									sbWhere.AppendLine(String.Format("r_{0}.{1} {2}", joinField, searchField,
+									sbJoin.AppendLine(String.Format(@"inner join dbo.{0} r_{1} on c.{1} = r_{1}.{1}", joinTable, joinField));
+									sbWhere.AppendLine(String.Format(@"r_{0}.{1} {2}", joinField, searchField,
 										String.Format(prop.SearchPredicate, searchableValues.First())));
 								}
 								break;
 
 							case SearchTypes.HasValue:
 								if (searchableValues.First() != null & prop.SearchPredicate != null) {
-									sbWhere.AppendLine(String.Format("c.{0} {1}", prop.PropertyCode, prop.SearchPredicate));
+									sbWhere.AppendLine(String.Format(@"c.{0} {1}", prop.PropertyCode, prop.SearchPredicate));
 								}
 								break;
 
@@ -107,18 +110,18 @@ namespace SongSearch.Web.Services {
 								if (searchableValues.Any(v => !String.IsNullOrWhiteSpace(v)) & prop.SearchPredicate != null) {
 									// two valid values
 									if (searchableValues.All(v => !String.IsNullOrWhiteSpace(v))) {
-										sbWhere.AppendLine(String.Format("c.{0} {1}", prop.PropertyCode, 
+										sbWhere.AppendLine(String.Format(@"c.{0} {1}", prop.PropertyCode, 
 											String.Format(prop.SearchPredicate, searchableValues.First(), searchableValues.Last())));
 									}
 										//one valid value
 									else {
 										// first value only
 										if (!String.IsNullOrEmpty(searchableValues[searchableValues.GetLowerBound(0)])) {
-											sbWhere.AppendLine(String.Format("c.{0} = {1}", prop.PropertyCode, searchableValues.First()));
+											sbWhere.AppendLine(String.Format(@"c.{0} = {1}", prop.PropertyCode, searchableValues.First()));
 										}
 											// second value only
 										else {
-											sbWhere.AppendLine(String.Format("c.{0} <= {1}", prop.PropertyCode, searchableValues.Last()));
+											sbWhere.AppendLine(String.Format(@"c.{0} <= {1}", prop.PropertyCode, searchableValues.Last()));
 										}
 									}								
 								}
@@ -135,10 +138,10 @@ namespace SongSearch.Web.Services {
 									group by c1.ContentId
 								 * */
 								foreach (var tagId in tagValues) {
-									sbJoin.AppendLine("inner join");
-									sbJoin.AppendLine("(select ContentId from dbo.ContentTags");
-									sbJoin.AppendLine(String.Format("where TagId = {0}", tagId));
-									sbJoin.AppendLine(String.Format("group by ContentId) ct_{0} on c.ContentId = ct_{0}.ContentId", tagId));
+									sbJoin.AppendLine(@"inner join");
+									sbJoin.AppendLine(@"(select ContentId from dbo.ContentTags");
+									sbJoin.AppendLine(String.Format(@"where TagId = {0}", tagId));
+									sbJoin.AppendLine(String.Format(@"group by ContentId) ct_{0} on c.ContentId = ct_{0}.ContentId", tagId));
 								}
 								break;
 
@@ -175,30 +178,38 @@ namespace SongSearch.Web.Services {
 					sbWhere.AppendLine(String.Concat((!hasConcat ? _add : String.Empty), "ucr.UserId = ", userId));
 				}
 
+				var sbQuery = new StringBuilder();
+				sbQuery.AppendLine("select * from dbo.Contents c");
+				//var sbPre = new StringBuilder();
+				//sbPre.AppendLine("select count(*) from dbo.Contents c");
+
 				var sbCommand = new StringBuilder();
-				sbCommand.AppendLine("select * from dbo.Contents c");
+				//sbCommand.AppendLine("select * from dbo.Contents c");
 				sbCommand.AppendLine(sbJoin.ToString());
 				sbCommand.AppendLine("where").AppendLine(sbWhere.ToString());
-				var commandText = sbCommand.ToString();
+				
+				var commandText = sbQuery.Append(sbCommand.ToString()).ToString();
+				//var preCountCommand = sbPre.Append(sbCommand.ToString()).ToString();
+
 				System.Diagnostics.Debug.Write(commandText);
 
 				sbCommand = null;
 				sbWhere = null;
 				sbJoin = null;
 				user = null;
-				
+
 				var query = session.All<Content>(commandText: commandText, parameters: null);
+				
 				query = query.DefaultSearchSort();
 
-				//if (pageNumber.HasValue && pageSize.HasValue){
+				pageIndex = pageIndex ?? 0;
+				pageSize = pageSize ?? 0;
 
-				//    var skip = (pageNumber.Value - 1) * pageSize.Value;
-				//    query = query.Skip(skip).Take(pageSize.Value);
-				//}
+				var pagedResults = query.ToPagedList(pageIndex.Value, pageSize.Value);
+				
+				//var results = query.ToList();
 
-				var results = query.ToList();
-
-				return results;
+				return pagedResults;
 			}
 
 			
@@ -232,7 +243,7 @@ namespace SongSearch.Web.Services {
 		// IsStartsWithSearch
 		// **************************************
 		private static bool IsStartsWithSearch(this string value) {
-			return (value.EndsWith(_leftSearchChar) && value.Length >= _fullSearchMin);
+			return (value.EndsWith(_leftSearchChar) || value.Length < _fullSearchMin);
 		}
 		// **************************************
 		// IsMultiSearch
@@ -241,6 +252,15 @@ namespace SongSearch.Web.Services {
 			return (searchValues.Length > 1 && searchValues.All(x => !String.IsNullOrWhiteSpace(x)));
 		}
 
+		// **************************************
+		// IsMultiSearch
+		// **************************************
+		private static string MakeSearchableColumn(this string value) {
+			value = string.Format(@"upper({0})", value);
+			var replacements = new string[] { @",", @"''", @";", @":", @"\\", @"/" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
+			replacements.ForEach(x => value = String.Format(@"replace({0}, '{1}','')", value, x));
+			return value;
+		}
 		
 	}
 }

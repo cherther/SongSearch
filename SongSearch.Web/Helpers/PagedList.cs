@@ -4,6 +4,9 @@ using System.Linq;
 using System.Web;
 
 namespace System.Collections.Generic {
+	// **************************************
+	// IPagedList
+	// **************************************
 	public interface IPagedList {
 		int TotalCount {
 			get;
@@ -42,16 +45,24 @@ namespace System.Collections.Generic {
 		bool IsCurrentPage(int pageNumber);
 	}
 
+	// ****************************************************************************
+	// PagedList: By Scott Gu, and he's a better man for it.
+	// ****************************************************************************
 	public class PagedList<T> : List<T>, IPagedList {
 		public PagedList(IQueryable<T> source, int index, int pageSize) {
-			this.TotalCount = source.Count();
+
+			//if (index > 0 && pageSize > 0){
+				source = source.Skip(index * pageSize).Take(pageSize);
+			//}
+
+			this.AddRange(source.ToList());
+
+			this.TotalCount = this.Count();
 			this.PageSize = pageSize;
 			this.PageIndex = index;
 			this.TotalPages = 1;
 			CalcPages();
 
-
-			this.AddRange(source.Skip(index * pageSize).Take(pageSize).ToList());
 		}
 		void CalcPages() {
 			if (PageSize > 0 && TotalCount > PageSize) {
@@ -115,7 +126,7 @@ namespace System.Collections.Generic {
 		}
 
 		public static PagedList<T> ToPagedList<T>(this IQueryable<T> source, int index) {
-			return new PagedList<T>(source, index, 10);
+			return new PagedList<T>(source, index, 100);
 		}
 	}
 }

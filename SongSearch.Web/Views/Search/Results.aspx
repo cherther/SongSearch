@@ -45,10 +45,6 @@
                 <%: Html.ActionLink(item.ContentId.ToString(), "Details", new { id=item.ContentId })%> |
             </td>
             <td>
-                <%: item.CatalogId %>
-            </td>
-           
-            <td>
                 <%: item.Title %>
             </td>
             <td>

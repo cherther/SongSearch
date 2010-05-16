@@ -60,6 +60,7 @@ namespace SongSearch.Web.Data {
 		}
 
 		public IQueryable<T> All<T>(string commandText, params object[] parameters) where T : class {
+			
 			return _ctx.ExecuteStoreQuery<T>(commandText, parameters).AsQueryable();
 		}
 

@@ -11,7 +11,6 @@ namespace SongSearch.Web.Data
 	public interface ISession : IDisposable {
 
 		void CommitChanges();
-
 		IQueryable<T> All<T>() where T : class;
 		IQueryable<T> All<T>(string commandText, params object[] parameters) where T : class;
 		IQueryable<T> All<T>(string loadWith) where T : class;
