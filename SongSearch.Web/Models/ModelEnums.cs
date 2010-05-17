@@ -48,15 +48,23 @@ namespace SongSearch.Web {
 	// TagType
 	// **************************************    
 	public enum TagType {
-		Moods = 1,
-		Styles,
-		Brands,
-		Gender,
-		Tempo,
-		SoundsLike,
-		Instruments,
-		Language
+		Moods = 10,
+		Styles = 11,
+		Gender = 9,
+		Tempo = 8,
+		SoundsLike = 13,
+		Instruments = 14,
+		Language = 15,
+		Brands = 20
+		
 	}
+
+	public enum SortType {
+		None = 0,
+		Ascending = 1,
+		Descending = 2
+	}
+
 
 	// **************************************
 	// InvitationStatusCodes

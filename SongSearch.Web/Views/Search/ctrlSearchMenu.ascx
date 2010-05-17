@@ -19,33 +19,33 @@
               %>
         <li>
             <label><%: item.PropertyName %></label>
-            <%: Html.Hidden(String.Format("s[{0}].P", i), item.PropertyId)%>
-            <%: Html.Hidden(String.Format("s[{0}].T", i), item.SearchTypeId)%>
+            <%: Html.Hidden(String.Format("f[{0}].P", i), item.PropertyId)%>
+            <%: Html.Hidden(String.Format("f[{0}].T", i), item.SearchTypeId)%>
 
             <%switch (searchType) {%>
                 <%case SearchTypes.Contains: {%>
-                <%: Html.TextBox(String.Format("s[{0}].V", i), value.First())%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First())%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Join: {%>
-                <%: Html.TextBox(String.Format("s[{0}].V", i), value.First())%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First())%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Range: {%>
-                <%: Html.TextBox(String.Format("s[{0}].V", i), value.First())%>&nbsp;to&nbsp;
-                <%: Html.TextBox(String.Format("s[{0}].V", i), value.Last())%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First())%>&nbsp;to&nbsp;
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.Last())%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.HasValue: {%>
-                <%: Html.CheckBox(String.Format("s[{0}].V", i))%>
+                <%: Html.CheckBox(String.Format("f[{0}].V", i))%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.IsTrue: {%>
-                <%: Html.CheckBox(String.Format("s[{0}].V", i))%>
+                <%: Html.CheckBox(String.Format("f[{0}].V", i))%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Tag: {%>
-                <%: Html.TextBox(String.Format("s[{0}].V", i))%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i))%>
                 <%break;%>
                 <%} %>
             <%}%>

@@ -7,17 +7,6 @@ using SongSearch.Web.Data;
 namespace SongSearch.Web.Services {
 
 	//// **************************************
-	//// SearchService
-	//// **************************************
-	//public abstract class SearchService : IDisposable {
-	//    public static PagedList<Content> SearchContentSql();
-	//    public static Content GetContentDetails(int contentId);
-
-	//    public static IList<string> GetLookupList(string fieldName);
-	//    public static IList<Tag> GetTags(TagType tagType, int? limitToTop = null);
-	//}
-
-	//// **************************************
 	//// IMediaService
 	//// **************************************
 	//public abstract class MediaService : IDisposable {

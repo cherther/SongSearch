@@ -15,6 +15,16 @@ namespace SongSearch.Web {
 			return count;
 		}
 
+		public static SortType Flip(this SortType sort){
+
+			return sort == SortType.Ascending ? SortType.Descending : SortType.Ascending;
+		}
+
+		public static bool IsDescending(this SortType sort) {
+
+			return sort == SortType.Descending;
+		}
+
 		//public static IQueryable<User> ChildUsers(this User user, IQueryable<User> users) {
 		//    return users.Where(u => u.ParentUserId == user.UserId)
 		//                        .AsHierarchy(u => u.UserId, u => u.ParentUserId);

@@ -9,5 +9,6 @@ namespace SongSearch.Web {
 		public int P { get; set; }
 		public SearchTypes T { get; set; }
 		public string[] V { get; set; }
+
 	}
 }

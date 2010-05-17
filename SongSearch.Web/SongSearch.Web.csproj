@@ -119,7 +119,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SongSearch.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Storage\IReadOnlySession.cs" />
+    <Compile Include="Infrastructure\Logging\IReadOnlySession.cs" />
     <Compile Include="Infrastructure\Storage\ISession.cs" />
     <Compile Include="Models\ModelEnums.cs" />
     <Compile Include="Models\AccountModels.cs" />

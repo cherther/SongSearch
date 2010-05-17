@@ -21,6 +21,9 @@ namespace SongSearch.Web {
 
 	public class SearchViewModel : ViewModel {
 
+		public int? SortPropertyId { get; set; }
+		public SortType SortType { get; set; }
+
 		public IList<SearchProperty> SearchMenuProperties { get; set; }
 		public IList<SearchField> SearchFields { get; set; }
 		public IList<Tag> SearchTags { get; set; }

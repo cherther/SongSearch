@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="294a2c42-07e9-4648-a67d-771c45b473e0" name="claus@AUGUSTSRV1 2010-05-17 12:50:40" runUser="AUGUSTSRV1\claus" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="e4578070-4019-459f-83ed-7fa29979bd1f">
+    <Deployment runDeploymentRoot="claus_AUGUSTSRV1 2010-05-17 12_50_40">
+      <DeploymentItem filename="D:\DevProjects\SongSearch\SongSearch.Web\bin\SongSearch.Web.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-05-17T12:50:40.0153012+02:00" queuing="2010-05-17T12:50:40.1093066+02:00" start="2010-05-17T12:50:40.1153069+02:00" finish="2010-05-17T12:50:41.1513662+02:00" />
+  <ResultSummary outcome="Completed">
+    <Counters total="8" executed="8" passed="8" error="0" failed="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Lookup_List_Artist_Should_Return_1637_Items" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="4531c3be-921b-f556-823b-f30bd5d7dbfc">
+      <Execution id="7812c9f0-1bf1-4c9a-9d44-e850291d337f" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Lookup_List_Artist_Should_Return_1637_Items" />
+    </UnitTest>
+    <UnitTest name="Lookup_List_Catalog_Should_Return_All_Items" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="096de424-6a4d-6fb1-d81b-e4560450cc5a">
+      <Execution id="2e080cd7-b0bb-474d-8a0b-4334dec95e9b" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Lookup_List_Catalog_Should_Return_All_Items" />
+    </UnitTest>
+    <UnitTest name="Lookup_List_Territories_Should_Return_All_Items" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="e5a4c698-1528-6183-e272-e075832678bb">
+      <Execution id="8590bf33-ae0a-438e-ae17-c57032d9eb5a" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Lookup_List_Territories_Should_Return_All_Items" />
+    </UnitTest>
+    <UnitTest name="TopStyles_Should_Return_TopLimitOnly" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="9d683688-9272-8169-8ab9-208532dfd9c7">
+      <Execution id="08acca50-e583-4887-b8b9-b1c326f0a11e" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TopStyles_Should_Return_TopLimitOnly" />
+    </UnitTest>
+    <UnitTest name="TopStyles_Should_Return_OrderedByMostTagged" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="eacfecb6-300b-0643-e032-71a65be72c44">
+      <Execution id="8f4dffc5-df23-43a9-b98d-6b297b0813fa" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TopStyles_Should_Return_OrderedByMostTagged" />
+    </UnitTest>
+    <UnitTest name="Search_Love_Should_Return_448_Results" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="f0e94873-0467-44d2-0d00-0faeb43850d4">
+      <Execution id="2480eae1-9312-44b6-9347-556431a0b104" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Search_Love_Should_Return_448_Results" />
+    </UnitTest>
+    <UnitTest name="Content_Details_Should_Contain_Releated_Entities" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="fbf04ba5-d512-80fd-271c-4453e8d4c1ef">
+      <Execution id="4325b5f0-963d-49e4-80c9-393d65a577c0" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Content_Details_Should_Contain_Releated_Entities" />
+    </UnitTest>
+    <UnitTest name="Repeated_Calls_To_Content_Details_Should_Not_Block" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="e147f4e3-a6e9-b0c5-9378-011d32c0f2fe">
+      <Execution id="869fe11d-1046-49aa-bd68-d67a80e8353c" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Repeated_Calls_To_Content_Details_Should_Not_Block" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="096de424-6a4d-6fb1-d81b-e4560450cc5a" executionId="2e080cd7-b0bb-474d-8a0b-4334dec95e9b" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="4531c3be-921b-f556-823b-f30bd5d7dbfc" executionId="7812c9f0-1bf1-4c9a-9d44-e850291d337f" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="9d683688-9272-8169-8ab9-208532dfd9c7" executionId="08acca50-e583-4887-b8b9-b1c326f0a11e" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e147f4e3-a6e9-b0c5-9378-011d32c0f2fe" executionId="869fe11d-1046-49aa-bd68-d67a80e8353c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="e5a4c698-1528-6183-e272-e075832678bb" executionId="8590bf33-ae0a-438e-ae17-c57032d9eb5a" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="eacfecb6-300b-0643-e032-71a65be72c44" executionId="8f4dffc5-df23-43a9-b98d-6b297b0813fa" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="f0e94873-0467-44d2-0d00-0faeb43850d4" executionId="2480eae1-9312-44b6-9347-556431a0b104" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="fbf04ba5-d512-80fd-271c-4453e8d4c1ef" executionId="4325b5f0-963d-49e4-80c9-393d65a577c0" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="2e080cd7-b0bb-474d-8a0b-4334dec95e9b" testId="096de424-6a4d-6fb1-d81b-e4560450cc5a" testName="Lookup_List_Catalog_Should_Return_All_Items" computerName="AUGUSTSRV1" duration="00:00:00.1210594" startTime="2010-05-17T12:50:40.1163070+02:00" endTime="2010-05-17T12:50:40.4033234+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2e080cd7-b0bb-474d-8a0b-4334dec95e9b">
+    </UnitTestResult>
+    <UnitTestResult executionId="7812c9f0-1bf1-4c9a-9d44-e850291d337f" testId="4531c3be-921b-f556-823b-f30bd5d7dbfc" testName="Lookup_List_Artist_Should_Return_1637_Items" computerName="AUGUSTSRV1" duration="00:00:00.0875104" startTime="2010-05-17T12:50:40.4043234+02:00" endTime="2010-05-17T12:50:40.4943286+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="7812c9f0-1bf1-4c9a-9d44-e850291d337f">
+    </UnitTestResult>
+    <UnitTestResult executionId="08acca50-e583-4887-b8b9-b1c326f0a11e" testId="9d683688-9272-8169-8ab9-208532dfd9c7" testName="TopStyles_Should_Return_TopLimitOnly" computerName="AUGUSTSRV1" duration="00:00:00.1227350" startTime="2010-05-17T12:50:40.4953286+02:00" endTime="2010-05-17T12:50:40.6213359+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="08acca50-e583-4887-b8b9-b1c326f0a11e">
+    </UnitTestResult>
+    <UnitTestResult executionId="869fe11d-1046-49aa-bd68-d67a80e8353c" testId="e147f4e3-a6e9-b0c5-9378-011d32c0f2fe" testName="Repeated_Calls_To_Content_Details_Should_Not_Block" computerName="AUGUSTSRV1" duration="00:00:00.3700544" startTime="2010-05-17T12:50:40.6223359+02:00" endTime="2010-05-17T12:50:40.9953572+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="869fe11d-1046-49aa-bd68-d67a80e8353c">
+      <Output>
+        <DebugTrace>Convert(value(System.Data.Objects.ObjectSet`1[SongSearch.Web.Data.Content])).MergeAs(AppendOnly).Where(Param_0 =&gt; Param_0.Title.Contains("LOVE")).Join(Convert(value(System.Data.Objects.ObjectSet`1[SongSearch.Web.Data.UserCatalogRole])).MergeAs(AppendOnly), c =&gt; c.CatalogId, u =&gt; u.CatalogId, (c, u) =&gt; new &lt;&gt;f__AnonymousType0`2(c = c, u = u)).Where(&lt;&gt;h__TransparentIdentifier6 =&gt; (&lt;&gt;h__TransparentIdentifier6.u.UserId == value(SongSearch.Web.Services.SearchService+&lt;&gt;c__DisplayClass7).userId)).Select(&lt;&gt;h__TransparentIdentifier6 =&gt; &lt;&gt;h__TransparentIdentifier6.c)</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="8590bf33-ae0a-438e-ae17-c57032d9eb5a" testId="e5a4c698-1528-6183-e272-e075832678bb" testName="Lookup_List_Territories_Should_Return_All_Items" computerName="AUGUSTSRV1" duration="00:00:00.0083159" startTime="2010-05-17T12:50:40.9963573+02:00" endTime="2010-05-17T12:50:41.0073579+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8590bf33-ae0a-438e-ae17-c57032d9eb5a">
+    </UnitTestResult>
+    <UnitTestResult executionId="8f4dffc5-df23-43a9-b98d-6b297b0813fa" testId="eacfecb6-300b-0643-e032-71a65be72c44" testName="TopStyles_Should_Return_OrderedByMostTagged" computerName="AUGUSTSRV1" duration="00:00:00.0238864" startTime="2010-05-17T12:50:41.0073579+02:00" endTime="2010-05-17T12:50:41.0343595+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="8f4dffc5-df23-43a9-b98d-6b297b0813fa">
+    </UnitTestResult>
+    <UnitTestResult executionId="2480eae1-9312-44b6-9347-556431a0b104" testId="f0e94873-0467-44d2-0d00-0faeb43850d4" testName="Search_Love_Should_Return_448_Results" computerName="AUGUSTSRV1" duration="00:00:00.0661943" startTime="2010-05-17T12:50:41.0353595+02:00" endTime="2010-05-17T12:50:41.1043635+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2480eae1-9312-44b6-9347-556431a0b104">
+      <Output>
+        <DebugTrace>Convert(value(System.Data.Objects.ObjectSet`1[SongSearch.Web.Data.Content])).MergeAs(AppendOnly).Where(Param_0 =&gt; Param_0.Title.Contains("LOVE")).Join(Convert(value(System.Data.Objects.ObjectSet`1[SongSearch.Web.Data.UserCatalogRole])).MergeAs(AppendOnly), c =&gt; c.CatalogId, u =&gt; u.CatalogId, (c, u) =&gt; new &lt;&gt;f__AnonymousType0`2(c = c, u = u)).Where(&lt;&gt;h__TransparentIdentifier6 =&gt; (&lt;&gt;h__TransparentIdentifier6.u.UserId == value(SongSearch.Web.Services.SearchService+&lt;&gt;c__DisplayClass7).userId)).Select(&lt;&gt;h__TransparentIdentifier6 =&gt; &lt;&gt;h__TransparentIdentifier6.c)</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4325b5f0-963d-49e4-80c9-393d65a577c0" testId="fbf04ba5-d512-80fd-271c-4453e8d4c1ef" testName="Content_Details_Should_Contain_Releated_Entities" computerName="AUGUSTSRV1" duration="00:00:00.0327361" startTime="2010-05-17T12:50:41.1053635+02:00" endTime="2010-05-17T12:50:41.1413656+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="4325b5f0-963d-49e4-80c9-393d65a577c0">
+    </UnitTestResult>
+  </Results>
+</TestRun>

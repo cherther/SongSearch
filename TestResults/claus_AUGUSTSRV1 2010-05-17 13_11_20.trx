@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="eaa2f6cf-17dd-46da-9dd6-0a2c10bf3314" name="claus@AUGUSTSRV1 2010-05-17 13:11:20" runUser="AUGUSTSRV1\claus" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="5a747466-a2ce-474b-89f8-53c06ee6e134">
+    <Deployment runDeploymentRoot="claus_AUGUSTSRV1 2010-05-17 13_11_20">
+      <DeploymentItem filename="D:\DevProjects\SongSearch\SongSearch.Web\bin\SongSearch.Web.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-05-17T13:11:20.3612449+02:00" queuing="2010-05-17T13:11:21.1122879+02:00" start="2010-05-17T13:11:21.2232942+02:00" finish="2010-05-17T13:11:35.6791210+02:00" />
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="AUGUSTSRV1" outcome="Error" timestamp="2010-05-17T13:11:35.6781210+02:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Search_Love_Should_Return_448_Results" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="f0e94873-0467-44d2-0d00-0faeb43850d4">
+      <Execution id="db3b74eb-6083-4150-b798-50bdbe10253c" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.SearchServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Search_Love_Should_Return_448_Results" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="f0e94873-0467-44d2-0d00-0faeb43850d4" executionId="db3b74eb-6083-4150-b798-50bdbe10253c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="db3b74eb-6083-4150-b798-50bdbe10253c" testId="f0e94873-0467-44d2-0d00-0faeb43850d4" testName="Search_Love_Should_Return_448_Results" computerName="AUGUSTSRV1" duration="00:00:14.3488207" startTime="2010-05-17T13:11:21.3293003+02:00" endTime="2010-05-17T13:11:35.6781210+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="db3b74eb-6083-4150-b798-50bdbe10253c">
+    </UnitTestResult>
+  </Results>
+</TestRun>

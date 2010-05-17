@@ -26,6 +26,14 @@ namespace System.Linq.Dynamic {
 					source.Expression, Expression.Quote(lambda)));
 		}
 
+		public static IQueryable<T> Select<T>(this IQueryable source, string selector, params object[] values) {
+			return (IQueryable<T>)Select((IQueryable)source, selector, values);
+		}
+
+		public static IQueryable<T> Select<T>(this IQueryable<T> source, string selector, params object[] values) {
+			return (IQueryable<T>)Select((IQueryable)source, selector, values);
+		}
+		
 		public static IQueryable Select(this IQueryable source, string selector, params object[] values) {
 			if (source == null) throw new ArgumentNullException("source");
 			if (selector == null) throw new ArgumentNullException("selector");
@@ -37,6 +45,7 @@ namespace System.Linq.Dynamic {
 					source.Expression, Expression.Quote(lambda)));
 		}
 
+		
 		public static IQueryable<T> OrderBy<T>(this IQueryable<T> source, string ordering, params object[] values) {
 			return (IQueryable<T>)OrderBy((IQueryable)source, ordering, values);
 		}
