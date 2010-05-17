@@ -135,10 +135,7 @@ namespace SongSearch.Web.Services {
 								   join u in userCatalogs on c.CatalogId equals u.CatalogId
 								   where u.UserId == userId
 								   select c;//.Where(c => c.Catalog.UserCatalogRoles.Any(r => r.UserId == userId));
-
-					//sbJoin.AppendLine("inner join dbo.UserCatalogRoles ucr on c.CatalogId = ucr.CatalogId");
-					//var hasConcat = sbWhere.ToString().EndsWith(_add);
-					//sbWhere.AppendLine(String.Concat((!hasConcat ? _add : String.Empty), "ucr.UserId = ", userId));
+					
 				}
 
 				System.Diagnostics.Debug.Write(contentQuery.Expression.ToString());
@@ -186,7 +183,7 @@ namespace SongSearch.Web.Services {
 
 								if (!startsWithSearch && !preciseSearch && search.IsMultiSearch()) {
 									foreach (var val in search) {
-										string predicate = String.Format("{0}.Contains(@0)", columnName);//.MakeSearchableColumn(),
+										string predicate = String.Format("{0}.Contains(@0)", columnName.MakeSearchableColumnName());
 										query = query.Where(predicate, val);
 
 									}
@@ -195,7 +192,7 @@ namespace SongSearch.Web.Services {
 
 									string predicate = String.Format(
 										startsWithSearch ? "{0}.StartsWith(@0)" : "{0}.Contains(@0)"
-										, columnName);//.MakeSearchableColumn(),
+										, columnName.MakeSearchableColumnName());//.MakeSearchableColumn(),
 									query = query.Where(predicate, val);
 								}
 							}
@@ -376,14 +373,24 @@ namespace SongSearch.Web.Services {
 			return (searchValues.Length > 1 && searchValues.All(x => !String.IsNullOrWhiteSpace(x)));
 		}
 
+		//// **************************************
+		//// MakeSearchableColumn
+		//// **************************************
+		//private static string MakeSearchableColumn(this string value) {
+		//    value = string.Format(@"upper({0})", value);
+		//    var replacements = new string[] { @",", @"''", @";", @":", @"\\", @"/" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
+		//    replacements.ForEach(x => value = String.Format(@"replace({0}, '{1}','')", value, x));
+		//    return value;
+		//}
+
 		// **************************************
-		// IsMultiSearch
+		// MakeSearchableColumn
 		// **************************************
-		private static string MakeSearchableColumn(this string value) {
-			value = string.Format(@"upper({0})", value);
-			var replacements = new string[] { @",", @"''", @";", @":", @"\\", @"/" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
-			replacements.ForEach(x => value = String.Format(@"replace({0}, '{1}','')", value, x));
-			return value;
+		private static string MakeSearchableColumnName(this string column) {
+			column = string.Format(@"{0}.ToUpper()", column);
+			var replacements = new string[] { @",", @"'", @";", @":", @"\", @"/", @"!", @"?" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
+			replacements.ForEach(x => column = String.Format(@"{0}.Replace(""{1}"","""")", column, x));
+			return column;
 		}
 
 	}
