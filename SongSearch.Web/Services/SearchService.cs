@@ -30,40 +30,6 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
-		// SearchContentSql
-		// **************************************
-		public static PagedList<Content> SearchContentSql(IList<SearchField> searchFields, string userName, int? pageSize = null, int? pageIndex = null) {
-
-			using (ISession session = new EFSession()) {
-
-				// Get Search Properties
-				var props = session.All<SearchProperty>().ToList();
-				
-
-				string commandText = BuildSearchSql(searchFields, props, userName);
-				//var preCountCommand = sbPre.Append(sbCommand.ToString()).ToString();
-
-				System.Diagnostics.Debug.Write(commandText);
-
-				var query = session.All<Content>(commandText: commandText, parameters: null);
-
-				query = query.DefaultSearchSort();
-
-				pageIndex = pageIndex ?? 0;
-				pageSize = pageSize ?? 0;
-
-				var pagedResults = query.ToPagedList(pageIndex.Value, pageSize.Value);
-
-				//var results = query.ToList();
-
-				return pagedResults;
-			}
-
-
-
-		}
-
-		// **************************************
 		// SearchContentDynamic
 		// **************************************
 		public static PagedList<Content> SearchContentDynamic(IList<SearchField> searchFields, string userName, int? pageSize = null, int? pageIndex = null) {
@@ -76,6 +42,26 @@ namespace SongSearch.Web.Services {
 				var contentQuery = session.All<Content>();
 				contentQuery = contentQuery.BuildSearchDynamicLinqSql(searchFields, props, userName);//Where("Title.Contains(@0)", "love");
 				//var preCountCommand = sbPre.Append(sbCommand.ToString()).ToString();
+
+				//limit to user catalogs
+				var user = AccountData.User(userName);
+				if (user == null) {
+					throw new ArgumentException("Invalid username");
+				}
+
+				if (!user.IsSuperAdmin()) {
+					var userId = user.UserId;
+					var userCatalogs = session.All<UserCatalogRole>();
+
+					contentQuery = from c in contentQuery
+								   join u in userCatalogs on c.CatalogId equals u.CatalogId
+								   where u.UserId == userId
+								   select c;//.Where(c => c.Catalog.UserCatalogRoles.Any(r => r.UserId == userId));
+
+						//sbJoin.AppendLine("inner join dbo.UserCatalogRoles ucr on c.CatalogId = ucr.CatalogId");
+					//var hasConcat = sbWhere.ToString().EndsWith(_add);
+					//sbWhere.AppendLine(String.Concat((!hasConcat ? _add : String.Empty), "ucr.UserId = ", userId));
+				}
 
 				System.Diagnostics.Debug.Write(contentQuery.Expression.ToString());
 

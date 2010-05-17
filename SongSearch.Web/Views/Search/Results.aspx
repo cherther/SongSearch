@@ -9,11 +9,29 @@
     
 <%
     var results = Model.SearchResults;
-    
+    var request = Request.RawUrl.Replace(String.Format("&p={0}", results.PageIndex), "");
      %>
     <h2>Results</h2>
     <p>Showing <%= results.Count() %> of <%= results.TotalCount %> total found.</p>
-    <p>Page <%= results.PageIndex+1 %> of <%= results.TotalPages%> total.</p>
+    <p>Page <%= results.CurrentPage %> of <%= results.TotalPages%> total.&nbsp;
+    <%if (results.HasPreviousPage) {%>
+    [<a href="<%=request%>&p=<%=results.LastPage%>">Prev</a>]
+    <%} %>
+    <%if (results.HasNextPage) {%>
+    [<a href="<%=request%>&p=<%=results.NextPage%>">Next</a>]
+    <%} %>
+    &nbsp;Go to:&nbsp; 
+    <%for (var i = 0; i < results.TotalPages; i++) { %>
+    <%if (i == results.PageIndex) {%>
+    <strong><%=i+1%></strong>
+    <%} %>
+    <%else { %>
+    <a href="<%=request%>&p=<%=i%>"><%=i+1%></a>
+    <%} %>
+    &nbsp;|&nbsp;
+    <%} %>
+    
+    </p>
     <table>
         <tr>
             <th>

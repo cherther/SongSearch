@@ -75,12 +75,12 @@ namespace System.Collections.Generic {
 		}
 		public int NextPage {
 			get {
-				return CurrentPage + 1;
+				return PageIndex + 1;
 			}
 		}
 		public int LastPage {
 			get {
-				return CurrentPage - 1;
+				return PageIndex - 1;
 			}
 		}
 		public int TotalCount {
@@ -109,7 +109,8 @@ namespace System.Collections.Generic {
 
 		public bool HasNextPage {
 			get {
-				return (PageIndex * PageSize) <= TotalCount;
+				//return (PageIndex * PageSize) <= TotalCount;
+				return CurrentPage < TotalPages;
 			}
 		}
 		public bool IsCurrentPage(int pageNumber) {
