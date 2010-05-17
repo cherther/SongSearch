@@ -38,7 +38,7 @@ namespace SongSearch.Web.Controllers
 					)
 					).ToList();
 
-				var results = SearchService.SearchContent(searchFields, User.Identity.Name, _pageSize, p);
+				var results = SearchService.SearchContentDynamic(searchFields, User.Identity.Name, _pageSize, p);
 				model.SearchResults = results;
 				model.SearchFields = searchFields;
 				return View(model);

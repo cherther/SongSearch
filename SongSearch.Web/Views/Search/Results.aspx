@@ -12,7 +12,8 @@
     
      %>
     <h2>Results</h2>
-    <p>Found: <%= results.Count() %></p>
+    <p>Showing <%= results.Count() %> of <%= results.TotalCount %> total found.</p>
+    <p>Page <%= results.PageIndex+1 %> of <%= results.TotalPages%> total.</p>
     <table>
         <tr>
             <th>

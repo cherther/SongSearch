@@ -51,17 +51,14 @@ namespace System.Collections.Generic {
 	public class PagedList<T> : List<T>, IPagedList {
 		public PagedList(IQueryable<T> source, int index, int pageSize) {
 
-			//if (index > 0 && pageSize > 0){
-				source = source.Skip(index * pageSize).Take(pageSize);
-			//}
-
-			this.AddRange(source.ToList());
-
-			this.TotalCount = this.Count();
+			
+			this.TotalCount = source.Count();
 			this.PageSize = pageSize;
 			this.PageIndex = index;
 			this.TotalPages = 1;
 			CalcPages();
+			source = source.Skip(index * pageSize).Take(pageSize);
+			this.AddRange(source.ToList());
 
 		}
 		void CalcPages() {

@@ -40,6 +40,10 @@
                 <%: Html.CheckBox(String.Format("s[{0}].V", i))%>
                 <%break;%>
                 <%} %>
+                <%case SearchTypes.IsTrue: {%>
+                <%: Html.CheckBox(String.Format("s[{0}].V", i))%>
+                <%break;%>
+                <%} %>
                 <%case SearchTypes.Tag: {%>
                 <%: Html.TextBox(String.Format("s[{0}].V", i))%>
                 <%break;%>

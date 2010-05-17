@@ -52,7 +52,7 @@ namespace SongSearch.Web {
 		}
 
 		public static string TrimInside(this string value, string replaceWith) {
-			replaceWith = replaceWith.MakeFilePathSafe();
+			//replaceWith = replaceWith.MakeFilePathSafe();
 			return value.Replace(" ", !String.IsNullOrWhiteSpace(replaceWith) ? replaceWith : String.Empty);
 		}
 
@@ -60,7 +60,7 @@ namespace SongSearch.Web {
 		// Removes non-alphanumeric characters, except ;
 		public static string MakeSearchableValue(this string value) {
 			value = Regex.Replace(value, @"[^a-zA-Z0-9; ]", Empty); //@"\W\s", "");
-			value = value.ToUpper();
+			value = value.Replace("  ", " ").ToUpper();
 
 			return value;
 		}

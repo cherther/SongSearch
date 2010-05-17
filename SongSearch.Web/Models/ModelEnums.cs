@@ -69,10 +69,11 @@ namespace SongSearch.Web {
 
 	public enum SearchTypes {
 		Contains = 1,
-		HasValue = 2,
-		Range = 3,
-		Tag = 4,
-		Join = 5
+		HasValue,
+		Range,
+		Tag,
+		Join,
+		IsTrue
 	}
 
 	// **************************************
