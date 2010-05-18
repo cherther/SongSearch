@@ -145,6 +145,7 @@
           <Property Name="ReleaseYear" Type="int" />
           <Property Name="RecordLabel" Type="nvarchar" MaxLength="300" />
           <Property Name="Lyrics" Type="nvarchar(max)" />
+          <Property Name="LyricsIndex" Type="nvarchar(max)" />
           <Property Name="Notes" Type="nvarchar(max)" />
           <Property Name="Keywords" Type="nvarchar(max)" />
           <Property Name="SimilarSongs" Type="nvarchar(max)" />
@@ -548,6 +549,7 @@
           <Property Type="String" Name="LicensingNotes" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Pop" />
           <Property Type="Int32" Name="Country" />
+          <Property Type="String" Name="LyricsIndex" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -779,7 +781,8 @@
             <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
-            <ScalarProperty Name="Country" ColumnName="Country" />
+            <ScalarProperty Name="LyricsIndex" ColumnName="LyricsIndex" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Pop" ColumnName="Pop" />
                 <ScalarProperty Name="LicensingNotes" ColumnName="LicensingNotes" />
                 <ScalarProperty Name="HasMediaFullVersion" ColumnName="HasMediaFullVersion" />

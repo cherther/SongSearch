@@ -1327,6 +1327,30 @@ namespace SongSearch.Web.Data
         private Nullable<global::System.Int32> _Country;
         partial void OnCountryChanging(Nullable<global::System.Int32> value);
         partial void OnCountryChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LyricsIndex
+        {
+            get
+            {
+                return _LyricsIndex;
+            }
+            set
+            {
+                OnLyricsIndexChanging(value);
+                ReportPropertyChanging("LyricsIndex");
+                _LyricsIndex = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LyricsIndex");
+                OnLyricsIndexChanged();
+            }
+        }
+        private global::System.String _LyricsIndex;
+        partial void OnLyricsIndexChanging(global::System.String value);
+        partial void OnLyricsIndexChanged();
 
         #endregion
     

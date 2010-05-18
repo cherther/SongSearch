@@ -161,7 +161,8 @@ namespace SongSearch.Web.Services {
 																		IList<SearchField> searchFields,
 																		IList<SearchProperty> properties) {
 
-
+			var currentlyIndexed = new string[] { "Lyrics" };
+			
 			foreach (var field in searchFields) {
 
 				var searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
@@ -170,11 +171,18 @@ namespace SongSearch.Web.Services {
 				if (prop != null) {
 					// build search 
 					string columnName = prop.PropertyCode.Trim();
-
+					
 					switch ((SearchTypes)prop.SearchTypeId) {
 
 						case SearchTypes.Contains:
 
+							columnName = !prop.IsIndexable ? 
+								(
+									currentlyIndexed.Contains(columnName) ? 
+									String.Concat(columnName, "Index") : columnName
+									) :
+								columnName.MakeSearchableColumnName();
+							
 							if (searchableValues.First() != null & prop.SearchPredicate != null) {
 
 								var startsWithSearch = field.V.First().IsStartsWithSearch();
@@ -183,7 +191,7 @@ namespace SongSearch.Web.Services {
 
 								if (!startsWithSearch && !preciseSearch && search.IsMultiSearch()) {
 									foreach (var val in search) {
-										string predicate = String.Format("{0}.Contains(@0)", columnName.MakeSearchableColumnName());
+										string predicate = String.Format("{0}.Contains(@0)", columnName);
 										query = query.Where(predicate, val);
 
 									}
@@ -192,7 +200,7 @@ namespace SongSearch.Web.Services {
 
 									string predicate = String.Format(
 										startsWithSearch ? "{0}.StartsWith(@0)" : "{0}.Contains(@0)"
-										, columnName.MakeSearchableColumnName());//.MakeSearchableColumn(),
+										, columnName);//.MakeSearchableColumn(),
 									query = query.Where(predicate, val);
 								}
 							}
