@@ -84,6 +84,10 @@ namespace SongSearch.Web {
 		IsTrue
 	}
 
+	public enum RightsTypes {
+		Master = 1,
+		Comp
+	}
 	// **************************************
 	// UserActionCodes
 	// **************************************    

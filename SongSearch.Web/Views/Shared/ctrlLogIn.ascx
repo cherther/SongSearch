@@ -3,13 +3,13 @@
 <div id="topnav" class="topnav">
 <%if (Request.IsAuthenticated) 
   {%>
-Hello, <strong><%=Html.Friendly() %></strong>! <%= Html.ActionLink("My Account", "UpdateProfile", "Account") %> | <%= Html.ActionLink("Log Out", "LogOut", "Account") %>
+Hello, <strong><%=Html.Friendly() %></strong>. <%= Html.ActionLink("Your Profile", "UpdateProfile", "Account")%> | <%= Html.ActionLink("Log Out", "LogOut", "Account") %>
 <%
   }
   else 
   {
 %>
-Already registered? <%=Html.ActionLink("Log in", "LogIn", "Account", null, new { @class = "signin" })  %>
+Already registered? <%=Html.ActionLink("Log in", "LogIn", "Account")  %>
 <%
   }
 %>

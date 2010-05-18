@@ -5,10 +5,16 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
-    <h2>Search</h2>
-    <% Html.RenderPartial("ctrlSearchMenu"); %>
-    
+<table>
+    <tr>
+    <td align="left" id="cw-search-options-panel">
+        <% Html.RenderPartial("ctrlSearchOptions"); %>
+    </td>
+    <td>
+        &nbsp;
+    </td>
+    </tr>
+</table>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">

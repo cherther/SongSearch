@@ -1069,54 +1069,6 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> PopCharts
-        {
-            get
-            {
-                return _PopCharts;
-            }
-            set
-            {
-                OnPopChartsChanging(value);
-                ReportPropertyChanging("PopCharts");
-                _PopCharts = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PopCharts");
-                OnPopChartsChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _PopCharts;
-        partial void OnPopChartsChanging(Nullable<global::System.Int32> value);
-        partial void OnPopChartsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> CountryCharts
-        {
-            get
-            {
-                return _CountryCharts;
-            }
-            set
-            {
-                OnCountryChartsChanging(value);
-                ReportPropertyChanging("CountryCharts");
-                _CountryCharts = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CountryCharts");
-                OnCountryChartsChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _CountryCharts;
-        partial void OnCountryChartsChanging(Nullable<global::System.Int32> value);
-        partial void OnCountryChartsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Int32> ReleaseYear
         {
             get
@@ -1327,6 +1279,54 @@ namespace SongSearch.Web.Data
         private global::System.String _LicensingNotes;
         partial void OnLicensingNotesChanging(global::System.String value);
         partial void OnLicensingNotesChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Pop
+        {
+            get
+            {
+                return _Pop;
+            }
+            set
+            {
+                OnPopChanging(value);
+                ReportPropertyChanging("Pop");
+                _Pop = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Pop");
+                OnPopChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Pop;
+        partial void OnPopChanging(Nullable<global::System.Int32> value);
+        partial void OnPopChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> Country
+        {
+            get
+            {
+                return _Country;
+            }
+            set
+            {
+                OnCountryChanging(value);
+                ReportPropertyChanging("Country");
+                _Country = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Country");
+                OnCountryChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _Country;
+        partial void OnCountryChanging(Nullable<global::System.Int32> value);
+        partial void OnCountryChanged();
 
         #endregion
     

@@ -140,8 +140,8 @@
           <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Writers" Type="nvarchar" MaxLength="500" />
-          <Property Name="PopCharts" Type="int" />
-          <Property Name="CountryCharts" Type="int" />
+          <Property Name="Pop" Type="int" />
+          <Property Name="Country" Type="int" />
           <Property Name="ReleaseYear" Type="int" />
           <Property Name="RecordLabel" Type="nvarchar" MaxLength="300" />
           <Property Name="Lyrics" Type="nvarchar(max)" />
@@ -533,8 +533,6 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
           <Property Name="Artist" Type="String" Nullable="false" MaxLength="300" Unicode="true" FixedLength="false" />
           <Property Name="Writers" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
-          <Property Name="PopCharts" Type="Int32" />
-          <Property Name="CountryCharts" Type="Int32" />
           <Property Name="ReleaseYear" Type="Int32" />
           <Property Name="RecordLabel" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
           <Property Name="Lyrics" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
@@ -548,6 +546,8 @@
           <Property Type="Boolean" Name="HasMediaPreviewVersion" Nullable="false" />
           <Property Type="Boolean" Name="HasMediaFullVersion" Nullable="false" />
           <Property Type="String" Name="LicensingNotes" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Pop" />
+          <Property Type="Int32" Name="Country" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -779,7 +779,9 @@
             <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
-            <ScalarProperty Name="LicensingNotes" ColumnName="LicensingNotes" />
+            <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Pop" ColumnName="Pop" />
+                <ScalarProperty Name="LicensingNotes" ColumnName="LicensingNotes" />
                 <ScalarProperty Name="HasMediaFullVersion" ColumnName="HasMediaFullVersion" />
                 <ScalarProperty Name="HasMediaPreviewVersion" ColumnName="HasMediaPreviewVersion" />
                 <ScalarProperty Name="ContentId" ColumnName="ContentId" />
@@ -792,8 +794,6 @@
             <ScalarProperty Name="Title" ColumnName="Title" />
             <ScalarProperty Name="Artist" ColumnName="Artist" />
             <ScalarProperty Name="Writers" ColumnName="Writers" />
-            <ScalarProperty Name="PopCharts" ColumnName="PopCharts" />
-            <ScalarProperty Name="CountryCharts" ColumnName="CountryCharts" />
             <ScalarProperty Name="ReleaseYear" ColumnName="ReleaseYear" />
             <ScalarProperty Name="RecordLabel" ColumnName="RecordLabel" />
             <ScalarProperty Name="Lyrics" ColumnName="Lyrics" />
@@ -916,15 +916,15 @@
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Cart" Width="1.5" PointX="0.75" PointY="11" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Catalog" Width="1.5" PointX="8" PointY="9.625" Height="1.7879850260416657" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentRight" Width="1.5" PointX="5.25" PointY="2.625" Height="2.5571907552083335" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="2" PointX="3" PointY="4" Height="5.634013671875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="2" PointX="3" PointY="4" Height="5.8263151041666656" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Role" Width="1.5" PointX="3.625" PointY="10.875" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Tag" Width="1.5" PointX="0.75" PointY="8.75" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Territory" Width="1.5" PointX="7.5" PointY="3" Height="1.787985026041671" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.User" Width="1.5" PointX="3.625" PointY="13.375" Height="4.0956022135416674" IsExpanded="true" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Contents_Catalogs" ManuallyRouted="false">
-          <ConnectorPoint PointX="8" PointY="10.302584694010417" />
-          <ConnectorPoint PointX="3.410158125" PointY="10.302584694010417" />
-          <ConnectorPoint PointX="3.410158125" PointY="9.634013671875" />
+          <ConnectorPoint PointX="8" PointY="10.398735410156251" />
+          <ConnectorPoint PointX="3.4531275" PointY="10.398735410156251" />
+          <ConnectorPoint PointX="3.4531275" PointY="9.8263151041666656" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentRights_Contents" ManuallyRouted="false">
           <ConnectorPoint PointX="5" PointY="4.5910953776041667" />
@@ -939,8 +939,8 @@
           <ConnectorPoint PointX="7.5" PointY="3.8939925130208355" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentTags" ManuallyRouted="false">
-          <ConnectorPoint PointX="3" PointY="9.1920068359375" />
-          <ConnectorPoint PointX="2.25" PointY="9.1920068359375" />
+          <ConnectorPoint PointX="3" PointY="9.2881575520833337" />
+          <ConnectorPoint PointX="2.25" PointY="9.2881575520833337" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Invitation" Width="1.5" PointX="0.875" PointY="14.25" Height="2.1725878906250031" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Invitations" >
@@ -948,8 +948,8 @@
           <ConnectorPoint PointX="3.625" PointY="15.336293945312502" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.CartContents" >
-          <ConnectorPoint PointX="3.1738265625000004" PointY="9.634013671875" />
-          <ConnectorPoint PointX="3.1738265625000004" PointY="13.018992513020834" />
+          <ConnectorPoint PointX="3.19531125" PointY="9.8263151041666656" />
+          <ConnectorPoint PointX="3.19531125" PointY="13.018992513020834" />
           <ConnectorPoint PointX="2.25" PointY="13.018992513020834" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Carts_Users" >

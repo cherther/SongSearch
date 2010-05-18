@@ -20,6 +20,7 @@ namespace SongSearch.Web {
 	public class ResetPasswordModel : ViewModel {
 		[Required]
 		[DataType(DataType.EmailAddress)]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
 		[DisplayName("Email address")]
 		public string Email { get; set; }
 
@@ -50,6 +51,7 @@ namespace SongSearch.Web {
 
 		[Required]
 		[DataType(DataType.EmailAddress)]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
 		[DisplayName("Email address")]
 		public string Email { get; set; }
 
@@ -77,6 +79,7 @@ namespace SongSearch.Web {
 
 		[Required]
 		[DataType(DataType.EmailAddress)]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
 		[DisplayName("Email address")]
 		public string Email { get; set; }
 
@@ -149,6 +152,10 @@ namespace SongSearch.Web {
 		[DisplayName("Confirm new password")]
 		public string ConfirmPassword { get; set; }
 
+		[Required]
+		[DataType(DataType.EmailAddress)]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
+		[DisplayName("Email address")]
 		public string Email { get; set; }
 
 	}

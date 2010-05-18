@@ -52,7 +52,7 @@ Log In
                     <%= Html.HiddenFor(m => m.ReturnUrl)%>
                     <p>
                     <button type="submit" class="cw-button cw-simple cw-blue">
-                    <span class="ok">Log in</span>
+                    <span class="b-ok">Log in</span>
                     </button>
                     </p>
                      <p>&nbsp;</p>

@@ -7,7 +7,7 @@
 <%
     IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
 
-    menu.Add("My Profile", new string[4] { "UpdateProfile", "Account", "", "current" });
+    menu.Add("Your Profile", new string[4] { "UpdateProfile", "Account", "", "current" });
     menu.Add("Change Password", new string[4] { "ChangePassword", "Account", "", "" });
     
     menu.Add("Log Out", new string[4] { "LogOut", "Account", "", "" });
@@ -69,7 +69,7 @@
                  <p>&nbsp;</p>
                 <p>
                     <button type="submit" class="cw-button cw-simple cw-blue">
-                    <span class="save">Update Profile</span>
+                    <span class="b-save">Update Profile</span>
                     </button>
                 </p>
             </fieldset>

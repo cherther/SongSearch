@@ -9,11 +9,16 @@
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <%=Html.CSS("cw.app")%>
     <%=Html.CSS("cw.buttons")%>
+    <%=Html.CSS("cw.forms")%>
+    <%=Html.CSS("cw.tables")%>
     <%=Html.CSS("cw.twitlogin")%>
     <%=Html.Script("jquery-1.4.1.min.js")%>
-    <%=Html.Script("jquery-ui-1.7.2.min.js")%>
-    <%=Html.Script("jquery.tablesorter.js")%>
-    <%=Html.Script("cw.app.js")%>
+    <%=Html.Script("jquery.blockUI.js")%>
+    <%//=Html.Script("jquery-ui-1.7.2.min.js")%>
+    <%//=Html.Script("jquery.tablesorter.js")%>
+    <%=Html.Script("cw.app.main.js?v=d")%>
+    <%=Html.Script("cw.app.ajax.js?v=d")%>
+    <%=Html.Script("cw.app.events.js?v=d")%>
     <title>Ford Music SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
@@ -34,13 +39,13 @@
     <%=Html.Flash() %>
     <div id="flash" style="display:none"></div>
 
-    <table>
+    <table width="100%">
     <tr>
-        <td>
+        <td align="left">
             <h1><a href="/">Ford Music <span>SongSearch</span></a></h1>
             <h3>Your professional music licensing resource</h3>
         </td>
-        <td>
+        <td align="right">
             <% Html.RenderPartial("ctrlLogIn"); %>
         </td> 
     </tr>
@@ -61,10 +66,10 @@
     </tr>
     
     <tr>
-        <td>
+        <td align="left">
             &copy; <%=DateTime.Now.Year %> Ford Music Services
 	    </td>
-        <td>
+        <td align="right">
             <% Html.RenderPartial("ctrlBuildInfo"); %>
             developed by <a href="http://www.codewerks.de/">codewerks.de</a>
 	    </td> 

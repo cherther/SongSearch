@@ -5,11 +5,8 @@ using SongSearch.Web.Services;
 using SongSearch.Web.Data;
 
 // see if this shows up, yup it does!
-namespace SongSearch.Web.Controllers {
+namespace SongSearch.Web {
 
-	/// <summary>
-	/// 
-	/// </summary>
 	[HandleError]
 	public class AccountController : Controller {
 

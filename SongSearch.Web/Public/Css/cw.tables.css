@@ -1,0 +1,23 @@
+﻿
+.cw-tbl-search-results 
+{
+    border: 1px solid gray;
+    border-collapse: collapse;
+    padding: 3px;
+}
+.cw-tbl-search-results tr
+{
+    border-bottom: 1px solid gray;
+}
+.cw-row-selected
+{
+background-color: #acf;
+}
+.cw-tbl-search-results th, td
+{
+    padding: 3px;
+}
+.cw-tbl-search-results th
+{
+    text-align: left;
+}

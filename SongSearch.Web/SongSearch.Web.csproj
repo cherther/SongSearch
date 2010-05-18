@@ -85,6 +85,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -94,6 +95,7 @@
     <Compile Include="Helpers\FlashHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\PagedList.cs" />
+    <Compile Include="Helpers\RenderView.cs" />
     <Compile Include="Helpers\VersionInfo.cs" />
     <Compile Include="Helpers\Extensions\Extensions.cs" />
     <Compile Include="Helpers\Extensions\LinqExtensions.cs" />
@@ -101,9 +103,9 @@
     <Compile Include="Helpers\SystemSettings.cs" />
     <Compile Include="Helpers\Extensions\UserExtensions.cs" />
     <Compile Include="Helpers\XssHelper.cs" />
-    <Compile Include="Infrastructure\Mailer\SendMail.cs" />
+    <Compile Include="Infrastructure\Mailer\Mail.cs" />
     <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
-    <Compile Include="Models\SearchModel.cs" />
+    <Compile Include="Models\SearchField.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Infrastructure\Authentication\AuthorizeAttribute.cs" />
@@ -121,14 +123,19 @@
     </Compile>
     <Compile Include="Infrastructure\Logging\IReadOnlySession.cs" />
     <Compile Include="Infrastructure\Storage\ISession.cs" />
-    <Compile Include="Models\ModelEnums.cs" />
+    <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\ViewModels.cs" />
+    <Compile Include="Services\ContentAdminService.cs" />
+    <Compile Include="Services\Interfaces\IContentAdminService.cs" />
+    <Compile Include="ViewModels\ContentViewModel.cs" />
+    <Compile Include="ViewModels\InviteViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountData.cs" />
-    <Compile Include="Services\ISearchService.cs" />
-    <Compile Include="Services\IAccountService.cs" />
-    <Compile Include="Services\IUserManagementService.cs" />
+    <Compile Include="Services\MediaService.cs" />
+    <Compile Include="Services\Interfaces\IAccountService.cs" />
+    <Compile Include="Services\Interfaces\IUserManagementService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserManagementService.cs" />
   </ItemGroup>
@@ -136,6 +143,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Public\Css\cw.app.css" />
+    <Content Include="Public\Css\cw.forms.css" />
+    <Content Include="Public\Css\cw.tables.css" />
     <Content Include="Public\Css\cw.twitlogin.css" />
     <Content Include="Public\Css\cw.buttons.css" />
     <Content Include="Public\Images\Icons\Silk\accept.png" />
@@ -1600,7 +1609,12 @@
     <Content Include="Public\Images\Icons\Silk\zoom.png" />
     <Content Include="Public\Images\Icons\Silk\zoom_in.png" />
     <Content Include="Public\Images\Icons\Silk\zoom_out.png" />
-    <Content Include="Public\Javascript\cw.app.js" />
+    <Content Include="Public\Images\bg-menu-main.png" />
+    <Content Include="Public\Images\loading.gif" />
+    <Content Include="Public\Javascript\cw.app.main.js" />
+    <Content Include="Public\Javascript\cw.app.events.js" />
+    <Content Include="Public\Javascript\cw.app.ajax.js" />
+    <Content Include="Public\Javascript\jquery.blockUI.js" />
     <Content Include="Public\Javascript\jquery.tablesorter.js" />
     <Content Include="Public\Javascript\jquery.tablesorter.min.js" />
     <Content Include="Public\Javascript\page-player.js" />
@@ -1617,13 +1631,16 @@
     <Content Include="Views\Account\ResetPasswordSuccess.aspx" />
     <Content Include="Views\Account\UpdateProfile.aspx" />
     <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
-    <Content Include="Views\Search\ctrlSearchMenu.ascx" />
+    <Content Include="Views\Search\ctrlContentDetail.ascx" />
+    <Content Include="Views\Search\ctrlSearchResults.ascx" />
+    <Content Include="Views\Search\ctrlSearchOptions.ascx" />
     <Content Include="Views\Search\Index.aspx" />
     <Content Include="Views\Search\Results.aspx" />
     <Content Include="Views\Shared\ctrlBuildInfo.ascx" />
     <Content Include="Views\Shared\ctrlLogIn.ascx" />
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
+    <Content Include="Views\User\Invite.aspx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

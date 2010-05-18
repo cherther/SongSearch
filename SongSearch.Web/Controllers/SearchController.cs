@@ -10,6 +10,7 @@ using System.Web.Routing;
 namespace SongSearch.Web.Controllers
 {
 	[RequireAuthorization]
+	[HandleError]
 	public class SearchController : Controller
     {
 
@@ -59,6 +60,28 @@ namespace SongSearch.Web.Controllers
 			}
 
 			return RedirectToAction("Index");
+		}
+
+		// **************************************
+		// Detail/5
+		// **************************************
+		[OutputCache(Duration = 60, VaryByParam = "id")]
+		public ActionResult Detail(int id) {
+
+			
+
+			var user = AccountData.User(User.Identity.Name);
+			var content = SearchService.GetContentDetails(id, user);
+			
+			if (Request.IsAjaxRequest()) {
+
+				return View("ctrlContentDetail", content);
+			
+			} else {
+				var model = new ContentViewModel() { NavigationLocation = "Search" };
+				model.Content = content;
+				return View(model);
+			}
 		}
 
 		// **************************************

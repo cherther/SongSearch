@@ -112,6 +112,7 @@ namespace SongSearch.Web.Services {
 				if (user.IsSuperAdmin() && GetNumberOfUsersByAccessLevel(Roles.SuperAdmin) <= 1) {
 					throw new ArgumentException("You cannot delete the last SuperAdmin");
 				} else {
+
 					if (takeOwnerShip) {
 						TakeOwnerShip(user);
 					}

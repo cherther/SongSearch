@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.SearchViewModel>" %>
-<ul id="search-menu">
+<ul id="search-menu" class="cw-list-searchoptions">
     <%using (Html.BeginForm("Results", "Search", FormMethod.Get, new { id = "searchForm"})) { %>
         <li>
             <button id="submit-top" type="submit" title="Search" class="cw-button cw-simple cw-blue">
@@ -7,6 +7,7 @@
             </button>
             <a href="#" class="reset" title="Reset the search form to start over">New</a>
         </li>
+        <div>&nbsp;</div>
         <%
           var searchMenuProperties = Model.SearchMenuProperties;
           var searchFields = Model.SearchFields;
@@ -15,16 +16,17 @@
         <%
               var i = searchMenuProperties.IndexOf(item); 
               var searchType = (SearchTypes) item.SearchTypeId;
-              var value = searchFields != null && searchFields.Count > i ? searchFields[i].V : new string[] {"",""};
+              var searchField = searchFields != null ? searchFields.SingleOrDefault(f => f.P == item.PropertyId) : null;
+              var value = searchField != null ? searchField.V : new string[] { "", "" };
               %>
         <li>
             <label><%: item.PropertyName %></label>
             <%: Html.Hidden(String.Format("f[{0}].P", i), item.PropertyId)%>
             <%: Html.Hidden(String.Format("f[{0}].T", i), item.SearchTypeId)%>
-
+            <div>
             <%switch (searchType) {%>
                 <%case SearchTypes.Contains: {%>
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First())%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = !String.IsNullOrWhiteSpace(value.First()) ? "cw-input-highlight" : "" })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Join: {%>
@@ -32,8 +34,12 @@
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Range: {%>
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First())%>&nbsp;to&nbsp;
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.Last())%>
+                <%
+                    var value1 = value.First();
+                    var value2 = value.Last();      
+                %>
+                <%: Html.TextBox(String.Format("f[{0}].V[0]", i), value1, new { size = 5, rel = "cw-first", @class = !String.IsNullOrWhiteSpace(value1) ? "cw-input-highlight" : "" })%>&nbsp;to&nbsp;
+                <%: Html.TextBox(String.Format("f[{0}].V[1]", i), value2, new { size = 5, rel = "cw-second", @class = !String.IsNullOrWhiteSpace(value2) ? "cw-input-highlight" : "" })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.HasValue: {%>
@@ -49,6 +55,7 @@
                 <%break;%>
                 <%} %>
             <%}%>
+            </div>
         </li>
         <%} %>
        

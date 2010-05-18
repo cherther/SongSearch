@@ -15,7 +15,7 @@
     menu.Add("Help", new string[3] { "Index", "Help", "Help" });
     if (Page.User.UserIsAnyAdmin())
     {
-        menu.Add("Admin", new string[3] { "Invite", "Admin", "Admin" });
+        menu.Add("Admin", new string[3] { "Invite", "User", "Admin" });
         //    menu.Add("Marketing", new string[3] { "Index", "Marketing", "" });
         //    menu.Add("Users", new string[3] { "Index", "Users", "Admin" });
     }
@@ -34,7 +34,7 @@
        
     %>
     
-        <ul id="toolbar-main" class="tb tb-main">
+        <ul id="main-menu" class="cw-menu cw-menu-main">
         <%
         foreach(var menuItem in menu)
         {

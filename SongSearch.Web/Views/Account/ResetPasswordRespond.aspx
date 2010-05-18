@@ -7,7 +7,7 @@
 <%
     IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
 
-    menu.Add("Update Profile", new string[4] { "UpdateProfile", "Account", "", "current" });
+    menu.Add("Your Profile", new string[4] { "UpdateProfile", "Account", "", "current" });
     
     menu.Add("Log Out", new string[4] { "LogOut", "Account", "", "" });
 

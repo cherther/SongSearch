@@ -288,15 +288,15 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private static Func<Content, string> _titleSort = c => c.Title.Length == 0 ? "zzz" : c.Title;
 		private static Func<Content, string> _artistSort = c => c.Artist.Length == 0 ? "zzz" : c.Artist;
-		private static Func<Content, int> _popSort = c => !c.PopCharts.HasValue ? 1000 : c.PopCharts.Value;
-		private static Func<Content, int> _countrySort = c => !c.CountryCharts.HasValue ? 1000 : c.CountryCharts.Value;
+		private static Func<Content, int> _popSort = c => !c.Pop.HasValue ? 1000 : c.Pop.Value;
+		private static Func<Content, int> _countrySort = c => !c.Country.HasValue ? 1000 : c.Country.Value;
 		private static Func<Content, int> _releaseYearSort = c => !c.ReleaseYear.HasValue ? 10000 : c.ReleaseYear.Value;
 
 		private static IQueryable<Content> DefaultSearchSort(this IQueryable<Content> query) {
 
 			return query
-					.OrderBy(c => !c.PopCharts.HasValue ? 1000 : c.PopCharts)
-					.ThenBy(c => !c.CountryCharts.HasValue ? 1000 : c.CountryCharts)
+					.OrderBy(c => !c.Pop.HasValue ? 1000 : c.Pop)
+					.ThenBy(c => !c.Country.HasValue ? 1000 : c.Country)
 					.ThenBy(c => c.Title.Length == 0 ? "zzz" : c.Title)
 					.ThenBy(c => c.Artist.Length == 0 ? "zzz" : c.Artist);
 
@@ -316,38 +316,33 @@ namespace SongSearch.Web.Services {
 					return sortDirection.IsDescending() ?
 						query.OrderByDescending(c => c.Title.Length == 0 ? "---" : c.Title) :
 						query.OrderBy(c => c.Title.Length == 0 ? "zzz" : c.Title);
-					break;
+				
 				case "Artist":
 					return sortDirection.IsDescending() ?
 						query.OrderByDescending(c => c.Artist.Length == 0 ? "---" : c.Artist) :
 						query.OrderBy(c => c.Artist.Length == 0 ? "zzz" : c.Artist);
-					break;
-				case "PopCharts":
-					return sortDirection.IsDescending() ?
-						query.OrderByDescending(c => !c.PopCharts.HasValue ? 1000 : c.PopCharts) : 
-						query.OrderBy(c => !c.PopCharts.HasValue ? 1000 : c.PopCharts);
-					break;
-				case "CountryCharts":
-					return sortDirection.IsDescending() ?
-						query.OrderByDescending(c => !c.CountryCharts.HasValue ? 1000 : c.CountryCharts) :
-						query.OrderBy(c => !c.CountryCharts.HasValue ? 1000 : c.CountryCharts);
-					break;
 
+				case "Pop":
+					return sortDirection.IsDescending() ?
+						query.OrderByDescending(c => !c.Pop.HasValue ? 1000 : c.Pop) :
+						query.OrderBy(c => !c.Pop.HasValue ? 1000 : c.Pop);
+
+				case "Country":
+					return sortDirection.IsDescending() ?
+						query.OrderByDescending(c => !c.Country.HasValue ? 1000 : c.Country) :
+						query.OrderBy(c => !c.Country.HasValue ? 1000 : c.Country);
+				
 				case "ReleaseYear":
 					return sortDirection.IsDescending() ?
 						query.OrderByDescending(c => !c.ReleaseYear.HasValue ? 0 : c.ReleaseYear) :
 						query.OrderBy(c => !c.ReleaseYear.HasValue ? 10000 : c.ReleaseYear);
-					break;
-		
+				
 				default:
 					
 					sortField = sortField != null && sortDirection != SortType.None ?
 							String.Format("{0} {1}", sortField, (sortDirection)) :
 							null;
 					return sortField != null ? query.OrderBy(sortField) : query;
-
-					break;
-		
 			}
 	
 			
