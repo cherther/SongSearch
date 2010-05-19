@@ -201,7 +201,7 @@
           </Key>
           <Property Name="TagId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TagName" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="TagTypeId" Type="smallint" Nullable="false" />
+          <Property Name="TagTypeId" Type="int" Nullable="false" />
           <Property Name="CreatedByUserId" Type="int" />
         </EntityType>
         <EntityType Name="Territories">
@@ -568,7 +568,7 @@
           <Property Name="TagName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="CreatedByUserId" Type="Int32" />
           <NavigationProperty Name="Contents" Relationship="SongSearch.Web.Data.Model.ContentTags" FromRole="Tags" ToRole="Contents" />
-          <Property Type="Int16" Name="TagTypeId" Nullable="false" />
+          <Property Type="Int32" Name="TagTypeId" Nullable="false" />
         </EntityType>
         <EntityType Name="Territory">
           <Key>

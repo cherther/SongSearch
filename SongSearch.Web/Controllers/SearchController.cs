@@ -29,6 +29,7 @@ namespace SongSearch.Web.Controllers
 		public ActionResult Index()
         {
 			var model = GetSearchViewModel();
+			
 			return View(model);
         }
 
@@ -68,18 +69,39 @@ namespace SongSearch.Web.Controllers
 		[OutputCache(Duration = 60, VaryByParam = "id")]
 		public ActionResult Detail(int id) {
 
+			var user = AccountData.User(User.Identity.Name);
+			var content = SearchService.GetContentDetails(id, user);
+			var model = GetContentViewModel();
+			model.IsEdit = false;
+			model.Content = content;
 			
+
+			if (Request.IsAjaxRequest()) {
+
+				return View("ctrlContentDetail", model);
+			
+			} else {
+				return View(model);
+			}
+		}
+
+		// **************************************
+		// Edit/5
+		// **************************************
+		public ActionResult Edit(int id) {
 
 			var user = AccountData.User(User.Identity.Name);
 			var content = SearchService.GetContentDetails(id, user);
-			
+			var model = GetContentViewModel();
+			model.IsEdit = true;
+			model.Content = content;
+
+
 			if (Request.IsAjaxRequest()) {
 
-				return View("ctrlContentDetail", content);
-			
+				return View("ctrlContentDetail", model);
+
 			} else {
-				var model = new ContentViewModel() { NavigationLocation = "Search" };
-				model.Content = content;
 				return View(model);
 			}
 		}
@@ -92,7 +114,28 @@ namespace SongSearch.Web.Controllers
 			var role = (Roles)_currentUser.RoleId;
 			var model = new SearchViewModel() {
 				NavigationLocation = "Search",				
-				SearchMenuProperties = SearchService.GetSearchMenuProperties(role)
+				SearchMenuProperties = SearchService.GetSearchMenuProperties(role),
+				SearchTags = new Dictionary<TagType, IList<Tag>>()
+			};
+			var tagTypes = ModelEnums.GetTagTypes();
+			foreach (var tagType in tagTypes) {
+
+				model.SearchTags.Add(tagType, SearchService.GetTopTags(tagType));
+	
+			}
+			return model;
+
+		}
+
+		// **************************************
+		// GetSearchViewModel
+		// **************************************
+		private ContentViewModel GetContentViewModel() {
+
+			var model = new ContentViewModel() {
+				NavigationLocation = "Search",
+				Tags = SearchService.GetLookupList<Tag>(),
+				UserCanEdit = _currentUser.IsAnyAdmin()
 			};
 
 			return model;

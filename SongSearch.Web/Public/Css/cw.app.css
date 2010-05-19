@@ -28,6 +28,10 @@ input.cw-input-highlight
     background-color: #FFFFCC;
 }
 
+.cw-optional
+{
+    display: none;
+}
 /* boxes */
 .cw-outl
 {

@@ -62,8 +62,13 @@ function showContentPanelCallback(data, trigger) {
 
     parentRow.addClass('cw-row-selected');
     parentRow.after(detailPanelRow);
-    detailPanelRow.slideDown();
+    //-----------------------------------------------------------------------------------
+    // cw-content-detail-tabs: calls jquery ui tabs widgets
+    //-----------------------------------------------------------------------------------
+    $('#cw-content-detail-tabs').tabs();
 
+    detailPanelRow.slideDown();
+    
     isContentDetailShowing = true;
     lastContentDetailLinkClicked = trigger[0];
     

@@ -12,9 +12,10 @@
     <%=Html.CSS("cw.forms")%>
     <%=Html.CSS("cw.tables")%>
     <%=Html.CSS("cw.twitlogin")%>
+    <%=Html.CSS("jquery-ui")%>
     <%=Html.Script("jquery-1.4.1.min.js")%>
     <%=Html.Script("jquery.blockUI.js")%>
-    <%//=Html.Script("jquery-ui-1.7.2.min.js")%>
+    <%=Html.Script("jquery-ui-1.8.1.min.js")%>
     <%//=Html.Script("jquery.tablesorter.js")%>
     <%=Html.Script("cw.app.main.js?v=d")%>
     <%=Html.Script("cw.app.ajax.js?v=d")%>

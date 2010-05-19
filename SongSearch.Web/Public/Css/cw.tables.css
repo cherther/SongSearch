@@ -7,11 +7,13 @@
 }
 .cw-tbl-search-results tr
 {
-    border-bottom: 1px solid gray;
+    border: 1px solid #aaaaaa;
 }
 .cw-row-selected
 {
-background-color: #acf;
+    background: #cccccc url(../images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;
+    /*background-color: #FFFFCC;
+    font-weight: bold;*/
 }
 .cw-tbl-search-results th, td
 {
@@ -20,4 +22,6 @@ background-color: #acf;
 .cw-tbl-search-results th
 {
     text-align: left;
+    white-space: nowrap;
+    
 }

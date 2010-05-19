@@ -58,7 +58,7 @@ namespace SongSearch.Web {
 		Brands = 20
 		
 	}
-
+	
 	public enum SortType {
 		None = 0,
 		Ascending = 1,
@@ -145,6 +145,20 @@ namespace SongSearch.Web {
 			return !roles.Contains(roleId) ?
 								(int)Roles.Client :
 								roleId;
+		}
+
+		public static TagType[] GetTagTypes() {
+			return new[] 
+				{ 
+					TagType.Moods, 
+					TagType.Styles,
+					TagType.Gender,
+					TagType.Tempo,
+					TagType.SoundsLike,
+					TagType.Instruments,
+					TagType.Language,
+					TagType.Brands
+			};
 		}
 	}
 }

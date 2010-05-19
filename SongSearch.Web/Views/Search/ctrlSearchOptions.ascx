@@ -51,7 +51,14 @@
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Tag: {%>
-                <%: Html.TextBox(String.Format("f[{0}].V", i))%>
+                <%
+                    var tagType = (TagType)item.PropertyId;
+                    var tags = Model.SearchTags[tagType];
+                    var selectedTags = value != null && value.All(v => !String.IsNullOrWhiteSpace(v)) ? value.Select(v => int.Parse(v)).ToArray() : null;
+                    var model = new TagCloudViewModel() { Tags = tags, TagType = tagType, InitialTagNumber = 5, SelectedTags = selectedTags };
+                %>    
+                <% Html.RenderPartial("ctrlTagCloud", model); %>
+                <%: Html.Hidden(String.Format("f[{0}].V", i)) %>
                 <%break;%>
                 <%} %>
             <%}%>

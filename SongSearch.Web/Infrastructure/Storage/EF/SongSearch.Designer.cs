@@ -2422,7 +2422,7 @@ namespace SongSearch.Web.Data
         /// <param name="tagId">Initial value of the TagId property.</param>
         /// <param name="tagName">Initial value of the TagName property.</param>
         /// <param name="tagTypeId">Initial value of the TagTypeId property.</param>
-        public static Tag CreateTag(global::System.Int32 tagId, global::System.String tagName, global::System.Int16 tagTypeId)
+        public static Tag CreateTag(global::System.Int32 tagId, global::System.String tagName, global::System.Int32 tagTypeId)
         {
             Tag tag = new Tag();
             tag.TagId = tagId;
@@ -2514,7 +2514,7 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int16 TagTypeId
+        public global::System.Int32 TagTypeId
         {
             get
             {
@@ -2529,8 +2529,8 @@ namespace SongSearch.Web.Data
                 OnTagTypeIdChanged();
             }
         }
-        private global::System.Int16 _TagTypeId;
-        partial void OnTagTypeIdChanging(global::System.Int16 value);
+        private global::System.Int32 _TagTypeId;
+        partial void OnTagTypeIdChanging(global::System.Int32 value);
         partial void OnTagTypeIdChanged();
 
         #endregion
