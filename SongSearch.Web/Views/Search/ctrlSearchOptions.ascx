@@ -5,7 +5,7 @@
             <button id="submit-top" type="submit" title="Search" class="cw-button cw-simple cw-blue">
             <span class="b-search">Search</span>
             </button>
-            <a href="#" class="reset" title="Reset the search form to start over">New</a>
+            <a href="#" class="cw-reset-form" title="Reset the search form to start over">New</a>
         </li>
         <div>&nbsp;</div>
         <%
@@ -26,7 +26,7 @@
             <div>
             <%switch (searchType) {%>
                 <%case SearchTypes.Contains: {%>
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = !String.IsNullOrWhiteSpace(value.First()) ? "cw-input-highlight" : "" })%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = !String.IsNullOrWhiteSpace(value.First()) ? "cw-form-value cw-input-highlight" : "cw-form-value" })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Join: {%>
@@ -38,27 +38,28 @@
                     var value1 = value.First();
                     var value2 = value.Last();      
                 %>
-                <%: Html.TextBox(String.Format("f[{0}].V[0]", i), value1, new { size = 5, rel = "cw-first", @class = !String.IsNullOrWhiteSpace(value1) ? "cw-input-highlight" : "" })%>&nbsp;to&nbsp;
-                <%: Html.TextBox(String.Format("f[{0}].V[1]", i), value2, new { size = 5, rel = "cw-second", @class = !String.IsNullOrWhiteSpace(value2) ? "cw-input-highlight" : "" })%>
+                <%: Html.TextBox(String.Format("f[{0}].V[0]", i), value1, new { size = 5, @class = !String.IsNullOrWhiteSpace(value1) ? "cw-form-value cw-input-highlight" : "cw-form-value" })%>&nbsp;to&nbsp;
+                <%: Html.TextBox(String.Format("f[{0}].V[1]", i), value2, new { size = 5, @class = !String.IsNullOrWhiteSpace(value2) ? "cw-form-value cw-input-highlight" : "cw-form-value" })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.HasValue: {%>
-                <%: Html.CheckBox(String.Format("f[{0}].V", i))%>
+                <%: Html.CheckBox(String.Format("f[{0}].V", i), new { @class = "cw-form-value" })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.IsTrue: {%>
-                <%: Html.CheckBox(String.Format("f[{0}].V", i))%>
+                <%: Html.CheckBox(String.Format("f[{0}].V", i), new { @class = "cw-form-value" })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Tag: {%>
                 <%
                     var tagType = (TagType)item.PropertyId;
                     var tags = Model.SearchTags[tagType];
-                    var selectedTags = value != null && value.All(v => !String.IsNullOrWhiteSpace(v)) ? value.Select(v => int.Parse(v)).ToArray() : null;
-                    var model = new TagCloudViewModel() { Tags = tags, TagType = tagType, InitialTagNumber = 5, SelectedTags = selectedTags };
+                    var selectedTagValues = value.First() != null ? value.First().Split(';') : null;
+                    var selectedTags = selectedTagValues.Where(v => !String.IsNullOrWhiteSpace(v)).Select(v => int.Parse(v)).ToArray();
+                    var model = new TagCloudViewModel() { Tags = tags, TagType = tagType, InitialTagNumber = 5, SelectedTags = selectedTags, TagClass = "cw-tagbox-search", TagIdTemplate = String.Format("f_{0}__V", i) };
                 %>    
                 <% Html.RenderPartial("ctrlTagCloud", model); %>
-                <%: Html.Hidden(String.Format("f[{0}].V", i)) %>
+                <%: Html.Hidden(String.Format("f[{0}].V", i), "", new { @class = "cw-form-value" })%>
                 <%break;%>
                 <%} %>
             <%}%>
@@ -75,7 +76,7 @@
             <button id="submit-bottom" type="submit" title="Search" class="cw-button cw-simple cw-blue">
             <span class="b-search">Search</span>
             </button>
-            <a href="#" class="reset" title="Reset the search form to start over">New</a>
+            <a href="#" class="cw-reset-form" title="Reset the search form to start over">New</a>
         </li>
     <%
         

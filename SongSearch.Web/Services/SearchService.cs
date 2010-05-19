@@ -268,9 +268,10 @@ namespace SongSearch.Web.Services {
 							break;
 						case SearchTypes.Tag:
 
-							var tagValues = searchableValues.SplitTags(';').Distinct(); //could also just replace, but this way it throws for non-numeric values
+							var tagValues = searchableValues.SplitTags(';').Distinct().ToArray(); //could also just replace, but this way it throws for non-numeric values
 							
-							foreach (var tagId in tagValues) {
+							foreach (var itm in tagValues) {
+								var tagId = itm;
 								query = query.Where(c => c.Tags.Any(t => t.TagId == tagId));
 
 							}

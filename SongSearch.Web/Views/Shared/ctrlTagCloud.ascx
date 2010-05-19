@@ -16,9 +16,9 @@
         }
         
         var tagName = tag.TagName;
-        var tagId = String.Format("{0}-{1}", tagTypeId, tag.TagId);
+        var tagId = String.Format("{0}-{1}", Model.TagIdTemplate, tag.TagId);
 
-        var tagClass = Model.SelectedTags != null && Model.SelectedTags.Contains(tag.TagId) ? "cw-blue" : "";
+        var tagClass = String.Concat(Model.TagClass, Model.SelectedTags != null && Model.SelectedTags.Contains(tag.TagId) ? " cw-blue" : "");
         
      %>
      <a id="<%= tagId%>" class="search-tag cw-tag-box cw-button cw-simple cw-small <%=tagClass %>"> <%=tagName%></a>    

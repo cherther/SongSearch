@@ -75,7 +75,7 @@
         <%    
             var selectedTags = content.Tags.Where(t => t.TagTypeId == (int)tagType).Select(t => t.TagId).ToArray();
             var tags = content.Tags.Where(t => t.TagTypeId == (int)tagType).ToList();//Model.Tags.Where(t => t.TagTypeId ==(int)tagType).ToList();
-            var model = new TagCloudViewModel() { Tags = tags, TagType = tagType, SelectedTags = selectedTags };              
+            var model = new TagCloudViewModel() { Tags = tags, TagType = tagType, SelectedTags = selectedTags, TagClass = "cw-tagbox-detail", TagIdTemplate = "t" };              
         %>    
             <%if (tags.Count() > 0) {%>
             <div class="cw-content-label"><%=tagType %></div>

@@ -30,14 +30,66 @@ function unwait(elem) {
 // UI element constants
 var contentDetailPanelId = '#cw-content-detail-panel';
 var searchOptionsPanelId = '#cw-search-options-panel';
+var tagBoxSelectedClass = 'cw-blue';
 
 var isContentDetailShowing;
 var lastContentDetailLinkClicked;
 
-function hideSearchOptions() {
-    $(searchOptionsPanelId).hide();
+//-----------------------------------------------------------------------------------
+// clear form
+//-----------------------------------------------------------------------------------
+function clearSearchForm(form) {
+
+    clearForm(form);
+    $('.search-tag').removeClass(tagBoxSelectedClass);
 }
 
+function clearForm(form) {
+    // iterate over all of the inputs for the form
+    // element that was passed in
+    $(':input.cw-form-value', form).each(function () {
+        var type = this.type;
+        var tag = this.tagName.toLowerCase(); // normalize case
+
+        // it's ok to reset the value attr of text inputs,
+        // password inputs, and textareas
+        if (type == 'text' || type == 'password' || tag == 'textarea' || type == 'hidden') {
+            this.value = "";
+        }
+        // checkboxes and radios need to have their checked state cleared
+        // but should *not* have their 'value' changed
+        else if (type == 'checkbox' || type == 'radio')
+            this.checked = false;
+        // select elements need to have their 'selectedIndex' property set to -1
+        // (this works for both single and multiple select elements)
+        else if (tag == 'select')
+            this.selectedIndex = -1;
+    });
+};
+
+function setSelectedSearchTagValue(link) {
+
+    var id = link[0].id;
+
+    var valField = '#' + id.substring(0, id.indexOf('-'));
+    var tagId = id.substring(id.indexOf('-') + 1);
+    var vals = $(valField) != null ? $(valField).val().split(';') : null;
+
+    var pos = vals.indexOf(tagId)
+    if (pos > -1) {
+        vals.splice(pos, 1);
+    }
+    else {
+        vals.push(tagId);
+    }
+
+    $(valField).val(vals.join(';'));
+    link.toggleClass(tagBoxSelectedClass);
+}
+
+//-----------------------------------------------------------------------------------
+//  content detail panel
+//-----------------------------------------------------------------------------------
 function showContentPanel(link) {
 
     if (link[0] != lastContentDetailLinkClicked) {
@@ -72,18 +124,6 @@ function showContentPanelCallback(data, trigger) {
     isContentDetailShowing = true;
     lastContentDetailLinkClicked = trigger[0];
     
-//    var contentDetailPanel = $(contentDetailPanelId);
-
-//    contentDetailPanel.html(data);
-
-//    if (!isContentDetailShowing) {
-
-//        contentDetailPanel.show();
-
-//        isContentDetailShowing = true;
-
-//        hideSearchOptions();
-//    }
 }
 
 function closeContentPanel() {

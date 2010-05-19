@@ -11,6 +11,8 @@ namespace SongSearch.Web {
 	// **************************************
 	public class TagCloudViewModel {
 
+		public string TagClass { get; set; }
+		public string TagIdTemplate { get; set; }
 		public int InitialTagNumber { get; set; }
 		public int[] SelectedTags { get; set; }
 		public TagType TagType { get; set; }
