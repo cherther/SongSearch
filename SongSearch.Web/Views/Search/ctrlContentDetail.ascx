@@ -8,12 +8,30 @@
     </button>
     </div>--%>
     <div id="cw-content-detail">
+    <hr />
+    <div id="cw-media-player">
+    Mediaplayer (TBD)
+    </div>
+    <hr />
+    <hr />
+    <div id="cw-content-detail-menu">
+    <%if (content.HasMediaFullVersion) { %>
+    <a href="#">Play</a>&nbsp;|&nbsp;<a href="#">Preview</a>&nbsp;|&nbsp;<a href="#">Download</a>&nbsp;|&nbsp;<a href="#">Add To Cart</a>&nbsp;|&nbsp;
+    <%} %>
+    <a href="#">Print</a>
+    <%if (Model.UserCanEdit) { %>
+    &nbsp;|&nbsp;<a href="#">Edit</a>
+    <%} %>
+	</div>
+    <hr />
     <div id="cw-content-detail-tabs">
 	<ul>
 		<li><a href="#tabs-1">Overview</a></li>
 		<li><a href="#tabs-2">Lyrics</a></li>
 		<li><a href="#tabs-3">Tags</a></li>
-		<li><a href="#tabs-4">Rights</a></li>
+		<%if (Model.SectionsAllowed.Contains("Rights")) { %>
+        <li><a href="#tabs-4">Rights</a></li>
+        <%} %>
 	</ul>
 	<div id="tabs-1">
 	<fieldset>
@@ -84,30 +102,49 @@
         <%} %>
     </fieldset>
     </div>
+    <%if (Model.SectionsAllowed.Contains("Rights")) { %>
     <div id="tabs-4">
 	<fieldset>           
-        <div class="cw-content-label">CatalogId</div>
-        <div class="cw-content-field"><%: content.Catalog.CatalogName %></div>
+        <div class="cw-content-label">Catalog</div>
+        <div class="cw-content-field"><%: content.Catalog.CatalogName%></div>
                 
         <div class="cw-content-label">All-in</div>
-        <div class="cw-content-field"><%: content.IsControlledAllIn %></div>
-              
-        <div class="cw-content-label">ContentRights</div>
-        <%foreach (var contentRight in content.ContentRights) { %>
-            <div class="cw-content-label">Rights Holder</div>
-            <div class="cw-content-field"><%: contentRight.RightsHolderName%></div>
-            <div class="cw-content-label">Rights Type</div>
-            <div class="cw-content-field"><%: (RightsTypes) contentRight.RightsTypeId%></div>
-            <div class="cw-content-label">Share</div>
-            <div class="cw-content-field"><%: contentRight.RightsHolderShare%></div>
-
+        <div class="cw-content-field"><%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, new { disabled = "disabled" })%></div>
+        
+       <%-- <div class="cw-content-label">Rights</div>--%>
+        <table>
+            <tr>
+                <th>
+                    <div class="cw-content-label">Rights Holder</div>
+                </th>
+                <th>
+                    <div class="cw-content-label">Rights Type</div>
+                </th>
+                <th>
+                    <div class="cw-content-label">Share</div>
+                </th>
+            </tr>
+        <% foreach (var contentRight in content.ContentRights) { %>
+            <tr>
+                <td>
+                    <div class="cw-content-field"><%: contentRight.RightsHolderName%></div>
+                </td>
+                <td>
+                    <div class="cw-content-field"><%: (RightsTypes)contentRight.RightsTypeId%></div>
+                </td>
+                <td>
+                    <div class="cw-content-field"><%: contentRight.RightsHolderShare.ToString("P0")%></div>
+                </td>
+            </tr>
         
         <%} %>
+        </table>      
         
-        <div class="cw-content-label">LicensingNotes</div>
-        <div class="cw-content-field"><pre><%: content.LicensingNotes %></pre></div>
+        <div class="cw-content-label">Licensing Notes</div>
+        <div class="cw-content-field"><pre><%: content.LicensingNotes%></pre></div>
     </fieldset>
     </div>
+    <%} %>
     <div><a href="#" id="cw-detail-close-link">Close</a></div>
     
     </div>

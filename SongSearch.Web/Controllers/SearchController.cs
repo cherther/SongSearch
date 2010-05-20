@@ -19,7 +19,7 @@ namespace SongSearch.Web.Controllers
 		private User _currentUser;
 
 		protected override void Initialize(RequestContext requestContext) {
-			_currentUser = AccountData.User(requestContext.HttpContext.User.Identity.Name);
+			_currentUser = CacheService.User(requestContext.HttpContext.User.Identity.Name);
 			base.Initialize(requestContext);
 		}
 
@@ -69,12 +69,18 @@ namespace SongSearch.Web.Controllers
 		[OutputCache(Duration = 60, VaryByParam = "id")]
 		public ActionResult Detail(int id) {
 
-			var user = AccountData.User(User.Identity.Name);
-			var content = SearchService.GetContentDetails(id, user);
+			//var user = AccountData.User(User.Identity.Name);
+			var content = SearchService.GetContentDetails(id, _currentUser);
 			var model = GetContentViewModel();
 			model.IsEdit = false;
 			model.Content = content;
-			
+			if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
+				model.SectionsAllowed.Add("Rights");
+			}
+
+			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+				model.UserCanEdit = true;
+			}
 
 			if (Request.IsAjaxRequest()) {
 
@@ -88,15 +94,19 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// Edit/5
 		// **************************************
+		[RequireAuthorization(MinAccessLevel=Roles.Admin)]
 		public ActionResult Edit(int id) {
 
-			var user = AccountData.User(User.Identity.Name);
-			var content = SearchService.GetContentDetails(id, user);
+			var content = SearchService.GetContentDetails(id, _currentUser);
 			var model = GetContentViewModel();
 			model.IsEdit = true;
 			model.Content = content;
-
-
+			//if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
+				model.SectionsAllowed.Add("Rights");
+			//}
+			//if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+				model.UserCanEdit = true;
+			//}
 			if (Request.IsAjaxRequest()) {
 
 				return View("ctrlContentDetail", model);
@@ -104,6 +114,20 @@ namespace SongSearch.Web.Controllers
 			} else {
 				return View(model);
 			}
+		}
+
+		public JsonResult AutoComplete(string f, string term) {
+
+			var values = CacheService.ContentField(f).Where(v => v != null).ToArray();
+			if (term.Length < 3) {
+				values = values != null ? values.Where(v => v.ToUpper().StartsWith(term.ToUpper())).ToArray() : values;
+			} else {
+
+				values = values != null ? values.Where(v => v.ToUpper().Contains(term.ToUpper())).ToArray() : values;
+			}
+
+			return Json(values, JsonRequestBehavior.AllowGet); //Json(values);
+			
 		}
 
 		// **************************************
@@ -114,15 +138,9 @@ namespace SongSearch.Web.Controllers
 			var role = (Roles)_currentUser.RoleId;
 			var model = new SearchViewModel() {
 				NavigationLocation = "Search",				
-				SearchMenuProperties = SearchService.GetSearchMenuProperties(role),
-				SearchTags = new Dictionary<TagType, IList<Tag>>()
+				SearchMenuProperties = CacheService.SearchProperties(role),
+				SearchTags = CacheService.TopTags()
 			};
-			var tagTypes = ModelEnums.GetTagTypes();
-			foreach (var tagType in tagTypes) {
-
-				model.SearchTags.Add(tagType, SearchService.GetTopTags(tagType));
-	
-			}
 			return model;
 
 		}
@@ -134,8 +152,9 @@ namespace SongSearch.Web.Controllers
 
 			var model = new ContentViewModel() {
 				NavigationLocation = "Search",
-				Tags = SearchService.GetLookupList<Tag>(),
-				UserCanEdit = _currentUser.IsAnyAdmin()
+				Tags = CacheService.Tags(),
+				
+				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" }
 			};
 
 			return model;

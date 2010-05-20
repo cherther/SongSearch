@@ -21,6 +21,39 @@
             // alert($('#' + propId).val());
         }
     );
+
+    var aCache = {};
+    $(".cw-autocomplete").autocomplete(
+        {
+            //source: "/Search/AutoComplete?f=" + this.rel,//["John", "Johnny", "Jon", "Joe" ],
+            source: function(request, response) {
+                var field = this.element[0].rel;
+				if (aCache.term == request.term && aCache.field == field && aCache.content) {
+					response(aCache.content);
+					return;
+				}
+				if (new RegExp(aCache.term).test(request.term) && aCache.content && aCache.content.length < 13) {
+					response($.ui.autocomplete.filter(aCache.content, request.term));
+					return;
+				}
+
+                var url = "/Search/AutoComplete?f=";
+				$.ajax({
+					url: url + field,
+					dataType: "json",
+					data: request,
+					success: function(data) {
+                        aCache.field = field;
+						aCache.term = request.term;
+						aCache.content = data;
+						response(data);
+					}
+				});
+			},
+            minLength: 2,
+        }
+    );
+
     //-----------------------------------------------------------------------------------
     // cw-detail-close-link
     //-----------------------------------------------------------------------------------

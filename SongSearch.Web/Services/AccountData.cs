@@ -13,7 +13,6 @@ namespace SongSearch.Web.Services {
 		// User
 		// **************************************
 		public static User User(string userName) {
-
 			using (ISession rep = new EFSession()) {
 				return rep.Single<User>(
 						u => u.UserName.ToUpper() == userName.ToUpper()
@@ -21,6 +20,22 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
+		public static User UserComplete(string userName) {
+
+			using (var ctx = new SongSearchContext(Connections.ConnectionString(ConnectionStrings.SongSearchContext))) {
+
+				ctx.ContextOptions.LazyLoadingEnabled = false;
+	
+				var user = ctx.Users
+					.Include("Carts")
+					.Include("UserCatalogRoles")
+					.Where(u => u.UserName.ToUpper() == userName.ToUpper()).SingleOrDefault();
+				return user;
+
+			}
+
+		}
+		
 		// ----------------------------------------------------------------------------
 		// Extensions
 		// ----------------------------------------------------------------------------
@@ -47,6 +62,16 @@ namespace SongSearch.Web.Services {
 		public static bool IsInRole(this User user, Roles role) {
 
 			return user.RoleId.Equals((int)role);
+		}
+
+		// **************************************
+		// IsAtLeastInRole
+		// **************************************    
+		public static bool IsAtLeastInCatalogRole(this User user, Roles role, Catalog catalog) {
+			return user.IsSuperAdmin() || 
+				(user.UserCatalogRoles != null ?
+				user.UserCatalogRoles.Any(x => x.CatalogId == catalog.CatalogId && x.RoleId <= (int)role) :
+				false);
 		}
 
 		// **************************************

@@ -45,12 +45,30 @@ namespace SongSearch.Web.Services {
 						
 			using (ISession session = new EFSession()) {
 				
-				var query = session.All<Content>().Select<string>(fieldName).Distinct();
+				var query = session.All<Content>().Select<string>(fieldName).Distinct().Where(v => v != null).Select(v => v.ToUpper());
 				return query.ToList();							
 			
 			}
 		}
 
+		// **************************************
+		// GetLookupListContentRights
+		//	returns simple listing of 
+		//	content right field values
+		// **************************************
+		public static IList<string> GetLookupListContentRights(string fieldName) {
+
+			if (String.IsNullOrWhiteSpace(fieldName)) {
+				throw new ArgumentException("Missing fieldName argument");
+			}
+
+			using (ISession session = new EFSession()) {
+
+				var query = session.All<ContentRight>().Select<string>(fieldName).Distinct();
+				return query.ToList();
+
+			}
+		}
 		// **************************************
 		// GetTopTags
 		// **************************************
@@ -73,6 +91,15 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetSearchMenuProperties
 		// **************************************
+		public static IList<SearchProperty> GetSearchMenuProperties() {
+
+
+			using (ISession session = new EFSession()) {
+
+				// Get Search Properties
+				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu).ToList();
+			}
+		}
 		public static IList<SearchProperty> GetSearchMenuProperties(Roles role) {
 
 
@@ -116,8 +143,8 @@ namespace SongSearch.Web.Services {
 
 			using (ISession session = new EFSession()) {
 
-				// Get Search Properties
-				var props = session.All<SearchProperty>().ToList();
+				// Get all Search Properties
+				var props = CacheService.SearchProperties((Roles)user.RoleId);//.session.All<SearchProperty>().ToList();
 				var contentQuery = session.All<Content>();
 				contentQuery = contentQuery.BuildSearchDynamicLinqSql(searchFields, props);//Where("Title.Contains(@0)", "love");
 				//var preCountCommand = sbPre.Append(sbCommand.ToString()).ToString();
@@ -138,7 +165,7 @@ namespace SongSearch.Web.Services {
 					
 				}
 
-				System.Diagnostics.Debug.Write(contentQuery.Expression.ToString());
+				//System.Diagnostics.Debug.Write(contentQuery.Expression.ToString());
 
 				// Get user request sort field and direction
 				var sortProp = sortPropertyId.HasValue ? props.Where(p => p.PropertyId == sortPropertyId.Value).SingleOrDefault() : null;

@@ -17,7 +17,7 @@ namespace SongSearch.Web {
 				return false;
 			}
 
-			return AccountData.User(princ.Identity.Name).IsAnyAdmin();
+			return CacheService.User(princ.Identity.Name).IsAnyAdmin();
 		}
 
 		// **************************************
@@ -29,7 +29,7 @@ namespace SongSearch.Web {
 			}
 			;
 
-			return AccountData.User(princ.Identity.Name).IsSuperAdmin();
+			return CacheService.User(princ.Identity.Name).IsSuperAdmin();
 		}
 
 		// **************************************
@@ -39,7 +39,7 @@ namespace SongSearch.Web {
 			if (!princ.Identity.IsAuthenticated) {
 				return false;
 			}
-			return AccountData.User(princ.Identity.Name).IsInRole(role);
+			return CacheService.User(princ.Identity.Name).IsInRole(role);
 		}
 
 		// **************************************
@@ -50,7 +50,7 @@ namespace SongSearch.Web {
 				return false;
 			}
 
-			return AccountData.User(princ.Identity.Name).IsAtLeastInRole(role);
+			return CacheService.User(princ.Identity.Name).IsAtLeastInRole(role);
 		}
 
 		// **************************************
@@ -61,7 +61,7 @@ namespace SongSearch.Web {
 				return false;
 			}
 
-			return AccountData.User(princ.Identity.Name).IsInAnyRole(roles);
+			return CacheService.User(princ.Identity.Name).IsInAnyRole(roles);
 		}
 
 	}

@@ -23,7 +23,7 @@ namespace SongSearch.Web.Services {
 			}
 
 			_activeUserIdentity = activeUserIdentity;
-			ActiveUser = AccountData.User(activeUserIdentity);
+			ActiveUser = CacheService.User(activeUserIdentity);
 		}
 
 		// ----------------------------------------------------------------------------

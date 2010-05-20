@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using SongSearch.Web.Services;
 
 namespace SongSearch.Web {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -25,6 +26,13 @@ namespace SongSearch.Web {
 			AreaRegistration.RegisterAllAreas();
 
 			RegisterRoutes(RouteTable.Routes);
+
+			CacheService.Initialize();
+		}
+
+		protected void Session_Start() {
+
+			CacheService.InitializeSession();
 		}
 	}
 }

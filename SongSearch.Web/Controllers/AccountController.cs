@@ -47,7 +47,7 @@ namespace SongSearch.Web {
 				if (_accs.UserIsValid(model.Email, model.Password))
 				//if (_ms.UserIsValid(model.Email, model.Password))
 				{
-					var friendly = AccountData.User(model.Email).FullName();
+					var friendly = CacheService.User(model.Email).FullName();
 
 					SetFriendlyNameCookie(friendly);
 
@@ -254,7 +254,7 @@ namespace SongSearch.Web {
 		public ActionResult UpdateProfile() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-			var user = AccountData.User(User.Identity.Name);
+			var user = CacheService.User(User.Identity.Name);
 
 			var vm = new UpdateProfileModel() { 
 				NavigationLocation = "Account", 
@@ -286,6 +286,7 @@ namespace SongSearch.Web {
 				if (_accs.UpdateProfile(currentUser, null)) {
 					var friendly = AccountData.User(userName).FullName();
 					SetFriendlyNameCookie(friendly);
+					CacheService.InitializeSession(userName, true);
 					return RedirectToAction("UpdateProfileSuccess");
 				} else {
 					ModelState.AddModelError("", Errors.PasswordChangeFailed.Text());

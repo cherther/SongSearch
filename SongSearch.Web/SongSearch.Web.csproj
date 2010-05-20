@@ -128,6 +128,7 @@
     <Compile Include="Infrastructure\Storage\ISession.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Services\CacheService.cs" />
     <Compile Include="Services\ContentAdminService.cs" />
     <Compile Include="Services\Interfaces\IContentAdminService.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />

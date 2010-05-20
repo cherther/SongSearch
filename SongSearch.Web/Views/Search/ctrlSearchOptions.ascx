@@ -26,7 +26,11 @@
             <div>
             <%switch (searchType) {%>
                 <%case SearchTypes.Contains: {%>
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = !String.IsNullOrWhiteSpace(value.First()) ? "cw-form-value cw-input-highlight" : "cw-form-value" })%>
+                <%
+                      var containsClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
+                    containsClass = String.Concat(containsClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
+                %>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = containsClass, rel = item.PropertyCode.ToLower() })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Join: {%>

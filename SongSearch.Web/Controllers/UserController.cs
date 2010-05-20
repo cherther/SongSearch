@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SongSearch.Web.Services;
 using System.Web.Routing;
+using SongSearch.Web.Data;
 
 namespace SongSearch.Web
 {
@@ -13,14 +14,16 @@ namespace SongSearch.Web
 	public class UserController : Controller
     {
 		IUserManagementService _ums;
-
+		private User _currentUser;
 		protected override void Initialize(RequestContext requestContext) {
+			_currentUser = CacheService.User(requestContext.HttpContext.User.Identity.Name);
 			if (_ums == null) { _ums = new UserManagementService(requestContext.HttpContext.User.Identity.Name); }
 
 			base.Initialize(requestContext);
 
 		}
 		
+
 		//
         // GET: /User/
 
@@ -48,8 +51,7 @@ namespace SongSearch.Web
 		public ActionResult Invite(InviteViewModel invites) {
 
 			string[] recipients = invites.Recipients;
-			var user = AccountData.User(User.Identity.Name);
-			string sender = String.Format("{0} <{1}>", user.FullName(), user.UserName); // Configuration.Get("AdminAddress");
+			string sender = String.Format("{0} <{1}>", _currentUser.FullName(), _currentUser.UserName); // Configuration.Get("AdminAddress");
 
 			foreach (string recipient in recipients) {
 				string address = recipient.ToLower().Trim();

@@ -31,6 +31,7 @@ function unwait(elem) {
 var contentDetailPanelId = '#cw-content-detail-panel';
 var searchOptionsPanelId = '#cw-search-options-panel';
 var tagBoxSelectedClass = 'cw-blue';
+var inputSelectedClass = 'cw-input-highlight';
 
 var isContentDetailShowing;
 var lastContentDetailLinkClicked;
@@ -41,7 +42,8 @@ var lastContentDetailLinkClicked;
 function clearSearchForm(form) {
 
     clearForm(form);
-    $('.search-tag').removeClass(tagBoxSelectedClass);
+    $('.cw-search-tag').removeClass(tagBoxSelectedClass);
+    $('.cw-form-value').removeClass(inputSelectedClass);
 }
 
 function clearForm(form) {

@@ -21,7 +21,7 @@
         var tagClass = String.Concat(Model.TagClass, Model.SelectedTags != null && Model.SelectedTags.Contains(tag.TagId) ? " cw-blue" : "");
         
      %>
-     <a id="<%= tagId%>" class="search-tag cw-tag-box cw-button cw-simple cw-small <%=tagClass %>"> <%=tagName%></a>    
+     <a id="<%= tagId%>" class="cw-search-tag cw-tag-box cw-button cw-simple cw-small <%=tagClass %>"> <%=tagName%></a>    
     <%
         tagCount++;
     } %>
