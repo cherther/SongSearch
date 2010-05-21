@@ -49,12 +49,12 @@ namespace SongSearch.Web.Data {
 			return _ctx.CreateObjectSet<T>();
 		}
 
-		public IQueryable<T> All<T>() where T : class {
-			return GetTable<T>().AsQueryable();
-		}
-
-		public IQueryable<T> All<T>(string loadWith) where T : class {
-			var set = GetTable<T>();
+		public IQueryable<T> All<T>(string loadWith = null) where T : class {
+			if (loadWith == null) {
+				return GetTable<T>().AsQueryable();
+			}
+			
+			var set = GetTable<T>(); 
 			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
 			return set.AsQueryable();
 		}
@@ -64,12 +64,14 @@ namespace SongSearch.Web.Data {
 			return _ctx.ExecuteStoreQuery<T>(commandText, parameters).AsQueryable();
 		}
 
-		public T Single<T>(Expression<Func<T, bool>> expression) where T : class {
-			return Single(expression, "");// GetTable<T>().SingleOrDefault(expression);
-		}
+		//public T Single<T>(Expression<Func<T, bool>> expression) where T : class {
+		//    return Single(expression, null);// GetTable<T>().SingleOrDefault(expression);
+		//}
 
-		public T Single<T>(Expression<Func<T, bool>> expression, string loadWith) where T : class {
-
+		public T Single<T>(Expression<Func<T, bool>> expression, string loadWith = null) where T : class {
+			if (loadWith == null) {
+				return GetTable<T>().SingleOrDefault(expression);
+			}
 			var set = GetTable<T>();
 			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
 			return set.SingleOrDefault(expression);
@@ -104,7 +106,6 @@ namespace SongSearch.Web.Data {
 //			items.ForEach(i => GetTable<T>().DeleteObject(i));
 		}
 
-		
 
 		#endregion
 

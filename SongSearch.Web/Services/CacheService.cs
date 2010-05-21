@@ -11,9 +11,10 @@ namespace SongSearch.Web.Services {
 
 		private static Cache _cache;
 		private static HttpSessionState _session;
+		
 		private static bool _appIsInitialized;
 		private static bool _sessionIsInitialized;
-		//private static bool _hasHttpContext;
+		
 		private static bool _hasCache;
 		private static bool _hasSession;
 
@@ -34,6 +35,9 @@ namespace SongSearch.Web.Services {
 			_cacheMatrix.Add(CacheKeys.Rights, CacheUpdateContentFields);
 			//Initialize();
 		}
+
+		public static string[] CachedContentFields = new string[] { "Title", "Artist", "RecordLabel", "Writers" };
+		public static string[] CachedContentRightsFields = new string[] { "RightsHolderName" };
 
 		public static DateTime LastUpdated { get; private set; }
 
@@ -61,19 +65,22 @@ namespace SongSearch.Web.Services {
 				InitializeSession(userName, false);
 			}
 		}
-	
+
 		public static void InitializeApp(bool force) {
 
 			if (HttpContext.Current != null) {
 				_cache = HttpContext.Current.Cache;
 				_hasCache = _cache != null;
-				if ((!_appIsInitialized) || (force)) {
-					if (_hasCache) {
 
-						foreach (var key in _cacheMatrix.Keys) {
-							_cacheMatrix[key](key);
-						}
+				if ((!_appIsInitialized || force) && _hasCache) {
+					// either app is not yet initialized 
+					// or we're forcing an update
+
+					foreach (var key in _cacheMatrix.Keys) {
+						//call the delegated function for each key
+						_cacheMatrix[key](key);
 					}
+
 					_appIsInitialized = true;
 					LastUpdated = DateTime.Now;
 				}
@@ -95,24 +102,24 @@ namespace SongSearch.Web.Services {
 			InitializeSession(userName, false);
 		}
 
-		public static void InitializeSession(string userName, bool force) {
+		public static void InitializeSession(
+			string userName, bool force) {
 
 			if (HttpContext.Current != null) {
 				_session = HttpContext.Current.Session;
 				_hasSession = _session != null;
 
-				if ((!_sessionIsInitialized) || (force)) {
-
-					if (userName != null && _hasSession) {
-
-						_sessionMatrix[CacheKeys.User](CacheKeys.User, userName); 
-					
+				if ((!_sessionIsInitialized || force) &&
+					(userName != null && _hasSession)) {
+					// either app is not yet initialized 
+					// or we're forcing an update
+					foreach (var key in _sessionMatrix.Keys) {
+						_sessionMatrix[key](key, userName);
 					}
-					
+
 					_sessionIsInitialized = true;
 				}
 			}
-			
 		}
 
 		// ----------------------------------------------------------------------------
@@ -206,7 +213,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// Catalogs
 		// **************************************
-		public static IList<string> RightsField(string fieldName) {
+		public static IList<string> ContentRightsField(string fieldName) {
 			if (_hasCache) {
 				if (Cache(CacheKeys.Rights) == null) { CacheUpdateContentRightsFields(CacheKeys.Content); }
 				var lookup = Cache(CacheKeys.Rights) as IDictionary<string, IList<string>>;
@@ -225,7 +232,10 @@ namespace SongSearch.Web.Services {
 		// Session
 		// **************************************
 		private static object Session(CacheKeys key) {
-			return _session[key.ToString()];
+			return Session(key.ToString());
+		}
+		private static object Session(string key) {
+			return _session[key];
 		}
 
 		// **************************************
@@ -350,9 +360,8 @@ namespace SongSearch.Web.Services {
 
 		private static IDictionary<string, IList<string>> GetDataContentFields() {
 			
-			var fields = new string[] { "Title", "Artist", "RecordLabel", "Writers" };
 			var lookup = new Dictionary<string, IList<string>>();
-			foreach (var field in fields) {
+			foreach (var field in CachedContentFields) {
 
 				lookup.Add(field.ToUpper(), GetDataContentField(field));
 			}
@@ -366,9 +375,9 @@ namespace SongSearch.Web.Services {
 		}
 
 		private static IDictionary<string, IList<string>> GetDataContentRightsFields() {
-			var fields = new string[] { "Title", "Artist", "RecordLabel" };
+			
 			var lookup = new Dictionary<string, IList<string>>();
-			foreach (var field in fields) {
+			foreach (var field in CachedContentRightsFields) {
 
 				lookup.Add(field.ToUpper(), GetDataContentRightsField(field));
 			}

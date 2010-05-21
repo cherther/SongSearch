@@ -7,6 +7,7 @@ using SongSearch.Web.Data;
 using System.Data.Objects;
 using System.Data.EntityClient;
 using System.Linq.Dynamic;
+using System.Linq.Expressions;
 
 namespace SongSearch.Web.Services {
 	public static class SearchService {
@@ -320,23 +321,29 @@ namespace SongSearch.Web.Services {
 		// (Private Extensions)
 		// ----------------------------------------------------------------------------
 		// **************************************
+		// Sort Expressions
+		// **************************************
+		private static Expression<Func<Content, string>> _titleSort = c => c.Title.Length == 0 ? "zzz" : c.Title;
+		private static Expression<Func<Content, string>> _titleSortDesc = c => c.Title.Length == 0 ? "---" : c.Title;
+		private static Expression<Func<Content, string>> _artistSort = c => c.Artist.Length == 0 ? "zzz" : c.Artist;
+		private static Expression<Func<Content, string>> _artistSortDesc = c => c.Artist.Length == 0 ? "--" : c.Artist;
+		private static Expression<Func<Content, int>> _popSort = c => !c.Pop.HasValue ? 1000 : c.Pop.Value;
+		private static Expression<Func<Content, int>> _countrySort = c => !c.Country.HasValue ? 1000 : c.Country.Value;
+		private static Expression<Func<Content, int>> _releaseYearSort = c => !c.ReleaseYear.HasValue ? 10000 : c.ReleaseYear.Value;
+		private static Expression<Func<Content, int>> _releaseYearSortDesc = c => !c.ReleaseYear.HasValue ? 0 : c.ReleaseYear.Value;
+
+		// **************************************
 		// DefaultSearchSort
 		// **************************************
-		private static Func<Content, string> _titleSort = c => c.Title.Length == 0 ? "zzz" : c.Title;
-		private static Func<Content, string> _artistSort = c => c.Artist.Length == 0 ? "zzz" : c.Artist;
-		private static Func<Content, int> _popSort = c => !c.Pop.HasValue ? 1000 : c.Pop.Value;
-		private static Func<Content, int> _countrySort = c => !c.Country.HasValue ? 1000 : c.Country.Value;
-		private static Func<Content, int> _releaseYearSort = c => !c.ReleaseYear.HasValue ? 10000 : c.ReleaseYear.Value;
-
 		private static IQueryable<Content> DefaultSearchSort(this IQueryable<Content> query) {
 
 			return query
-					.OrderBy(c => !c.Pop.HasValue ? 1000 : c.Pop)
-					.ThenBy(c => !c.Country.HasValue ? 1000 : c.Country)
-					.ThenBy(c => c.Title.Length == 0 ? "zzz" : c.Title)
-					.ThenBy(c => c.Artist.Length == 0 ? "zzz" : c.Artist);
-
+					.OrderBy(_popSort)
+					.ThenBy(_countrySort)
+					.ThenBy(_titleSort)
+					.ThenBy(_artistSort);
 		}
+		
 
 		// **************************************
 		// UserSearchSort
@@ -350,28 +357,28 @@ namespace SongSearch.Web.Services {
 			switch (sortField) {
 				case "Title":
 					return sortDirection.IsDescending() ?
-						query.OrderByDescending(c => c.Title.Length == 0 ? "---" : c.Title) :
-						query.OrderBy(c => c.Title.Length == 0 ? "zzz" : c.Title);
+						query.OrderByDescending(_titleSortDesc) :
+						query.OrderBy(_titleSort);					
 				
 				case "Artist":
 					return sortDirection.IsDescending() ?
-						query.OrderByDescending(c => c.Artist.Length == 0 ? "---" : c.Artist) :
-						query.OrderBy(c => c.Artist.Length == 0 ? "zzz" : c.Artist);
+						query.OrderByDescending(_artistSortDesc) :
+						query.OrderBy(_artistSort);
 
 				case "Pop":
 					return sortDirection.IsDescending() ?
-						query.OrderByDescending(c => !c.Pop.HasValue ? 1000 : c.Pop) :
-						query.OrderBy(c => !c.Pop.HasValue ? 1000 : c.Pop);
+						query.OrderByDescending(_popSort) :
+						query.OrderBy(_popSort);
 
 				case "Country":
 					return sortDirection.IsDescending() ?
-						query.OrderByDescending(c => !c.Country.HasValue ? 1000 : c.Country) :
-						query.OrderBy(c => !c.Country.HasValue ? 1000 : c.Country);
+						query.OrderByDescending(_countrySort) :
+						query.OrderBy(_countrySort);
 				
 				case "ReleaseYear":
 					return sortDirection.IsDescending() ?
-						query.OrderByDescending(c => !c.ReleaseYear.HasValue ? 0 : c.ReleaseYear) :
-						query.OrderBy(c => !c.ReleaseYear.HasValue ? 10000 : c.ReleaseYear);
+						query.OrderByDescending(_releaseYearSortDesc) :
+						query.OrderBy(_releaseYearSort);
 				
 				default:
 					

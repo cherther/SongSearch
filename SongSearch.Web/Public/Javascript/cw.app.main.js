@@ -112,8 +112,8 @@ function showContentPanelCallback(data, trigger) {
 
     var parentRow = trigger.closest('tr');
     var numberofCells = 6;// parentRow.children('td').length;
-    var detailPanelRow = $('<tr style="display: none" id="cw-content-detail-row"><td colspan="' + numberofCells + '">' + data);
-
+    var detailPanelRow = $('<tr id="cw-content-detail-row"><td colspan="' + numberofCells + '">' + data);
+//style="display: none" 
     parentRow.addClass('cw-row-selected');
     parentRow.after(detailPanelRow);
     //-----------------------------------------------------------------------------------
@@ -121,8 +121,9 @@ function showContentPanelCallback(data, trigger) {
     //-----------------------------------------------------------------------------------
     $('#cw-content-detail-tabs').tabs();
 
-    detailPanelRow.slideDown();
-    
+//    detailPanelRow.slideDown();
+//    detailPanelRow.css('display', ' table-row');
+
     isContentDetailShowing = true;
     lastContentDetailLinkClicked = trigger[0];
     

@@ -46,7 +46,7 @@ namespace SongSearch.Web {
 			if (ModelState.IsValid) {
 				if (_accs.UserIsValid(model.Email, model.Password))
 				//if (_ms.UserIsValid(model.Email, model.Password))
-				{
+		{
 					var friendly = CacheService.User(model.Email).FullName();
 
 					SetFriendlyNameCookie(friendly);
@@ -90,7 +90,7 @@ namespace SongSearch.Web {
 		public ActionResult LogOut() {
 
 			_fs.SignOut();
-			
+
 			Session.Abandon();
 
 			return RedirectToAction("LogIn", "Account");
@@ -256,14 +256,14 @@ namespace SongSearch.Web {
 
 			var user = CacheService.User(User.Identity.Name);
 
-			var vm = new UpdateProfileModel() { 
-				NavigationLocation = "Account", 
+			var vm = new UpdateProfileModel() {
+				NavigationLocation = "Account",
 				Email = User.Identity.Name,
 				FirstName = user.FirstName,
 				LastName = user.LastName,
 				ShowSignatureField = user.IsAnyAdmin(),
-				Signature = user.Signature			
-			
+				Signature = user.Signature
+
 			};
 
 			return View(vm);
@@ -276,25 +276,32 @@ namespace SongSearch.Web {
 		public ActionResult UpdateProfile(UpdateProfileModel model) {
 			if (ModelState.IsValid) {
 				var userName = User.Identity.Name;
-				User currentUser = new User() {
-					UserName = userName, //model.Email,
+				User user = new User() {
+					UserName = userName,
 					FirstName = model.FirstName,
 					LastName = model.LastName,
 					Signature = model.Signature
 				};
-				
-				if (_accs.UpdateProfile(currentUser, null)) {
-					var friendly = AccountData.User(userName).FullName();
-					SetFriendlyNameCookie(friendly);
+				//update the user's profile in the database
+				if (_accs.UpdateProfile(user, null)) {
+
+					// Update the user data cached in session
 					CacheService.InitializeSession(userName, true);
+
+					var friendly =
+						CacheService.User(userName).FullName();
+					SetFriendlyNameCookie(friendly);
 					return RedirectToAction("UpdateProfileSuccess");
+
 				} else {
-					ModelState.AddModelError("", Errors.PasswordChangeFailed.Text());
+					ModelState.AddModelError("",
+						Errors.PasswordChangeFailed.Text());
 				}
 			}
 
 			// If we got this far, something failed, redisplay form
-			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
+			ViewData["PasswordLength"] =
+				AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
 			return View(model);
 		}
@@ -344,20 +351,20 @@ namespace SongSearch.Web {
 
 				//Send email
 
-						string link = String.Format(@"<a href='{0}/Account/ResetPasswordRespond/{1}?rc={2}'>visit our Password Reset page</a>",
-							Settings.BaseUrl.Text(),
-							model.Email,
-							model.ResetCode);
-						string msg = String.Format(Messages.PasswordResetRequestLink.Text(), link);
+				string link = String.Format(@"<a href='{0}/Account/ResetPasswordRespond/{1}?rc={2}'>visit our Password Reset page</a>",
+					Settings.BaseUrl.Text(),
+					model.Email,
+					model.ResetCode);
+				string msg = String.Format(Messages.PasswordResetRequestLink.Text(), link);
 
-						Mail.SendMail(
-							Settings.AdminEmailAddress.Text(),
-							model.Email,
-							Messages.PasswordResetRequestSubjectLine.Text(),
-							String.Format("{0} {1}", Messages.PasswordResetRequest.Text(), msg)
+				Mail.SendMail(
+					Settings.AdminEmailAddress.Text(),
+					model.Email,
+					Messages.PasswordResetRequestSubjectLine.Text(),
+					String.Format("{0} {1}", Messages.PasswordResetRequest.Text(), msg)
 
-							);
-					return RedirectToAction("ResetPasswordSuccess");				
+					);
+				return RedirectToAction("ResetPasswordSuccess");
 			}
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
@@ -392,12 +399,12 @@ namespace SongSearch.Web {
 		[ValidateAntiForgeryToken]
 		public ActionResult ResetPasswordRespond(ResetPasswordModel model) {
 			if (
-				ModelState.IsValid && 
+				ModelState.IsValid &&
 				_accs.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
 				) {
-				
+
 				return RedirectToAction("LogIn", "Account");
-			
+
 			} else {
 				ModelState.AddModelError("", Errors.PasswordResetFailed.Text());
 

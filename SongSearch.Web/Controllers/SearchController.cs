@@ -116,17 +116,31 @@ namespace SongSearch.Web.Controllers
 			}
 		}
 
+		// **************************************
+		// AutoComplete/f = fieldName, term = search term
+		// **************************************
 		public JsonResult AutoComplete(string f, string term) {
 
-			var values = CacheService.ContentField(f).Where(v => v != null).ToArray();
+			var values = f.Equals("CatalogId", StringComparison.InvariantCultureIgnoreCase) ? 
+				CacheService.Catalogs().Select(c => c.CatalogName.ToUpper()).ToArray() :
+				(
+					CacheService.CachedContentFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ? 
+					CacheService.ContentField(f).Where(v => v != null).ToArray() :
+					(
+					CacheService.CachedContentRightsFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ?
+						CacheService.ContentRightsField(f).Where(v => v != null).ToArray() :
+						new string[] {""}
+					)
+				);
+
 			if (term.Length < 3) {
-				values = values != null ? values.Where(v => v.ToUpper().StartsWith(term.ToUpper())).ToArray() : values;
+				values = values != null ? values.Where(v => v.MakeSearchableValue().StartsWith(term.MakeSearchableValue())).ToArray() : values;
 			} else {
 
-				values = values != null ? values.Where(v => v.ToUpper().Contains(term.ToUpper())).ToArray() : values;
+				values = values != null ? values.Where(v => v.MakeSearchableValue().Contains(term.MakeSearchableValue())).ToArray() : values;
 			}
 
-			return Json(values, JsonRequestBehavior.AllowGet); //Json(values);
+			return Json(values, JsonRequestBehavior.AllowGet);
 			
 		}
 

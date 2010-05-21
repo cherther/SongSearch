@@ -27,14 +27,17 @@
             <%switch (searchType) {%>
                 <%case SearchTypes.Contains: {%>
                 <%
-                      var containsClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
-                    containsClass = String.Concat(containsClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
+                     var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
+                     valueClass = String.Concat(valueClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
                 %>
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = containsClass, rel = item.PropertyCode.ToLower() })%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyCode.ToLower() })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Join: {%>
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First())%>
+                <%  var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
+                    valueClass = String.Concat(valueClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
+                %>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyCode.ToLower() })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Range: {%>
