@@ -271,10 +271,10 @@ namespace SongSearch.Web.Services {
 
 								var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ? 
 									contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
-								var downloadName = nameUserOverride ?? (content.DownloadableName() ?? asset.Name);
+								var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? asset.Name);
 
 								try {
-									zip.AddEntry(String.Format("{0}\\{1}", cart.ArchiveName.Replace(".zip", ""), downloadName, asset.Extension),
+									zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, asset.Extension),
 												File.ReadAllBytes(asset.FullName));
 								}
 								catch {
