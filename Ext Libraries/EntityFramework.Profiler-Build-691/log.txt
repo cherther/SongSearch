@@ -62,3 +62,4 @@ System.InvalidOperationException: Cannot retrieve attached application instance 
 2010-05-25 15:49:25,732 [1] DEBUG Rhino.Licensing.LicenseValidator [(null)] - License accepted for EntityFramework Profiler
 2010-05-25 15:49:50,327 [1] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
 2010-05-25 15:49:50,389 [1] DEBUG Rhino.Licensing.LicenseValidator [(null)] - License accepted for EntityFramework Profiler
+2010-05-25 15:54:50,335 [12] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52

@@ -131,7 +131,7 @@ namespace SongSearch.Web {
 		// **************************************
 		// Logger
 		// **************************************
-		public ILogger Logger {
+		public static ILogger Logger {
 			get {
 				return Container.Get<ILogger>();
 			}

@@ -164,6 +164,7 @@
     <Compile Include="Services\Interfaces\IContentAdminService.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
+    <Compile Include="ViewModels\ContentListViewModel.cs" />
     <Compile Include="ViewModels\TagCloudViewModel.cs" />
     <Compile Include="ViewModels\InviteViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
@@ -1687,6 +1688,9 @@
     <Content Include="Views\Search\ctrlContentDetail.ascx" />
     <Content Include="Views\Search\ctrlSearchResults.ascx" />
     <Content Include="Views\Search\ctrlSearchOptions.ascx" />
+    <Content Include="Views\Shared\ctrlCartContentsTable.ascx" />
+    <Content Include="Views\Shared\ctrlResultsTable.ascx" />
+    <Content Include="Views\Shared\ctrlResultsPager.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />
     <Content Include="Views\Search\Index.aspx" />
     <Content Include="Views\Search\Results.aspx" />

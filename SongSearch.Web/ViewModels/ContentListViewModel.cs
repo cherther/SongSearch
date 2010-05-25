@@ -5,19 +5,18 @@ using System.Web;
 using SongSearch.Web.Data;
 
 namespace SongSearch.Web {
-	public class SearchViewModel : ViewModel {
+	public class ContentListViewModel : ViewModel {
 
+		public IList<SearchProperty> SearchMenuProperties { get; set; }
+		
 		public int? SortPropertyId { get; set; }
 		public SortType SortType { get; set; }
 		public string RequestUrl { get; set; }
 		public string PagerSortUrl { get; set; }
 		public string HeaderSortUrl { get; set; }
 
-		public IList<SearchProperty> SearchMenuProperties { get; set; }
-		public IList<SearchField> SearchFields { get; set; }
-		public IDictionary<TagType, IList<Tag>> SearchTags { get; set; }
-		public PagedList<Content> SearchResults { get; set; }
-		public string[] SearchResultsHeaders { get; set; }
+		public PagedList<Content> List { get; set; }
+		public string[] ListHeaders { get; set; }
 
 	}
 }

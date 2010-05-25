@@ -57,7 +57,7 @@ namespace System.Collections.Generic {
 			this.PageIndex = index;
 			this.TotalPages = 1;
 			CalcPages();
-			source = source.Skip(index * pageSize).Take(pageSize);
+			source = pageSize > 0 ? source.Skip(index * pageSize).Take(pageSize) : source;
 			this.AddRange(source.ToList());
 
 		}

@@ -39,11 +39,10 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		public ActionResult Index()
         {
-			var vm = new CartViewModel();
-			vm.NavigationLocation = "Cart";
-
+			var vm = GetCartViewModel();
 			vm.MyCarts = _cartService.MyCarts();
-			vm.PageTitle = "My Carts";
+			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File name"};
+			
 
 			return View(vm);
         }
@@ -145,10 +144,10 @@ namespace SongSearch.Web.Controllers
 		// URL: /Cart/Zip/3
 		// **************************************
 		[HttpPost]
-		public void ZipAsync(string userArchiveName, IDictionary<int, string> contentNames) {
+		public ActionResult Zip(string userArchiveName, IList<ContentUserDownloadable> contentNames) {
 			_cartService.CompressMyActiveCart(userArchiveName, contentNames);
 			CacheService.RefreshMyActiveCart(_currentUser.UserName);
-	
+			return RedirectToAction("Index");
 
 		}
 		public ActionResult ZipCompleted() {
@@ -170,5 +169,20 @@ namespace SongSearch.Web.Controllers
 			return new FileStreamResult(new System.IO.FileStream(cart.ArchivePath(), System.IO.FileMode.Open), "application/zip");
 		}
 
+		// **************************************
+		// GetSearchViewModel
+		// **************************************
+		private CartViewModel GetCartViewModel() {
+
+			var role = (Roles)_currentUser.RoleId;
+			var model = new CartViewModel() {
+				PageTitle = "My Song Cart",
+				NavigationLocation = "Cart",
+				//SearchMenuProperties = CacheService.SearchProperties(role)
+				
+			};
+			return model;
+
+		}
     }
 }

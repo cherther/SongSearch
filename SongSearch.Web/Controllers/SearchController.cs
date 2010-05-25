@@ -41,7 +41,7 @@ namespace SongSearch.Web.Controllers
 			var model = GetSearchViewModel();
 			model.SortPropertyId = s;
 			model.SortType = o.HasValue ? (SortType)o.GetValueOrDefault() : SortType.None;
-
+			
 			var isValid = f.Any(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v)));
 
 			if (isValid) {
@@ -57,6 +57,13 @@ namespace SongSearch.Web.Controllers
 				var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
 				model.SearchResults = results;
 				model.SearchFields = searchFields;
+
+				model.RequestUrl = Request.RawUrl.Replace(String.Format("&p={0}", results.PageIndex), "");
+				model.PagerSortUrl = model.SortPropertyId.HasValue ?
+					String.Format("&s={0}&o={1}", model.SortPropertyId.Value, (int)model.SortType) : "";
+				model.HeaderSortUrl = model.RequestUrl.Replace(String.Format("&s={0}&o={1}", model.SortPropertyId.GetValueOrDefault(), (int)model.SortType), "");
+				model.SearchResultsHeaders = new string[] { "Title", "Artist", "Pop", "Country", "ReleaseYear", "Preview" };
+
 				return View(model);
 			}
 

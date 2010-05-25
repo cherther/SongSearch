@@ -22,7 +22,7 @@ namespace SongSearch.Web.Services {
 		void AddToMyActiveCart(int contentId);
 		void RemoveFromMyActiveCart(int contentId);
 
-		void CompressMyActiveCart(string userArchiveName, IDictionary<int, string> contentNames);//, IList<Content> items);
+		void CompressMyActiveCart(string userArchiveName, IList<ContentUserDownloadable> contentNames);//, IList<Content> items);
 		Cart DownloadCompressedCart(int cartId);
 
 		void DeleteCart(int cartId);

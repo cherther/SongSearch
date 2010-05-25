@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using Ionic.Zip;
 using Ninject;
+using NLog;
 
 namespace SongSearch.Web.Services {
 	
@@ -33,7 +34,27 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public IList<Cart> MyCarts() {
 
-			var carts = ReadSession.All<Cart>().Where(c => c.UserId == ActiveUser.UserId).ToList();
+			var carts = ReadSession.GetObjectQuery<Cart>()
+				.Include("Contents")
+				.Where(c => c.UserId == ActiveUser.UserId).ToList();
+
+			carts = AddUserDownloadableNames(carts);
+			return carts;
+		}
+
+		private List<Cart> AddUserDownloadableNames(List<Cart> carts) {
+
+			var signature = ActiveUser.Signature;
+			foreach (var cart in carts) {
+
+				if (cart.CartStatus == (int)CartStatusCodes.Active) {
+					var contents = cart.Contents;
+
+					foreach (var content in contents) {
+						content.UserDownloadableName = content.DownloadableName(signature);
+					}
+				}
+			}
 
 			return carts;
 		}
@@ -51,13 +72,12 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public Cart MyActiveCartContents() {
 
-			using (var session = Application.DataSessionReadOnly) {
-				var cart = session.GetObjectQuery<Cart>()
-					.Include("Contents")
-					.Where(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();
+			var cart = ReadSession.GetObjectQuery<Cart>()
+				.Include("Contents")
+				.Where(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();
 
-				return cart;
-			}
+			return cart;
+			
 		}
 		
 		// **************************************
@@ -144,14 +164,15 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// CompressMyActiveCart
 		// **************************************
-		public void CompressMyActiveCart(string userArchiveName = null, IDictionary<int, string> contentNames = null) {
+		public void CompressMyActiveCart(string userArchiveName = null, IList<ContentUserDownloadable> contentNames = null) {
 			var cart = MyActiveCart();
 
 			if (cart != null && cart.Contents.Count() > 0) {
 				string zipName = cart.ArchiveDownloadName(userArchiveName);
+				cart.ArchiveName = zipName;
 				string zipPath = CompressCart(cart, contentNames);
 				cart.MarkAsCompressed(zipPath);
-				
+				DataSession.CommitChanges();
 				cart = null;
 			}
 		}
@@ -231,7 +252,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// Zip
 		// **************************************
-		private string CompressCart(Cart cart, IDictionary<int, string> contentNames) {
+		private string CompressCart(Cart cart, IList<ContentUserDownloadable> contentNames) {
 
 				string zipPath = cart.ArchivePath(); 
 				string signature = ActiveUser.IsAnyAdmin() ? ActiveUser.Signature : ActiveUser.ParentSignature();
@@ -243,16 +264,23 @@ namespace SongSearch.Web.Services {
 						
 						if (content.HasMediaFullVersion) {
 						
-							var asset = new FileInfo(Path.Combine(Settings.AssetPathFullSong.Text(), content.ContentId.ToString(), ".mp3"));
+							var assetFileName = String.Concat(content.ContentId, ".mp3");
+							var asset = new FileInfo(Path.Combine(Settings.AssetPathFullSong.Text(), assetFileName));
 
 							if (asset.Exists) {
 
-								var nameUserOverride = contentNames != null && contentNames.Any(x => x.Key == content.ContentId) ? 
-									contentNames.Where(x => x.Key == content.ContentId).Single().Value : null;
+								var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ? 
+									contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
 								var downloadName = nameUserOverride ?? (content.DownloadableName() ?? asset.Name);
-								
-								zip.AddEntry(String.Format("{0}\\{1}", cart.ArchiveName.Replace(".zip", ""), downloadName, asset.Extension),
-											File.ReadAllBytes(asset.FullName));
+
+								try {
+									zip.AddEntry(String.Format("{0}\\{1}", cart.ArchiveName.Replace(".zip", ""), downloadName, asset.Extension),
+												File.ReadAllBytes(asset.FullName));
+								}
+								catch {
+
+									Application.Logger.Info(String.Concat(asset.FullName, " is missing."));
+								}
 							}
 						}
 					}

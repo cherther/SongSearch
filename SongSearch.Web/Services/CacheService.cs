@@ -163,7 +163,7 @@ namespace SongSearch.Web.Services {
 				activeCart = GetDataUserActiveCart(userName);
 			}
 
-			var isInCart = activeCart.Contents != null && activeCart.Contents.Any(c => c.ContentId == contentId);
+			var isInCart = activeCart != null && activeCart.Contents != null && activeCart.Contents.Any(c => c.ContentId == contentId);
 			return isInCart;
 
 		}
