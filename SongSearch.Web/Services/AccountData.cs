@@ -12,7 +12,7 @@ namespace SongSearch.Web.Services {
 
 		//static IDataSession _session;
 
-		//public static IDataSession Session {
+		//public static IDataSession DataSession {
 		//    get {
 		//        _session = _session ?? Application.DataSession;
 		//        return _session;

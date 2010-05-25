@@ -63,24 +63,27 @@ namespace SongSearch.Web {
 			return _context.CreateObjectSet<T>();
 		}
 
-		public IQueryable<T> All<T>(string loadWith = null) where T : class, new() {
-			if (loadWith == null) {
+		public IQueryable<T> All<T>() where T : class, new() {
 				return GetTable<T>().AsQueryable();
-			}
-
-			var set = GetTable<T>();
-			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
-			return set.AsQueryable();
 		}
+		//public IQueryable<T> All<T>(string loadWith = null) where T : class, new() {
+		//    if (loadWith == null) {
+		//        return GetTable<T>().AsQueryable();
+		//    }
+
+		//    var set = GetTable<T>();
+		//    var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
+		//    return set.AsQueryable();
+		//}
 
 		public IQueryable<T> All<T>(string commandText, params object[] parameters) where T : class, new() {
 
 			return _context.ExecuteStoreQuery<T>(commandText, parameters).AsQueryable();
 		}
 
-		//public T Single<T>(Expression<Func<T, bool>> expression) where T : class {
-		//    return Single(expression, null);// GetTable<T>().SingleOrDefault(expression);
-		//}
+		public ObjectQuery<T> GetObjectQuery<T>() where T : class, new() {
+			return new ObjectQuery<T>(GetSetName<T>(), _context);
+		}
 
 		public T Single<T>(Expression<Func<T, bool>> expression, string loadWith = null) where T : class, new() {
 			if (loadWith == null) {

@@ -21,7 +21,7 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		// (Constructor)
 		// ----------------------------------------------------------------------------
-		public AccountService(IDataSession session) : base(session) {}
+		public AccountService(IDataSession dataSession, IDataSessionReadOnly readSession) : base(dataSession, readSession) { }
 		public AccountService(string activeUserIdentity) : base(activeUserIdentity) { }
 		
 		// ----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ namespace SongSearch.Web.Services {
 		public User RegisterUser(User user, Guid invitationCode) {
 
 			if (!UserExists(user.UserName)) {
-				var inv = Session.Single<Invitation>(i => i.InvitationId.Equals(invitationCode) && i.InvitationEmailAddress.Equals(user.UserName));
+				var inv = DataSession.Single<Invitation>(i => i.InvitationId.Equals(invitationCode) && i.InvitationEmailAddress.Equals(user.UserName));
 
 				if (inv != null) {
 
@@ -48,7 +48,7 @@ namespace SongSearch.Web.Services {
 					user.RegisteredOn = DateTime.Now;
 
 					// Get parent users catalog where parent user is at least a plugger and assign to new user in client role
-					var catalogs = Session.All<UserCatalogRole>().Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Plugger);
+					var catalogs = DataSession.All<UserCatalogRole>().Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Plugger);
 					catalogs.ForEach(c =>
 						user.UserCatalogRoles.Add(new UserCatalogRole() { CatalogId = c.CatalogId, RoleId = (int)Roles.Client })
 					);
@@ -56,10 +56,10 @@ namespace SongSearch.Web.Services {
 
 					inv.InvitationStatus = (int)InvitationStatusCodes.Registered;
 
-					Session.Add<User>(user);
+					DataSession.Add<User>(user);
 
 
-					Session.CommitChanges();
+					DataSession.CommitChanges();
 					inv = null;
 				}
 			} else {
@@ -73,7 +73,7 @@ namespace SongSearch.Web.Services {
 		// UserIsValid
 		// **************************************    
 		public bool UserIsValid(string userName, string password) {
-			var user = GetUser(userName);
+			var user = ReadSession.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
 			if (user == null) {
 				return false;
 			}
@@ -113,8 +113,8 @@ namespace SongSearch.Web.Services {
 				dbuser.Password = newPassword.PasswordHashString();
 			}
 
-			Session.Update<User>(dbuser);
-			Session.CommitChanges();
+			DataSession.Update<User>(dbuser);
+			DataSession.CommitChanges();
 			dbuser = null;
 			return true;
 			
@@ -132,8 +132,8 @@ namespace SongSearch.Web.Services {
 
 			if (user.UserName.PasswordHashString().Equals(resetCode)) {
 				user.Password = newPassword.PasswordHashString();
-				Session.Update<User>(user);
-				Session.CommitChanges();
+				DataSession.Update<User>(user);
+				DataSession.CommitChanges();
 				user = null;
 				return true;
 			}
@@ -157,7 +157,7 @@ namespace SongSearch.Web.Services {
 			return GetUser(user.UserName);
 		}
 		private User GetUser(string userName) {
-			return Session.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+			return DataSession.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
 		}
 
 		// **************************************
@@ -169,7 +169,7 @@ namespace SongSearch.Web.Services {
 			user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
 			user.RoleId = (int) Roles.Client;
 
-			Session.Add<User>(user);
+			DataSession.Add<User>(user);
 
 			user = null;
 		}
@@ -194,13 +194,13 @@ namespace SongSearch.Web.Services {
 		private void Dispose(bool disposing) {
 			if (!_disposed) {
 				{
-					if (Session != null) {
-						Session.Dispose();
-						Session = null;
+					if (DataSession != null) {
+						DataSession.Dispose();
+						DataSession = null;
 					}
-					if (SessionReadOnly != null) {
-						SessionReadOnly.Dispose();
-						SessionReadOnly = null;
+					if (ReadSession != null) {
+						ReadSession.Dispose();
+						ReadSession = null;
 					}
 				}
 

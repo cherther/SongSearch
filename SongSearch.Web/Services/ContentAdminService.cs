@@ -35,13 +35,13 @@ namespace SongSearch.Web.Services {
 		private void Dispose(bool disposing) {
 			if (!_disposed) {
 				{
-					if (Session != null) {
-						Session.Dispose();
-						Session = null;
+					if (DataSession != null) {
+						DataSession.Dispose();
+						DataSession = null;
 					}
-					if (SessionReadOnly != null) {
-						SessionReadOnly.Dispose();
-						SessionReadOnly = null;
+					if (ReadSession != null) {
+						ReadSession.Dispose();
+						ReadSession = null;
 					}
 				}
 

@@ -294,7 +294,7 @@ namespace SongSearch.Web {
 				//update the user's profile in the database
 				if (_acctService.UpdateProfile(user, null)) {
 
-					// Update the user data cached in session
+					// Update the user dataSession cached in dataSession
 					CacheService.InitializeSession(userName, true);
 
 					var friendly =

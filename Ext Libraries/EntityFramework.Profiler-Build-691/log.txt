@@ -35,3 +35,30 @@ System.InvalidOperationException: Cannot retrieve attached application instance 
 2010-05-25 12:15:12,271 [13] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
 2010-05-25 12:20:12,284 [12] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
 2010-05-25 12:25:12,287 [8] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 12:30:12,291 [6] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 12:35:12,294 [12] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 12:40:12,305 [13] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 12:45:12,307 [6] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 14:22:15,659 [1] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 14:22:15,720 [1] DEBUG Rhino.Licensing.LicenseValidator [(null)] - License accepted for EntityFramework Profiler
+2010-05-25 14:27:15,657 [6] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 14:32:15,668 [3] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 14:37:15,672 [12] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 14:42:15,676 [6] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 14:47:15,679 [14] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 14:52:15,691 [8] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 14:57:15,694 [6] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:02:15,695 [3] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:07:15,708 [3] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:12:15,730 [6] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:17:15,732 [12] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:22:15,734 [13] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:27:15,737 [3] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:32:15,749 [6] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:37:15,753 [12] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:42:15,759 [3] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:47:15,763 [3] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:49:25,673 [1] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:49:25,732 [1] DEBUG Rhino.Licensing.LicenseValidator [(null)] - License accepted for EntityFramework Profiler
+2010-05-25 15:49:50,327 [1] INFO  Rhino.Licensing.LicenseValidator [(null)] - License expiration date is 06/25/2010 08:13:52
+2010-05-25 15:49:50,389 [1] DEBUG Rhino.Licensing.LicenseValidator [(null)] - License accepted for EntityFramework Profiler

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Objects;
+using System.Linq.Expressions;
 
 namespace SongSearch.Web {
 	
@@ -12,6 +13,9 @@ namespace SongSearch.Web {
 			_context = context;
 			_context.ContextOptions.LazyLoadingEnabled = false;
 		}
+		private ObjectSet<T> GetTable<T>() where T : class, new() {
+			return _context.CreateObjectSet<T>();
+		}
 		string GetSetName<T>() {
 			var entitySetProperty =
 			_context.GetType().GetProperties()
@@ -20,11 +24,11 @@ namespace SongSearch.Web {
 
 			return entitySetProperty.Name;
 		}
-		public T Single<T>(System.Linq.Expressions.Expression<Func<T, bool>> expression) where T : class, new() {
+		public T Single<T>(Expression<Func<T, bool>> expression) where T : class, new() {
 
-			return new ObjectQuery<T>(GetSetName<T>(), _context, MergeOption.NoTracking).SingleOrDefault();
+			return new ObjectQuery<T>(GetSetName<T>(), _context, MergeOption.NoTracking).SingleOrDefault(expression);
 		}
-
+		
 		public IQueryable<T> All<T>() where T : class, new() {
 			return new ObjectQuery<T>(GetSetName<T>(), _context, MergeOption.NoTracking);
 		}

@@ -67,7 +67,7 @@ namespace SongSearch.Web.Services {
 
 
 		public IList<Invitation> GetMyInvites(InvitationStatusCodes status) {
-			return Session.All<Invitation>()
+			return DataSession.All<Invitation>()
 				.Where(i => i.InvitedByUserId == ActiveUser.UserId
 							&& i.InvitationStatus == (int)status)
 				.ToList();				
@@ -86,7 +86,7 @@ namespace SongSearch.Web.Services {
 
 			//TODO: is this not handled via self-join?
 			user.ParentUser = user.ParentUserId.HasValue ?
-				Session.Single<User>(u => u.UserId == user.ParentUserId) :
+				DataSession.Single<User>(u => u.UserId == user.ParentUserId) :
 				null;
 
 			return user;
@@ -110,14 +110,14 @@ namespace SongSearch.Web.Services {
 					}
 
 					if (user.Invitation != null) {
-						Session.Delete<Invitation>(user.Invitation);
+						DataSession.Delete<Invitation>(user.Invitation);
 					}
 					//handled via cascade in db
 					//user.Carts.ToList().ForEach(x => user.Carts.Remove(x));
 					//user.UserCatalogRoles.ToList().ForEach(x => user.UserCatalogRoles.Remove(x));
 
-					Session.Delete<User>(user);
-					Session.CommitChanges();
+					DataSession.Delete<User>(user);
+					DataSession.CommitChanges();
 				}
 			}
 		}
@@ -139,18 +139,18 @@ namespace SongSearch.Web.Services {
 			user.ParentUserId = ActiveUser.UserId;
 
 			// take over the child users
-			var childUsers = Session.All<User>().Where(u => u.ParentUserId == user.UserId);
+			var childUsers = DataSession.All<User>().Where(u => u.ParentUserId == user.UserId);
 			foreach (var child in childUsers) {
 				child.ParentUserId = ActiveUser.UserId;
 			}
 
 			//Re-assign invites from this myUser to active myUser
-			var invites = Session.All<Invitation>().Where(i => i.InvitedByUserId == user.UserId);
+			var invites = DataSession.All<Invitation>().Where(i => i.InvitedByUserId == user.UserId);
 			foreach (var invite in invites) {
 				invite.InvitedByUserId = ActiveUser.UserId;
 			}
 
-			Session.CommitChanges();
+			DataSession.CommitChanges();
 		}
 
 		// **************************************
@@ -160,27 +160,28 @@ namespace SongSearch.Web.Services {
 
 			inviteEmailAddress = inviteEmailAddress.ToLower();
 
-			var inv = Session.Single<Invitation>(
-				i => i.InvitationEmailAddress.ToLower() == inviteEmailAddress
+			var inv = DataSession.Single<Invitation>(
+				i => i.InvitationEmailAddress.ToLower() == inviteEmailAddress.ToLower()
 				&& i.InvitationStatus == (int)InvitationStatusCodes.Open
 				&& i.InvitedByUserId == ActiveUser.UserId);
 
 			if (inv == null) {
 				inv = new Invitation {
+					InvitationId = Guid.NewGuid(),
 					InvitationEmailAddress = inviteEmailAddress,
 					ExpirationDate = DateTime.Now.AddDays(30).Date,
 					InvitedByUserId = ActiveUser.UserId,
 					InvitationStatus = (int)InvitationStatusCodes.Open
 				};
 
-				Session.Add<Invitation>(inv);
+				DataSession.Add<Invitation>(inv);
 			} else //extend expiration date
 			{
 				//inv.InvitationStatus = (int)InvitationStatusCodes.Open;
 				inv.ExpirationDate = DateTime.Now.AddDays(30).Date;
 
 			}
-			Session.CommitChanges();
+			DataSession.CommitChanges();
 
 			var inviteId = inv.InvitationId;
 
@@ -193,7 +194,7 @@ namespace SongSearch.Web.Services {
 		public Invitation GetInvitation(string inviteId, string inviteEmailAddress) {
 			var inviteGuid = new Guid(inviteId);
 
-			var inv = Session.Single<Invitation>(i => i.InvitationId == inviteGuid && i.InvitationEmailAddress.ToLower() == inviteEmailAddress);
+			var inv = DataSession.Single<Invitation>(i => i.InvitationId == inviteGuid && i.InvitationEmailAddress.ToLower() == inviteEmailAddress);
 
 			return inv;
 		}
@@ -202,7 +203,7 @@ namespace SongSearch.Web.Services {
 		// GetNumberOfUsersByAccessLevel
 		// **************************************
 		public int GetNumberOfUsersByAccessLevel(Roles role) {
-			var users = Session.All<User>().Where(u => u.RoleId == (int)role);
+			var users = DataSession.All<User>().Where(u => u.RoleId == (int)role);
 			return (users.Count());
 		}
 
@@ -214,8 +215,8 @@ namespace SongSearch.Web.Services {
 
 			if (user != null && ModelEnums.GetRoles().Contains(roleId)) {
 				user.RoleId = roleId;
-				Session.Update<User>(user);
-				Session.CommitChanges();
+				DataSession.Update<User>(user);
+				DataSession.CommitChanges();
 			}
 		}
 
@@ -242,7 +243,7 @@ namespace SongSearch.Web.Services {
 								CatalogId = catalogId,
 								RoleId = roleId
 							};
-						Session.Add<UserCatalogRole>(usrCatalogRole);
+						DataSession.Add<UserCatalogRole>(usrCatalogRole);
 					}
 				} else {
 				
@@ -255,18 +256,18 @@ namespace SongSearch.Web.Services {
 						//also remove these catalogs from any child users, really?
 						var childUsers = user.GetUserHierarchy(withCatalogRoles: true);
 						foreach (var child in childUsers) {
-							var cat = Session.Single<UserCatalogRole>(x => x.CatalogId == catalogId && x.UserId == child.UserId);
-							if (cat != null) { Session.Delete<UserCatalogRole>(cat); }
+							var cat = DataSession.Single<UserCatalogRole>(x => x.CatalogId == catalogId && x.UserId == child.UserId);
+							if (cat != null) { DataSession.Delete<UserCatalogRole>(cat); }
 						}
 
 						// revoke parent access
-						Session.Delete<UserCatalogRole>(usrCatalogRole);
+						DataSession.Delete<UserCatalogRole>(usrCatalogRole);
 
 
 					}
 				}
 
-				Session.CommitChanges();
+				DataSession.CommitChanges();
 
 			}
 		}
@@ -280,7 +281,7 @@ namespace SongSearch.Web.Services {
 			var parentUsr = GetUser(usr.ParentUserId.GetValueOrDefault());
 
 			if (usr != null) {
-				var catalogs = Session.All<Catalog>();
+				var catalogs = DataSession.All<Catalog>();
 				// limit to catalogs with myUser admin access if not superadmin
 				if (!ActiveUser.IsSuperAdmin() && parentUsr != null) {
 					catalogs = from uc in parentUsr.UserCatalogRoles.AsQueryable()
@@ -302,19 +303,19 @@ namespace SongSearch.Web.Services {
 							CatalogId = catalog.CatalogId,
 							RoleId = roleId
 						};
-						Session.Add<UserCatalogRole>(usrCatalog);
+						DataSession.Add<UserCatalogRole>(usrCatalog);
 					} else {
 						if (roleId > 0) {
 							usrCatalog.RoleId = roleId;
 
 						} else {
 							// revoke access
-							Session.Delete<UserCatalogRole>(usrCatalog);
+							DataSession.Delete<UserCatalogRole>(usrCatalog);
 						}
 					}
 				}
 
-				Session.CommitChanges();
+				DataSession.CommitChanges();
 			}
 		}
 
@@ -323,10 +324,10 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public void UpdateCatalogRoleAllUsers(int catalogId, int roleId) {
 
-			var cat = Session.Single<Catalog>(x => x.CatalogId == catalogId);
+			var cat = DataSession.Single<Catalog>(x => x.CatalogId == catalogId);
 
 			if (cat != null) {
-				var allUsers = Session.All<User>();
+				var allUsers = DataSession.All<User>();
 				var myUsers = ActiveUser.GetUserHierarchy();
 
 				SetCatalogRole(catalogId, roleId, allUsers, myUsers);
@@ -352,16 +353,16 @@ namespace SongSearch.Web.Services {
 							CatalogId = catalogId,
 							RoleId = roleId
 						};
-						Session.Add<UserCatalogRole>(usrCatalog);
+						DataSession.Add<UserCatalogRole>(usrCatalog);
 					} else {
 						if (roleId > 0) {
 							usrCatalog.RoleId = roleId;
 						} else {
-							Session.Delete<UserCatalogRole>(usrCatalog);
+							DataSession.Delete<UserCatalogRole>(usrCatalog);
 						}
 					}
 
-					Session.CommitChanges();
+					DataSession.CommitChanges();
 
 					if (myUser.ChildUsers.Count > 0) {
 
@@ -388,20 +389,20 @@ namespace SongSearch.Web.Services {
 		//    return myUser;
 		//}
 		private User GetUser(int userId) {
-			var user = Session.Single<User>(u => u.UserId == userId);
+			var user = DataSession.Single<User>(u => u.UserId == userId);
 			return user;
 		}
 		private User GetUser(string userName) {
-			var user = Session.Single<User>(u => u.UserName == userName);
+			var user = DataSession.Single<User>(u => u.UserName == userName);
 			return user;
 		}
 		private IQueryable<User> GetUsers() {
-			var users = Session.All<User>();
+			var users = DataSession.All<User>();
 			return users;
 		}
 
 		private IQueryable<UserCatalogRole> GetUsersCatalog() {
-			var users = Session.All<UserCatalogRole>();
+			var users = DataSession.All<UserCatalogRole>();
 			return users;
 		}
 
@@ -427,13 +428,13 @@ namespace SongSearch.Web.Services {
 		private void Dispose(bool disposing) {
 			if (!_disposed) {
 				{
-					if (Session != null) {
-						Session.Dispose();
-						Session = null;
+					if (DataSession != null) {
+						DataSession.Dispose();
+						DataSession = null;
 					}
-					if (SessionReadOnly != null) {
-						SessionReadOnly.Dispose();
-						SessionReadOnly = null;
+					if (ReadSession != null) {
+						ReadSession.Dispose();
+						ReadSession = null;
 					}
 				}
 

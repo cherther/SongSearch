@@ -78,15 +78,15 @@ namespace SongSearch.Web {
 		}
 
 		// ----------------------------------------------------------------------------
-		// ASP.NET Session
+		// ASP.NET DataSession
 		// ----------------------------------------------------------------------------
 		// **************************************
 		// Session_Start
 		// **************************************
 		protected void Session_Start() {
-
+			
 			CacheService.InitializeSession();
-			//Session["UserName"] = User.Identity.Name;
+			//DataSession["UserName"] = User.Identity.Name;
 		}
 
 
@@ -107,6 +107,7 @@ namespace SongSearch.Web {
 			}
 
 			CacheService.Initialize();
+			//Logger.Info("App is starting up");
 		}
 
 		// **************************************

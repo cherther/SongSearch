@@ -130,7 +130,7 @@ namespace SongSearch.Web.Services
 
 				var cachePolicy = filterContext.HttpContext.Response.Cache;
                 cachePolicy.SetProxyMaxAge(new TimeSpan(0));
-                cachePolicy.AddValidationCallback(CacheValidateHandler, null /* data */);
+                cachePolicy.AddValidationCallback(CacheValidateHandler, null /* dataSession */);
             }
             else
             {

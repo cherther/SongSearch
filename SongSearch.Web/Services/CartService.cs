@@ -18,14 +18,14 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
-		//private IDataSession Session;
+		//private IDataSession DataSession;
 		private bool _disposed;
 		//private string _activeUserIdentity;
 
 		private const int _daysToExpire = 30;
 		private const int _daysToDelete = 7;
 
-		public CartService(IDataSession session) : base(session) {}
+		public CartService(IDataSession dataSession, IDataSessionReadOnly readSession) : base(dataSession, readSession) { }
 
 		public CartService(string activeUserIdentity) : base(activeUserIdentity) { }
 		// **************************************
@@ -33,7 +33,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public IList<Cart> MyCarts() {
 
-			var carts = Session.All<Cart>().Where(c => c.UserId == ActiveUser.UserId).ToList();
+			var carts = ReadSession.All<Cart>().Where(c => c.UserId == ActiveUser.UserId).ToList();
 
 			return carts;
 		}
@@ -42,9 +42,24 @@ namespace SongSearch.Web.Services {
 		// MyActiveCart
 		// **************************************
 		public Cart MyActiveCart() {
-			return Session.Single<Cart>(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active);
+
+			return DataSession.Single<Cart>(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active);
 		}
 
+		// **************************************
+		// MyActiveCartContents
+		// **************************************
+		public Cart MyActiveCartContents() {
+
+			using (var session = Application.DataSessionReadOnly) {
+				var cart = session.GetObjectQuery<Cart>()
+					.Include("Contents")
+					.Where(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();
+
+				return cart;
+			}
+		}
+		
 		// **************************************
 		// MyCartContents
 		// **************************************
@@ -66,7 +81,7 @@ namespace SongSearch.Web.Services {
 			var query = MyActiveCart();
 
 			if (query != null) {
-				bool isInCart = query.Contents.Any(i => i.ContentId == contentId);
+				bool isInCart = query.Contents != null && query.Contents.Any(i => i.ContentId == contentId);
 				query = null;
 
 				return isInCart;
@@ -80,7 +95,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public void AddToMyActiveCart(int contentId) {
 
-			var content = Session.Single<Content>(c => c.ContentId == contentId);
+			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 			if (content == null) {
 				throw new ArgumentException(Errors.ItemDoesNotExist.Text());
 			}
@@ -100,11 +115,11 @@ namespace SongSearch.Web.Services {
 					CartStatus = (int)CartStatusCodes.Active					
 				};
 
-				Session.Add<Cart>(cart);
+				DataSession.Add<Cart>(cart);
 			}
 
 			cart.Contents.Add(content);
-			Session.CommitChanges();
+			DataSession.CommitChanges();
 		}
 
 		// **************************************
@@ -119,7 +134,7 @@ namespace SongSearch.Web.Services {
 				if (content != null) {
 					cart.Contents.Remove(content);
 
-					Session.CommitChanges();
+					DataSession.CommitChanges();
 				}
 			}
 
@@ -127,14 +142,14 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
-		// PackageMyActiveCart
+		// CompressMyActiveCart
 		// **************************************
-		public void CompressMyActiveCart(string userArchiveName = null) {
+		public void CompressMyActiveCart(string userArchiveName = null, IDictionary<int, string> contentNames = null) {
 			var cart = MyActiveCart();
 
 			if (cart != null && cart.Contents.Count() > 0) {
 				string zipName = cart.ArchiveDownloadName(userArchiveName);
-				string zipPath = CompressCart(cart);
+				string zipPath = CompressCart(cart, contentNames);
 				cart.MarkAsCompressed(zipPath);
 				
 				cart = null;
@@ -145,7 +160,13 @@ namespace SongSearch.Web.Services {
 		// DownloadPackagedCart
 		// **************************************
 		public Cart DownloadCompressedCart(int cartId) {
-			throw new NotImplementedException();
+
+			var cart = DataSession.Single<Cart>(c => c.UserId == ActiveUser.UserId && c.CartId == cartId);
+			if (cart != null) {
+				throw new ArgumentOutOfRangeException();
+			}
+			cart.MarkAsDownloaded();
+			return cart;
 		}
 
 		// **************************************
@@ -153,15 +174,15 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public void DeleteCart(int cartId) {
 
-			var cart = Session.Single<Cart>(c => c.CartId == cartId);
+			var cart = DataSession.Single<Cart>(c => c.CartId == cartId);
 			if (cart != null && cart.UserId != ActiveUser.UserId) {
 				throw new ArgumentOutOfRangeException();
 			}
 			
 			string path = cart.ArchivePath();
 
-			Session.Delete<Cart>(cart);
-			Session.CommitChanges();
+			DataSession.Delete<Cart>(cart);
+			DataSession.CommitChanges();
 
 			cart = null;
 
@@ -175,7 +196,7 @@ namespace SongSearch.Web.Services {
 		// ArchiveExpiredCarts
 		// **************************************
 		public void ArchiveExpiredCarts() {
-			var expiredCarts = Session.All<Cart>()
+			var expiredCarts = DataSession.All<Cart>()
 									.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed &&
 										c.LastUpdatedOn < DateTime.Now.AddDays(-_daysToExpire));
 
@@ -183,7 +204,7 @@ namespace SongSearch.Web.Services {
 				cart.CartStatus = (int)CartStatusCodes.Downloaded;
 				cart.LastUpdatedOn = DateTime.Now;
 			}
-			Session.CommitChanges();
+			DataSession.CommitChanges();
 
 			expiredCarts = null;
 		}
@@ -192,7 +213,7 @@ namespace SongSearch.Web.Services {
 		// DeletedExpiredArchivedCarts
 		// **************************************
 		public void DeletedExpiredArchivedCarts() {
-			var expiredCarts = Session.All<Cart>()
+			var expiredCarts = DataSession.All<Cart>()
 									.Where(c => c.CartStatus == (int)CartStatusCodes.Downloaded &&
 										 c.LastUpdatedOn < DateTime.Now.AddDays(-_daysToDelete));
 
@@ -210,7 +231,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// Zip
 		// **************************************
-		private string CompressCart(Cart cart) {
+		private string CompressCart(Cart cart, IDictionary<int, string> contentNames) {
 
 				string zipPath = cart.ArchivePath(); 
 				string signature = ActiveUser.IsAnyAdmin() ? ActiveUser.Signature : ActiveUser.ParentSignature();
@@ -226,7 +247,9 @@ namespace SongSearch.Web.Services {
 
 							if (asset.Exists) {
 
-								var downloadName = content.DownloadableName() ?? asset.Name;
+								var nameUserOverride = contentNames != null && contentNames.Any(x => x.Key == content.ContentId) ? 
+									contentNames.Where(x => x.Key == content.ContentId).Single().Value : null;
+								var downloadName = nameUserOverride ?? (content.DownloadableName() ?? asset.Name);
 								
 								zip.AddEntry(String.Format("{0}\\{1}", cart.ArchiveName.Replace(".zip", ""), downloadName, asset.Extension),
 											File.ReadAllBytes(asset.FullName));
@@ -254,9 +277,9 @@ namespace SongSearch.Web.Services {
 		private void Dispose(bool disposing) {
 			if (!_disposed) {
 				{
-					if (Session != null) {
-						Session.Dispose();
-						Session = null;
+					if (DataSession != null) {
+						DataSession.Dispose();
+						DataSession = null;
 					}					
 				}
 

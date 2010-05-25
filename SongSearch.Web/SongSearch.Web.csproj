@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Infrastructure\Storage\EF\DataSessionReadOnlyEF.cs" />
     <Compile Include="Infrastructure\Storage\EF\SongSearchDataSession.cs" />
     <Compile Include="Infrastructure\Storage\File.cs" />
+    <Compile Include="Models\Content.cs" />
     <Compile Include="Models\SearchField.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -161,6 +163,7 @@
     <Compile Include="Services\Interfaces\ICartService.cs" />
     <Compile Include="Services\Interfaces\IContentAdminService.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
+    <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\TagCloudViewModel.cs" />
     <Compile Include="ViewModels\InviteViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
@@ -1680,6 +1683,7 @@
     <Content Include="Views\Account\ResetPasswordSuccess.aspx" />
     <Content Include="Views\Account\UpdateProfile.aspx" />
     <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
+    <Content Include="Views\Cart\Index.aspx" />
     <Content Include="Views\Search\ctrlContentDetail.ascx" />
     <Content Include="Views\Search\ctrlSearchResults.ascx" />
     <Content Include="Views\Search\ctrlSearchOptions.ascx" />
@@ -1691,6 +1695,8 @@
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
     <Content Include="Views\User\Invite.aspx" />
+    <Content Include="Views\User\InviteComplete.aspx" />
+    <Content Include="Views\User\InviteMessage.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1725,6 +1731,9 @@
       <LastGenOutput>SongSearch.Designer.cs</LastGenOutput>
       <CustomToolNamespace>SongSearch.Web.Data</CustomToolNamespace>
     </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NLog.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

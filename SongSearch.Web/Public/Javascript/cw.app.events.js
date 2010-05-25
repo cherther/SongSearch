@@ -76,7 +76,37 @@
         showContentPanel(link);
     }
     );
+    //-----------------------------------------------------------------------------------
+    // cw-cart-add-link
+    //-----------------------------------------------------------------------------------
+    $('.cw-cart-add-link').live('click',
+        function (evt) {
 
+            evt.preventDefault();
+
+            var link = $(this);
+            var id = link[0].rel;
+            addToCart(id);
+            
+			link.text('In Cart');
+			link.attr('title', 'In Cart');
+			link.attr('href', '/Cart');
+            link.removeClass('cw-cart-add-link');
+        }
+    );
+    //-----------------------------------------------------------------------------------
+    // cw-cart-remove-link
+    //-----------------------------------------------------------------------------------
+    $('.cw-cart-remove-link').live('click',
+        function (evt) {
+
+            evt.preventDefault();
+
+            var link = $(this);
+            var id = link[0].rel;
+            removeFromCart(id);
+        }
+    );
 
 }
 );

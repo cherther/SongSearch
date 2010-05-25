@@ -16,7 +16,14 @@
     <hr />
     <div id="cw-content-detail-menu">
     <%if (content.HasMediaFullVersion) { %>
-    <a href="#">Play</a>&nbsp;|&nbsp;<a href="#">Preview</a>&nbsp;|&nbsp;<a href="#">Download</a>&nbsp;|&nbsp;<a href="#">Add To Cart</a>&nbsp;|&nbsp;
+    <a href="#">Play</a>&nbsp;|&nbsp;
+    <a href="#">Preview</a>&nbsp;|&nbsp;
+    <a href="#">Download</a>&nbsp;|&nbsp;
+    <%if(!content.IsInMyActiveCart){ %>
+    <a class="cw-cart-add-link" rel="<%: content.ContentId %>" href="#">Add To Cart</a>&nbsp;|&nbsp;
+    <%} else { %>
+    <%: Html.ActionLink("In Cart", "Index", "Cart", null, null) %>&nbsp;|&nbsp;
+    <%} %>
     <%} %>
     <a href="#">Print</a>
     <%if (Model.UserCanEdit) { %>

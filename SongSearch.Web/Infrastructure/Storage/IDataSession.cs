@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Data.Objects;
 
 namespace SongSearch.Web
 {
@@ -12,8 +13,10 @@ namespace SongSearch.Web
 
 		void CommitChanges();
 
-		IQueryable<T> All<T>(string loadWith = null) where T : class, new();
+		IQueryable<T> All<T>() where T : class, new();
+//		IQueryable<T> All<T>(string loadWith = null) where T : class, new();
 		IQueryable<T> All<T>(string commandText, params object[] parameters) where T : class, new();
+		ObjectQuery<T> GetObjectQuery<T>() where T : class, new();
 
 		T Single<T>(Expression<Func<T, bool>> expression, string loadWith = null) where T : class, new();
 

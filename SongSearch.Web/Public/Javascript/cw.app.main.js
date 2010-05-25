@@ -116,9 +116,8 @@ function showContentPanelCallback(data, trigger) {
 //style="display: none" 
     parentRow.addClass('cw-row-selected');
     parentRow.after(detailPanelRow);
-    //-----------------------------------------------------------------------------------
+    
     // cw-content-detail-tabs: calls jquery ui tabs widgets
-    //-----------------------------------------------------------------------------------
     $('#cw-content-detail-tabs').tabs();
 
 //    detailPanelRow.slideDown();
@@ -137,4 +136,46 @@ function closeContentPanel() {
         $('.cw-row-selected').removeClass('cw-row-selected');
         isContentDetailShowing = false;
     }
+}
+
+//-----------------------------------------------------------------------------------
+// Song Cart
+//-----------------------------------------------------------------------------------
+function updateCartCount() {
+
+    var menuCartLink = $('#menu-cart a')
+    var url = menuCartLink.attr('href');
+    url = url + '/CartCount?' + Rnd();
+    //alert(url);
+
+    $.getJSON(
+		    url,
+		    '',
+		    function (result) {
+			    //var result = "count is \"<strong>" + json + "\"";
+			    //alert("Result: " + result);
+			    var count;
+			    result == null ? count = 0 : count = result;
+			    menuCartLink.text('Song Cart (' + count + ')');
+		    }
+	    );
+}
+
+function addToCart(contentId) {
+    //alert(contentId);
+    $.post("/Cart/Add", { id: contentId },
+		  function (data) {
+		      updateCartCount();
+		  }, "json");
+
+}
+
+
+function removeFromCart(contentId) {
+    //alert(contentId);
+    $.post("/Cart/Remove", { id: contentId },
+		function (data) {
+		    updateCartCount();
+		}, "json");
+
 }

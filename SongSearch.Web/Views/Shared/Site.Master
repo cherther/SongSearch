@@ -82,7 +82,7 @@
 	if (Page.User.Identity.IsAuthenticated)
 	{
 %>
-<script type="text/javascript">    //$(document).ready(function () { //updateCartCount(); });</script>
+<script type="text/javascript"> $(document).ready(function () { updateCartCount(); });</script>
 <%} %>
 
 <asp:ContentPlaceHolder ID="Javascripts" runat="server" />

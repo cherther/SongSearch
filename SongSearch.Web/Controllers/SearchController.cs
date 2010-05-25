@@ -66,11 +66,12 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// Detail/5
 		// **************************************
-		[OutputCache(Duration = 60, VaryByParam = "id")]
+		//[OutputCache(Duration = 60, VaryByParam = "id")]
 		public ActionResult Detail(int id) {
 
 			//var user = AccountData.User(User.Identity.Name);
 			var content = SearchService.GetContentDetails(id, _currentUser);
+			
 			var model = GetContentViewModel();
 			model.IsEdit = false;
 			model.Content = content;

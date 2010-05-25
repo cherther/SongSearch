@@ -7,8 +7,8 @@ using SongSearch.Web.Data;
 
 namespace SongSearch.Web.Services {
 	public class BaseService {
-		protected IDataSession Session {get;set;}
-		protected IDataSessionReadOnly SessionReadOnly { get; set; }
+		protected IDataSession DataSession {get;set;}
+		protected IDataSessionReadOnly ReadSession { get; set; }
 
 		private string _activeUserIdentity;
 
@@ -27,22 +27,22 @@ namespace SongSearch.Web.Services {
 		public User ActiveUser { get; set; }
 
 		public BaseService(IDataSession session) {
-			Session = session;
+			DataSession = session;
 		}
 		
-		public BaseService(IDataSession session, IDataSessionReadOnly sessionReadOnly) {
-			Session = session;
-			SessionReadOnly = sessionReadOnly;
+		public BaseService(IDataSession dataSession, IDataSessionReadOnly readSession) {
+			DataSession = dataSession;
+			ReadSession = readSession;
 		}
 
 		//for testing
 		public BaseService(string activeUserIdentity) {
-			if (Session == null) {
-				Session = new SongSearchDataSession();
+			if (DataSession == null) {
+				DataSession = new SongSearchDataSession();
 			}
 
-			if (SessionReadOnly == null) {
-				SessionReadOnly = new SongSearchDataSessionReadOnly();
+			if (ReadSession == null) {
+				ReadSession = new SongSearchDataSessionReadOnly();
 			}
 
 			_activeUserIdentity = activeUserIdentity;

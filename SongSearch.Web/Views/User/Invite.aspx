@@ -27,6 +27,7 @@
 	   {
 		   //string baseUrl = Html.ActionLink("register", "Register").ToString();
 		   %>
+       <%=Html.AntiForgeryToken() %>
 	 <fieldset id="invite">
 		<legend>
 		   Invite

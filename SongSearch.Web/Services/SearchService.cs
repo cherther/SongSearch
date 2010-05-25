@@ -130,6 +130,13 @@ namespace SongSearch.Web.Services {
 						.Include("ContentRights.Territories")
 						.Where(c => c.ContentId == contentId).SingleOrDefault();
 
+					//var myActiveCart = dataSession.GetObjectQuery<Cart>()
+					//    .Include("Contents")
+					//    .Where(x => x.UserId == user.UserId && x.CartStatus == (int)CartStatusCodes.Active)
+					//    .SingleOrDefault();
+
+					content.IsInMyActiveCart = CacheService.IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
+					
 					return content;
 					// check if user has access to catalog
 				}
@@ -151,7 +158,7 @@ namespace SongSearch.Web.Services {
 			using (var session = Application.DataSessionReadOnly){//Application.Container.Get<IDataSession>()) {
 
 				// Get all Search Properties
-				var props = CacheService.SearchProperties((Roles)user.RoleId);//.session.All<SearchProperty>().ToList();
+				var props = CacheService.SearchProperties((Roles)user.RoleId);//.dataSession.All<SearchProperty>().ToList();
 				var contentQuery = session.All<Content>();
 				contentQuery = contentQuery.BuildSearchDynamicLinqSql(searchFields, props);//Where("Title.Contains(@0)", "love");
 				//var preCountCommand = sbPre.Append(sbCommand.ToString()).ToString();

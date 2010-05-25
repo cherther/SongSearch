@@ -5,6 +5,8 @@ using System.Web;
 using SongSearch.Web.Data;
 using System.Web.Caching;
 using System.Web.SessionState;
+using Ninject;
+using Ninject.Web.Mvc;
 
 namespace SongSearch.Web.Services {
 	public static class CacheService {
@@ -26,6 +28,7 @@ namespace SongSearch.Web.Services {
 
 			// set up the caching matrices with keys and caching actions
 			_sessionMatrix.Add(CacheKeys.User, SessionUpdateUser);
+			_sessionMatrix.Add(CacheKeys.Carts, SessionUpdateUserActiveCart);
 
 			_cacheMatrix.Add(CacheKeys.Catalogs, CacheUpdateCatalogs);
 			_cacheMatrix.Add(CacheKeys.SearchProperties, CacheUpdateSearchProperties);
@@ -46,6 +49,7 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		public enum CacheKeys {
 			User,
+			Carts,
 			Catalogs,
 			SearchProperties,
 			Tags,
@@ -123,7 +127,7 @@ namespace SongSearch.Web.Services {
 		}
 
 		// ----------------------------------------------------------------------------
-		// Session
+		// DataSession
 		// ----------------------------------------------------------------------------
 		public static User User(string userName) {
 			if (_hasSession) {
@@ -137,6 +141,39 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
+		public static Cart MyActiveCart(string userName) {
+			if (_hasSession) {
+				if (Session(CacheKeys.Carts) == null) { SessionUpdateUserActiveCart(CacheKeys.Carts, userName); }
+				var value = Session(CacheKeys.Carts) as Cart;
+				return value;
+
+			} else {
+				return GetDataUserActiveCart(userName);
+			}
+		}
+
+		public static bool IsInMyActiveCart(int contentId, string userName) {
+			Cart activeCart;
+
+			if (_hasSession) {
+				if (Session(CacheKeys.Carts) == null) { SessionUpdateUserActiveCart(CacheKeys.Carts, userName); }
+				activeCart = Session(CacheKeys.Carts) as Cart;
+
+			} else {
+				activeCart = GetDataUserActiveCart(userName);
+			}
+
+			var isInCart = activeCart.Contents != null && activeCart.Contents.Any(c => c.ContentId == contentId);
+			return isInCart;
+
+		}
+
+
+		public static void RefreshMyActiveCart(string userName) {
+			if (_hasSession) {
+				SessionUpdateUserActiveCart(CacheKeys.Carts, userName); 
+			}
+		}
 		// ----------------------------------------------------------------------------
 		//  App
 		// ----------------------------------------------------------------------------
@@ -229,7 +266,7 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		
 		// **************************************
-		// Session
+		// DataSession
 		// **************************************
 		private static object Session(CacheKeys key) {
 			return Session(key.ToString());
@@ -268,7 +305,11 @@ namespace SongSearch.Web.Services {
 			SessionUpdate(obj, key);				
 			
 		}
+		private static void SessionUpdateUserActiveCart(CacheKeys key, params object[] list) {
+			var obj = GetDataUserActiveCart(list[0] as string);
+			SessionUpdate(obj, key);
 
+		}
 		// **************************************
 		// CacheUpdate
 		// **************************************
@@ -330,6 +371,21 @@ namespace SongSearch.Web.Services {
 			var obj = AccountData.UserComplete(userName);
 			return obj;
 		}
+
+		private static Cart GetDataUserActiveCart(string userName) {
+			using (var cartService = Application.Container.Get<CartService>()) {
+				cartService.ActiveUserName = userName;
+				var obj = cartService.MyActiveCartContents();
+				return obj;
+			}
+		}
+		//private static bool GetDataUserIsInMyActiveCart(int contentId, string userName){
+		//    using (var cartService = Application.Container.Get<CartService>()) {
+		//        cartService.ActiveUserName = userName;
+		//        var obj = cartService.MyActiveCartContents();
+		//        return obj;
+		//    }
+		//}
 
 		private static IList<Catalog> GetDataCatalogs() {
 
