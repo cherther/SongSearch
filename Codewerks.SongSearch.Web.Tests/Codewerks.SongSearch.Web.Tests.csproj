@@ -33,7 +33,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HibernatingRhinos.Profiler.Appender, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0774796e73ebf640, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Ext Libraries\EntityFramework.Profiler-Build-691\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Ninject, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Ext Libraries\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Ext Libraries\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\Ext Libraries\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -58,7 +73,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />
     <Compile Include="Services\AccountServiceTests.cs" />
+    <Compile Include="Services\CartServiceTests.cs" />
     <Compile Include="Services\SearchServiceTests.cs" />
+    <Compile Include="Services\TestBase.cs" />
     <Compile Include="Services\UserManagementTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -106,7 +106,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 			//Arrange
 			int numberOfTotalUsers;
 
-			using (ISession rep = new EFSession()) {
+			using (IDataSession rep = new SongSearchDataSession()) {
 				numberOfTotalUsers = rep.All<User>().Count();
 			}
 			//Act
@@ -127,7 +127,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 			var testActiveUserIdentity = "seller@yahoo.com";
 			var testActiveUserId = 6;
 			int numberOfTotalUsers;
-			using (ISession rep = new EFSession()) {
+			using (IDataSession rep = new SongSearchDataSession()) {
 				numberOfTotalUsers = rep.All<User>().Count();
 			}
 			using (IUserManagementService svc = new UserManagementService(testActiveUserIdentity)) {

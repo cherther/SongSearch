@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="2aba4f85-9994-420c-b167-03e8bab0fb8d" name="claus@AUGUSTSRV1 2010-05-25 11:16:43" runUser="AUGUSTSRV1\claus" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="94847aea-1d0d-4133-a3f0-a8b7acb399ce">
+    <Deployment runDeploymentRoot="claus_AUGUSTSRV1 2010-05-25 11_16_43">
+      <DeploymentItem filename="D:\DevProjects\SongSearch\SongSearch.Web\bin\SongSearch.Web.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\EntityFramework.Profiler-Build-691\HibernatingRhinos.Profiler.Appender.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\Ninject.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\Ninject.Web.Mvc.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\nunit.framework.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-05-25T11:16:43.2864759+02:00" queuing="2010-05-25T11:16:44.4895447+02:00" start="2010-05-25T11:16:44.6045513+02:00" finish="2010-05-25T11:17:04.2866770+02:00" />
+  <ResultSummary outcome="Error">
+    <Counters total="4" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="3" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="AUGUSTSRV1" outcome="Warning" timestamp="2010-05-25T11:16:43.4934877+02:00">
+        <Text>Warning: Test Run deployment issue: The assembly or module 'System.Web.Mvc' directly or indirectly referenced by the test container 'd:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll' was not found.</Text>
+      </RunInfo>
+      <RunInfo computerName="AUGUSTSRV1" outcome="Error" timestamp="2010-05-25T11:17:04.2856770+02:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="User_Can_Remove_Item_From_Active_Cart" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="5da30f3b-dc19-f64b-a78c-dacf53b802be">
+      <Execution id="f91308e9-61d1-44d6-8d44-e9875e887132" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.CartServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="User_Can_Remove_Item_From_Active_Cart" />
+    </UnitTest>
+    <UnitTest name="User_Can_Add_Item_To_Active_Cart_Twice_Without_Error" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="3bcf9a3e-214c-f3d1-6698-784c7efb391f">
+      <Execution id="799056b5-7060-498d-9a9a-71fa3ef0bf24" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.CartServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="User_Can_Add_Item_To_Active_Cart_Twice_Without_Error" />
+    </UnitTest>
+    <UnitTest name="User_Can_Add_Item_To_Active_Cart" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="14bc09a9-8636-725f-d670-619999130d95">
+      <Execution id="ec321f69-e6c4-4a98-a104-79d136b4547c" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.CartServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="User_Can_Add_Item_To_Active_Cart" />
+    </UnitTest>
+    <UnitTest name="User_Can_Remove_Item_From_Active_Cart_Twice_Without_Error" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="916cfae5-79be-2be1-e5a7-f471189a992b">
+      <Execution id="b669125f-e05d-4d51-a32c-eddaf00326b2" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.CartServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="User_Can_Remove_Item_From_Active_Cart_Twice_Without_Error" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="14bc09a9-8636-725f-d670-619999130d95" executionId="ec321f69-e6c4-4a98-a104-79d136b4547c" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="3bcf9a3e-214c-f3d1-6698-784c7efb391f" executionId="799056b5-7060-498d-9a9a-71fa3ef0bf24" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="5da30f3b-dc19-f64b-a78c-dacf53b802be" executionId="f91308e9-61d1-44d6-8d44-e9875e887132" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="916cfae5-79be-2be1-e5a7-f471189a992b" executionId="b669125f-e05d-4d51-a32c-eddaf00326b2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="ec321f69-e6c4-4a98-a104-79d136b4547c" testId="14bc09a9-8636-725f-d670-619999130d95" testName="User_Can_Add_Item_To_Active_Cart" computerName="AUGUSTSRV1" duration="00:00:19.5781198" startTime="2010-05-25T11:16:44.7085572+02:00" endTime="2010-05-25T11:17:04.2866770+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ec321f69-e6c4-4a98-a104-79d136b4547c">
+    </UnitTestResult>
+    <UnitTestResult executionId="799056b5-7060-498d-9a9a-71fa3ef0bf24" testId="3bcf9a3e-214c-f3d1-6698-784c7efb391f" testName="User_Can_Add_Item_To_Active_Cart_Twice_Without_Error" computerName="AUGUSTSRV1" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="799056b5-7060-498d-9a9a-71fa3ef0bf24">
+    </UnitTestResult>
+    <UnitTestResult executionId="f91308e9-61d1-44d6-8d44-e9875e887132" testId="5da30f3b-dc19-f64b-a78c-dacf53b802be" testName="User_Can_Remove_Item_From_Active_Cart" computerName="AUGUSTSRV1" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f91308e9-61d1-44d6-8d44-e9875e887132">
+    </UnitTestResult>
+    <UnitTestResult executionId="b669125f-e05d-4d51-a32c-eddaf00326b2" testId="916cfae5-79be-2be1-e5a7-f471189a992b" testName="User_Can_Remove_Item_From_Active_Cart_Twice_Without_Error" computerName="AUGUSTSRV1" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="b669125f-e05d-4d51-a32c-eddaf00326b2">
+    </UnitTestResult>
+  </Results>
+</TestRun>

@@ -8,10 +8,22 @@ using SongSearch.Web;
 using SongSearch.Web.Controllers;
 using SongSearch.Web.Services;
 using SongSearch.Web.Data;
+using Ninject;
+using Ninject.Modules;
+using Ninject.Web.Mvc;
 
 namespace Codewerks.SongSearch.Web.Tests.Services {
 	[TestClass]
-	public class AccountServiceTests {
+	public class AccountServiceTests : TestBase {
+
+		public AccountServiceTests() {
+
+			_acc = Container.Get<AccountService>();
+
+			_usr = Container.Get<UserManagementService>();
+			_usr.ActiveUserName = _admin;
+			
+		}
 
 		/*
 		 void RegisterUser(User user);
@@ -178,8 +190,6 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 		[ClassInitialize()]
 		public static void Initialize(TestContext testContext) {
 
-			_acc = new AccountService();
-			_usr = new UserManagementService(_admin);
 			
 			ResetInvitation();
 		}
@@ -190,18 +200,18 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 			DeleteUser(_dummyId);
 			
 
-			_acc.Dispose();
-			_usr.Dispose();
+			//_acc.Dispose();
+			//_usr.Dispose();
 		}
 
 		private static void DeleteUser(int id) {
-			_usr.DeleteUser(id, false);
+			//_usr.DeleteUser(id, false);
 
 		}
 
 		private static void ResetInvitation() {
 
-			using (ISession session = new EFSession()) {
+			using (var session = new SongSearchDataSession()) {
 
 				var inv = session.Single<Invitation>(x => x.InvitationId == _invitationCode);
 				if (inv != null)

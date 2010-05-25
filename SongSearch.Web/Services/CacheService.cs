@@ -32,11 +32,11 @@ namespace SongSearch.Web.Services {
 			_cacheMatrix.Add(CacheKeys.Tags, CacheUpdateTags);
 			_cacheMatrix.Add(CacheKeys.TopTags, CacheUpdateTopTags);
 			_cacheMatrix.Add(CacheKeys.Content, CacheUpdateContentFields);
-			_cacheMatrix.Add(CacheKeys.Rights, CacheUpdateContentFields);
+			_cacheMatrix.Add(CacheKeys.Rights, CacheUpdateContentRightsFields);
 			//Initialize();
 		}
 
-		public static string[] CachedContentFields = new string[] { "Title", "Artist", "RecordLabel", "Writers" };
+		public static string[] CachedContentFields = new string[] { "Artist", "RecordLabel", "Writers" };
 		public static string[] CachedContentRightsFields = new string[] { "RightsHolderName" };
 
 		public static DateTime LastUpdated { get; private set; }
@@ -332,6 +332,7 @@ namespace SongSearch.Web.Services {
 		}
 
 		private static IList<Catalog> GetDataCatalogs() {
+
 			var obj = SearchService.GetLookupList<Catalog>();
 			return obj;
 		}

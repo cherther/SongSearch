@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<license id="ddc7cd17-c032-40aa-a0b2-205152684987" expiration="2010-06-25T08:13:52.9730000" type="Trial" prof="EFProf">
+  <name>Claus</name>
+  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+    <SignedInfo>
+      <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+      <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+      <Reference URI="">
+        <Transforms>
+          <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+        </Transforms>
+        <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <DigestValue>am0RVjDrsVX/5/nDAej0O2h9Bgo=</DigestValue>
+      </Reference>
+    </SignedInfo>
+    <SignatureValue>h3rpLmFTYIP4OVRLH6LRH1wwxezmOcbADX5R8B6bESnpET65APN0xmpGNVAEA2S26dCeUFRBJc3GlCd7eB40cD9jlIk+uUUknW0raRfX5wObpklR6YpZcZUYD2pR75ApCxwGzEaSSGsKFl3KhQOz2mkbz9VApQ/k/IDQfpxifBM=</SignatureValue>
+  </Signature>
+</license>

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="7129201a-6abe-4f6f-bb6d-1f009077c391" name="claus@AUGUSTSRV1 2010-05-25 12:14:35" runUser="AUGUSTSRV1\claus" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="a3245322-424d-4717-af2f-6b1eaf8dc676">
+    <Deployment runDeploymentRoot="claus_AUGUSTSRV1 2010-05-25 12_14_35">
+      <DeploymentItem filename="D:\DevProjects\SongSearch\SongSearch.Web\bin\SongSearch.Web.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\EntityFramework.Profiler-Build-691\HibernatingRhinos.Profiler.Appender.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\Ninject.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\Ninject.Web.Mvc.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\nunit.framework.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-05-25T12:14:35.1720564+02:00" queuing="2010-05-25T12:14:36.5031325+02:00" start="2010-05-25T12:14:36.6191392+02:00" finish="2010-05-25T12:14:42.2154592+02:00" />
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" error="0" failed="1" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="AUGUSTSRV1" outcome="Warning" timestamp="2010-05-25T12:14:35.2870630+02:00">
+        <Text>Warning: Test Run deployment issue: The assembly or module 'System.Web.Mvc' directly or indirectly referenced by the test container 'd:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll' was not found.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="Can_Register_User" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="383df81d-0cf7-f78f-00b8-047cdd4e0106">
+      <Execution id="3497ae99-e3f1-4841-abfe-0f83c491fea2" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="Can_Register_User" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="383df81d-0cf7-f78f-00b8-047cdd4e0106" executionId="3497ae99-e3f1-4841-abfe-0f83c491fea2" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="3497ae99-e3f1-4841-abfe-0f83c491fea2" testId="383df81d-0cf7-f78f-00b8-047cdd4e0106" testName="Can_Register_User" computerName="AUGUSTSRV1" duration="00:00:00.0798345" startTime="2010-05-25T12:14:36.7251452+02:00" endTime="2010-05-25T12:14:38.6012525+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3497ae99-e3f1-4841-abfe-0f83c491fea2">
+      <Output>
+        <Exception>Exception has been thrown by the target of an invocation.</Exception>
+        <ErrorInfo>
+          <Message>Unable to create instance of class Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests. Error: System.ArgumentNullException: Cannot be null
+Parameter name: root.</Message>
+          <StackTrace>    at Ninject.Infrastructure.Ensure.ArgumentNotNull(Object argument, String name)
+   at Ninject.ResolutionExtensions.GetResolutionIterator(IResolutionRoot root, Type service, Func`2 constraint, IEnumerable`1 parameters, Boolean isOptional)
+   at Ninject.ResolutionExtensions.Get[T](IResolutionRoot root, IParameter[] parameters)
+   at SongSearch.Web.Application.get_DataSessionReadOnly() in D:\DevProjects\SongSearch\SongSearch.Web\Global.asax.cs:line 59
+   at SongSearch.Web.Services.AccountData.UserComplete(String userName) in D:\DevProjects\SongSearch\SongSearch.Web\Services\AccountData.cs:line 36
+   at SongSearch.Web.Services.CacheService.GetDataUser(String userName) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CacheService.cs:line 330
+   at SongSearch.Web.Services.CacheService.User(String userName) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CacheService.cs:line 136
+   at SongSearch.Web.Services.BaseService..ctor(String activeUserIdentity) in D:\DevProjects\SongSearch\SongSearch.Web\Services\BaseService.cs:line 49
+   at SongSearch.Web.Services.AccountService..ctor(String activeUserIdentity) in D:\DevProjects\SongSearch\SongSearch.Web\Services\AccountService.cs:line 25
+   at Codewerks.SongSearch.Web.Tests.Services.AccountServiceTests..ctor() in D:\DevProjects\SongSearch\Codewerks.SongSearch.Web.Tests\Services\AccountServiceTests.cs:line 21
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+</TestRun>

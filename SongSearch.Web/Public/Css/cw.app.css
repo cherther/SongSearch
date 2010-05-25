@@ -8,7 +8,7 @@ body
 {
     font-size: 81.25%; 
     line-height: 1.2; 
-    font-family: Tahoma, Verdana, Helvetica, sans-serif; 
+    font-family: Verdana, Helvetica, Arial, sans-serif; 
 }	
 a, a:visited { /*text-decoration: none;*/ color: #0044CC; }
 h1 { font-size: 2em; font-variant:small-caps;}

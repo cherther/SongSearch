@@ -10,15 +10,15 @@ namespace SongSearch.Web {
 	[HandleError]
 	public class AccountController : Controller {
 
-		IFormsAuthenticationService _fs;
-		IUserManagementService _ums;
-		IAccountService _accs;
+		IFormsAuthenticationService _authService;
+		IUserManagementService _usrMgmtService;
+		IAccountService _acctService;
 
 		protected override void Initialize(RequestContext requestContext) {
-			if (_fs == null) { _fs = new FormsAuthenticationService(); }
-			if (_ums == null) { _ums = new UserManagementService(requestContext.HttpContext.User.Identity.Name); }
-			if (_accs == null) { _accs = new AccountService(); }
-
+			
+			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
+				_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+			}
 			base.Initialize(requestContext);
 
 		}
@@ -29,7 +29,15 @@ namespace SongSearch.Web {
 			base.OnActionExecuting(filterContext);
 		}
 
-
+		public AccountController(
+            IFormsAuthenticationService authService,
+			IUserManagementService usrMgmtService,
+			IAccountService acctService
+			) {
+            _authService = authService;
+			_usrMgmtService = usrMgmtService;
+			_acctService = acctService;
+        }
 		// **************************************
 		// URL: /Account/LogIn
 		// **************************************
@@ -44,15 +52,16 @@ namespace SongSearch.Web {
 		public ActionResult LogIn(LogOnModel model, string returnUrl) {
 
 			if (ModelState.IsValid) {
-				if (_accs.UserIsValid(model.Email, model.Password))
+				if (_acctService.UserIsValid(model.Email, model.Password))
 				//if (_ms.UserIsValid(model.Email, model.Password))
 		{
 					var friendly = CacheService.User(model.Email).FullName();
 
 					SetFriendlyNameCookie(friendly);
 
-					_fs.SignIn(model.Email, model.RememberMe);
 
+					_authService.SignIn(model.Email, model.RememberMe);
+					_usrMgmtService.ActiveUserName = model.Email;
 
 					if (!String.IsNullOrEmpty(returnUrl)) {
 						return Redirect(returnUrl);
@@ -89,7 +98,7 @@ namespace SongSearch.Web {
 		[RequireAuthorization]
 		public ActionResult LogOut() {
 
-			_fs.SignOut();
+			_authService.SignOut();
 
 			Session.Abandon();
 
@@ -106,7 +115,7 @@ namespace SongSearch.Web {
 			ViewData["email"] = em;
 
 
-			_fs.SignOut();
+			_authService.SignOut();
 
 			Session.Abandon();
 
@@ -128,12 +137,12 @@ namespace SongSearch.Web {
 			//model.UserName = model.Email;
 
 			if (ModelState.IsValid) {
-				if (_accs.UserExists(model.Email)) {
+				if (_acctService.UserExists(model.Email)) {
 					ModelState.AddModelError("Email", Errors.UserAlreadyRegistered.Text());
 				} else {
 
 					// Check invitation code
-					var inv = _ums.GetInvitation(model.InviteId, model.Email);
+					var inv = _usrMgmtService.GetInvitation(model.InviteId, model.Email);
 
 					if (inv != null) {
 						switch (inv.InvitationStatus) {
@@ -155,9 +164,9 @@ namespace SongSearch.Web {
 									};
 
 									try {
-										user = _accs.RegisterUser(user, inv.InvitationId);
+										user = _acctService.RegisterUser(user, inv.InvitationId);
 
-										_fs.SignIn(user.UserName, false /* createPersistentCookie */);
+										_authService.SignIn(user.UserName, false /* createPersistentCookie */);
 
 										return RedirectToAction("Index", "Home");
 									}
@@ -212,8 +221,8 @@ namespace SongSearch.Web {
 			if (ModelState.IsValid) {
 				var userName = User.Identity.Name;
 				var user = new User() { UserName = userName, Password = model.OldPassword };
-				if (_accs.UpdateProfile(user, model.NewPassword)) {
-					//_accs.UpdateCurrentUserInSession();
+				if (_acctService.UpdateProfile(user, model.NewPassword)) {
+					//_acctService.UpdateCurrentUserInSession();
 					return RedirectToAction("ChangePasswordSuccess");
 				} else {
 					ModelState.AddModelError("", Errors.PasswordChangeFailed.Text());
@@ -283,7 +292,7 @@ namespace SongSearch.Web {
 					Signature = model.Signature
 				};
 				//update the user's profile in the database
-				if (_accs.UpdateProfile(user, null)) {
+				if (_acctService.UpdateProfile(user, null)) {
 
 					// Update the user data cached in session
 					CacheService.InitializeSession(userName, true);
@@ -400,7 +409,7 @@ namespace SongSearch.Web {
 		public ActionResult ResetPasswordRespond(ResetPasswordModel model) {
 			if (
 				ModelState.IsValid &&
-				_accs.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
+				_acctService.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
 				) {
 
 				return RedirectToAction("LogIn", "Account");

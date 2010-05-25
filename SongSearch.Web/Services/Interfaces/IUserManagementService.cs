@@ -10,7 +10,7 @@ namespace SongSearch.Web.Services {
 	// IUserManagementService
 	// **************************************
 	public interface IUserManagementService : IDisposable {
-
+		string ActiveUserName { get; set; }
 		User ActiveUser { get; set; }
 
 		IList<User> GetMyUserHierarchy();

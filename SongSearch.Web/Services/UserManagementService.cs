@@ -6,25 +6,17 @@ using SongSearch.Web.Data;
 
 namespace SongSearch.Web.Services {
 
-	public class UserManagementService : IUserManagementService {
+	public class UserManagementService : BaseService, IUserManagementService {
 
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
-		private ISession _session;
 		private bool _disposed;
-		private string _activeUserIdentity;
+		
+				
+		public UserManagementService(IDataSession session) : base(session) {}
+		public UserManagementService(string activeUserIdentity) : base(activeUserIdentity) { }
 
-		public User ActiveUser { get; set; }
-
-		public UserManagementService(string activeUserIdentity) {
-			if (_session == null) {
-				_session = new EFSession();
-			}
-
-			_activeUserIdentity = activeUserIdentity;
-			ActiveUser = CacheService.User(activeUserIdentity);
-		}
 
 		// ----------------------------------------------------------------------------
 		// (Public)
@@ -75,7 +67,7 @@ namespace SongSearch.Web.Services {
 
 
 		public IList<Invitation> GetMyInvites(InvitationStatusCodes status) {
-			return _session.All<Invitation>()
+			return Session.All<Invitation>()
 				.Where(i => i.InvitedByUserId == ActiveUser.UserId
 							&& i.InvitationStatus == (int)status)
 				.ToList();				
@@ -94,7 +86,7 @@ namespace SongSearch.Web.Services {
 
 			//TODO: is this not handled via self-join?
 			user.ParentUser = user.ParentUserId.HasValue ?
-				_session.Single<User>(u => u.UserId == user.ParentUserId) :
+				Session.Single<User>(u => u.UserId == user.ParentUserId) :
 				null;
 
 			return user;
@@ -118,14 +110,14 @@ namespace SongSearch.Web.Services {
 					}
 
 					if (user.Invitation != null) {
-						_session.Delete<Invitation>(user.Invitation);
+						Session.Delete<Invitation>(user.Invitation);
 					}
 					//handled via cascade in db
 					//user.Carts.ToList().ForEach(x => user.Carts.Remove(x));
 					//user.UserCatalogRoles.ToList().ForEach(x => user.UserCatalogRoles.Remove(x));
 
-					_session.Delete<User>(user);
-					_session.CommitChanges();
+					Session.Delete<User>(user);
+					Session.CommitChanges();
 				}
 			}
 		}
@@ -147,18 +139,18 @@ namespace SongSearch.Web.Services {
 			user.ParentUserId = ActiveUser.UserId;
 
 			// take over the child users
-			var childUsers = _session.All<User>().Where(u => u.ParentUserId == user.UserId);
+			var childUsers = Session.All<User>().Where(u => u.ParentUserId == user.UserId);
 			foreach (var child in childUsers) {
 				child.ParentUserId = ActiveUser.UserId;
 			}
 
 			//Re-assign invites from this myUser to active myUser
-			var invites = _session.All<Invitation>().Where(i => i.InvitedByUserId == user.UserId);
+			var invites = Session.All<Invitation>().Where(i => i.InvitedByUserId == user.UserId);
 			foreach (var invite in invites) {
 				invite.InvitedByUserId = ActiveUser.UserId;
 			}
 
-			_session.CommitChanges();
+			Session.CommitChanges();
 		}
 
 		// **************************************
@@ -168,7 +160,7 @@ namespace SongSearch.Web.Services {
 
 			inviteEmailAddress = inviteEmailAddress.ToLower();
 
-			var inv = _session.Single<Invitation>(
+			var inv = Session.Single<Invitation>(
 				i => i.InvitationEmailAddress.ToLower() == inviteEmailAddress
 				&& i.InvitationStatus == (int)InvitationStatusCodes.Open
 				&& i.InvitedByUserId == ActiveUser.UserId);
@@ -181,14 +173,14 @@ namespace SongSearch.Web.Services {
 					InvitationStatus = (int)InvitationStatusCodes.Open
 				};
 
-				_session.Add<Invitation>(inv);
+				Session.Add<Invitation>(inv);
 			} else //extend expiration date
 			{
 				//inv.InvitationStatus = (int)InvitationStatusCodes.Open;
 				inv.ExpirationDate = DateTime.Now.AddDays(30).Date;
 
 			}
-			_session.CommitChanges();
+			Session.CommitChanges();
 
 			var inviteId = inv.InvitationId;
 
@@ -201,7 +193,7 @@ namespace SongSearch.Web.Services {
 		public Invitation GetInvitation(string inviteId, string inviteEmailAddress) {
 			var inviteGuid = new Guid(inviteId);
 
-			var inv = _session.Single<Invitation>(i => i.InvitationId == inviteGuid && i.InvitationEmailAddress.ToLower() == inviteEmailAddress);
+			var inv = Session.Single<Invitation>(i => i.InvitationId == inviteGuid && i.InvitationEmailAddress.ToLower() == inviteEmailAddress);
 
 			return inv;
 		}
@@ -210,7 +202,7 @@ namespace SongSearch.Web.Services {
 		// GetNumberOfUsersByAccessLevel
 		// **************************************
 		public int GetNumberOfUsersByAccessLevel(Roles role) {
-			var users = _session.All<User>().Where(u => u.RoleId == (int)role);
+			var users = Session.All<User>().Where(u => u.RoleId == (int)role);
 			return (users.Count());
 		}
 
@@ -222,8 +214,8 @@ namespace SongSearch.Web.Services {
 
 			if (user != null && ModelEnums.GetRoles().Contains(roleId)) {
 				user.RoleId = roleId;
-				_session.Update<User>(user);
-				_session.CommitChanges();
+				Session.Update<User>(user);
+				Session.CommitChanges();
 			}
 		}
 
@@ -250,7 +242,7 @@ namespace SongSearch.Web.Services {
 								CatalogId = catalogId,
 								RoleId = roleId
 							};
-						_session.Add<UserCatalogRole>(usrCatalogRole);
+						Session.Add<UserCatalogRole>(usrCatalogRole);
 					}
 				} else {
 				
@@ -263,18 +255,18 @@ namespace SongSearch.Web.Services {
 						//also remove these catalogs from any child users, really?
 						var childUsers = user.GetUserHierarchy(withCatalogRoles: true);
 						foreach (var child in childUsers) {
-							var cat = _session.Single<UserCatalogRole>(x => x.CatalogId == catalogId && x.UserId == child.UserId);
-							if (cat != null) { _session.Delete<UserCatalogRole>(cat); }
+							var cat = Session.Single<UserCatalogRole>(x => x.CatalogId == catalogId && x.UserId == child.UserId);
+							if (cat != null) { Session.Delete<UserCatalogRole>(cat); }
 						}
 
 						// revoke parent access
-						_session.Delete<UserCatalogRole>(usrCatalogRole);
+						Session.Delete<UserCatalogRole>(usrCatalogRole);
 
 
 					}
 				}
 
-				_session.CommitChanges();
+				Session.CommitChanges();
 
 			}
 		}
@@ -288,7 +280,7 @@ namespace SongSearch.Web.Services {
 			var parentUsr = GetUser(usr.ParentUserId.GetValueOrDefault());
 
 			if (usr != null) {
-				var catalogs = _session.All<Catalog>();
+				var catalogs = Session.All<Catalog>();
 				// limit to catalogs with myUser admin access if not superadmin
 				if (!ActiveUser.IsSuperAdmin() && parentUsr != null) {
 					catalogs = from uc in parentUsr.UserCatalogRoles.AsQueryable()
@@ -310,19 +302,19 @@ namespace SongSearch.Web.Services {
 							CatalogId = catalog.CatalogId,
 							RoleId = roleId
 						};
-						_session.Add<UserCatalogRole>(usrCatalog);
+						Session.Add<UserCatalogRole>(usrCatalog);
 					} else {
 						if (roleId > 0) {
 							usrCatalog.RoleId = roleId;
 
 						} else {
 							// revoke access
-							_session.Delete<UserCatalogRole>(usrCatalog);
+							Session.Delete<UserCatalogRole>(usrCatalog);
 						}
 					}
 				}
 
-				_session.CommitChanges();
+				Session.CommitChanges();
 			}
 		}
 
@@ -331,10 +323,10 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public void UpdateCatalogRoleAllUsers(int catalogId, int roleId) {
 
-			var cat = _session.Single<Catalog>(x => x.CatalogId == catalogId);
+			var cat = Session.Single<Catalog>(x => x.CatalogId == catalogId);
 
 			if (cat != null) {
-				var allUsers = _session.All<User>();
+				var allUsers = Session.All<User>();
 				var myUsers = ActiveUser.GetUserHierarchy();
 
 				SetCatalogRole(catalogId, roleId, allUsers, myUsers);
@@ -360,16 +352,16 @@ namespace SongSearch.Web.Services {
 							CatalogId = catalogId,
 							RoleId = roleId
 						};
-						_session.Add<UserCatalogRole>(usrCatalog);
+						Session.Add<UserCatalogRole>(usrCatalog);
 					} else {
 						if (roleId > 0) {
 							usrCatalog.RoleId = roleId;
 						} else {
-							_session.Delete<UserCatalogRole>(usrCatalog);
+							Session.Delete<UserCatalogRole>(usrCatalog);
 						}
 					}
 
-					_session.CommitChanges();
+					Session.CommitChanges();
 
 					if (myUser.ChildUsers.Count > 0) {
 
@@ -396,20 +388,20 @@ namespace SongSearch.Web.Services {
 		//    return myUser;
 		//}
 		private User GetUser(int userId) {
-			var user = _session.Single<User>(u => u.UserId == userId);
+			var user = Session.Single<User>(u => u.UserId == userId);
 			return user;
 		}
 		private User GetUser(string userName) {
-			var user = _session.Single<User>(u => u.UserName == userName);
+			var user = Session.Single<User>(u => u.UserName == userName);
 			return user;
 		}
 		private IQueryable<User> GetUsers() {
-			var users = _session.All<User>();
+			var users = Session.All<User>();
 			return users;
 		}
 
 		private IQueryable<UserCatalogRole> GetUsersCatalog() {
-			var users = _session.All<UserCatalogRole>();
+			var users = Session.All<UserCatalogRole>();
 			return users;
 		}
 
@@ -430,28 +422,20 @@ namespace SongSearch.Web.Services {
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
+
+
 		private void Dispose(bool disposing) {
 			if (!_disposed) {
-				// If disposing equals true, dispose all managed
-				// and unmanaged resources.if (disposing)
 				{
-					if (_session != null) {
-						_session.Dispose();
-						_session = null;
+					if (Session != null) {
+						Session.Dispose();
+						Session = null;
 					}
-					//if (UserRepository != null) {
-					//    UserRepository.Dispose();
-					//    UserRepository = null;
-					//}
-					//if (_princ != null) {
-					//    _princ = null;
-					//}
+					if (SessionReadOnly != null) {
+						SessionReadOnly.Dispose();
+						SessionReadOnly = null;
+					}
 				}
-
-				// Call the appropriate methods to clean up
-				// unmanaged resources here.
-				//CloseHandle(handle);
-				//handle = IntPtr.Zero;
 
 				_disposed = true;
 			}

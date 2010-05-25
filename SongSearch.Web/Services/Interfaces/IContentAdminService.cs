@@ -9,6 +9,8 @@ namespace SongSearch.Web.Services {
 	// IContentAdminService
 	// **************************************
 	public interface IContentAdminService : IDisposable {
+		string ActiveUserName { get; set; }
+		User ActiveUser { get; set; }
 		void Update(Content content);
 		void Delete(int contentId);
 	}

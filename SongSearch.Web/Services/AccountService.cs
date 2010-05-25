@@ -3,35 +3,27 @@ using System.Linq;
 using System.Security.Principal;
 using System.Web;
 using SongSearch.Web.Data;
+using Ninject;
 
 namespace SongSearch.Web.Services {
 	
 	// **************************************
 	// AccountService
 	// **************************************
-	public class AccountService : IAccountService {
+	public class AccountService : BaseService, IAccountService {
 
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
-		private ISession _session;
 		private bool _disposed;
-		//private string _activeUserIdentity;
 		private const int _minPasswordLength = 5;
 
 		// ----------------------------------------------------------------------------
 		// (Constructor)
 		// ----------------------------------------------------------------------------
-		public AccountService() {
-			if (_session == null) {
-				_session = new EFSession();
-			}
-
-//			_activeUserIdentity = activeUserIdentity;
-//			ActiveUser = UserData.User(activeUserIdentity);
-		}
+		public AccountService(IDataSession session) : base(session) {}
+		public AccountService(string activeUserIdentity) : base(activeUserIdentity) { }
 		
-
 		// ----------------------------------------------------------------------------
 		// (Public)
 		// ----------------------------------------------------------------------------
@@ -46,7 +38,7 @@ namespace SongSearch.Web.Services {
 		public User RegisterUser(User user, Guid invitationCode) {
 
 			if (!UserExists(user.UserName)) {
-				var inv = _session.Single<Invitation>(i => i.InvitationId.Equals(invitationCode) && i.InvitationEmailAddress.Equals(user.UserName));
+				var inv = Session.Single<Invitation>(i => i.InvitationId.Equals(invitationCode) && i.InvitationEmailAddress.Equals(user.UserName));
 
 				if (inv != null) {
 
@@ -56,7 +48,7 @@ namespace SongSearch.Web.Services {
 					user.RegisteredOn = DateTime.Now;
 
 					// Get parent users catalog where parent user is at least a plugger and assign to new user in client role
-					var catalogs = _session.All<UserCatalogRole>().Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Plugger);
+					var catalogs = Session.All<UserCatalogRole>().Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Plugger);
 					catalogs.ForEach(c =>
 						user.UserCatalogRoles.Add(new UserCatalogRole() { CatalogId = c.CatalogId, RoleId = (int)Roles.Client })
 					);
@@ -64,10 +56,10 @@ namespace SongSearch.Web.Services {
 
 					inv.InvitationStatus = (int)InvitationStatusCodes.Registered;
 
-					_session.Add<User>(user);
+					Session.Add<User>(user);
 
 
-					_session.CommitChanges();
+					Session.CommitChanges();
 					inv = null;
 				}
 			} else {
@@ -121,8 +113,8 @@ namespace SongSearch.Web.Services {
 				dbuser.Password = newPassword.PasswordHashString();
 			}
 
-			_session.Update<User>(dbuser);
-			_session.CommitChanges();
+			Session.Update<User>(dbuser);
+			Session.CommitChanges();
 			dbuser = null;
 			return true;
 			
@@ -140,8 +132,8 @@ namespace SongSearch.Web.Services {
 
 			if (user.UserName.PasswordHashString().Equals(resetCode)) {
 				user.Password = newPassword.PasswordHashString();
-				_session.Update<User>(user);
-				_session.CommitChanges();
+				Session.Update<User>(user);
+				Session.CommitChanges();
 				user = null;
 				return true;
 			}
@@ -165,7 +157,7 @@ namespace SongSearch.Web.Services {
 			return GetUser(user.UserName);
 		}
 		private User GetUser(string userName) {
-			return _session.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+			return Session.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
 		}
 
 		// **************************************
@@ -177,7 +169,7 @@ namespace SongSearch.Web.Services {
 			user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
 			user.RoleId = (int) Roles.Client;
 
-			_session.Add<User>(user);
+			Session.Add<User>(user);
 
 			user = null;
 		}
@@ -202,10 +194,14 @@ namespace SongSearch.Web.Services {
 		private void Dispose(bool disposing) {
 			if (!_disposed) {
 				{
-					if (_session != null) {
-						_session.Dispose();
-						_session = null;
-					}					
+					if (Session != null) {
+						Session.Dispose();
+						Session = null;
+					}
+					if (SessionReadOnly != null) {
+						SessionReadOnly.Dispose();
+						SessionReadOnly = null;
+					}
 				}
 
 				_disposed = true;

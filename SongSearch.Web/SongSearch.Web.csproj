@@ -41,6 +41,15 @@
     <Reference Include="AntiXSSLibrary">
       <HintPath>..\..\mvcstarter\lib\AntiXSSLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="DotNetOpenAuth">
+      <HintPath>..\Ext Libraries\DotNetOpenAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenId">
+      <HintPath>..\Ext Libraries\DotNetOpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="HibernatingRhinos.Profiler.Appender">
+      <HintPath>..\Ext Libraries\EntityFramework.Profiler-Build-691\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\..\FordMusic\ExternalAssemblies\Ionic.Zip.dll</HintPath>
     </Reference>
@@ -48,8 +57,22 @@
     <Reference Include="MvcUserControlHtmlHelpers">
       <HintPath>..\..\FordMusic\ExternalAssemblies\MvcUserControlHtmlHelpers.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Ext Libraries\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Ext Libraries\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\..\mvcstarter\lib\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark">
+      <HintPath>..\Ext Libraries\Spark.dll</HintPath>
+    </Reference>
+    <Reference Include="Spark.Web.Mvc">
+      <HintPath>..\Ext Libraries\Spark.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -108,6 +131,9 @@
     <Compile Include="Helpers\XssHelper.cs" />
     <Compile Include="Infrastructure\Mailer\Mail.cs" />
     <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
+    <Compile Include="Infrastructure\Storage\EF\DataSessionReadOnlyEF.cs" />
+    <Compile Include="Infrastructure\Storage\EF\SongSearchDataSession.cs" />
+    <Compile Include="Infrastructure\Storage\File.cs" />
     <Compile Include="Models\SearchField.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -118,18 +144,21 @@
     <Compile Include="Infrastructure\Logging\ILogger.cs" />
     <Compile Include="Infrastructure\Logging\LogUtility.cs" />
     <Compile Include="Infrastructure\Logging\NLogLogger.cs" />
-    <Compile Include="Infrastructure\Storage\EF\EFSession.cs" />
+    <Compile Include="Infrastructure\Storage\EF\DataSessionEF.cs" />
     <Compile Include="Infrastructure\Storage\EF\SongSearch.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongSearch.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Logging\IReadOnlySession.cs" />
-    <Compile Include="Infrastructure\Storage\ISession.cs" />
+    <Compile Include="Infrastructure\Storage\IDataSessionReadOnly.cs" />
+    <Compile Include="Infrastructure\Storage\IDataSession.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CacheService.cs" />
     <Compile Include="Services\ContentAdminService.cs" />
+    <Compile Include="Services\CartService.cs" />
+    <Compile Include="Services\Interfaces\ICartService.cs" />
     <Compile Include="Services\Interfaces\IContentAdminService.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\TagCloudViewModel.cs" />

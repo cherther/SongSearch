@@ -5,28 +5,37 @@ using System.Data;
 using System.Data.Entity;
 using System.Web;
 using SongSearch.Web.Data;
+using Ninject;
 
 namespace SongSearch.Web.Services {
 	public static class AccountData {
+
+		//static IDataSession _session;
+
+		//public static IDataSession Session {
+		//    get {
+		//        _session = _session ?? Application.DataSession;
+		//        return _session;
+		//    }
+		//    set {
+		//        _session = value;
+		//    }
+		//}
 
 		// **************************************
 		// User
 		// **************************************
 		public static User User(string userName) {
-			using (ISession rep = new EFSession()) {
-				return rep.Single<User>(
-						u => u.UserName.ToUpper() == userName.ToUpper()
-						);
+			using (var session = Application.DataSessionReadOnly) {
+				return session.Single<User>(u => u.UserName.ToUpper() == userName.ToUpper());
 			}
 		}
 
 		public static User UserComplete(string userName) {
 
-			using (var ctx = new SongSearchContext(Connections.ConnectionString(ConnectionStrings.SongSearchContext))) {
+			using (var session = Application.DataSessionReadOnly) {
 
-				ctx.ContextOptions.LazyLoadingEnabled = false;
-	
-				var user = ctx.Users
+				var user = session.GetObjectQuery<User>()
 					.Include("Carts")
 					.Include("UserCatalogRoles")
 					.Where(u => u.UserName.ToUpper() == userName.ToUpper()).SingleOrDefault();
@@ -132,17 +141,9 @@ namespace SongSearch.Web.Services {
 		// **************************************    
 		public static IList<User> GetUserHierarchy(this User user, bool withCatalogRoles = false) {
 
-			using (var ctx = new SongSearchContext(Connections.ConnectionString(ConnectionStrings.SongSearchContext))) {
-				//
-				if (withCatalogRoles)
-					ctx.ContextOptions.LazyLoadingEnabled = false;
+			using (var session = Application.DataSessionReadOnly) {
 
-				//		DataLoadOptions dlo = new DataLoadOptions();
-
-				//using (ISession session = new EFSession(ctx)) {
-					// Only users with same or lesser access rights
-					//var rep = fullyLoaded ? _usrMgmtSvc.GetUserRepositoryFullyLoaded() : SqlSession;
-				var set = ctx.CreateObjectSet<User>();
+				var set = session.GetObjectQuery<User>();
 				var users = (withCatalogRoles ? set.Include("UserCatalogRoles") : set).Where(u => u.RoleId >= (int)user.RoleId).ToList();
 					//				users = !roleId.HasValue ? users : users.Where(u => u.RoleId == roleId);
 
@@ -154,7 +155,7 @@ namespace SongSearch.Web.Services {
 
 					var userHierarchy = topLevelUsers.AttachChildren(users);
 
-					return userHierarchy;//SqlSession.GetUsers().Where(x => x.ParentUserId == User.UserId).Flatten();
+					return userHierarchy;
 				//}
 			}
 		}
@@ -171,16 +172,6 @@ namespace SongSearch.Web.Services {
 			return parents;
 		}
 
-
-		// **************************************
-		// ActiveCartContentsCount
-		// **************************************    
-		//public static int ActiveCartContentsCount(this DisplayUser user) {
-
-		//    using (ICartService cart = new CartService(user.UserName)) {
-		//        return cart == null ? 0 : cart.MyActiveCartContentsCount();
-		//    }
-		//}
 
 	}
 }

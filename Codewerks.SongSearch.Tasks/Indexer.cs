@@ -11,7 +11,7 @@ namespace Codewerks.SongSearch.Tasks {
 		
 		public static void Index() {
 
-			using (ISession session = new EFSession()) {
+			using (IDataSession session = new SongSearchDataSession()) {
 
 				var contents = session.All<Content>().Where(x => x.Lyrics != null);
 

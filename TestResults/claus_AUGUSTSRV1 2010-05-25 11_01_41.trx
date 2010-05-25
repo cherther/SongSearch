@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="179927b1-e86e-4049-8b6c-fd313d5e6a72" name="claus@AUGUSTSRV1 2010-05-25 11:01:41" runUser="AUGUSTSRV1\claus" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Default Test Settings" id="1e4e2dc9-052c-4561-9492-a90470d25619">
+    <Deployment runDeploymentRoot="claus_AUGUSTSRV1 2010-05-25 11_01_41">
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\EntityFramework.Profiler-Build-691\HibernatingRhinos.Profiler.Appender.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\SongSearch.Web\bin\SongSearch.Web.dll" />
+      <DeploymentItem filename="D:\DevProjects\SongSearch\Ext Libraries\nunit.framework.dll" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2010-05-25T11:01:41.1258753+02:00" queuing="2010-05-25T11:01:42.1589343+02:00" start="2010-05-25T11:01:42.2759410+02:00" finish="2010-05-25T11:02:10.5165563+02:00" />
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="AUGUSTSRV1" outcome="Warning" timestamp="2010-05-25T11:01:41.3158861+02:00">
+        <Text>Warning: Test Run deployment issue: The assembly or module 'System.Web.Mvc' directly or indirectly referenced by the test container 'd:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll' was not found.</Text>
+      </RunInfo>
+      <RunInfo computerName="AUGUSTSRV1" outcome="Error" timestamp="2010-05-25T11:02:10.5155562+02:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="User_Can_Add_Item_To_Active_Cart" storage="d:\devprojects\songsearch\codewerks.songsearch.web.tests\bin\debug\codewerks.songsearch.web.tests.dll" id="14bc09a9-8636-725f-d670-619999130d95">
+      <Execution id="0e6d2737-3d23-4aea-ab55-0661478c9815" />
+      <TestMethod codeBase="D:/DevProjects/SongSearch/Codewerks.SongSearch.Web.Tests/bin/Debug/Codewerks.SongSearch.Web.Tests.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="Codewerks.SongSearch.Web.Tests.Services.CartServiceTests, Codewerks.SongSearch.Web.Tests, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="User_Can_Add_Item_To_Active_Cart" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="14bc09a9-8636-725f-d670-619999130d95" executionId="0e6d2737-3d23-4aea-ab55-0661478c9815" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="0e6d2737-3d23-4aea-ab55-0661478c9815" testId="14bc09a9-8636-725f-d670-619999130d95" testName="User_Can_Add_Item_To_Active_Cart" computerName="AUGUSTSRV1" duration="00:00:28.1406095" startTime="2010-05-25T11:01:42.3759468+02:00" endTime="2010-05-25T11:02:10.5165563+02:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="0e6d2737-3d23-4aea-ab55-0661478c9815">
+    </UnitTestResult>
+  </Results>
+</TestRun>

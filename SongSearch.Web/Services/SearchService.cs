@@ -8,6 +8,7 @@ using System.Data.Objects;
 using System.Data.EntityClient;
 using System.Linq.Dynamic;
 using System.Linq.Expressions;
+using Ninject;
 
 namespace SongSearch.Web.Services {
 	public static class SearchService {
@@ -22,9 +23,9 @@ namespace SongSearch.Web.Services {
 		// GetLookupList: 
 		//	returns simple listing of table contents
 		// **************************************
-		public static IList<T> GetLookupList<T>() where T : class {
+		public static IList<T> GetLookupList<T>() where T : class, new() {
 
-			using (ISession session = new EFSession()) {
+			using (var session = Application.DataSessionReadOnly) {//Container.Get<IDataSession>()) {
 
 				var query = session.All<T>(); ;
 				return query.ToList();
@@ -43,8 +44,8 @@ namespace SongSearch.Web.Services {
 			if (String.IsNullOrWhiteSpace(fieldName)){
 				throw new ArgumentException("Missing fieldName argument");
 			}
-						
-			using (ISession session = new EFSession()) {
+
+			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
 				
 				var query = session.All<Content>().Select<string>(fieldName).Distinct().Where(v => v != null).Select(v => v.ToUpper());
 				return query.ToList();							
@@ -63,7 +64,7 @@ namespace SongSearch.Web.Services {
 				throw new ArgumentException("Missing fieldName argument");
 			}
 
-			using (ISession session = new EFSession()) {
+			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
 
 				var query = session.All<ContentRight>().Select<string>(fieldName).Distinct();
 				return query.ToList();
@@ -76,7 +77,7 @@ namespace SongSearch.Web.Services {
 		public static IList<Tag> GetTopTags(TagType tagType, int? limitToTop = null) {
 
 
-			using (ISession session = new EFSession()) {
+			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
 
 				var tags = session.All<Tag>().Where(t => t.TagTypeId == (int)tagType);
 				tags = tags.OrderByDescending(t => t.Contents.Count);
@@ -95,7 +96,7 @@ namespace SongSearch.Web.Services {
 		public static IList<SearchProperty> GetSearchMenuProperties() {
 
 
-			using (ISession session = new EFSession()) {
+			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
 
 				// Get Search Properties
 				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu).ToList();
@@ -104,7 +105,7 @@ namespace SongSearch.Web.Services {
 		public static IList<SearchProperty> GetSearchMenuProperties(Roles role) {
 
 
-			using (ISession session = new EFSession()) {
+			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
 
 				// Get Search Properties
 				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu && x.AccessLevel >= (int)role).ToList();
@@ -115,19 +116,24 @@ namespace SongSearch.Web.Services {
 		// GetContentDetails
 		// **************************************
 		public static Content GetContentDetails(int contentId, User user) {
-			using (var ctx = new SongSearchContext(Connections.ConnectionString(ConnectionStrings.SongSearchContext))) {
 
-				ctx.ContextOptions.LazyLoadingEnabled = false;
-				//var set = ctx.CreateObjectSet<Content>();
-				var content = ctx.Contents
-					.Include("Tags")
-					.Include("Catalog")
-					.Include("ContentRights")
-					.Include("ContentRights.Territories")
-					.Where(c => c.ContentId == contentId).SingleOrDefault();
-				return content;
-				// check if user has access to catalog
-			}
+			//using (var context = new SongSearchContext(Connections.ConnectionString(ConnectionStrings.SongSearchContext))) {
+
+			//    context.ContextOptions.LazyLoadingEnabled = false;
+
+				using (var session = Application.DataSessionReadOnly){//context)) {
+					//var set = ctx.CreateObjectSet<Content>();
+					var content = session.GetObjectQuery<Content>()//context.Contents
+						.Include("Tags")
+						.Include("Catalog")
+						.Include("ContentRights")
+						.Include("ContentRights.Territories")
+						.Where(c => c.ContentId == contentId).SingleOrDefault();
+
+					return content;
+					// check if user has access to catalog
+				}
+			//}
 		}
 
 		// **************************************
@@ -142,7 +148,7 @@ namespace SongSearch.Web.Services {
 											int? pageIndex = null) {
 
 
-			using (ISession session = new EFSession()) {
+			using (var session = Application.DataSessionReadOnly){//Application.Container.Get<IDataSession>()) {
 
 				// Get all Search Properties
 				var props = CacheService.SearchProperties((Roles)user.RoleId);//.session.All<SearchProperty>().ToList();

@@ -30,9 +30,9 @@ namespace SongSearch.Web.Services {
 				// If disposing equals true, dispose all managed
 				// and unmanaged resources.if (disposing)
 				{
-					//if (_session != null) {
-					//    _session.Dispose();
-					//    _session = null;
+					//if (Session != null) {
+					//    Session.Dispose();
+					//    Session = null;
 					//}
 				}
 

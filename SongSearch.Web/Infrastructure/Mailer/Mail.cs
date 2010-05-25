@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Net.Mail;
 
-namespace SongSearch.Web.Services {
+namespace SongSearch.Web {
 	public static class Mail {
 
 		public static void SendMail(string from, string to, string subject, string message) {
