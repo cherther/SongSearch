@@ -14,6 +14,8 @@ body
 }	
 a, a:visited { /*text-decoration: none;*/ color: #0044CC; }
 a.cw-logo {  font-family: Verdana, Arial, sans-serif; text-decoration: none; color: #000; }
+a.cw-small { font-size: 0.7em; }
+a.cw-tags-more-link { padding: 0.8em 0.8em 0.8em 0.8em; }
 h1 { font-size: 2em; font-variant:small-caps;}
 h2 { font-size: 1.375em; }
 h3 { font-size: 1.125em; }

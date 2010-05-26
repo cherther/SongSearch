@@ -64,7 +64,7 @@
                     var tags = Model.SearchTags[tagType];
                     var selectedTagValues = value.First() != null ? value.First().Split(';') : null;
                     var selectedTags = selectedTagValues.Where(v => !String.IsNullOrWhiteSpace(v)).Select(v => int.Parse(v)).ToArray();
-                    var model = new TagCloudViewModel() { Tags = tags, TagType = tagType, InitialTagNumber = 5, SelectedTags = selectedTags, TagClass = "cw-tagbox-search", TagIdTemplate = String.Format("f_{0}__V", i) };
+                    var model = new TagCloudViewModel() { Tags = tags, TagType = tagType, TagTypeName = item.PropertyName, InitialTagNumber = 5, SelectedTags = selectedTags, TagClass = "cw-tagbox-search", TagIdTemplate = String.Format("f_{0}__V", i) };
                 %>    
                 <% Html.RenderPartial("ctrlTagCloud", model); %>
                 <%: Html.Hidden(String.Format("f[{0}].V", i), "", new { @class = "cw-form-value" })%>
@@ -75,11 +75,11 @@
         </li>
         <%} %>
        
-        <li>
+        <%--<li>
             <div>&nbsp;</div>
             <a href="#" id="more-options-link">Show More Search Options</a>
             <div>&nbsp;</div>
-         </li>
+         </li>--%>
         <li>
             <button id="submit-bottom" type="submit" title="Search" class="cw-button cw-simple cw-blue">
             <span class="b-search">Search</span>

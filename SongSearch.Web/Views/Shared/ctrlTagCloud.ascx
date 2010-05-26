@@ -10,8 +10,8 @@
     {
         if (hasMoreLinks && tagCount == Model.InitialTagNumber)
         { %>
-            <div><a id="more-link-<%=tagTypeId%>" class="more-tags-link" href="#">more...</a></div>
-            <span id="more-<%=tagTypeId%>" class="more-tags cw-optional">
+            <div><a class="cw-small cw-tags-more-link" href="#">more <%: Model.TagTypeName.ToString().ToLower()%> choices...</a>
+            <div class="cw-more-tags cw-optional">
           <%
         }
         
@@ -27,5 +27,5 @@
     } %>
     <%if (hasMoreLinks)
       { %>
-        </span>
+        </div></div>
     <%}%>    

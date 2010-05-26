@@ -21,7 +21,19 @@
             // alert($('#' + propId).val());
         }
     );
+    //cw-tags-more-link
+    $('.cw-tags-more-link').click(
+        function (evt) {
+            evt.preventDefault();
 
+            var link = $(this);
+            var moretags = link.siblings('.cw-more-tags');
+            moretags.toggleClass('cw-optional');
+            link.text(link.text().swap('more', 'less'));
+
+            // alert($('#' + propId).val());
+        }
+    );
     var aCache = {};
     $(".cw-autocomplete").autocomplete(
         {

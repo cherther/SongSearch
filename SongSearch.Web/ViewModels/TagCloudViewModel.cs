@@ -16,6 +16,7 @@ namespace SongSearch.Web {
 		public int InitialTagNumber { get; set; }
 		public int[] SelectedTags { get; set; }
 		public TagType TagType { get; set; }
+		public string TagTypeName { get; set; }
 		public IList<Tag> Tags { get; set; }
 	}
 
