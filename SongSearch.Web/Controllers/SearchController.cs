@@ -55,6 +55,8 @@ namespace SongSearch.Web.Controllers
 
 				
 				var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
+
+				
 				model.SearchResults = results;
 				model.SearchFields = searchFields;
 

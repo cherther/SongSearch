@@ -1649,6 +1649,8 @@
     <Content Include="Public\Images\Icons\Silk\zoom_in.png" />
     <Content Include="Public\Images\Icons\Silk\zoom_out.png" />
     <Content Include="Public\Images\bg-menu-main.png" />
+    <Content Include="Public\Images\Icons\ico_minus.png" />
+    <Content Include="Public\Images\Icons\ico_plus.png" />
     <Content Include="Public\Images\jquery-ui\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Public\Images\jquery-ui\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Public\Images\jquery-ui\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -1684,11 +1686,12 @@
     <Content Include="Views\Account\ResetPasswordSuccess.aspx" />
     <Content Include="Views\Account\UpdateProfile.aspx" />
     <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
+    <Content Include="Views\Cart\ctrlCartTable.ascx" />
     <Content Include="Views\Cart\Index.aspx" />
     <Content Include="Views\Search\ctrlContentDetail.ascx" />
     <Content Include="Views\Search\ctrlSearchResults.ascx" />
     <Content Include="Views\Search\ctrlSearchOptions.ascx" />
-    <Content Include="Views\Shared\ctrlCartContentsTable.ascx" />
+    <Content Include="Views\Cart\ctrlCartContentsTable.ascx" />
     <Content Include="Views\Shared\ctrlResultsTable.ascx" />
     <Content Include="Views\Shared\ctrlResultsPager.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />

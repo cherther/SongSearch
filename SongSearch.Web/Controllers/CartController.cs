@@ -41,7 +41,7 @@ namespace SongSearch.Web.Controllers
         {
 			var vm = GetCartViewModel();
 			vm.MyCarts = _cartService.MyCarts();
-			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File name"};
+			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File Name", "Remove"};
 			
 
 			return View(vm);
@@ -66,7 +66,6 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Cart/Add/5
 		// **************************************
-		[HttpPost]
 		public ActionResult Add(int id) {
 			try {
 
@@ -91,7 +90,6 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Cart/Remove/5
 		// **************************************
-		[HttpPost]
 		public ActionResult Remove(int id) {
 			try {
 
@@ -120,23 +118,13 @@ namespace SongSearch.Web.Controllers
 		public ActionResult Delete(int id) {
 			try {
 
-				//itmTag = new ItemsTag() { ContentID = id, TagID = tid };
-				//rep.Insert(itmTag);
 				_cartService.DeleteCart(id);
-				CacheService.RefreshMyActiveCart(_currentUser.UserName);
+				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
-				if (Request.IsAjaxRequest()) {
-					return Json(id);
-				} else {
-					return RedirectToAction("Index");
-				}
+				return RedirectToAction("Index");
 			}
 			catch (Exception ex) {
-				if (Request.IsAjaxRequest()) {
-					throw ex;
-				} else {
-					return RedirectToAction("Index", "Error", ex);
-				}
+				return RedirectToAction("Index", "Error", ex);
 			}
 		}
 
@@ -150,24 +138,35 @@ namespace SongSearch.Web.Controllers
 			return RedirectToAction("Index");
 
 		}
-		public ActionResult ZipCompleted() {
-			return RedirectToAction("Index");
+		//[HttpPost]
+		//public ActionResult ZipCompleted() {
+		//    return RedirectToAction("Index");
 
-		}
+		//}
 		// **************************************
 		// URL: /MyCarts/Download/5
 		// **************************************
 		public ActionResult Download(int id) {
 
 			var cart = _cartService.DownloadCompressedCart(id);
-			CacheService.RefreshMyActiveCart(_currentUser.UserName);
+			//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
 			if (cart == null) { throw new ArgumentException(); }
 
 			Response.ContentType = "application/zip";
 			Response.AddHeader("content-disposition", String.Format("filename={0}", cart.ArchiveName));
 			return new FileStreamResult(new System.IO.FileStream(cart.ArchivePath(), System.IO.FileMode.Open), "application/zip");
+			
 		}
+		//public ActionResult DownloadDone() {
+
+		//    var vm = GetCartViewModel();
+		//    vm.MyCarts = _cartService.MyCarts();
+		//    vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File Name", "Remove" };
+
+
+		//    return View(vm);
+		//}
 
 		// **************************************
 		// GetSearchViewModel

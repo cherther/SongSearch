@@ -183,10 +183,11 @@ namespace SongSearch.Web.Services {
 		public Cart DownloadCompressedCart(int cartId) {
 
 			var cart = DataSession.Single<Cart>(c => c.UserId == ActiveUser.UserId && c.CartId == cartId);
-			if (cart != null) {
+			if (cart == null) {
 				throw new ArgumentOutOfRangeException();
 			}
 			cart.MarkAsDownloaded();
+			DataSession.CommitChanges();
 			return cart;
 		}
 
@@ -195,8 +196,8 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public void DeleteCart(int cartId) {
 
-			var cart = DataSession.Single<Cart>(c => c.CartId == cartId);
-			if (cart != null && cart.UserId != ActiveUser.UserId) {
+			var cart = DataSession.Single<Cart>(c => c.UserId == ActiveUser.UserId && c.CartId == cartId);
+			if (cart == null) {
 				throw new ArgumentOutOfRangeException();
 			}
 			

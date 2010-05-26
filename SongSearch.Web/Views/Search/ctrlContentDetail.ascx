@@ -20,7 +20,7 @@
     <a href="#">Preview</a>&nbsp;|&nbsp;
     <a href="#">Download</a>&nbsp;|&nbsp;
     <%if(!content.IsInMyActiveCart){ %>
-    <a class="cw-cart-add-link" rel="<%: content.ContentId %>" href="#">Add To Cart</a>&nbsp;|&nbsp;
+    <%: Html.ActionLink("Add To Cart", "Add", "Cart", new { id = content.ContentId }, new { @class = "cw-cart-add-link" })%>&nbsp;|&nbsp;
     <%} else { %>
     <%: Html.ActionLink("In Cart", "Index", "Cart", null, null) %>&nbsp;|&nbsp;
     <%} %>

@@ -49,3 +49,37 @@
     text-align: left;
     white-space: nowrap;    
 }
+
+
+/* Cart Grid  */
+.cw-tbl-carts
+{
+	/*font-family: Tahoma, Verdana, helvetica,verdana,sans-serif;*/
+	border: 1px solid #c0c0c0;
+	border-collapse: collapse;
+	vertical-align: middle;
+	margin: 10px 0;
+}
+
+.cw-tbl-carts th { background-color: #cecece; font-weight: normal; text-align: left; }
+.cw-tbl-carts .cw-tbl-carts-main { border-top: 1px solid #c0c0c0; }
+.cw-tbl-carts td, th { padding: 0.25em 0.8em;  vertical-align: middle; text-align: left; }
+.cw-tbl-carts-contents
+{
+	width: 15px;
+	height: 20px;
+	cursor: pointer;
+}
+.cw-tbl-carts-contents-show
+{
+	background:transparent url("../../public/images/icons/ico_plus.png") no-repeat;
+}
+
+.cw-tbl-carts-contents-hide
+{
+	background:transparent url("../../public/images/icons/ico_minus.png") no-repeat;
+}
+.cw-tbl-carts-details
+{
+    display: none;
+}

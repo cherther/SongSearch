@@ -289,14 +289,19 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// SessionUpdate
 		// **************************************
-		private static void SessionUpdate(object cacheObject, CacheKeys cacheKey) {
-			if (_hasSession && cacheObject != null) {
+		public static void SessionUpdate(object cacheObject, CacheKeys cacheKey) {
+			SessionUpdate(cacheObject, cacheKey.ToString());
+		}
+		public static void SessionUpdate(object cacheObject, string cacheKey) {
+			if (_hasSession) {
 				_session.Remove(cacheKey.ToString());
 
-				_session.Add(
-					cacheKey.ToString(),
-					cacheObject
-					);
+				if (cacheObject != null) {
+					_session.Add(
+						cacheKey.ToString(),
+						cacheObject
+						);
+				}
 			}
 		}
 
@@ -313,22 +318,25 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// CacheUpdate
 		// **************************************
-		private static void CacheUpdate(object cacheObject, CacheKeys cacheKey) {
+		public static void CacheUpdate(object cacheObject, CacheKeys cacheKey) {
 			CacheUpdate(cacheObject, cacheKey.ToString());
 		}
 
-		private static void CacheUpdate(object cacheObject, string cacheKey) {
+		public static void CacheUpdate(object cacheObject, string cacheKey) {
 
-			if (_hasCache && cacheObject != null) {
+			if (_hasCache) {
 				_cache.Remove(cacheKey);
 
-				_cache.Insert(
-					cacheKey,
-					cacheObject,
-					null,
-					DateTime.Now.AddSeconds(3600),
-					System.Web.Caching.Cache.NoSlidingExpiration
-					);
+				if (cacheObject != null) {
+					_cache.Insert(
+						cacheKey,
+						cacheObject,
+						null,
+						DateTime.Now.AddSeconds(3600),
+						System.Web.Caching.Cache.NoSlidingExpiration
+						);
+				}
+				
 			}
 		}
 

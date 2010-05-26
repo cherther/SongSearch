@@ -17,6 +17,6 @@ namespace SongSearch.Web {
 
 		public PagedList<Content> List { get; set; }
 		public string[] ListHeaders { get; set; }
-
+		public bool ShowDetails { get; set; }
 	}
 }

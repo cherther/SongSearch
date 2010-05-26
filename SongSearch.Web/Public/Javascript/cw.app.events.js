@@ -85,8 +85,8 @@
             evt.preventDefault();
 
             var link = $(this);
-            var id = link[0].rel;
-            addToCart(id);
+            //var id = link[0].rel;
+            addToCart(link[0]);
             
 			link.text('In Cart');
 			link.attr('title', 'In Cart');
@@ -97,15 +97,31 @@
     //-----------------------------------------------------------------------------------
     // cw-cart-remove-link
     //-----------------------------------------------------------------------------------
-    $('.cw-cart-remove-link').live('click',
+//    $('.cw-cart-remove-link').live('click',
+//        function (evt) {
+
+//            evt.preventDefault();
+
+//            var link = $(this);
+//            //var id = link[0].rel;
+//            removeFromCart(link[0]);
+//        }
+//    );
+
+    //-----------------------------------------------------------------------------------
+    // cw-cart-remove-link
+    //-----------------------------------------------------------------------------------
+    $('.cw-tbl-carts-contents').click(
         function (evt) {
 
             evt.preventDefault();
-
-            var link = $(this);
-            var id = link[0].rel;
-            removeFromCart(id);
-        }
+           
+			var cartId = $(this)[0].id.replace('s-', '');
+			//alert(cartId);
+			$('#c-' + cartId).toggle();
+			$(this).toggleClass('cw-tbl-carts-contents-show');
+			$(this).toggleClass('cw-tbl-carts-contents-hide');
+    }
     );
 
 }
