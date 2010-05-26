@@ -5,6 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<div id="content" class = "cw-outl">
 <table>
     <tr>
     <td align="left" width="200" id="cw-search-options-panel">
@@ -17,6 +18,7 @@
     </td>
     </tr>
 </table>
+</div>
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">

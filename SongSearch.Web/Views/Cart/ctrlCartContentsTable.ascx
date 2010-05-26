@@ -35,8 +35,13 @@
             <%if (tableHeader.Contains("File Name")) { %>
             <td>
                 <%= Html.Hidden("contentNames[" + cartIndex + "].ContentId", item.ContentId)%>
-			    <%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { size = "50", maxlength = "120" })%>
+			    <%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { size = "80", maxlength = "120" })%>
 			    <% cartIndex++;%>
+            </td>
+            <%} %>
+            <%if (tableHeader.Contains("Download")) { %>
+            <td>
+                <%: Html.ActionLink("Download", "Download", "Media", new { id = item.ContentId }, new { @class = "cw-button cw-simple cw-small cw-blue", title = "Download" })%>
             </td>
             <%} %>
             <%if (tableHeader.Contains("Remove")) { %>

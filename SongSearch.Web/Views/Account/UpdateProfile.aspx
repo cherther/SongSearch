@@ -21,7 +21,7 @@
     
 </asp:Content>
 <asp:Content ID="updateProfileContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded">
 
     <h3>Update Profile</h3>
     <p>

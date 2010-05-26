@@ -17,7 +17,7 @@ Log In
 </asp:Content>
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded">
         <h3>Log in</h3>
         <p>
         Please enter your e-mail address and password. <%= Html.ActionLink("Register", "Register") %> if you don't have an account.

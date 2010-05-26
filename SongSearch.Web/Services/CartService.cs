@@ -264,24 +264,20 @@ namespace SongSearch.Web.Services {
 					foreach (var content in contents) {
 						
 						if (content.HasMediaFullVersion) {
-						
-							var assetFileName = String.Concat(content.ContentId, ".mp3");
-							var asset = new FileInfo(Path.Combine(Settings.AssetPathFullSong.Text(), assetFileName));
 
-							if (asset.Exists) {
+							var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
+														contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
+							var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
+								
+							try {
+								var asset = MediaService.GetContentMedia(content.ContentId, MediaVersion.FullSong);
 
-								var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ? 
-									contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
-								var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? asset.Name);
+								zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, MediaService.ContentMediaExtension),
+											asset);
+							}
+							catch {
 
-								try {
-									zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, asset.Extension),
-												File.ReadAllBytes(asset.FullName));
-								}
-								catch {
-
-									Application.Logger.Info(String.Concat(asset.FullName, " is missing."));
-								}
+								Application.Logger.Info(String.Concat(content.ContentId, " is missing."));
 							}
 						}
 					}

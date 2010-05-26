@@ -41,7 +41,7 @@ namespace SongSearch.Web.Controllers
         {
 			var vm = GetCartViewModel();
 			vm.MyCarts = _cartService.MyCarts();
-			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File Name", "Remove"};
+			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File Name", "Download", "Remove"};
 			
 
 			return View(vm);

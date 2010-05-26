@@ -17,7 +17,7 @@
     
 </asp:Content>
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded">
     <h3>Create a New Account</h3>
     <p>
         Use the form below to create a new account. Or, <%= Html.ActionLink("log in", "LogIn") %> if you already have an account.

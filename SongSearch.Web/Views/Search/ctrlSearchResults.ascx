@@ -16,7 +16,7 @@
      %>
     <h2>Results</h2>
     <p><%= results.TotalCount %> songs found.</p>
-    <% Html.RenderPartial("ctrlResultsPager", Model); %>
-    <% Html.RenderPartial("ctrlResultsTable", contentListViewModel); %>
+    <% Html.RenderPartial("ctrlPager", Model); %>
+    <% Html.RenderPartial("ctrlSearchResultsTable", contentListViewModel); %>
     
   

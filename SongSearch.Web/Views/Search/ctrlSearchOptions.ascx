@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.SearchViewModel>" %>
+<div class="cw-outl">
 <ul id="search-menu" class="cw-list-searchoptions">
     <%using (Html.BeginForm("Results", "Search", FormMethod.Get, new { id = "searchForm"})) { %>
         <li>
@@ -89,4 +90,4 @@
         
    } %>
 </ul>
-
+</div>

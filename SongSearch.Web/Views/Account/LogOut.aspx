@@ -6,7 +6,7 @@
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
 
-<div id="signin" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded">
 	<h3>Logging Out...</h3>
 	<p style="text-align: center; padding: 0.5em 0 0.5em 0;"><img src="../../Content/loader.gif" alt="Loggings Out..." />
     </p>

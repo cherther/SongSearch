@@ -16,7 +16,7 @@
 %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-
+<div id="content" class="cw-outl cw-padded">
     <h2>Invite New Users</h2>
 
 	<p>Please enter one or many e-mail addresses (separated by commas).</p> 
@@ -42,6 +42,6 @@
 	   </div>
 	   
 	 </fieldset>  
-	<%} %>
-
+	<%}%>
+</div>
 </asp:Content>

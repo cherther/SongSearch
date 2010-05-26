@@ -20,7 +20,7 @@
     
 </asp:Content>
 <asp:Content ID="resetPasswordContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded">
 
     <h3>Reset Password</h3>
     <p>

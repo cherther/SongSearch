@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded">
     <h3>Reset Password</h3>
     <p>
         Please enter your e-mail address and we will send you a link to help you select a new password. Please <%= Html.ActionLink("register", "Register") %> if you don't have an account.

@@ -18,7 +18,7 @@
     <%if (content.HasMediaFullVersion) { %>
     <a href="#">Play</a>&nbsp;|&nbsp;
     <a href="#">Preview</a>&nbsp;|&nbsp;
-    <a href="#">Download</a>&nbsp;|&nbsp;
+    <%: Html.ActionLink("Download", "Download", "Media", new { id = content.ContentId }, null)%>&nbsp;|&nbsp;
     <%if(!content.IsInMyActiveCart){ %>
     <%: Html.ActionLink("Add To Cart", "Add", "Cart", new { id = content.ContentId }, new { @class = "cw-cart-add-link" })%>&nbsp;|&nbsp;
     <%} else { %>

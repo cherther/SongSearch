@@ -5,7 +5,7 @@ using SongSearch.Web.Services;
 using SongSearch.Web.Data;
 
 // see if this shows up, yup it does!
-namespace SongSearch.Web {
+namespace SongSearch.Web.Controllers {
 
 	[HandleError]
 	public class AccountController : Controller {
@@ -38,6 +38,7 @@ namespace SongSearch.Web {
 			_usrMgmtService = usrMgmtService;
 			_acctService = acctService;
         }
+
 		// **************************************
 		// URL: /Account/LogIn
 		// **************************************

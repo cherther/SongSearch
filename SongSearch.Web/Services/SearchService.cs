@@ -113,34 +113,52 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
+		// GetContent
+		// **************************************
+		public static Content GetContent(int contentId, User user) {
+
+			using (var session = Application.DataSessionReadOnly) {
+
+				var content = session.GetObjectQuery<Content>()
+					.Where(c => c.ContentId == contentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
+
+				// check if user has access to catalog
+				if (content != null && !user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId)) {
+					return null;
+				}
+				if (content != null) {
+					content.UserDownloadableName = content.DownloadableName(user.FileSignature());
+					//content.IsInMyActiveCart = CacheService.IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
+				}
+				return content;
+				
+			}
+		}
+		
+		// **************************************
 		// GetContentDetails
 		// **************************************
 		public static Content GetContentDetails(int contentId, User user) {
 
-			//using (var context = new SongSearchContext(Connections.ConnectionString(ConnectionStrings.SongSearchContext))) {
+			using (var session = Application.DataSessionReadOnly) {
 
-			//    context.ContextOptions.LazyLoadingEnabled = false;
+				var content = session.GetObjectQuery<Content>()
+					.Include("Tags")
+					.Include("Catalog")
+					.Include("ContentRights")
+					.Include("ContentRights.Territories")
+				.Where(c => c.ContentId == contentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
 
-				using (var session = Application.DataSessionReadOnly){//context)) {
-					//var set = ctx.CreateObjectSet<Content>();
-					var content = session.GetObjectQuery<Content>()//context.Contents
-						.Include("Tags")
-						.Include("Catalog")
-						.Include("ContentRights")
-						.Include("ContentRights.Territories")
-						.Where(c => c.ContentId == contentId).SingleOrDefault();
-
-					//var myActiveCart = dataSession.GetObjectQuery<Cart>()
-					//    .Include("Contents")
-					//    .Where(x => x.UserId == user.UserId && x.CartStatus == (int)CartStatusCodes.Active)
-					//    .SingleOrDefault();
-
-					content.IsInMyActiveCart = CacheService.IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
-					
-					return content;
-					// check if user has access to catalog
+				// check if user has access to catalog
+				if (content != null && !user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId)) {
+					return null;
 				}
-			//}
+				if (content != null) {
+					content.UserDownloadableName = content.DownloadableName(user.FileSignature());
+					content.IsInMyActiveCart = CacheService.IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
+				}
+				return content;
+			}
 		}
 
 		// **************************************

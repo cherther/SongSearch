@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SongSearch.Web.Data;
+using System.IO;
 
 namespace SongSearch.Web.Services {
 
@@ -11,11 +12,50 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	public class MediaService : IDisposable {
 
-		public static string GetContentMediaUrl(int contentId, MediaVersion type) {
+		// **************************************
+		// ContentMediaExtension
+		// **************************************
+		public static string ContentMediaExtension {
 
-			throw new NotImplementedException();
+			get { return ".mp3"; }
 		}
 
+		// **************************************
+		// GetContentMedia
+		// **************************************
+		public static byte[] GetContentMedia(int contentId, MediaVersion version) {
+
+			var assetFile = new FileInfo(GetContentMediaFilePath(contentId, version));
+
+			if (assetFile.Exists) {
+				var assetBytes = File.ReadAllBytes(assetFile.FullName);
+
+				return assetBytes;
+			} else {
+				throw new ArgumentOutOfRangeException("Content media file is missing");
+			}
+
+		}
+
+		// **************************************
+		// GetContentMediaFileName
+		// **************************************
+		public static string GetContentMediaFileName(int contentId) {
+
+			return String.Concat(contentId, ContentMediaExtension);
+	
+		}
+
+		// **************************************
+		// GetContentMediaFilePath
+		// **************************************
+		public static string GetContentMediaFilePath(int contentId, MediaVersion version) {
+
+			var assetPath = version == MediaVersion.FullSong ? Settings.AssetPathFullSong.Text() : Settings.AssetPathPreview.Text();
+			return Path.Combine(assetPath, GetContentMediaFileName(contentId));
+
+		}
+		
 		// ----------------------------------------------------------------------------
 		// (Dispose)
 		// ----------------------------------------------------------------------------

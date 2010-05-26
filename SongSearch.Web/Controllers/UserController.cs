@@ -7,7 +7,7 @@ using SongSearch.Web.Services;
 using System.Web.Routing;
 using SongSearch.Web.Data;
 
-namespace SongSearch.Web
+namespace SongSearch.Web.Controllers
 {
     [HandleError]
 	[RequireAuthorization(MinAccessLevel=Roles.Admin)]

@@ -110,7 +110,9 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -165,6 +167,7 @@
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\ContentListViewModel.cs" />
+    <Compile Include="ViewModels\ErrorViewModel.cs" />
     <Compile Include="ViewModels\TagCloudViewModel.cs" />
     <Compile Include="ViewModels\InviteViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
@@ -1688,12 +1691,13 @@
     <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
     <Content Include="Views\Cart\ctrlCartTable.ascx" />
     <Content Include="Views\Cart\Index.aspx" />
+    <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Search\ctrlContentDetail.ascx" />
     <Content Include="Views\Search\ctrlSearchResults.ascx" />
     <Content Include="Views\Search\ctrlSearchOptions.ascx" />
     <Content Include="Views\Cart\ctrlCartContentsTable.ascx" />
-    <Content Include="Views\Shared\ctrlResultsTable.ascx" />
-    <Content Include="Views\Shared\ctrlResultsPager.ascx" />
+    <Content Include="Views\Search\ctrlSearchResultsTable.ascx" />
+    <Content Include="Views\Search\ctrlPager.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />
     <Content Include="Views\Search\Index.aspx" />
     <Content Include="Views\Search\Results.aspx" />

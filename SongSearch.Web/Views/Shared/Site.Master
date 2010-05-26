@@ -43,7 +43,7 @@
     <table width="100%">
     <tr>
         <td align="left">
-            <h1><a href="/">Ford Music <span>SongSearch</span></a></h1>
+            <h1><a href="/" class="cw-logo">Ford Music <span>SongSearch</span></a></h1>
             <h3>Your professional music licensing resource</h3>
         </td>
         <td align="right">

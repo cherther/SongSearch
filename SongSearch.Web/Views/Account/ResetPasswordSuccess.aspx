@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="resetPasswordSuccessContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded">
     <h2>Reset Password</h2>
     <p>
         Please check your email inbox for an email to help you reset your password.
