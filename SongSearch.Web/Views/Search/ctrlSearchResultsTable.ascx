@@ -45,9 +45,6 @@
                 <%: item.ReleaseYear %>
             </td>
            
-            <td>
-                <%: item.HasMediaPreviewVersion %>
-            </td>
         </tr>
     
     <% } %>

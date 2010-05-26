@@ -13,11 +13,14 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization(MinAccessLevel=Roles.Admin)]
 	public class UserController : Controller
     {
-		IUserManagementService _usrMgmtService;
+		private IUserManagementService _usrMgmtService;
+		private User _currentUser;
+		
 		protected override void Initialize(RequestContext requestContext) {
 			
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+				_currentUser = _usrMgmtService.ActiveUser;
 			}
 			base.Initialize(requestContext);
 
@@ -44,7 +47,7 @@ namespace SongSearch.Web.Controllers
         }
 
 		// **************************************
-		// URL: /Admin/Invite
+		// URL: /User/Invite
 		// **************************************
 		public ActionResult Invite() {
 			var vm = new InviteViewModel() {
@@ -62,7 +65,7 @@ namespace SongSearch.Web.Controllers
 		public ActionResult Invite(InviteViewModel invites) {
 
 			string[] recipients = invites.Recipients;
-			string sender = String.Format("{0} <{1}>", _usrMgmtService.ActiveUser.FullName(), _usrMgmtService.ActiveUser.UserName); // Configuration.Get("AdminAddress");
+			string sender = String.Format("{0} <{1}>", _currentUser.FullName(), _currentUser.UserName); // Configuration.Get("AdminAddress");
 
 			foreach (string recipient in recipients) {
 				string address = recipient.ToLower().Trim();
@@ -93,5 +96,46 @@ namespace SongSearch.Web.Controllers
 			return View("InviteComplete", invites);
 		}
 
+		// **************************************
+		// URL: /User/Manage
+		// **************************************
+		public ActionResult Manage() {
+
+			var users = _usrMgmtService.GetMyUserHierarchy();
+			var invites = _usrMgmtService.GetMyInvites(InvitationStatusCodes.Open);
+			var vm = new UserViewModel();
+
+			vm.MyUsers = users;
+			vm.MyInvites = invites;
+			vm.PageTitle = "User Management";
+			vm.NavigationLocation = "Admin";
+
+			return View(vm);
+		}
+
+		// **************************************
+		// URL: /User/Manage
+		// **************************************
+		public ActionResult Detail(int id) {
+
+			var user = _usrMgmtService.GetUserDetail(id);
+			var vm = new UserViewModel();
+
+			vm.MyUsers = new List<User>() { user };
+			vm.Catalogs = CacheService.Catalogs();
+			vm.Roles = ModelEnums.GetRoles().Where(r => r >= _currentUser.RoleId).ToArray();
+			vm.IsThisUser = user.UserId == _currentUser.UserId;
+			vm.NavigationLocation = "Admin";
+			vm.AllowEdit = !vm.IsThisUser && !user.IsSuperAdmin();
+
+			if (!_currentUser.IsSuperAdmin()) {
+				//vm.LookupCatalogs = vm.LookupCatalogs.LimitToAdministeredBy(user);
+			}
+			if (Request.IsAjaxRequest()) {
+				return View("ctrlDetail", vm);
+			} else {
+				return View(vm);
+			}
+		}
     }
 }

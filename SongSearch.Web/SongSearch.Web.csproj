@@ -179,6 +179,7 @@
     <Compile Include="Services\Interfaces\IUserManagementService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserManagementService.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -1705,6 +1706,9 @@
     <Content Include="Views\Shared\ctrlLogIn.ascx" />
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
+    <Content Include="Views\User\ctrlDetail.ascx" />
+    <Content Include="Views\User\ctrlUserList.ascx" />
+    <Content Include="Views\User\Manage.aspx" />
     <Content Include="Views\User\Invite.aspx" />
     <Content Include="Views\User\InviteComplete.aspx" />
     <Content Include="Views\User\InviteMessage.ascx" />

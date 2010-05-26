@@ -64,7 +64,7 @@ namespace SongSearch.Web.Controllers
 				model.PagerSortUrl = model.SortPropertyId.HasValue ?
 					String.Format("&s={0}&o={1}", model.SortPropertyId.Value, (int)model.SortType) : "";
 				model.HeaderSortUrl = model.RequestUrl.Replace(String.Format("&s={0}&o={1}", model.SortPropertyId.GetValueOrDefault(), (int)model.SortType), "");
-				model.SearchResultsHeaders = new string[] { "Title", "Artist", "Pop", "Country", "ReleaseYear", "Preview" };
+				model.SearchResultsHeaders = new string[] { "Title", "Artist", "Pop", "Country", "ReleaseYear"};
 
 				return View(model);
 			}

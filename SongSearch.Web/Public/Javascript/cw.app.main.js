@@ -26,6 +26,16 @@ function unwait(elem) {
     //elem.css("cursor", "pointer");
 }
 
+function showErrorNotice(err) {
+//    $.pnotify.defaults.pnotify_delay = 8000;
+//    $.pnotify({
+//        pnotify_type: 'error',
+//        pnotify_title: 'Something bad happened!',
+//        pnotify_text: err.statusText
+    //    });
+    alert(err);
+}
+
 // UI functions
 // UI element constants
 var contentDetailPanelId = '#cw-content-detail-panel';
@@ -138,3 +148,23 @@ function closeContentPanel() {
     }
 }
 
+
+//-----------------------------------------------------------------------------------
+// User Management
+//-----------------------------------------------------------------------------------
+var isUserDetailShowing = false;
+
+var isCatalogDetailShowing = false;
+var catalogDetail = $('#cw-catalog-detail');
+
+function showUserDetailPanel(data) {
+    //var url = '/User/Userdetail/' + userId;
+    
+    var userDetail = $('#cw-user-detail');
+    userDetail.html(data);
+    if (!isUserDetailShowing) {
+        userDetail.show(); //fadeIn('slow');
+        isUserDetailShowing = true;
+    }
+
+}

@@ -8,7 +8,7 @@
 	IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
 
     menu.Add("Invite", new string[4] { "Invite", "User", "Admin", "current" });
-    menu.Add("Manage Users", new string[4] { "Index", "User", "Admin", "" });
+    menu.Add("Manage Users", new string[4] { "Manage", "User", "Admin", "" });
     menu.Add("Manage Catalogs", new string[4] { "Index", "Catalog", "Admin", "" });
 	
 	Html.RenderPartial("ctrlSubMenu", menu);

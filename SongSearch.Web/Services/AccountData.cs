@@ -7,7 +7,7 @@ using System.Web;
 using SongSearch.Web.Data;
 using Ninject;
 
-namespace SongSearch.Web.Services {
+namespace SongSearch.Web {
 	public static class AccountData {
 
 		//static IDataSession _session;

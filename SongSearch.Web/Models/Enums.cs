@@ -128,7 +128,7 @@ namespace SongSearch.Web {
 			       		(int) Roles.Client
 			       	};
 		}
-
+		
 		public static int[] GetPublicRoles() {
 			//			return (int[])Enum.GetValues(typeof(SystemRoles));
 			return new[]

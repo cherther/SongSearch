@@ -136,5 +136,22 @@
     }
     );
 
+    //-----------------------------------
+    // User Grid
+    //-----------------------------------
+    $('.cw-user-detail-link').live('click',
+		function (evt) {
+
+		    evt.preventDefault();
+		    var link = $(this);
+            var url = link[0].href;
+		    var listing = link.parents('.cw-user-listing');
+		    $('.cw-user-listing').removeClass('selected');
+		    listing.addClass('selected');
+		    
+		    getUserDetail(url);
+
+		}
+	);
 }
 );

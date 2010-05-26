@@ -7,7 +7,7 @@
     <file relUrl="Public/Images/Icons/Silk/chart_curve.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/cart_remove.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/bell_go.png" publishTime="05/15/2010 09:08:47" />
-    <file relUrl="Views/User/Invite.aspx" publishTime="05/26/2010 13:13:30" />
+    <file relUrl="Views/User/Invite.aspx" publishTime="05/26/2010 19:03:49" />
     <file relUrl="Public/Images/Icons/Silk/application_view_gallery.png" publishTime="05/15/2010 09:08:47" />
     <file relUrl="Public/Images/Icons/Silk/cup.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/feed_go.png" publishTime="05/15/2010 09:08:49" />
@@ -221,6 +221,7 @@
     <file relUrl="Public/Images/Icons/Silk/application.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/user.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/arrow_se.png" publishTime="05/15/2010 09:08:47" />
+    <file relUrl="Views/User/Manage.aspx" publishTime="05/26/2010 19:54:40" />
     <file relUrl="Public/Images/Icons/Silk/bullet_arrow_up.png" publishTime="05/15/2010 09:08:47" />
     <file relUrl="Public/Images/Icons/Silk/chart_pie_lightning.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/seasons.png" publishTime="05/15/2010 09:08:52" />
@@ -551,6 +552,7 @@
     <file relUrl="Public/Images/Icons/Silk/sport_8ball.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/eject_blue.png" publishTime="05/15/2010 09:08:49" />
     <file relUrl="Public/Images/Icons/Silk/arrow_nw_se.png" publishTime="05/15/2010 09:08:47" />
+    <file relUrl="Views/User/ctrlUserList.ascx" publishTime="05/26/2010 19:19:53" />
     <file relUrl="Public/Images/Icons/Silk/female.png" publishTime="05/15/2010 09:08:49" />
     <file relUrl="Public/Images/Icons/Silk/text_align_justify.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="bin/Ninject.Web.Mvc.dll" publishTime="05/25/2010 07:45:25" />
@@ -858,6 +860,7 @@
     <file relUrl="Public/Images/Icons/Silk/picture.png" publishTime="05/15/2010 09:08:51" />
     <file relUrl="Public/Images/Icons/Silk/control_repeat_blue.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/server_lightning.png" publishTime="05/15/2010 09:08:52" />
+    <file relUrl="Views/User/ctrlDetail.ascx" publishTime="05/26/2010 19:58:17" />
     <file relUrl="Public/Images/Icons/Silk/arrow_right.png" publishTime="05/15/2010 09:08:47" />
     <file relUrl="Public/Images/Icons/Silk/shape_square_add.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/disk_black_error.png" publishTime="05/15/2010 09:08:48" />
@@ -1033,7 +1036,7 @@
     <file relUrl="Public/Images/Icons/Silk/application_home.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/bullet_plus.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/laptop.png" publishTime="05/15/2010 09:08:50" />
-    <file relUrl="Views/Search/ctrlSearchResultsTable.ascx" publishTime="05/25/2010 17:44:37" />
+    <file relUrl="Views/Search/ctrlSearchResultsTable.ascx" publishTime="05/26/2010 15:00:31" />
     <file relUrl="Public/Images/Icons/Silk/feed_key.png" publishTime="05/15/2010 09:08:49" />
     <file relUrl="Public/Images/Icons/Silk/section_collapsed.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/application_view_icons.png" publishTime="05/15/2010 09:08:47" />
@@ -1091,7 +1094,7 @@
     <file relUrl="Public/Images/Icons/Silk/smartphone_disk.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/css_valid.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/bullet_wrench_red.png" publishTime="05/15/2010 09:08:48" />
-    <file relUrl="Public/Javascript/cw.app.ajax.js" publishTime="05/26/2010 08:47:04" />
+    <file relUrl="Public/Javascript/cw.app.ajax.js" publishTime="05/26/2010 19:53:06" />
     <file relUrl="Public/Images/Icons/Silk/cart_go.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/bookmark_go.png" publishTime="05/15/2010 09:08:47" />
     <file relUrl="Public/Images/Icons/Silk/database_start.png" publishTime="05/15/2010 09:08:48" />
@@ -1140,7 +1143,7 @@
     <file relUrl="Public/Images/Icons/Silk/cake_sliced.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/table_gear.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/emoticon_surprised.png" publishTime="05/15/2010 09:08:49" />
-    <file relUrl="bin/SongSearch.Web.dll" publishTime="05/26/2010 14:48:16" />
+    <file relUrl="bin/SongSearch.Web.dll" publishTime="05/26/2010 19:59:03" />
     <file relUrl="Public/Images/Icons/Silk/control_start.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/sport_tennis.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/comment_edit.png" publishTime="05/15/2010 09:08:48" />
@@ -1240,7 +1243,7 @@
     <file relUrl="Views/Cart/ctrlCartTable.ascx" publishTime="05/26/2010 09:28:21" />
     <file relUrl="Public/Images/Icons/Silk/building_error.png" publishTime="05/15/2010 09:08:47" />
     <file relUrl="Public/Images/Icons/Silk/cart.png" publishTime="05/15/2010 09:08:48" />
-    <file relUrl="Public/Javascript/cw.app.events.js" publishTime="05/26/2010 14:40:41" />
+    <file relUrl="Public/Javascript/cw.app.events.js" publishTime="05/26/2010 19:51:43" />
     <file relUrl="Public/Images/Icons/Silk/application_start.png" publishTime="05/15/2010 09:08:47" />
     <file relUrl="Public/Images/Icons/Silk/arrow_left.png" publishTime="05/15/2010 09:08:47" />
     <file relUrl="Public/Images/Icons/Silk/cake.png" publishTime="05/15/2010 09:08:48" />
@@ -1412,7 +1415,7 @@
     <file relUrl="Public/Images/Icons/Silk/house.png" publishTime="05/15/2010 09:08:50" />
     <file relUrl="Public/Images/Icons/Silk/shape_move_forwards.png" publishTime="05/15/2010 09:08:52" />
     <file relUrl="Public/Images/Icons/Silk/cd_eject.png" publishTime="05/15/2010 09:08:48" />
-    <file relUrl="Public/Javascript/cw.app.main.js" publishTime="05/26/2010 08:43:19" />
+    <file relUrl="Public/Javascript/cw.app.main.js" publishTime="05/26/2010 19:52:52" />
     <file relUrl="Public/Images/Icons/Silk/flag_yellow.png" publishTime="05/15/2010 09:08:50" />
     <file relUrl="Public/Images/Icons/Silk/bullet_purple.png" publishTime="05/15/2010 09:08:48" />
     <file relUrl="Public/Images/Icons/Silk/page_delete.png" publishTime="05/15/2010 09:08:50" />

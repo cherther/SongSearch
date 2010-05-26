@@ -91,3 +91,28 @@ function removeFromCart(url) {
 	});
 
 }
+
+//-----------------------------------------------------------------------------------
+// User Management
+//-----------------------------------------------------------------------------------
+function getUserDetail(url) {
+    //var url = '/User/Userdetail/' + userId;
+    $.ajax({
+        url: url,
+        cache: false,
+        dataType: 'html',
+        success: function (data, status, xhr) {
+            if (status == "error") {
+                showErrorNotice(xhr.status + " " + xhr.statusText);
+            }
+            else {
+                showUserDetailPanel(data);
+            }
+        },
+        error: function (xhr, status, error) {
+            showErrorNotice(xhr.status + " " + xhr.statusText);
+        }
+    }
+            );
+
+}
