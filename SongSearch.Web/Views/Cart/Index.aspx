@@ -25,8 +25,8 @@
     %>
     <%if (activeCartCount  > 0) {%>
     <p>Your song cart contains <strong><%=activeCartCount%></strong> item(s).</p>
-    <% using (Html.BeginForm("Zip", "Cart", FormMethod.Post))
-	    { %>
+    <% using (Html.BeginForm("Zip", "Cart", FormMethod.Post)){ %>
+    <%= Html.AntiForgeryToken() %>
     <p>To create a single zip file containing all items, click the 'Zip My Song Cart' button below. </p>
     <div>&nbsp;</div>
         <div>
@@ -68,22 +68,20 @@
           <p>You have no zip files waiting to be downloaded. </p>
           <%} %>
     </div>
+    <%if (downloadedCarts != null && downloadedCarts.Count() > 0) { %>
     <div>&nbsp;</div>
     <hr />
     <div>&nbsp;</div>
     <div class="cw-outl cw-carts">
-		 
-          <%if (downloadedCarts != null && downloadedCarts.Count() > 0) { %>
 		  <h3>(3) Zipped Song Carts Archive</h3>
           <p>Previously downloaded zip files appear below.</p>
 		  <p>To save them to your computer, click the 'Save' button next to the file you want to download, or 'Delete' the ones you no longer need.</p>
 		  <p>Previously downloaded files will be stored up to 7 days after you have first downloaded them.</p>
           <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status", "Save", "Delete" }; %>
           <% ViewData["CartContentHeaders"] = new string[] { "Title", "Artist", "Year" }; %>
-          <% Html.RenderPartial("ctrlCartTable", downloadedCarts); %>
-          <%} %>
-
+          <% Html.RenderPartial("ctrlCartTable", downloadedCarts); %>    
     </div>
+    <%} %>
 </div>
 </asp:Content>
 

@@ -98,7 +98,7 @@
 
             var link = $(this);
             //var id = link[0].rel;
-            addToCart(link[0]);
+            addToCartAjax(link[0]);
             
 			link.text('In Cart');
 			link.attr('title', 'In Cart');
@@ -116,7 +116,7 @@
 
 //            var link = $(this);
 //            //var id = link[0].rel;
-//            removeFromCart(link[0]);
+//            removeFromCartAjax(link[0]);
 //        }
 //    );
 
@@ -146,10 +146,47 @@
 		    var link = $(this);
             var url = link[0].href;
 		    var listing = link.parents('.cw-user-listing');
-		    $('.cw-user-listing').removeClass('selected');
-		    listing.addClass('selected');
-		    
-		    getUserDetail(url);
+            $('.cw-user-listing').removeClass('cw-selected');
+            listing.addClass('cw-selected');
+
+		    getUserDetailAjax(url);
+
+		}
+	);
+    //cw-role-edit
+    $('.cw-role-edit').live('click',
+		function (evt) {
+
+		    evt.preventDefault();
+			var link = $(this);
+            
+			updateRoleAjax(link, 'cw-green');
+			
+
+		}
+	);
+
+    //cw-cat-role-edit
+    $('.cw-cat-role-edit').live('click',
+		function (evt) {
+
+		    evt.preventDefault();
+			var link = $(this);
+            
+			updateCatRoleAjax(link);
+			
+
+		}
+	);
+    //cw-cat-role-edit-all
+    $('.cw-cat-role-edit-all').live('click',
+		function (evt) {
+
+		    evt.preventDefault();
+			var link = $(this);
+            
+			updateCatRoleAjax(link);
+			
 
 		}
 	);

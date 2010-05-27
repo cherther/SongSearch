@@ -28,7 +28,7 @@ namespace SongSearch.Web.Services {
 
 			// set up the caching matrices with keys and caching actions
 			_sessionMatrix.Add(CacheKeys.User, SessionUpdateUser);
-			_sessionMatrix.Add(CacheKeys.Carts, SessionUpdateUserActiveCart);
+			_sessionMatrix.Add(CacheKeys.ActiveCartContents, SessionUpdateUserActiveCart);
 
 			_cacheMatrix.Add(CacheKeys.Catalogs, CacheUpdateCatalogs);
 			_cacheMatrix.Add(CacheKeys.SearchProperties, CacheUpdateSearchProperties);
@@ -49,7 +49,7 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		public enum CacheKeys {
 			User,
-			Carts,
+			ActiveCartContents,
 			Catalogs,
 			SearchProperties,
 			Tags,
@@ -143,8 +143,8 @@ namespace SongSearch.Web.Services {
 
 		public static Cart MyActiveCart(string userName) {
 			if (_hasSession) {
-				if (Session(CacheKeys.Carts) == null) { SessionUpdateUserActiveCart(CacheKeys.Carts, userName); }
-				var value = Session(CacheKeys.Carts) as Cart;
+				if (Session(CacheKeys.ActiveCartContents) == null) { SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); }
+				var value = Session(CacheKeys.ActiveCartContents) as Cart;
 				return value;
 
 			} else {
@@ -156,8 +156,8 @@ namespace SongSearch.Web.Services {
 			Cart activeCart;
 
 			if (_hasSession) {
-				if (Session(CacheKeys.Carts) == null) { SessionUpdateUserActiveCart(CacheKeys.Carts, userName); }
-				activeCart = Session(CacheKeys.Carts) as Cart;
+				if (Session(CacheKeys.ActiveCartContents) == null) { SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); }
+				activeCart = Session(CacheKeys.ActiveCartContents) as Cart;
 
 			} else {
 				activeCart = GetDataUserActiveCart(userName);
@@ -171,7 +171,7 @@ namespace SongSearch.Web.Services {
 
 		public static void RefreshMyActiveCart(string userName) {
 			if (_hasSession) {
-				SessionUpdateUserActiveCart(CacheKeys.Carts, userName); 
+				SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); 
 			}
 		}
 		// ----------------------------------------------------------------------------

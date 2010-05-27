@@ -33,6 +33,7 @@ foreach (var cart in Model)
 	    </td>
 	    <td>
 	    <% using (Html.BeginForm("Download", "Cart", new { id = cart.CartId }, FormMethod.Post)) { %>
+        <%: Html.AntiForgeryToken() %>
 	        <button type="submit" class="cw-button cw-simple cw-small cw-blue">
 	        <span class="b-save">Save</span></button>
 	    <%}%>
@@ -40,6 +41,7 @@ foreach (var cart in Model)
         <%if (tableHeader.Contains("Delete")) { %>
         <td>
 	    <% using (Html.BeginForm("Delete", "Cart", new { id = cart.CartId }, FormMethod.Post)) {%>
+        <%: Html.AntiForgeryToken() %>
 	        <button type="submit" class="cw-button cw-simple cw-small cw-blue">
 	        <span class="b-delete">Delete</span></button>
 	    <%}%>

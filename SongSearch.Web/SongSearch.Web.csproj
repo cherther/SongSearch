@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
     <PublishDatabases>false</PublishDatabases>
   </PropertyGroup>
@@ -73,6 +73,10 @@
     </Reference>
     <Reference Include="Spark.Web.Mvc">
       <HintPath>..\Ext Libraries\Spark.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="SquishIt.Framework, Version=0.5.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Ext Libraries\SquishIt\SquishIt.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -114,7 +118,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -138,7 +142,7 @@
     <Compile Include="Infrastructure\Storage\EF\SongSearchDataSession.cs" />
     <Compile Include="Infrastructure\Storage\File.cs" />
     <Compile Include="Models\Content.cs" />
-    <Compile Include="Models\SearchField.cs" />
+    <Compile Include="ViewModels\SearchField.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Infrastructure\Authentication\AuthorizeAttribute.cs" />
@@ -157,7 +161,7 @@
     <Compile Include="Infrastructure\Storage\IDataSessionReadOnly.cs" />
     <Compile Include="Infrastructure\Storage\IDataSession.cs" />
     <Compile Include="Models\Enums.cs" />
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="ViewModels\AccountModels.cs" />
     <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\CacheService.cs" />
     <Compile Include="Services\ContentAdminService.cs" />
@@ -185,6 +189,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Public\Css\cw.app.css" />
+    <Content Include="Public\Css\cw.flash.css" />
     <Content Include="Public\Css\cw.forms.css" />
     <Content Include="Public\Css\cw.tables.css" />
     <Content Include="Public\Css\cw.twitlogin.css" />
@@ -1669,6 +1674,19 @@
     <Content Include="Public\Images\jquery-ui\ui-icons_888888_256x240.png" />
     <Content Include="Public\Images\jquery-ui\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Public\Images\loading.gif" />
+    <Content Include="Public\Images\skins\orange\button_left.gif" />
+    <Content Include="Public\Images\skins\orange\button_left.png" />
+    <Content Include="Public\Images\skins\orange\button_right.gif" />
+    <Content Include="Public\Images\skins\orange\button_right.png" />
+    <Content Include="Public\Images\skins\silver\button_left.gif" />
+    <Content Include="Public\Images\skins\silver\button_left.png" />
+    <Content Include="Public\Images\skins\silver\button_right.gif" />
+    <Content Include="Public\Images\skins\silver\button_right.png" />
+    <Content Include="Public\Images\skins\simple\awesome-overlay-sprite.png" />
+    <Content Include="Public\Images\skins\yellow\button_left.gif" />
+    <Content Include="Public\Images\skins\yellow\button_left.png" />
+    <Content Include="Public\Images\skins\yellow\button_right.gif" />
+    <Content Include="Public\Images\skins\yellow\button_right.png" />
     <Content Include="Public\Javascript\cw.app.main.js" />
     <Content Include="Public\Javascript\cw.app.events.js" />
     <Content Include="Public\Javascript\cw.app.ajax.js" />
@@ -1706,12 +1724,12 @@
     <Content Include="Views\Shared\ctrlLogIn.ascx" />
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
-    <Content Include="Views\User\ctrlDetail.ascx" />
-    <Content Include="Views\User\ctrlUserList.ascx" />
-    <Content Include="Views\User\Manage.aspx" />
-    <Content Include="Views\User\Invite.aspx" />
-    <Content Include="Views\User\InviteComplete.aspx" />
-    <Content Include="Views\User\InviteMessage.ascx" />
+    <Content Include="Views\UserManagement\ctrlDetail.ascx" />
+    <Content Include="Views\UserManagement\ctrlUserList.ascx" />
+    <Content Include="Views\UserManagement\Index.aspx" />
+    <Content Include="Views\UserManagement\Invite.aspx" />
+    <Content Include="Views\UserManagement\InviteComplete.aspx" />
+    <Content Include="Views\UserManagement\InviteMessage.ascx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -42,7 +42,13 @@ namespace SongSearch.Web.Controllers
 			var vm = GetCartViewModel();
 			vm.MyCarts = _cartService.MyCarts();
 			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File Name", "Download", "Remove"};
-			
+
+			var compressedCarts = vm.MyCarts.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed);
+			var count = compressedCarts.Count();
+			if (count > 0) {
+				var msg = String.Format("You have <strong>{0}</strong> {1} waiting to be downloaded.", count, count > 1 ? "carts": "cart");
+				this.FlashInfo(msg);
+			}
 
 			return View(vm);
         }
@@ -66,6 +72,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Cart/Add/5
 		// **************************************
+		//[HttpPost]
 		public ActionResult Add(int id) {
 			try {
 
@@ -73,8 +80,9 @@ namespace SongSearch.Web.Controllers
 				CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
 				if (Request.IsAjaxRequest()) {
-					return Json(id);
+					return Json(id, JsonRequestBehavior.AllowGet);
 				} else {
+					this.FlashInfo("Item added to cart");
 					return RedirectToAction("Index");
 				}
 			}
@@ -82,6 +90,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
+					this.FlashError("There was an error adding this item");
 					return RedirectToAction("Index", "Error", ex);
 				}
 			}
@@ -90,6 +99,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Cart/Remove/5
 		// **************************************
+		//[HttpPost]
 		public ActionResult Remove(int id) {
 			try {
 
@@ -97,8 +107,9 @@ namespace SongSearch.Web.Controllers
 				CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
 				if (Request.IsAjaxRequest()) {
-					return Json(id);
+					return Json(id, JsonRequestBehavior.AllowGet);
 				} else {
+					this.FlashInfo("Item removed from cart");
 					return RedirectToAction("Index");
 				}
 			}
@@ -106,6 +117,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
+					this.FlashError("There was an error removing this item");
 					return RedirectToAction("Index", "Error", ex);
 				}
 			}
@@ -115,28 +127,40 @@ namespace SongSearch.Web.Controllers
 		// URL: /Cart/Delete/3
 		// **************************************
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Delete(int id) {
 			try {
 
 				_cartService.DeleteCart(id);
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
-				return RedirectToAction("Index");
+				this.FlashInfo("Cart deleted");
 			}
-			catch (Exception ex) {
-				return RedirectToAction("Index", "Error", ex);
+			catch {
+				this.FlashError("There was an error deleting this cart");				
 			}
+			return RedirectToAction("Index");
+
 		}
 
 		// **************************************
 		// URL: /Cart/Zip/3
 		// **************************************
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Zip(string userArchiveName, IList<ContentUserDownloadable> contentNames) {
-			_cartService.CompressMyActiveCart(userArchiveName, contentNames);
-			CacheService.RefreshMyActiveCart(_currentUser.UserName);
-			return RedirectToAction("Index");
 
+			try {
+				_cartService.CompressMyActiveCart(userArchiveName, contentNames);
+				CacheService.RefreshMyActiveCart(_currentUser.UserName);
+				this.FlashInfo("Your cart is ready for download");
+
+			}
+			catch {
+				this.FlashError("There was an error zipping this cart. Please try again in a bit.");
+
+			}
+			return RedirectToAction("Index");
 		}
 		//[HttpPost]
 		//public ActionResult ZipCompleted() {
@@ -148,15 +172,20 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		public ActionResult Download(int id) {
 
-			var cart = _cartService.DownloadCompressedCart(id);
-			//CacheService.RefreshMyActiveCart(_currentUser.UserName);
+			try {
+				var cart = _cartService.DownloadCompressedCart(id);
+				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
-			if (cart == null) { throw new ArgumentException(); }
+				if (cart == null) { throw new ArgumentException(); }
 
-			Response.ContentType = "application/zip";
-			Response.AddHeader("content-disposition", String.Format("filename={0}", cart.ArchiveName));
-			return new FileStreamResult(new System.IO.FileStream(cart.ArchivePath(), System.IO.FileMode.Open), "application/zip");
-			
+				Response.ContentType = "application/zip";
+				Response.AddHeader("content-disposition", String.Format("filename={0}", cart.ArchiveName));
+				return new FileStreamResult(new System.IO.FileStream(cart.ArchivePath(), System.IO.FileMode.Open), "application/zip");
+			}
+			catch {
+				this.FlashError("There was an error downloading this cart. Please try again in a bit.");
+				return RedirectToAction("Index");
+			}
 		}
 		//public ActionResult DownloadDone() {
 

@@ -113,7 +113,7 @@ namespace SongSearch.Web.Services {
 						DataSession.Delete<Invitation>(user.Invitation);
 					}
 					//handled via cascade in db
-					//user.Carts.ToList().ForEach(x => user.Carts.Remove(x));
+					//user.ActiveCartContents.ToList().ForEach(x => user.ActiveCartContents.Remove(x));
 					//user.UserCatalogRoles.ToList().ForEach(x => user.UserCatalogRoles.Remove(x));
 
 					DataSession.Delete<User>(user);
@@ -144,7 +144,7 @@ namespace SongSearch.Web.Services {
 				child.ParentUserId = ActiveUser.UserId;
 			}
 
-			//Re-assign invites from this myUser to active myUser
+			//Re-assign model from this myUser to active myUser
 			var invites = DataSession.All<Invitation>().Where(i => i.InvitedByUserId == user.UserId);
 			foreach (var invite in invites) {
 				invite.InvitedByUserId = ActiveUser.UserId;
@@ -276,7 +276,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateUserRoleAllCatalogs
 		// **************************************
-		public void UpdateUserRoleAllCatalogs(int userId, int roleId) {
+		public void UpdateAllCatalogs(int userId, int roleId) {
 			var usr = GetUser(userId);
 			var parentUsr = GetUser(usr.ParentUserId.GetValueOrDefault());
 
@@ -322,7 +322,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateCatalogRoleAllUsers
 		// **************************************
-		public void UpdateCatalogRoleAllUsers(int catalogId, int roleId) {
+		public void UpdateAllUsers(int catalogId, int roleId) {
 
 			var cat = DataSession.Single<Catalog>(x => x.CatalogId == catalogId);
 

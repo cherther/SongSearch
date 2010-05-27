@@ -41,6 +41,21 @@ input.cw-input-highlight
 {
     display: none;
 }
+.cw-selected
+{
+	background-color: #FFFFCC;
+}
+
+.cw-unselected
+{
+	background-color: #FFFFFF;
+}
+
+span.cw-highlight 
+{
+	background-color:#F5DF00;
+	padding:0.1em;
+}
 /* boxes */
 .cw-outl
 {

@@ -1,6 +1,6 @@
-﻿function getContentDetail(url, trigger) {
+﻿function getContentDetailAjax(url, trigger) {
     
-    wait(null, null);
+    wait();
 
     $.ajax({
         url: url,
@@ -8,17 +8,17 @@
         cache: false,
         dataType: 'html',
         success: function (data, status, xhr) {
-            if (status == "error") {
-                showErrorNotice(xhr.status + " " + xhr.statusText);
+            if (status == 'error') {
+                flash('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
 
                 showContentPanelCallback(data, trigger);
-                unwait(null); //detailsPanel);
+                unwait(); //detailsPanel);
             }
         },
         error: function (xhr, status, error) {
-            showErrorNotice(xhr.status + " " + xhr.statusText);
+            flash('error', xhr.status + ' ' + xhr.statusText);
         }
     });
 
@@ -27,7 +27,7 @@
 //-----------------------------------------------------------------------------------
 // Song Cart
 //-----------------------------------------------------------------------------------
-function updateCartCount() {
+function updateCartCountAjax() {
 
     var menuCartLink = $('#menu-cart a')
     var url = menuCartLink.attr('href');
@@ -47,72 +47,131 @@ function updateCartCount() {
 	    );
 }
 
-function addToCart(url) {
+function addToCartAjax(url) {
 
-	$.ajax({
-	    url: url,
-	    type: 'POST',
-		cache: false,
-		dataType: 'json',
-		success: function (data, status, xhr) {
-		    if (status == "error") {
-		        showErrorNotice(xhr.status + " " + xhr.statusText);
-		    }
-		    else {
-		        updateCartCount();
-		    }
-		},
-		error: function (xhr, status, error) {
-		    showErrorNotice(xhr.status + " " + xhr.statusText);
-		}
-	});
-
-}
-
-
-function removeFromCart(url) {
-   
-	$.ajax({
-		url: url,
-		type: 'POST',
-		cache: false,
-		dataType: 'json',
-		success: function (data, status, xhr) {
-		    if (status == "error") {
-		        showErrorNotice(xhr.status + " " + xhr.statusText);
-		    }
-		    else {
-		        updateCartCount();
-		    }
-		},
-		error: function (xhr, status, error) {
-		    showErrorNotice(xhr.status + " " + xhr.statusText);
-		}
-	});
+    $.ajax({
+        url: url,
+        type: 'POST',
+        cache: false,
+        dataType: 'json',
+        success: function (data, status, xhr) {
+            if (status == 'error') {
+                flash('error', xhr.status + ' ' + xhr.statusText);
+            }
+            else {
+                flash('info', 'Added to Cart');
+                updateCartCountAjax();
+            }
+        },
+        error: function (xhr, status, error) {
+            flash('error', xhr.status + ' ' + xhr.statusText);
+        }
+    });
 
 }
+
+
+//function removeFromCartAjax(url) {
+//   
+//	$.ajax({
+//		url: url,
+//		type: 'POST',
+//		cache: false,
+//		dataType: 'json',
+//		success: function (data, status, xhr) {
+//		    if (status == 'error') {
+//		        flash('error', xhr.status + ' ' + xhr.statusText);
+//		    }
+//		    else {
+//		        flash('info', 'Removed from Cart');
+//		        updateCartCountAjax();
+//		    }
+//		},
+//		error: function (xhr, status, error) {
+//		    flash('error', xhr.status + ' ' + xhr.statusText);
+//		}
+//	});
+
+//}
 
 //-----------------------------------------------------------------------------------
 // User Management
 //-----------------------------------------------------------------------------------
-function getUserDetail(url) {
+function getUserDetailAjax(url) {
     //var url = '/User/Userdetail/' + userId;
+    wait();
     $.ajax({
         url: url,
         cache: false,
         dataType: 'html',
         success: function (data, status, xhr) {
-            if (status == "error") {
-                showErrorNotice(xhr.status + " " + xhr.statusText);
+            if (status == 'error') {
+                flash('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
+
                 showUserDetailPanel(data);
+                unwait();
             }
         },
         error: function (xhr, status, error) {
-            showErrorNotice(xhr.status + " " + xhr.statusText);
+            flash('error', xhr.status + ' ' + xhr.statusText);
         }
     }
-            );
+ );
+}
+
+function updateRoleAjax(link) {
+
+    var url = link[0].href;
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'POST',
+        cache: false,
+        success: function (data, status, xhr) {
+            if (status == "error") {
+                flash('error', xhr.status + ' ' + xhr.statusText);
+            }
+            else {
+                toggleTagBoxSelection(link, 'cw-green', true)
+                flash('info', 'User role updated');
+            }
+        },
+        error: function (xhr, status, error) {
+            flash('error', xhr.status + " " + xhr.statusText);
+        }
+        }
+	);
+
+}
+
+
+function updateCatRoleAjax(link) {
+
+    wait();
+    var url = link[0].href;
+    var detUrl = link[0].rel;
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'POST',
+        cache: false,
+        success: function (data, status, xhr) {
+            if (status == "error") {
+                flash('error', xhr.status + ' ' + xhr.statusText);
+            }
+            else {
+                getUserDetailAjax(detUrl);
+                unwait();
+            }
+        },
+        error: function (xhr, status, error) {
+            flash('error', xhr.status + " " + xhr.statusText);
+        }
+    }
+	);
 
 }

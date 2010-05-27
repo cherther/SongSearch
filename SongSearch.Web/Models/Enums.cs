@@ -118,7 +118,6 @@ namespace SongSearch.Web {
 
 	public static class ModelEnums {
 		public static int[] GetRoles() {
-//			return (int[])Enum.GetValues(typeof(SystemRoles));
 			return new[]
 			       	{
 			       		(int) Roles.None,
@@ -130,11 +129,9 @@ namespace SongSearch.Web {
 		}
 		
 		public static int[] GetPublicRoles() {
-			//			return (int[])Enum.GetValues(typeof(SystemRoles));
 			return new[]
 			       	{
 			       		(int) Roles.None,
-//				(int) AccessLevels.SuperAdmin, 
 			       		(int) Roles.Admin,
 			       		(int) Roles.Plugger,
 			       		(int) Roles.Client

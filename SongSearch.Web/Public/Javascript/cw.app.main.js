@@ -6,34 +6,52 @@ if (!String.prototype.swap) String.prototype.swap = function (a, b) { if (this.c
 
 function Rnd() { return Math.floor(Math.random() * 100001).toString(); }
 
+var waiting = false;
 function wait(elem, message) {
 
     try {
-        //$("body").css("cursor", "wait");
-        elem = elem == null ? $("body") : elem;
-        message = message == null ? "Loading" : message;
-        elem.css("cursor", "wait");
-        //elem.block({ message: '<h3><img src="/public/images/loading.gif" />' + message + '...</h3>' });
-        
+        if (!waiting) {
+            //$("body").css("cursor", "wait");
+            elem = elem == null ? $("body") : elem;
+            message = message == null ? "Loading" : message;
+            elem.css("cursor", "wait");
+            //elem.block({ message: '<h3><img src="/public/images/loading.gif" />' + message + '...</h3>' });
+            waiting = true;
+        }
     }
     catch (ex) {
     }
 }
 function unwait(elem) {
-    elem = elem == null ? $("body") : elem;
-    //elem.unblock();
-    elem.css("cursor", "default");
-    //elem.css("cursor", "pointer");
+    if (waiting) {
+        elem = elem == null ? $("body") : elem;
+        //elem.unblock();
+        elem.css("cursor", "default");
+        //elem.css("cursor", "pointer");
+    }
+    waiting = false;
 }
 
-function showErrorNotice(err) {
-//    $.pnotify.defaults.pnotify_delay = 8000;
-//    $.pnotify({
-//        pnotify_type: 'error',
-//        pnotify_title: 'Something bad happened!',
-//        pnotify_text: err.statusText
-    //    });
-    alert(err);
+function flash(type, msg) {
+
+    //var fade = type == 'info';
+    var flash = $('#flash');
+    flash.html(msg).removeClass('').addClass(type);
+    flash.slideDown('slow');
+    if (type == 'info') {
+        flash.delay('1200').fadeOut('slow'); 
+    }
+    flash.click(function () 
+        {
+            flash.toggle('highlight') 
+        });
+}
+
+function toggleTagBoxSelection(box, selectedClass, toggle) {
+    box.siblings().removeClass(selectedClass);
+    if (toggle) {
+        box.addClass(selectedClass);
+    }
 }
 
 // UI functions
@@ -108,7 +126,7 @@ function showContentPanel(link) {
 
         var url = link[0].href;
 
-        getContentDetail(url, link);
+        getContentDetailAjax(url, link);
 
     } else {
         closeContentPanel();
@@ -155,12 +173,12 @@ function closeContentPanel() {
 var isUserDetailShowing = false;
 
 var isCatalogDetailShowing = false;
-var catalogDetail = $('#cw-catalog-detail');
-
+var catalogDetailId = '#cw-catalog-detail';
+var userDetailId = '#cw-user-detail';
 function showUserDetailPanel(data) {
     //var url = '/User/Userdetail/' + userId;
     
-    var userDetail = $('#cw-user-detail');
+    var userDetail = $(userDetailId);
     userDetail.html(data);
     if (!isUserDetailShowing) {
         userDetail.show(); //fadeIn('slow');

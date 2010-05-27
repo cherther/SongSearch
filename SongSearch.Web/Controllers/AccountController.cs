@@ -56,14 +56,21 @@ namespace SongSearch.Web.Controllers {
 				if (_acctService.UserIsValid(model.Email, model.Password))
 				//if (_ms.UserIsValid(model.Email, model.Password))
 		{
-					var friendly = CacheService.User(model.Email).FullName();
-
-					SetFriendlyNameCookie(friendly);
-
 
 					_authService.SignIn(model.Email, model.RememberMe);
-					_usrMgmtService.ActiveUserName = model.Email;
+					//_usrMgmtService.ActiveUserName = model.Email;
+					CacheService.InitializeSession(model.Email, true);
+					var user = CacheService.User(model.Email);
 
+					SetFriendlyNameCookie(user.FullName());
+
+					var msg = string.Concat("Welcome ", user.FullName());
+					var cart = CacheService.MyActiveCart(user.UserName);
+					var activeItems = cart != null && cart.Contents != null ? cart.Contents.Count : 0;
+					msg = activeItems > 0 ? String.Concat(msg, String.Format(". You have <strong>{0}</strong> {1} waiting in your song cart.", activeItems, activeItems > 1 ? "items" : "item")) : msg;
+					this.FlashInfo(msg);
+
+					
 					if (!String.IsNullOrEmpty(returnUrl)) {
 						return Redirect(returnUrl);
 					} else {
@@ -71,6 +78,7 @@ namespace SongSearch.Web.Controllers {
 					}
 				} else {
 					ModelState.AddModelError("", Errors.LoginFailed.Text());
+					this.FlashError("There was an error logging you in...");
 				}
 
 			}
@@ -196,7 +204,7 @@ namespace SongSearch.Web.Controllers {
 
 			// If we got this far, something failed, redisplay form
 			model.NavigationLocation = "Register";
-
+			this.FlashError("There was an error registering you...");
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(model);
@@ -232,6 +240,8 @@ namespace SongSearch.Web.Controllers {
 
 			// If we got this far, something failed, redisplay form
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
+			this.FlashError("There was an error changing your password...");
+
 			model.NavigationLocation = "Account";
 			return View(model);
 		}
@@ -294,14 +304,17 @@ namespace SongSearch.Web.Controllers {
 				};
 				//update the user's profile in the database
 				if (_acctService.UpdateProfile(user, null)) {
-
+					
 					// Update the user dataSession cached in dataSession
 					CacheService.InitializeSession(userName, true);
-
-					var friendly =
-						CacheService.User(userName).FullName();
+					user = CacheService.User(User.Identity.Name);
+					var friendly = user.FullName();
 					SetFriendlyNameCookie(friendly);
-					return RedirectToAction("UpdateProfileSuccess");
+
+					model.ShowSignatureField = user.IsAnyAdmin();
+					this.FlashInfo("Successfully updated your profile...");
+
+					return View(model);
 
 				} else {
 					ModelState.AddModelError("",
@@ -313,29 +326,31 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] =
 				AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
+			this.FlashError("There was an error updating your profile...");
+
 			return View(model);
 		}
 
-		// **************************************
-		// URL: /Account/UpdateProfileSuccess
-		// **************************************        
-		[RequireAuthorization]
-		public ActionResult UpdateProfileSuccess() {
-			//string email = User.Identity.Name;
+		//// **************************************
+		//// URL: /Account/UpdateProfileSuccess
+		//// **************************************        
+		//[RequireAuthorization]
+		//public ActionResult UpdateProfileSuccess() {
+		//    //string email = User.Identity.Name;
 
-			//try
-			//{
-			//    _cas.SendMail(
-			//        Settings.AdminEmailAddress.Text(), 
-			//        email, 
-			//        Messages.PasswordChangeSuccessSubjectLine.Text(), 
-			//        Messages.PasswordChangeSuccess.Text()
-			//        );
-			//}
-			//catch { }
-			UpdateProfileModel vm = new UpdateProfileModel() { NavigationLocation = "Account" };
-			return View(vm);
-		}
+		//    //try
+		//    //{
+		//    //    _cas.SendMail(
+		//    //        Settings.AdminEmailAddress.Text(), 
+		//    //        email, 
+		//    //        Messages.PasswordChangeSuccessSubjectLine.Text(), 
+		//    //        Messages.PasswordChangeSuccess.Text()
+		//    //        );
+		//    //}
+		//    //catch { }
+		//    UpdateProfileModel vm = new UpdateProfileModel() { NavigationLocation = "Account" };
+		//    return View(vm);
+		//}
 
 
 		// **************************************
@@ -378,6 +393,7 @@ namespace SongSearch.Web.Controllers {
 			}
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
+			this.FlashError("There was an error processing your password reset request...");
 
 			return View(model);
 		}
@@ -420,6 +436,7 @@ namespace SongSearch.Web.Controllers {
 
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 				model.NavigationLocation = "Account";
+				this.FlashError("There was an error processing your password reset request...");
 
 				return View(model);
 			}

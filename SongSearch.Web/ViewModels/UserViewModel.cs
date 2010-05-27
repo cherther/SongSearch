@@ -17,5 +17,7 @@ namespace SongSearch.Web {
 		public IList<Invitation> MyInvites { get; set; }
 		public IList<Catalog> Catalogs { get; set; }
 		public int[] Roles { get; set; }
+		public int[] CatalogRoles { get; set; }
+
 	}
 }

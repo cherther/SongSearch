@@ -11,9 +11,9 @@ namespace SongSearch.Web.Controllers {
 		// URL: /
 		// **************************************
 		public ActionResult Index() {
-			var vm = new ViewModel() { NavigationLocation = "Home" };
-			return View(vm);
-			//return RedirectToAction("Index", "Search");
+			//var vm = new ViewModel() { NavigationLocation = "Home" };
+			//return View(vm);
+			return RedirectToAction("Index", "Search");
 		}
 
 		// **************************************

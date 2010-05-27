@@ -53,22 +53,27 @@ namespace SongSearch.Web.Controllers
 					)
 					).ToList();
 
-				
-				var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
+				try {
+					var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
 
 				
-				model.SearchResults = results;
-				model.SearchFields = searchFields;
+					model.SearchResults = results;
+					model.SearchFields = searchFields;
 
-				model.RequestUrl = Request.RawUrl.Replace(String.Format("&p={0}", results.PageIndex), "");
-				model.PagerSortUrl = model.SortPropertyId.HasValue ?
-					String.Format("&s={0}&o={1}", model.SortPropertyId.Value, (int)model.SortType) : "";
-				model.HeaderSortUrl = model.RequestUrl.Replace(String.Format("&s={0}&o={1}", model.SortPropertyId.GetValueOrDefault(), (int)model.SortType), "");
-				model.SearchResultsHeaders = new string[] { "Title", "Artist", "Pop", "Country", "ReleaseYear"};
+					model.RequestUrl = Request.RawUrl.Replace(String.Format("&p={0}", results.PageIndex), "");
+					model.PagerSortUrl = model.SortPropertyId.HasValue ?
+						String.Format("&s={0}&o={1}", model.SortPropertyId.Value, (int)model.SortType) : "";
+					model.HeaderSortUrl = model.RequestUrl.Replace(String.Format("&s={0}&o={1}", model.SortPropertyId.GetValueOrDefault(), (int)model.SortType), "");
+					model.SearchResultsHeaders = new string[] { "Title", "Artist", "Pop", "Country", "ReleaseYear"};
 
-				return View(model);
+					return View(model);
+				}
+				catch {
+					this.FlashError("There was an error getting your search results. Please try again in a bit.");
+				}
 			}
 
+			this.FlashWarning("Please try your search again.");
 			return RedirectToAction("Index");
 		}
 

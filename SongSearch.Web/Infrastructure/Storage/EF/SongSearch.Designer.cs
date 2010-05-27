@@ -89,7 +89,7 @@ namespace SongSearch.Web.Data
             {
                 if ((_Carts == null))
                 {
-                    _Carts = base.CreateObjectSet<Cart>("Carts");
+                    _Carts = base.CreateObjectSet<Cart>("ActiveCartContents");
                 }
                 return _Carts;
             }
@@ -260,11 +260,11 @@ namespace SongSearch.Web.Data
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the Carts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the ActiveCartContents EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToCarts(Cart cart)
         {
-            base.AddObject("Carts", cart);
+            base.AddObject("ActiveCartContents", cart);
         }
     
         /// <summary>
