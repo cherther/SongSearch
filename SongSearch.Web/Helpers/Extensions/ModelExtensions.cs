@@ -31,7 +31,7 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string DownloadableName(this Content content, string signature = null) {
 
-			signature = signature ?? "";
+			signature = signature != null ? String.Format("({0})", signature) : "";
 
 			return (String.Format("{0} by {1} {2}", content.Title.ToUpper(), content.Artist.ToUpper(), signature)).MakeFilePathSafe();
 		

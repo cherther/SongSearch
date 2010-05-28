@@ -36,7 +36,7 @@
                 </table>
             </div>
             <div>&nbsp;</div>
-            <h3>Invites</h3><%= Html.ActionLink("Invite New", "Invite", "UserManagement") %>
+            <h3>Open Invites</h3><%= Html.ActionLink("Invite New", "Invite", "UserManagement") %>
             <div>&nbsp;</div>
             <div class = "cw-outl cw-padded" style="overflow: auto; height: 150px; width: 300px;">
                 <table id="invite-list" class="cw-tbl-usr">

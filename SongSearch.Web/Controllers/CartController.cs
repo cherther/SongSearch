@@ -134,7 +134,7 @@ namespace SongSearch.Web.Controllers
 				_cartService.DeleteCart(id);
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
-				this.FlashInfo("Cart deleted");
+				this.FlashInfo("Cart Deleted");
 			}
 			catch {
 				this.FlashError("There was an error deleting this cart");				

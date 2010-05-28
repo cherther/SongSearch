@@ -387,37 +387,47 @@ namespace SongSearch.Web.Services {
 			//for special cases, we use lambdas, otherwise we use DynamicLinq
 			switch (sortField) {
 				case "Title":
-					return sortDirection.IsDescending() ?
+					query = (sortDirection.IsDescending() ?
 						query.OrderByDescending(_titleSortDesc) :
-						query.OrderBy(_titleSort);					
-				
+						query.OrderBy(_titleSort)
+						)
+						.ThenBy(_artistSort);
+					break;
 				case "Artist":
-					return sortDirection.IsDescending() ?
+					query = (sortDirection.IsDescending() ?
 						query.OrderByDescending(_artistSortDesc) :
-						query.OrderBy(_artistSort);
-
+						query.OrderBy(_artistSort)
+						)
+						.ThenBy(_titleSort);
+					break;
 				case "Pop":
-					return sortDirection.IsDescending() ?
+					query = (sortDirection.IsDescending() ?
 						query.OrderByDescending(_popSort) :
-						query.OrderBy(_popSort);
-
+						query.OrderBy(_popSort))
+						.ThenBy(_titleSort).ThenBy(_artistSort);
+					break;
 				case "Country":
-					return sortDirection.IsDescending() ?
+					query = (sortDirection.IsDescending() ?
 						query.OrderByDescending(_countrySort) :
-						query.OrderBy(_countrySort);
-				
+						query.OrderBy(_countrySort))
+						.ThenBy(_titleSort).ThenBy(_artistSort);
+					break;
 				case "ReleaseYear":
-					return sortDirection.IsDescending() ?
+					query = (sortDirection.IsDescending() ?
 						query.OrderByDescending(_releaseYearSortDesc) :
-						query.OrderBy(_releaseYearSort);
-				
+						query.OrderBy(_releaseYearSort))
+						.ThenBy(_titleSort).ThenBy(_artistSort);
+					break;
 				default:
 					
 					sortField = sortField != null && sortDirection != SortType.None ?
 							String.Format("{0} {1}", sortField, (sortDirection)) :
 							null;
-					return sortField != null ? query.OrderBy(sortField) : query;
+					query = sortField != null ? query.OrderBy(sortField) : query;
+					break;
 			}
+
+			return query;
 	
 			
 		}

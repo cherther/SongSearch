@@ -46,7 +46,7 @@
             <%} %>
             <%if (tableHeader.Contains("Remove")) { %>
             <td>
-                <%: Html.ActionLink("Remove", "Remove", "Cart", new { id = item.ContentId }, new { @class = "cw-cart-remove-link cw-button cw-simple cw-small cw-blue", title = "Remove from Cart" })%>
+                <%: Html.ActionLink("Remove", "Remove", "Cart", new { id = item.ContentId }, new { @class = "cw-cart-remove-link cw-button cw-simple cw-small cw-red", title = "Remove from Cart" })%>
             </td>
             <%} %>
         </tr>

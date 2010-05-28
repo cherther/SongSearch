@@ -78,7 +78,7 @@
     </tr>
     </table>
 <% 
-    var d = SongSearch.Web.Application.Environment != AppEnvironment.Production ? "?d" : "";
+	var d = SongSearch.Web.Application.Environment != AppEnvironment.Production ? "?d" : "";
 %>
 <%= Bundle.JavaScript()
     .Add("~/public/javascript/jquery-1.4.1.min.js")

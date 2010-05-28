@@ -4,7 +4,7 @@
     var request = Model.RequestUrl;
     var sortUrl = Model.PagerSortUrl;
  %>
-<div>
+<div class="cw-pager">
     <%if (results.TotalPages > 1) { %>
     Page <%= results.CurrentPage%> of <%= results.TotalPages%> total.&nbsp;
     Go to:&nbsp;
@@ -53,3 +53,4 @@
     &nbsp;
     <%} %>
     </div>
+

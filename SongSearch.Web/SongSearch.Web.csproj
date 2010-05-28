@@ -1711,6 +1711,7 @@
     <Content Include="Views\Cart\ctrlCartTable.ascx" />
     <Content Include="Views\Cart\Index.aspx" />
     <Content Include="Views\Error\Index.aspx" />
+    <Content Include="Views\Search\ctrlBreadcrumb.ascx" />
     <Content Include="Views\Search\ctrlContentDetail.ascx" />
     <Content Include="Views\Search\ctrlSearchResults.ascx" />
     <Content Include="Views\Search\ctrlSearchOptions.ascx" />
