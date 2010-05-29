@@ -48,13 +48,13 @@
             <td width="200">
                 <%: !String.IsNullOrWhiteSpace(item.Artist) ? item.Artist.ToUpper() : "(N/A)"%>
             </td>
-            <td>
+            <td align="right">
                 <%: item.Pop %>
             </td>
-            <td>
+            <td align="right">
                 <%: item.Country %>
             </td>
-            <td>
+            <td align="right">
                 <%: item.ReleaseYear %>
             </td>
            

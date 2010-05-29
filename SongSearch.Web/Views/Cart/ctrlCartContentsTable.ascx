@@ -29,7 +29,7 @@
             <td width="200">
                 <%: !String.IsNullOrWhiteSpace(item.Artist) ? item.Artist.ToUpper() : "(N/A)"%>
             </td>
-            <td>
+            <td align="right">
                 <%: item.ReleaseYear %>
             </td>
             <%if (tableHeader.Contains("File Name")) { %>

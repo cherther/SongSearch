@@ -12,7 +12,9 @@
         <% Html.RenderPartial("ctrlSearchOptions"); %>
     </td>
     <td  align="left">
+		
         <div id="cw-search-results-panel">
+		
         <% Html.RenderPartial("ctrlSearchResults"); %>
         </div>
     </td>

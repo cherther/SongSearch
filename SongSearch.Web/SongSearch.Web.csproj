@@ -191,6 +191,7 @@
     <Content Include="Global.asax" />
     <Content Include="Public\Css\cw.app.css" />
     <Content Include="Public\Css\cw.flash.css" />
+    <Content Include="Public\Css\cw.flashblock.css" />
     <Content Include="Public\Css\cw.forms.css" />
     <Content Include="Public\Css\cw.tables.css" />
     <Content Include="Public\Css\cw.twitlogin.css" />

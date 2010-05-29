@@ -87,5 +87,14 @@
 #cw-tbl-media-player
 {
     width: 100%;
-    border: 0;
+    border: 1px solid #999999;
+    background-color: #eee;
+}
+#cw-tbl-media-player tr
+{
+    border: 1px solid #999999;
+}
+#cw-tbl-media-player td
+{
+    border: 0px none;
 }

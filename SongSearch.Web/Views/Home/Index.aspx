@@ -15,9 +15,14 @@
 		 <div>&nbsp;</div>
 		<div>5/29/2010</div>
         <ul class="cw-vertical">
-            <li>Media Player Testing: Flash based (Soundmanager 2)</li>
-            <li>Song Detail starts Full Version in media player when not in cart page</li>
-			<li>Volume, Timer and Song Progress not yet implemented</li>
+            <li>Media Player Beta:</li>
+		        <ul class="cw-vertical">
+					<li>Pause/Start controls</li>
+					<li>Shows current & total time and position</li>
+					<li>Clicking on song in search results auto-starts full version</li>
+					<li>Detects missing or blocked Flash plug-in and shows error message</li>
+					<li>Volume control not yet implemented</li>
+				</ul>
         </ul>
 		<div>&nbsp;</div>
         <div>5/28/2010</div>

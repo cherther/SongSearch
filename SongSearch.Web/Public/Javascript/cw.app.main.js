@@ -4,9 +4,15 @@ if (!Array.prototype.contains) Array.prototype.contains = function (b) { for (va
 if (!String.prototype.contains) String.prototype.contains = function (s) { if (this.indexOf(s) != -1) return true; return false; };
 if (!String.prototype.swap) String.prototype.swap = function (a, b) { if (this.contains(a)) { return this.replace(a, b); } else { return this.replace(b, a); } };
 
+//***********************************************
+//  wait
+//***********************************************
 function Rnd() { return Math.floor(Math.random() * 100001).toString(); }
 
 var waiting = false;
+//***********************************************
+//  wait
+//***********************************************
 function wait(elem, message) {
 
     try {
@@ -22,6 +28,10 @@ function wait(elem, message) {
     catch (ex) {
     }
 }
+
+//***********************************************
+//  unwait
+//***********************************************
 function unwait(elem) {
     if (waiting) {
         elem = elem == null ? $("body") : elem;
@@ -32,6 +42,9 @@ function unwait(elem) {
     waiting = false;
 }
 
+//***********************************************
+//  flash
+//***********************************************
 function flash(type, msg) {
 
     //var fade = type == 'info';
@@ -47,11 +60,24 @@ function flash(type, msg) {
         });
 }
 
+//***********************************************
+//  toggleTagBoxSelection
+//***********************************************
 function toggleTagBoxSelection(box, selectedClass, toggle) {
     box.siblings().removeClass(selectedClass);
     if (toggle) {
         box.addClass(selectedClass);
     }
+}
+
+
+function millSecsToTimeCode(millSec, returnAsString) {
+    // convert milliseconds to mm:ss, return as object literal or string
+    var secs = Math.floor(millSec / 1000);
+    var min = Math.floor(secs / 60);
+    var sec = secs - (min * 60);
+    // if (min == 0 && sec == 0) return null; // return 0:00 as null
+    return (returnAsString ? (min + ':' + (sec < 10 ? '0' + sec : sec)) : { 'min': min, 'sec': sec });
 }
 
 // UI functions
@@ -67,6 +93,9 @@ var lastContentDetailLinkClicked;
 //-----------------------------------------------------------------------------------
 // clear form
 //-----------------------------------------------------------------------------------
+//***********************************************
+//  showContentPanel
+//***********************************************
 function clearSearchForm(form) {
 
     clearForm(form);
@@ -74,6 +103,9 @@ function clearSearchForm(form) {
     $('.cw-form-value').removeClass(inputSelectedClass);
 }
 
+//***********************************************
+//  showContentPanel
+//***********************************************
 function clearForm(form) {
     // iterate over all of the inputs for the form
     // element that was passed in
@@ -97,6 +129,9 @@ function clearForm(form) {
     });
 };
 
+//***********************************************
+//  showContentPanel
+//***********************************************
 function setSelectedSearchTagValue(link) {
 
     var id = link[0].id;
@@ -120,6 +155,9 @@ function setSelectedSearchTagValue(link) {
 //-----------------------------------------------------------------------------------
 //  content detail panel
 //-----------------------------------------------------------------------------------
+//***********************************************
+//  showContentPanel
+//***********************************************
 function showContentPanel(link) {
 
     mediaStop();
@@ -137,6 +175,11 @@ function showContentPanel(link) {
     }
     
 }
+
+//***********************************************
+//  showContentPanelCallback
+//      called from ajax success call
+//***********************************************
 function showContentPanelCallback(data, link) {
 
     closeContentPanel();
@@ -164,6 +207,9 @@ function showContentPanelCallback(data, link) {
     
 }
 
+//***********************************************
+//  closeContentPanel
+//***********************************************
 function closeContentPanel() {
 
     if (isContentDetailShowing) {
@@ -178,11 +224,17 @@ function closeContentPanel() {
 //-----------------------------------------------------------------------------------
 //  Media Player buttons
 //-----------------------------------------------------------------------------------
+//***********************************************
+//  togglePlayButton
+//***********************************************
 function togglePlayButton(id) {
     togglePlayButtons(id, true);
 }
 
-function togglePlayButtons(id, checkOtherControls) {
+//***********************************************
+//  togglePlayButtons
+//***********************************************
+function togglePlayButtons(id, resetOnly) {
     
     var readyClass = 'b-play';
     var playingClass = 'b-pause';
@@ -191,9 +243,9 @@ function togglePlayButtons(id, checkOtherControls) {
 
     var button = $(id);
     var icon = button.children('span');
-    
-    if (!checkOtherControls) {
 
+    if (!resetOnly) {
+        // we're only concerned with resetting this link
         if (button.hasClass(playingColorClass)) {
             button.addClass(readyColorClass);
             button.removeClass(playingColorClass);
@@ -217,6 +269,47 @@ function togglePlayButtons(id, checkOtherControls) {
     }
 }
 
+//***********************************************
+//  toggleAllPlayButtons: resets all buttons
+//***********************************************
+function toggleAllPlayButtons() {
+
+    var buttons = $('.cw-media-play-link');
+
+    buttons.each(
+        function (x) {
+            var button = buttons[x];
+            togglePlayButtons('#' + button.id, false);
+        }
+    );
+}
+
+//***********************************************
+//  setCurrentMediaTime: sets the elapsed time value
+//***********************************************
+function setCurrentMediaTime(length) {
+
+    var totalTime = millSecsToTimeCode(length, true);
+    $('#cw-media-player-time').html(totalTime);
+
+}
+
+function setCurrentPosition(position, duration) {
+    duration = duration == 0 ? 1000 : duration; 
+    $('#cw-media-position').width((((position / duration) * 100) + '%'));
+}
+function setCurrentLoadPercentage(loaded, total) {
+    total = total == 0 ? 1000 : total;
+    $('#cw-media-loaded').width((((loaded / total) * 100) + '%'));
+}
+//***********************************************
+//  toggleAllPlayButtons: sets the total duration value
+//***********************************************
+function setTotalMediaLength(length) {
+
+    var totalTime = millSecsToTimeCode(length, true);
+    $('#cw-media-player-length').html(totalTime);
+}
 //-----------------------------------------------------------------------------------
 // User Management
 //-----------------------------------------------------------------------------------
@@ -225,6 +318,10 @@ var isUserDetailShowing = false;
 var isCatalogDetailShowing = false;
 var catalogDetailId = '#cw-catalog-detail';
 var userDetailId = '#cw-user-detail';
+
+//***********************************************
+//  showUserDetailPanel
+//***********************************************
 function showUserDetailPanel(data) {
     //var url = '/User/Userdetail/' + userId;
     

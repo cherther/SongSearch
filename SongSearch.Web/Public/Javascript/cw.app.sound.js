@@ -1,21 +1,12 @@
 ﻿$(document).ready(function () {
 
-    soundManager.url = '/public/flash/'; // directory where SM2 .SWFs live
-    //soundManager.waitForWindowLoad = true;
-    // Note that SoundManager will determine and append the appropriate .SWF file to the URL,
-    // eg. /path/to/sm2-flash-movies/soundmanager2.swf automatically.
-
-    // Experimental HTML5 audio support (force-enabled for iPad), flash-free sound for Safari + Chrome. Enable if you want to try it!
+    soundManager.url = '/public/flash/';
     //soundManager.useHTML5Audio = true;
     soundManager.flashVersion = 9;
-//    // do this to skip flash block handling for now. See the flashblock demo when you want to start getting fancy.
-//    soundManager.useFlashBlock = false;
-//    soundManager.allowScriptAccess = 'always';
-//    // disable debug mode after development/testing..
+    //soundManager.useFlashBlock = true;
     soundManager.debugMode = false;
     soundManager.useHighPerformance = true;
-    // Option 3 (best): onready() + createSound() methods, handle load/failure together:
-    
+
     soundManager.onready(function (oStatus) {
         // check if SM2 successfully loaded..
         if (oStatus.success) {
@@ -23,7 +14,7 @@
             isSoundManagerReady = true;
             //mySound = soundManager.createSound();
         } else {
-            // (Optional) Hrmm, SM2 could not start. Show an error, etc.?
+            flash('error', 'There was an error loading our Flash sound player on your system. Please turn off any Flash blocking software while using this site.');
         }
     });
 
@@ -66,7 +57,8 @@ function mediaPlay(url) {
                         mySound.stop();
                     }
                     //                    mySound.play(url);
-                    mySound = soundManager.createSound({ id: 'cw-sound' + mySoundId++, url: url, stream: true });
+                    mySound = _getSound(url);
+    
                     mySound.play();
                     lastUrlPlayed = url;
 
@@ -76,12 +68,45 @@ function mediaPlay(url) {
             }
 
         } else { //first time
-            mySound = soundManager.createSound({ id: 'cw-sound' + mySoundId++, url: url, stream: true });
+            mySound = _getSound(url);
             mySound.play();
             lastUrlPlayed = url;
         }
+
+      
     }
 
+}
+
+function _getSound(url) {
+    return soundManager.createSound(
+                {
+                    id: 'cw-sound' + mySoundId++,
+                    url: url,
+                    stream: true,
+                    onload: function () { setTotalMediaLength(this.durationEstimate); },
+                    onfinish: function () {
+                        toggleAllPlayButtons();
+                        setCurrentMediaTime(0);
+                        setTotalMediaLength(0);
+                        setCurrentPosition(0, 1);
+                        setCurrentLoadPercentage(0, this.bytesTotal)
+                    },
+                    onstop: function () {
+                        setCurrentMediaTime(0);
+                        setTotalMediaLength(0);
+                        setCurrentPosition(0, 1);
+                        setCurrentLoadPercentage(0, this.bytesTotal)
+                    },
+                    whileplaying: function () {
+                        setCurrentMediaTime(this.position);
+                        setCurrentPosition(this.position, this.durationEstimate);
+                    },
+                    whileloading: function () {
+                        setCurrentLoadPercentage(this.bytesLoaded, this.bytesTotal);
+                    }
+                }
+                );
 }
 
 //***********************************************
@@ -97,3 +122,4 @@ function mediaStop() {
         }
     }
 }
+
