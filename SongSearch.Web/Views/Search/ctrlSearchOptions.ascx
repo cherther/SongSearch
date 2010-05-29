@@ -6,7 +6,7 @@
             <button id="submit-top" type="submit" title="Search" class="cw-button cw-simple cw-blue">
             <span class="b-search">Search</span>
             </button>
-            <a href="#" class="cw-reset-form" title="Reset the search form to start over">New</a>
+            &nbsp;<a href="#" class="cw-reset-form" title="Reset the search form to start over">Clear</a>
         </li>
         <div>&nbsp;</div>
         <%
@@ -84,7 +84,7 @@
             <button id="submit-bottom" type="submit" title="Search" class="cw-button cw-simple cw-blue">
             <span class="b-search">Search</span>
             </button>
-            <a href="#" class="cw-reset-form" title="Reset the search form to start over">New</a>
+            &nbsp;<a href="#" class="cw-reset-form" title="Reset the search form to start over">Clear</a>
         </li>
     <%
         

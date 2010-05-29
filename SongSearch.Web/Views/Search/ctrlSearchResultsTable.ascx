@@ -27,10 +27,23 @@
         </tr>
 
     <% foreach (var item in results) { %>
-    
+		<% 
+			var mediaUrl = Url.SiteRoot();
+			mediaUrl = item.HasMediaFullVersion ? 
+				String.Concat(mediaUrl, Url.Action("Stream", "Media", new { id = item.ContentId, version = MediaVersion.FullSong })) :
+				//(
+					//item.HasMediaPreviewVersion ?
+					//String.Concat(mediaUrl, Url.Action("Stream", "Media", new { id = item.ContentId, version = MediaVersion.Preview }))  :
+					""
+			//		)
+		   ;
+		   
+		   %>
         <tr>
             <td width="300">
-                <%: Html.ActionLink(!String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)", "Detail", new { id = item.ContentId }, new { @class = "cw-content-detail-link" })%>
+                <%: Html.ActionLink(!String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)", "Detail", 
+                	new { id = item.ContentId }, 
+                					new { @class = "cw-content-detail-link", rel = mediaUrl })%>
             </td>
             <td width="200">
                 <%: !String.IsNullOrWhiteSpace(item.Artist) ? item.Artist.ToUpper() : "(N/A)"%>

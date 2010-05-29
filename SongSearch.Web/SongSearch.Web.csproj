@@ -129,6 +129,7 @@
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\PagedList.cs" />
     <Compile Include="Helpers\RenderView.cs" />
+    <Compile Include="Helpers\Url.cs" />
     <Compile Include="Helpers\VersionInfo.cs" />
     <Compile Include="Helpers\Extensions\Extensions.cs" />
     <Compile Include="Helpers\Extensions\LinqExtensions.cs" />
@@ -195,6 +196,8 @@
     <Content Include="Public\Css\cw.twitlogin.css" />
     <Content Include="Public\Css\cw.buttons.css" />
     <Content Include="Public\Css\jquery-ui.css" />
+    <Content Include="Public\Flash\soundmanager2.swf" />
+    <Content Include="Public\Flash\soundmanager2_flash9.swf" />
     <Content Include="Public\Images\Icons\Silk\accept.png" />
     <Content Include="Public\Images\Icons\Silk\add.png" />
     <Content Include="Public\Images\Icons\Silk\anchor.png" />
@@ -1690,14 +1693,11 @@
     <Content Include="Public\Javascript\cw.app.main.js" />
     <Content Include="Public\Javascript\cw.app.events.js" />
     <Content Include="Public\Javascript\cw.app.ajax.js" />
+    <Content Include="Public\Javascript\cw.app.sound.js" />
     <Content Include="Public\Javascript\jquery-ui-1.8.1.min.js" />
     <Content Include="Public\Javascript\jquery.blockUI.js" />
-    <Content Include="Public\Javascript\jquery.tablesorter.js" />
-    <Content Include="Public\Javascript\jquery.tablesorter.min.js" />
-    <Content Include="Public\Javascript\page-player.js" />
     <Content Include="Public\Javascript\soundmanager2-nodebug-jsmin.js" />
     <Content Include="Public\Javascript\soundmanager2.js" />
-    <Content Include="Public\Javascript\swfobject.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
     <Content Include="Views\Account\LogIn.aspx" />
@@ -1718,6 +1718,7 @@
     <Content Include="Views\Cart\ctrlCartContentsTable.ascx" />
     <Content Include="Views\Search\ctrlSearchResultsTable.ascx" />
     <Content Include="Views\Search\ctrlPager.ascx" />
+    <Content Include="Views\Shared\ctrlMediaplayer.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />
     <Content Include="Views\Search\Index.aspx" />
     <Content Include="Views\Search\Results.aspx" />
@@ -1770,6 +1771,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Public\Flash\soundmanager2_flash_xdomain.zip" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

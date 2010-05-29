@@ -1,4 +1,7 @@
-﻿function getContentDetailAjax(url, trigger) {
+﻿//-----------------------------------------------------------------------------------
+// Search Results
+//-----------------------------------------------------------------------------------
+function getContentDetailAjax(url, link) {
     
     wait();
 
@@ -13,7 +16,7 @@
             }
             else {
 
-                showContentPanelCallback(data, trigger);
+                showContentPanelCallback(data, link);
                 unwait(); //detailsPanel);
             }
         },

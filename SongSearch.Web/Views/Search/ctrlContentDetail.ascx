@@ -8,16 +8,12 @@
     </button>
     </div>--%>
     <div id="cw-content-detail">
-    <hr />
-    <div id="cw-media-player">
-    Mediaplayer (TBD)
+    <div id="cw-media-player-panel">
+    <% Html.RenderPartial("ctrlMediaplayer"); %>
     </div>
-    <hr />
     <hr />
     <div id="cw-content-detail-menu">
     <%if (content.HasMediaFullVersion) { %>
-    <a href="#">Play</a>&nbsp;|&nbsp;
-    <a href="#">Preview</a>&nbsp;|&nbsp;
     <%: Html.ActionLink("Download", "Download", "Media", new { id = content.ContentId }, null)%>&nbsp;|&nbsp;
     <%if(!content.IsInMyActiveCart){ %>
     <%: Html.ActionLink("Add To Cart", "Add", "Cart", new { id = content.ContentId }, new { @class = "cw-cart-add-link" })%>&nbsp;|&nbsp;

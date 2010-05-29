@@ -64,11 +64,11 @@ namespace SongSearch.Web.Controllers
 			var mediaPath = MediaService.GetContentMediaFilePath(id, (MediaVersion) version);
 			var content = SearchService.GetContent(id, _currentUser);
 			if (content != null) {
-				var downloadName = String.Concat(content.UserDownloadableName, MediaService.ContentMediaExtension);
+				//var downloadName = String.Concat(content.UserDownloadableName, MediaService.ContentMediaExtension);
 				var contentType = "application/mp3";
 				Response.ContentType = contentType;
 				// if this is not embedded, adding the header will force it to open the application responsible for the extension
-				Response.AddHeader("content-disposition", String.Format("filename={0}", downloadName));
+				//Response.AddHeader("content-disposition", String.Format("filename={0}", downloadName));
 				return new FileStreamResult(new FileStream(mediaPath, System.IO.FileMode.Open), contentType);
 			} else {
 				var msg = "You do not have access to this file";

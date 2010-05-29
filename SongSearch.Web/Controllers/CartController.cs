@@ -44,8 +44,9 @@ namespace SongSearch.Web.Controllers
 			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File Name", "Download", "Remove"};
 
 			var msg = _currentUser.DownloadCartMessage(vm.MyCarts);
-
-			this.FlashInfo(msg);
+			if (msg != null) {
+				this.FlashInfo(msg);
+			}
 			return View(vm);
         }
 

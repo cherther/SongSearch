@@ -1,9 +1,9 @@
 ﻿
 .cw-row-selected
 {
-    background: #cccccc url(../images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;
-    /*background-color: #FFFFCC;
-    font-weight: bold;*/
+    background: #cccccc url(/public/images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;
+    /*background-color: #FFFFCC;*/  
+    font-weight: bold;
 }
 /* Search Results */
 .cw-tbl-search-results 
@@ -72,14 +72,20 @@
 }
 .cw-tbl-carts-contents-show
 {
-	background:transparent url("../public/images/icons/ico_plus.png") no-repeat;
+	background:transparent url(/public/images/icons/ico_plus.png) no-repeat;
 }
 
 .cw-tbl-carts-contents-hide
 {
-	background:transparent url("../public/images/icons/ico_minus.png") no-repeat;
+	background:transparent url(/public/images/icons/ico_minus.png) no-repeat;
 }
 .cw-tbl-carts-details
 {
     display: none;
+}
+
+#cw-tbl-media-player
+{
+    width: 100%;
+    border: 0;
 }

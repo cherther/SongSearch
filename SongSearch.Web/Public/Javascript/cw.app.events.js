@@ -1,39 +1,8 @@
 ﻿$(document).ready(function () {
 
+     //-----------------------------------------------------------------------------------
+    // AutoComplete
     //-----------------------------------------------------------------------------------
-    // form.reset
-    //-----------------------------------------------------------------------------------
-    $('.cw-reset-form').click(
-			function (evt) {
-			    evt.preventDefault();
-			    clearSearchForm($(this).parents('form'));
-
-			}
-		);
-
-    $('.cw-tagbox-search').click(
-        function (evt) {
-            evt.preventDefault();
-
-            var link = $(this);
-            setSelectedSearchTagValue(link);
-
-            // alert($('#' + propId).val());
-        }
-    );
-    //cw-tags-more-link
-    $('.cw-tags-more-link').click(
-        function (evt) {
-            evt.preventDefault();
-
-            var link = $(this);
-            var moretags = link.siblings('.cw-more-tags');
-            moretags.toggleClass('cw-optional');
-            link.text(link.text().swap('more', 'less'));
-
-            // alert($('#' + propId).val());
-        }
-    );
     var aCache = {};
     $(".cw-autocomplete").autocomplete(
         {
@@ -63,22 +32,62 @@
 					    }
 				    });
                 }
-			},
+		    },
             minLength: 2,
         }
     );
 
     //-----------------------------------------------------------------------------------
-    // cw-detail-close-link
+    // Search option panel
     //-----------------------------------------------------------------------------------
-    $('#cw-detail-close-link').live('click',
+    //***********************************************
+    //  Form Reset
+    //***********************************************
+    $('.cw-reset-form').click(
+			function (evt) {
+			    evt.preventDefault();
+			    clearSearchForm($(this).parents('form'));
+
+			}
+		);
+
+    //***********************************************
+    //  Tag Box Click
+    //***********************************************
+    $('.cw-tagbox-search').click(
         function (evt) {
-            closeContentPanel();
+            evt.preventDefault();
+
+            var link = $(this);
+            setSelectedSearchTagValue(link);
+
+            // alert($('#' + propId).val());
         }
     );
+
+    //***********************************************
+    //  Tag Box More Choices Click
+    //***********************************************
+    $('.cw-tags-more-link').click(
+        function (evt) {
+            evt.preventDefault();
+
+            var link = $(this);
+            var moretags = link.siblings('.cw-more-tags');
+            moretags.toggleClass('cw-optional');
+            link.text(link.text().swap('more', 'less'));
+
+            // alert($('#' + propId).val());
+        }
+    );
+    
     //-----------------------------------------------------------------------------------
-    // cw-content-detail-link
+    // Seatch results
     //-----------------------------------------------------------------------------------
+    
+    //***********************************************
+    //  Content detail link
+    //***********************************************
     $('.cw-content-detail-link').live('click',
     function (evt) {
 
@@ -88,9 +97,26 @@
         showContentPanel(link);
     }
     );
+
     //-----------------------------------------------------------------------------------
-    // cw-cart-add-link
+    // Content detail panel
     //-----------------------------------------------------------------------------------
+    //***********************************************
+    //  Close button click
+    //***********************************************
+    $('#cw-detail-close-link').live('click',
+        function (evt) {
+            closeContentPanel();
+        }
+    );
+    
+        
+    //-----------------------------------------------------------
+    // Content detail menu
+    //-----------------------------------------------------------
+    //***********************************************
+    //  Add-to-cart link click
+    //***********************************************
     $('.cw-cart-add-link').live('click',
         function (evt) {
 
@@ -106,23 +132,30 @@
             link.removeClass('cw-cart-add-link');
         }
     );
+    
     //-----------------------------------------------------------------------------------
-    // cw-cart-remove-link
+    //Media Player 
     //-----------------------------------------------------------------------------------
-//    $('.cw-cart-remove-link').live('click',
-//        function (evt) {
+    //***********************************************
+    //  Media Play
+    //***********************************************
+    $('.cw-media-play-link').live('click',
+        function (evt) {
 
-//            evt.preventDefault();
+            evt.preventDefault();
 
-//            var link = $(this);
-//            //var id = link[0].rel;
-//            removeFromCartAjax(link[0]);
-//        }
-//    );
-
+            var url = this.href;
+            //var id = link[0].rel;
+            mediaPlay(url);
+            togglePlayButton('#' + this.id);
+        }
+    );
     //-----------------------------------------------------------------------------------
-    // cw-cart-remove-link
+    // Cart Grid
     //-----------------------------------------------------------------------------------
+    //***********************************************
+    // Show/Hide cart contents link
+    //***********************************************
     $('.cw-tbl-carts-contents').click(
         function (evt) {
 
@@ -136,9 +169,12 @@
     }
     );
 
-    //-----------------------------------
-    // User Grid
-    //-----------------------------------
+    //-----------------------------------------------------------------------------------
+    // User Management List
+    //-----------------------------------------------------------------------------------
+    //***********************************************
+    // User detail link
+    //***********************************************
     $('.cw-user-detail-link').live('click',
 		function (evt) {
 
@@ -153,7 +189,10 @@
 
 		}
 	);
-    //cw-role-edit
+    
+    //***********************************************
+    // User role edit link
+    //***********************************************
     $('.cw-role-edit').live('click',
 		function (evt) {
 
@@ -166,7 +205,9 @@
 		}
 	);
 
-    //cw-cat-role-edit
+    //***********************************************
+    // Catalog role edit link
+    //***********************************************
     $('.cw-cat-role-edit').live('click',
 		function (evt) {
 
@@ -178,7 +219,10 @@
 
 		}
 	);
-    //cw-cat-role-edit-all
+    
+    //***********************************************
+    // Catalog role edit all link
+    //***********************************************
     $('.cw-cat-role-edit-all').live('click',
 		function (evt) {
 
@@ -190,5 +234,8 @@
 
 		}
 	);
+
+
+   
 }
 );

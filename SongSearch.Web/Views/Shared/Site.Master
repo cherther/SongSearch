@@ -78,20 +78,31 @@
 	    </td> 
     </tr>
     </table>
-<% 
-	var d = App.Environment != AppEnvironment.Production ? "?d" : "";
-%>
-<%= Bundle.JavaScript()
+<%
+	var debug = App.Environment != AppEnvironment.Production;
+	var d = debug ? "?d" : "";
+	var bundle = Bundle.JavaScript()
     .Add("~/public/javascript/jquery-1.4.1.min.js")
     .Add("~/public/javascript/jquery.blockUI.js")
-    .Add("~/public/javascript/jquery-ui-1.8.1.min.js")
-    .Add(String.Concat("~/public/javascript/cw.app.main.js", d))
+    .Add("~/public/javascript/jquery-ui-1.8.1.min.js");
+
+	if (!debug) {
+		bundle.Add("~/public/javascript/soundmanager2-nodebug-jsmin.js");
+	} else {
+		bundle.Add("~/public/javascript/soundmanager2.js");
+	}
+	
+	
+	bundle
+		.Add(String.Concat("~/public/javascript/cw.app.main.js", d))
         .Add(String.Concat("~/public/javascript/cw.app.ajax.js", d))
             .Add(String.Concat("~/public/javascript/cw.app.events.js", d))
-    .WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
+				.Add(String.Concat("~/public/javascript/cw.app.sound.js", d))
+		.WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
     //.ForceRelease()
-    .Render("~/public/javascript/cw-combined_#.js")
-%>    		
+	;
+	%>
+	<%= bundle.Render("~/public/javascript/cw-combined_#.js")%>    		
 </body>
 
 <%
@@ -100,6 +111,7 @@
 %>
 <script type="text/javascript">$(document).ready(function () { updateCartCountAjax(); });</script>
 <%} %>
+
 <%=Html.Flash() %>
 <asp:ContentPlaceHolder id="Javascripts" runat="server" />
 </html>

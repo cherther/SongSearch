@@ -122,23 +122,26 @@ function setSelectedSearchTagValue(link) {
 //-----------------------------------------------------------------------------------
 function showContentPanel(link) {
 
+    mediaStop();
+
     if (link[0] != lastContentDetailLinkClicked) {
 
         var url = link[0].href;
-
         getContentDetailAjax(url, link);
 
     } else {
+        
         closeContentPanel();
+
         lastContentDetailLinkClicked = null;
     }
     
 }
-function showContentPanelCallback(data, trigger) {
+function showContentPanelCallback(data, link) {
 
     closeContentPanel();
 
-    var parentRow = trigger.closest('tr');
+    var parentRow = link.closest('tr');
     var numberofCells = 6;// parentRow.children('td').length;
     var detailPanelRow = $('<tr id="cw-content-detail-row"><td colspan="' + numberofCells + '">' + data);
 //style="display: none" 
@@ -150,9 +153,14 @@ function showContentPanelCallback(data, trigger) {
 
 //    detailPanelRow.slideDown();
 //    detailPanelRow.css('display', ' table-row');
+    var mediaUrl = link[0].rel;
+    if (mediaUrl) {
+        mediaPlay(mediaUrl);
+        togglePlayButton('#cw-play-full');
+    }
 
     isContentDetailShowing = true;
-    lastContentDetailLinkClicked = trigger[0];
+    lastContentDetailLinkClicked = link[0];
     
 }
 
@@ -163,9 +171,51 @@ function closeContentPanel() {
         if (contentDetailRow.length > 0) { contentDetailRow.remove(); }
         $('.cw-row-selected').removeClass('cw-row-selected');
         isContentDetailShowing = false;
+        mediaStop();
     }
 }
 
+//-----------------------------------------------------------------------------------
+//  Media Player buttons
+//-----------------------------------------------------------------------------------
+function togglePlayButton(id) {
+    togglePlayButtons(id, true);
+}
+
+function togglePlayButtons(id, checkOtherControls) {
+    
+    var readyClass = 'b-play';
+    var playingClass = 'b-pause';
+    var readyColorClass = 'cw-green';
+    var playingColorClass = 'cw-red';
+
+    var button = $(id);
+    var icon = button.children('span');
+    
+    if (!checkOtherControls) {
+
+        if (button.hasClass(playingColorClass)) {
+            button.addClass(readyColorClass);
+            button.removeClass(playingColorClass);
+            icon.removeClass(playingClass);
+            icon.addClass(readyClass);
+        }
+    
+    } else {
+        
+        button.toggleClass(readyColorClass);
+        button.toggleClass(playingColorClass);
+        icon.toggleClass(playingClass);
+        icon.toggleClass(readyClass);
+
+        var otherButton = button.siblings('.cw-media-play-link');
+
+        if (otherButton.length > 0) {
+            //recurse
+            togglePlayButtons('#' + otherButton[0].id, false);
+        }
+    }
+}
 
 //-----------------------------------------------------------------------------------
 // User Management

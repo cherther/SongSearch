@@ -12,6 +12,13 @@
         <h4>What's New</h4>
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
+		 <div>&nbsp;</div>
+		<div>5/29/2010</div>
+        <ul class="cw-vertical">
+            <li>Media Player Testing: Flash based (Soundmanager 2)</li>
+            <li>Song Detail starts Full Version in media player when not in cart page</li>
+			<li>Volume, Timer and Song Progress not yet implemented</li>
+        </ul>
 		<div>&nbsp;</div>
         <div>5/28/2010</div>
         <ul class="cw-vertical">
@@ -24,7 +31,8 @@
 				Shows if carts are zipped by not downloaded <br />
 			</li>
         </ul>
-        <div>&nbsp;</div><div>5/25/2010</div>
+        <div>&nbsp;</div>
+		<div>5/25/2010</div>
         <ul class="cw-vertical">
             <li>Downloads now working</li>
             <li>'Add to Cart' working</li>
