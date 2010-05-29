@@ -24,7 +24,7 @@ namespace System.Web.Mvc {
 				return "";
 			}
 		}
-
+		
 		public static string Script(this HtmlHelper helper, string fileName) {
 			if (!fileName.EndsWith(".js"))
 				fileName += ".js";

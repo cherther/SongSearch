@@ -25,6 +25,7 @@
     <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>
+	<%if (App.Environment == AppEnvironment.Production) { %>
     <script type="text/javascript">
 
         var _gaq = _gaq || [];
@@ -38,7 +39,7 @@
         })();
 
     </script>
-    
+    <%} %>
     <div id="flash" style="display:none"></div>
 
     <table width="100%">
@@ -78,7 +79,7 @@
     </tr>
     </table>
 <% 
-	var d = SongSearch.Web.Application.Environment != AppEnvironment.Production ? "?d" : "";
+	var d = App.Environment != AppEnvironment.Production ? "?d" : "";
 %>
 <%= Bundle.JavaScript()
     .Add("~/public/javascript/jquery-1.4.1.min.js")

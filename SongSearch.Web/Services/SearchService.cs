@@ -25,7 +25,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static IList<T> GetLookupList<T>() where T : class, new() {
 
-			using (var session = Application.DataSessionReadOnly) {//Container.Get<IDataSession>()) {
+			using (var session = App.DataSessionReadOnly) {//Container.Get<IDataSession>()) {
 
 				var query = session.All<T>(); ;
 				return query.ToList();
@@ -45,7 +45,7 @@ namespace SongSearch.Web.Services {
 				throw new ArgumentException("Missing fieldName argument");
 			}
 
-			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
+			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 				
 				var query = session.All<Content>().Select<string>(fieldName).Distinct().Where(v => v != null).Select(v => v.ToUpper());
 				return query.ToList();							
@@ -64,7 +64,7 @@ namespace SongSearch.Web.Services {
 				throw new ArgumentException("Missing fieldName argument");
 			}
 
-			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
+			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 
 				var query = session.All<ContentRight>().Select<string>(fieldName).Distinct();
 				return query.ToList();
@@ -77,7 +77,7 @@ namespace SongSearch.Web.Services {
 		public static IList<Tag> GetTopTags(TagType tagType, int? limitToTop = null) {
 
 
-			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
+			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 
 				var tags = session.All<Tag>().Where(t => t.TagTypeId == (int)tagType);
 				tags = tags.OrderByDescending(t => t.Contents.Count);
@@ -96,7 +96,7 @@ namespace SongSearch.Web.Services {
 		public static IList<SearchProperty> GetSearchMenuProperties() {
 
 
-			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
+			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 
 				// Get Search Properties
 				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu).ToList();
@@ -105,7 +105,7 @@ namespace SongSearch.Web.Services {
 		public static IList<SearchProperty> GetSearchMenuProperties(Roles role) {
 
 
-			using (var session = Application.DataSessionReadOnly) {//Application.Container.Get<IDataSession>()) {
+			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 
 				// Get Search Properties
 				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu && x.AccessLevel >= (int)role).ToList();
@@ -117,7 +117,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static Content GetContent(int contentId, User user) {
 
-			using (var session = Application.DataSessionReadOnly) {
+			using (var session = App.DataSessionReadOnly) {
 
 				var content = session.GetObjectQuery<Content>()
 					.Where(c => c.ContentId == contentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
@@ -140,7 +140,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static Content GetContentDetails(int contentId, User user) {
 
-			using (var session = Application.DataSessionReadOnly) {
+			using (var session = App.DataSessionReadOnly) {
 
 				var content = session.GetObjectQuery<Content>()
 					.Include("Tags")
@@ -173,7 +173,7 @@ namespace SongSearch.Web.Services {
 											int? pageIndex = null) {
 
 
-			using (var session = Application.DataSessionReadOnly){//Application.Container.Get<IDataSession>()) {
+			using (var session = App.DataSessionReadOnly){//App.Container.Get<IDataSession>()) {
 
 				// Get all Search Properties
 				var props = CacheService.SearchProperties((Roles)user.RoleId);//.dataSession.All<SearchProperty>().ToList();

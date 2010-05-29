@@ -64,13 +64,17 @@ namespace SongSearch.Web.Controllers {
 
 					SetFriendlyNameCookie(user.FullName());
 
-					var msg = string.Concat("Welcome ", user.FullName());
-					var cart = CacheService.MyActiveCart(user.UserName);
-					var activeItems = cart != null && cart.Contents != null ? cart.Contents.Count : 0;
-					msg = activeItems > 0 ? String.Concat(msg, String.Format(". You have <strong>{0}</strong> {1} waiting in your song cart.", activeItems, activeItems > 1 ? "items" : "item")) : msg;
+					var msg = user.LoginMessage();// string.Concat("Welcome ", user.FullName());
+
+					//if (CacheService.Session("ActiveCartMessageShown") == null) {
+					//    var cart = CacheService.MyActiveCart(user.UserName);
+					//    var activeItems = cart != null && cart.Contents != null ? cart.Contents.Count : 0;
+					//    msg = activeItems > 0 ? String.Concat(msg, String.Format(". You have <strong>{0}</strong> {1} waiting in your song cart.", activeItems, activeItems > 1 ? "items" : "item")) : msg;
+						
+					//    CacheService.SessionUpdate("1", "ActiveCartMessageShown");
+					//}
 					this.FlashInfo(msg);
 
-					
 					if (!String.IsNullOrEmpty(returnUrl)) {
 						return Redirect(returnUrl);
 					} else {

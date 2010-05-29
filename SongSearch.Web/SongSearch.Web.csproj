@@ -1731,7 +1731,9 @@
     <Content Include="Views\UserManagement\Invite.aspx" />
     <Content Include="Views\UserManagement\InviteComplete.aspx" />
     <Content Include="Views\UserManagement\InviteMessage.ascx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

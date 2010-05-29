@@ -277,7 +277,7 @@ namespace SongSearch.Web.Services {
 							}
 							catch {
 
-								Application.Logger.Info(String.Concat(content.ContentId, " is missing."));
+								App.Logger.Info(String.Concat(content.ContentId, " is missing."));
 							}
 						}
 					}

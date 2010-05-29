@@ -43,13 +43,9 @@ namespace SongSearch.Web.Controllers
 			vm.MyCarts = _cartService.MyCarts();
 			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File Name", "Download", "Remove"};
 
-			var compressedCarts = vm.MyCarts.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed);
-			var count = compressedCarts.Count();
-			if (count > 0) {
-				var msg = String.Format("You have <strong>{0}</strong> {1} waiting to be downloaded.", count, count > 1 ? "carts": "cart");
-				this.FlashInfo(msg);
-			}
+			var msg = _currentUser.DownloadCartMessage(vm.MyCarts);
 
+			this.FlashInfo(msg);
 			return View(vm);
         }
 

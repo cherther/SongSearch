@@ -22,12 +22,12 @@ namespace SongSearch.Web {
 	}
 
 	// **************************************
-	// Application
+	// App
 	// **************************************
-	public class Application : NinjectHttpApplication {
+	public class App : NinjectHttpApplication {
 
 		// ----------------------------------------------------------------------------
-		// Application-Level Variables
+		// App-Level Variables
 		// ----------------------------------------------------------------------------
 		// **************************************
 		// Environment
@@ -91,7 +91,7 @@ namespace SongSearch.Web {
 
 
 		// ----------------------------------------------------------------------------
-		// ASP.NET Application
+		// ASP.NET App
 		// ----------------------------------------------------------------------------
 		// **************************************
 		// OnApplicationStarted

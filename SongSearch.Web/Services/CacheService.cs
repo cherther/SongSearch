@@ -126,8 +126,19 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
+
+		// **************************************
+		// Quick Get method for cache or session 
+		//	values
+		// **************************************
+		public static string Get(string key) {
+
+			return (Session(key) ?? Cache(key)) as string;
+		
+		}
+
 		// ----------------------------------------------------------------------------
-		// DataSession
+		// Session
 		// ----------------------------------------------------------------------------
 		public static User User(string userName) {
 			if (_hasSession) {
@@ -177,10 +188,10 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		//  App
 		// ----------------------------------------------------------------------------
+
 		// **************************************
 		// Catalogs
 		// **************************************
-		
 		public static IList<Catalog> Catalogs() {
 			if (_hasCache) {
 				if (Cache(CacheKeys.Catalogs) == null) { CacheUpdateCatalogs(CacheKeys.Catalogs); }
@@ -271,7 +282,7 @@ namespace SongSearch.Web.Services {
 		private static object Session(CacheKeys key) {
 			return Session(key.ToString());
 		}
-		private static object Session(string key) {
+		public static object Session(string key) {
 			return _session[key];
 		}
 
@@ -282,7 +293,7 @@ namespace SongSearch.Web.Services {
 			return Cache(key.ToString());
 		}
 
-		private static object Cache(string key) {
+		public static object Cache(string key) {
 			return _cache[key];
 		}
 	
@@ -381,14 +392,14 @@ namespace SongSearch.Web.Services {
 		}
 
 		private static Cart GetDataUserActiveCart(string userName) {
-			using (var cartService = Application.Container.Get<CartService>()) {
+			using (var cartService = App.Container.Get<CartService>()) {
 				cartService.ActiveUserName = userName;
 				var obj = cartService.MyActiveCartContents();
 				return obj;
 			}
 		}
 		//private static bool GetDataUserIsInMyActiveCart(int contentId, string userName){
-		//    using (var cartService = Application.Container.Get<CartService>()) {
+		//    using (var cartService = App.Container.Get<CartService>()) {
 		//        cartService.ActiveUserName = userName;
 		//        var obj = cartService.MyActiveCartContents();
 		//        return obj;
