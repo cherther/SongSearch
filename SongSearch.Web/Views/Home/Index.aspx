@@ -13,6 +13,16 @@
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
 		 <div>&nbsp;</div>
+		<div>5/30/2010</div>
+        <ul class="cw-vertical">
+            <li>Volume control now working!</li>
+			<ul class="cw-vertical">
+					<li>Default is 60% of full volume</li>
+					<li>No mute but can be dragged to 0%</li>
+					<li>Remembers volume setting from song to song on the same page (i.e. as long as page is not refreshed, sorted etc)</li>
+			</ul>
+		</ul>
+		<div>&nbsp;</div>
 		<div>5/29/2010</div>
         <ul class="cw-vertical">
             <li>Media Player Beta:</li>

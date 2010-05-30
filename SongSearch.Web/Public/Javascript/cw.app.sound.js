@@ -11,7 +11,7 @@
         // check if SM2 successfully loaded..
         if (oStatus.success) {
             // SM2 has loaded - now you can create and play sounds!
-            isSoundManagerReady = true;
+            _isSoundManagerReady = true;
             //mySound = soundManager.createSound();
         } else {
             flash('error', 'There was an error loading our Flash sound player on your system. Please turn off any Flash blocking software while using this site.');
@@ -22,10 +22,11 @@
 
 
 //----------------------------------------------------------------------------------------------------------------------------------------
-var isSoundManagerReady = false;
-var mySoundId = 0 ;
-var mySound;
-var lastUrlPlayed;
+var _isSoundManagerReady = false;
+var _mySoundId = 0;
+var _mySound;
+var _lastUrlPlayed;
+var _currentVolume = 60;
 
 //-----------------------------------------------------------------------------------
 //Sound manager controllers
@@ -35,32 +36,32 @@ var lastUrlPlayed;
 //***********************************************
 function mediaPlay(url) {
 
-    if (isSoundManagerReady) {
+    if (_isSoundManagerReady) {
 
-        if (mySound){
-            if (url == lastUrlPlayed) {
-                if (mySound.readyState != 2) {
-                    if (mySound.playState != 1) {
+        if (_mySound) {
+            if (url == _lastUrlPlayed) {
+                if (_mySound.readyState != 2) {
+                    if (_mySound.playState != 1) {
                         // not yet playing
-                        mySound.play();
+                        _mySound.play();
                     } else {
-                        mySound.togglePause();
+                        _mySound.togglePause();
                     }
                 } else {
                     soundManager._writeDebug('Warning: sound failed to load (security restrictions, 404 or bad format)', 2);
                 }
             } else {
 
-                if (mySound.readyState != 2) {
-                    if (mySound.playState == 1) {
+                if (_mySound.readyState != 2) {
+                    if (_mySound.playState == 1) {
                         // playing
-                        mySound.stop();
+                        _mySound.stop();
                     }
                     //                    mySound.play(url);
-                    mySound = _getSound(url);
-    
-                    mySound.play();
-                    lastUrlPlayed = url;
+                    _mySound = getSound(url);
+
+                    _mySound.play();
+                    _lastUrlPlayed = url;
 
                 } else {
                     soundManager._writeDebug('Warning: sound failed to load (security restrictions, 404 or bad format)', 2);
@@ -68,9 +69,9 @@ function mediaPlay(url) {
             }
 
         } else { //first time
-            mySound = _getSound(url);
-            mySound.play();
-            lastUrlPlayed = url;
+            _mySound = getSound(url);
+            _mySound.play();
+            _lastUrlPlayed = url;
         }
 
       
@@ -78,12 +79,14 @@ function mediaPlay(url) {
 
 }
 
-function _getSound(url) {
+function getSound(url) {
+    _currentVolume = _currentVolume != null && _currentVolume >= 0 ? _currentVolume : 60;
     return soundManager.createSound(
                 {
-                    id: 'cw-sound' + mySoundId++,
+                    id: 'cw-sound' + _mySoundId++,
                     url: url,
                     stream: true,
+                    volume: _currentVolume,
                     onload: function () { setTotalMediaLength(this.durationEstimate); },
                     onfinish: function () {
                         toggleAllPlayButtons();
@@ -114,11 +117,20 @@ function _getSound(url) {
 //***********************************************
 function mediaStop() {
 
-    if (isSoundManagerReady) {
-        if (mySound && mySound.readyState != 2 && mySound.playState == 1) {
+    if (_isSoundManagerReady) {
+        if (_mySound && _mySound.readyState != 2 && _mySound.playState == 1) {
             // playing
-            mySound.stop();
-            lastUrlPlayed = null;
+            _mySound.stop();
+            _lastUrlPlayed = null;
+        }
+    }
+}
+
+function changeVolume(value) {
+    if (_isSoundManagerReady) {
+        if (_mySound && _mySound.readyState != 2 && _mySound.playState == 1) {
+            _mySound.setVolume(value);
+            _currentVolume = value;
         }
     }
 }

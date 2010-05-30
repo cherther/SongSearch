@@ -87,12 +87,12 @@
 #cw-tbl-media-player
 {
     width: 100%;
-    border: 1px solid #999999;
-    background-color: #eee;
+    border: 1px solid #ccc;
+    background-color: #fff/*#eee;*/
 }
 #cw-tbl-media-player tr
 {
-    border: 1px solid #999999;
+    border: 1px solid #ccc;
 }
 #cw-tbl-media-player td
 {
