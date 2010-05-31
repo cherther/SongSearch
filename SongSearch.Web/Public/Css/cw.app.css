@@ -10,7 +10,7 @@ body
 { 
     font-size: 81.25%; 
     line-height: 1.2; 
-    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Verdana, sans-serif;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
 }	
 a, a:visited { /*text-decoration: none;*/ color: #0044CC; }
 a.cw-logo {  font-family: Verdana, Arial, sans-serif; text-decoration: none; color: #000; }

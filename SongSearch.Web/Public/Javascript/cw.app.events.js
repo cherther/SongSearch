@@ -40,6 +40,8 @@
     //-----------------------------------------------------------------------------------
     // Search option panel
     //-----------------------------------------------------------------------------------
+    
+    //$('.cw-form-value-button').button();
     //***********************************************
     //  Form Reset
     //***********************************************
@@ -160,7 +162,7 @@
     //***********************************************
     // Show/Hide cart contents link
     //***********************************************
-    $('.cw-tbl-carts-contents').click(
+    $('.cw-carts-contents').click(
         function (evt) {
 
             evt.preventDefault();
@@ -168,8 +170,8 @@
 			var cartId = $(this)[0].id.replace('s-', '');
 			//alert(cartId);
 			$('#c-' + cartId).toggle();
-			$(this).toggleClass('cw-tbl-carts-contents-show');
-			$(this).toggleClass('cw-tbl-carts-contents-hide');
+			$(this).toggleClass('cw-carts-contents-show');
+			$(this).toggleClass('cw-carts-contents-hide');
     }
     );
 

@@ -37,19 +37,3 @@
 </tr>
 
 </table>
-<script type="text/javascript">
-	$(function () {
-		// setup master volume
-		var vol = _currentVolume != null && _currentVolume >= 0 ? _currentVolume : 60;
-
-		$("#cw-media-player-volume").slider({
-			value: vol,
-			orientation: "horizontal",
-			range: "min",
-			animate: true,
-			slide: function (evt, ui) {
-				changeVolume(ui.value); 
-				}
-		});
-	});
-	</script>

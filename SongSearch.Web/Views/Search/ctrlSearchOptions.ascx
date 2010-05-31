@@ -7,25 +7,35 @@
             <span class="b-search">Search</span>
             </button>
             &nbsp;<a href="#" class="cw-reset-form" title="Reset the search form to start over">Clear</a>
+			<div>&nbsp;</div>
         </li>
-        <div>&nbsp;</div>
         <%
           var searchMenuProperties = Model.SearchMenuProperties;
           var searchFields = Model.SearchFields;
+		  //var lastGroup = "";
+		  var i = 0;
         %>
-        <%foreach (var item in searchMenuProperties) { %>
+        <%foreach (var prop in searchMenuProperties) { %>
         <%
-              var i = searchMenuProperties.IndexOf(item); 
-              var searchType = (SearchTypes) item.SearchTypeId;
-              var searchField = searchFields != null ? searchFields.SingleOrDefault(f => f.P == item.PropertyId) : null;
-              var value = searchField != null ? searchField.V : new string[] { "", "" };
+			var item = prop;
+			//var i = searchMenuProperties.IndexOf(item); 
+			var isGroup = item.SearchGroup != null;		
+			//var group = item.SearchGroup ?? "";
+			  		      
+			var searchType = (SearchTypes) item.SearchTypeId;
+			var searchField = searchFields != null ? searchFields.SingleOrDefault(f => f.P == item.PropertyId) : null;
+			var value = searchField != null ? searchField.V : new string[] { "", "" };
+			  
+			  
               %>
-        <li>
-            <label><%: item.PropertyName %></label>
-            <%: Html.Hidden(String.Format("f[{0}].P", i), item.PropertyId)%>
+			<li>
+            <%if (!isGroup && (searchType != SearchTypes.HasValue && searchType != SearchTypes.IsTrue)) { %>
+			<label><%: item.PropertyName%></label>
+            <%} %>
+			<%: Html.Hidden(String.Format("f[{0}].P", i), item.PropertyId)%>
             <%: Html.Hidden(String.Format("f[{0}].T", i), item.SearchTypeId)%>
             <div>
-            <%switch (searchType) {%>
+			<%switch (searchType) {%>
                 <%case SearchTypes.Contains: {%>
                 <%
                      var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
@@ -51,11 +61,19 @@
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.HasValue: {%>
-                <%: Html.CheckBox(String.Format("f[{0}].V", i), new { @class = "cw-form-value" })%>
+				<% var buttonId = String.Format("button-{0}", item.PropertyId); %>
+                <%: Html.CheckBox(String.Format("f[{0}].V", i), new { id = buttonId, @class = "cw-form-value-button" })%>
+				<label for="<%= buttonId %>">
+				<%: item.PropertyName%>
+				</label>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.IsTrue: {%>
-                <%: Html.CheckBox(String.Format("f[{0}].V", i), new { @class = "cw-form-value" })%>
+				<% var buttonId = String.Format("button-{0}", item.PropertyId); %>
+                <%: Html.CheckBox(String.Format("f[{0}].V", i), new { @class = "cw-form-value-button" })%>
+				<label for="<%= buttonId %>">
+				<%: item.PropertyName%>
+				</label>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Tag: {%>
@@ -71,8 +89,9 @@
                 <%break;%>
                 <%} %>
             <%}%>
-            </div>
+			</div>
         </li>
+		<% i++; %>
         <%} %>
        
         <%--<li>

@@ -192,8 +192,7 @@ function showContentPanelCallback(data, link) {
     parentRow.after(detailPanelRow);
     
     // cw-content-detail-tabs: calls jquery ui tabs widgets
-    $('#cw-content-detail-tabs').tabs();
-
+    setupContentPanelUIControls();
 //    detailPanelRow.slideDown();
 //    detailPanelRow.css('display', ' table-row');
     var mediaUrl = link[0].rel;
@@ -204,7 +203,14 @@ function showContentPanelCallback(data, link) {
 
     isContentDetailShowing = true;
     lastContentDetailLinkClicked = link[0];
-    
+
+}
+
+function setupContentPanelUIControls() {
+    $('.cw-content-detail-menu').button();
+    $('#cw-content-detail-tabs').tabs();
+    setupVolumeSlider();
+
 }
 
 //***********************************************
@@ -248,10 +254,8 @@ function togglePlayButtons(id, resetOnly) {
     if (!resetOnly) {
         // we're only concerned with resetting this link
         if (button.hasClass(playingColorClass)) {
-            button.addClass(readyColorClass);
-            button.removeClass(playingColorClass);
-            icon.removeClass(playingClass);
-            icon.addClass(readyClass);
+            button.removeClass(playingColorClass).addClass(readyColorClass); //switchClass(playingColorClass, readyColorClass); //
+            icon.removeClass(playingClass).addClass(readyClass);
         }
     
     } else {
@@ -310,6 +314,20 @@ function setTotalMediaLength(length) {
 
     var totalTime = millSecsToTimeCode(length, true);
     $('#cw-media-player-length').html(totalTime);
+}
+
+function setupVolumeSlider() {
+    // setup master volume
+    var vol = _currentVolume != null && _currentVolume >= 0 ? _currentVolume : 60;
+
+    $("#cw-media-player-volume").slider({
+            value: vol,
+            orientation: "horizontal",
+            range: "min",
+            animate: true,
+            slide: function (evt, ui) { changeVolume(ui.value); }
+        }
+    );
 }
 //-----------------------------------------------------------------------------------
 // User Management

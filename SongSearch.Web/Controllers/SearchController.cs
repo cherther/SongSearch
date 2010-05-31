@@ -81,27 +81,12 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// Detail/5
 		// **************************************
-		//[OutputCache(Duration = 60, VaryByParam = "id")]
 		public ActionResult Detail(int id) {
 
-			//var user = AccountData.User(User.Identity.Name);
-			var content = SearchService.GetContentDetails(id, _currentUser);
-			
-			var model = GetContentViewModel();
-			model.SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>();
-
-			model.IsEdit = false;
-			model.Content = content;
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
-				model.SectionsAllowed.Add("Rights");
-			}
-
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
-				model.UserCanEdit = true;
-			}
+			var model = GetDetailModel(id);
 
 			if (Request.IsAjaxRequest()) {
-
+				model.ViewMode = ViewModes.Embedded;
 				return View("ctrlContentDetail", model);
 			
 			} else {
@@ -109,6 +94,18 @@ namespace SongSearch.Web.Controllers
 			}
 		}
 
+		// **************************************
+		// Print/5
+		// **************************************
+		public ActionResult Print(int id) {
+
+			var model = GetDetailModel(id);
+			model.ViewMode = ViewModes.Print;
+			return View(model);
+			
+		}
+
+		
 		// **************************************
 		// Edit/5
 		// **************************************
@@ -130,7 +127,7 @@ namespace SongSearch.Web.Controllers
 				return View("ctrlContentDetail", model);
 
 			} else {
-				return View(model);
+				return RedirectToAction("Index");
 			}
 		}
 
@@ -177,6 +174,30 @@ namespace SongSearch.Web.Controllers
 
 		}
 
+
+		// **************************************
+		// GetDetailModel
+		// **************************************
+		private ContentViewModel GetDetailModel(int id) {
+			//var user = AccountData.User(User.Identity.Name);
+			var content = SearchService.GetContentDetails(id, _currentUser);
+
+			var model = GetContentViewModel();
+			model.SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>();
+
+			model.IsEdit = false;
+			model.Content = content;
+			if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
+				model.SectionsAllowed.Add("Notes");
+				model.SectionsAllowed.Add("Rights");
+			}
+
+			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+				model.UserCanEdit = true;
+			}
+			return model;
+		}
+
 		// **************************************
 		// GetSearchViewModel
 		// **************************************
@@ -191,5 +212,6 @@ namespace SongSearch.Web.Controllers
 			return model;
 
 		}
+
     }
 }

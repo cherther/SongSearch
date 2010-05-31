@@ -183,6 +183,7 @@
           <Property Name="PropertyId" Type="int" Nullable="false" />
           <Property Name="PropertyCode" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="PropertyName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="PropertyShortName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="SearchGroup" Type="nvarchar" MaxLength="50" />
           <Property Name="SearchTypeId" Type="smallint" />
           <Property Name="SearchPredicate" Type="varchar" MaxLength="50" />
@@ -751,6 +752,7 @@
           <Property Type="Boolean" Name="IsIndexable" Nullable="false" />
           <Property Type="Boolean" Name="IncludeInSearchMenu" Nullable="false" />
           <Property Type="String" Name="SearchPredicate" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PropertyShortName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -878,6 +880,7 @@
           <EntitySetMapping Name="SearchProperties">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SearchProperty">
               <MappingFragment StoreEntitySet="SearchProperties">
+                <ScalarProperty Name="PropertyShortName" ColumnName="PropertyShortName" />
                 <ScalarProperty Name="SearchPredicate" ColumnName="SearchPredicate" />
                 <ScalarProperty Name="IncludeInSearchMenu" ColumnName="IncludeInSearchMenu" />
                 <ScalarProperty Name="IsIndexable" ColumnName="IsIndexable" />

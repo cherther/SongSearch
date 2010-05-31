@@ -12,6 +12,13 @@
         <h4>What's New</h4>
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
+		<div>&nbsp;</div>
+		<div>5/31/2010</div>
+        <ul class="cw-vertical">
+            <li>Lyrics search words highlighted in song detail</li>
+            <li>Notes search words highlighted in song detail</li>
+            <li>Playing another song now cancels any pending media player loads (cuts down bandwith use)</li>
+			</ul>
 		 <div>&nbsp;</div>
 		<div>5/30/2010</div>
         <ul class="cw-vertical">

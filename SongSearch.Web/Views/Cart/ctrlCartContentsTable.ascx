@@ -16,7 +16,11 @@
     </tr>
     <%var cartIndex = 0; %>
     <% foreach (var item in results) { %>
-        <%var title = !String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)"; %>
+        <%
+		   var title = !String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)";
+		   var artistUrl = String.Concat(Url.Action("Results", "Search"), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
+		   
+		    %>
         <tr>
             <td width="300">
             <%if (Model.ShowDetails) { %>
@@ -28,6 +32,7 @@
             
             <td width="200">
                 <%: !String.IsNullOrWhiteSpace(item.Artist) ? item.Artist.ToUpper() : "(N/A)"%>
+				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist" style="vertical-align: middle"><img src="/public/images/icons/arrow.gif" /></a>
             </td>
             <td align="right">
                 <%: item.ReleaseYear %>

@@ -20,4 +20,6 @@ namespace SongSearch.Web {
 		public string[] SearchResultsHeaders { get; set; }
 
 	}
+
+	
 }

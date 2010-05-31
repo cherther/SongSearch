@@ -41,7 +41,7 @@ namespace SongSearch.Web.Controllers
         {
 			var vm = GetCartViewModel();
 			vm.MyCarts = _cartService.MyCarts();
-			vm.CartContentHeaders = new string[] { "Title", "Artist", "ReleaseYear", "File Name", "Download", "Remove"};
+			vm.CartContentHeaders = new string[] { "Title", "Artist", "Year", "File Name", "Download", "Remove"};
 
 			//Reset the searchFields to stop any previous highlighting preferences
 			CacheService.SessionUpdate(null, "SearchFields");

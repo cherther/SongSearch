@@ -15,7 +15,7 @@ foreach (var cart in Model)
 {
 	%>                         
 	<tr class="cw-tbl-carts-main">
-	    <td><div id="s-<%: cart.CartId%>" class="cw-tbl-carts-contents cw-tbl-carts-contents-show">&nbsp;</div></td>
+	    <td><div id="s-<%: cart.CartId%>" class="cw-carts-contents cw-carts-contents-show">&nbsp;</div></td>
 	    <td>
 	        <%: cart.LastUpdatedOn.ToShortDateString()%>
 	    </td>

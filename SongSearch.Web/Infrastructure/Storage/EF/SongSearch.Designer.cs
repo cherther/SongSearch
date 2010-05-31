@@ -89,7 +89,7 @@ namespace SongSearch.Web.Data
             {
                 if ((_Carts == null))
                 {
-                    _Carts = base.CreateObjectSet<Cart>("ActiveCartContents");
+                    _Carts = base.CreateObjectSet<Cart>("Carts");
                 }
                 return _Carts;
             }
@@ -260,11 +260,11 @@ namespace SongSearch.Web.Data
         #region AddTo Methods
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the ActiveCartContents EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the Carts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToCarts(Cart cart)
         {
-            base.AddObject("ActiveCartContents", cart);
+            base.AddObject("Carts", cart);
         }
     
         /// <summary>
@@ -2045,7 +2045,8 @@ namespace SongSearch.Web.Data
         /// <param name="isCacheable">Initial value of the IsCacheable property.</param>
         /// <param name="isIndexable">Initial value of the IsIndexable property.</param>
         /// <param name="includeInSearchMenu">Initial value of the IncludeInSearchMenu property.</param>
-        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyCode, global::System.String propertyName, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu)
+        /// <param name="propertyShortName">Initial value of the PropertyShortName property.</param>
+        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyCode, global::System.String propertyName, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu, global::System.String propertyShortName)
         {
             SearchProperty searchProperty = new SearchProperty();
             searchProperty.PropertyId = propertyId;
@@ -2057,6 +2058,7 @@ namespace SongSearch.Web.Data
             searchProperty.IsCacheable = isCacheable;
             searchProperty.IsIndexable = isIndexable;
             searchProperty.IncludeInSearchMenu = includeInSearchMenu;
+            searchProperty.PropertyShortName = propertyShortName;
             return searchProperty;
         }
 
@@ -2401,6 +2403,30 @@ namespace SongSearch.Web.Data
         private global::System.String _SearchPredicate;
         partial void OnSearchPredicateChanging(global::System.String value);
         partial void OnSearchPredicateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PropertyShortName
+        {
+            get
+            {
+                return _PropertyShortName;
+            }
+            set
+            {
+                OnPropertyShortNameChanging(value);
+                ReportPropertyChanging("PropertyShortName");
+                _PropertyShortName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PropertyShortName");
+                OnPropertyShortNameChanged();
+            }
+        }
+        private global::System.String _PropertyShortName;
+        partial void OnPropertyShortNameChanging(global::System.String value);
+        partial void OnPropertyShortNameChanged();
 
         #endregion
     

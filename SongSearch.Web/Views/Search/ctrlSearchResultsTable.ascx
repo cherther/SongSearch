@@ -18,7 +18,7 @@
                         var ord = Model.SortPropertyId.GetValueOrDefault().Equals(sp) ? (int)Model.SortType.Flip() : (int)SortType.Ascending;
                         var colUrl = String.Format("{0}&s={1}&o={2}", sortUrl, sp, ord);
                     %>
-                    <a href="<%=colUrl%>"><%: prop.PropertyName%></a>
+                    <a href="<%=colUrl%>"><%: prop.PropertyShortName%></a>
                     <%} else { %>
                     <%: col%>
                     <%}%>
@@ -30,14 +30,9 @@
 		<% 
 			var mediaUrl = Url.SiteRoot();
 			mediaUrl = item.HasMediaFullVersion ? 
-				String.Concat(mediaUrl, Url.Action("Stream", "Media", new { id = item.ContentId, version = MediaVersion.FullSong })) :
-				//(
-					//item.HasMediaPreviewVersion ?
-					//String.Concat(mediaUrl, Url.Action("Stream", "Media", new { id = item.ContentId, version = MediaVersion.Preview }))  :
-					""
-			//		)
-		   ;
+				String.Concat(mediaUrl, Url.Action("Stream", "Media", new { id = item.ContentId, version = MediaVersion.FullSong })) : "";
 		   
+		   var artistUrl = String.Concat(Url.Action("Results", "Search"), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
 		   %>
         <tr>
             <td width="300">
@@ -47,7 +42,8 @@
             </td>
             <td width="200">
                 <%: !String.IsNullOrWhiteSpace(item.Artist) ? item.Artist.ToUpper() : "(N/A)"%>
-            </td>
+				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist"><img src="/public/images/icons/arrow.gif" /></a>
+			</td>
             <td align="right">
                 <%: item.Pop %>
             </td>
