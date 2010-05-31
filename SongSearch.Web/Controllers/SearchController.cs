@@ -59,6 +59,7 @@ namespace SongSearch.Web.Controllers
 				
 					model.SearchResults = results;
 					model.SearchFields = searchFields;
+					CacheService.SessionUpdate(searchFields, "SearchFields");
 
 					model.RequestUrl = Request.RawUrl.Replace(String.Format("&p={0}", results.PageIndex), "");
 					model.PagerSortUrl = model.SortPropertyId.HasValue ?
@@ -182,7 +183,7 @@ namespace SongSearch.Web.Controllers
 			var model = new ContentViewModel() {
 				NavigationLocation = "Search",
 				Tags = CacheService.Tags(),
-				
+				SearchFields = CacheService.Session("SearchFields") as IList<SearchField>,
 				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" }
 			};
 

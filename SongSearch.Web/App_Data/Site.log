@@ -20767,3 +20767,35 @@ TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.
 05/30/2010 10:10:49: App is shutting down
 05/30/2010 10:14:47: App is shutting down
 05/30/2010 10:22:40: App is shutting down
+05/31/2010 09:31:12: 
+Error in Path :/soundmanager2.swf
+Raw Url :/soundmanager2.swf
+Message :The controller for path '/soundmanager2.swf' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+05/31/2010 09:31:12: 
+Error in Path :/soundmanager2.swf
+Raw Url :/soundmanager2.swf
+Message :The controller for path '/soundmanager2.swf' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+05/31/2010 09:31:40: App is shutting down
+05/31/2010 09:42:56: App is shutting down

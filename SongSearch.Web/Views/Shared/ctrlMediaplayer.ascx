@@ -1,8 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.ContentViewModel>" %>
 <%
     var content = Model.Content;
-	var fullSong = content.HasMediaFullVersion ? Url.Action("Stream", "Media", new { id = content.ContentId, version = MediaVersion.FullSong }) : null;
-	var preview = content.HasMediaPreviewVersion ? Url.Action("Stream", "Media", new { id = content.ContentId, version = MediaVersion.Preview }) : null;
 %>
 <div id="sm2-container"></div>
 <table id="cw-tbl-media-player">
@@ -17,12 +15,14 @@
 </tr>
 <tr>
 	<td width="55%">
-	<%if (fullSong != null) { %>
-	<a href="<%: fullSong %>" id = "cw-play-full"
+	<%if (content.HasMediaFullVersion != null) { %>
+	<%var url = Url.Action("Stream", "Media", new { id = content.ContentId, version = MediaVersion.FullSong }); %>
+	<a href="<%: url %>" id = "cw-play-full"
 		class = "cw-media-play-link cw-button cw-small cw-simple cw-green"><span class="b-play">Full Song</span></a>
 	<%} %>
-	<%if (preview != null) { %>
-    	<a href="<%: preview %>" id = "cw-play-preview"
+	<%if (content.HasMediaPreviewVersion != null) { %>
+	<%	var url = Url.Action("Stream", "Media", new { id = content.ContentId, version = MediaVersion.Preview }); %>
+    	<a href="<%: url %>" id = "cw-play-preview"
 		class = "cw-media-play-link cw-button cw-small cw-simple cw-green"><span class="b-play">:30</span></a>
 	<%} %>
 	</td>

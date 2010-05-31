@@ -52,7 +52,7 @@ input.cw-input-highlight
 	background-color: #FFFFFF;
 }
 
-span.cw-highlight 
+.cw-highlight 
 {
 	background-color:#F5DF00;
 	padding:0.1em;

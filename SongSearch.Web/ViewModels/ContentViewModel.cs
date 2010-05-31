@@ -11,6 +11,6 @@ namespace SongSearch.Web {
 		public bool IsEdit { get; set; }
 		public IList<Tag> Tags { get; set; }
 		public Content Content { get; set; }
-
+		public IList<SearchField> SearchFields { get; set; }
 	}
 }

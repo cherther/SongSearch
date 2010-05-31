@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Text;
+using SongSearch.Web;
+using Microsoft.Security.Application;
 
 namespace System.Web.Mvc {
 	public static class HtmlHelpers {
@@ -46,6 +48,18 @@ namespace System.Web.Mvc {
 		public static string Image(this HtmlHelper helper, string fileName, string attributes) {
 			fileName = string.Format("{0}/{1}/{2}", pubDir, imageDir, fileName);
 			return string.Format("<img src='{0}' {1}' />", helper.AttributeEncode(fileName), helper.AttributeEncode(attributes));
+		}
+
+
+		public static string HighlightSearchTerm(this HtmlHelper helper, string fieldValue, SearchField searchField) {
+			var value = AntiXss.HtmlEncode(fieldValue.ToUpper());
+			
+			if (searchField != null) {
+				var searchVal = searchField.V.FirstOrDefault() ?? "";
+				value = value.Replace(searchVal.ToUpper(), String.Format(@"<span class='cw-highlight'>{0}</span>", searchVal.ToUpper()));
+			}
+
+			return value;
 		}
 	}
 }

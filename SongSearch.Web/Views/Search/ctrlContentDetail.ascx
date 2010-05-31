@@ -1,6 +1,8 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.ContentViewModel>" %>
 <%
     var content = Model.Content;
+	var searchFields = Model.SearchFields;
+	
 %>
     <%--<div style="float: right">
     <button id="detail-close" type="submit" title="Close" class="cw-button cw-small cw-simple cw-blue">
@@ -61,9 +63,12 @@
         
         <div class="cw-content-label">Writers</div>
         <div class="cw-content-field"><%: content.Writers %></div>
-                
+        <%
+			var notesSearch = searchFields.Where(s => s.P == 19).SingleOrDefault();
+			var notes = Html.HighlightSearchTerm(content.Notes, notesSearch); 
+		 %>        
         <div class="cw-content-label">Notes</div>
-        <div class="cw-content-field"><pre><%: content.Notes %></pre></div>
+        <div class="cw-content-field"><pre><%= notes %></pre></div>
         
         <div class="cw-content-label">Keywords</div>
         <div class="cw-content-field"><%: content.Keywords %></div>
@@ -76,7 +81,11 @@
     <div id="tabs-2">
 	<fieldset>          
         <div class="cw-content-label">Lyrics</div>
-        <div class="cw-content-field"><pre><%: content.Lyrics %></pre></div>
+		<%
+			var lyricsSearch = searchFields.Where(s => s.P == 7).SingleOrDefault();
+			var lyrics = Html.HighlightSearchTerm(content.Lyrics, lyricsSearch);
+					%>
+        <div class="cw-content-field"><pre><%= lyrics%></pre></div>
 
         
 
