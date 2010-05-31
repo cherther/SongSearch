@@ -64,7 +64,7 @@
         <div class="cw-content-label">Writers</div>
         <div class="cw-content-field"><%: content.Writers %></div>
         <%
-			var notesSearch = searchFields.Where(s => s.P == 19).SingleOrDefault();
+        	var notesSearch = searchFields.Where(s => s.P == 19).SingleOrDefault();
 			var notes = Html.HighlightSearchTerm(content.Notes, notesSearch); 
 		 %>        
         <div class="cw-content-label">Notes</div>

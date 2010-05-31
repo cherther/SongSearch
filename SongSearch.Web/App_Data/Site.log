@@ -20799,3 +20799,88 @@ Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance
 TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
 05/31/2010 09:31:40: App is shutting down
 05/31/2010 09:42:56: App is shutting down
+05/31/2010 10:25:15: 
+Error in Path :/Search/Detail/1598
+Raw Url :/Search/Detail/1598?_=1275294304976
+Message :Exception of type 'System.Web.HttpUnhandledException' was thrown.
+Source :System.Web
+Stack Trace :   at System.Web.UI.Page.HandleError(Exception e)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequestWithNoAssert(HttpContext context)
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at System.Web.Mvc.ViewPage.ProcessRequest(HttpContext context)
+   at System.Web.Mvc.ViewUserControl.ViewUserControlContainerPage.ProcessRequest(HttpContext context)
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.<>c__DisplayClass1.<ProcessRequest>b__0()
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.<>c__DisplayClass4.<Wrap>b__3()
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.Wrap[TResult](Func`1 func)
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.Wrap(Action action)
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.ProcessRequest(HttpContext context)
+   at System.Web.HttpServerUtility.ExecuteInternal(IHttpHandler handler, TextWriter writer, Boolean preserveForm, Boolean setPreviousPage, VirtualPath path, VirtualPath filePath, String physPath, Exception error, String queryStringOverride)
+TargetSite :Boolean HandleError(System.Exception)
+05/31/2010 10:26:34: App is shutting down
+05/31/2010 10:28:32: App is shutting down
+05/31/2010 10:30:34: App is shutting down
+05/31/2010 10:39:59: App is shutting down
+05/31/2010 10:43:52: 
+Error in Path :/soundmanager2.swf
+Raw Url :/soundmanager2.swf
+Message :The controller for path '/soundmanager2.swf' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+05/31/2010 10:43:52: 
+Error in Path :/soundmanager2.swf
+Raw Url :/soundmanager2.swf
+Message :The controller for path '/soundmanager2.swf' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+05/31/2010 10:43:54: 
+Error in Path :/soundmanager2.swf
+Raw Url :/soundmanager2.swf
+Message :The controller for path '/soundmanager2.swf' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+05/31/2010 10:43:54: 
+Error in Path :/soundmanager2.swf
+Raw Url :/soundmanager2.swf
+Message :The controller for path '/soundmanager2.swf' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+05/31/2010 10:47:22: App is shutting down

@@ -28,6 +28,14 @@ var _mySound;
 var _lastUrlPlayed;
 var _currentVolume = 60;
 
+var sm_rs_uninitialised = 0;
+var sm_rs_loading = 1;
+var sm_rs_failed_error = 2;
+var sm_rs_loaded_success = 3;
+
+var sm_ps_stopped = 0;
+var sm_ps_playing = 1;
+
 //-----------------------------------------------------------------------------------
 //Sound manager controllers
 //-----------------------------------------------------------------------------------
@@ -39,9 +47,9 @@ function mediaPlay(url) {
     if (_isSoundManagerReady) {
 
         if (_mySound) {
-            if (url == _lastUrlPlayed) {
-                if (_mySound.readyState != 2) {
-                    if (_mySound.playState != 1) {
+            if (url == _lastUrlPlayed) { //second click on same link
+                if (_mySound.readyState != sm_rs_failed_error) {
+                    if (_mySound.playState != sm_ps_playing) {
                         // not yet playing
                         _mySound.play();
                     } else {
@@ -52,12 +60,13 @@ function mediaPlay(url) {
                 }
             } else {
 
-                if (_mySound.readyState != 2) {
-                    if (_mySound.playState == 1) {
-                        // playing
+                if (_mySound.readyState != sm_rs_failed_error) {
+                    _mySound.unload();
+
+                    if (_mySound.playState == sm_ps_playing) {
+                        // still playing? huh?
                         _mySound.stop();
                     }
-                    //                    mySound.play(url);
                     _mySound = getSound(url);
 
                     _mySound.play();
@@ -118,8 +127,9 @@ function getSound(url) {
 function mediaStop() {
 
     if (_isSoundManagerReady) {
-        if (_mySound && _mySound.readyState != 2 && _mySound.playState == 1) {
+        if (_mySound && _mySound.readyState != sm_rs_failed_error && _mySound.playState == sm_ps_playing) {
             // playing
+            _mySound.unload();
             _mySound.stop();
             _lastUrlPlayed = null;
         }
@@ -128,7 +138,7 @@ function mediaStop() {
 
 function changeVolume(value) {
     if (_isSoundManagerReady) {
-        if (_mySound && _mySound.readyState != 2 && _mySound.playState == 1) {
+        if (_mySound && _mySound.readyState != sm_rs_failed_error && _mySound.playState == sm_ps_playing) {
             _mySound.setVolume(value);
             _currentVolume = value;
         }

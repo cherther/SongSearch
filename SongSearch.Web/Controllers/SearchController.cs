@@ -88,6 +88,8 @@ namespace SongSearch.Web.Controllers
 			var content = SearchService.GetContentDetails(id, _currentUser);
 			
 			var model = GetContentViewModel();
+			model.SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>();
+
 			model.IsEdit = false;
 			model.Content = content;
 			if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
@@ -183,7 +185,6 @@ namespace SongSearch.Web.Controllers
 			var model = new ContentViewModel() {
 				NavigationLocation = "Search",
 				Tags = CacheService.Tags(),
-				SearchFields = CacheService.Session("SearchFields") as IList<SearchField>,
 				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" }
 			};
 
