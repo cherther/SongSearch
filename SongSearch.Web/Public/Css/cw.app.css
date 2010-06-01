@@ -159,6 +159,11 @@ ul.cw-list-searchoptions li
    /* width: 640px;*/
 }
 
+#cw-content-detail-menu
+{
+    padding: 0 0 0 3px;
+}
+
 .cw-carts
 {
     margin: 0.8em;

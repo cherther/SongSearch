@@ -2,7 +2,7 @@
 <%
     var content = Model.Content;
 	var searchFields = Model.SearchFields;
-	
+	var menuButtonClass = "cw-button cw-simple cw-small cw-gray"; //'.cw-content-detail-menu
 %>
     <%--<div style="float: right">
     <button id="detail-close" type="submit" title="Close" class="cw-button cw-small cw-simple cw-blue">
@@ -18,16 +18,16 @@
 			<hr />
 			<div id="cw-content-detail-menu">
 			<%if (content.HasMediaFullVersion) { %>
-			<%: Html.ActionLink("Download", "Download", "Media", new { id = content.ContentId }, new { @class = "cw-content-detail-menu" })%>
+			<%: Html.ActionLink("Download", "Download", "Media", new { id = content.ContentId }, new { @class = menuButtonClass })%>
 			<%if(!content.IsInMyActiveCart){ %>
-			<%: Html.ActionLink("Add To Cart", "Add", "Cart", new { id = content.ContentId }, new { @class = "cw-cart-add-link cw-content-detail-menu" })%>
+			<%: Html.ActionLink("Add To Cart", "Add", "Cart", new { id = content.ContentId }, new { @class = String.Concat(menuButtonClass, " cw-cart-add-link") })%>
 			<%} else { %>
-			<%: Html.ActionLink("In Cart", "Index", "Cart", null, new { @class = "cw-content-detail-menu" })%>
+			<%: Html.ActionLink("In Cart", "Index", "Cart", null, new { @class = menuButtonClass })%>
 			<%} %>
 			<%} %>
-			<%: Html.ActionLink("Print", "Print", "Search", new { id = content.ContentId }, new { @class = "cw-content-detail-menu", target = "_new" })%>
+			<%: Html.ActionLink("Print", "Print", "Search", new { id = content.ContentId }, new { @class = menuButtonClass, target = "_new" })%>
 			<%if (Model.UserCanEdit) { %>
-			<%: Html.ActionLink("Edit", "Edit", "Search", new { id = content.ContentId }, new { @class = "cw-content-detail-menu" })%>
+			<%: Html.ActionLink("Edit", "Edit", "Search", new { id = content.ContentId }, new { @class = menuButtonClass })%>
 			<%} %>
 			</div>
 			<hr />

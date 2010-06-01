@@ -234,7 +234,7 @@ a.cw-tag-box
 	background-position: 0 0;
 	
 	/* Special effects */
-	text-shadow: 0 -1px 1px rgba(0,0,0,0.25), -2px 0 1px rgba(0,0,0,0.25); 
+	/*text-shadow: 0 -1px 1px rgba(0,0,0,0.25), -2px 0 1px rgba(0,0,0,0.25); */
 	border-radius: 5px; 
 	-moz-border-radius: 5px; 
 	-webkit-border-radius: 5px; 
@@ -316,19 +316,20 @@ a.cw-tag-box
 }
 
 /* Simple button colors */
-.cw-button.cw-simple					{ background-color: #333; }		/* Default */
-.cw-button.cw-simple.cw-black		{ background-color: #333; }
-.cw-button.cw-simple.cw-red		{ background-color: #a90118; }
+.cw-button.cw-simple				{ background-color: #CCCCCC; color: #000 !important; }	/*{ background-color: #333; }		 Default */
+.cw-button.cw-simple.cw-black		{ background-color: #333; color: #fff !important; }
+.cw-button.cw-simple.cw-red		{ background-color: #a90118; color: #fff !important; }
 .cw-button.cw-simple.cw-orange	{ background-color: #ff8a00; }
 .cw-button.cw-simple.cw-yellow	{ background-color: #ffb515; }
-.cw-button.cw-simple.cw-green		{ background-color: #59a901; }
-.cw-button.cw-simple.cw-blue		{ background-color: #015ea9; }
-.cw-button.cw-simple.cw-teal		{ background-color: #2daebf; }
-.cw-button.cw-simple.cw-magenta	{ background-color: #a9014b; }
-.cw-button.cw-simple.cw-purple	{ background-color: #9d01a9; }
+.cw-button.cw-simple.cw-green		{ background-color: #59a901; color: #fff !important; }
+.cw-button.cw-simple.cw-blue		{ background-color: #015ea9; color: #fff !important; }
+.cw-button.cw-simple.cw-teal		{ background-color: #2daebf; color: #fff !important; }
+.cw-button.cw-simple.cw-magenta	{ background-color: #a9014b; color: #fff !important; }
+.cw-button.cw-simple.cw-purple	{ background-color: #9d01a9; color: #fff !important; }
+.cw-button.cw-simple.cw-gray { background-color: #CCCCCC; color: #000 !important; }
 
 /* Simple button sizes */
-.cw-button.cw-simple.cw-small          { padding: 4px 7px 5px; font-size: 10px !important; }
+.cw-button.cw-simple.cw-small          { padding: 4px 7px 5px; font-size: 10px !important; text-shadow: none !important;}
 .cw-button.cw-simple.cw-small:active   { padding: 5px 7px 4px; }
 .cw-button.cw-simple                    { /* default */ }
 .cw-button.cw-simple:active             { padding: 6px 10px 4px; }
