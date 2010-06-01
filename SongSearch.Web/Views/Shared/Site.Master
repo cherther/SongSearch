@@ -41,7 +41,7 @@
 
     </script>
     <%} %>
-    <div id="flash" style="display:none"></div>
+    <div id="fire" style="display:none"></div>
 
     <table width="100%">
     <tr>
@@ -83,7 +83,7 @@
 	var debug = App.Environment != AppEnvironment.Production;
 	var d = debug ? "?d" : "";
 	var bundle = Bundle.JavaScript()
-    .Add("~/public/javascript/jquery-1.4.1.min.js")
+    .Add("~/public/javascript/jquery-1.4.2.min.js")
     .Add("~/public/javascript/jquery.blockUI.js")
     .Add("~/public/javascript/jquery-ui-1.8.1.min.js");
 
@@ -110,10 +110,10 @@
 	if (Page.User.Identity.IsAuthenticated)
 	{
 %>
-<script type="text/javascript">$(document).ready(function () { updateCartCountAjax(); });</script>
-<%} %>
+<%--<script type="text/javascript">$(document).ready(function () { updateCartCountAjax(); });</script>
+--%><%} %>
 
-<%=Html.Flash() %>
+<%=Html.Fire() %>
 <asp:ContentPlaceHolder id="Javascripts" runat="server" />
 </html>
 

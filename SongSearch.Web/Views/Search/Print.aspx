@@ -3,6 +3,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Detail
 </asp:Content>
+
+<asp:Content ID="Content5" ContentPlaceHolderID="Javascripts" runat="server">
+<script type="text/javascript">
+$(document).ready(function () {
+
+	window.print();
+
+}
+);
+</script>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class = "cw-outl">
 	<% Html.RenderPartial("ctrlContentDetail", Model); %>

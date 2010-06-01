@@ -45,18 +45,18 @@ function unwait(elem) {
 //***********************************************
 //  flash
 //***********************************************
-function flash(type, msg) {
+function fire(type, msg) {
 
     //var fade = type == 'info';
-    var flash = $('#flash');
-    flash.html(msg).removeClass('').addClass(type);
-    flash.slideDown('slow');
+    var fire = $('#fire');
+    fire.html(msg).removeClass('').addClass(type);
+    fire.slideDown('slow');
     if (type == 'info') {
-        flash.delay('1200').fadeOut('slow'); 
+        fire.delay('2000').fadeOut('slow'); 
     }
-    flash.click(function () 
+    fire.click(function () 
         {
-            flash.toggle('highlight') 
+            fire.toggle('highlight') 
         });
 }
 
@@ -187,14 +187,13 @@ function showContentPanelCallback(data, link) {
     var parentRow = link.closest('tr');
     var numberofCells = 6;// parentRow.children('td').length;
     var detailPanelRow = $('<tr id="cw-content-detail-row"><td colspan="' + numberofCells + '">' + data);
-//style="display: none" 
     parentRow.addClass('cw-row-selected');
     parentRow.after(detailPanelRow);
+    unwait(); 
     
     // cw-content-detail-tabs: calls jquery ui tabs widgets
     setupContentPanelUIControls();
-//    detailPanelRow.slideDown();
-//    detailPanelRow.css('display', ' table-row');
+
     var mediaUrl = link[0].rel;
     if (mediaUrl) {
         mediaPlay(mediaUrl);
@@ -207,7 +206,7 @@ function showContentPanelCallback(data, link) {
 }
 
 function setupContentPanelUIControls() {
-    $('.cw-content-detail-menu').button();
+    //$('.cw-content-detail-menu').button();
     $('#cw-content-detail-tabs').tabs();
     setupVolumeSlider();
 

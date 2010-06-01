@@ -178,7 +178,24 @@ namespace SongSearch.Web.Services {
 			return isInCart;
 
 		}
+		public static int MyActiveCartCount(string userName) {
+			
+			Cart activeCart;
 
+			if (_hasSession) {
+				if (Session(CacheKeys.ActiveCartContents) == null) { SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); }
+				activeCart = Session(CacheKeys.ActiveCartContents) as Cart;
+
+			} else {
+				activeCart = GetDataUserActiveCart(userName);
+			}
+
+			int count = activeCart != null && activeCart.Contents != null ? activeCart.Contents.Count() : 0;
+
+			activeCart = null;
+			return count;
+
+		}
 
 		public static void RefreshMyActiveCart(string userName) {
 			if (_hasSession) {

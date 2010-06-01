@@ -23,7 +23,7 @@ namespace SongSearch.Web.Controllers
 			Exception lastError = Server.GetLastError();
 			lastError = lastError ?? new Exception(message ?? "Unknown Error");
 			var vm = new ErrorViewModel() { Error = new HandleErrorInfo(lastError, controllerName, actionName) };
-			this.FlashError("Oops! We're sorry, something bad happened while processing your request...");
+			this.FireError("Oops! We're sorry, something bad happened while processing your request...");
 			return View(vm);
 		}
 		/// <summary>

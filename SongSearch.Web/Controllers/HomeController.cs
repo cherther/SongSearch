@@ -18,7 +18,7 @@ namespace SongSearch.Web.Controllers {
 
 				var msg = CacheService.User(User.Identity.Name).LoginMessage();
 				
-				this.FlashInfo(msg);
+				this.FireInfo(msg);
 			}
 			var vm = new ViewModel() { NavigationLocation = "Home" };
 			return View(vm);

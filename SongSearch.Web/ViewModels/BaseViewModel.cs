@@ -13,12 +13,13 @@ namespace SongSearch.Web {
 		public ViewModes ViewMode { get; set; }
 		public string PageTitle { get; set; }
 		public string NavigationLocation { get; set; }
+		public int MyActiveCartCount { get; set; }
 
 		public ViewModel() {
 			ViewMode = ViewModes.Normal;
 			PageTitle = "";
 			NavigationLocation = "";
-			
+		
 		}
 	}
 

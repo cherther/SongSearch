@@ -10,9 +10,9 @@
     menu.Add("Search", new string[3] { "Index", "Search", "Search" });
     if (Page.User.Identity.IsAuthenticated)
     {
-        var cartCount = ViewData["MyActiveCartContentsCount"] as string ?? "";
-        var cartMnuText = String.Concat("Song Cart", cartCount != null ? String.Format("({0})", cartCount) : "");
-        menu.Add("Cart", new string[3] { "Index", "Cart", cartMnuText });
+        //var cartCount = ViewData["MyActiveCartContentsCount"] as string ?? "";
+        //var cartMnuText = String.Concat("Song Cart", cartCount != null ? String.Format("({0})", cartCount) : "");
+        menu.Add("Cart", new string[3] { "Index", "Cart", "Song Cart" });
     }
     menu.Add("Help", new string[3] { "Index", "Help", "Help" });
     if (Page.User.UserIsAnyAdmin())
@@ -34,8 +34,12 @@
             string menuId = String.Format("menu-{0}", menuItem.Key.ToLower());
                 %>
             <li id="<%=menuId %>" class="<%= menuItem.Key == navLocation ? "current" : ""%>">
+			<%if (menuItem.Key == "Cart") { %>
+			<% Html.RenderAction("CartCount", "Cart"); %>
+			<%} else { %>
             <%= Html.ActionLink(values[2], values[0], values[1])%>
-            </li>
+            <%} %>
+			</li>
             <%
                 //}
             } %>

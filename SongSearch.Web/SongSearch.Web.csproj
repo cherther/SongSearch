@@ -125,7 +125,7 @@
     <Compile Include="Helpers\Configuration.cs" />
     <Compile Include="Helpers\Connections.cs" />
     <Compile Include="Helpers\DynamicLinq.cs" />
-    <Compile Include="Helpers\FlashHelpers.cs" />
+    <Compile Include="Helpers\FireHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\PagedList.cs" />
     <Compile Include="Helpers\RenderView.cs" />
@@ -1696,6 +1696,7 @@
     <Content Include="Public\Javascript\cw.app.events.js" />
     <Content Include="Public\Javascript\cw.app.ajax.js" />
     <Content Include="Public\Javascript\cw.app.sound.js" />
+    <Content Include="Public\Javascript\jquery-1.4.2.min.js" />
     <Content Include="Public\Javascript\jquery-ui-1.8.1.min.js" />
     <Content Include="Public\Javascript\jquery.blockUI.js" />
     <Content Include="Public\Javascript\soundmanager2-nodebug-jsmin.js" />
@@ -1710,6 +1711,7 @@
     <Content Include="Views\Account\ResetPasswordSuccess.aspx" />
     <Content Include="Views\Account\UpdateProfile.aspx" />
     <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
+    <Content Include="Views\Cart\ctrlCartCount.ascx" />
     <Content Include="Views\Cart\ctrlCartTable.ascx" />
     <Content Include="Views\Cart\Index.aspx" />
     <Content Include="Views\Error\Index.aspx" />

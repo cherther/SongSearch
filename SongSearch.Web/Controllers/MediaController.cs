@@ -29,7 +29,7 @@ namespace SongSearch.Web.Controllers
 				return Get(id, MediaVersion.FullSong);
 			}
 			catch {
-				this.FlashInfo("There was an error downloading this item. Please try again in a bit.");
+				this.FireInfo("There was an error downloading this item. Please try again in a bit.");
 				return RedirectToAction("Index", "Search");
 			}
 		}
@@ -49,7 +49,7 @@ namespace SongSearch.Web.Controllers
 				return base.File(media, contentType, downloadName);
 			} else {
 				var msg = "You do not have access to this file";
-				this.FlashError(msg);
+				this.FireError(msg);
 				return RedirectToAction("Index", "Error", new { exc = new AccessViolationException(msg), message = msg, controllerName = "Media", actionName = "Download" });
 			}
 
@@ -72,7 +72,7 @@ namespace SongSearch.Web.Controllers
 				return new FileStreamResult(new FileStream(mediaPath, System.IO.FileMode.Open), contentType);
 			} else {
 				var msg = "You do not have access to this file";
-				this.FlashError(msg);
+				this.FireError(msg);
 				return RedirectToAction("Index", "Error", new { exc = new AccessViolationException(msg), message = msg, controllerName = "Media", actionName = "Download" });
 			}
 		}

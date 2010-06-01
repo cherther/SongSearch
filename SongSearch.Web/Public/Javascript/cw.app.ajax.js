@@ -12,16 +12,18 @@ function getContentDetailAjax(url, link) {
         dataType: 'html',
         success: function (data, status, xhr) {
             if (status == 'error') {
-                flash('error', xhr.status + ' ' + xhr.statusText);
+                unwait();
+                fire('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
 
                 showContentPanelCallback(data, link);
-                unwait(); //detailsPanel);
+
             }
         },
         error: function (xhr, status, error) {
-            flash('error', xhr.status + ' ' + xhr.statusText);
+            unwait();
+            fire('error', xhr.status + ' ' + xhr.statusText);
         }
     });
 
@@ -50,8 +52,10 @@ function updateCartCountAjax() {
 	    );
 }
 
-function addToCartAjax(url) {
+function addToCartAjax(link) {
 
+    var url = link[0].href;
+    wait();
     $.ajax({
         url: url,
         type: 'POST',
@@ -59,15 +63,27 @@ function addToCartAjax(url) {
         dataType: 'json',
         success: function (data, status, xhr) {
             if (status == 'error') {
-                flash('error', xhr.status + ' ' + xhr.statusText);
+                fire('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
-                flash('info', 'Added to Cart');
+                link.fadeTo('slow', 0.2, function () {
+                    link.text('In Cart');
+                    link.attr('title', 'In Cart');
+                    link.attr('href', '/Cart');
+                    link.fadeTo('slow', 1);
+                    link.removeClass('cw-cart-add-link');
+                    //setupContentPanelUIControls();
+                }
+                );
+
+
+                //fire('info', 'Added to Cart');
                 updateCartCountAjax();
+                unwait();
             }
         },
         error: function (xhr, status, error) {
-            flash('error', xhr.status + ' ' + xhr.statusText);
+            fire('error', xhr.status + ' ' + xhr.statusText);
         }
     });
 
@@ -83,15 +99,15 @@ function addToCartAjax(url) {
 //		dataType: 'json',
 //		success: function (data, status, xhr) {
 //		    if (status == 'error') {
-//		        flash('error', xhr.status + ' ' + xhr.statusText);
+//		        fire('error', xhr.status + ' ' + xhr.statusText);
 //		    }
 //		    else {
-//		        flash('info', 'Removed from Cart');
+//		        fire('info', 'Removed from Cart');
 //		        updateCartCountAjax();
 //		    }
 //		},
 //		error: function (xhr, status, error) {
-//		    flash('error', xhr.status + ' ' + xhr.statusText);
+//		    fire('error', xhr.status + ' ' + xhr.statusText);
 //		}
 //	});
 
@@ -109,7 +125,7 @@ function getUserDetailAjax(url) {
         dataType: 'html',
         success: function (data, status, xhr) {
             if (status == 'error') {
-                flash('error', xhr.status + ' ' + xhr.statusText);
+                fire('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
 
@@ -118,7 +134,7 @@ function getUserDetailAjax(url) {
             }
         },
         error: function (xhr, status, error) {
-            flash('error', xhr.status + ' ' + xhr.statusText);
+            fire('error', xhr.status + ' ' + xhr.statusText);
         }
     }
  );
@@ -135,15 +151,15 @@ function updateRoleAjax(link) {
         cache: false,
         success: function (data, status, xhr) {
             if (status == "error") {
-                flash('error', xhr.status + ' ' + xhr.statusText);
+                fire('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
                 toggleTagBoxSelection(link, 'cw-green', true)
-                flash('info', 'User role updated');
+                fire('info', 'User role updated');
             }
         },
         error: function (xhr, status, error) {
-            flash('error', xhr.status + " " + xhr.statusText);
+            fire('error', xhr.status + " " + xhr.statusText);
         }
         }
 	);
@@ -164,7 +180,7 @@ function updateCatRoleAjax(link) {
         cache: false,
         success: function (data, status, xhr) {
             if (status == "error") {
-                flash('error', xhr.status + ' ' + xhr.statusText);
+                fire('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
                 getUserDetailAjax(detUrl);
@@ -172,7 +188,7 @@ function updateCatRoleAjax(link) {
             }
         },
         error: function (xhr, status, error) {
-            flash('error', xhr.status + " " + xhr.statusText);
+            fire('error', xhr.status + " " + xhr.statusText);
         }
     }
 	);

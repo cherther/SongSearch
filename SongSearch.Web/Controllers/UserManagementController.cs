@@ -77,7 +77,7 @@ namespace SongSearch.Web
 				string[] recipients = model.Recipients;
 				if (recipients.Count() == 0) {
 					ModelState.AddModelError("Recipient", "Please enter a valid email address");
-					this.FlashError("There was an error processing your invites...");
+					this.FireError("There was an error processing your invites...");
 					return View(model);
 				
 				}
@@ -88,7 +88,7 @@ namespace SongSearch.Web
 
 					if (!Regex.Match(address, @"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}").Success) {
 						ModelState.AddModelError("Recipient", "'" + address + "' is not a valid email address");
-						this.FlashError("There was an error processing your invites...");
+						this.FireError("There was an error processing your invites...");
 						return View(model);
 					}
 				}
@@ -122,7 +122,7 @@ namespace SongSearch.Web
 				return View("InviteComplete", model);
 			} else {
 				ModelState.AddModelError("", "There was an error processing your invites");
-				this.FlashError("There was an error processing your invites...");
+				this.FireError("There was an error processing your invites...");
 				return View(model);
 			}
 		}
@@ -157,7 +157,7 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FlashError("There was an error processing your request");
+					this.FireError("There was an error processing your request");
 					return RedirectToAction("Index");
 				}
 			}
@@ -177,14 +177,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FlashError("There was an error updating this user's role...");
+					this.FireError("There was an error updating this user's role...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(roleId);
 			} else {
-				this.FlashInfo("Succesfully updated user's role");
+				this.FireInfo("Succesfully updated user's role");
 				return RedirectToAction("Index");
 			}
 		}
@@ -203,14 +203,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FlashError("There was an error updating this user's catalog access...");
+					this.FireError("There was an error updating this user's catalog access...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(roleId);
 			} else {
-				this.FlashInfo("Succesfully updated user's catalog access");
+				this.FireInfo("Succesfully updated user's catalog access");
 				return RedirectToAction("Index");
 			}
 		}
@@ -229,14 +229,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FlashError("There was an error updating this user's catalog access...");
+					this.FireError("There was an error updating this user's catalog access...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(roleId);
 			} else {
-				this.FlashInfo("Succesfully updated user's catalog access");
+				this.FireInfo("Succesfully updated user's catalog access");
 				return RedirectToAction("Index");
 			}
 		}
@@ -255,14 +255,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FlashError("There was an error deleting the user...");
+					this.FireError("There was an error deleting the user...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(id);
 			} else {
-				this.FlashInfo("User Deleted");
+				this.FireInfo("User Deleted");
 				return RedirectToAction("Index");
 			}
 		}
@@ -280,14 +280,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FlashError("There was an error processing your request...");
+					this.FireError("There was an error processing your request...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(id);
 			} else {
-				this.FlashInfo("Sucessfully transferred user ownership");
+				this.FireInfo("Sucessfully transferred user ownership");
 				return RedirectToAction("Index");
 			}
 		}

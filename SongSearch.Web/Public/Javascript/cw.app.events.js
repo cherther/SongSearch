@@ -126,12 +126,8 @@
 
             var link = $(this);
             //var id = link[0].rel;
-            addToCartAjax(link[0]);
+            addToCartAjax(link);
             
-			link.text('In Cart');
-			link.attr('title', 'In Cart');
-			link.attr('href', '/Cart');
-            link.removeClass('cw-cart-add-link');
         }
     );
     

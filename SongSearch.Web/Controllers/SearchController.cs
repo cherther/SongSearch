@@ -70,11 +70,11 @@ namespace SongSearch.Web.Controllers
 					return View(model);
 				}
 				catch {
-					this.FlashError("There was an error getting your search results. Please try again in a bit.");
+					this.FireError("There was an error getting your search results. Please try again in a bit.");
 				}
 			}
 
-			this.FlashWarning("Please try your search again.");
+			this.FireWarning("Please try your search again.");
 			return RedirectToAction("Index");
 		}
 

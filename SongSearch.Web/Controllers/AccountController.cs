@@ -73,7 +73,7 @@ namespace SongSearch.Web.Controllers {
 						
 					//    CacheService.SessionUpdate("1", "ActiveCartMessageShown");
 					//}
-					this.FlashInfo(msg);
+					this.FireInfo(msg);
 
 					if (!String.IsNullOrEmpty(returnUrl)) {
 						return Redirect(returnUrl);
@@ -82,7 +82,7 @@ namespace SongSearch.Web.Controllers {
 					}
 				} else {
 					ModelState.AddModelError("", Errors.LoginFailed.Text());
-					this.FlashError("There was an error logging you in...");
+					this.FireError("There was an error logging you in...");
 				}
 
 			}
@@ -208,7 +208,7 @@ namespace SongSearch.Web.Controllers {
 
 			// If we got this far, something failed, redisplay form
 			model.NavigationLocation = "Register";
-			this.FlashError("There was an error registering you...");
+			this.FireError("There was an error registering you...");
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(model);
@@ -244,7 +244,7 @@ namespace SongSearch.Web.Controllers {
 
 			// If we got this far, something failed, redisplay form
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
-			this.FlashError("There was an error changing your password...");
+			this.FireError("There was an error changing your password...");
 
 			model.NavigationLocation = "Account";
 			return View(model);
@@ -316,7 +316,7 @@ namespace SongSearch.Web.Controllers {
 					SetFriendlyNameCookie(friendly);
 
 					model.ShowSignatureField = user.IsAnyAdmin();
-					this.FlashInfo("Successfully updated your profile...");
+					this.FireInfo("Successfully updated your profile...");
 
 					return View(model);
 
@@ -330,7 +330,7 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] =
 				AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
-			this.FlashError("There was an error updating your profile...");
+			this.FireError("There was an error updating your profile...");
 
 			return View(model);
 		}
@@ -397,7 +397,7 @@ namespace SongSearch.Web.Controllers {
 			}
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
-			this.FlashError("There was an error processing your password reset request...");
+			this.FireError("There was an error processing your password reset request...");
 
 			return View(model);
 		}
@@ -440,7 +440,7 @@ namespace SongSearch.Web.Controllers {
 
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 				model.NavigationLocation = "Account";
-				this.FlashError("There was an error processing your password reset request...");
+				this.FireError("There was an error processing your password reset request...");
 
 				return View(model);
 			}
