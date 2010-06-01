@@ -94,12 +94,53 @@
     function (evt) {
 
         evt.preventDefault();
+        var link = $(this);
+        
+        if (isContentEditMode){
+            if (window.confirm('You\'re in Edit mode. Do you want to SAVE changes you\'ve made?')){
+            // save stuff, then showContentPanel, maybe pass in as a delegate? for now:
+                fire('info', 'Saved...');
+            } else {
+                fire('warning', 'Save cancelled...');
+            }
+            
+            showContentPanel(link);
+
+        } else {
+            showContentPanel(link);
+        }
+    }
+    );
+
+    //***********************************************
+    //  Content edit link
+    //***********************************************
+    $('.cw-content-edit-link').live('click',
+    function (evt) {
+
+        evt.preventDefault();
 
         var link = $(this);
         showContentPanel(link);
     }
     );
 
+    //***********************************************
+    //  Content save link
+    //***********************************************
+    $('.cw-content-save-link').live('click',
+    function (evt) {
+
+        evt.preventDefault();
+
+        var link = $(this);
+        
+        // save the form data
+
+        //then:
+        showContentPanel(link);
+    }
+    );
     //-----------------------------------------------------------------------------------
     // Content detail panel
     //-----------------------------------------------------------------------------------

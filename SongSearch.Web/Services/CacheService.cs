@@ -36,6 +36,7 @@ namespace SongSearch.Web.Services {
 			_cacheMatrix.Add(CacheKeys.TopTags, CacheUpdateTopTags);
 			_cacheMatrix.Add(CacheKeys.Content, CacheUpdateContentFields);
 			_cacheMatrix.Add(CacheKeys.Rights, CacheUpdateContentRightsFields);
+			_cacheMatrix.Add(CacheKeys.Territories, CacheUpdateTerritories);
 			//Initialize();
 		}
 
@@ -55,7 +56,8 @@ namespace SongSearch.Web.Services {
 			Tags,
 			TopTags,
 			Content,
-			Rights
+			Rights,
+			Territories
 		}
 		// **************************************
 		// Initialize
@@ -276,7 +278,7 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
-		// Catalogs
+		// ContentRightsField
 		// **************************************
 		public static IList<string> ContentRightsField(string fieldName) {
 			if (_hasCache) {
@@ -286,6 +288,19 @@ namespace SongSearch.Web.Services {
 				return value;
 			} else {
 				return GetDataContentRightsField(fieldName);
+			}
+		}
+
+		// **************************************
+		// Tags
+		// **************************************
+		public static IList<Territory> Territories() {
+			if (_hasCache) {
+				if (Cache(CacheKeys.Territories) == null) { CacheUpdateTerritories(CacheKeys.Territories); }
+				var value = Cache(CacheKeys.Territories) as IList<Territory>;
+				return value;
+			} else {
+				return GetDataTerritories();
 			}
 		}
 
@@ -399,7 +414,12 @@ namespace SongSearch.Web.Services {
 			var lookup = GetDataContentRightsFields();
 			CacheUpdate(lookup, key);
 		}
-		
+
+		private static void CacheUpdateTerritories(CacheKeys key, params object[] list) {
+			var lookup = GetDataTerritories();
+			CacheUpdate(lookup, key);
+		}
+
 		// **************************************
 		// GetData
 		// **************************************
@@ -482,6 +502,9 @@ namespace SongSearch.Web.Services {
 			return SearchService.GetLookupListContentRights(fieldName);
 		}
 
-		
+		private static IList<Territory> GetDataTerritories() {
+			var obj = SearchService.GetLookupList<Territory>();
+			return obj;
+		}
 	}
 }

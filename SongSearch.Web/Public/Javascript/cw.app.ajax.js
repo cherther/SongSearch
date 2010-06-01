@@ -16,9 +16,11 @@ function getContentDetailAjax(url, link) {
                 fire('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
-
-                showContentPanelCallback(data, link);
-
+                if (isContentViewMode) {
+                    showContentPanelCallback(data, link);
+                } else {
+                    showContentPanelCallbackEdit(data, link);
+                }
             }
         },
         error: function (xhr, status, error) {

@@ -84,6 +84,7 @@ namespace SongSearch.Web.Controllers
 		public ActionResult Detail(int id) {
 
 			var model = GetDetailModel(id);
+			model.EditMode = EditModes.Viewing;
 
 			if (Request.IsAjaxRequest()) {
 				model.ViewMode = ViewModes.Embedded;
@@ -101,6 +102,8 @@ namespace SongSearch.Web.Controllers
 
 			var model = GetDetailModel(id);
 			model.ViewMode = ViewModes.Print;
+			model.EditMode = EditModes.Viewing;
+
 			return View(model);
 			
 		}
@@ -112,16 +115,9 @@ namespace SongSearch.Web.Controllers
 		[RequireAuthorization(MinAccessLevel=Roles.Admin)]
 		public ActionResult Edit(int id) {
 
-			var content = SearchService.GetContentDetails(id, _currentUser);
-			var model = GetContentViewModel();
-			model.IsEdit = true;
-			model.Content = content;
-			//if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
-				model.SectionsAllowed.Add("Rights");
-			//}
-			//if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
-				model.UserCanEdit = true;
-			//}
+			var model = GetEditModel(id);
+			model.EditMode = EditModes.Editing;
+
 			if (Request.IsAjaxRequest()) {
 
 				return View("ctrlContentDetail", model);
@@ -131,6 +127,23 @@ namespace SongSearch.Web.Controllers
 			}
 		}
 
+		// **************************************
+		// Save/5
+		// **************************************
+		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
+		public ActionResult Save(int id) {
+
+			var model = GetEditModel(id);
+			model.EditMode = EditModes.Saving;
+
+			if (Request.IsAjaxRequest()) {
+
+				return View("ctrlContentDetail", model);
+
+			} else {
+				return RedirectToAction("Index");
+			}
+		}
 		// **************************************
 		// AutoComplete/f = fieldName, term = search term
 		// **************************************
@@ -174,6 +187,21 @@ namespace SongSearch.Web.Controllers
 
 		}
 
+		// **************************************
+		// GetContentViewModel
+		// **************************************
+		private ContentViewModel GetContentViewModel() {
+
+			var model = new ContentViewModel() {
+				NavigationLocation = "Search",
+				Tags = CacheService.Tags(),
+				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" },
+				SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>()
+			};
+
+			return model;
+
+		}
 
 		// **************************************
 		// GetDetailModel
@@ -183,7 +211,6 @@ namespace SongSearch.Web.Controllers
 			var content = SearchService.GetContentDetails(id, _currentUser);
 
 			var model = GetContentViewModel();
-			model.SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>();
 
 			model.IsEdit = false;
 			model.Content = content;
@@ -199,19 +226,32 @@ namespace SongSearch.Web.Controllers
 		}
 
 		// **************************************
-		// GetSearchViewModel
+		// GetDetailModel
 		// **************************************
-		private ContentViewModel GetContentViewModel() {
+		private ContentViewModel GetEditModel(int id) {
+			//var user = AccountData.User(User.Identity.Name);
+			var model = GetContentViewModel();
+			
+	
+			var content = SearchService.GetContentDetails(id, _currentUser);
 
-			var model = new ContentViewModel() {
-				NavigationLocation = "Search",
-				Tags = CacheService.Tags(),
-				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" }
-			};
+			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+
+				model.UserCanEdit = true;
+				model.Content = content;
+				
+				if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
+					model.SectionsAllowed.Add("Notes");
+					model.SectionsAllowed.Add("Rights");
+					model.Territories = CacheService.Territories();
+				}
+			}
 
 			return model;
-
 		}
+
+
+		
 
     }
 }

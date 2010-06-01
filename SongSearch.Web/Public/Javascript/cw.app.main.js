@@ -49,9 +49,9 @@ function fire(type, msg) {
 
     //var fade = type == 'info';
     var fire = $('#fire');
-    fire.html(msg).removeClass('').addClass(type);
+    fire.html(msg).removeClass().addClass(type);
     fire.slideDown('slow');
-    if (type == 'info') {
+    if (type != 'error') {
         fire.delay('2000').fadeOut('slow'); 
     }
     fire.click(function () 
@@ -88,6 +88,10 @@ var tagBoxSelectedClass = 'cw-blue';
 var inputSelectedClass = 'cw-input-highlight';
 
 var isContentDetailShowing;
+var isContentViewMode;
+var isContentEditMode;
+var isContentSaveMode;
+
 var lastContentDetailLinkClicked;
 
 //-----------------------------------------------------------------------------------
@@ -160,9 +164,15 @@ function setSelectedSearchTagValue(link) {
 //***********************************************
 function showContentPanel(link) {
 
-    mediaStop();
+    var contentLink = link[0];
+    isContentEditMode = contentLink.rel == "Edit";
+    isContentSaveMode = contentLink.rel == "Save";
+    isContentViewMode = !isContentEditMode && !isContentSaveMode;
 
-    if (link[0] != lastContentDetailLinkClicked) {
+    if (isContentViewMode) {
+        mediaStop();
+    }
+    if (contentLink != lastContentDetailLinkClicked || !isContentViewMode) {
 
         var url = link[0].href;
         getContentDetailAjax(url, link);
@@ -182,7 +192,7 @@ function showContentPanel(link) {
 //***********************************************
 function showContentPanelCallback(data, link) {
 
-    closeContentPanel();
+    if (isContentViewMode && isContentDetailShowing) { closeContentPanel(); }
 
     var parentRow = link.closest('tr');
     var numberofCells = 6;// parentRow.children('td').length;
@@ -202,6 +212,31 @@ function showContentPanelCallback(data, link) {
 
     isContentDetailShowing = true;
     lastContentDetailLinkClicked = link[0];
+
+}
+
+//***********************************************
+//  showContentPanelCallback
+//      called from ajax success call
+//***********************************************
+function showContentPanelCallbackEdit(data, link) {
+
+    var detailPanel = $('#cw-content-detail');
+    detailPanel.html(data);
+    unwait();
+    if (isContentSaveMode) { fire('info', 'Saved...'); }
+    // cw-content-detail-tabs: calls jquery ui tabs widgets
+    setupContentPanelUIControls();
+    
+    link.text(link.text().swap('Edit','Save'));
+    link.toggleClass('cw-gray').toggleClass('cw-red');
+    link.toggleClass('cw-content-edit-link').toggleClass('cw-content-save-link');
+    link[0].href = link[0].href.swap('Edit', 'Save');
+    link[0].rel = link[0].rel.swap('Edit', 'Save');
+
+
+    isContentDetailShowing = true;
+    //lastContentDetailLinkClicked = link[0];
 
 }
 

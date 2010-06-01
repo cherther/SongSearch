@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<dynamic>" %>
 <%--<div id="login-panel">--%>
 <div id="topnav" class="topnav">
+[<%: App.Environment %>]&nbsp;
 <%if (Request.IsAuthenticated) 
   {%>
 Hello, <strong><%=Html.Friendly() %></strong>. <%= Html.ActionLink("Your Profile", "UpdateProfile", "Account")%> | <%= Html.ActionLink("Log Out", "LogOut", "Account") %>

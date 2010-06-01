@@ -1724,6 +1724,7 @@
     <Content Include="Views\Search\ctrlSearchResultsTable.ascx" />
     <Content Include="Views\Search\ctrlPager.ascx" />
     <Content Include="Views\Search\Detail.aspx" />
+    <Content Include="Views\Shared\ctrlTerritoryCloud.ascx" />
     <Content Include="Views\Shared\ctrlMediaplayer.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />
     <Content Include="Views\Search\Index.aspx" />
@@ -1732,6 +1733,7 @@
     <Content Include="Views\Shared\ctrlLogIn.ascx" />
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\StringPreformatted.ascx" />
     <Content Include="Views\UserManagement\ctrlDetail.ascx" />
     <Content Include="Views\UserManagement\ctrlUserList.ascx" />
     <Content Include="Views\UserManagement\Index.aspx" />

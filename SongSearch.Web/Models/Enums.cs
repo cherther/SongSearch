@@ -157,5 +157,13 @@ namespace SongSearch.Web {
 					TagType.Brands
 			};
 		}
+
+		public static RightsTypes[] GetRightsTypes() {
+			return new[] 
+				{ 
+					RightsTypes.Comp, 
+					RightsTypes.Master
+				};
+		}
 	}
 }

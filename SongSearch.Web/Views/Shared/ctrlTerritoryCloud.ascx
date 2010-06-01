@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<TagCloudViewModel<SongSearch.Web.Data.Tag>>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<TagCloudViewModel<SongSearch.Web.Data.Territory>>" %>
 <%
     var tags = Model.Tags;
     var hasMoreLinks = Model.InitialTagNumber > 0 && tags.Count > Model.InitialTagNumber;
@@ -14,10 +14,10 @@
           <%
         }
         
-        var tagName = tag.TagName;
-        var tagId = String.Format("{0}-{1}", Model.TagIdTemplate, tag.TagId);
+        var tagName = tag.TerritoryName;
+        var tagId = String.Format("{0}-{1}", Model.TagIdTemplate, tag.TerritoryId);
 
-        var tagClass = String.Concat(Model.TagClass, Model.SelectedTags != null && Model.SelectedTags.Contains(tag.TagId) ? " cw-blue" : "");
+		var tagClass = String.Concat(Model.TagClass, Model.SelectedTags != null && Model.SelectedTags.Contains(tag.TerritoryId) ? " cw-blue" : "");
         
      %>
      <a id="<%= tagId%>" class="cw-search-tag cw-tag-box cw-button cw-simple cw-small <%=tagClass %>"> <%=tagName%></a>    

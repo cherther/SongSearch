@@ -11,12 +11,14 @@ namespace SongSearch.Web {
 	// **************************************
 	public class ViewModel {
 		public ViewModes ViewMode { get; set; }
+		public EditModes EditMode { get; set; }
 		public string PageTitle { get; set; }
 		public string NavigationLocation { get; set; }
 		public int MyActiveCartCount { get; set; }
 
 		public ViewModel() {
 			ViewMode = ViewModes.Normal;
+			EditMode = EditModes.Viewing;
 			PageTitle = "";
 			NavigationLocation = "";
 		
@@ -28,6 +30,11 @@ namespace SongSearch.Web {
 		Normal,
 		Embedded,
 		Print
+	}
+	public enum EditModes {
+		Viewing,
+		Editing,
+		Saving
 	}
 	
 }
