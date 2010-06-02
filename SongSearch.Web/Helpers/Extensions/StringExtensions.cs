@@ -29,22 +29,21 @@ namespace SongSearch.Web {
 		//
 		// Removes non-alphanumeric characters
 		public static string MakeIndexValue(this string value) {
-			value = Regex.Replace(value, @"[^a-zA-Z0-9 ]", Empty); //@"\W\s", "");
-			value = value.ToUpper();
-
+			if (value != null) {
+				value = Regex.Replace(value, @"[^a-zA-Z0-9 ]", Empty); //@"\W\s", "");
+				value = value.ToUpper();
+			}
 			return value;
 		}
 
 		public static string MakeFilePathSafe(this string value) {
 			string pat = @"[\\/:*?""<>|]";
-			value = Regex.Replace(value, pat, Empty);
-
-			return value;
+			return value != null ? Regex.Replace(value, pat, Empty) : value;
 		}
 
 		public static bool IsFilePathSafe(this string value) {
 			string pat = @"[^\\/:*?""<>|]*";
-			return Regex.IsMatch(value, pat);
+			return value != null && Regex.IsMatch(value, pat);
 		}
 
 		public static string TrimInside(this string value) {
@@ -130,6 +129,10 @@ namespace SongSearch.Web {
 			}
 
 			return String.Format("{0} MB", size);
+		}
+
+		public static string ToYesNo(this bool yes) {
+			return yes ? "Yes" : "No";
 		}
 
 	}

@@ -14,10 +14,43 @@ namespace SongSearch.Web.Services {
 		public ContentAdminService(IDataSession session) : base(session) {}
 		public ContentAdminService(string activeUserIdentity): base(activeUserIdentity) { }
 
-		public void Update(Content content) {
-			throw new NotImplementedException();
+		// **************************************
+		//  UpdateModelWith
+		// **************************************
+		public void Update(Content content, IList<int> tags, IList<ContentRightViewModel> rights) {
+
+			//UpdateModelWith Content
+			var currentContent = DataSession.GetObjectQuery<Content>()
+					.Include("Tags")
+					.Include("Catalog")
+					.Include("ContentRights")
+					.Include("ContentRights.Territories")
+				.Where(c => c.ContentId == content.ContentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
+
+			if (currentContent == null) {
+				throw new ArgumentOutOfRangeException("Content does not exist");
+			}
+
+			currentContent.UpdateModelWith(content);
+
+			//UpdateModelWith Tags
+			var contentTags = tags.Where(t => t > 0).ToList();
+			var allTags = DataSession.All<Tag>().ToList();
+			currentContent.UpdateModelWith(contentTags, allTags);
+
+			//UpdateModelWith Rights
+			currentContent.UpdateModelWith(rights);
+
+
+			DataSession.CommitChanges();
+
 		}
 
+		
+
+		// **************************************
+		//  UpdateModelWith
+		// **************************************
 		public void Delete(int contentId) {
 			throw new NotImplementedException();
 		}

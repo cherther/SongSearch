@@ -11,8 +11,23 @@
     <span class="b-cancel">Close</span>
     </button>
     </div>--%>
+<div id="cw-content-detail">
+<%if (isEditing) { %>
+	<%Html.BeginForm("Save", "Content", FormMethod.Post, new { id = "cw-content-editor" }); %>
 
-<%if (Model.ViewMode != ViewModes.Print && Model.EditMode == EditModes.Viewing) {%>
+	<%: Html.HiddenFor(m => m.Content.ContentId)%>
+	<%: Html.HiddenFor(m => m.Content.CatalogId)%>
+	<%: Html.HiddenFor(m => m.Content.CreatedByUserId)%>
+	<%: Html.HiddenFor(m => m.Content.CreatedOn)%>
+	<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
+	<%: Html.HiddenFor(m => m.Content.LastUpdatedOn)%>
+	<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
+	<%: Html.HiddenFor(m => m.Content.HasMediaPreviewVersion)%>
+	<%: Html.HiddenFor(m => m.Content.HasMediaFullVersion)%>
+	<%: Html.AntiForgeryToken() %>
+
+<%}%>
+<%if (Model.ViewMode == ViewModes.Normal | (Model.ViewMode == ViewModes.Embedded && Model.EditMode == EditModes.Viewing)) {%>
 	<div id="cw-media-player-panel">
 	<% Html.RenderPartial("ctrlMediaplayer"); %>
 	</div>
@@ -28,12 +43,22 @@
 	<%} %>
 	<%: Html.ActionLink("Print", "Print", "Content", new { id = content.ContentId }, new { @class = menuButtonClass, target = "_new" })%>
 	<%if (Model.UserCanEdit) { %>
-	<%: Html.ActionLink("Edit", "Edit", "Content", new { id = content.ContentId }, new { rel = "Edit", @class = String.Concat(menuButtonClass, " cw-content-edit-link") })%>
+	<%	
+		var linkClass = String.Concat(menuButtonClass, " cw-content-edit-link");
+		var linkAction = Model.EditMode == EditModes.Viewing ? "Edit" : "Save";
+	%>
+		<% if (Model.ViewMode == ViewModes.Embedded || Model.EditMode == EditModes.Viewing) {%>
+		<%: Html.ActionLink(linkAction, linkAction, "Content", new { id = content.ContentId }, new { rel = linkAction, @class = linkClass })%>
+		<%} else { %>
+		<button type="submit" class="<%: menuButtonClass %>"><%: linkAction %></button>
+		<%}%> 
 	<%} %>
 	</div>
 	<hr />
 <%}%>
-<div id="cw-content-detail">
+
+	<div id="cw-content-detail-data">
+
 	<div id="cw-content-detail-tabs">
 <%if (Model.ViewMode == ViewModes.Print) {%>
 	<h3><%: content.Title%> by <%: content.Artist%></h3>
@@ -49,19 +74,8 @@
 		<%} %>
 	</ul>
 <%} %>
-<%if (isEditing) { %>
-<%Html.BeginForm("Save", "Content", FormMethod.Post, new { id = "cw-content-editor" }); %>
-<%: Html.HiddenFor(m => m.Content.ContentId)%>
-<%: Html.HiddenFor(m => m.Content.CatalogId)%>
-<%: Html.HiddenFor(m => m.Content.CreatedByUserId)%>
-<%: Html.HiddenFor(m => m.Content.CreatedOn)%>
-<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
-<%: Html.HiddenFor(m => m.Content.LastUpdatedOn)%>
-<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
-<%: Html.HiddenFor(m => m.Content.HasMediaPreviewVersion)%>
-<%: Html.HiddenFor(m => m.Content.HasMediaFullVersion)%>
-<%: Html.AntiForgeryToken() %>
-<%}%>
+
+
 <div id="tabs-1">
 	<table class="cw-tbl-content-detail">
 		<tr>
@@ -130,18 +144,32 @@
 <table class="cw-tbl-content-detail">           
 	<%
 	var tagTypes = ModelEnums.GetTagTypes();//.OrderBy(t => t);
+	var tt = 0;
 	%>
 	<%foreach (var tagType in tagTypes) { %>
 	<%    
-	Func<Tag, bool> func = t => t.TagTypeId == (int)tagType;
-	var selectedTags = content.Tags.Where(func).Select(t => t.TagId).ToArray();
-	var tags = (isEditing ? Model.Tags : content.Tags.ToList()).Where(func).ToList();
-	var model = new TagCloudViewModel<Tag>() { Tags = tags, TagType = tagType, SelectedTags = selectedTags, TagClass = "cw-tagbox-detail", TagIdTemplate = "t" };              
+		//var tagTypeId = String.Format("tags[{0}].", tt++);
+		Func<Tag, bool> func = x => x.TagTypeId == (int)tagType;
+		var selectedTags = content.Tags.Where(func).Select(x => x.TagId).ToArray();
+		var tags = (isEditing ? Model.Tags : content.Tags.ToList()).Where(func).ToList();
+		var model = new TagCloudViewModel<Tag>() { 
+			EditMode = Model.EditMode, 
+			TagCountSeed = tt,
+			Tags = tags, 
+			TagType = tagType, 
+			SelectedTags = selectedTags, 
+			TagClass = "cw-tagbox-detail",
+			TagIdTemplate = isEditing ? "tags[{0}]" : "t",
+		};
+
+		tt += tags.Count();
 	%>    
 		<%if (tags.Count() > 0) {%>
 		<tr>
 			<td class="cw-content-label"><%=tagType%></td>
-			<td><% Html.RenderPartial("ctrlTagCloud", model); %></td>
+			<td>
+			<% Html.RenderPartial("ctrlTagCloud", model); %>
+			</td>
 		</tr>
 		<%} %>
 	<%} %>
@@ -162,7 +190,9 @@
 		</tr>
         <tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.IsControlledAllIn)%></td>
-			<td class="cw-content-field"><%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, isEditing ? new { disabled = "disabled" } : null)%></td>
+			<td class="cw-content-field"><%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, !isEditing ? new { disabled = "disabled" } : null)%>
+			<%: !isEditing ? content.IsControlledAllIn.ToYesNo() : "" %>
+			</td>
 		</tr>
 		<tr>
 			<td class="cw-content-label">Share %</td>
@@ -178,13 +208,19 @@
 						<th>
 							Share
 						</th>
+						<th>
+						</th>
 					</tr>
 				<%var r = 0; %>
-				<% foreach (var contentRight in content.ContentRights) { %>
-				<%	var rightId = String.Format("rights[{0}].", r++); %>
+				<%foreach (var contentRight in content.ContentRights) { %>
+				<%	
+					var rightId = String.Format("rights[{0}].", r++);
+					var rightsHolderShare = contentRight.RightsHolderShare.ToString("P2");
+				%>
 					<tr>
 						<td class="cw-content-field">
 							<%if (isEditing) {%> 
+							<%: Html.Hidden(String.Concat(rightId, "ContentId"), contentRight.ContentId)%>
 							<%: Html.Hidden(String.Concat(rightId, "ContentRightId"), contentRight.ContentRightId)%>
 							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"), contentRight.RightsHolderName)%>
 							<%} else {%> 
@@ -198,27 +234,76 @@
 							<%: (RightsTypes)contentRight.RightsTypeId%>
 							<%} %>
 						</td>
-						<td class="cw-content-field">
+						<td class="cw-content-field text-right">
 							<%if (isEditing) {%> 
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"), contentRight.RightsHolderShare.ToString("P0"))%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"), rightsHolderShare)%>
 							<%} else {%> 
-							<%: contentRight.RightsHolderShare.ToString("P0")%>
+							<%: rightsHolderShare%>
 							<%} %>
+						</td>
+						<td>
+						<%if (isEditing) {%>
+					  	<a href="#" class="cw-delete-right-link"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
+						<%} %>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="3">
-						<%if (contentRight.Territories != null && contentRight.Territories.Count() > 0) {%>
+						<%//if (contentRight.Territories != null && contentRight.Territories.Count() > 0) {%>
 						<%    
-	var selectedTerritories = contentRight.Territories.Select(t => t.TerritoryId).ToArray();
-	var territories = isEditing ? Model.Territories : contentRight.Territories.ToList();
-	var model = new TagCloudViewModel<Territory>() { Tags = territories, SelectedTags = selectedTerritories, TagClass = "cw-tagbox-detail", TagIdTemplate = "tr" };              
+							var selectedTerritories = contentRight.Territories.Select(x => x.TerritoryId).ToArray();
+							var territories = isEditing ? Model.Territories : contentRight.Territories.ToList();
+							var model = new TagCloudViewModel<Territory>() { 
+								EditMode = Model.EditMode, 
+								Tags = territories, 
+								SelectedTags = selectedTerritories, 
+								TagClass = "cw-tagbox-detail",
+								TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
+							};              
 						%>    
 							<% Html.RenderPartial("ctrlTerritoryCloud", model); %>
-						<%} %>
+						<%//} %>
+						</td>
+						<td>
 						</td>
 					</tr>
 				<%} %>
+				<%if (isEditing) {%>
+				<%	var rightId = String.Format("rights[{0}].", r++); %>
+					<tr>
+						<td class="cw-content-field">
+							<%: Html.Hidden(String.Concat(rightId, "ContentId"), Model.Content.ContentId)%>
+							<%: Html.Hidden(String.Concat(rightId, "ContentRightId"), 0)%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"))%>
+						</td>
+						<td class="cw-content-field">
+							<%: Html.DropDownList(String.Concat(rightId, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
+						</td>
+						<td class="cw-content-field text-right">
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"))%>
+						</td>
+						<td>
+					  	<a href="#" class="cw-add-right-link"><img src="../../public/images/icons/silk/add.png" alt="Add" /></a>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<%    
+						var territories = Model.Territories;
+						var model = new TagCloudViewModel<Territory>() {
+							EditMode = Model.EditMode,
+							Tags = territories,
+							TagClass = "cw-tagbox-detail",
+							TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
+						};              
+						%>    
+						<% Html.RenderPartial("ctrlTerritoryCloud", model); %>
+						</td>
+						<td>
+						</td>
+					</tr>
+				<%} %>
+
 				</table>
 				</td>
 		</tr>
@@ -238,5 +323,6 @@
 <%if (Model.ViewMode != ViewModes.Print) {%>
 </div>
 <%} %>
+</div>
 </div>
 	

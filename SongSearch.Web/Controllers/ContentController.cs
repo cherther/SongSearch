@@ -45,6 +45,7 @@ namespace SongSearch.Web.Controllers
 					return View("ctrlContentDetail", model);
 
 				} else {
+					model.ViewMode = ViewModes.Normal;
 					return View(model);
 				}
 			}
@@ -85,11 +86,12 @@ namespace SongSearch.Web.Controllers
 				model.EditMode = EditModes.Editing;
 
 				if (Request.IsAjaxRequest()) {
-
+					model.ViewMode = ViewModes.Embedded;
 					return View("ctrlContentDetail", model);
 
 				} else {
-					return RedirectToAction("Index");
+					model.ViewMode = ViewModes.Normal;
+					return View("Detail", model);
 				}
 			}
 			catch (Exception ex) {
@@ -105,22 +107,29 @@ namespace SongSearch.Web.Controllers
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Save(Content content, IList<ContentRight> rights, bool returnData = true) {
+		public ActionResult Save(Content content, 
+			IList<int> tags, 
+			IList<ContentRightViewModel> rights,
+			bool returnData = true) {
 
 			try {
-
-				//do some saving
-
+				//if (ModelState.IsValid) {
+					//do some saving
+					_cntAdmService.Update(content, tags, rights);
+				//}
 				if (returnData) {
-					var model = GetEditModel(content.ContentId);
-					model.EditMode = EditModes.Saving;
+					var vm = GetEditModel(content.ContentId);
+					
 
 					if (Request.IsAjaxRequest()) {
-
-						return View("ctrlContentDetail", model);
+						vm.ViewMode = ViewModes.Embedded;
+						vm.EditMode = EditModes.Saving;
+						return View("ctrlContentDetail", vm);
 
 					} else {
-						return RedirectToAction("Index");
+						vm.ViewMode = ViewModes.Normal;
+						vm.EditMode = EditModes.Viewing;
+						return View("Detail", vm);
 					}
 				} else {
 					return Content(content.ContentId.ToString());

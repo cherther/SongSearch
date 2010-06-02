@@ -144,7 +144,7 @@ namespace SongSearch.Web.Services {
 				child.ParentUserId = ActiveUser.UserId;
 			}
 
-			//Re-assign model from this myUser to active myUser
+			//Re-assign content from this myUser to active myUser
 			var invites = DataSession.All<Invitation>().Where(i => i.InvitedByUserId == user.UserId);
 			foreach (var invite in invites) {
 				invite.InvitedByUserId = ActiveUser.UserId;

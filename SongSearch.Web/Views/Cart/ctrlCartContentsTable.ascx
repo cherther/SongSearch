@@ -5,12 +5,13 @@
     //var sortUrl = Model.HeaderSortUrl;
     //var props = Model.SearchMenuProperties;
     var tableHeader = Model.ListHeaders; // new string[] { "Title", "Artist", "ReleaseYear", "Preview" }; ;
-    
+	var rightCols = new string[] { "Pop", "Country", "ReleaseYear" };
  %>
 <table class="cw-tbl-cart-contents">
     <tr>
     <%foreach(var col in tableHeader){ %>
-        <th><%: col%></th>
+	<% var classId = rightCols.Contains(col) ? "text-right" : ""; %>
+        <th class="<%: classId %>"><%: col%></th>
         <%} %>
         
     </tr>

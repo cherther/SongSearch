@@ -52,9 +52,9 @@ namespace System.Web.Mvc {
 
 
 		public static string HighlightSearchTerm(this HtmlHelper helper, string fieldValue, SearchField searchField) {
-			var value = AntiXss.HtmlEncode(fieldValue.ToUpper());
+			var value = fieldValue != null ? AntiXss.HtmlEncode(fieldValue.ToUpper()) : null;
 			
-			if (searchField != null) {
+			if (searchField != null && value != null) {
 				var searchVal = searchField.V.FirstOrDefault() ?? "";
 				value = value.Replace(searchVal.ToUpper(), String.Format(@"<span class='cw-highlight'>{0}</span>", searchVal.ToUpper()));
 			}

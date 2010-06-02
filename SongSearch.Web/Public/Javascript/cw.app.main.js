@@ -254,7 +254,7 @@ function showContentPanelCallbackEdit(data, link, altLink) {
         showContentPanel(altLink);
     }
     else {
-        var detailPanel = $('#cw-content-detail');
+        var detailPanel = $('#cw-content-detail-data');
         detailPanel.html(data);
         unwait();
         // cw-content-detail-tabs: calls jquery ui tabs widgets

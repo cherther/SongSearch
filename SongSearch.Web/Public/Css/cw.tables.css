@@ -1,4 +1,7 @@
-﻿
+﻿.text-right 
+{
+    text-align: right;
+}
 .cw-row-selected
 {
     background: #cccccc url(/public/images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;
@@ -23,7 +26,7 @@
 }
 .cw-tbl-search-results th
 {
-    text-align: left;
+    //text-align: left;
     white-space: nowrap;    
 }
 
