@@ -47,36 +47,48 @@
 <%if (Model.ViewMode == ViewModes.Print) {%>
 	<h3><%: content.Title %> by <%: content.Artist %></h3>
 <%} %>
-<%if (isEditing) { Html.BeginForm("Save", "Search", FormMethod.Post, new { id = " cw-content-form" }); }%>
+<%if (isEditing) { %>
+<%Html.BeginForm("Save", "Search", FormMethod.Post, new { id = "cw-content-editor" }); %>
+<%: Html.HiddenFor(m => m.Content.ContentId)%>
+<%: Html.HiddenFor(m => m.Content.CatalogId)%>
+<%: Html.HiddenFor(m => m.Content.CreatedByUserId)%>
+<%: Html.HiddenFor(m => m.Content.CreatedOn)%>
+<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
+<%: Html.HiddenFor(m => m.Content.LastUpdatedOn)%>
+<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
+<%: Html.HiddenFor(m => m.Content.HasMediaPreviewVersion)%>
+<%: Html.HiddenFor(m => m.Content.HasMediaFullVersion)%>
+<%: Html.AntiForgeryToken() %>
+<%}%>
 <div id="tabs-1">
 	<table class="cw-tbl-content-detail">
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Title)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.Title) : Html.DisplayFor(m => m.Content.Title)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Title) : Html.DisplayFor(m => m.Content.Title)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Artist)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.Artist) : Html.DisplayFor(m => m.Content.Artist)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Artist) : Html.DisplayFor(m => m.Content.Artist)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Pop)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.Pop) : Html.DisplayFor(m => m.Content.Pop)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Pop) : Html.DisplayFor(m => m.Content.Pop)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Country)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.Country) : Html.DisplayFor(m => m.Content.Country)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Country) : Html.DisplayFor(m => m.Content.Country)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.ReleaseYear)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.ReleaseYear) : Html.DisplayFor(m => m.Content.ReleaseYear)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.ReleaseYear) : Html.DisplayFor(m => m.Content.ReleaseYear)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.RecordLabel)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.RecordLabel) : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel) : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Writers)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.Writers) : Html.DisplayFor(m => m.Content.Writers)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers) : Html.DisplayFor(m => m.Content.Writers)%></td>
 		</tr>
 		<%if (Model.SectionsAllowed.Contains("Notes")) { %>
 		<%
@@ -85,16 +97,16 @@
 			%> 
 			<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Notes)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextAreaFor(m => m.Content.Notes) : Html.DisplayFor(m => m.Content.Notes, "StringPreformatted")%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Notes) : Html.DisplayFor(m => m.Content.Notes)%></td>
 		</tr>      
 		<%} %>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Keywords)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.Keywords) : Html.DisplayFor(m => m.Content.Keywords)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Keywords) : Html.DisplayFor(m => m.Content.Keywords)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.SimilarSongs)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextBoxFor(m => m.Content.SimilarSongs) : Html.DisplayFor(m => m.Content.SimilarSongs)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.SimilarSongs) : Html.DisplayFor(m => m.Content.SimilarSongs)%></td>
 		</tr>
 	</table>
 </div>
@@ -107,7 +119,7 @@
 	<table class="cw-tbl-content-detail">         
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Lyrics)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextAreaFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics, "StringPreformatted")%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics, "MultilineText")%></td>
 		</tr>
 	</table>
 </div>
@@ -151,10 +163,6 @@
 			<td class="cw-content-field"><%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, isEditing ? new { disabled = "disabled" } : null)%></td>
 		</tr>
 		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.LicensingNotes)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.TextAreaFor(m => m.Content.LicensingNotes) : Html.DisplayFor(m => m.Content.LicensingNotes, "StringPreformatted")%></td>
-		</tr>
-			<tr>
 			<td class="cw-content-label">Share %</td>
 			<td class="cw-content-field">
 				<table class="cw-tbl-content-rights">
@@ -169,25 +177,28 @@
 							Share
 						</th>
 					</tr>
+				<%var r = 0; %>
 				<% foreach (var contentRight in content.ContentRights) { %>
+				<%	var rightId = String.Format("rights[{0}].", r++); %>
 					<tr>
 						<td class="cw-content-field">
 							<%if (isEditing) {%> 
-							<%: Html.TextBox("RightsHolderName", contentRight.RightsHolderName)%>
+							<%: Html.Hidden(String.Concat(rightId, "ContentRightId"), contentRight.ContentRightId)%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"), contentRight.RightsHolderName)%>
 							<%} else {%> 
 							<%: contentRight.RightsHolderName%>
 							<%} %>
 						</td>
 						<td class="cw-content-field">
 							<%if (isEditing) {%> 
-							<%: Html.DropDownList("RightsTypeId", new SelectList(ModelEnums.GetRightsTypes()))%>
+							<%: Html.DropDownList(String.Concat(rightId, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
 							<%} else {%> 
 							<%: (RightsTypes)contentRight.RightsTypeId%>
 							<%} %>
 						</td>
 						<td class="cw-content-field">
 							<%if (isEditing) {%> 
-							<%: Html.TextBox("RightsHolderShare", contentRight.RightsHolderShare.ToString("P0"))%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"), contentRight.RightsHolderShare.ToString("P0"))%>
 							<%} else {%> 
 							<%: contentRight.RightsHolderShare.ToString("P0")%>
 							<%} %>
@@ -208,7 +219,12 @@
 				<%} %>
 				</table>
 				</td>
-		</tr>    
+		</tr>
+		<tr>
+			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.LicensingNotes)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.LicensingNotes) : Html.DisplayFor(m => m.Content.LicensingNotes)%></td>
+		</tr>
+   
         </table>
 
 </div>

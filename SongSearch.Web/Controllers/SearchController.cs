@@ -131,17 +131,25 @@ namespace SongSearch.Web.Controllers
 		// Save/5
 		// **************************************
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
-		public ActionResult Save(int id) {
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Save(Content content, IList<ContentRight> rights, bool returnData = true) {
 
-			var model = GetEditModel(id);
-			model.EditMode = EditModes.Saving;
+			//do some saving
 
-			if (Request.IsAjaxRequest()) {
+			if (returnData) {
+				var model = GetEditModel(content.ContentId);
+				model.EditMode = EditModes.Saving;
 
-				return View("ctrlContentDetail", model);
+				if (Request.IsAjaxRequest()) {
 
+					return View("ctrlContentDetail", model);
+
+				} else {
+					return RedirectToAction("Index");
+				}
 			} else {
-				return RedirectToAction("Index");
+				return Content(content.ContentId.ToString());
 			}
 		}
 		// **************************************

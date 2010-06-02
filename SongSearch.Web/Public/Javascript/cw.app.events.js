@@ -99,12 +99,11 @@
         if (isContentEditMode){
             if (window.confirm('You\'re in Edit mode. Do you want to SAVE changes you\'ve made?')){
             // save stuff, then showContentPanel, maybe pass in as a delegate? for now:
-                fire('info', 'Saved...');
+                saveContentPanel(lastContentEditLinkClicked, link);
             } else {
                 fire('warning', 'Save cancelled...');
+                showContentPanel(link);
             }
-            
-            showContentPanel(link);
 
         } else {
             showContentPanel(link);
@@ -135,10 +134,8 @@
 
         var link = $(this);
         
-        // save the form data
-
-        //then:
-        showContentPanel(link);
+        saveContentPanel(link, null);
+        
     }
     );
     //-----------------------------------------------------------------------------------

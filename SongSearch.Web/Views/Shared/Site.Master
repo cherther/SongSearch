@@ -84,8 +84,9 @@
 	var d = debug ? "?d" : "";
 	var bundle = Bundle.JavaScript()
     .Add("~/public/javascript/jquery-1.4.2.min.js")
-    .Add("~/public/javascript/jquery.blockUI.js")
-    .Add("~/public/javascript/jquery-ui-1.8.1.min.js");
+    .Add("~/public/javascript/jquery.form.js")
+	.Add("~/public/javascript/jquery.blockUI.js")
+	.Add("~/public/javascript/jquery-ui-1.8.1.min.js");
 
 	if (!debug) {
 		bundle.Add("~/public/javascript/soundmanager2-nodebug-jsmin.js");

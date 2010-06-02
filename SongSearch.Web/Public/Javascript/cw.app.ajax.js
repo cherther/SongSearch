@@ -1,6 +1,9 @@
 ﻿//-----------------------------------------------------------------------------------
 // Search Results
 //-----------------------------------------------------------------------------------
+//***********************************************
+//  getContentDetailAjax
+//***********************************************
 function getContentDetailAjax(url, link) {
     
     wait();
@@ -19,7 +22,7 @@ function getContentDetailAjax(url, link) {
                 if (isContentViewMode) {
                     showContentPanelCallback(data, link);
                 } else {
-                    showContentPanelCallbackEdit(data, link);
+                    showContentPanelCallbackEdit(data, link, null);
                 }
             }
         },
@@ -28,6 +31,36 @@ function getContentDetailAjax(url, link) {
             fire('error', xhr.status + ' ' + xhr.statusText);
         }
     });
+
+}
+
+//***********************************************
+//  submitContentFormAjax
+//***********************************************
+function submitContentFormAjax(formId, link, altLink) {
+    var form = $(formId);
+    var returnData = altLink == null;
+
+    var options = {
+        beforeSubmit: function () { wait(); },
+        data: { returnData: returnData },
+        success: function (data, status, xhr) {
+            if (status == 'error') {
+                unwait();
+                fire('error', xhr.status + ' ' + xhr.statusText);
+            } else {
+                showContentPanelCallbackEdit(data, link, altLink);
+            }
+        },
+        error:
+			function (xhr, status, error) {
+			    unwait();
+			    fire(err);
+
+			}
+    };
+
+    $(form).ajaxSubmit(options);
 
 }
 

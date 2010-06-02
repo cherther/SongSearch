@@ -1699,6 +1699,7 @@
     <Content Include="Public\Javascript\jquery-1.4.2.min.js" />
     <Content Include="Public\Javascript\jquery-ui-1.8.1.min.js" />
     <Content Include="Public\Javascript\jquery.blockUI.js" />
+    <Content Include="Public\Javascript\jquery.form.js" />
     <Content Include="Public\Javascript\soundmanager2-nodebug-jsmin.js" />
     <Content Include="Public\Javascript\soundmanager2.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
@@ -1733,7 +1734,8 @@
     <Content Include="Views\Shared\ctrlLogIn.ascx" />
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
-    <Content Include="Views\Shared\DisplayTemplates\StringPreformatted.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\MultilineText.ascx" />
+    <Content Include="Views\Shared\EditorTemplates\MultilineText.ascx" />
     <Content Include="Views\UserManagement\ctrlDetail.ascx" />
     <Content Include="Views\UserManagement\ctrlUserList.ascx" />
     <Content Include="Views\UserManagement\Index.aspx" />

@@ -1,3 +1,17 @@
 ﻿input 
 {
 }
+.text-box 
+{
+}
+.single-line
+{
+    width: 60%;   
+}
+.multi-line
+{
+    font-family: 'Courier New' , Courier !important;
+    white-space: pre-wrap;
+    width: 90%;
+    height: 20em;
+}

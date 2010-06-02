@@ -93,6 +93,7 @@ var isContentEditMode;
 var isContentSaveMode;
 
 var lastContentDetailLinkClicked;
+var lastContentEditLinkClicked;
 
 //-----------------------------------------------------------------------------------
 // clear form
@@ -172,7 +173,9 @@ function showContentPanel(link) {
     if (isContentViewMode) {
         mediaStop();
     }
-    if (contentLink != lastContentDetailLinkClicked || !isContentViewMode) {
+    var sameContent = lastContentDetailLinkClicked != null ? link[0] == lastContentDetailLinkClicked[0] : false;
+
+    if (!sameContent || !isContentViewMode) {
 
         var url = link[0].href;
         getContentDetailAjax(url, link);
@@ -186,6 +189,28 @@ function showContentPanel(link) {
     
 }
 
+//***********************************************
+//  showContentPanel
+//***********************************************
+function saveContentPanel(link, altLink) {
+
+    var contentLink = link[0];
+    isContentEditMode = contentLink.rel == "Edit";
+    isContentSaveMode = contentLink.rel == "Save";
+    isContentViewMode = !isContentEditMode && !isContentSaveMode;
+
+    
+    // save the form data
+    if (isContentSaveMode){
+        submitContentFormAjax('#cw-content-editor', link, altLink);
+    } else {
+        
+        closeContentPanel();
+
+        lastContentDetailLinkClicked = null;
+    }
+    
+}
 //***********************************************
 //  showContentPanelCallback
 //      called from ajax success call
@@ -211,7 +236,7 @@ function showContentPanelCallback(data, link) {
     }
 
     isContentDetailShowing = true;
-    lastContentDetailLinkClicked = link[0];
+    lastContentDetailLinkClicked = link;
 
 }
 
@@ -219,25 +244,31 @@ function showContentPanelCallback(data, link) {
 //  showContentPanelCallback
 //      called from ajax success call
 //***********************************************
-function showContentPanelCallbackEdit(data, link) {
+function showContentPanelCallbackEdit(data, link, altLink) {
 
-    var detailPanel = $('#cw-content-detail');
-    detailPanel.html(data);
-    unwait();
     if (isContentSaveMode) { fire('info', 'Saved...'); }
-    // cw-content-detail-tabs: calls jquery ui tabs widgets
-    setupContentPanelUIControls();
-    
-    link.text(link.text().swap('Edit','Save'));
-    link.toggleClass('cw-gray').toggleClass('cw-red');
-    link.toggleClass('cw-content-edit-link').toggleClass('cw-content-save-link');
-    link[0].href = link[0].href.swap('Edit', 'Save');
-    link[0].rel = link[0].rel.swap('Edit', 'Save');
+    lastContentEditLinkClicked = isContentSaveMode ? null : link;
 
+    if (altLink) {
+        unwait();
+        showContentPanel(altLink);
+    }
+    else {
+        var detailPanel = $('#cw-content-detail');
+        detailPanel.html(data);
+        unwait();
+        // cw-content-detail-tabs: calls jquery ui tabs widgets
+        setupContentPanelUIControls();
 
-    isContentDetailShowing = true;
-    //lastContentDetailLinkClicked = link[0];
+        link.text(link.text().swap('Edit', 'Save'));
+        link.toggleClass('cw-gray').toggleClass('cw-red');
+        link.toggleClass('cw-content-edit-link').toggleClass('cw-content-save-link');
+        link[0].href = link[0].href.swap('Edit', 'Save');
+        link[0].rel = link[0].rel.swap('Edit', 'Save');
 
+        isContentDetailShowing = true;
+        
+    }
 }
 
 function setupContentPanelUIControls() {
