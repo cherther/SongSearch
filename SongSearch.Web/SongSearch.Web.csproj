@@ -114,6 +114,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MediaController.cs" />
@@ -1716,15 +1717,15 @@
     <Content Include="Views\Cart\ctrlCartTable.ascx" />
     <Content Include="Views\Cart\Index.aspx" />
     <Content Include="Views\Error\Index.aspx" />
-    <Content Include="Views\Search\Print.aspx" />
+    <Content Include="Views\Content\Print.aspx" />
     <Content Include="Views\Search\ctrlBreadcrumb.ascx" />
-    <Content Include="Views\Search\ctrlContentDetail.ascx" />
+    <Content Include="Views\Content\ctrlContentDetail.ascx" />
     <Content Include="Views\Search\ctrlSearchResults.ascx" />
     <Content Include="Views\Search\ctrlSearchOptions.ascx" />
     <Content Include="Views\Cart\ctrlCartContentsTable.ascx" />
     <Content Include="Views\Search\ctrlSearchResultsTable.ascx" />
     <Content Include="Views\Search\ctrlPager.ascx" />
-    <Content Include="Views\Search\Detail.aspx" />
+    <Content Include="Views\Content\Detail.aspx" />
     <Content Include="Views\Shared\ctrlTerritoryCloud.ascx" />
     <Content Include="Views\Shared\ctrlMediaplayer.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />

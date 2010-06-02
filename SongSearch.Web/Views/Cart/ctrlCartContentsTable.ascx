@@ -24,7 +24,7 @@
         <tr>
             <td width="300">
             <%if (Model.ShowDetails) { %>
-                <%: Html.ActionLink(title, "Detail", "Search", new { id = item.ContentId }, new { @class = "cw-content-detail-link" })%>
+                <%: Html.ActionLink(title, "Detail", "Content", new { id = item.ContentId }, new { @class = "cw-content-detail-link" })%>
             <%} else { %>
                 <%: title %>
             <%} %>

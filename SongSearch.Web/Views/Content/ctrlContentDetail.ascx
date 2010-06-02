@@ -12,7 +12,7 @@
     </button>
     </div>--%>
 
-<%if (Model.EditMode == EditModes.Viewing) {%>
+<%if (Model.ViewMode != ViewModes.Print && Model.EditMode == EditModes.Viewing) {%>
 	<div id="cw-media-player-panel">
 	<% Html.RenderPartial("ctrlMediaplayer"); %>
 	</div>
@@ -26,15 +26,19 @@
 	<%: Html.ActionLink("In Cart", "Index", "Cart", null, new { @class = menuButtonClass })%>
 	<%} %>
 	<%} %>
-	<%: Html.ActionLink("Print", "Print", "Search", new { id = content.ContentId }, new { @class = menuButtonClass, target = "_new" })%>
+	<%: Html.ActionLink("Print", "Print", "Content", new { id = content.ContentId }, new { @class = menuButtonClass, target = "_new" })%>
 	<%if (Model.UserCanEdit) { %>
-	<%: Html.ActionLink("Edit", "Edit", "Search", new { id = content.ContentId }, new { rel = "Edit", @class = String.Concat(menuButtonClass, " cw-content-edit-link") })%>
+	<%: Html.ActionLink("Edit", "Edit", "Content", new { id = content.ContentId }, new { rel = "Edit", @class = String.Concat(menuButtonClass, " cw-content-edit-link") })%>
 	<%} %>
 	</div>
 	<hr />
 <%}%>
 <div id="cw-content-detail">
 	<div id="cw-content-detail-tabs">
+<%if (Model.ViewMode == ViewModes.Print) {%>
+	<h3><%: content.Title%> by <%: content.Artist%></h3>
+	<div>&nbsp;</div>
+<%} else {%>
 	<ul>
 		<li><a href="#tabs-1">Overview</a></li>
 		<li><a href="#tabs-2">Lyrics</a></li>
@@ -44,11 +48,9 @@
 		
 		<%} %>
 	</ul>
-<%if (Model.ViewMode == ViewModes.Print) {%>
-	<h3><%: content.Title %> by <%: content.Artist %></h3>
 <%} %>
 <%if (isEditing) { %>
-<%Html.BeginForm("Save", "Search", FormMethod.Post, new { id = "cw-content-editor" }); %>
+<%Html.BeginForm("Save", "Content", FormMethod.Post, new { id = "cw-content-editor" }); %>
 <%: Html.HiddenFor(m => m.Content.ContentId)%>
 <%: Html.HiddenFor(m => m.Content.CatalogId)%>
 <%: Html.HiddenFor(m => m.Content.CreatedByUserId)%>
@@ -191,7 +193,7 @@
 						</td>
 						<td class="cw-content-field">
 							<%if (isEditing) {%> 
-							<%: Html.DropDownList(String.Concat(rightId, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
+							<%: Html.DropDownList(String.Concat(rightId, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes(), (RightsTypes)contentRight.RightsTypeId))%>
 							<%} else {%> 
 							<%: (RightsTypes)contentRight.RightsTypeId%>
 							<%} %>

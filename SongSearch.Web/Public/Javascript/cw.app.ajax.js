@@ -55,7 +55,7 @@ function submitContentFormAjax(formId, link, altLink) {
         error:
 			function (xhr, status, error) {
 			    unwait();
-			    fire(err);
+			    fire('error', xhr.status + ' ' + xhr.statusText);
 
 			}
     };

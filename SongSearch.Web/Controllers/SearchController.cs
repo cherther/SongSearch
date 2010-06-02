@@ -45,7 +45,8 @@ namespace SongSearch.Web.Controllers
 			var isValid = f.Any(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v)));
 
 			if (isValid) {
-				var searchFields = f.Where(x => x.V != null && 
+				try {
+					var searchFields = f.Where(x => x.V != null && 
 					x.V.Any(v => 
 					v != null && 
 					!String.IsNullOrWhiteSpace(v) 
@@ -53,7 +54,6 @@ namespace SongSearch.Web.Controllers
 					)
 					).ToList();
 
-				try {
 					var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
 
 				
@@ -78,80 +78,7 @@ namespace SongSearch.Web.Controllers
 			return RedirectToAction("Index");
 		}
 
-		// **************************************
-		// Detail/5
-		// **************************************
-		public ActionResult Detail(int id) {
-
-			var model = GetDetailModel(id);
-			model.EditMode = EditModes.Viewing;
-
-			if (Request.IsAjaxRequest()) {
-				model.ViewMode = ViewModes.Embedded;
-				return View("ctrlContentDetail", model);
-			
-			} else {
-				return View(model);
-			}
-		}
-
-		// **************************************
-		// Print/5
-		// **************************************
-		public ActionResult Print(int id) {
-
-			var model = GetDetailModel(id);
-			model.ViewMode = ViewModes.Print;
-			model.EditMode = EditModes.Viewing;
-
-			return View(model);
-			
-		}
-
 		
-		// **************************************
-		// Edit/5
-		// **************************************
-		[RequireAuthorization(MinAccessLevel=Roles.Admin)]
-		public ActionResult Edit(int id) {
-
-			var model = GetEditModel(id);
-			model.EditMode = EditModes.Editing;
-
-			if (Request.IsAjaxRequest()) {
-
-				return View("ctrlContentDetail", model);
-
-			} else {
-				return RedirectToAction("Index");
-			}
-		}
-
-		// **************************************
-		// Save/5
-		// **************************************
-		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Save(Content content, IList<ContentRight> rights, bool returnData = true) {
-
-			//do some saving
-
-			if (returnData) {
-				var model = GetEditModel(content.ContentId);
-				model.EditMode = EditModes.Saving;
-
-				if (Request.IsAjaxRequest()) {
-
-					return View("ctrlContentDetail", model);
-
-				} else {
-					return RedirectToAction("Index");
-				}
-			} else {
-				return Content(content.ContentId.ToString());
-			}
-		}
 		// **************************************
 		// AutoComplete/f = fieldName, term = search term
 		// **************************************
@@ -195,70 +122,7 @@ namespace SongSearch.Web.Controllers
 
 		}
 
-		// **************************************
-		// GetContentViewModel
-		// **************************************
-		private ContentViewModel GetContentViewModel() {
-
-			var model = new ContentViewModel() {
-				NavigationLocation = "Search",
-				Tags = CacheService.Tags(),
-				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" },
-				SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>()
-			};
-
-			return model;
-
-		}
-
-		// **************************************
-		// GetDetailModel
-		// **************************************
-		private ContentViewModel GetDetailModel(int id) {
-			//var user = AccountData.User(User.Identity.Name);
-			var content = SearchService.GetContentDetails(id, _currentUser);
-
-			var model = GetContentViewModel();
-
-			model.IsEdit = false;
-			model.Content = content;
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
-				model.SectionsAllowed.Add("Notes");
-				model.SectionsAllowed.Add("Rights");
-			}
-
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
-				model.UserCanEdit = true;
-			}
-			return model;
-		}
-
-		// **************************************
-		// GetDetailModel
-		// **************************************
-		private ContentViewModel GetEditModel(int id) {
-			//var user = AccountData.User(User.Identity.Name);
-			var model = GetContentViewModel();
-			
-	
-			var content = SearchService.GetContentDetails(id, _currentUser);
-
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
-
-				model.UserCanEdit = true;
-				model.Content = content;
-				
-				if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
-					model.SectionsAllowed.Add("Notes");
-					model.SectionsAllowed.Add("Rights");
-					model.Territories = CacheService.Territories();
-				}
-			}
-
-			return model;
-		}
-
-
+		
 		
 
     }

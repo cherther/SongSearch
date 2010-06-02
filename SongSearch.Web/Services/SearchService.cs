@@ -150,8 +150,8 @@ namespace SongSearch.Web.Services {
 				.Where(c => c.ContentId == contentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
 
 				// check if user has access to catalog
-				if (content != null && !user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId)) {
-					return null;
+				if (content == null || (content != null && !user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId))) {
+					throw new ArgumentOutOfRangeException("Content does not exist or you do not have access");					
 				}
 				if (content != null) {
 					content.UserDownloadableName = content.DownloadableName(user.FileSignature());

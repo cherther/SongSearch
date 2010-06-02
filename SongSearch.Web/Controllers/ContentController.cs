@@ -1,0 +1,202 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using SongSearch.Web.Data;
+using System.Web.Routing;
+using SongSearch.Web.Services;
+
+namespace SongSearch.Web.Controllers
+{
+	[RequireAuthorization]
+	[HandleError]
+	public class ContentController : Controller
+    {
+		private User _currentUser;
+		IContentAdminService _cntAdmService;
+
+		protected override void Initialize(RequestContext requestContext) {
+
+			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
+				_cntAdmService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+				_currentUser = _cntAdmService.ActiveUser;
+			}
+
+
+			base.Initialize(requestContext);
+		}
+
+		public ContentController(IContentAdminService cntAdmService) {
+			_cntAdmService = cntAdmService;
+        }
+
+		// **************************************
+		// Detail/5
+		// **************************************
+		public ActionResult Detail(int id) {
+
+			try {
+				var model = GetDetailModel(id);
+				model.EditMode = EditModes.Viewing;
+
+				if (Request.IsAjaxRequest()) {
+					model.ViewMode = ViewModes.Embedded;
+					return View("ctrlContentDetail", model);
+
+				} else {
+					return View(model);
+				}
+			}
+			catch (Exception ex) {
+				this.FireError(ex.Message);
+				return RedirectToAction("Index", "Error", new { ex, message = ex.Message, controllerName = this.ToString() });
+
+			}
+		}
+
+		// **************************************
+		// Print/5
+		// **************************************
+		public ActionResult Print(int id) {
+			try {
+				var model = GetDetailModel(id);
+				model.ViewMode = ViewModes.Print;
+				model.EditMode = EditModes.Viewing;
+
+				return View(model);
+			}
+			catch (Exception ex) {
+				this.FireError(ex.Message);
+				return RedirectToAction("Index", "Error", new { ex, message = ex.Message, controllerName = this.ToString() });
+
+			}
+		}
+
+		
+		// **************************************
+		// Edit/5
+		// **************************************
+		[RequireAuthorization(MinAccessLevel=Roles.Admin)]
+		public ActionResult Edit(int id) {
+
+			try {
+				var model = GetEditModel(id);
+				model.EditMode = EditModes.Editing;
+
+				if (Request.IsAjaxRequest()) {
+
+					return View("ctrlContentDetail", model);
+
+				} else {
+					return RedirectToAction("Index");
+				}
+			}
+			catch (Exception ex) {
+				this.FireError(ex.Message);
+				return RedirectToAction("Index", "Error", new { ex, message = ex.Message, controllerName = this.ToString() });
+
+			}
+		}
+
+		// **************************************
+		// Save/5
+		// **************************************
+		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Save(Content content, IList<ContentRight> rights, bool returnData = true) {
+
+			try {
+
+				//do some saving
+
+				if (returnData) {
+					var model = GetEditModel(content.ContentId);
+					model.EditMode = EditModes.Saving;
+
+					if (Request.IsAjaxRequest()) {
+
+						return View("ctrlContentDetail", model);
+
+					} else {
+						return RedirectToAction("Index");
+					}
+				} else {
+					return Content(content.ContentId.ToString());
+				}
+			}
+			catch (Exception ex) {
+				this.FireError(ex.Message);
+				return RedirectToAction("Index", "Error", new { ex, message = ex.Message, controllerName = this.ToString() });
+
+			}
+		}
+
+		// **************************************
+		// GetContentViewModel
+		// **************************************
+		private ContentViewModel GetContentViewModel() {
+
+			var model = new ContentViewModel() {
+				NavigationLocation = "Search",
+				Tags = CacheService.Tags(),
+				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" },
+				SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>()
+			};
+
+			return model;
+
+		}
+
+		// **************************************
+		// GetDetailModel
+		// **************************************
+		private ContentViewModel GetDetailModel(int id) {
+
+			var content = SearchService.GetContentDetails(id, _currentUser);
+			
+			var model = GetContentViewModel();
+
+			model.IsEdit = false;
+			model.Content = content;
+			if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
+				model.SectionsAllowed.Add("Notes");
+				model.SectionsAllowed.Add("Rights");
+			}
+
+			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+				model.UserCanEdit = true;
+			}
+			return model;
+		}
+
+		// **************************************
+		// GetEditModel
+		// **************************************
+		private ContentViewModel GetEditModel(int id) {
+			//var user = AccountData.User(User.Identity.Name);
+			var model = GetContentViewModel();
+
+
+			var content = SearchService.GetContentDetails(id, _currentUser);
+
+			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+
+				model.UserCanEdit = true;
+				model.Content = content;
+
+				if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
+					model.SectionsAllowed.Add("Notes");
+					model.SectionsAllowed.Add("Rights");
+					model.Territories = CacheService.Territories();
+				}
+			}
+
+			return model;
+		}
+
+
+
+    }
+}

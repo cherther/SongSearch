@@ -36,13 +36,12 @@
 		   %>
         <tr>
             <td width="300">
-                <%: Html.ActionLink(!String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)", "Detail", 
-                	new { id = item.ContentId }, 
-                					new { @class = "cw-content-detail-link", rel = mediaUrl })%>
+                <%: Html.ActionLink(!String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)", "Detail", "Content",  
+                	new { id = item.ContentId }, new { @class = "cw-content-detail-link", rel = mediaUrl })%>
             </td>
             <td width="200">
                 <%: !String.IsNullOrWhiteSpace(item.Artist) ? item.Artist.ToUpper() : "(N/A)"%>
-				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist"><img src="/public/images/icons/arrow.gif" /></a>
+				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist"><img src="/public/images/icons/arrow.gif" alt="right-arrow"/></a>
 			</td>
             <td align="right">
                 <%: item.Pop %>
