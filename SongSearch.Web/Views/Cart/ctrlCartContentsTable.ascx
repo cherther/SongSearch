@@ -22,8 +22,8 @@
 		   var artistUrl = String.Concat(Url.Action("Results", "Search"), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
 		   
 		    %>
-        <tr>
-            <td width="300">
+        <tr class="cw-tbl-data">
+            <td width="40%">
             <%if (Model.ShowDetails) { %>
                 <%: Html.ActionLink(title, "Detail", "Content", new { id = item.ContentId }, new { @class = "cw-content-detail-link" })%>
             <%} else { %>
@@ -31,17 +31,17 @@
             <%} %>
             </td>
             
-            <td width="200">
+            <td width="30%">
                 <%: !String.IsNullOrWhiteSpace(item.Artist) ? item.Artist.ToUpper() : "(N/A)"%>
-				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist" style="vertical-align: middle"><img src="/public/images/icons/arrow.gif" /></a>
+				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist" style="vertical-align: middle"><img src="/public/images/icons/arrow.gif" alt="right-arrow" /></a>
             </td>
-            <td align="right">
+            <td class="text-right">
                 <%: item.ReleaseYear %>
             </td>
             <%if (tableHeader.Contains("File Name")) { %>
             <td>
                 <%= Html.Hidden("contentNames[" + cartIndex + "].ContentId", item.ContentId)%>
-			    <%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { size = "80", maxlength = "120" })%>
+			    <%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { size = "40", maxlength = "120" })%>
 			    <% cartIndex++;%>
             </td>
             <%} %>

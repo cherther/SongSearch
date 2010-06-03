@@ -15,3 +15,14 @@
     width: 90%;
     height: 20em;
 }
+
+.cw-tagbox-label-edit
+{
+    white-space: pre-wrap;
+}
+.cw-tagbox-checkbox
+{
+    /*text-indent: -9999999px;
+    position: absolute;*/
+    display: none;
+}

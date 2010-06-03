@@ -35,7 +35,7 @@
 		   
 		   var artistUrl = String.Concat(Url.Action("Results", "Search"), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
 		   %>
-        <tr>
+        <tr class="cw-tbl-data">
             <td width="40%">
                 <%: Html.ActionLink(!String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)", "Detail", "Content",  
                 	new { id = item.ContentId }, new { @class = "cw-content-detail-link", rel = mediaUrl })%>

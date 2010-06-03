@@ -15,6 +15,7 @@ namespace SongSearch.Web {
 		public string PageTitle { get; set; }
 		public string NavigationLocation { get; set; }
 		public int MyActiveCartCount { get; set; }
+		public ModelAction ModelAction { get; set; }
 
 		public ViewModel() {
 			ViewMode = ViewModes.Normal;
@@ -34,7 +35,13 @@ namespace SongSearch.Web {
 	public enum EditModes {
 		Viewing,
 		Editing,
-		Saving
+		Saving,
+	}
+
+	public enum ModelAction {
+		Update = 0, 
+		Add = 1,
+		Delete = 2
 	}
 	
 }

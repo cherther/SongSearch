@@ -38,7 +38,7 @@ namespace SongSearch.Web.Services {
 			var query = GetUsersCatalog();
 			var roleId = ActiveUser.RoleId;
 
-			// Only users with same or lesser access rights
+			// Only users with same or lesser access rightsModel
 			query = query.Where(x => x.Role.RoleId >= roleId);
 
 			// For anyone other than SuperAdmin, get child users only
@@ -144,7 +144,7 @@ namespace SongSearch.Web.Services {
 				child.ParentUserId = ActiveUser.UserId;
 			}
 
-			//Re-assign content from this myUser to active myUser
+			//Re-assign contentModel from this myUser to active myUser
 			var invites = DataSession.All<Invitation>().Where(i => i.InvitedByUserId == user.UserId);
 			foreach (var invite in invites) {
 				invite.InvitedByUserId = ActiveUser.UserId;

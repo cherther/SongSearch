@@ -1,46 +1,14 @@
 ﻿$(document).ready(function () {
 
-     //-----------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------
     // AutoComplete
     //-----------------------------------------------------------------------------------
-    var aCache = {};
-    $(".cw-autocomplete").autocomplete(
-        {
-            //source: "/Search/AutoComplete?f=" + this.rel,//["John", "Johnny", "Jon", "Joe" ],
-            source: function(request, response) {
-                var field = $(this)[0].element[0].alt; //little hack to store an extra field on the input elem, rel does not work cross-browser for input tags
-                if (field){
-				    if (aCache.term == request.term && aCache.field == field && aCache.content) {
-					    response(aCache.content);
-					    return;
-				    }
-				    if (new RegExp(aCache.term).test(request.term) && aCache.content && aCache.content.length < 13) {
-					    response($.ui.autocomplete.filter(aCache.content, request.term));
-					    return;
-				    }
-
-                    var url = "/Search/AutoComplete?f=";
-				    $.ajax({
-					    url: url + field,
-					    dataType: "json",
-					    data: request,
-					    success: function(data) {
-                            aCache.field = field;
-						    aCache.term = request.term;
-						    aCache.content = data;
-						    response(data);
-					    }
-				    });
-                }
-		    },
-            minLength: 2,
-        }
-    );
-
+    setupAutoComplete();
+    
     //-----------------------------------------------------------------------------------
     // Search option panel
     //-----------------------------------------------------------------------------------
-    
+
     //$('.cw-form-value-button').button();
     //***********************************************
     //  Form Reset
@@ -68,6 +36,14 @@
     );
 
     //***********************************************
+    //  Tag CheckBox Click
+    //***********************************************
+    $('.cw-tagbox-label-edit').live('click',
+        function (evt) {
+            $(this).toggleClass('cw-blue');
+        }
+    );
+    //***********************************************
     //  Tag Box More Choices Click
     //***********************************************
     $('.cw-tags-more-link').click(
@@ -82,11 +58,11 @@
             // alert($('#' + propId).val());
         }
     );
-    
+
     //-----------------------------------------------------------------------------------
     // Seatch results
     //-----------------------------------------------------------------------------------
-    
+
     //***********************************************
     //  Content detail link
     //***********************************************
@@ -95,10 +71,10 @@
 
         evt.preventDefault();
         var link = $(this);
-        
-        if (isContentEditMode){
-            if (window.confirm('You\'re in Edit mode. Do you want to SAVE changes you\'ve made?')){
-            // save stuff, then showContentPanel, maybe pass in as a delegate? for now:
+
+        if (isContentEditMode) {
+            if (window.confirm('You\'re in Edit mode. Do you want to SAVE changes you\'ve made?')) {
+                // save stuff, then showContentPanel, maybe pass in as a delegate? for now:
                 saveContentPanel(lastContentEditLinkClicked, link);
             } else {
                 fire('warning', 'Save cancelled...');
@@ -124,6 +100,16 @@
     }
     );
 
+    $('.cw-delete-right-link').live('click',
+    function (evt) {
+
+        evt.preventDefault();
+
+        var link = $(this);
+        deleteContentRight(link);
+    }
+    );
+
     //***********************************************
     //  Content save link
     //***********************************************
@@ -133,9 +119,9 @@
         evt.preventDefault();
 
         var link = $(this);
-        
+
         saveContentPanel(link, null);
-        
+
     }
     );
     //-----------------------------------------------------------------------------------
@@ -149,8 +135,8 @@
             closeContentPanel();
         }
     );
-    
-        
+
+
     //-----------------------------------------------------------
     // Content detail menu
     //-----------------------------------------------------------
@@ -165,15 +151,15 @@
             var link = $(this);
             //var id = link[0].rel;
             addToCartAjax(link);
-            
+
         }
     );
-    
+
     //-----------------------------------------------------------------------------------
     //Media Player 
     //-----------------------------------------------------------------------------------
 
- 
+
     //***********************************************
     //  Media Play
     //***********************************************
@@ -200,13 +186,13 @@
         function (evt) {
 
             evt.preventDefault();
-           
-			var cartId = $(this)[0].id.replace('s-', '');
-			//alert(cartId);
-			$('#c-' + cartId).toggle();
-			$(this).toggleClass('cw-carts-contents-show');
-			$(this).toggleClass('cw-carts-contents-hide');
-    }
+
+            var cartId = $(this)[0].id.replace('s-', '');
+            //alert(cartId);
+            $('#c-' + cartId).toggle();
+            $(this).toggleClass('cw-carts-contents-show');
+            $(this).toggleClass('cw-carts-contents-hide');
+        }
     );
 
     //-----------------------------------------------------------------------------------
@@ -220,16 +206,16 @@
 
 		    evt.preventDefault();
 		    var link = $(this);
-            var url = link[0].href;
+		    var url = link[0].href;
 		    var listing = link.parents('.cw-user-listing');
-            $('.cw-user-listing').removeClass('cw-selected');
-            listing.addClass('cw-selected');
+		    $('.cw-user-listing').removeClass('cw-selected');
+		    listing.addClass('cw-selected');
 
 		    getUserDetailAjax(url);
 
 		}
 	);
-    
+
     //***********************************************
     // User role edit link
     //***********************************************
@@ -237,10 +223,10 @@
 		function (evt) {
 
 		    evt.preventDefault();
-			var link = $(this);
-            
-			updateRoleAjax(link, 'cw-green');
-			
+		    var link = $(this);
+
+		    updateRoleAjax(link, 'cw-green');
+
 
 		}
 	);
@@ -252,14 +238,14 @@
 		function (evt) {
 
 		    evt.preventDefault();
-			var link = $(this);
-            
-			updateCatRoleAjax(link);
-			
+		    var link = $(this);
+
+		    updateCatRoleAjax(link);
+
 
 		}
 	);
-    
+
     //***********************************************
     // Catalog role edit all link
     //***********************************************
@@ -267,15 +253,15 @@
 		function (evt) {
 
 		    evt.preventDefault();
-			var link = $(this);
-            
-			updateCatRoleAjax(link);
-			
+		    var link = $(this);
+
+		    updateCatRoleAjax(link);
+
 
 		}
 	);
 
 
-   
+
 }
 );

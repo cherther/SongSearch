@@ -138,7 +138,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 				//Assert
 				Assert.IsNotNull(content, "Content is null");
 				Assert.IsNotNull(content.Catalog, "Catalog is null");
-				//Assert.IsTrue(content.Catalog.CatalogName.Equals("Paradise Artists", StringComparison.InvariantCultureIgnoreCase));
+				//Assert.IsTrue(contentModel.Catalog.CatalogName.Equals("Paradise Artists", StringComparison.InvariantCultureIgnoreCase));
 				Assert.IsNotNull(content.Tags != null, "Tags are null");
 				Assert.IsNotNull(content.ContentRights, "ContentRights are null");
 				Assert.IsNotNull(content.ContentRights.First().Territories, "Territories are null");
@@ -201,7 +201,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 			//var catalogs = SearchService.GetLookupListContent("Catalog.CatalogName");
 			//var list = SearchService.GetLookupListContent("Artist");
 			//Assert
-			Assert.IsNotNull(styles, "tags is null");
+			Assert.IsNotNull(styles, "tagsModel is null");
 			Assert.IsTrue(styles.First().TagName.Equals("Pop"),"Pop should be most tagged style");
 			//Assert.AreEqual(expected, artists.Count, "Incorrect number of artists");
 		}
@@ -217,8 +217,8 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 			//var catalogs = SearchService.GetLookupListContent("Catalog.CatalogName");
 			//var list = SearchService.GetLookupListContent("Artist");
 			//Assert
-			Assert.IsNotNull(styles, "tags is null");
-			Assert.AreEqual(topLimit, styles.Count(), "Incorrect number of top tags");
+			Assert.IsNotNull(styles, "tagsModel is null");
+			Assert.AreEqual(topLimit, styles.Count(), "Incorrect number of top tagsModel");
 			//Assert.AreEqual(expected, artists.Count, "Incorrect number of artists");
 		}
 

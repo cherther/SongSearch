@@ -84,6 +84,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		public JsonResult AutoComplete(string f, string term) {
 
+			term = term.ToUpper();
 			var values = f.Equals("CatalogId", StringComparison.InvariantCultureIgnoreCase) ? 
 				CacheService.Catalogs().Select(c => c.CatalogName.ToUpper()).ToArray() :
 				(

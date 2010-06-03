@@ -18,14 +18,14 @@
 
 		var tagId = isEditing ? String.Format(Model.TagIdTemplate, Model.TagCountSeed) : String.Format("{0}-{1}", Model.TagIdTemplate, tag.TagId);
 		var isSelected = Model.SelectedTags != null && Model.SelectedTags.Contains(tag.TagId);
-		var tagClass = String.Concat(Model.TagClass, isSelected ? " cw-blue" : "");
+		var tagClass = String.Concat(Model.TagClass, isEditing ? "-edit" : "", " cw-button cw-simple cw-small ", isSelected ? " cw-blue" : "");
         
      %>
 	 <%if (isEditing) { %>
-	 <label for="<%= tagId %>"><%: tagName%></label>
-	 <%: Html.CheckBox(tagId, isSelected, new { value = tag.TagId })%>
+	 <label for="<%= tagId %>" class="<%: tagClass %>"><%: tagName%></label>
+	 <%: Html.CheckBox(tagId, isSelected, new { id = tagId, value = tag.TagId, @class = "cw-tagbox-checkbox" })%>
 	 <%} else { %>
-     <a id="<%= tagId%>" class="cw-search-tag cw-tag-box cw-button cw-simple cw-small <%=tagClass %>"> <%=tagName%></a>
+     <a id="<%= tagId%>" class="<%=tagClass %>"> <%=tagName%></a>
 	 <%} %>
     <%
 		Model.TagCountSeed++;

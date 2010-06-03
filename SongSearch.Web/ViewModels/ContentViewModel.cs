@@ -17,22 +17,17 @@ namespace SongSearch.Web {
 	}
 
 
-	public class ContentRightViewModel {
+	public class ContentRightViewModel : ViewModel {
 
 		public int ContentRightId { get; set; }
 		public int ContentId { get; set; }
 		public RightsTypes RightsTypeId { get; set; }
-//		public int RightsHolderId { get; set; }
 		public string RightsHolderName { get; set; }
 		public string RightsHolderShare { get; set; }
 
 		public IList<int> Territories { get; set; }
 	}
 	
-	public class ContentRightTerritoryViewModel {
-		//public int ContentRightId { get; set; }
-		public int TerritoryId { get; set; }
-	}
 
 	public class ContentTagViewModel {
 		public int TagType { get; set; }

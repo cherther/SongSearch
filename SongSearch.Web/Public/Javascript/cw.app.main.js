@@ -96,8 +96,50 @@ var lastContentDetailLinkClicked;
 var lastContentEditLinkClicked;
 
 //-----------------------------------------------------------------------------------
-// clear form
+//
 //-----------------------------------------------------------------------------------
+
+//***********************************************
+//  setupAutoComplete
+//***********************************************
+var aCache = {};
+function setupAutoComplete() {
+
+    $(".cw-autocomplete").autocomplete(
+        {
+            //source: "/Search/AutoComplete?f=" + this.rel,//["John", "Johnny", "Jon", "Joe" ],
+            source: function (request, response) {
+
+                var field = $(this)[0].element[0].alt; //little hack to store an extra field on the input elem, rel does not work cross-browser for input tags
+                if (field) {
+                    if (aCache.term == request.term && aCache.field == field && aCache.content) {
+                        response(aCache.content);
+                        return;
+                    }
+                    if (new RegExp(aCache.term).test(request.term) && aCache.content && aCache.content.length < 13) {
+                        response($.ui.autocomplete.filter(aCache.content, request.term));
+                        return;
+                    }
+
+                    var url = "/Search/AutoComplete?f=";
+                    $.ajax({
+                        url: url + field,
+                        dataType: "json",
+                        data: request,
+                        success: function (data) {
+                            aCache.field = field;
+                            aCache.term = request.term;
+                            aCache.content = data;
+                            response(data);
+                        }
+                    });
+                }
+
+            },
+            minLength: 2
+        }
+    );
+}
 //***********************************************
 //  showContentPanel
 //***********************************************
@@ -274,8 +316,18 @@ function showContentPanelCallbackEdit(data, link, altLink) {
 function setupContentPanelUIControls() {
     //$('.cw-content-detail-menu').button();
     $('#cw-content-detail-tabs').tabs();
+    //$('.cw-tag-checkbox').button();
     setupVolumeSlider();
+    setupAutoComplete();
+}
 
+function deleteContentRight(link) {
+
+    var parentRow = link.closest('tr');
+    var modelAction = link.prev('.cw-model-action');
+    modelAction.val(2); // ModelAction=Delete
+    parentRow.hide().next().hide();
+    
 }
 
 //***********************************************

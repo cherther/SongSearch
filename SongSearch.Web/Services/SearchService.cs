@@ -37,7 +37,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetLookupListContent
 		//	returns simple listing of 
-		//	content field values
+		//	contentModel field values
 		// **************************************
 		public static IList<string> GetLookupListContent(string fieldName) {
 
@@ -56,7 +56,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetLookupListContentRights
 		//	returns simple listing of 
-		//	content right field values
+		//	contentModel contentRight field values
 		// **************************************
 		public static IList<string> GetLookupListContentRights(string fieldName) {
 
@@ -66,7 +66,7 @@ namespace SongSearch.Web.Services {
 
 			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 
-				var query = session.All<ContentRight>().Select<string>(fieldName).Distinct();
+				var query = session.All<ContentRight>().Select<string>(fieldName).Distinct().Select(v => v.ToUpper());
 				return query.ToList();
 
 			}
@@ -128,7 +128,7 @@ namespace SongSearch.Web.Services {
 				}
 				if (content != null) {
 					content.UserDownloadableName = content.DownloadableName(user.FileSignature());
-					//content.IsInMyActiveCart = CacheService.IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
+					//contentModel.IsInMyActiveCart = CacheService.IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
 				}
 				return content;
 				
@@ -193,7 +193,7 @@ namespace SongSearch.Web.Services {
 					contentQuery = from c in contentQuery
 								   join u in userCatalogs on c.CatalogId equals u.CatalogId
 								   where u.UserId == userId
-								   select c;//.Where(c => c.Catalog.UserCatalogRoles.Any(r => r.UserId == userId));
+								   select c;//.Where(c => c.Catalog.UserCatalogRoles.Any(rm => rm.UserId == userId));
 					
 				}
 

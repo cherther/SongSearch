@@ -84,7 +84,7 @@
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Artist)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Artist) : Html.DisplayFor(m => m.Content.Artist)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Artist, "StringAutoComplete" ) : Html.DisplayFor(m => m.Content.Artist)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Pop)%></td>
@@ -100,11 +100,11 @@
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.RecordLabel)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel) : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel, "StringAutoComplete") : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Writers)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers) : Html.DisplayFor(m => m.Content.Writers)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Writers)%></td>
 		</tr>
 		<%if (Model.SectionsAllowed.Contains("Notes")) { %>
 		<%
@@ -157,8 +157,8 @@
 			TagCountSeed = tt,
 			Tags = tags, 
 			TagType = tagType, 
-			SelectedTags = selectedTags, 
-			TagClass = "cw-tagbox-detail",
+			SelectedTags = selectedTags,
+			TagClass = "cw-tagbox-label",
 			TagIdTemplate = isEditing ? "tags[{0}]" : "t",
 		};
 
@@ -222,7 +222,7 @@
 							<%if (isEditing) {%> 
 							<%: Html.Hidden(String.Concat(rightId, "ContentId"), contentRight.ContentId)%>
 							<%: Html.Hidden(String.Concat(rightId, "ContentRightId"), contentRight.ContentRightId)%>
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"), contentRight.RightsHolderName)%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"), contentRight.RightsHolderName, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
 							<%} else {%> 
 							<%: contentRight.RightsHolderName%>
 							<%} %>
@@ -236,13 +236,14 @@
 						</td>
 						<td class="cw-content-field text-right">
 							<%if (isEditing) {%> 
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"), rightsHolderShare)%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"), rightsHolderShare, new { width = 20 })%>
 							<%} else {%> 
 							<%: rightsHolderShare%>
 							<%} %>
 						</td>
 						<td>
 						<%if (isEditing) {%>
+						<%: Html.Hidden(String.Concat(rightId, "ModelAction"), (int)ModelAction.Update, new { @class = "cw-model-action" })%>
 					  	<a href="#" class="cw-delete-right-link"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
 						<%} %>
 						</td>
@@ -256,8 +257,8 @@
 							var model = new TagCloudViewModel<Territory>() { 
 								EditMode = Model.EditMode, 
 								Tags = territories, 
-								SelectedTags = selectedTerritories, 
-								TagClass = "cw-tagbox-detail",
+								SelectedTags = selectedTerritories,
+								TagClass = "cw-tagbox-label",
 								TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
 							};              
 						%>    
@@ -274,16 +275,17 @@
 						<td class="cw-content-field">
 							<%: Html.Hidden(String.Concat(rightId, "ContentId"), Model.Content.ContentId)%>
 							<%: Html.Hidden(String.Concat(rightId, "ContentRightId"), 0)%>
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"))%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"),null, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
 						</td>
 						<td class="cw-content-field">
 							<%: Html.DropDownList(String.Concat(rightId, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
 						</td>
 						<td class="cw-content-field text-right">
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"))%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"), null, new { width = 20 })%>
 						</td>
 						<td>
-					  	<a href="#" class="cw-add-right-link"><img src="../../public/images/icons/silk/add.png" alt="Add" /></a>
+						<%: Html.Hidden(String.Concat(rightId, "ModelAction"), (int)ModelAction.Add, new { @class = "cw-model-action" })%>
+						<a href="#" class="cw-add-right-link"><img src="../../public/images/icons/silk/add.png" alt="Add" /></a>
 						</td>
 					</tr>
 					<tr>
@@ -293,7 +295,7 @@
 						var model = new TagCloudViewModel<Territory>() {
 							EditMode = Model.EditMode,
 							Tags = territories,
-							TagClass = "cw-tagbox-detail",
+							TagClass = "cw-tagbox-label",
 							TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
 						};              
 						%>    

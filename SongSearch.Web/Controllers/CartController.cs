@@ -179,7 +179,7 @@ namespace SongSearch.Web.Controllers
 				if (cart == null) { throw new ArgumentException(); }
 
 				Response.ContentType = "application/zip";
-				Response.AddHeader("content-disposition", String.Format("filename={0}", cart.ArchiveName));
+				Response.AddHeader("contentModel-disposition", String.Format("filename={0}", cart.ArchiveName));
 				return new FileStreamResult(new System.IO.FileStream(cart.ArchivePath(), System.IO.FileMode.Open), "application/zip");
 			}
 			catch {

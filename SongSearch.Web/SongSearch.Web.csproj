@@ -1736,7 +1736,9 @@
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
     <Content Include="Views\Shared\DisplayTemplates\MultilineText.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\_Object.ascx" />
     <Content Include="Views\Shared\EditorTemplates\MultilineText.ascx" />
+    <Content Include="Views\Shared\EditorTemplates\StringAutoComplete.ascx" />
     <Content Include="Views\UserManagement\ctrlDetail.ascx" />
     <Content Include="Views\UserManagement\ctrlUserList.ascx" />
     <Content Include="Views\UserManagement\Index.aspx" />

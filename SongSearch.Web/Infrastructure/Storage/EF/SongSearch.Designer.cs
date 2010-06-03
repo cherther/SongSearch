@@ -1479,16 +1479,14 @@ namespace SongSearch.Web.Data
         /// <param name="contentRightId">Initial value of the ContentRightId property.</param>
         /// <param name="contentId">Initial value of the ContentId property.</param>
         /// <param name="rightsTypeId">Initial value of the RightsTypeId property.</param>
-        /// <param name="rightsHolderId">Initial value of the RightsHolderId property.</param>
         /// <param name="rightsHolderShare">Initial value of the RightsHolderShare property.</param>
         /// <param name="rightsHolderName">Initial value of the RightsHolderName property.</param>
-        public static ContentRight CreateContentRight(global::System.Int32 contentRightId, global::System.Int32 contentId, global::System.Int32 rightsTypeId, global::System.Int32 rightsHolderId, global::System.Decimal rightsHolderShare, global::System.String rightsHolderName)
+        public static ContentRight CreateContentRight(global::System.Int32 contentRightId, global::System.Int32 contentId, global::System.Int32 rightsTypeId, global::System.Decimal rightsHolderShare, global::System.String rightsHolderName)
         {
             ContentRight contentRight = new ContentRight();
             contentRight.ContentRightId = contentRightId;
             contentRight.ContentId = contentId;
             contentRight.RightsTypeId = rightsTypeId;
-            contentRight.RightsHolderId = rightsHolderId;
             contentRight.RightsHolderShare = rightsHolderShare;
             contentRight.RightsHolderName = rightsHolderName;
             return contentRight;
@@ -1571,30 +1569,6 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _RightsTypeId;
         partial void OnRightsTypeIdChanging(global::System.Int32 value);
         partial void OnRightsTypeIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 RightsHolderId
-        {
-            get
-            {
-                return _RightsHolderId;
-            }
-            set
-            {
-                OnRightsHolderIdChanging(value);
-                ReportPropertyChanging("RightsHolderId");
-                _RightsHolderId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RightsHolderId");
-                OnRightsHolderIdChanged();
-            }
-        }
-        private global::System.Int32 _RightsHolderId;
-        partial void OnRightsHolderIdChanging(global::System.Int32 value);
-        partial void OnRightsHolderIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

@@ -82,7 +82,13 @@
                     var tags = Model.SearchTags[tagType];
                     var selectedTagValues = value.First() != null ? value.First().Split(';') : null;
                     var selectedTags = selectedTagValues.Where(v => !String.IsNullOrWhiteSpace(v)).Select(v => int.Parse(v)).ToArray();
-                    var model = new TagCloudViewModel<SongSearch.Web.Data.Tag>() { Tags = tags, TagTypeName = item.PropertyName, InitialTagNumber = 5, SelectedTags = selectedTags, TagClass = "cw-tagbox-search", TagIdTemplate = String.Format("f_{0}__V", i) };
+                    var model = new TagCloudViewModel<SongSearch.Web.Data.Tag>() { 
+						Tags = tags, 
+						TagTypeName = item.PropertyName, 
+						InitialTagNumber = 5, 
+						SelectedTags = selectedTags,
+						TagClass = "cw-tagbox-search", 
+						TagIdTemplate = String.Format("f_{0}__V", i) };
                 %>    
                 <% Html.RenderPartial("ctrlTagCloud", model); %>
                 <%: Html.Hidden(String.Format("f[{0}].V", i), "", new { @class = "cw-form-value" })%>

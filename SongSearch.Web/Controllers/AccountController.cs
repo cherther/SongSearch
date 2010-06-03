@@ -54,11 +54,11 @@ namespace SongSearch.Web.Controllers {
 
 			if (ModelState.IsValid) {
 				if (_acctService.UserIsValid(model.Email, model.Password))
-				//if (_ms.UserIsValid(content.Email, content.Password))
+				//if (_ms.UserIsValid(contentModel.Email, contentModel.Password))
 		{
 
 					_authService.SignIn(model.Email, model.RememberMe);
-					//_usrMgmtService.ActiveUserName = content.Email;
+					//_usrMgmtService.ActiveUserName = contentModel.Email;
 					CacheService.InitializeSession(model.Email, true);
 					var user = CacheService.User(model.Email);
 
@@ -147,7 +147,7 @@ namespace SongSearch.Web.Controllers {
 		public ActionResult Register(RegisterModel model) {
 
 			//set username to email address
-			//content.UserName = content.Email;
+			//contentModel.UserName = contentModel.Email;
 
 			if (ModelState.IsValid) {
 				if (_acctService.UserExists(model.Email)) {
@@ -163,7 +163,7 @@ namespace SongSearch.Web.Controllers {
 									model.Invitation = inv;
 
 									// Attempt to register the myUser
-									//MembershipCreateStatus createStatus = _ms.CreateUser(content.Email, content.Password, content.Email);
+									//MembershipCreateStatus createStatus = _ms.CreateUser(contentModel.Email, contentModel.Password, contentModel.Email);
 									if (String.IsNullOrEmpty(model.Email)) throw new ArgumentException("Value cannot be null or empty.", "Email");
 									if (String.IsNullOrEmpty(model.Password)) throw new ArgumentException("Value cannot be null or empty.", "Password");
 									if (String.IsNullOrEmpty(model.InviteId)) throw new ArgumentException("Value cannot be null or empty.", "InviteId");

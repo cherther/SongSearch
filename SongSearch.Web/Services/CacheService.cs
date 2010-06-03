@@ -284,10 +284,10 @@ namespace SongSearch.Web.Services {
 			if (_hasCache) {
 				if (Cache(CacheKeys.Rights) == null) { CacheUpdateContentRightsFields(CacheKeys.Content); }
 				var lookup = Cache(CacheKeys.Rights) as IDictionary<string, IList<string>>;
-				var value = lookup[fieldName];
+				var value = lookup[fieldName.ToUpper()];
 				return value;
 			} else {
-				return GetDataContentRightsField(fieldName);
+				return GetDataContentRightsField(fieldName.ToUpper());
 			}
 		}
 
@@ -332,6 +332,11 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// SessionUpdate
 		// **************************************
+		public static void SessionUpdate(CacheKeys cacheKey) {
+
+			_sessionMatrix[cacheKey](cacheKey);
+		}
+		
 		public static void SessionUpdate(object cacheObject, CacheKeys cacheKey) {
 			SessionUpdate(cacheObject, cacheKey.ToString());
 		}
@@ -361,6 +366,11 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// CacheUpdate
 		// **************************************
+		public static void CacheUpdate(CacheKeys cacheKey) {
+
+			_cacheMatrix[cacheKey](cacheKey);
+		}
+
 		public static void CacheUpdate(object cacheObject, CacheKeys cacheKey) {
 			CacheUpdate(cacheObject, cacheKey.ToString());
 		}

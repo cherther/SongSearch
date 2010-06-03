@@ -13,22 +13,20 @@
 {
     border: 1px solid gray;
     border-collapse: collapse;
-    padding: 3px;
+    padding: 4px;
+    
 }
 .cw-tbl-search-results tr
 {
     border: 1px solid #aaaaaa;
 }
 
-.cw-tbl-search-results th, td
+.cw-tbl-data td
 {
-    padding: 3px;
-}
-.cw-tbl-search-results th
-{
-    //text-align: left;
-    white-space: nowrap;    
-}
+    padding: 4px;
+    /*white-space: nowrap;   */
+ }
+
 
 /* Content Detail */
 .cw-tbl-content-detail 
@@ -61,7 +59,8 @@
     border: 1px solid gray;
     border-collapse: collapse;
     padding: 3px;
-    font-size: 80%;
+    font-size: 90%;
+    white-space: nowrap;    
 }
 .cw-tbl-cart-contents tr
 {
@@ -75,7 +74,6 @@
 .cw-tbl-cart-contents th
 {
     text-align: left;
-    white-space: nowrap;    
 }
 
 

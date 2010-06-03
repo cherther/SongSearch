@@ -43,10 +43,10 @@ namespace SongSearch.Web {
 		string GetSetName<T>() {
 
 			//If you get an error here it's because your namespace
-			//for your EDM doesn't match the partial content class
+			//for your EDM doesn't match the partial contentModel class
 			//to change - open the properties for the EDM FILE and change "Custom Tool Namespace"
 			//Not - this IS NOT the Namespace setting in the EDM designer - that's for something
-			//else entirely. This is for the EDMX file itself (r-click, properties)
+			//else entirely. This is for the EDMX file itself (rm-click, properties)
 
 			var entitySetProperty =
 			_context.GetType().GetProperties()
