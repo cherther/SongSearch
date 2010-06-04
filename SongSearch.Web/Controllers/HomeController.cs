@@ -13,14 +13,17 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		public ActionResult Index() {
 
-			if (User.Identity.IsAuthenticated){
-				
-				var msg = CacheService.User(User.Identity.Name).LoginMessage();
-				
-				this.FireInfo(msg);
+			try {
+				if (User.Identity.IsAuthenticated) {
+
+					var msg = CacheService.User(User.Identity.Name).LoginMessage();
+
+					this.FireInfo(msg);
+				}
 			}
+			catch { }
 			return View(new ViewModel() { NavigationLocation = "Home" });
-			//return RedirectToAction("Index", "Search");
+			
 		}
 
 		// **************************************

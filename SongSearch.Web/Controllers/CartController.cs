@@ -39,27 +39,39 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		public ActionResult Index()
         {
-			var vm = GetCartViewModel();
-			vm.MyCarts = _cartService.MyCarts();
-			vm.CartContentHeaders = new string[] { "Title", "Artist", "Year", "File Name", "Download", "Remove"};
+			try {
 
-			//Reset the searchFields to stop any previous highlighting preferences
-			CacheService.SessionUpdate(null, "SearchFields");
+				var vm = GetCartViewModel();
+				vm.MyCarts = _cartService.MyCarts();
+				vm.CartContentHeaders = new string[] { "Title", "Artist", "Year", "File Name", "Download", "Remove" };
+				//Reset the searchFields to stop any previous highlighting preferences
+				CacheService.SessionUpdate(null, "SearchFields");
 
-			var msg = _currentUser.DownloadCartMessage(vm.MyCarts);
-			if (msg != null) {
-				this.FireInfo(msg);
+				var msg = _currentUser != null ? _currentUser.DownloadCartMessage(vm.MyCarts) : "";
+
+				if (msg != null) {
+					this.FireInfo(msg);
+				}
+
+				return View(vm);
 			}
-			return View(vm);
+			catch {
+				this.FireError("There was an error loading the Song Cart page. Please try again in a bit.");
+				return RedirectToAction("Index", "Home");
+			}
+			
         }
 
 		// **************************************
 		// URL: /Cart/CartCount
 		// **************************************
 		public ActionResult CartCount() {
-			
-			var count = CacheService.MyActiveCartCount(_currentUser.UserName);
-			
+			var count = 0;
+			try {
+				count = CacheService.MyActiveCartCount(_currentUser.UserName);
+			}
+			catch { }
+
 			if (Request.IsAjaxRequest()) {
 				return Json(count, JsonRequestBehavior.AllowGet);
 			} else {

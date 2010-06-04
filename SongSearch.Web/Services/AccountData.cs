@@ -42,14 +42,14 @@ namespace SongSearch.Web {
 		public static bool IsAnyAdmin(this User user) {
 			var levels = new[] { Roles.SuperAdmin, Roles.Admin };
 
-			return user.IsInAnyRole(levels);
+			return user != null && user.IsInAnyRole(levels);
 		}
 
 		// **************************************
 		// IsSuperAdmin
 		// **************************************    
 		public static bool IsSuperAdmin(this User user) {
-			return (user.IsInRole(Roles.SuperAdmin));
+			return (user != null && user.IsInRole(Roles.SuperAdmin));
 		}
 
 		// **************************************
@@ -57,31 +57,31 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static bool IsInRole(this User user, Roles role) {
 
-			return user.RoleId.Equals((int)role);
+			return user != null && user.RoleId.Equals((int)role);
 		}
 
 		// **************************************
 		// IsAtLeastInRole
 		// **************************************    
 		public static bool IsAtLeastInCatalogRole(this User user, Roles role, Catalog catalog) {
-			return user.IsSuperAdmin() || 
+			return user != null &&  (user.IsSuperAdmin() || 
 				(user.UserCatalogRoles != null ?
 				user.UserCatalogRoles.Any(x => x.CatalogId == catalog.CatalogId && x.RoleId <= (int)role) :
-				false);
+				false));
 		}
 
 		// **************************************
 		// IsAtLeastInDbRole
 		// **************************************    
 		public static bool IsAtLeastInRole(this User user, Roles role) {
-			return user.RoleId <= (int)role;
+			return user != null && user.RoleId <= (int)role;
 		}
 
 		// **************************************
 		// IsInAnyDbRole
 		// **************************************    
 		public static bool IsInAnyRole(this User user, Roles[] roles) {
-			return roles.Contains((Roles)user.RoleId);
+			return user != null && roles.Contains((Roles)user.RoleId);
 		}
 
 		// **************************************
@@ -100,7 +100,7 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string ParentSignature(this User user) {
 
-			var parent = user.ParentUser; //rep.Single<User>(u => u.UserId == user.UserId).ParentUser;
+			var parent = user != null ? user.ParentUser : null ; //rep.Single<User>(u => u.UserId == user.UserId).ParentUser;
 
 			return parent == null ? "" : (parent.Signature ?? parent.UserName);
 		}
@@ -109,7 +109,7 @@ namespace SongSearch.Web {
 		// FileSignature
 		// **************************************    
 		public static string FileSignature(this User user) {
-			return user.IsAnyAdmin() ? user.Signature : user.ParentSignature();
+			return user != null ? (user.IsAnyAdmin() ? user.Signature : user.ParentSignature()) : "";
 		}
 
 		// **************************************

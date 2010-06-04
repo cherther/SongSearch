@@ -15,10 +15,12 @@ namespace SongSearch.Web.Controllers {
 		IAccountService _acctService;
 
 		protected override void Initialize(RequestContext requestContext) {
-			
-			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+			try {
+				if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
+					_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+				}
 			}
+			catch { }
 			base.Initialize(requestContext);
 
 		}
@@ -272,21 +274,28 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		[RequireAuthorization]
 		public ActionResult UpdateProfile() {
-			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-			var user = CacheService.User(User.Identity.Name);
+			try {
+				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-			var vm = new UpdateProfileModel() {
-				NavigationLocation = "Account",
-				Email = User.Identity.Name,
-				FirstName = user.FirstName,
-				LastName = user.LastName,
-				ShowSignatureField = user.IsAnyAdmin(),
-				Signature = user.Signature
+				var user = CacheService.User(User.Identity.Name);
 
-			};
+				var vm = new UpdateProfileModel() {
+					NavigationLocation = "Account",
+					Email = User.Identity.Name,
+					FirstName = user.FirstName,
+					LastName = user.LastName,
+					ShowSignatureField = user.IsAnyAdmin(),
+					Signature = user.Signature
 
-			return View(vm);
+				};
+
+				return View(vm);
+			}
+			catch {
+				this.FireError("There was an error loading the Update Profile page. Please try again in a bit.");
+				return RedirectToAction("Index", "Home");
+			}
 		}
 
 		[RequireAuthorization]

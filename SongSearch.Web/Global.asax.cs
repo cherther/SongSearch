@@ -84,9 +84,11 @@ namespace SongSearch.Web {
 		// Session_Start
 		// **************************************
 		protected void Session_Start() {
-			
+			try {
 			CacheService.InitializeSession();
 			//DataSession["UserName"] = User.Identity.Name;
+			}
+			catch { }
 		}
 
 
@@ -105,8 +107,10 @@ namespace SongSearch.Web {
 			if (Environment == AppEnvironment.Development) {
 				HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 			}
-
-			CacheService.Initialize();
+			try {
+				CacheService.Initialize();
+			}
+			catch { }
 			//Logger.Info("App is starting up");
 		}
 

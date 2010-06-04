@@ -28,7 +28,15 @@ namespace SongSearch.Web.Controllers
         // GET: /Search/
 		public ActionResult Index()
         {
-			return View(GetSearchViewModel());
+			try {
+				var vm = GetSearchViewModel();
+
+				return View(vm);
+			}
+			catch {
+				this.FireError("There was an error loading the Search page. Please try again in a bit.");
+				return RedirectToAction("Index", "Home");
+			}
         }
 
 		// ****************************************************************************
@@ -82,28 +90,34 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		public JsonResult AutoComplete(string f, string term) {
 
-			term = term.ToUpper();
-			var values = f.Equals("CatalogId", StringComparison.InvariantCultureIgnoreCase) ? 
-				CacheService.Catalogs().Select(c => c.CatalogName.ToUpper()).ToArray() :
-				(
-					CacheService.CachedContentFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ? 
-					CacheService.ContentField(f).Where(v => v != null).ToArray() :
+			try {
+				term = term.ToUpper();
+				var values = f.Equals("CatalogId", StringComparison.InvariantCultureIgnoreCase) ?
+					CacheService.Catalogs().Select(c => c.CatalogName.ToUpper()).ToArray() :
 					(
-					CacheService.CachedContentRightsFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ?
-						CacheService.ContentRightsField(f).Where(v => v != null).ToArray() :
-						new string[] {""}
-					)
-				);
+						CacheService.CachedContentFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ?
+						CacheService.ContentField(f).Where(v => v != null).ToArray() :
+						(
+						CacheService.CachedContentRightsFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ?
+							CacheService.ContentRightsField(f).Where(v => v != null).ToArray() :
+							new string[] { "" }
+						)
+					);
 
-			if (term.Length < 3) {
-				values = values != null ? values.Where(v => v.MakeSearchableValue().StartsWith(term.MakeSearchableValue())).ToArray() : values;
-			} else {
+				if (term.Length < 3) {
+					values = values != null ? values.Where(v => v.MakeSearchableValue().StartsWith(term.MakeSearchableValue())).ToArray() : values;
+				} else {
 
-				values = values != null ? values.Where(v => v.MakeSearchableValue().Contains(term.MakeSearchableValue())).ToArray() : values;
+					values = values != null ? values.Where(v => v.MakeSearchableValue().Contains(term.MakeSearchableValue())).ToArray() : values;
+				}
+
+				return Json(values, JsonRequestBehavior.AllowGet);
 			}
+			catch {
+					
+				return Json("", JsonRequestBehavior.AllowGet);
 
-			return Json(values, JsonRequestBehavior.AllowGet);
-			
+			}
 		}
 
 		// **************************************

@@ -16,17 +16,19 @@ namespace SongSearch.Web {
 			if (!princ.Identity.IsAuthenticated) {
 				return false;
 			}
-
-			return CacheService.User(princ.Identity.Name).IsAnyAdmin();
+			var user = CacheService.User(princ.Identity.Name);
+			return user != null && user.IsAnyAdmin();
 		}
 
 		// **************************************
 		// UserIsSuperAdmin
 		// **************************************    
 		public static bool UserIsSuperAdmin(this IPrincipal princ) {
-			return princ.Identity.IsAuthenticated ?
-				CacheService.User(princ.Identity.Name).IsSuperAdmin()
-				: false;
+			if (!princ.Identity.IsAuthenticated) {
+				return false;
+			}
+			var user = CacheService.User(princ.Identity.Name);
+			return user != null && user.IsSuperAdmin();
 			
 		}
 
@@ -34,27 +36,35 @@ namespace SongSearch.Web {
 		// UserIsInRole
 		// **************************************    
 		public static bool UserIsInRole(this IPrincipal princ, Roles role) {
-			return princ.Identity.IsAuthenticated ?
-				CacheService.User(princ.Identity.Name).IsInRole(role)
-				: false;
+			if (!princ.Identity.IsAuthenticated) {
+				return false;
+			}
+			var user = CacheService.User(princ.Identity.Name);
+			return user != null && user.IsInRole(role);
 		}
 
 		// **************************************
 		// UserIsAtLeastInRole
 		// **************************************    
 		public static bool UserIsAtLeastInRole(this IPrincipal princ, Roles role) {
-			return princ.Identity.IsAuthenticated ?
-				CacheService.User(princ.Identity.Name).IsAtLeastInRole(role)
-				: false;
+			if (!princ.Identity.IsAuthenticated) {
+				return false;
+			}
+			var user = CacheService.User(princ.Identity.Name);
+			return user != null && user.IsAtLeastInRole(role);
+			
 		}
 
 		// **************************************
 		// UserIsInAnyRole
 		// **************************************    
 		public static bool UserIsInAnyRole(this IPrincipal princ, Roles[] roles) {
-			return princ.Identity.IsAuthenticated ?
-				CacheService.User(princ.Identity.Name).IsInAnyRole(roles)
-				: false;
+			if (!princ.Identity.IsAuthenticated) {
+				return false;
+			}
+			var user = CacheService.User(princ.Identity.Name);
+			return user != null && user.IsInAnyRole(roles);
+
 		}
 
 	}

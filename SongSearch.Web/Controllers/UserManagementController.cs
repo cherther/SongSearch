@@ -43,16 +43,22 @@ namespace SongSearch.Web
 		// **************************************
 		public ActionResult Index() {
 
-			var users = _usrMgmtService.GetMyUserHierarchy();
-			var invites = _usrMgmtService.GetMyInvites(InvitationStatusCodes.Open);
-			var vm = new UserViewModel();
+			try {
+				var users = _usrMgmtService.GetMyUserHierarchy();
+				var invites = _usrMgmtService.GetMyInvites(InvitationStatusCodes.Open);
+				var vm = new UserViewModel();
 
-			vm.MyUsers = users;
-			vm.MyInvites = invites;
-			vm.PageTitle = "User Management";
-			vm.NavigationLocation = "Admin";
+				vm.MyUsers = users;
+				vm.MyInvites = invites;
+				vm.PageTitle = "User Management";
+				vm.NavigationLocation = "Admin";
 
-			return View(vm);
+				return View(vm);
+			}
+			catch {
+				this.FireError("There was an error loading the User Management page. Please try again in a bit.");
+				return RedirectToAction("Index", "Home");
+			}
 		}
 
 		// **************************************

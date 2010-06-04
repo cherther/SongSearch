@@ -60,20 +60,25 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		//[OutputCache(Duration = 60, VaryByParam = "id;version")]
 		public ActionResult Stream(int id, MediaVersion version = MediaVersion.Preview) {
-
-			var mediaPath = MediaService.GetContentMediaFilePath(id, (MediaVersion) version);
-			var content = SearchService.GetContent(id, _currentUser);
-			if (content != null) {
-				//var downloadName = String.Concat(contentModel.UserDownloadableName, MediaService.ContentMediaExtension);
-				var contentType = "application/mp3";
-				Response.ContentType = contentType;
-				// if this is not embedded, adding the header will force it to open the application responsible for the extension
-				//Response.AddHeader("contentModel-disposition", String.Format("filename={0}", downloadName));
-				return new FileStreamResult(new FileStream(mediaPath, System.IO.FileMode.Open), contentType);
-			} else {
-				var msg = "You do not have access to this file";
-				this.FireError(msg);
-				return RedirectToAction("Index", "Error", new { exc = new AccessViolationException(msg), message = msg, controllerName = "Media", actionName = "Download" });
+			try {
+				var mediaPath = MediaService.GetContentMediaFilePath(id, (MediaVersion)version);
+				var content = SearchService.GetContent(id, _currentUser);
+				if (content != null) {
+					//var downloadName = String.Concat(contentModel.UserDownloadableName, MediaService.ContentMediaExtension);
+					var contentType = "application/mp3";
+					Response.ContentType = contentType;
+					// if this is not embedded, adding the header will force it to open the application responsible for the extension
+					//Response.AddHeader("contentModel-disposition", String.Format("filename={0}", downloadName));
+					return new FileStreamResult(new FileStream(mediaPath, System.IO.FileMode.Open), contentType);
+				} else {
+					var msg = "You do not have access to this file";
+					this.FireError(msg);
+					return RedirectToAction("Index", "Error", new { exc = new AccessViolationException(msg), message = msg, controllerName = "Media", actionName = "Download" });
+				}
+			}
+			catch {
+				this.FireError("There was an error loading the User Management page. Please try again in a bit.");
+				return RedirectToAction("Index", "Home");
 			}
 		}
 
