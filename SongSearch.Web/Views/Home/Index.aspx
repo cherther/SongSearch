@@ -13,6 +13,12 @@
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
 		<div>&nbsp;</div>
+		<div></div>6/4/2010</div>
+        <ul class="cw-vertical">
+            <li>Song Edit now fully functional, no mp3 upload yet</li>
+            <li>User Deletion and Take Ownership now enabled (was off for testing purposes)</li>
+        </ul>
+		<div>&nbsp;</div>
 		<div>5/31/2010</div>
         <ul class="cw-vertical">
             <li>Lyrics search words highlighted in song detail</li>

@@ -85,13 +85,9 @@ namespace SongSearch.Web {
 			return new ObjectQuery<T>(GetSetName<T>(), _context);
 		}
 
-		public T Single<T>(Expression<Func<T, bool>> expression, string loadWith = null) where T : class, new() {
-			if (loadWith == null) {
-				return GetTable<T>().SingleOrDefault(expression);
-			}
-			var set = GetTable<T>();
-			var query = !String.IsNullOrWhiteSpace(loadWith) ? set.Include(loadWith) : set;
-			return set.SingleOrDefault(expression);
+		public T Single<T>(Expression<Func<T, bool>> expression) where T : class, new() {
+			
+			return GetTable<T>().SingleOrDefault(expression);
 		}
 
 		public void Add<T>(T item) where T : class, new() {

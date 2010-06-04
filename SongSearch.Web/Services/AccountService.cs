@@ -74,23 +74,14 @@ namespace SongSearch.Web.Services {
 		// **************************************    
 		public bool UserIsValid(string userName, string password) {
 			var user = ReadSession.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
-			if (user == null) {
-				return false;
-			}
-			bool isValid = PasswordHashMatches(user.Password, password);
-			user = null;
-			return isValid;
+			return user != null && PasswordHashMatches(user.Password, password);
 		}
 
 		// **************************************
 		// UserExists
 		// **************************************    
 		public bool UserExists(string userName) {
-			var user = GetUser(userName); 
-			bool exists = user != null ? true : false;
-			user = null;
-
-			return exists;
+			return GetUser(userName) != null ? true : false;
 		}
 
 		// **************************************

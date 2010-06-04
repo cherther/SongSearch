@@ -63,9 +63,7 @@ namespace SongSearch.Web.Controllers
 			if (Request.IsAjaxRequest()) {
 				return Json(count, JsonRequestBehavior.AllowGet);
 			} else {
-				//ViewData["MyActiveCartContentsCount"] = count;
-				var vm = new ViewModel() { MyActiveCartCount = count };
-				return View("ctrlCartCount", vm);
+				return View("ctrlCartCount", new ViewModel() { MyActiveCartCount = count });
 			}
 		}
 
@@ -201,16 +199,12 @@ namespace SongSearch.Web.Controllers
 		// GetSearchViewModel
 		// **************************************
 		private CartViewModel GetCartViewModel() {
-
-			var role = (Roles)_currentUser.RoleId;
-			var model = new CartViewModel() {
+			return new CartViewModel() {
 				PageTitle = "My Song Cart",
 				NavigationLocation = "Cart",
-				//SearchMenuProperties = CacheService.SearchProperties(role)
 				
 			};
-			return model;
-
+			
 		}
     }
 }

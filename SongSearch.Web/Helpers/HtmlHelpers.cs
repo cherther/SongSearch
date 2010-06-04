@@ -30,8 +30,8 @@ namespace System.Web.Mvc {
 		public static string Script(this HtmlHelper helper, string fileName) {
 			if (!fileName.EndsWith(".js"))
 				fileName += ".js";
-			var jsPath = string.Format("<script src='{0}/{1}/{2}' ></script>\n", pubDir, scriptDir, helper.AttributeEncode(fileName));
-			return jsPath;
+			return string.Format("<script src='{0}/{1}/{2}' ></script>\n", pubDir, scriptDir, helper.AttributeEncode(fileName));
+			
 		}
 		public static string CSS(this HtmlHelper helper, string fileName) {
 			return CSS(helper, fileName, "screen");
@@ -39,8 +39,8 @@ namespace System.Web.Mvc {
 		public static string CSS(this HtmlHelper helper, string fileName, string media) {
 			if (!fileName.EndsWith(".css"))
 				fileName += ".css";
-			var jsPath = string.Format("<link rel='stylesheet' type='text/css' href='{0}/{1}/{2}'  media='" + media + "'/>\n", pubDir, cssDir, helper.AttributeEncode(fileName));
-			return jsPath;
+			return string.Format("<link rel='stylesheet' type='text/css' href='{0}/{1}/{2}'  media='" + media + "'/>\n", pubDir, cssDir, helper.AttributeEncode(fileName));
+			
 		}
 		public static string Image(this HtmlHelper helper, string fileName) {
 			return Image(helper, fileName, "");

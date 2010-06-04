@@ -24,44 +24,37 @@ namespace SongSearch.Web {
 		// UserIsSuperAdmin
 		// **************************************    
 		public static bool UserIsSuperAdmin(this IPrincipal princ) {
-			if (!princ.Identity.IsAuthenticated) {
-				return false;
-			}
-			;
-
-			return CacheService.User(princ.Identity.Name).IsSuperAdmin();
+			return princ.Identity.IsAuthenticated ?
+				CacheService.User(princ.Identity.Name).IsSuperAdmin()
+				: false;
+			
 		}
 
 		// **************************************
 		// UserIsInRole
 		// **************************************    
 		public static bool UserIsInRole(this IPrincipal princ, Roles role) {
-			if (!princ.Identity.IsAuthenticated) {
-				return false;
-			}
-			return CacheService.User(princ.Identity.Name).IsInRole(role);
+			return princ.Identity.IsAuthenticated ?
+				CacheService.User(princ.Identity.Name).IsInRole(role)
+				: false;
 		}
 
 		// **************************************
 		// UserIsAtLeastInRole
 		// **************************************    
 		public static bool UserIsAtLeastInRole(this IPrincipal princ, Roles role) {
-			if (!princ.Identity.IsAuthenticated) {
-				return false;
-			}
-
-			return CacheService.User(princ.Identity.Name).IsAtLeastInRole(role);
+			return princ.Identity.IsAuthenticated ?
+				CacheService.User(princ.Identity.Name).IsAtLeastInRole(role)
+				: false;
 		}
 
 		// **************************************
 		// UserIsInAnyRole
 		// **************************************    
 		public static bool UserIsInAnyRole(this IPrincipal princ, Roles[] roles) {
-			if (!princ.Identity.IsAuthenticated) {
-				return false;
-			}
-
-			return CacheService.User(princ.Identity.Name).IsInAnyRole(roles);
+			return princ.Identity.IsAuthenticated ?
+				CacheService.User(princ.Identity.Name).IsInAnyRole(roles)
+				: false;
 		}
 
 	}

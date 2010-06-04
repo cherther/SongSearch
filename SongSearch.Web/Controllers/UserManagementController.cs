@@ -59,13 +59,11 @@ namespace SongSearch.Web
 		// URL: /UserManagement/Invite
 		// **************************************
 		public ActionResult Invite() {
-			var model = new InviteViewModel() {
-				NavigationLocation = "Admin"
-			};
-
-			model.InviteId = Guid.Empty.ToString();
-
-			return View(model);
+			return View(
+				new InviteViewModel() {
+					NavigationLocation = "Admin",
+					InviteId = Guid.Empty.ToString()
+				});
 		}
 
 		[HttpPost]
@@ -248,7 +246,7 @@ namespace SongSearch.Web
 		public ActionResult Delete(int id) {
 
 			try {
-				//_usrMgmtService.DeleteUser(id, true);
+				_usrMgmtService.DeleteUser(id, true);
 
 			}
 			catch (Exception ex) {
@@ -274,7 +272,7 @@ namespace SongSearch.Web
 		[ValidateAntiForgeryToken]
 		public ActionResult TakeOwnership(int id) {
 			try {
-				//_usrMgmtService.TakeOwnerShip(id);
+				_usrMgmtService.TakeOwnerShip(id);
 			}
 			catch (Exception ex) {
 				if (Request.IsAjaxRequest()) {

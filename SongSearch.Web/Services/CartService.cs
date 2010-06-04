@@ -38,8 +38,7 @@ namespace SongSearch.Web.Services {
 				.Include("Contents")
 				.Where(c => c.UserId == ActiveUser.UserId).ToList();
 
-			carts = AddUserDownloadableNames(carts);
-			return carts;
+			return AddUserDownloadableNames(carts);
 		}
 
 		private List<Cart> AddUserDownloadableNames(List<Cart> carts) {
@@ -72,12 +71,9 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public Cart MyActiveCartContents() {
 
-			var cart = ReadSession.GetObjectQuery<Cart>()
+			return ReadSession.GetObjectQuery<Cart>()
 				.Include("Contents")
-				.Where(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();
-
-			return cart;
-			
+				.Where(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();			
 		}
 		
 		// **************************************
@@ -100,14 +96,7 @@ namespace SongSearch.Web.Services {
 		public bool IsInMyActiveCart(int contentId) {
 			var query = MyActiveCart();
 
-			if (query != null) {
-				bool isInCart = query.Contents != null && query.Contents.Any(i => i.ContentId == contentId);
-				query = null;
-
-				return isInCart;
-			} else {
-				return false;
-			}
+			return query != null && query.Contents != null && query.Contents.Any(i => i.ContentId == contentId);
 		}
 
 		// **************************************

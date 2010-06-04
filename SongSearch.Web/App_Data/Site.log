@@ -22869,3 +22869,4 @@ Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWi
 TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
 06/03/2010 17:28:59: App is shutting down
 06/03/2010 17:39:55: App is shutting down
+06/04/2010 09:58:10: App is shutting down

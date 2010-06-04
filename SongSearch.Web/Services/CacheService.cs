@@ -146,9 +146,8 @@ namespace SongSearch.Web.Services {
 			if (_hasSession) {
 
 				if (Session(CacheKeys.User) == null) { SessionUpdateUser(CacheKeys.User, userName); }
-				var value = Session(CacheKeys.User) as User;
-				return value;
-
+				return Session(CacheKeys.User) as User;
+				
 			} else {
 				return GetDataUser(userName);
 			}
@@ -157,9 +156,8 @@ namespace SongSearch.Web.Services {
 		public static Cart MyActiveCart(string userName) {
 			if (_hasSession) {
 				if (Session(CacheKeys.ActiveCartContents) == null) { SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); }
-				var value = Session(CacheKeys.ActiveCartContents) as Cart;
-				return value;
-
+				return Session(CacheKeys.ActiveCartContents) as Cart;
+				
 			} else {
 				return GetDataUserActiveCart(userName);
 			}
@@ -176,9 +174,8 @@ namespace SongSearch.Web.Services {
 				activeCart = GetDataUserActiveCart(userName);
 			}
 
-			var isInCart = activeCart != null && activeCart.Contents != null && activeCart.Contents.Any(c => c.ContentId == contentId);
-			return isInCart;
-
+			return activeCart != null && activeCart.Contents != null && activeCart.Contents.Any(c => c.ContentId == contentId);
+			
 		}
 		public static int MyActiveCartCount(string userName) {
 			
@@ -192,10 +189,7 @@ namespace SongSearch.Web.Services {
 				activeCart = GetDataUserActiveCart(userName);
 			}
 
-			int count = activeCart != null && activeCart.Contents != null ? activeCart.Contents.Count() : 0;
-
-			activeCart = null;
-			return count;
+			return activeCart != null && activeCart.Contents != null ? activeCart.Contents.Count() : 0;
 
 		}
 
@@ -214,8 +208,8 @@ namespace SongSearch.Web.Services {
 		public static IList<Catalog> Catalogs() {
 			if (_hasCache) {
 				if (Cache(CacheKeys.Catalogs) == null) { CacheUpdateCatalogs(CacheKeys.Catalogs); }
-				var value = Cache(CacheKeys.Catalogs) as IList<Catalog>;
-				return value;
+				return Cache(CacheKeys.Catalogs) as IList<Catalog>;
+				
 			} else {
 				return GetDataCatalogs();
 			}
@@ -242,8 +236,8 @@ namespace SongSearch.Web.Services {
 		public static IList<Tag> Tags() {
 			if (_hasCache) {
 				if (Cache(CacheKeys.Tags) == null) { CacheUpdateTags(CacheKeys.Tags); }
-				var value = Cache(CacheKeys.Tags) as IList<Tag>;
-				return value;
+				return Cache(CacheKeys.Tags) as IList<Tag>;
+				
 			} else {
 				return GetDataTags();
 			}
@@ -255,8 +249,8 @@ namespace SongSearch.Web.Services {
 		public static IDictionary<TagType, IList<Tag>> TopTags() {
 			if (_hasCache) {
 				if (Cache(CacheKeys.TopTags) == null) { CacheUpdateTopTags(CacheKeys.TopTags); }
-				var value = Cache(CacheKeys.TopTags) as IDictionary<TagType, IList<Tag>>;
-				return value;
+				return Cache(CacheKeys.TopTags) as IDictionary<TagType, IList<Tag>>;
+				
 			} else {
 				return GetDataTopTags();
 			}
@@ -270,8 +264,7 @@ namespace SongSearch.Web.Services {
 			if (_hasCache){
 				if (Cache(CacheKeys.Content) == null) { CacheUpdateContentFields(CacheKeys.Content); }
 				var lookup = Cache(CacheKeys.Content) as IDictionary<string, IList<string>>;
-				var value = lookup.Keys.Contains(fieldName) ? lookup[fieldName] : new List<string> { "" } ;
-				return value;
+				return lookup.Keys.Contains(fieldName) ? lookup[fieldName] : new List<string> { "" };
 			} else {
 				return GetDataContentField(fieldName);
 			}
@@ -284,8 +277,7 @@ namespace SongSearch.Web.Services {
 			if (_hasCache) {
 				if (Cache(CacheKeys.Rights) == null) { CacheUpdateContentRightsFields(CacheKeys.Content); }
 				var lookup = Cache(CacheKeys.Rights) as IDictionary<string, IList<string>>;
-				var value = lookup[fieldName.ToUpper()];
-				return value;
+				return lookup[fieldName.ToUpper()]; ;
 			} else {
 				return GetDataContentRightsField(fieldName.ToUpper());
 			}
@@ -297,8 +289,7 @@ namespace SongSearch.Web.Services {
 		public static IList<Territory> Territories() {
 			if (_hasCache) {
 				if (Cache(CacheKeys.Territories) == null) { CacheUpdateTerritories(CacheKeys.Territories); }
-				var value = Cache(CacheKeys.Territories) as IList<Territory>;
-				return value;
+				return Cache(CacheKeys.Territories) as IList<Territory>;
 			} else {
 				return GetDataTerritories();
 			}
@@ -394,79 +385,56 @@ namespace SongSearch.Web.Services {
 		}
 
 		private static void CacheUpdateCatalogs(CacheKeys key, params object[] list) {
-			var obj = GetDataCatalogs();
-			CacheUpdate(obj, key);
+			CacheUpdate(GetDataCatalogs(), key);
 		}
 
 		private static void CacheUpdateSearchProperties(CacheKeys key, params object[] list) {
-			var obj = GetDataSearchProperties();
-			CacheUpdate(obj, key);
-			
+			CacheUpdate(GetDataSearchProperties(), key);	
 		}
 
 		private static void CacheUpdateTags(CacheKeys key, params object[] list) {
-			var obj = GetDataTags();
-			CacheUpdate(obj, key);
-			
+			CacheUpdate(GetDataTags(), key);		
 		}
 		private static void CacheUpdateTopTags(CacheKeys key, params object[] list) {
-			var obj = GetDataTopTags();
-			CacheUpdate(obj, key);
-			
+			CacheUpdate(GetDataTopTags(), key);
 		}
 
 		private static void CacheUpdateContentFields(CacheKeys key, params object[] list) {
-			var lookup = GetDataContentFields();
-			CacheUpdate(lookup, key);			
+			CacheUpdate(GetDataContentFields(), key);			
 		}
 
 		private static void CacheUpdateContentRightsFields(CacheKeys key, params object[] list) {
-			var lookup = GetDataContentRightsFields();
-			CacheUpdate(lookup, key);
+			CacheUpdate(GetDataContentRightsFields(), key);
 		}
 
 		private static void CacheUpdateTerritories(CacheKeys key, params object[] list) {
-			var lookup = GetDataTerritories();
-			CacheUpdate(lookup, key);
+			CacheUpdate(GetDataTerritories(), key);
 		}
 
 		// **************************************
 		// GetData
 		// **************************************
 		private static User GetDataUser(string userName) {
-			var obj = AccountData.UserComplete(userName);
-			return obj;
+			return AccountData.UserComplete(userName);
 		}
 
 		private static Cart GetDataUserActiveCart(string userName) {
 			using (var cartService = App.Container.Get<CartService>()) {
 				cartService.ActiveUserName = userName;
-				var obj = cartService.MyActiveCartContents();
-				return obj;
+				return cartService.MyActiveCartContents();
 			}
 		}
-		//private static bool GetDataUserIsInMyActiveCart(int contentId, string userName){
-		//    using (var cartService = App.Container.Get<CartService>()) {
-		//        cartService.ActiveUserName = userName;
-		//        var obj = cartService.MyActiveCartContents();
-		//        return obj;
-		//    }
-		//}
 
 		private static IList<Catalog> GetDataCatalogs() {
-
-			var obj = SearchService.GetLookupList<Catalog>();
-			return obj;
+			return SearchService.GetLookupList<Catalog>();
 		}
 
 		private static IList<SearchProperty> GetDataSearchProperties() {
-			var obj = SearchService.GetSearchMenuProperties();
-			return obj;
+			return SearchService.GetSearchMenuProperties();
 		}
 		
 		private static IList<Tag> GetDataTags() {
-			var obj = SearchService.GetLookupList<Tag>();
-			return obj;
+			return SearchService.GetLookupList<Tag>();
 		}
 
 		private static IDictionary<TagType, IList<Tag>> GetDataTopTags() {
@@ -513,8 +481,7 @@ namespace SongSearch.Web.Services {
 		}
 
 		private static IList<Territory> GetDataTerritories() {
-			var obj = SearchService.GetLookupList<Territory>();
-			return obj;
+			return SearchService.GetLookupList<Territory>();
 		}
 	}
 }

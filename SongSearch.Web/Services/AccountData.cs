@@ -11,18 +11,6 @@ using SongSearch.Web.Services;
 namespace SongSearch.Web {
 	public static class AccountData {
 
-		//static IDataSession _session;
-
-		//public static IDataSession DataSession {
-		//    get {
-		//        _session = _session ?? App.DataSession;
-		//        return _session;
-		//    }
-		//    set {
-		//        _session = value;
-		//    }
-		//}
-
 		// **************************************
 		// User
 		// **************************************
@@ -36,11 +24,10 @@ namespace SongSearch.Web {
 
 			using (var session = App.DataSessionReadOnly) {
 
-				var user = session.GetObjectQuery<User>()
+				return session.GetObjectQuery<User>()
 					.Include("Carts")
 					.Include("UserCatalogRoles")
 					.Where(u => u.UserName.ToUpper() == userName.ToUpper()).SingleOrDefault();
-				return user;
 
 			}
 
@@ -56,7 +43,6 @@ namespace SongSearch.Web {
 			var levels = new[] { Roles.SuperAdmin, Roles.Admin };
 
 			return user.IsInAnyRole(levels);
-			//            return (princ.IsInRole(SUPERADMIN) || princ.IsInRole(CLIENTADMIN));
 		}
 
 		// **************************************
@@ -103,14 +89,10 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string FullName(this User user) {
 
-
 			string name = user != null ? String.Format("{0} {1}", user.FirstName, user.LastName) : "";
 
-			name = string.IsNullOrEmpty(name.Trim()) ? user.UserName : name;
+			return String.IsNullOrEmpty(name.Trim()) ? user.UserName : name;
 
-			user = null;
-
-			return name;
 		}
 
 		// **************************************
@@ -120,21 +102,14 @@ namespace SongSearch.Web {
 
 			var parent = user.ParentUser; //rep.Single<User>(u => u.UserId == user.UserId).ParentUser;
 
-			string sig = parent == null ? "" : (parent.Signature ?? parent.UserName);
-			parent = null;
-			return sig;
+			return parent == null ? "" : (parent.Signature ?? parent.UserName);
 		}
 
 		// **************************************
 		// FileSignature
 		// **************************************    
 		public static string FileSignature(this User user) {
-
-			if (user.IsAnyAdmin()) {
-				return user.Signature;
-			} else {
-				return user.ParentSignature();
-			}
+			return user.IsAnyAdmin() ? user.Signature : user.ParentSignature();
 		}
 
 		// **************************************
@@ -184,18 +159,15 @@ namespace SongSearch.Web {
 
 				var set = session.GetObjectQuery<User>();
 				var users = (withCatalogRoles ? set.Include("UserCatalogRoles") : set).Where(u => u.RoleId >= (int)user.RoleId).ToList();
-					//				users = !roleId.HasValue ? users : users.Where(u => u.RoleId == roleId);
 
-					var topLevelUsers = (
+				var topLevelUsers = (
 						user.IsSuperAdmin() ?
 						users.Where(u => !u.ParentUserId.HasValue) :
 						users.Where(u => u.ParentUserId == user.UserId)
 						).ToList();
 
-					var userHierarchy = topLevelUsers.AttachChildren(users);
+				return topLevelUsers.AttachChildren(users);
 
-					return userHierarchy;
-				//}
 			}
 		}
 

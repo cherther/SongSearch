@@ -28,9 +28,7 @@ namespace SongSearch.Web.Controllers
         // GET: /Search/
 		public ActionResult Index()
         {
-			var model = GetSearchViewModel();
-			
-			return View(model);
+			return View(GetSearchViewModel());
         }
 
 		// ****************************************************************************
@@ -113,13 +111,12 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		private SearchViewModel GetSearchViewModel() {
 
-			var role = (Roles)_currentUser.RoleId;
-			var model = new SearchViewModel() {
-				NavigationLocation = "Search",				
-				SearchMenuProperties = CacheService.SearchProperties(role),
+			return new SearchViewModel() {
+				NavigationLocation = "Search",
+				SearchMenuProperties = CacheService.SearchProperties((Roles)_currentUser.RoleId),
 				SearchTags = CacheService.TopTags()
 			};
-			return model;
+
 
 		}
 

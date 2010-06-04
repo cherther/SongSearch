@@ -14,14 +14,12 @@ namespace SongSearch.Web.Controllers {
 		public ActionResult Index() {
 
 			if (User.Identity.IsAuthenticated){
-				var h = new HtmlHelper(new ViewContext(), new ViewPage());
-
+				
 				var msg = CacheService.User(User.Identity.Name).LoginMessage();
 				
 				this.FireInfo(msg);
 			}
-			var vm = new ViewModel() { NavigationLocation = "Home" };
-			return View(vm);
+			return View(new ViewModel() { NavigationLocation = "Home" });
 			//return RedirectToAction("Index", "Search");
 		}
 

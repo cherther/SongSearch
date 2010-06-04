@@ -132,14 +132,13 @@ namespace SongSearch.Web.Controllers {
 
 			Session.Abandon();
 
-			var vm = new RegisterModel() {
+			return View(new RegisterModel() {
 
 				NavigationLocation = "Register",
 				InviteId = id,
 				Email = em
 
-			};
-			return View(vm);
+			});
 		}
 
 		[HttpPost]
@@ -220,9 +219,7 @@ namespace SongSearch.Web.Controllers {
 		public ActionResult ChangePassword() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-			var vm = new UpdateProfileModel() { NavigationLocation = "Account" };
-
-			return View(vm);
+			return View(new UpdateProfileModel() { NavigationLocation = "Account" });
 		}
 
 		[RequireAuthorization]
@@ -266,8 +263,7 @@ namespace SongSearch.Web.Controllers {
 					);
 			}
 			catch { }
-			var vm = new UpdateProfileModel() { NavigationLocation = "Account" };
-			return View(vm);
+			return View(new UpdateProfileModel() { NavigationLocation = "Account" });
 		}
 
 
@@ -361,13 +357,11 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/ResetPassword
 		// **************************************        
 		public ActionResult ResetPassword() {
-			var model = new ResetPasswordModel() {
-				NavigationLocation = "Account"
-			};
-
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-			return View(model);
+			return View(new ResetPasswordModel() {
+				NavigationLocation = "Account"
+			});
 		}
 
 		[HttpPost]

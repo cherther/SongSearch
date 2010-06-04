@@ -28,9 +28,8 @@ namespace System.Web.Mvc {
 			if (appPath == "/")
 				appPath = "";
 
-			var sOut = Protocol + context.Request.ServerVariables["SERVER_NAME"] + Port + appPath;
-			return sOut;
-
+			return Protocol + context.Request.ServerVariables["SERVER_NAME"] + Port + appPath;
+			
 		}
 
 		public static string SiteRoot(this UrlHelper url) {
@@ -52,13 +51,9 @@ namespace System.Web.Mvc {
 		}
 
 		public static string GetReturnUrl(HttpContextBase context) {
-			var returnUrl = "";
-
-			if (context.Request.QueryString["ReturnUrl"] != null) {
-				returnUrl = context.Request.QueryString["ReturnUrl"];
-			}
-
-			return returnUrl;
+			return context.Request.QueryString["ReturnUrl"] != null ?
+				context.Request.QueryString["ReturnUrl"]
+				: "";
 		}
 
 		public static string GetReturnUrl(this UrlHelper helper) {

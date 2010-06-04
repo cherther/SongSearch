@@ -27,8 +27,7 @@ namespace SongSearch.Web.Services {
 
 			using (var session = App.DataSessionReadOnly) {//Container.Get<IDataSession>()) {
 
-				var query = session.All<T>(); ;
-				return query.ToList();
+				return session.All<T>().ToList();
 
 			}
 		
@@ -46,9 +45,14 @@ namespace SongSearch.Web.Services {
 			}
 
 			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
-				
-				var query = session.All<Content>().Select<string>(fieldName).Distinct().Where(v => v != null).Select(v => v.ToUpper());
-				return query.ToList();							
+
+				return session.All<Content>()
+					.Select<string>(fieldName)
+					.Distinct()
+					.Where(v => v != null)
+					.Select(v => v.ToUpper())
+					.ToList();
+										
 			
 			}
 		}
@@ -66,8 +70,12 @@ namespace SongSearch.Web.Services {
 
 			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 
-				var query = session.All<ContentRight>().Select<string>(fieldName).Distinct().Select(v => v.ToUpper());
-				return query.ToList();
+				return session.All<ContentRight>()
+					.Select<string>(fieldName)
+					.Distinct()
+					.Select(v => v.ToUpper())
+					.ToList();
+				
 
 			}
 		}
@@ -84,9 +92,7 @@ namespace SongSearch.Web.Services {
 				if (limitToTop.HasValue) {
 					tags = tags.Take(limitToTop.Value);
 				}
-				var topTags  = tags.ToList();
-				
-				return topTags;
+				return tags.ToList();
 			}
 		}
 
@@ -97,7 +103,6 @@ namespace SongSearch.Web.Services {
 
 
 			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
-
 				// Get Search Properties
 				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu).ToList();
 			}
@@ -106,7 +111,6 @@ namespace SongSearch.Web.Services {
 
 
 			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
-
 				// Get Search Properties
 				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu && x.AccessLevel >= (int)role).ToList();
 			}
@@ -207,9 +211,8 @@ namespace SongSearch.Web.Services {
 				pageIndex = pageIndex ?? 0;
 				pageSize = pageSize ?? 100;
 
-				var pagedResults = contentQuery.ToPagedList(pageIndex.Value, pageSize.Value);
+				return contentQuery.ToPagedList(pageIndex.Value, pageSize.Value);
 
-				return pagedResults;
 			}
 		}
 

@@ -65,13 +65,9 @@ namespace SongSearch.Web {
 		}
 
 		public static int[] SplitTags(this string tags, char separator) {
-			if (!String.IsNullOrWhiteSpace(tags)) {
-				int[] tagIds = tags.Split(separator).Where(t => !String.IsNullOrWhiteSpace(t)).Select(t => int.Parse(t)).ToArray();
-
-				return tagIds;
-			}
-			else
-				return new int[] {};
+			return !String.IsNullOrWhiteSpace(tags) ? 
+				tags.Split(separator).Where(t => !String.IsNullOrWhiteSpace(t)).Select(t => int.Parse(t)).ToArray() 
+				: new int[] {};
 		}
 
 		public static int[] SplitTags(this IEnumerable<string> tags, char separator) {
@@ -91,44 +87,27 @@ namespace SongSearch.Web {
 		}
 
 		public static string JoinTags(this string[] tags, char separator) {
-			if (tags.Length > 0) {
-				string tagIds = String.Concat(tags.Select(a => String.Format("{0};", a)).ToArray());
-				return tagIds;
-			}
-			else
-				return String.Empty;
+			return tags.Length > 0 ? String.Concat(tags.Select(a => String.Format("{0};", a)).ToArray())
+					: String.Empty;
 		}
 
 		public static string JoinTags(this int[] tags, char separator) {
-			if (tags.Length > 0) {
-				string tagIds = String.Concat(tags.Select(a => String.Format("{0};", a)).ToArray());
-				return tagIds;
-			}
-			else
-				return String.Empty;
+			return tags.Length > 0 ? String.Concat(tags.Select(a => String.Format("{0};", a)).ToArray())
+				: String.Empty;
 		}
 
 		public static string Left(this string fullString, int lengthToReturn, string ellipsis) {
-			if (fullString.Length > lengthToReturn) {
-				string newString = fullString.Substring(0, lengthToReturn);
-
-				newString = String.Concat(newString, ellipsis);
-				return newString;
-			}
-			else {
-				return fullString;
-			}
+			return fullString.Length > lengthToReturn ? 
+				String.Concat(fullString.Substring(0, lengthToReturn), ellipsis)
+				: fullString;
 		}
 
 
 		public static string ToFileSizeDescription(this decimal? fileSize) {
-			string size = "0";
-
-			if (fileSize.HasValue) {
-				size = Convert.ToInt32((fileSize.Value/(1024*1024))).ToString();
-			}
-
-			return String.Format("{0} MB", size);
+			
+			return String.Format("{0} MB", 
+				fileSize.HasValue ? Convert.ToInt32((fileSize.Value/(1024*1024))) : 0
+				);
 		}
 
 		public static string ToYesNo(this bool yes) {

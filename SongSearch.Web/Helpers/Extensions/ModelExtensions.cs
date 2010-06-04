@@ -68,8 +68,7 @@ namespace SongSearch.Web {
 		// GetArchivePath
 		// **************************************
 		public static string ArchivePath(this Cart cart) {
-			string zipPath = Settings.ZipPath.Text();
-			return Path.Combine(zipPath, cart.ArchiveName);
+			return Path.Combine(Settings.ZipPath.Text(), cart.ArchiveName);
 		}
 
 		// **************************************
@@ -126,10 +125,5 @@ namespace SongSearch.Web {
 			return cart;
 
 		}
-
-		//public static IQueryable<User> ChildUsers(this User user, IQueryable<User> users) {
-		//    return users.Where(u => u.ParentUserId == user.UserId)
-		//                        .AsHierarchy(u => u.UserId, u => u.ParentUserId);
-		//}
 	}
 }

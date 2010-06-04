@@ -1,8 +1,9 @@
 ﻿// Helpers
 if (!Array.prototype.indexOf) Array.prototype.indexOf = function (b) { for (var a = 0; a < this.length; a++) if (this[a] === b) return a; return -1 };
 if (!Array.prototype.contains) Array.prototype.contains = function (b) { for (var a = 0; a < this.length; a++) if (this[a] === b) return true; return false };
-if (!String.prototype.contains) String.prototype.contains = function (s) { if (this.indexOf(s) != -1) return true; return false; };
-if (!String.prototype.swap) String.prototype.swap = function (a, b) { if (this.contains(a)) { return this.replace(a, b); } else { return this.replace(b, a); } };
+if (!String.prototype.contains) String.prototype.contains = function (s) { return this.indexOf(s) != -1; };
+//if (!String.prototype.swap) String.prototype.swap = function (a, b) { if (this.contains(a)) { return this.replace(a, b); } else { return this.replace(b, a); } };
+if (!String.prototype.swap) String.prototype.swap = function (a, b) { return this.contains(a) ? this.replace(a, b) : this.replace(b, a); };
 
 //***********************************************
 //  wait

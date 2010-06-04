@@ -47,22 +47,9 @@ namespace SongSearch.Web.Services {
 
 			var users = query.ToList();
 
-			var userHierarchy = ActiveUser.IsSuperAdmin()
-												? users.Where(u => !u.User.ParentUserId.HasValue).ToList()
+			return ActiveUser.IsSuperAdmin() ? users.Where(u => !u.User.ParentUserId.HasValue).ToList()
 												: users;
 
-			//userHierarchy = AttachChildren(userHierarchy, users);
-
-			//var parents = _princ.IsSuperAdmin()
-			//            ? query.Where(u => !u.ParentUserId.HasValue)
-			//            : query;
-
-			//var children = query.Where(u => u.ParentUserId.HasValue);
-
-			//IQueryable<DisplayUser> results = MakeUserTree(parents, children);
-			//var userTree = results.ToList();
-
-			return userHierarchy;
 		}
 
 
@@ -183,9 +170,8 @@ namespace SongSearch.Web.Services {
 			}
 			DataSession.CommitChanges();
 
-			var inviteId = inv.InvitationId;
+			return inv.InvitationId;
 
-			return inviteId;
 		}
 
 		// **************************************
@@ -194,17 +180,14 @@ namespace SongSearch.Web.Services {
 		public Invitation GetInvitation(string inviteId, string inviteEmailAddress) {
 			var inviteGuid = new Guid(inviteId);
 
-			var inv = DataSession.Single<Invitation>(i => i.InvitationId == inviteGuid && i.InvitationEmailAddress.ToLower() == inviteEmailAddress);
-
-			return inv;
+			return DataSession.Single<Invitation>(i => i.InvitationId == inviteGuid && i.InvitationEmailAddress.ToLower() == inviteEmailAddress);
 		}
 
 		// **************************************
 		// GetNumberOfUsersByAccessLevel
 		// **************************************
 		public int GetNumberOfUsersByAccessLevel(Roles role) {
-			var users = DataSession.All<User>().Where(u => u.RoleId == (int)role);
-			return (users.Count());
+			return DataSession.All<User>().Where(u => u.RoleId == (int)role).Count();
 		}
 
 		// **************************************
@@ -389,21 +372,17 @@ namespace SongSearch.Web.Services {
 		//    return myUser;
 		//}
 		private User GetUser(int userId) {
-			var user = DataSession.Single<User>(u => u.UserId == userId);
-			return user;
+			return DataSession.Single<User>(u => u.UserId == userId);			
 		}
 		private User GetUser(string userName) {
-			var user = DataSession.Single<User>(u => u.UserName == userName);
-			return user;
+			return DataSession.Single<User>(u => u.UserName == userName);			
 		}
 		private IQueryable<User> GetUsers() {
-			var users = DataSession.All<User>();
-			return users;
+			return DataSession.All<User>();
 		}
 
 		private IQueryable<UserCatalogRole> GetUsersCatalog() {
-			var users = DataSession.All<UserCatalogRole>();
-			return users;
+			return DataSession.All<UserCatalogRole>();
 		}
 
 		private IList<UserCatalogRole> AttachChildren(IList<UserCatalogRole> parents, IList<UserCatalogRole> users) {

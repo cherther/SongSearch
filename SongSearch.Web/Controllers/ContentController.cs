@@ -147,14 +147,12 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		private ContentViewModel GetContentViewModel() {
 
-			var model = new ContentViewModel() {
+			return new ContentViewModel() {
 				NavigationLocation = "Search",
 				Tags = CacheService.Tags(),
 				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" },
 				SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>()
 			};
-
-			return model;
 
 		}
 
@@ -174,9 +172,7 @@ namespace SongSearch.Web.Controllers
 				model.SectionsAllowed.Add("Rights");
 			}
 
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
-				model.UserCanEdit = true;
-			}
+			model.UserCanEdit = _currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog);
 			return model;
 		}
 
