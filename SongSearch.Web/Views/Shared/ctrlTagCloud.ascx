@@ -1,20 +1,19 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<TagCloudViewModel<SongSearch.Web.Data.Tag>>" %>
 <%
-    var tags = Model.Tags;
-    var hasMoreLinks = Model.InitialTagNumber > 0 && tags.Count > Model.InitialTagNumber;
+	var tagCount = Model.InitialTagNumber > 0 ? Model.InitialTagNumber : Model.Tags.Count();
+	var tags = Model.InitialTagNumber > 0 ? 
+		(Model.TagCountSeed == 0 ? Model.Tags.Take(tagCount) : Model.Tags.Skip(tagCount))
+		: Model.Tags;
+	var hasMoreLinks = Model.TagCountSeed == 0 && Model.InitialTagNumber > 0 && Model.Tags.Count > Model.InitialTagNumber;
 	var isEditing = Model.EditMode == EditModes.Editing;
-%>
+	var tagDivClass = Model.InitialTagNumber > 0 && Model.TagCountSeed > 0 ? "cw-more-tags cw-optional" : "";
+	
+	%>
+<div class="<%= tagDivClass %>">
 <%
-    foreach (var tag in tags)//.Take(initialTagNumber))
+	foreach (var tag in tags)
     {
-		if (hasMoreLinks && Model.TagCountSeed == Model.InitialTagNumber)
-        { %>
-            <div><a class="cw-small cw-tags-more-link" href="#">more <%: Model.TagTypeName.ToString().ToLower()%> choices...</a>
-            <div class="cw-more-tags cw-optional">
-          <%
-        }
-        
-        var tagName = tag.TagName;
+		var tagName = tag.TagName;
 
 		var tagId = isEditing ? String.Format(Model.TagIdTemplate, Model.TagCountSeed) : String.Format("{0}-{1}", Model.TagIdTemplate, tag.TagId);
 		var isSelected = Model.SelectedTags != null && Model.SelectedTags.Contains(tag.TagId);
@@ -30,7 +29,7 @@
     <%
 		Model.TagCountSeed++;
     } %>
-    <%if (hasMoreLinks)
-      { %>
-        </div></div>
-    <%}%>    
+</div>
+<%if (hasMoreLinks){ %>
+<% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, Model); %>
+<%}%>

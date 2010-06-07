@@ -170,11 +170,17 @@
 
             var url = this.href;
             //var id = link[0].rel;
-            mediaPlay(url);
-            togglePlayButton('#' + this.id);
+            mediaPlay(url, '#' + this.id);
         }
     );
 
+   $('.cw-media-repeat-link').live('click',
+        function (evt) {
+
+            evt.preventDefault();
+            mediaRepeat();
+        }
+    );
 
     //-----------------------------------------------------------------------------------
     // Cart Grid

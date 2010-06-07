@@ -15,16 +15,20 @@
 </tr>
 <tr>
 	<td width="55%">
-	<%if (content.HasMediaFullVersion != null) { %>
+	<%if (content.HasMediaFullVersion) { %>
 	<%var url = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.FullSong)); %>
-	<a href="<%: url %>" id = "cw-play-full"
-		class = "cw-media-play-link cw-button cw-small cw-simple cw-green"><span class="b-play">Full Song</span></a>
+	<a href="<%: url %>" id="cw-play-full"
+		class = "cw-media-play-link cw-button cw-small cw-simple cw-green" title="Play/Pause"><span class="b-play">Full Song</span></a>
 	<%} %>
-	<%if (content.HasMediaPreviewVersion != null) { %>
+	<%if (content.HasMediaPreviewVersion) { %>
 	<%	var url = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Preview)); %>
     	<a href="<%: url %>" id = "cw-play-preview"
-		class = "cw-media-play-link cw-button cw-small cw-simple cw-green"><span class="b-play">:30</span></a>
+		class = "cw-media-play-link cw-button cw-small cw-simple cw-green" title="Play/Pause"><span class="b-play">:30</span></a>
 	<%} %>
+	<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
+	<a href="#" id="cw-play-repeat" class="cw-media-repeat-link cw-button cw-small cw-simple" title="Repeat" disabled="disabled"><span class="b-undo" >Repeat</span></a>
+	<%} %>
+
 	</td>
 	<td width="20%" align="right">
 		<div id="cw-media-player-volume"></div>				

@@ -29,7 +29,7 @@
 			  
               %>
 			<li>
-            <%if (!isGroup && (searchType != SearchTypes.HasValue && searchType != SearchTypes.IsTrue)) { %>
+            <%if (!isGroup && (searchType == SearchTypes.Contains || searchType == SearchTypes.Range)) { %>
 			<label><%: item.DisplayName%></label>
             <%} %>
 			<%: Html.Hidden(String.Format("f[{0}].P", i), item.PropertyId)%>
@@ -44,13 +44,13 @@
                 <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyName.ToLower() })%>
                 <%break;%>
                 <%} %>
-                <%case SearchTypes.Join: {%>
+                <%--<%case SearchTypes.Join: {%>
                 <%  var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
                     valueClass = String.Concat(valueClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
                 %>
                 <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyName.ToLower() })%>
                 <%break;%>
-                <%} %>
+                <%} %>--%>
                 <%case SearchTypes.Range: {%>
                 <%
                     var value1 = value.First();
@@ -89,8 +89,14 @@
 						SelectedTags = selectedTags,
 						TagClass = "cw-tagbox-search", 
 						TagIdTemplate = String.Format("f_{0}__V", i) };
-                %>    
-                <% Html.RenderPartial("ctrlTagCloud", model); %>
+                %>
+				<div>
+				<label>
+				<%: item.DisplayName%>
+				</label>
+				<%if (tags.Count > model.InitialTagNumber) {  %><a class="cw-small cw-tags-more-link" href="#">more...</a><%} %>
+                <% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, model); %>
+				</div>
                 <%: Html.Hidden(String.Format("f[{0}].V", i), "", new { @class = "cw-form-value" })%>
                 <%break;%>
                 <%} %>

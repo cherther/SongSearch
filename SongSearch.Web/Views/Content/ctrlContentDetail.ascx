@@ -29,19 +29,19 @@
 <%}%>
 <%if (Model.ViewMode == ViewModes.Normal | (Model.ViewMode == ViewModes.Embedded && Model.EditMode == EditModes.Viewing)) {%>
 	<div id="cw-media-player-panel">
-	<% Html.RenderPartial("ctrlMediaplayer"); %>
+	<% Html.RenderPartial(MVC.Shared.Views.ctrlMediaplayer); %>
 	</div>
 	<hr />
 	<div id="cw-content-detail-menu">
 	<%if (content.HasMediaFullVersion) { %>
-	<%: Html.ActionLink("Download", "Download", "Media", new { id = content.ContentId }, new { @class = menuButtonClass })%>
+	<%: Html.ActionLink("Download", MVC.Media.Download(content.ContentId), new { @class = menuButtonClass })%>
 	<%if(!content.IsInMyActiveCart){ %>
-	<%: Html.ActionLink("Add To Cart", "Add", "Cart", new { id = content.ContentId }, new { @class = String.Concat(menuButtonClass, " cw-cart-add-link") })%>
+	<%: Html.ActionLink("Add To Cart", MVC.Cart.Add(content.ContentId), new { @class = String.Concat(menuButtonClass, " cw-cart-add-link") })%>
 	<%} else { %>
-	<%: Html.ActionLink("In Cart", "Index", "Cart", null, new { @class = menuButtonClass })%>
+	<%: Html.ActionLink("In Cart", MVC.Cart.Index(), new { @class = menuButtonClass })%>
 	<%} %>
 	<%} %>
-	<%: Html.ActionLink("Print", "Print", "Content", new { id = content.ContentId }, new { @class = menuButtonClass, target = "_new" })%>
+	<%: Html.ActionLink("Print", MVC.Content.Print(content.ContentId), new { @class = menuButtonClass, target = "_new" })%>
 	<%if (Model.UserCanEdit) { %>
 	<%	
 		var linkClass = String.Concat(menuButtonClass, " cw-content-edit-link");
@@ -84,7 +84,7 @@
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Artist)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Artist, "StringAutoComplete" ) : Html.DisplayFor(m => m.Content.Artist)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Artist, MVC.Shared.Views.EditorTemplates.StringAutoComplete) : Html.DisplayFor(m => m.Content.Artist)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Pop)%></td>
@@ -100,11 +100,11 @@
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.RecordLabel)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel, "StringAutoComplete") : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel, MVC.Shared.Views.EditorTemplates.StringAutoComplete) : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Writers)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Writers)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, MVC.Shared.Views.EditorTemplates.StringAutoComplete) : Html.DisplayFor(m => m.Content.Writers)%></td>
 		</tr>
 		<%if (Model.SectionsAllowed.Contains("Notes")) { %>
 		<%
@@ -135,7 +135,7 @@
 	<table class="cw-tbl-content-detail">         
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Lyrics)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics, "MultilineText")%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics, MVC.Shared.Views.DisplayTemplates.MultilineText)%></td>
 		</tr>
 	</table>
 </div>
@@ -168,7 +168,7 @@
 		<tr>
 			<td class="cw-content-label"><%=tagType%></td>
 			<td>
-			<% Html.RenderPartial("ctrlTagCloud", model); %>
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, model); %>
 			</td>
 		</tr>
 		<%} %>
@@ -262,7 +262,7 @@
 								TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
 							};              
 						%>    
-							<% Html.RenderPartial("ctrlTerritoryCloud", model); %>
+							<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
 						<%//} %>
 						</td>
 						<td>
@@ -299,7 +299,7 @@
 							TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
 						};              
 						%>    
-						<% Html.RenderPartial("ctrlTerritoryCloud", model); %>
+						<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
 						</td>
 						<td>
 						</td>

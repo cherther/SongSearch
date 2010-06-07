@@ -147,7 +147,7 @@ function setupAutoComplete() {
 function clearSearchForm(form) {
 
     clearForm(form);
-    $('.cw-search-tag').removeClass(tagBoxSelectedClass);
+    $('.cw-tagbox-search').removeClass(tagBoxSelectedClass);
     $('.cw-form-value').removeClass(inputSelectedClass);
 }
 
@@ -274,8 +274,8 @@ function showContentPanelCallback(data, link) {
 
     var mediaUrl = link[0].rel;
     if (mediaUrl) {
-        mediaPlay(mediaUrl);
-        togglePlayButton('#cw-play-full');
+        mediaPlay(mediaUrl, '#cw-play-full');
+        //togglePlayButton();
     }
 
     isContentDetailShowing = true;
@@ -348,6 +348,21 @@ function closeContentPanel() {
 //-----------------------------------------------------------------------------------
 //  Media Player buttons
 //-----------------------------------------------------------------------------------
+var _lastMediaButtonPressed;
+
+function mediaPlay(url, id) {
+    soundPlay(url);
+    togglePlayButton(id);
+    $('.cw-media-repeat-link').removeAttr('disabled');
+    _lastMediaButtonPressed = id;
+}
+
+function mediaRepeat() {
+    if (soundPlayRepeat() == sm_ps_stopped) {
+        togglePlayButton(_lastMediaButtonPressed);
+    }
+}
+
 
 //***********************************************
 //  togglePlayButton
@@ -359,7 +374,7 @@ function togglePlayButton(id) {
 //***********************************************
 //  togglePlayButtons
 //***********************************************
-function togglePlayButtons(id, resetOnly) {
+function togglePlayButtons(id, toggle) {
     
     var readyClass = 'b-play';
     var playingClass = 'b-pause';
@@ -369,7 +384,7 @@ function togglePlayButtons(id, resetOnly) {
     var button = $(id);
     var icon = button.children('span');
 
-    if (!resetOnly) {
+    if (!toggle) {
         // we're only concerned with resetting this link
         if (button.hasClass(playingColorClass)) {
             button.removeClass(playingColorClass).addClass(readyColorClass); //switchClass(playingColorClass, readyColorClass); //

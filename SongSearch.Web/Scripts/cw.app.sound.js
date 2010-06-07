@@ -42,14 +42,19 @@ var sm_ps_playing = 1;
 //***********************************************
 //  mediaPlay: starts, stops, toggles
 //***********************************************
-function mediaPlay(url) {
+function soundPlay(url) {
+
+    var begin_playState;
+    var begin_readyState;
 
     if (_isSoundManagerReady) {
 
         if (_mySound) {
+            begin_readyState = _mySound.readyState;
+            begin_playState = _mySound.playState;
             if (url == _lastUrlPlayed) { //second click on same link
-                if (_mySound.readyState != sm_rs_failed_error) {
-                    if (_mySound.playState != sm_ps_playing) {
+                if (begin_readyState != sm_rs_failed_error) {
+                    if (begin_playState != sm_ps_playing) {
                         // not yet playing
                         _mySound.play();
                     } else {
@@ -60,10 +65,10 @@ function mediaPlay(url) {
                 }
             } else {
 
-                if (_mySound.readyState != sm_rs_failed_error) {
+                if (begin_readyState != sm_rs_failed_error) {
                     _mySound.unload();
 
-                    if (_mySound.playState == sm_ps_playing) {
+                    if (begin_playState == sm_ps_playing) {
                         // still playing? huh?
                         _mySound.stop();
                     }
@@ -78,14 +83,22 @@ function mediaPlay(url) {
             }
 
         } else { //first time
+            begin_playState = sm_ps_stopped;
+            begin_readyState = sm_rs_uninitialised;
             _mySound = getSound(url);
             _mySound.play();
             _lastUrlPlayed = url;
         }
-
       
     }
 
+    return begin_playState;
+}
+
+function soundPlayRepeat() {
+    var url = _lastUrlPlayed;
+    _lastUrlPlayed = null;
+    return soundPlay(url);
 }
 
 function getSound(url) {

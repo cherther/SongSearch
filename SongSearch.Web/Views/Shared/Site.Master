@@ -96,10 +96,10 @@
 	
 	
 	bundle
-		.Add(Links.Scripts.cw_app_main_js)
-        .Add(Links.Scripts.cw_app_ajax_js)
-            .Add(Links.Scripts.cw_app_events_js)
-				.Add(Links.Scripts.cw_app_sound_js)
+		.Add(String.Concat(Links.Scripts.cw_app_main_js, d))
+        .Add(String.Concat(Links.Scripts.cw_app_ajax_js, d))
+        .Add(String.Concat(Links.Scripts.cw_app_events_js, d))
+		.Add(String.Concat(Links.Scripts.cw_app_sound_js, d))
 		.WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
     //.ForceRelease()
 	;
