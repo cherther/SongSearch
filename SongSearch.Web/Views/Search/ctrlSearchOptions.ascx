@@ -30,7 +30,7 @@
               %>
 			<li>
             <%if (!isGroup && (searchType != SearchTypes.HasValue && searchType != SearchTypes.IsTrue)) { %>
-			<label><%: item.PropertyName%></label>
+			<label><%: item.DisplayName%></label>
             <%} %>
 			<%: Html.Hidden(String.Format("f[{0}].P", i), item.PropertyId)%>
             <%: Html.Hidden(String.Format("f[{0}].T", i), item.SearchTypeId)%>
@@ -41,14 +41,14 @@
                      var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
                      valueClass = String.Concat(valueClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
                 %>
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyCode.ToLower() })%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyName.ToLower() })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Join: {%>
                 <%  var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
                     valueClass = String.Concat(valueClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
                 %>
-                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyCode.ToLower() })%>
+                <%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyName.ToLower() })%>
                 <%break;%>
                 <%} %>
                 <%case SearchTypes.Range: {%>
@@ -64,7 +64,7 @@
 				<% var buttonId = String.Format("button-{0}", item.PropertyId); %>
                 <%: Html.CheckBox(String.Format("f[{0}].V", i), new { id = buttonId, @class = "cw-form-value-button" })%>
 				<label for="<%= buttonId %>">
-				<%: item.PropertyName%>
+				<%: item.DisplayName%>
 				</label>
                 <%break;%>
                 <%} %>
@@ -72,7 +72,7 @@
 				<% var buttonId = String.Format("button-{0}", item.PropertyId); %>
                 <%: Html.CheckBox(String.Format("f[{0}].V", i), new { @class = "cw-form-value-button" })%>
 				<label for="<%= buttonId %>">
-				<%: item.PropertyName%>
+				<%: item.DisplayName%>
 				</label>
                 <%break;%>
                 <%} %>

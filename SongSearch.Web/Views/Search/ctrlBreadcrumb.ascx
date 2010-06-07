@@ -16,14 +16,17 @@
 
 		<%switch (searchType) {%>
 			<%case SearchTypes.Contains: {%>
-			<%: prop.PropertyName%>:
+			<%: prop.DisplayName%>:
 			<%foreach (var v in searchField.V) {%>
 				<%:v%>&nbsp;
 			<%} %>
 			<%break;%>
 			<%} %>
+			<%case SearchTypes.Join: {%>
+			<%goto case (SearchTypes.Contains);	%>	
+			<%}%>
 			<%case SearchTypes.HasValue: {%>
-				<%:prop.PropertyName%>&nbsp;
+				<%:prop.DisplayName%>&nbsp;
 			<%break;%>
 			<%} %>
 			<%case SearchTypes.Range: {%>
@@ -33,7 +36,7 @@
 			<%break;%>
 			<%} %>
 			<%case SearchTypes.IsTrue: {%>
-			<%:prop.PropertyName%>&nbsp;
+			<%:prop.DisplayName%>&nbsp;
 			<%break;%>
 			<%} %>
 			<%case SearchTypes.Tag: {%>

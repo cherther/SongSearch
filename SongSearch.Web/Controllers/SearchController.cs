@@ -92,7 +92,7 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				term = term.ToUpper();
-				var values = f.Equals("CatalogId", StringComparison.InvariantCultureIgnoreCase) ?
+				var values = f.Equals("Catalog.CatalogName", StringComparison.InvariantCultureIgnoreCase) ?
 					CacheService.Catalogs().Select(c => c.CatalogName.ToUpper()).ToArray() :
 					(
 						CacheService.CachedContentFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ?

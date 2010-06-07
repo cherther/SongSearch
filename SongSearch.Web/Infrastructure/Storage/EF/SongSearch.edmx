@@ -180,9 +180,9 @@
             <PropertyRef Name="PropertyId" />
           </Key>
           <Property Name="PropertyId" Type="int" Nullable="false" />
-          <Property Name="PropertyCode" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="PropertyName" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="PropertyShortName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PropertyName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="DisplayName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="ShortName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="SearchGroup" Type="nvarchar" MaxLength="50" />
           <Property Name="SearchTypeId" Type="smallint" />
           <Property Name="SearchPredicate" Type="varchar" MaxLength="50" />
@@ -745,10 +745,12 @@
             <PropertyRef Name="PropertyId" />
           </Key>
           <Property Type="Int32" Name="PropertyId" Nullable="false" />
-          <Property Type="String" Name="PropertyCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="PropertyName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PropertyName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DisplayName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ShortName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="SearchGroup" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="Int16" Name="SearchTypeId" />
+          <Property Type="String" Name="SearchPredicate" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="PropertyType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="LookupName" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ListName" MaxLength="10" FixedLength="false" Unicode="true" />
@@ -757,8 +759,6 @@
           <Property Type="Boolean" Name="IsCacheable" Nullable="false" />
           <Property Type="Boolean" Name="IsIndexable" Nullable="false" />
           <Property Type="Boolean" Name="IncludeInSearchMenu" Nullable="false" />
-          <Property Type="String" Name="SearchPredicate" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PropertyShortName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -885,8 +885,6 @@
           <EntitySetMapping Name="SearchProperties">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SearchProperty">
               <MappingFragment StoreEntitySet="SearchProperties">
-                <ScalarProperty Name="PropertyShortName" ColumnName="PropertyShortName" />
-                <ScalarProperty Name="SearchPredicate" ColumnName="SearchPredicate" />
                 <ScalarProperty Name="IncludeInSearchMenu" ColumnName="IncludeInSearchMenu" />
                 <ScalarProperty Name="IsIndexable" ColumnName="IsIndexable" />
                 <ScalarProperty Name="IsCacheable" ColumnName="IsCacheable" />
@@ -895,10 +893,12 @@
                 <ScalarProperty Name="ListName" ColumnName="ListName" />
                 <ScalarProperty Name="LookupName" ColumnName="LookupName" />
                 <ScalarProperty Name="PropertyType" ColumnName="PropertyType" />
+                <ScalarProperty Name="SearchPredicate" ColumnName="SearchPredicate" />
                 <ScalarProperty Name="SearchTypeId" ColumnName="SearchTypeId" />
                 <ScalarProperty Name="SearchGroup" ColumnName="SearchGroup" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
                 <ScalarProperty Name="PropertyName" ColumnName="PropertyName" />
-                <ScalarProperty Name="PropertyCode" ColumnName="PropertyCode" />
                 <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -982,7 +982,7 @@
           <ConnectorPoint PointX="5.125" PointY="14.086293945312502" />
           <ConnectorPoint PointX="7.5" PointY="14.086293945312502" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="10.375" PointY="0.75" Height="3.5186979166666674" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="12.125" PointY="1.125" Height="3.9033007812500031" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -217,13 +217,13 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
-		// BuildSearchSql
+		// BuildSearchDynamicLinqSql
 		// **************************************
 		private static IQueryable<Content> BuildSearchDynamicLinqSql(this IQueryable<Content> query,
 																		IList<SearchField> searchFields,
 																		IList<SearchProperty> properties) {
 
-			var currentlyIndexed = new string[] { "Lyrics" };
+			var currentlyFieldIndexed = new string[] { "Lyrics" }; //Columns that have dedicated index fields
 			
 			foreach (var field in searchFields) {
 
@@ -232,7 +232,7 @@ namespace SongSearch.Web.Services {
 				var prop = properties.Where(p => p.PropertyId == field.P).SingleOrDefault();
 				if (prop != null) {
 					// build search 
-					string columnName = prop.PropertyCode.Trim();
+					string columnName = prop.PropertyName.Trim();
 					
 					switch ((SearchTypes)prop.SearchTypeId) {
 
@@ -240,12 +240,12 @@ namespace SongSearch.Web.Services {
 
 							columnName = !prop.IsIndexable ? 
 								(
-									currentlyIndexed.Contains(columnName) ? 
+									currentlyFieldIndexed.Contains(columnName) ? 
 									String.Concat(columnName, "Index") : columnName
 									) :
 								columnName.MakeSearchableColumnName();
 							
-							if (searchableValues.First() != null & prop.SearchPredicate != null) {
+							if (searchableValues.First() != null) {
 
 								var startsWithSearch = field.V.First().IsStartsWithSearch();
 								var preciseSearch = field.V.First().IsPreciseSearch();
@@ -253,14 +253,14 @@ namespace SongSearch.Web.Services {
 
 								if (!startsWithSearch && !preciseSearch && search.IsMultiSearch()) {
 									foreach (var val in search) {
-										string predicate = String.Format("{0}.Contains(@0)", columnName);
+										var predicate = String.Format("{0}.Contains(@0)", columnName);
 										query = query.Where(predicate, val);
 
 									}
 								} else {
 									var val = searchableValues.First();
 
-									string predicate = String.Format(
+									var predicate = String.Format(
 										startsWithSearch ? "{0}.StartsWith(@0)" : "{0}.Contains(@0)"
 										, columnName);//.MakeSearchableColumn(),
 									query = query.Where(predicate, val);
@@ -269,11 +269,11 @@ namespace SongSearch.Web.Services {
 							break;
 
 						case SearchTypes.Join:
-							if (searchableValues.First() != null & prop.SearchPredicate != null) {
+							if (searchableValues.First() != null) {
 								var joinTable = prop.LookupName;
-								var joinField = prop.PropertyCode;
-								var searchField = prop.PropertyName;
-
+								var predicate = String.Format("{0}.{1}.Contains(@0)", joinTable, columnName);
+								var val = searchableValues.First(); 
+								query = query.Where(predicate, val);
 								//sbJoin.AppendLine(String.Format(@"inner join dbo.{0} r_{1} on c.{1} = r_{1}.{1}", joinTable, joinField));
 								//sbWhere.AppendLine(String.Format(@"r_{0}.{1} {2}", joinField, searchField,
 								//    String.Format(prop.SearchPredicate, searchableValues.First())));
@@ -282,16 +282,16 @@ namespace SongSearch.Web.Services {
 
 						case SearchTypes.HasValue:
 							if (searchableValues.First() != null) {
-								
-								string predicate = String.Format("{0} != null", columnName);//.MakeSearchableColumn(),
+
+								var predicate = String.Format("{0} != null", columnName);
 								query = query.Where(predicate);
 							}
 							break;
 
 						case SearchTypes.IsTrue:
 							if (searchableValues.First() != null) {
-								
-								string predicate = String.Format("{0} == true", columnName);//.MakeSearchableColumn(),
+
+								var predicate = String.Format("{0} == true", columnName);
 								query = query.Where(predicate);
 							}
 							break;
@@ -308,20 +308,20 @@ namespace SongSearch.Web.Services {
 
 								if (range.All(v => v.HasValue)) {
 									// two valid values
-									string predicate = String.Format("{0} >= @0 && {0} <= @1", columnName);//.MakeSearchableColumn(),
+									var predicate = String.Format("{0} >= @0 && {0} <= @1", columnName);
 
 									query = query.Where(predicate, range.First(), range.Last());
 								} else {
 									//one valid value
 									if (range.First().HasValue) {
 										// first value only
-										string predicate = String.Format("{0} == @0", columnName);//.MakeSearchableColumn(),
+										var predicate = String.Format("{0} == @0", columnName);
 
 										query = query.Where(predicate, range.First());
 
 									} else {
 										// second value only
-										string predicate = String.Format("{0} <= @0", columnName);//.MakeSearchableColumn(),
+										var predicate = String.Format("{0} <= @0", columnName);
 
 										query = query.Where(predicate, range.Last());
 									}
@@ -384,7 +384,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private static IQueryable<Content> UserSearchSort(this IQueryable<Content> query, SearchProperty sortProperty, int? sortType) {
 			//products.OrderBy("Category.CategoryName, UnitPrice descending");
-			var sortField = sortProperty != null ? sortProperty.PropertyCode : null;
+			var sortField = sortProperty != null ? sortProperty.PropertyName : null;
 			var sortDirection = (SortType)sortType.GetValueOrDefault();
 
 			//for special cases, we use lambdas, otherwise we use DynamicLinq
@@ -470,7 +470,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private static string MakeSearchableColumnName(this string column) {
 			column = string.Format(@"{0}.ToUpper()", column);
-			var replacements = new string[] { @",", @"'", @";", @":", @"\", @"/", @"!", @"?" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
+			var replacements = new string[] { @",", @"'", @";", @":", @"\", @"/", @"!", @"?", @"&" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
 			replacements.ForEach(x => column = String.Format(@"{0}.Replace(""{1}"","""")", column, x));
 			return column;
 		}

@@ -2011,28 +2011,28 @@ namespace SongSearch.Web.Data
         /// Create a new SearchProperty object.
         /// </summary>
         /// <param name="propertyId">Initial value of the PropertyId property.</param>
-        /// <param name="propertyCode">Initial value of the PropertyCode property.</param>
         /// <param name="propertyName">Initial value of the PropertyName property.</param>
+        /// <param name="displayName">Initial value of the DisplayName property.</param>
+        /// <param name="shortName">Initial value of the ShortName property.</param>
         /// <param name="propertyType">Initial value of the PropertyType property.</param>
         /// <param name="accessLevel">Initial value of the AccessLevel property.</param>
         /// <param name="isListable">Initial value of the IsListable property.</param>
         /// <param name="isCacheable">Initial value of the IsCacheable property.</param>
         /// <param name="isIndexable">Initial value of the IsIndexable property.</param>
         /// <param name="includeInSearchMenu">Initial value of the IncludeInSearchMenu property.</param>
-        /// <param name="propertyShortName">Initial value of the PropertyShortName property.</param>
-        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyCode, global::System.String propertyName, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu, global::System.String propertyShortName)
+        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyName, global::System.String displayName, global::System.String shortName, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu)
         {
             SearchProperty searchProperty = new SearchProperty();
             searchProperty.PropertyId = propertyId;
-            searchProperty.PropertyCode = propertyCode;
             searchProperty.PropertyName = propertyName;
+            searchProperty.DisplayName = displayName;
+            searchProperty.ShortName = shortName;
             searchProperty.PropertyType = propertyType;
             searchProperty.AccessLevel = accessLevel;
             searchProperty.IsListable = isListable;
             searchProperty.IsCacheable = isCacheable;
             searchProperty.IsIndexable = isIndexable;
             searchProperty.IncludeInSearchMenu = includeInSearchMenu;
-            searchProperty.PropertyShortName = propertyShortName;
             return searchProperty;
         }
 
@@ -2071,30 +2071,6 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String PropertyCode
-        {
-            get
-            {
-                return _PropertyCode;
-            }
-            set
-            {
-                OnPropertyCodeChanging(value);
-                ReportPropertyChanging("PropertyCode");
-                _PropertyCode = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("PropertyCode");
-                OnPropertyCodeChanged();
-            }
-        }
-        private global::System.String _PropertyCode;
-        partial void OnPropertyCodeChanging(global::System.String value);
-        partial void OnPropertyCodeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.String PropertyName
         {
             get
@@ -2113,6 +2089,54 @@ namespace SongSearch.Web.Data
         private global::System.String _PropertyName;
         partial void OnPropertyNameChanging(global::System.String value);
         partial void OnPropertyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DisplayName
+        {
+            get
+            {
+                return _DisplayName;
+            }
+            set
+            {
+                OnDisplayNameChanging(value);
+                ReportPropertyChanging("DisplayName");
+                _DisplayName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DisplayName");
+                OnDisplayNameChanged();
+            }
+        }
+        private global::System.String _DisplayName;
+        partial void OnDisplayNameChanging(global::System.String value);
+        partial void OnDisplayNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ShortName
+        {
+            get
+            {
+                return _ShortName;
+            }
+            set
+            {
+                OnShortNameChanging(value);
+                ReportPropertyChanging("ShortName");
+                _ShortName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ShortName");
+                OnShortNameChanged();
+            }
+        }
+        private global::System.String _ShortName;
+        partial void OnShortNameChanging(global::System.String value);
+        partial void OnShortNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2161,6 +2185,30 @@ namespace SongSearch.Web.Data
         private Nullable<global::System.Int16> _SearchTypeId;
         partial void OnSearchTypeIdChanging(Nullable<global::System.Int16> value);
         partial void OnSearchTypeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SearchPredicate
+        {
+            get
+            {
+                return _SearchPredicate;
+            }
+            set
+            {
+                OnSearchPredicateChanging(value);
+                ReportPropertyChanging("SearchPredicate");
+                _SearchPredicate = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SearchPredicate");
+                OnSearchPredicateChanged();
+            }
+        }
+        private global::System.String _SearchPredicate;
+        partial void OnSearchPredicateChanging(global::System.String value);
+        partial void OnSearchPredicateChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2353,54 +2401,6 @@ namespace SongSearch.Web.Data
         private global::System.Boolean _IncludeInSearchMenu;
         partial void OnIncludeInSearchMenuChanging(global::System.Boolean value);
         partial void OnIncludeInSearchMenuChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String SearchPredicate
-        {
-            get
-            {
-                return _SearchPredicate;
-            }
-            set
-            {
-                OnSearchPredicateChanging(value);
-                ReportPropertyChanging("SearchPredicate");
-                _SearchPredicate = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SearchPredicate");
-                OnSearchPredicateChanged();
-            }
-        }
-        private global::System.String _SearchPredicate;
-        partial void OnSearchPredicateChanging(global::System.String value);
-        partial void OnSearchPredicateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String PropertyShortName
-        {
-            get
-            {
-                return _PropertyShortName;
-            }
-            set
-            {
-                OnPropertyShortNameChanging(value);
-                ReportPropertyChanging("PropertyShortName");
-                _PropertyShortName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("PropertyShortName");
-                OnPropertyShortNameChanged();
-            }
-        }
-        private global::System.String _PropertyShortName;
-        partial void OnPropertyShortNameChanging(global::System.String value);
-        partial void OnPropertyShortNameChanged();
 
         #endregion
     

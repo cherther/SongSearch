@@ -13,13 +13,13 @@
 		<% var classId = rightCols.Contains(col) ? "text-right" : ""; %>
             <th class="<%: classId %>">
                 <%
-                    var prop = props.Where(p => p.PropertyCode.Equals(col)).SingleOrDefault();
+                    var prop = props.Where(p => p.PropertyName.Equals(col)).SingleOrDefault();
                     if (prop != null){
                         var sp = prop.PropertyId;
                         var ord = Model.SortPropertyId.GetValueOrDefault().Equals(sp) ? (int)Model.SortType.Flip() : (int)SortType.Ascending;
                         var colUrl = String.Format("{0}&s={1}&o={2}", sortUrl, sp, ord);
                     %>
-                    <a href="<%=colUrl%>"><%: prop.PropertyShortName%></a>
+                    <a href="<%=colUrl%>"><%: prop.ShortName%></a>
                     <%} else { %>
                     <%: col%>
                     <%}%>
@@ -31,14 +31,14 @@
 		<% 
 			var mediaUrl = Url.SiteRoot();
 			mediaUrl = item.HasMediaFullVersion ? 
-				String.Concat(mediaUrl, Url.Action("Stream", "Media", new { id = item.ContentId, version = MediaVersion.FullSong })) : "";
+				String.Concat(mediaUrl, Url.Action(MVC.Media.Stream(item.ContentId, MediaVersion.FullSong))) : "";
 		   
-		   var artistUrl = String.Concat(Url.Action("Results", "Search"), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
+		   var artistUrl = String.Concat(Url.Action(MVC.Search.Results()), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
 		   %>
         <tr class="cw-tbl-data">
             <td width="40%">
-                <%: Html.ActionLink(!String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)", "Detail", "Content",  
-                	new { id = item.ContentId }, new { @class = "cw-content-detail-link", rel = mediaUrl })%>
+                <%: Html.ActionLink(!String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)", 
+                	MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", rel = mediaUrl })%>
             </td>
             <td width="30%">
                 <%: !String.IsNullOrWhiteSpace(item.Artist) ? item.Artist.ToUpper() : "(N/A)"%>
