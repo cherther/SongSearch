@@ -9,7 +9,7 @@
 <table>
     <tr>
     <td align="left" width="200" id="cw-search-options-panel">
-        <% Html.RenderPartial("ctrlSearchOptions"); %>
+        <% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
     </td>
     <td>
         <div class = "cw-outl cw-padded">

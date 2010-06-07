@@ -9,8 +9,8 @@ Log In
     menu.Add("Log In", new string[4] { "LogIn", "Account", "", "current" });
     //    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
 //    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
-    
-    Html.RenderPartial("ctrlSubMenu", menu);
+
+	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
         
     %>
     
@@ -20,11 +20,11 @@ Log In
 <div id="content" class="cw-outl cw-padded">
         <h3>Log in</h3>
         <p>
-        Please enter your e-mail address and password. <%= Html.ActionLink("Register", "Register") %> if you don't have an account.
+        Please enter your e-mail address and password. <%= Html.ActionLink("Register", MVC.Account.Register())%> if you don't have an account.
         </p>
     <%//= Html.ValidationSummary("Login was unsuccessful. Please correct the errors and try again.") %>
     <% Html.EnableClientValidation(); %>
-    <% using (Html.BeginForm("LogIn", "Account", null, FormMethod.Post, new { @class = "cw-form-small" }))
+    <% using (Html.BeginForm(MVC.Account.LogIn(), FormMethod.Post, new { @class = "cw-form-small" }))
        { %><%=Html.AntiForgeryToken() %>
             <fieldset>
                 
@@ -56,7 +56,7 @@ Log In
                     </button>
                     </p>
                      <p>&nbsp;</p>
-                    <p> <%= Html.ActionLink("Forgot your password?", "ResetPassword", "Account")%></p>
+                    <p> <%= Html.ActionLink("Forgot your password?", MVC.Account.ResetPassword())%></p>
             </fieldset>
     <% } %>
    

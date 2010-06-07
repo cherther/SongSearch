@@ -9,13 +9,13 @@
 <table>
     <tr>
     <td align="left" width="200" id="cw-search-options-panel">
-        <% Html.RenderPartial("ctrlSearchOptions"); %>
+        <% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
     </td>
     <td  align="left">
 		
         <div id="cw-search-results-panel">
 		
-        <% Html.RenderPartial("ctrlSearchResults"); %>
+        <% Html.RenderPartial(MVC.Search.Views.ctrlSearchResults); %>
         </div>
     </td>
     </tr>

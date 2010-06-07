@@ -25,7 +25,7 @@
     %>
     <%if (activeCartCount  > 0) {%>
     <p>Your song cart contains <strong><%=activeCartCount%></strong> item(s).</p>
-    <% using (Html.BeginForm("Zip", "Cart", FormMethod.Post)){ %>
+    <% using (Html.BeginForm(MVC.Cart.Zip(), FormMethod.Post)){ %>
     <%= Html.AntiForgeryToken() %>
     <p>To create a single zip file containing all items, click the 'Zip My Song Cart' button below. </p>
     <div>&nbsp;</div>
@@ -41,14 +41,14 @@
 	        </button>
         </div>
         <div>&nbsp;</div>
-        <% Html.RenderPartial("ctrlCartContentsTable", contentListViewModel); %>
+        <% Html.RenderPartial(MVC.Cart.Views.ctrlCartContentsTable, contentListViewModel); %>
 
         <%}%>
 
     <%} else {%>
      <p>&nbsp;</p><p>Your Song Cart is empty.</p>
     <p>&nbsp;</p>
-    <p>To put something in your Song Cart, start by <%: Html.ActionLink("searching", "", "Search",null, null) %> our database. 
+    <p>To put something in your Song Cart, start by <%: Html.ActionLink("searching", MVC.Search.Index()) %> our database. 
     When you find a song you like, click the <em>Add to Cart</em> button.</p>
     <% }%>
 
@@ -63,7 +63,7 @@
 		  <p>Zipped carts will be shown here for 7 days after you have requested them, then they will move to the 'Zipped Song Carts Archive' section below.</p>
           <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status", "Save" }; %>
           <% ViewData["CartContentHeaders"] = new string[] { "Title", "Artist", "Year" }; %>
-          <% Html.RenderPartial("ctrlCartTable", compressedCarts); %>
+          <% Html.RenderPartial(MVC.Cart.Views.ctrlCartTable, compressedCarts); %>
           <%} else {%>
           <p>You have no zip files waiting to be downloaded. </p>
           <%} %>
@@ -79,7 +79,7 @@
 		  <p>Previously downloaded files will be stored up to 7 days after you have first downloaded them.</p>
           <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status", "Save", "Delete" }; %>
           <% ViewData["CartContentHeaders"] = new string[] { "Title", "Artist", "Year" }; %>
-          <% Html.RenderPartial("ctrlCartTable", downloadedCarts); %>    
+          <% Html.RenderPartial(MVC.Cart.Views.ctrlCartTable, downloadedCarts); %>    
     </div>
     <%} %>
 </div>

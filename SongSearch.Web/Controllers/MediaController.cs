@@ -12,7 +12,7 @@ namespace SongSearch.Web.Controllers
 {
 	[RequireAuthorization]
 	[HandleError]
-	public class MediaController : Controller
+	public partial class MediaController : Controller
     {
 		private User _currentUser;
 
@@ -24,13 +24,13 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// Download
 		// **************************************
-		public ActionResult Download(int id) {
+		public virtual ActionResult Download(int id) {
 			try {
 				return Get(id, MediaVersion.FullSong);
 			}
 			catch {
 				this.FireInfo("There was an error downloading this item. Please try again in a bit.");
-				return RedirectToAction("Index", "Search");
+				return RedirectToAction(MVC.Search.Index());
 			}
 		}
 
@@ -38,7 +38,7 @@ namespace SongSearch.Web.Controllers
 		// Download
 		// **************************************
 		//[OutputCache(Duration = 60, VaryByParam = "id;version")]
-		public ActionResult Get(int id, MediaVersion version = MediaVersion.Preview) {
+		public virtual ActionResult Get(int id, MediaVersion version = MediaVersion.Preview) {
 
 			var media = MediaService.GetContentMedia(id, (MediaVersion)version);
 			var content = SearchService.GetContent(id, _currentUser);
@@ -50,7 +50,7 @@ namespace SongSearch.Web.Controllers
 			} else {
 				var msg = "You do not have access to this file";
 				this.FireError(msg);
-				return RedirectToAction("Index", "Error", new { exc = new AccessViolationException(msg), message = msg, controllerName = "Media", actionName = "Download" });
+				return RedirectToAction(MVC.Error.Index(new AccessViolationException(msg), msg, "Media", "Download" ));
 			}
 
 		}
@@ -59,7 +59,7 @@ namespace SongSearch.Web.Controllers
 		// Stream
 		// **************************************
 		//[OutputCache(Duration = 60, VaryByParam = "id;version")]
-		public ActionResult Stream(int id, MediaVersion version = MediaVersion.Preview) {
+		public virtual ActionResult Stream(int id, MediaVersion version = MediaVersion.Preview) {
 			try {
 				var mediaPath = MediaService.GetContentMediaFilePath(id, (MediaVersion)version);
 				var content = SearchService.GetContent(id, _currentUser);
@@ -73,12 +73,12 @@ namespace SongSearch.Web.Controllers
 				} else {
 					var msg = "You do not have access to this file";
 					this.FireError(msg);
-					return RedirectToAction("Index", "Error", new { exc = new AccessViolationException(msg), message = msg, controllerName = "Media", actionName = "Download" });
+					return RedirectToAction(MVC.Error.Index(new AccessViolationException(msg), msg, "Media", "Stream"));
 				}
 			}
 			catch {
-				this.FireError("There was an error loading the User Management page. Please try again in a bit.");
-				return RedirectToAction("Index", "Home");
+				this.FireError("There was an error loading this page. Please try again in a bit.");
+				return RedirectToAction(MVC.Search.Index());
 			}
 		}
 

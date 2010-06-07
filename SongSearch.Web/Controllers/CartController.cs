@@ -12,7 +12,7 @@ namespace SongSearch.Web.Controllers
 {
 	[RequireAuthorization]
 	[HandleError]
-	public class CartController : AsyncController
+	public partial class CartController : AsyncController
     {
 		private User _currentUser;
 
@@ -37,7 +37,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Cart/
 		// **************************************
-		public ActionResult Index()
+		public virtual ActionResult Index()
         {
 			try {
 
@@ -57,7 +57,7 @@ namespace SongSearch.Web.Controllers
 			}
 			catch {
 				this.FireError("There was an error loading the Song Cart page. Please try again in a bit.");
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction(MVC.Home.Index());
 			}
 			
         }
@@ -65,7 +65,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Cart/CartCount
 		// **************************************
-		public ActionResult CartCount() {
+		public virtual ActionResult CartCount() {
 			var count = 0;
 			try {
 				count = CacheService.MyActiveCartCount(_currentUser.UserName);
@@ -75,7 +75,7 @@ namespace SongSearch.Web.Controllers
 			if (Request.IsAjaxRequest()) {
 				return Json(count, JsonRequestBehavior.AllowGet);
 			} else {
-				return View("ctrlCartCount", new ViewModel() { MyActiveCartCount = count });
+				return View(Views.ctrlCartCount, new ViewModel() { MyActiveCartCount = count });
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace SongSearch.Web.Controllers
 		// URL: /Cart/Add/5
 		// **************************************
 		//[HttpPost]
-		public ActionResult Add(int id) {
+		public virtual ActionResult Add(int id) {
 			try {
 
 				_cartService.AddToMyActiveCart(id);
@@ -93,7 +93,7 @@ namespace SongSearch.Web.Controllers
 					return Json(id, JsonRequestBehavior.AllowGet);
 				} else {
 					this.FireInfo("Item added to cart");
-					return RedirectToAction("Index");
+					return RedirectToAction(MVC.Cart.Index());
 				}
 			}
 			catch (Exception ex) {
@@ -101,7 +101,8 @@ namespace SongSearch.Web.Controllers
 					throw ex;
 				} else {
 					this.FireError("There was an error adding this item");
-					return RedirectToAction("Index", "Error", ex);
+					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+				
 				}
 			}
 		}
@@ -110,7 +111,7 @@ namespace SongSearch.Web.Controllers
 		// URL: /Cart/Remove/5
 		// **************************************
 		//[HttpPost]
-		public ActionResult Remove(int id) {
+		public virtual ActionResult Remove(int id) {
 			try {
 
 				_cartService.RemoveFromMyActiveCart(id);
@@ -120,7 +121,7 @@ namespace SongSearch.Web.Controllers
 					return Json(id, JsonRequestBehavior.AllowGet);
 				} else {
 					this.FireInfo("Item removed from cart");
-					return RedirectToAction("Index");
+					return RedirectToAction(MVC.Cart.Index());
 				}
 			}
 			catch (Exception ex) {
@@ -128,7 +129,8 @@ namespace SongSearch.Web.Controllers
 					throw ex;
 				} else {
 					this.FireError("There was an error removing this item");
-					return RedirectToAction("Index", "Error", ex);
+					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+				
 				}
 			}
 		}
@@ -138,7 +140,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id) {
+		public virtual ActionResult Delete(int id) {
 			try {
 
 				_cartService.DeleteCart(id);
@@ -149,7 +151,7 @@ namespace SongSearch.Web.Controllers
 			catch {
 				this.FireError("There was an error deleting this cart");				
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction(MVC.Cart.Index());
 
 		}
 
@@ -158,7 +160,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Zip(string userArchiveName, IList<ContentUserDownloadable> contentNames) {
+		public virtual ActionResult Zip(string userArchiveName, IList<ContentUserDownloadable> contentNames) {
 
 			try {
 				_cartService.CompressMyActiveCart(userArchiveName, contentNames);
@@ -170,7 +172,7 @@ namespace SongSearch.Web.Controllers
 				this.FireError("There was an error zipping this cart. Please try again in a bit.");
 
 			}
-			return RedirectToAction("Index");
+			return RedirectToAction(MVC.Cart.Index());
 		}
 		//[HttpPost]
 		//public ActionResult ZipCompleted() {
@@ -180,7 +182,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /MyCarts/Download/5
 		// **************************************
-		public ActionResult Download(int id) {
+		public virtual ActionResult Download(int id) {
 
 			try {
 				var cart = _cartService.DownloadCompressedCart(id);
@@ -195,7 +197,7 @@ namespace SongSearch.Web.Controllers
 			}
 			catch {
 				this.FireError("There was an error downloading this cart. Please try again in a bit.");
-				return RedirectToAction("Index");
+				return RedirectToAction(MVC.Cart.Index());
 			}
 		}
 		//public ActionResult DownloadDone() {

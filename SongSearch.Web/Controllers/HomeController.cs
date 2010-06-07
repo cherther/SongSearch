@@ -7,11 +7,11 @@ using SongSearch.Web.Services;
 
 namespace SongSearch.Web.Controllers {
 	[HandleError]
-	public class HomeController : Controller {
+	public partial class HomeController : Controller {
 		// **************************************
 		// URL: /
 		// **************************************
-		public ActionResult Index() {
+		public virtual ActionResult Index() {
 
 			try {
 				if (User.Identity.IsAuthenticated) {
@@ -29,7 +29,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		// URL: /Home/About/
 		// **************************************
-		public ActionResult About() {
+		public virtual ActionResult About() {
 			//var vm = new ViewModel() { NavigationLocation = "About" };
 			return View();
 		}

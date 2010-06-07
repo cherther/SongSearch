@@ -16,6 +16,6 @@ $(document).ready(function () {
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class = "cw-outl">
-	<% Html.RenderPartial("ctrlContentDetail", Model); %>
+	<% Html.RenderPartial(MVC.Content.Views.ctrlContentDetail, Model); %>
    </div>
 </asp:Content>

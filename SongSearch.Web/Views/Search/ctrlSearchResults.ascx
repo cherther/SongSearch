@@ -16,11 +16,11 @@
      %>
      <div class="cw-outl cw-padded">
     <h2>Results</h2>
-    <% Html.RenderPartial("ctrlBreadcrumb", Model); %>
+    <% Html.RenderPartial(MVC.Search.Views.ctrlBreadcrumb, Model); %>
     <p><%= results.TotalCount %> songs found.</p>
 	<% if (results.TotalCount > 0) { %>
-	<% Html.RenderPartial("ctrlPager", Model); %>
-    <% Html.RenderPartial("ctrlSearchResultsTable", contentListViewModel); %>
+	<% Html.RenderPartial(MVC.Search.Views.ctrlPager, Model); %>
+    <% Html.RenderPartial(MVC.Search.Views.ctrlSearchResultsTable, contentListViewModel); %>
     <% } %>
 	</div>
     

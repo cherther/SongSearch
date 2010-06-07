@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.SearchViewModel>" %>
 <div class="cw-outl">
 <ul id="search-menu" class="cw-list-searchoptions">
-    <%using (Html.BeginForm("Results", "Search", FormMethod.Get, new { id = "searchForm"})) { %>
+    <%using (Html.BeginForm(MVC.Search.Results(), FormMethod.Get, new { id = "searchForm"})) { %>
         <li>
             <button id="submit-top" type="submit" title="Search" class="cw-button cw-simple cw-blue">
             <span class="b-search">Search</span>

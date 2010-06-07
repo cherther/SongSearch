@@ -11,7 +11,7 @@ namespace SongSearch.Web.Controllers
 {
 	[RequireAuthorization]
 	[HandleError]
-	public class SearchController : Controller
+	public partial class SearchController : Controller
     {
 
 		private const int _pageSize = 100;
@@ -26,7 +26,7 @@ namespace SongSearch.Web.Controllers
 		
         //
         // GET: /Search/
-		public ActionResult Index()
+		public virtual ActionResult Index()
         {
 			try {
 				var vm = GetSearchViewModel();
@@ -35,14 +35,14 @@ namespace SongSearch.Web.Controllers
 			}
 			catch {
 				this.FireError("There was an error loading the Search page. Please try again in a bit.");
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction(MVC.Home.Index());
 			}
         }
 
 		// ****************************************************************************
 		// Search/Results/ f = SearchField, p = PageIndex, s = SortField, o = SortType
 		// ****************************************************************************
-		public ActionResult Results(IList<SearchField> f, int? p, int? s, int? o) {
+		public virtual ActionResult Results(IList<SearchField> f, int? p, int? s, int? o) {
 
 			var model = GetSearchViewModel();
 			model.SortPropertyId = s;
@@ -81,14 +81,14 @@ namespace SongSearch.Web.Controllers
 			}
 
 			this.FireWarning("Please try your search again.");
-			return RedirectToAction("Index");
+			return RedirectToAction(Actions.Index());
 		}
 
 		
 		// **************************************
 		// AutoComplete/f = fieldName, term = search term
 		// **************************************
-		public JsonResult AutoComplete(string f, string term) {
+		public virtual JsonResult AutoComplete(string f, string term) {
 
 			try {
 				term = term.ToUpper();

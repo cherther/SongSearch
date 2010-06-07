@@ -50,7 +50,7 @@
 		<div>&nbsp;</div>
         <div>5/28/2010</div>
         <ul class="cw-vertical">
-            <li><%: Html.ActionLink("User Management", "Index", "UserManagement") %> feature complete<br /> 
+            <li><%: Html.ActionLink("User Management", MVC.UserManagement.Views.Index)%> feature complete<br /> 
 			(Delete User & Take Ownership features are working, but for testing reasons are intentionally not actually deleting users or changing ownership)</li>
             <li>Added search breadcrumb, showing what user searched for</li>
             <li>Added error notification bar to top of page</li>
@@ -64,7 +64,7 @@
         <ul class="cw-vertical">
             <li>Downloads now working</li>
             <li>'Add to Cart' working</li>
-            <li><%: Html.ActionLink("Cart", "Index", "Cart") %> zipping, downloading, archiving etc all working</li>
+            <li><%: Html.ActionLink("Cart", MVC.Cart.Views.Index)%> zipping, downloading, archiving etc all working</li>
         </ul>
         <div>&nbsp;</div>
         <div>5/21/2010</div>

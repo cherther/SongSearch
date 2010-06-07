@@ -14,8 +14,8 @@
 
 //    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
 //    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
-    
-    Html.RenderPartial("ctrlSubMenu", menu);
+
+	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
         
     %>
     
@@ -29,7 +29,7 @@
     </p>
     <%//= Html.ValidationSummary("Profile update was unsuccessful. Please correct the errors and try again.")%>
     
-    <% using (Html.BeginForm("UpdateProfile", "Account", null, FormMethod.Post, new { @class = "cw-form-small" }))
+    <% using (Html.BeginForm(MVC.Account.UpdateProfile(), FormMethod.Post, new { @class = "cw-form-small" }))
        {%>
        <%=Html.AntiForgeryToken() %>
        <% Html.EnableClientValidation(); %>

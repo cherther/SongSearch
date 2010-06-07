@@ -50,12 +50,12 @@
             <h3>Your professional music licensing resource</h3>
         </td>
         <td align="right">
-            <% Html.RenderPartial("ctrlLogIn"); %>
+            <% Html.RenderPartial(MVC.Shared.Views.ctrlLogIn); %>
         </td> 
     </tr>
     <tr>
         <td colspan="2">
-            <% Html.RenderPartial("ctrlMainMenu"); %>
+            <% Html.RenderPartial(MVC.Shared.Views.ctrlMainMenu); %>
         </td> 
     </tr>
     <tr>
@@ -74,7 +74,7 @@
             &copy; <%=DateTime.Now.Year %> Ford Music Services
 	    </td>
         <td align="right">
-            <% Html.RenderPartial("ctrlBuildInfo"); %>
+            <% Html.RenderPartial(MVC.Shared.Views.ctrlBuildInfo); %>
             developed by <a href="http://www.codewerks.de/">codewerks.de</a>
 	    </td> 
     </tr>
@@ -83,28 +83,28 @@
 	var debug = App.Environment != AppEnvironment.Production;
 	var d = debug ? "?d" : "";
 	var bundle = Bundle.JavaScript()
-    .Add("~/public/javascript/jquery-1.4.2.min.js")
-    .Add("~/public/javascript/jquery.form.js")
-	.Add("~/public/javascript/jquery.blockUI.js")
-	.Add("~/public/javascript/jquery-ui-1.8.1.min.js");
+	.Add(Links.Scripts.jquery_1_4_2_min_js)
+    .Add(Links.Scripts.jquery_form_js)
+	.Add(Links.Scripts.jquery_blockUI_js)
+	.Add(Links.Scripts.jquery_ui_1_8_1_min_js);
 
 	if (!debug) {
-		bundle.Add("~/public/javascript/soundmanager2-nodebug-jsmin.js");
+		bundle.Add(Links.Scripts.soundmanager2_nodebug_jsmin_js);
 	} else {
-		bundle.Add("~/public/javascript/soundmanager2.js");
+		bundle.Add(Links.Scripts.soundmanager2_js);
 	}
 	
 	
 	bundle
-		.Add(String.Concat("~/public/javascript/cw.app.main.js", d))
-        .Add(String.Concat("~/public/javascript/cw.app.ajax.js", d))
-            .Add(String.Concat("~/public/javascript/cw.app.events.js", d))
-				.Add(String.Concat("~/public/javascript/cw.app.sound.js", d))
+		.Add(Links.Scripts.cw_app_main_js)
+        .Add(Links.Scripts.cw_app_ajax_js)
+            .Add(Links.Scripts.cw_app_events_js)
+				.Add(Links.Scripts.cw_app_sound_js)
 		.WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
     //.ForceRelease()
 	;
 	%>
-	<%= bundle.Render("~/public/javascript/cw-combined_#.js")%>    		
+	<%= bundle.Render("~/Scripts/cw-combined_#.js")%>    		
 </body>
 
 <%

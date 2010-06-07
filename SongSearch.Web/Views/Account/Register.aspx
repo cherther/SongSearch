@@ -10,8 +10,8 @@
 
 //    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
 //    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
-    
-    Html.RenderPartial("ctrlSubMenu", menu);
+
+	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
         
     %>
     
@@ -26,7 +26,7 @@
         Passwords are required to be a minimum of <%=Html.Encode(ViewData["PasswordLength"])%> characters in length.
     </p>
     <%//= Html.ValidationSummary("Account creation was unsuccessful. Please correct the errors and try again.") %>
-    <% using (Html.BeginForm("Register", "Account", null, FormMethod.Post, new { @class = "cw-form-small" }))
+    <% using (Html.BeginForm(MVC.Account.Register(), FormMethod.Post, new { @class = "cw-form-small" }))
        { %><%=Html.AntiForgeryToken() %>
     
         

@@ -12,7 +12,7 @@ namespace SongSearch.Web
 {
     [HandleError]
 	[RequireAuthorization(MinAccessLevel=Roles.Admin)]
-	public class UserManagementController : Controller
+	public partial class UserManagementController : Controller
     {
 		private IUserManagementService _usrMgmtService;
 		private User _currentUser;
@@ -41,7 +41,7 @@ namespace SongSearch.Web
 		// **************************************
 		// URL: /UserManagement/
 		// **************************************
-		public ActionResult Index() {
+		public virtual ActionResult Index() {
 
 			try {
 				var users = _usrMgmtService.GetMyUserHierarchy();
@@ -57,14 +57,14 @@ namespace SongSearch.Web
 			}
 			catch {
 				this.FireError("There was an error loading the User Management page. Please try again in a bit.");
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction(MVC.Home.Index());
 			}
 		}
 
 		// **************************************
 		// URL: /UserManagement/Invite
 		// **************************************
-		public ActionResult Invite() {
+		public virtual ActionResult Invite() {
 			return View(
 				new InviteViewModel() {
 					NavigationLocation = "Admin",
@@ -75,7 +75,7 @@ namespace SongSearch.Web
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[ValidateOnlyIncomingValues]
-		public ActionResult Invite(InviteViewModel model) {
+		public virtual ActionResult Invite(InviteViewModel model) {
 
 			if (ModelState.IsValid) {
 				string[] recipients = model.Recipients;
@@ -123,7 +123,7 @@ namespace SongSearch.Web
 
 					}
 				}
-				return View("InviteComplete", model);
+				return View(Views.InviteComplete, model);
 			} else {
 				ModelState.AddModelError("", "There was an error processing your invites");
 				this.FireError("There was an error processing your invites...");
@@ -134,7 +134,7 @@ namespace SongSearch.Web
 		// **************************************
 		// URL: /UserManagement/User/5
 		// **************************************
-		public ActionResult Detail(int id) {
+		public virtual ActionResult Detail(int id) {
 
 			try {
 				var user = _usrMgmtService.GetUserDetail(id);
@@ -152,9 +152,9 @@ namespace SongSearch.Web
 					//vm.LookupCatalogs = vm.LookupCatalogs.LimitToAdministeredBy(user);
 				}
 				if (Request.IsAjaxRequest()) {
-					return View("ctrlDetail", vm);
+					return View(Views.ctrlDetail, vm);
 				} else {
-					return RedirectToAction("Index"); //return View(vm);
+					return RedirectToAction(MVC.UserManagement.Index()); //return View(vm);
 				}
 			}
 			catch (Exception ex){
@@ -162,7 +162,7 @@ namespace SongSearch.Web
 					throw ex;
 				} else {
 					this.FireError("There was an error processing your request");
-					return RedirectToAction("Index");
+					return RedirectToAction(MVC.UserManagement.Index());
 				}
 			}
 		}
@@ -171,7 +171,7 @@ namespace SongSearch.Web
 		// URL: /UserManagement/UpdateRole?user=5&roleId=3
 		// **************************************
 		[HttpPost]
-		public ActionResult UpdateRole(int userId, int roleId) {
+		public virtual ActionResult UpdateRole(int userId, int roleId) {
 			try {
 
 				_usrMgmtService.UpdateUsersRole(userId, roleId);
@@ -189,7 +189,7 @@ namespace SongSearch.Web
 				return Json(roleId);
 			} else {
 				this.FireInfo("Succesfully updated user's role");
-				return RedirectToAction("Index");
+				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
 
@@ -197,7 +197,7 @@ namespace SongSearch.Web
 		// URL: /UserManagement/UpdateCatalog?user=5&roleId=3
 		// **************************************
 		[HttpPost]
-		public ActionResult UpdateCatalog(int userId, int catalogId, int roleId) {
+		public virtual ActionResult UpdateCatalog(int userId, int catalogId, int roleId) {
 			try {
 
 				_usrMgmtService.UpdateUserCatalogRole(userId, catalogId, roleId);
@@ -215,7 +215,7 @@ namespace SongSearch.Web
 				return Json(roleId);
 			} else {
 				this.FireInfo("Succesfully updated user's catalog access");
-				return RedirectToAction("Index");
+				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
 
@@ -223,7 +223,7 @@ namespace SongSearch.Web
 		// URL: /UserManagement/UpdateCatalog?user=5&roleId=3
 		// **************************************
 		[HttpPost]
-		public ActionResult UpdateAllCatalogs(int userId, int roleId) {
+		public virtual ActionResult UpdateAllCatalogs(int userId, int roleId) {
 			try {
 
 				_usrMgmtService.UpdateAllCatalogs(userId, roleId);
@@ -241,7 +241,7 @@ namespace SongSearch.Web
 				return Json(roleId);
 			} else {
 				this.FireInfo("Succesfully updated user's catalog access");
-				return RedirectToAction("Index");
+				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
 		// **************************************
@@ -249,7 +249,7 @@ namespace SongSearch.Web
 		// **************************************
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id) {
+		public virtual ActionResult Delete(int id) {
 
 			try {
 				_usrMgmtService.DeleteUser(id, true);
@@ -267,7 +267,7 @@ namespace SongSearch.Web
 				return Json(id);
 			} else {
 				this.FireInfo("User Deleted");
-				return RedirectToAction("Index");
+				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
 
@@ -276,7 +276,7 @@ namespace SongSearch.Web
 		// **************************************
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult TakeOwnership(int id) {
+		public virtual ActionResult TakeOwnership(int id) {
 			try {
 				_usrMgmtService.TakeOwnerShip(id);
 			}
@@ -292,7 +292,7 @@ namespace SongSearch.Web
 				return Json(id);
 			} else {
 				this.FireInfo("Sucessfully transferred user ownership");
-				return RedirectToAction("Index");
+				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
     }

@@ -15,7 +15,7 @@
 //    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
 //    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
     
-    Html.RenderPartial("ctrlSubMenu", menu);
+    Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
         
     %>
     
@@ -32,7 +32,7 @@
     </p>
     <%//= Html.ValidationSummary("Password change was unsuccessful. Please correct the errors and try again.")%>
     <% Html.EnableClientValidation(); %>
-    <% using (Html.BeginForm("ChangePassword", "Account", null, FormMethod.Post, new { @class = "cw-form-small" }))
+    <% using (Html.BeginForm(MVC.Account.ChangePassword(), FormMethod.Post, new { @class = "cw-form-small" }))
        {%><%=Html.AntiForgeryToken() %>
             <fieldset>
                 <legend>Password Information</legend>

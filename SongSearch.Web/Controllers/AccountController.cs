@@ -8,7 +8,7 @@ using SongSearch.Web.Data;
 namespace SongSearch.Web.Controllers {
 
 	[HandleError]
-	public class AccountController : Controller {
+	public partial class AccountController : Controller {
 
 		IFormsAuthenticationService _authService;
 		IUserManagementService _usrMgmtService;
@@ -45,14 +45,14 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/LogIn
 		// **************************************
 		[ValidateOnlyIncomingValues]
-		public ActionResult LogIn(LogOnModel model) {
+		public virtual ActionResult LogIn(LogOnModel model) {
 			model.NavigationLocation = "Account";
 			return View(model);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult LogIn(LogOnModel model, string returnUrl) {
+		public virtual ActionResult LogIn(LogOnModel model, string returnUrl) {
 
 			if (ModelState.IsValid) {
 				if (_acctService.UserIsValid(model.Email, model.Password))
@@ -80,7 +80,7 @@ namespace SongSearch.Web.Controllers {
 					if (!String.IsNullOrEmpty(returnUrl)) {
 						return Redirect(returnUrl);
 					} else {
-						return RedirectToAction("Index", "Home");
+						return RedirectToAction(MVC.Home.Index());
 					}
 				} else {
 					ModelState.AddModelError("", Errors.LoginFailed.Text());
@@ -111,20 +111,20 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/LogOut
 		// **************************************
 		[RequireAuthorization]
-		public ActionResult LogOut() {
+		public virtual ActionResult LogOut() {
 
 			_authService.SignOut();
 
 			Session.Abandon();
 
-			return RedirectToAction("LogIn", "Account");
+			return RedirectToAction(Actions.LogIn());
 		}
 
 
 		// **************************************
 		// URL: /Account/Register
 		// **************************************        
-		public ActionResult Register(string id, string em) {
+		public virtual ActionResult Register(string id, string em) {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			ViewData["inviteId"] = id;
 			ViewData["email"] = em;
@@ -145,7 +145,7 @@ namespace SongSearch.Web.Controllers {
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Register(RegisterModel model) {
+		public virtual ActionResult Register(RegisterModel model) {
 
 			//set username to email address
 			//contentModel.UserName = contentModel.Email;
@@ -182,7 +182,7 @@ namespace SongSearch.Web.Controllers {
 
 										_authService.SignIn(user.UserName, false /* createPersistentCookie */);
 
-										return RedirectToAction("Index", "Home");
+										return RedirectToAction(MVC.Home.Index());
 									}
 									catch {
 										ModelState.AddModelError("Email", Errors.UserCreationFailed.Text());//AccountValidation.ErrorCodeToString(createStatus));
@@ -218,7 +218,7 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/ChangePassword
 		// **************************************
 		[RequireAuthorization]
-		public ActionResult ChangePassword() {
+		public virtual ActionResult ChangePassword() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(new UpdateProfileModel() { NavigationLocation = "Account" });
@@ -228,14 +228,14 @@ namespace SongSearch.Web.Controllers {
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
-		public ActionResult ChangePassword(UpdateProfileModel model) {
+		public virtual ActionResult ChangePassword(UpdateProfileModel model) {
 
 			if (ModelState.IsValid) {
 				var userName = User.Identity.Name;
 				var user = new User() { UserName = userName, Password = model.OldPassword };
 				if (_acctService.UpdateProfile(user, model.NewPassword)) {
 					//_acctService.UpdateCurrentUserInSession();
-					return RedirectToAction("ChangePasswordSuccess");
+					return RedirectToAction(Actions.ChangePasswordSuccess());
 				} else {
 					ModelState.AddModelError("", Errors.PasswordChangeFailed.Text());
 				}
@@ -253,7 +253,7 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/ChangePasswordSuccess
 		// **************************************        
 		[RequireAuthorization]
-		public ActionResult ChangePasswordSuccess() {
+		public virtual ActionResult ChangePasswordSuccess() {
 			string email = User.Identity.Name;
 
 			try {
@@ -273,7 +273,7 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/UpdateProfile
 		// **************************************
 		[RequireAuthorization]
-		public ActionResult UpdateProfile() {
+		public virtual ActionResult UpdateProfile() {
 
 			try {
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
@@ -294,7 +294,7 @@ namespace SongSearch.Web.Controllers {
 			}
 			catch {
 				this.FireError("There was an error loading the Update Profile page. Please try again in a bit.");
-				return RedirectToAction("Index", "Home");
+				return RedirectToAction(MVC.Home.Index());
 			}
 		}
 
@@ -302,7 +302,7 @@ namespace SongSearch.Web.Controllers {
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
-		public ActionResult UpdateProfile(UpdateProfileModel model) {
+		public virtual ActionResult UpdateProfile(UpdateProfileModel model) {
 			if (ModelState.IsValid) {
 				var userName = User.Identity.Name;
 				User user = new User() {
@@ -365,7 +365,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		// URL: /Account/ResetPassword
 		// **************************************        
-		public ActionResult ResetPassword() {
+		public virtual ActionResult ResetPassword() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(new ResetPasswordModel() {
@@ -376,7 +376,7 @@ namespace SongSearch.Web.Controllers {
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
-		public ActionResult ResetPassword(ResetPasswordModel model) {
+		public virtual ActionResult ResetPassword(ResetPasswordModel model) {
 
 			if (ModelState.IsValid) {
 				model.ResetCode = model.Email.PasswordHashString();
@@ -396,7 +396,7 @@ namespace SongSearch.Web.Controllers {
 					String.Format("{0} {1}", Messages.PasswordResetRequest.Text(), msg)
 
 					);
-				return RedirectToAction("ResetPasswordSuccess");
+				return RedirectToAction(Actions.ResetPasswordSuccess());
 			}
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
@@ -408,14 +408,14 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		// URL: /Account/ResetPasswordSuccess
 		// **************************************        
-		public ActionResult ResetPasswordSuccess() {
+		public virtual ActionResult ResetPasswordSuccess() {
 			return View();
 		}
 
 		// **************************************
 		// URL: /Account/ResetPasswordRespond
 		// **************************************        
-		public ActionResult ResetPasswordRespond(string id, string rc) {
+		public virtual ActionResult ResetPasswordRespond(string id, string rc) {
 			var model = new ResetPasswordModel() {
 				NavigationLocation = "Account",
 				Email = id,
@@ -430,13 +430,13 @@ namespace SongSearch.Web.Controllers {
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult ResetPasswordRespond(ResetPasswordModel model) {
+		public virtual ActionResult ResetPasswordRespond(ResetPasswordModel model) {
 			if (
 				ModelState.IsValid &&
 				_acctService.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
 				) {
 
-				return RedirectToAction("LogIn", "Account");
+				return RedirectToAction(Actions.LogIn());
 
 			} else {
 				ModelState.AddModelError("", Errors.PasswordResetFailed.Text());

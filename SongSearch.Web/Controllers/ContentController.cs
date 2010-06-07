@@ -11,7 +11,7 @@ namespace SongSearch.Web.Controllers
 {
 	[RequireAuthorization]
 	[HandleError]
-	public class ContentController : Controller
+	public partial class ContentController : Controller
     {
 		private User _currentUser;
 		IContentAdminService _cntAdmService;
@@ -34,7 +34,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// Detail/5
 		// **************************************
-		public ActionResult Detail(int id) {
+		public virtual ActionResult Detail(int id) {
 
 			try {
 				var model = GetDetailModel(id);
@@ -42,7 +42,7 @@ namespace SongSearch.Web.Controllers
 
 				if (Request.IsAjaxRequest()) {
 					model.ViewMode = ViewModes.Embedded;
-					return View("ctrlContentDetail", model);
+					return View(Views.ctrlContentDetail, model);
 
 				} else {
 					model.ViewMode = ViewModes.Normal;
@@ -51,15 +51,15 @@ namespace SongSearch.Web.Controllers
 			}
 			catch (Exception ex) {
 				this.FireError(ex.Message);
-				return RedirectToAction("Index", "Error", new { ex, message = ex.Message, controllerName = this.ToString() });
-
+				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+				
 			}
 		}
 
 		// **************************************
 		// Print/5
 		// **************************************
-		public ActionResult Print(int id) {
+		public virtual ActionResult Print(int id) {
 			try {
 				var model = GetDetailModel(id);
 				model.ViewMode = ViewModes.Print;
@@ -69,8 +69,8 @@ namespace SongSearch.Web.Controllers
 			}
 			catch (Exception ex) {
 				this.FireError(ex.Message);
-				return RedirectToAction("Index", "Error", new { ex, message = ex.Message, controllerName = this.ToString() });
-
+				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+				
 			}
 		}
 
@@ -79,7 +79,7 @@ namespace SongSearch.Web.Controllers
 		// Edit/5
 		// **************************************
 		[RequireAuthorization(MinAccessLevel=Roles.Admin)]
-		public ActionResult Edit(int id) {
+		public virtual ActionResult Edit(int id) {
 
 			try {
 				var model = GetEditModel(id);
@@ -96,8 +96,7 @@ namespace SongSearch.Web.Controllers
 			}
 			catch (Exception ex) {
 				this.FireError(ex.Message);
-				return RedirectToAction("Index", "Error", new { ex, message = ex.Message, controllerName = this.ToString() });
-
+				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 			}
 		}
 
@@ -107,7 +106,7 @@ namespace SongSearch.Web.Controllers
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult Save(Content content, 
+		public virtual ActionResult Save(Content content, 
 			IList<int> tags, 
 			IList<ContentRightViewModel> rights,
 			bool returnData = true) {
@@ -137,8 +136,8 @@ namespace SongSearch.Web.Controllers
 			}
 			catch (Exception ex) {
 				this.FireError(ex.Message);
-				return RedirectToAction("Index", "Error", new { ex, message = ex.Message, controllerName = this.ToString() });
-
+				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+				
 			}
 		}
 

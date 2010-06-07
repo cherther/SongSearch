@@ -16,12 +16,12 @@
 <tr>
 	<td width="55%">
 	<%if (content.HasMediaFullVersion != null) { %>
-	<%var url = Url.Action("Stream", "Media", new { id = content.ContentId, version = MediaVersion.FullSong }); %>
+	<%var url = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.FullSong)); %>
 	<a href="<%: url %>" id = "cw-play-full"
 		class = "cw-media-play-link cw-button cw-small cw-simple cw-green"><span class="b-play">Full Song</span></a>
 	<%} %>
 	<%if (content.HasMediaPreviewVersion != null) { %>
-	<%	var url = Url.Action("Stream", "Media", new { id = content.ContentId, version = MediaVersion.Preview }); %>
+	<%	var url = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Preview)); %>
     	<a href="<%: url %>" id = "cw-play-preview"
 		class = "cw-media-play-link cw-button cw-small cw-simple cw-green"><span class="b-play">:30</span></a>
 	<%} %>

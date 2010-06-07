@@ -11,7 +11,7 @@
         Please enter your e-mail address and we will send you a link to help you select a new password. Please <%= Html.ActionLink("register", "Register") %> if you don't have an account.
     </p>
      <%= Html.ValidationSummary("Password reset request was unsuccessful. Please correct the errors and try again.") %>
-    <% using (Html.BeginForm("ResetPassword", "Account", null, FormMethod.Post, new { @class = "cw-form-small" }))
+    <% using (Html.BeginForm(MVC.Account.ResetPassword(), FormMethod.Post, new { @class = "cw-form-small" }))
        {%>
        <%=Html.AntiForgeryToken() %>
         <fieldset>

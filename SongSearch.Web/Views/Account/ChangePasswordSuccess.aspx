@@ -14,8 +14,8 @@
 
 //    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
 //    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
-    
-    Html.RenderPartial("ctrlSubMenu", menu);
+
+	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
         
     %>
     

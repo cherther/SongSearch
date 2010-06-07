@@ -4,19 +4,19 @@
 [<%: App.Environment %>]&nbsp;
 <%if (Request.IsAuthenticated) 
   {%>
-Hello, <strong><%=Html.Friendly() %></strong>. <%= Html.ActionLink("Your Profile", "UpdateProfile", "Account")%> | <%= Html.ActionLink("Log Out", "LogOut", "Account") %>
+Hello, <strong><%=Html.Friendly() %></strong>. <%= Html.ActionLink("Your Profile", MVC.Account.UpdateProfile())%> | <%= Html.ActionLink("Log Out", MVC.Account.LogOut())%>
 <%
   }
   else 
   {
 %>
-Already registered? <%=Html.ActionLink("Log in", "LogIn", "Account")  %>
+Already registered? <%=Html.ActionLink("Log in", MVC.Account.LogIn())%>
 <%
   }
 %>
 </div>
   <fieldset id="signin_menu">
-    <% using (Html.BeginForm("LogIn", "Account", FormMethod.Post))
+    <% using (Html.BeginForm(MVC.Account.LogIn(), FormMethod.Post))
        { %>
       <p>
        <label for="Email">E-mail</label>
@@ -31,7 +31,7 @@ Already registered? <%=Html.ActionLink("Log in", "LogIn", "Account")  %>
         <input id="RememberMe" name="RememberMe" value="true" tabindex="7" type="checkbox">
         <label for="RememberMe">Remember me</label>
       </p>
-      <p class="forgot"> <%= Html.ActionLink("Forgot your password?", "ResetPassword", "Account")%></p>
+      <p class="forgot"> <%= Html.ActionLink("Forgot your password?", MVC.Account.ResetPassword())%></p>
    <%} %>
   </fieldset>
 
