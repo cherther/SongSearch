@@ -75,7 +75,7 @@ namespace SongSearch.Web.Controllers {
 						
 					//    CacheService.SessionUpdate("1", "ActiveCartMessageShown");
 					//}
-					this.FireInfo(msg);
+					this.FeedbackInfo(msg);
 
 					if (!String.IsNullOrEmpty(returnUrl)) {
 						return Redirect(returnUrl);
@@ -84,7 +84,7 @@ namespace SongSearch.Web.Controllers {
 					}
 				} else {
 					ModelState.AddModelError("", Errors.LoginFailed.Text());
-					this.FireError("There was an error logging you in...");
+					this.FeedbackError("There was an error logging you in...");
 				}
 
 			}
@@ -209,7 +209,7 @@ namespace SongSearch.Web.Controllers {
 
 			// If we got this far, something failed, redisplay form
 			model.NavigationLocation = "Register";
-			this.FireError("There was an error registering you...");
+			this.FeedbackError("There was an error registering you...");
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(model);
@@ -243,7 +243,7 @@ namespace SongSearch.Web.Controllers {
 
 			// If we got this far, something failed, redisplay form
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
-			this.FireError("There was an error changing your password...");
+			this.FeedbackError("There was an error changing your password...");
 
 			model.NavigationLocation = "Account";
 			return View(model);
@@ -293,7 +293,7 @@ namespace SongSearch.Web.Controllers {
 				return View(vm);
 			}
 			catch {
-				this.FireError("There was an error loading the Update Profile page. Please try again in a bit.");
+				this.FeedbackError("There was an error loading the Update Profile page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
 		}
@@ -321,7 +321,7 @@ namespace SongSearch.Web.Controllers {
 					SetFriendlyNameCookie(friendly);
 
 					model.ShowSignatureField = user.IsAnyAdmin();
-					this.FireInfo("Successfully updated your profile...");
+					this.FeedbackInfo("Successfully updated your profile...");
 
 					return View(model);
 
@@ -335,7 +335,7 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] =
 				AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
-			this.FireError("There was an error updating your profile...");
+			this.FeedbackError("There was an error updating your profile...");
 
 			return View(model);
 		}
@@ -400,7 +400,7 @@ namespace SongSearch.Web.Controllers {
 			}
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
-			this.FireError("There was an error processing your password reset request...");
+			this.FeedbackError("There was an error processing your password reset request...");
 
 			return View(model);
 		}
@@ -443,7 +443,7 @@ namespace SongSearch.Web.Controllers {
 
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 				model.NavigationLocation = "Account";
-				this.FireError("There was an error processing your password reset request...");
+				this.FeedbackError("There was an error processing your password reset request...");
 
 				return View(model);
 			}

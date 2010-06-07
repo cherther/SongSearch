@@ -34,7 +34,7 @@ namespace SongSearch.Web.Controllers
 				return View(vm);
 			}
 			catch {
-				this.FireError("There was an error loading the Search page. Please try again in a bit.");
+				this.FeedbackError("There was an error loading the Search page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
         }
@@ -76,11 +76,11 @@ namespace SongSearch.Web.Controllers
 					return View(model);
 				}
 				catch {
-					this.FireError("There was an error getting your search results. Please try again in a bit.");
+					this.FeedbackError("There was an error getting your search results. Please try again in a bit.");
 				}
 			}
 
-			this.FireWarning("Please try your search again.");
+			this.FeedbackWarning("Please try your search again.");
 			return RedirectToAction(Actions.Index());
 		}
 

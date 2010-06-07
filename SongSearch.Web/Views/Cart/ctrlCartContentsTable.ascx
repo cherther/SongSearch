@@ -19,13 +19,13 @@
     <% foreach (var item in results) { %>
         <%
 		   var title = !String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)";
-		   var artistUrl = String.Concat(Url.Action("Results", "Search"), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
+		   var artistUrl = String.Concat(Url.Action(MVC.Search.Results()), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
 		   
 		    %>
         <tr class="cw-tbl-data">
             <td width="40%">
             <%if (Model.ShowDetails) { %>
-                <%: Html.ActionLink(title, "Detail", "Content", new { id = item.ContentId }, new { @class = "cw-content-detail-link" })%>
+                <%: Html.ActionLink(title, MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link" })%>
             <%} else { %>
                 <%: title %>
             <%} %>
@@ -47,12 +47,12 @@
             <%} %>
             <%if (tableHeader.Contains("Download")) { %>
             <td>
-                <%: Html.ActionLink("Download", "Download", "Media", new { id = item.ContentId }, new { @class = "cw-button cw-simple cw-small cw-blue", title = "Download" })%>
+                <%: Html.ActionLink("Download", MVC.Media.Download(item.ContentId), new { @class = "cw-button cw-simple cw-small cw-blue", title = "Download" })%>
             </td>
             <%} %>
             <%if (tableHeader.Contains("Remove")) { %>
             <td>
-                <%: Html.ActionLink("Remove", "Remove", "Cart", new { id = item.ContentId }, new { @class = "cw-cart-remove-link cw-button cw-simple cw-small cw-red", title = "Remove from Cart" })%>
+                <%: Html.ActionLink("Remove", MVC.Cart.Remove(item.ContentId), new { @class = "cw-cart-remove-link cw-button cw-simple cw-small cw-red", title = "Remove from Cart" })%>
             </td>
             <%} %>
         </tr>

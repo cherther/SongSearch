@@ -50,7 +50,7 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
-				this.FireError(ex.Message);
+				this.FeedbackError(ex.Message);
 				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 				
 			}
@@ -68,7 +68,7 @@ namespace SongSearch.Web.Controllers
 				return View(model);
 			}
 			catch (Exception ex) {
-				this.FireError(ex.Message);
+				this.FeedbackError(ex.Message);
 				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 				
 			}
@@ -95,7 +95,7 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
-				this.FireError(ex.Message);
+				this.FeedbackError(ex.Message);
 				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 			}
 		}
@@ -135,7 +135,7 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
-				this.FireError(ex.Message);
+				this.FeedbackError(ex.Message);
 				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 				
 			}

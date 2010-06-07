@@ -32,7 +32,7 @@
     <% using (Html.BeginForm(MVC.Account.UpdateProfile(), FormMethod.Post, new { @class = "cw-form-small" }))
        {%>
        <%=Html.AntiForgeryToken() %>
-       <% Html.EnableClientValidation(); %>
+	   <% Html.EnableClientValidation(); %>
             <fieldset>
                 <legend>Profile Information</legend>
                 <div class="cw-fe-vert">
@@ -40,6 +40,7 @@
                 </div>
                 <div class="cw-fe-vert cw-fe-req">
                     <%= Html.Encode(Model.Email)%>
+					<%= Html.HiddenFor(m => Model.Email)%>
                 </div>
                 <div class="cw-fe-vert">
                     <%= Html.LabelFor(m => m.FirstName) %>

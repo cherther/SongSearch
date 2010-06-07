@@ -43,9 +43,8 @@
 	</div>
 
 	<%= Bundle.JavaScript()
-    .Add("~/public/javascript/jquery-1.4.2.min.js")
-    .WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
-    .Render("~/public/javascript/cw-print_#.js")%>  
+	.Add(Links.Scripts.jquery_1_4_2_min_js).WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
+	.Render("~/public/javascript/cw-print_#.js")%>  
 
 </body>
 <asp:ContentPlaceHolder id="Javascripts" runat="server" />

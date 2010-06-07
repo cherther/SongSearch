@@ -18,7 +18,7 @@ namespace SongSearch.Web.Controllers {
 
 					var msg = CacheService.User(User.Identity.Name).LoginMessage();
 
-					this.FireInfo(msg);
+					this.FeedbackInfo(msg);
 				}
 			}
 			catch { }

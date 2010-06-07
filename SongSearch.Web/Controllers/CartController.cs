@@ -50,13 +50,13 @@ namespace SongSearch.Web.Controllers
 				var msg = _currentUser != null ? _currentUser.DownloadCartMessage(vm.MyCarts) : "";
 
 				if (msg != null) {
-					this.FireInfo(msg);
+					this.FeedbackInfo(msg);
 				}
 
 				return View(vm);
 			}
 			catch {
-				this.FireError("There was an error loading the Song Cart page. Please try again in a bit.");
+				this.FeedbackError("There was an error loading the Song Cart page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
 			
@@ -92,7 +92,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					return Json(id, JsonRequestBehavior.AllowGet);
 				} else {
-					this.FireInfo("Item added to cart");
+					this.FeedbackInfo("Item added to cart");
 					return RedirectToAction(MVC.Cart.Index());
 				}
 			}
@@ -100,7 +100,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FireError("There was an error adding this item");
+					this.FeedbackError("There was an error adding this item");
 					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 				
 				}
@@ -120,7 +120,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					return Json(id, JsonRequestBehavior.AllowGet);
 				} else {
-					this.FireInfo("Item removed from cart");
+					this.FeedbackInfo("Item removed from cart");
 					return RedirectToAction(MVC.Cart.Index());
 				}
 			}
@@ -128,7 +128,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FireError("There was an error removing this item");
+					this.FeedbackError("There was an error removing this item");
 					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 				
 				}
@@ -146,10 +146,10 @@ namespace SongSearch.Web.Controllers
 				_cartService.DeleteCart(id);
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
-				this.FireInfo("Cart Deleted");
+				this.FeedbackInfo("Cart Deleted");
 			}
 			catch {
-				this.FireError("There was an error deleting this cart");				
+				this.FeedbackError("There was an error deleting this cart");				
 			}
 			return RedirectToAction(MVC.Cart.Index());
 
@@ -165,11 +165,11 @@ namespace SongSearch.Web.Controllers
 			try {
 				_cartService.CompressMyActiveCart(userArchiveName, contentNames);
 				CacheService.RefreshMyActiveCart(_currentUser.UserName);
-				this.FireInfo("Your cart is ready for download");
+				this.FeedbackInfo("Your cart is ready for download");
 
 			}
 			catch {
-				this.FireError("There was an error zipping this cart. Please try again in a bit.");
+				this.FeedbackError("There was an error zipping this cart. Please try again in a bit.");
 
 			}
 			return RedirectToAction(MVC.Cart.Index());
@@ -196,7 +196,7 @@ namespace SongSearch.Web.Controllers
 				return new FileStreamResult(new System.IO.FileStream(cart.ArchivePath(), System.IO.FileMode.Open), "application/zip");
 			}
 			catch {
-				this.FireError("There was an error downloading this cart. Please try again in a bit.");
+				this.FeedbackError("There was an error downloading this cart. Please try again in a bit.");
 				return RedirectToAction(MVC.Cart.Index());
 			}
 		}

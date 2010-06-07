@@ -138,7 +138,7 @@
     <Compile Include="Helpers\Configuration.cs" />
     <Compile Include="Helpers\Connections.cs" />
     <Compile Include="Helpers\DynamicLinq.cs" />
-    <Compile Include="Helpers\FireHelpers.cs" />
+    <Compile Include="Helpers\FeedbackHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
     <Compile Include="Helpers\PagedList.cs" />
     <Compile Include="Helpers\RenderView.cs" />
@@ -223,7 +223,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Public\Css\cw.app.css" />
-    <Content Include="Public\Css\cw.flash.css" />
+    <Content Include="Public\Css\cw.feedback.css" />
     <Content Include="Public\Css\cw.flashblock.css" />
     <Content Include="Public\Css\cw.forms.css" />
     <Content Include="Public\Css\cw.tables.css" />
@@ -1731,7 +1731,10 @@
     <Content Include="Scripts\cw.app.sound.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.1.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
+    <Content Include="Scripts\jquery.feedbackbar.js" />
+    <Content Include="Scripts\jquery.feedbackbar.min.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\soundmanager2-nodebug-jsmin.js" />
     <Content Include="Scripts\soundmanager2.js" />
@@ -1806,6 +1809,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Public\Javascript\" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Infrastructure\Storage\EF\SongSearch.edmx">

@@ -2,7 +2,7 @@
 {
     background-color: #CCFFCC;
     border-top: 1px solid #FFCC66;
-    border-bottom: 4px solid #FFCC66;
+    border-bottom: 4px solid #006600;
     padding: 6px;
     font-family: "Helvetica Neue" , Helvetica, Arial, non-serif;
     font-size: 1.1em;
@@ -44,6 +44,46 @@
     cursor: pointer;
 }
 
+.feedback-bar
+{
+    background-color: #CCFFCC; /*#999999*/
+    color: #339933; /*#FFFFFF*/
+    border-bottom: 2px solid #006600; /*#333333*/
+    font-family: "Helvetica Neue" , Helvetica, Arial, non-serif;
+    font-size: 1.1em;
+    text-align: center;
+    cursor: pointer;
+}
+
+.feedback-bar-error
+{
+    background-color: #FF3300;
+    color: #FFFFFF;
+    border-bottom: 2px solid #333333;
+    font-family: "Helvetica Neue" , Helvetica, Arial, non-serif;
+    font-size: 1.1em;
+    text-align: center;
+    cursor: pointer;
+}
+
+.feedback-bar-content {
+	padding: 7px 0;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+.feedback-bar-content .close {
+	border: 2px solid;
+	padding-left: 4px;
+	padding-right: 4px;
+	text-decoration: none;
+	position: absolute;
+	right: 30px;
+	top: 5px;
+	font-weight: normal;
+	font-size: 13px;
+	color: #339933; /*#FFFFFF*/
+}
 /* ASP.NET MVC styles */
 .field-validation-error { color: #ff0000; }
 .input-validation-error { border: 1px solid #ff0000; background-color: #ffeeee; }

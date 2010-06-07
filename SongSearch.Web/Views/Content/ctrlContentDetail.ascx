@@ -13,7 +13,7 @@
     </div>--%>
 <div id="cw-content-detail">
 <%if (isEditing) { %>
-	<%Html.BeginForm("Save", "Content", FormMethod.Post, new { id = "cw-content-editor" }); %>
+	<%Html.BeginForm(MVC.Content.Save(), FormMethod.Post, new { id = "cw-content-editor" }); %>
 
 	<%: Html.HiddenFor(m => m.Content.ContentId)%>
 	<%: Html.HiddenFor(m => m.Content.CatalogId)%>
@@ -84,7 +84,7 @@
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Artist)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Artist, MVC.Shared.Views.EditorTemplates.StringAutoComplete) : Html.DisplayFor(m => m.Content.Artist)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Artist, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Artist)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Pop)%></td>
@@ -100,11 +100,11 @@
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.RecordLabel)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel, MVC.Shared.Views.EditorTemplates.StringAutoComplete) : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel, "StringAutoComplete") : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
 		</tr>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Writers)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, MVC.Shared.Views.EditorTemplates.StringAutoComplete) : Html.DisplayFor(m => m.Content.Writers)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Writers)%></td>
 		</tr>
 		<%if (Model.SectionsAllowed.Contains("Notes")) { %>
 		<%
@@ -135,7 +135,7 @@
 	<table class="cw-tbl-content-detail">         
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Lyrics)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics, MVC.Shared.Views.DisplayTemplates.MultilineText)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics,"MultilineText")%></td>
 		</tr>
 	</table>
 </div>

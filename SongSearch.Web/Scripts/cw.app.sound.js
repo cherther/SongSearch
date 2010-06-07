@@ -14,7 +14,7 @@
             _isSoundManagerReady = true;
             //mySound = soundManager.createSound();
         } else {
-            fire('error', 'There was an error loading our Flash sound player on your system. Please turn off any Flash blocking software while using this site.');
+            feedback('error', 'There was an error loading our Flash sound player on your system. Please turn off any Flash blocking software while using this site.');
         }
     });
 

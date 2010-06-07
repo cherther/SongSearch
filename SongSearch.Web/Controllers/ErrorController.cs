@@ -22,7 +22,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Index(Exception exc, string message = null, string controllerName = "unknown controller", string actionName = "unknown action") {
 			Exception lastError = Server.GetLastError();
 			lastError = lastError ?? new Exception(message ?? "Unknown Error");
-			this.FireError("Oops! We're sorry, something bad happened while processing your request...");
+			this.FeedbackError("Oops! We're sorry, something bad happened while processing your request...");
 			return View(new ErrorViewModel() { Error = new HandleErrorInfo(lastError, controllerName, actionName) } );
 		}
 		/// <summary>

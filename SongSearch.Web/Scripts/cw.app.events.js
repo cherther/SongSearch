@@ -77,7 +77,7 @@
                 // save stuff, then showContentPanel, maybe pass in as a delegate? for now:
                 saveContentPanel(lastContentEditLinkClicked, link);
             } else {
-                fire('warning', 'Save cancelled...');
+                feedback('warning', 'Save cancelled...');
                 showContentPanel(link);
             }
 

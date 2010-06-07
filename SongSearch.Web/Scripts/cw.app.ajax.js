@@ -16,7 +16,7 @@ function getContentDetailAjax(url, link) {
         success: function (data, status, xhr) {
             if (status == 'error') {
                 unwait();
-                fire('error', xhr.status + ' ' + xhr.statusText);
+                feedback('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
                 if (isContentViewMode) {
@@ -28,7 +28,7 @@ function getContentDetailAjax(url, link) {
         },
         error: function (xhr, status, error) {
             unwait();
-            fire('error', xhr.status + ' ' + xhr.statusText);
+            feedback('error', xhr.status + ' ' + xhr.statusText);
         }
     });
 
@@ -47,7 +47,7 @@ function submitContentFormAjax(formId, link, altLink) {
         success: function (data, status, xhr) {
             if (status == 'error') {
                 unwait();
-                fire('error', xhr.status + ' ' + xhr.statusText);
+                feedback('error', xhr.status + ' ' + xhr.statusText);
             } else {
                 showContentPanelCallbackEdit(data, link, altLink);
             }
@@ -55,7 +55,7 @@ function submitContentFormAjax(formId, link, altLink) {
         error:
 			function (xhr, status, error) {
 			    unwait();
-			    fire('error', xhr.status + ' ' + xhr.statusText);
+			    feedback('error', xhr.status + ' ' + xhr.statusText);
 
 			}
     };
@@ -98,7 +98,7 @@ function addToCartAjax(link) {
         dataType: 'json',
         success: function (data, status, xhr) {
             if (status == 'error') {
-                fire('error', xhr.status + ' ' + xhr.statusText);
+                feedback('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
                 link.fadeTo('slow', 0.2, function () {
@@ -112,13 +112,13 @@ function addToCartAjax(link) {
                 );
 
 
-                //fire('info', 'Added to Cart');
+                //feedback('info', 'Added to Cart');
                 updateCartCountAjax();
                 unwait();
             }
         },
         error: function (xhr, status, error) {
-            fire('error', xhr.status + ' ' + xhr.statusText);
+            feedback('error', xhr.status + ' ' + xhr.statusText);
         }
     });
 
@@ -134,15 +134,15 @@ function addToCartAjax(link) {
 //		dataType: 'json',
 //		success: function (data, status, xhr) {
 //		    if (status == 'error') {
-//		        fire('error', xhr.status + ' ' + xhr.statusText);
+//		        feedback('error', xhr.status + ' ' + xhr.statusText);
 //		    }
 //		    else {
-//		        fire('info', 'Removed from Cart');
+//		        feedback('info', 'Removed from Cart');
 //		        updateCartCountAjax();
 //		    }
 //		},
 //		error: function (xhr, status, error) {
-//		    fire('error', xhr.status + ' ' + xhr.statusText);
+//		    feedback('error', xhr.status + ' ' + xhr.statusText);
 //		}
 //	});
 
@@ -160,7 +160,7 @@ function getUserDetailAjax(url) {
         dataType: 'html',
         success: function (data, status, xhr) {
             if (status == 'error') {
-                fire('error', xhr.status + ' ' + xhr.statusText);
+                feedback('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
 
@@ -169,7 +169,7 @@ function getUserDetailAjax(url) {
             }
         },
         error: function (xhr, status, error) {
-            fire('error', xhr.status + ' ' + xhr.statusText);
+            feedback('error', xhr.status + ' ' + xhr.statusText);
         }
     }
  );
@@ -186,15 +186,15 @@ function updateRoleAjax(link) {
         cache: false,
         success: function (data, status, xhr) {
             if (status == "error") {
-                fire('error', xhr.status + ' ' + xhr.statusText);
+                feedback('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
                 toggleTagBoxSelection(link, 'cw-green', true)
-                fire('info', 'User role updated');
+                feedback('info', 'User role updated');
             }
         },
         error: function (xhr, status, error) {
-            fire('error', xhr.status + " " + xhr.statusText);
+            feedback('error', xhr.status + " " + xhr.statusText);
         }
         }
 	);
@@ -215,7 +215,7 @@ function updateCatRoleAjax(link) {
         cache: false,
         success: function (data, status, xhr) {
             if (status == "error") {
-                fire('error', xhr.status + ' ' + xhr.statusText);
+                feedback('error', xhr.status + ' ' + xhr.statusText);
             }
             else {
                 getUserDetailAjax(detUrl);
@@ -223,7 +223,7 @@ function updateCatRoleAjax(link) {
             }
         },
         error: function (xhr, status, error) {
-            fire('error', xhr.status + " " + xhr.statusText);
+            feedback('error', xhr.status + " " + xhr.statusText);
         }
     }
 	);

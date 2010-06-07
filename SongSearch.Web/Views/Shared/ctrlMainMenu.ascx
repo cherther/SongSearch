@@ -35,7 +35,7 @@
                 %>
             <li id="<%=menuId %>" class="<%= menuItem.Key == navLocation ? "current" : ""%>">
 			<%if (menuItem.Key == "Cart") { %>
-			<% Html.RenderAction("CartCount", "Cart"); %>
+			<% Html.RenderAction(MVC.Cart.CartCount()); %>
 			<%} else { %>
             <%= Html.ActionLink(values[2], values[0], values[1])%>
             <%} %>

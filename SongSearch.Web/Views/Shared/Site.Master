@@ -14,7 +14,7 @@
         .Add("~/public/css/cw.forms.css")
         .Add("~/public/css/cw.tables.css")
                 .Add("~/public/css/cw.flashblock.css")
-						.Add("~/public/css/cw.flash.css")
+						.Add("~/public/css/cw.feedback.css")
 						.Add("~/public/css/cw.twitlogin.css")
         .Add("~/public/css/jquery-ui.css")
         //.ForceRelease()
@@ -41,7 +41,7 @@
 
     </script>
     <%} %>
-    <div id="fire" style="display:none"></div>
+    <%--<div id="fire" style="display:none"></div>--%>
 
     <table width="100%">
     <tr>
@@ -84,10 +84,10 @@
 	var d = debug ? "?d" : "";
 	var bundle = Bundle.JavaScript()
 	.Add(Links.Scripts.jquery_1_4_2_min_js)
-    .Add(Links.Scripts.jquery_form_js)
+	.Add(Links.Scripts.jquery_form_js)
 	.Add(Links.Scripts.jquery_blockUI_js)
-	.Add(Links.Scripts.jquery_ui_1_8_1_min_js);
-
+	.Add(Links.Scripts.jquery_ui_min_js)
+	.Add(Links.Scripts.jquery_feedbackbar_js);
 	if (!debug) {
 		bundle.Add(Links.Scripts.soundmanager2_nodebug_jsmin_js);
 	} else {
@@ -104,7 +104,7 @@
     //.ForceRelease()
 	;
 	%>
-	<%= bundle.Render("~/Scripts/cw-combined_#.js")%>    		
+	<%= bundle.Render("~/public/javascript/cw-combined_#.js")%>    		
 </body>
 
 <%
@@ -114,7 +114,7 @@
 <%--<script type="text/javascript">$(document).ready(function () { updateCartCountAjax(); });</script>
 --%><%} %>
 
-<%=Html.Fire() %>
+<%=Html.Feedback() %>
 <asp:ContentPlaceHolder id="Javascripts" runat="server" />
 </html>
 

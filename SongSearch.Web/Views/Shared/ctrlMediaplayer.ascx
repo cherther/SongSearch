@@ -26,7 +26,7 @@
 		class = "cw-media-play-link cw-button cw-small cw-simple cw-green" title="Play/Pause"><span class="b-play">:30</span></a>
 	<%} %>
 	<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
-	<a href="#" id="cw-play-repeat" class="cw-media-repeat-link cw-button cw-small cw-simple" title="Repeat" disabled="disabled"><span class="b-undo" >Repeat</span></a>
+	<button id="cw-play-repeat" class="cw-media-repeat-link cw-button cw-small cw-simple" title="Repeat" disabled="disabled"><span class="b-undo" >Repeat</span></button>
 	<%} %>
 
 	</td>

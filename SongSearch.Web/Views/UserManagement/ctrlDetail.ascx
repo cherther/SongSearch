@@ -7,7 +7,7 @@
 <div>
     <strong><%= user.FullName() %></strong>
 <%if (Model.IsThisUser){%>
-    <span>(<%=Html.ActionLink("Edit your Profile", "UpdateProfile", "Account") %>)</span>
+    <span>(<%=Html.ActionLink("Edit your Profile", MVC.Account.UpdateProfile()) %>)</span>
 <%}%>
 </div>
 
@@ -30,7 +30,7 @@
         string roleName = ((SongSearch.Web.Roles)role).ToString();
         string roleClass = String.Concat("cw-tag-box cw-role-edit cw-button cw-simple cw-small", role == user.RoleId ? " cw-green" : " cw-black"); 
 		%>
-        <%=Html.ActionLink(roleName, "UpdateRole", new { userId = user.UserId, roleId = role }, new { @class = roleClass })%>
+        <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateRole(user.UserId, role), new { @class = roleClass })%>
 	<%} %>
 </div>
 
@@ -50,7 +50,7 @@
                         string roleName = ((SongSearch.Web.Roles)role).ToString();
                         string roleClass = "cw-tag-box cw-cat-role-edit-all cw-button cw-simple cw-small"; 
 				        %>
-                        <%=Html.ActionLink(roleName, "UpdateAllCatalogs", new { userId = user.UserId, roleId = role }, new { @class = roleClass, rel = userDetailUrl })%>
+                        <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllCatalogs(user.UserId, role), new { @class = roleClass, rel = userDetailUrl })%>
 			        <%} %>
                 </td>
             </tr>
@@ -87,11 +87,11 @@
                     foreach (var role in Model.CatalogRoles)
 			        {
                         var roleClass = String.Concat("cw-tag-box cw-cat-role-edit cw-button cw-simple cw-small", role == userCatRoleId ? " cw-green" : " cw-black");
-                        var roleValue = !role.Equals(userCatRoleId) ? role : 0;
+                        var roleId = !role.Equals(userCatRoleId) ? role : 0;
                         var roleName = ((SongSearch.Web.Roles)role).ToString();
                         
 				        %>
-                        <%=Html.ActionLink(roleName, "UpdateCatalog", new { userId = user.UserId, catalogId = cat.CatalogId, roleId = roleValue }, new { @class = roleClass, rel = userDetailUrl })%>
+                        <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, cat.CatalogId, roleId), new { @class = roleClass, rel = userDetailUrl })%>
 			        <%} %>
                     </td>
                 </tr>
@@ -102,7 +102,7 @@
 
 <%if (Model.AllowEdit){ %>
     <div>&nbsp;</div>
-    <%using (Html.BeginForm("Delete","UserManagement", FormMethod.Post)){ %>
+    <%using (Html.BeginForm(MVC.UserManagement.Delete(), FormMethod.Post)){ %>
     <%= Html.Hidden("id", user.UserId) %>
     <%= Html.AntiForgeryToken() %>
     <div class="cw-outl cw-padded" >
@@ -118,7 +118,7 @@
     <%} %>
     <div>&nbsp;</div>
 	
-    <%using (Html.BeginForm("TakeOwnership", "UserManagement", FormMethod.Post)) { %>
+    <%using (Html.BeginForm(MVC.UserManagement.TakeOwnership(), FormMethod.Post)) { %>
     <%=Html.Hidden("id", user.UserId)%>
     <%= Html.AntiForgeryToken() %>
     <div class="cw-outl cw-padded">

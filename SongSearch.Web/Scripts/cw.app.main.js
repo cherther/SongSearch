@@ -46,19 +46,23 @@ function unwait(elem) {
 //***********************************************
 //  flash
 //***********************************************
-function fire(type, msg) {
+function feedback(type, msg) {
 
-    //var fade = type == 'info';
-    var fire = $('#fire');
-    fire.html(msg).removeClass().addClass(type);
-    fire.slideDown('slow');
-    if (type != 'error') {
-        fire.delay('2000').fadeOut('slow'); 
+    if (type == "error") {
+        msg += "<a class='close' href='#'>x</a>";
+        var wrapperClass = 'feedback-bar-error';
+        var autoClose = false;
+    } else {
+        var wrapperClass = 'feedback-bar';
+        var autoClose = 2000;
+    
     }
-    fire.click(function () 
-        {
-            fire.toggle('highlight') 
-        });
+    
+    $.feedbackBar(msg, { autoClose: autoClose, wrapperClass: wrapperClass});
+
+    var fb = $('.' + wrapperClass);
+    fb.click(function () { fb.toggle('highlight') });
+
 }
 
 //***********************************************
@@ -289,7 +293,7 @@ function showContentPanelCallback(data, link) {
 //***********************************************
 function showContentPanelCallbackEdit(data, link, altLink) {
 
-    if (isContentSaveMode) { fire('info', 'Saved...'); }
+    if (isContentSaveMode) { feedback('info', 'Saved...'); }
     lastContentEditLinkClicked = isContentSaveMode ? null : link;
 
     if (altLink) {

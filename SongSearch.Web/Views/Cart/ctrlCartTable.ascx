@@ -32,7 +32,7 @@ foreach (var cart in Model)
 	        <%: ((CartStatusCodes)cart.CartStatus)%>
 	    </td>
 	    <td>
-	    <% using (Html.BeginForm("Download", "Cart", new { id = cart.CartId }, FormMethod.Post)) { %>
+	    <% using (Html.BeginForm(MVC.Cart.Download(cart.CartId), FormMethod.Post)) { %>
         <%: Html.AntiForgeryToken() %>
 	        <button type="submit" class="cw-button cw-simple cw-small cw-blue">Download</button>
 <%--	        <span class="b-save">Download</span></button>
@@ -40,7 +40,7 @@ foreach (var cart in Model)
 	    </td>
         <%if (tableHeader.Contains("Delete")) { %>
         <td>
-	    <% using (Html.BeginForm("Delete", "Cart", new { id = cart.CartId }, FormMethod.Post)) {%>
+	    <% using (Html.BeginForm(MVC.Cart.Delete(cart.CartId), FormMethod.Post)) {%>
         <%: Html.AntiForgeryToken() %>
 	        <button type="submit" class="cw-button cw-simple cw-small cw-blue">
 	        <span class="b-delete">Delete</span></button>
@@ -57,7 +57,7 @@ foreach (var cart in Model)
             var contentListViewModel = new ContentListViewModel() { List = cartContent, ListHeaders = cartContentHeaders, ShowDetails = cart.CartStatus == (int)CartStatusCodes.Active };
 	    %>
 			
-	    <% Html.RenderPartial("ctrlCartContentsTable", contentListViewModel); %>  
+	    <% Html.RenderPartial(MVC.Cart.Views.ctrlCartContentsTable, contentListViewModel); %>  
 	    </td>
 	</tr>
 <%

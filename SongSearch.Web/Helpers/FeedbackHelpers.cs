@@ -5,19 +5,19 @@ using System.Web;
 using System.Text;
 
 namespace System.Web.Mvc {
-	public static class FireHelpers {
+	public static class FeedbackHelpers {
 
-		public static void FireInfo(this Controller controller, string message) {
+		public static void FeedbackInfo(this Controller controller, string message) {
 			controller.TempData["info"] = message;
 		}
-		public static void FireWarning(this Controller controller, string message) {
+		public static void FeedbackWarning(this Controller controller, string message) {
 			controller.TempData["warning"] = message;
 		}
-		public static void FireError(this Controller controller, string message) {
+		public static void FeedbackError(this Controller controller, string message) {
 			controller.TempData["error"] = message;
 		}
 
-		public static string Fire(this HtmlHelper helper) {
+		public static string Feedback(this HtmlHelper helper) {
 
 			var message = "";
 			var className = "";
@@ -35,7 +35,7 @@ namespace System.Web.Mvc {
 			if (!String.IsNullOrEmpty(message)) {
 				sb.AppendLine("<script>");
 				sb.AppendLine("$(document).ready(function() {");
-				sb.AppendFormat("fire('{0}', '{1}');", className, message);
+				sb.AppendFormat("feedback('{0}', '{1}');", className, message);
 				sb.AppendLine("});");
 				sb.AppendLine("</script>");
 			}

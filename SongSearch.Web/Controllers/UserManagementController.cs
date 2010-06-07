@@ -56,7 +56,7 @@ namespace SongSearch.Web
 				return View(vm);
 			}
 			catch {
-				this.FireError("There was an error loading the User Management page. Please try again in a bit.");
+				this.FeedbackError("There was an error loading the User Management page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
 		}
@@ -81,7 +81,7 @@ namespace SongSearch.Web
 				string[] recipients = model.Recipients;
 				if (recipients.Count() == 0) {
 					ModelState.AddModelError("Recipient", "Please enter a valid email address");
-					this.FireError("There was an error processing your invites...");
+					this.FeedbackError("There was an error processing your invites...");
 					return View(model);
 				
 				}
@@ -92,7 +92,7 @@ namespace SongSearch.Web
 
 					if (!Regex.Match(address, @"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}").Success) {
 						ModelState.AddModelError("Recipient", "'" + address + "' is not a valid email address");
-						this.FireError("There was an error processing your invites...");
+						this.FeedbackError("There was an error processing your invites...");
 						return View(model);
 					}
 				}
@@ -126,7 +126,7 @@ namespace SongSearch.Web
 				return View(Views.InviteComplete, model);
 			} else {
 				ModelState.AddModelError("", "There was an error processing your invites");
-				this.FireError("There was an error processing your invites...");
+				this.FeedbackError("There was an error processing your invites...");
 				return View(model);
 			}
 		}
@@ -161,7 +161,7 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FireError("There was an error processing your request");
+					this.FeedbackError("There was an error processing your request");
 					return RedirectToAction(MVC.UserManagement.Index());
 				}
 			}
@@ -181,14 +181,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FireError("There was an error updating this user's role...");
+					this.FeedbackError("There was an error updating this user's role...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(roleId);
 			} else {
-				this.FireInfo("Succesfully updated user's role");
+				this.FeedbackInfo("Succesfully updated user's role");
 				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
@@ -207,14 +207,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FireError("There was an error updating this user's catalog access...");
+					this.FeedbackError("There was an error updating this user's catalog access...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(roleId);
 			} else {
-				this.FireInfo("Succesfully updated user's catalog access");
+				this.FeedbackInfo("Succesfully updated user's catalog access");
 				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
@@ -233,14 +233,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FireError("There was an error updating this user's catalog access...");
+					this.FeedbackError("There was an error updating this user's catalog access...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(roleId);
 			} else {
-				this.FireInfo("Succesfully updated user's catalog access");
+				this.FeedbackInfo("Succesfully updated user's catalog access");
 				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
@@ -259,14 +259,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FireError("There was an error deleting the user...");
+					this.FeedbackError("There was an error deleting the user...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(id);
 			} else {
-				this.FireInfo("User Deleted");
+				this.FeedbackInfo("User Deleted");
 				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}
@@ -284,14 +284,14 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					this.FireError("There was an error processing your request...");
+					this.FeedbackError("There was an error processing your request...");
 				}
 			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(id);
 			} else {
-				this.FireInfo("Sucessfully transferred user ownership");
+				this.FeedbackInfo("Sucessfully transferred user ownership");
 				return RedirectToAction(MVC.UserManagement.Index());
 			}
 		}

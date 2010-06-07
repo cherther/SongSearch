@@ -291,8 +291,12 @@ namespace Links {
         public static readonly string jquery_1_4_1_min_js = Url("jquery-1.4.1.min.js");
         public static readonly string jquery_1_4_2_min_js = Url("jquery-1.4.2.min.js");
         public static readonly string jquery_ui_1_8_1_min_js = Url("jquery-ui-1.8.1.min.js");
+        public static readonly string jquery_ui_min_js = Url("jquery-ui.min.js");
         public static readonly string jquery_blockUI_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.blockUI.min.js") ? Url("jquery.blockUI.min.js") : Url("jquery.blockUI.js");
                       
+        public static readonly string jquery_feedbackbar_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.feedbackbar.min.js") ? Url("jquery.feedbackbar.min.js") : Url("jquery.feedbackbar.js");
+                      
+        public static readonly string jquery_feedbackbar_min_js = Url("jquery.feedbackbar.min.js");
         public static readonly string jquery_form_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.form.min.js") ? Url("jquery.form.min.js") : Url("jquery.form.js");
                       
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
