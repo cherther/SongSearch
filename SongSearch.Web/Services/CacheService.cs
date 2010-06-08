@@ -31,6 +31,7 @@ namespace SongSearch.Web.Services {
 			_sessionMatrix.Add(CacheKeys.ActiveCartContents, SessionUpdateUserActiveCart);
 
 			_cacheMatrix.Add(CacheKeys.Catalogs, CacheUpdateCatalogs);
+			_cacheMatrix.Add(CacheKeys.Users, CacheUpdateUsers);
 			_cacheMatrix.Add(CacheKeys.SearchProperties, CacheUpdateSearchProperties);
 			_cacheMatrix.Add(CacheKeys.Tags, CacheUpdateTags);
 			_cacheMatrix.Add(CacheKeys.TopTags, CacheUpdateTopTags);
@@ -52,6 +53,7 @@ namespace SongSearch.Web.Services {
 			User,
 			ActiveCartContents,
 			Catalogs,
+			Users,
 			SearchProperties,
 			Tags,
 			TopTags,
@@ -94,12 +96,15 @@ namespace SongSearch.Web.Services {
 		}
 
 		public static void InitializeSession() {
+			InitializeSession(false);
+		}
+		public static void InitializeSession(bool force) {
 
 			if (HttpContext.Current.User != null && !String.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name)) {
 				string userName = HttpContext.Current.User.Identity.Name;
-				InitializeSession(userName, false);
+				InitializeSession(userName, force);
 			} else {
-				InitializeSession(null, false);
+				InitializeSession(null, force);
 			}
 		}
 
@@ -212,6 +217,19 @@ namespace SongSearch.Web.Services {
 				
 			} else {
 				return GetDataCatalogs();
+			}
+		}
+		
+		// **************************************
+		// Catalogs
+		// **************************************
+		public static IList<User> Users() {
+			if (_hasCache) {
+				if (Cache(CacheKeys.Users) == null) { CacheUpdateUsers(CacheKeys.Users); }
+				return Cache(CacheKeys.Users) as IList<User>;
+
+			} else {
+				return GetDataUsers();
 			}
 		}
 
@@ -387,6 +405,9 @@ namespace SongSearch.Web.Services {
 		private static void CacheUpdateCatalogs(CacheKeys key, params object[] list) {
 			CacheUpdate(GetDataCatalogs(), key);
 		}
+		private static void CacheUpdateUsers(CacheKeys key, params object[] list) {
+			CacheUpdate(GetDataUsers(), key);
+		}
 
 		private static void CacheUpdateSearchProperties(CacheKeys key, params object[] list) {
 			CacheUpdate(GetDataSearchProperties(), key);	
@@ -427,6 +448,10 @@ namespace SongSearch.Web.Services {
 
 		private static IList<Catalog> GetDataCatalogs() {
 			return SearchService.GetLookupList<Catalog>();
+		}
+
+		private static IList<User> GetDataUsers() {
+			return SearchService.GetLookupList<User>();
 		}
 
 		private static IList<SearchProperty> GetDataSearchProperties() {

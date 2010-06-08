@@ -61,12 +61,19 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
-		// IsAtLeastInRole
+		// IsAtLeastInCatalogRole
 		// **************************************    
 		public static bool IsAtLeastInCatalogRole(this User user, Roles role, Catalog catalog) {
 			return user != null &&  (user.IsSuperAdmin() || 
 				(user.UserCatalogRoles != null ?
 				user.UserCatalogRoles.Any(x => x.CatalogId == catalog.CatalogId && x.RoleId <= (int)role) :
+				false));
+		}
+
+		public static bool IsAtLeastInCatalogRole(this User user, Roles role, int catalogId) {
+			return user != null && (user.IsSuperAdmin() ||
+				(user.UserCatalogRoles != null ?
+				user.UserCatalogRoles.Any(x => x.CatalogId == catalogId && x.RoleId <= (int)role) :
 				false));
 		}
 

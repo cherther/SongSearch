@@ -175,6 +175,31 @@ function getUserDetailAjax(url) {
  );
 }
 
+function getCatalogDetailAjax(url){
+    //var url = '/User/Userdetail/' + userId;
+    wait();
+    $.ajax({
+        url: url,
+        cache: false,
+        dataType: 'html',
+        success: function (data, status, xhr) {
+            if (status == 'error') {
+                feedback('error', xhr.status + ' ' + xhr.statusText);
+            }
+            else {
+
+                showCatalogDetailPanel(data);
+                unwait();
+            }
+        },
+        error: function (xhr, status, error) {
+            feedback('error', xhr.status + ' ' + xhr.statusText);
+        }
+    }
+ );
+}
+
+
 function updateRoleAjax(link) {
 
     var url = link[0].href;
@@ -202,7 +227,7 @@ function updateRoleAjax(link) {
 }
 
 
-function updateCatRoleAjax(link) {
+function updateUserCatRoleAjax(link) {
 
     wait();
     var url = link[0].href;
@@ -219,6 +244,34 @@ function updateCatRoleAjax(link) {
             }
             else {
                 getUserDetailAjax(detUrl);
+                unwait();
+            }
+        },
+        error: function (xhr, status, error) {
+            feedback('error', xhr.status + " " + xhr.statusText);
+        }
+    }
+	);
+
+}
+
+function updateCatRoleAjax(link) {
+
+    wait();
+    var url = link[0].href;
+    var detUrl = link[0].rel;
+
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        type: 'POST',
+        cache: false,
+        success: function (data, status, xhr) {
+            if (status == "error") {
+                feedback('error', xhr.status + ' ' + xhr.statusText);
+            }
+            else {
+                getCatalogDetailAjax(detUrl);
                 unwait();
             }
         },

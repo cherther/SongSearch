@@ -29,7 +29,7 @@ namespace SongSearch.Web.Services {
 		void UpdateUserCatalogRole(int userId, int catalogId, int roleId);
 
 		void UpdateAllCatalogs(int userId, int roleId);
-		void UpdateAllUsers(int catalogId, int roleId);
 
+		void UpdateAllUsers(int catalogId, int roleId);
 	}
 }

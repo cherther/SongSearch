@@ -48,7 +48,7 @@
                     foreach (var role in Model.CatalogRoles)
 			        {
                         string roleName = ((SongSearch.Web.Roles)role).ToString();
-                        string roleClass = "cw-tag-box cw-cat-role-edit-all cw-button cw-simple cw-small"; 
+						string roleClass = "cw-tag-box cw-usrcat-role-edit-all cw-button cw-simple cw-small"; 
 				        %>
                         <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllCatalogs(user.UserId, role), new { @class = roleClass, rel = userDetailUrl })%>
 			        <%} %>
@@ -86,7 +86,7 @@
                     <%
                     foreach (var role in Model.CatalogRoles)
 			        {
-                        var roleClass = String.Concat("cw-tag-box cw-cat-role-edit cw-button cw-simple cw-small", role == userCatRoleId ? " cw-green" : " cw-black");
+                        var roleClass = String.Concat("cw-tag-box cw-usrcat-role-edit cw-button cw-simple cw-small", role == userCatRoleId ? " cw-green" : " cw-gray");
                         var roleId = !role.Equals(userCatRoleId) ? role : 0;
                         var roleName = ((SongSearch.Web.Roles)role).ToString();
                         

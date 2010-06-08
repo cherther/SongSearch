@@ -52,6 +52,11 @@ namespace SongSearch.Web {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult UpdateAllUsers() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.UpdateAllUsers);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Delete() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
         }
@@ -79,6 +84,7 @@ namespace SongSearch.Web {
             public readonly string UpdateRole = "UpdateRole";
             public readonly string UpdateCatalog = "UpdateCatalog";
             public readonly string UpdateAllCatalogs = "UpdateAllCatalogs";
+            public readonly string UpdateAllUsers = "UpdateAllUsers";
             public readonly string Delete = "Delete";
             public readonly string TakeOwnership = "TakeOwnership";
         }
@@ -142,6 +148,13 @@ namespace SongSearch.Web {
         public override System.Web.Mvc.ActionResult UpdateAllCatalogs(int userId, int roleId) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateAllCatalogs);
             callInfo.RouteValueDictionary.Add("userId", userId);
+            callInfo.RouteValueDictionary.Add("roleId", roleId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult UpdateAllUsers(int catalogId, int roleId) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateAllUsers);
+            callInfo.RouteValueDictionary.Add("catalogId", catalogId);
             callInfo.RouteValueDictionary.Add("roleId", roleId);
             return callInfo;
         }

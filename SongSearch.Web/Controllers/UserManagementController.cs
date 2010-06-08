@@ -154,7 +154,7 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					return View(Views.ctrlDetail, vm);
 				} else {
-					return RedirectToAction(MVC.UserManagement.Index()); //return View(vm);
+					return RedirectToAction(Actions.Index()); //return View(vm);
 				}
 			}
 			catch (Exception ex){
@@ -162,7 +162,7 @@ namespace SongSearch.Web
 					throw ex;
 				} else {
 					this.FeedbackError("There was an error processing your request");
-					return RedirectToAction(MVC.UserManagement.Index());
+					return RedirectToAction(Actions.Index());
 				}
 			}
 		}
@@ -215,7 +215,7 @@ namespace SongSearch.Web
 				return Json(roleId);
 			} else {
 				this.FeedbackInfo("Succesfully updated user's catalog access");
-				return RedirectToAction(MVC.UserManagement.Index());
+				return RedirectToAction(Actions.Index());
 			}
 		}
 
@@ -241,7 +241,33 @@ namespace SongSearch.Web
 				return Json(roleId);
 			} else {
 				this.FeedbackInfo("Succesfully updated user's catalog access");
-				return RedirectToAction(MVC.UserManagement.Index());
+				return RedirectToAction(Actions.Index());
+			}
+		}
+
+		// **************************************
+		// URL: /UserManagement/UpdateCatalog?user=5&roleId=3
+		// **************************************
+		[HttpPost]
+		public virtual ActionResult UpdateAllUsers(int catalogId, int roleId) {
+			try {
+
+				_usrMgmtService.UpdateAllUsers(catalogId, roleId);
+
+			}
+			catch (Exception ex) {
+				if (Request.IsAjaxRequest()) {
+					throw ex;
+				} else {
+					this.FeedbackError("There was an error updating all users' catalog access...");
+				}
+			}
+
+			if (Request.IsAjaxRequest()) {
+				return Json(roleId);
+			} else {
+				this.FeedbackInfo("Succesfully updated all users' catalog access");
+				return RedirectToAction(Actions.Index());
 			}
 		}
 		// **************************************
@@ -267,7 +293,7 @@ namespace SongSearch.Web
 				return Json(id);
 			} else {
 				this.FeedbackInfo("User Deleted");
-				return RedirectToAction(MVC.UserManagement.Index());
+				return RedirectToAction(Actions.Index());
 			}
 		}
 
@@ -292,7 +318,7 @@ namespace SongSearch.Web
 				return Json(id);
 			} else {
 				this.FeedbackInfo("Sucessfully transferred user ownership");
-				return RedirectToAction(MVC.UserManagement.Index());
+				return RedirectToAction(Actions.Index());
 			}
 		}
     }

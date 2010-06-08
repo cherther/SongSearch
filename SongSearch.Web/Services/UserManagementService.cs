@@ -12,7 +12,6 @@ namespace SongSearch.Web.Services {
 		// (Properties)
 		// ----------------------------------------------------------------------------
 		private bool _disposed;
-		
 				
 		public UserManagementService(IDataSession session) : base(session) {}
 		public UserManagementService(string activeUserIdentity) : base(activeUserIdentity) { }
@@ -310,48 +309,43 @@ namespace SongSearch.Web.Services {
 			var cat = DataSession.Single<Catalog>(x => x.CatalogId == catalogId);
 
 			if (cat != null) {
-				var allUsers = DataSession.All<User>();
-				var myUsers = ActiveUser.GetUserHierarchy();
+				//var users = DataSession.GetObjectQuery<User>().Include("UserCatalogRoles").ToList();
+				var users = ActiveUser.GetUserHierarchy(true);
 
-				SetCatalogRole(catalogId, roleId, allUsers, myUsers);
+				SetCatalogRole(catalogId, roleId, users);
+				DataSession.CommitChanges();
 			}
 		}
 
 		// **************************************
 		// SetCatalogRole
 		// **************************************
-		private void SetCatalogRole(int catalogId, int roleId, IQueryable<User> allUsers, IList<User> myUsers) {
-			foreach (var myUser in myUsers) {
+		private void SetCatalogRole(int catalogId, int roleId, IList<User> users) {
+			foreach (var user in users) {
 
-				var user = allUsers.Where(x => x.UserId == myUser.UserId).SingleOrDefault();
+				var usrCatalog = DataSession.Single<UserCatalogRole>(uc => uc.CatalogId == catalogId && uc.UserId == user.UserId);
+					
+				roleId = ModelEnums.GetRoles().GetBestMatchForRole(roleId);
 
-				if (user != null) {
-					var usrCatalog = user.UserCatalogRoles.Where(uc => uc.CatalogId == catalogId).SingleOrDefault();
-
-					roleId = ModelEnums.GetRoles().GetBestMatchForRole(roleId);
-
-					if (usrCatalog == null && roleId > 0) {
-						usrCatalog = new UserCatalogRole {
-							UserId = myUser.UserId,
-							CatalogId = catalogId,
-							RoleId = roleId
-						};
-						DataSession.Add<UserCatalogRole>(usrCatalog);
+				if (usrCatalog == null && roleId > 0) {
+					usrCatalog = new UserCatalogRole {
+						UserId = user.UserId,
+						CatalogId = catalogId,
+						RoleId = roleId
+					};
+					DataSession.Add<UserCatalogRole>(usrCatalog);
+				} else {
+					if (roleId > 0) {
+						usrCatalog.RoleId = roleId;
 					} else {
-						if (roleId > 0) {
-							usrCatalog.RoleId = roleId;
-						} else {
-							DataSession.Delete<UserCatalogRole>(usrCatalog);
-						}
+						DataSession.Delete<UserCatalogRole>(usrCatalog);
 					}
+				}
 
-					DataSession.CommitChanges();
+				if (user.ChildUsers.Count > 0) {
 
-					if (myUser.ChildUsers.Count > 0) {
+					SetCatalogRole(catalogId, roleId, user.ChildUsers);
 
-						SetCatalogRole(catalogId, roleId, allUsers.AsQueryable(), myUser.GetUserHierarchy());
-
-					}
 				}
 			}
 		}

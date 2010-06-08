@@ -15,7 +15,7 @@
     <tr id="<%= rowId%>" class="cw-user-listing <%= rowClass%>">
 		<td>-</td>
 		<td>
-		    <%: Html.ActionLink(user.FullName(), "Detail", new { id = user.UserId }, new { @class = "cw-user-detail-link" })%>
+		    <%: Html.ActionLink(user.FullName(), MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link" })%>
 		</td>
 	</tr>
 	<%

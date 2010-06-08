@@ -240,13 +240,13 @@
     //***********************************************
     // Catalog role edit link
     //***********************************************
-    $('.cw-cat-role-edit').live('click',
+    $('.cw-usrcat-role-edit').live('click',
 		function (evt) {
 
 		    evt.preventDefault();
 		    var link = $(this);
 
-		    updateCatRoleAjax(link);
+		    updateUserCatRoleAjax(link);
 
 
 		}
@@ -255,13 +255,13 @@
     //***********************************************
     // Catalog role edit all link
     //***********************************************
-    $('.cw-cat-role-edit-all').live('click',
+	$('.cw-usrcat-role-edit-all').live('click',
 		function (evt) {
 
 		    evt.preventDefault();
 		    var link = $(this);
 
-		    updateCatRoleAjax(link);
+		    updateUserCatRoleAjax(link);
 
 
 		}
@@ -269,5 +269,59 @@
 
 
 
+
+
+    //***********************************************
+    //  Catalog role edit link
+    //***********************************************
+    $('.cw-cat-role-edit').live('click',
+    function (evt) {
+
+	    evt.preventDefault();
+	    var link = $(this);
+
+	    updateCatRoleAjax(link);
+
+
+    }
+    );
+
+    //***********************************************
+    // Catalog role edit all link
+    //***********************************************
+    $('.cw-cat-role-edit-all').live('click',
+    function (evt) {
+
+	    evt.preventDefault();
+	    var link = $(this);
+
+	    updateCatRoleAjax(link);
+
+
+    }
+    );
+
+		//
+
+	//-----------------------------------------------------------------------------------
+	// Catalog Management List
+	//-----------------------------------------------------------------------------------
+	//***********************************************
+		// Catalog detail link
+	//***********************************************
+	$('.cw-catalog-detail-link').live('click',
+	    function (evt) {
+
+		    evt.preventDefault();
+		    var link = $(this);
+		    var url = link[0].href;
+		    var listing = link.parents('.cw-catalog-listing');
+		    $('.cw-catalog-listing').removeClass('cw-selected');
+		    listing.addClass('cw-selected');
+
+		    getCatalogDetailAjax(url);
+
+	    }
+    );
 }
 );

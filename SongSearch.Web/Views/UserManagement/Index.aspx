@@ -8,10 +8,10 @@
 	IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
 
     menu.Add("Manage Users", new string[4] { "Index", "UserManagement", "Admin", "current" });
-    menu.Add("Manage Catalogs", new string[4] { "Index", "Catalog", "Admin", "" });
+	menu.Add("Manage Catalogs", new string[4] { "Index", "CatalogManagement", "Admin", "" });
     menu.Add("Invite", new string[4] { "Invite", "UserManagement", "Admin", "" });
-	
-	Html.RenderPartial("ctrlSubMenu", menu);
+
+	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
 		
 %>
 </asp:Content>
@@ -32,7 +32,7 @@
 		<td style="vertical-align: top">
             <div class = "cw-outl cw-padded" style="overflow:auto ; height: 300px; width: 300px;">
                 <table id="user-list" class="cw-tbl-usr">
-                    <% Html.RenderPartial("ctrlUserList", users ); %>
+                    <% Html.RenderPartial(MVC.UserManagement.Views.ctrlUserList, users ); %>
                 </table>
             </div>
             <div>&nbsp;</div>

@@ -168,6 +168,7 @@ namespace SongSearch.Web {
 				Bind<ICartService>().To<CartService>();
 				Bind<IContentAdminService>().To<ContentAdminService>();
 				Bind<IUserManagementService>().To<UserManagementService>();
+				Bind<ICatalogManagementService>().To<CatalogManagementService>();
 				Bind<IFormsAuthenticationService>().To<FormsAuthenticationService>();
 			}
 		}

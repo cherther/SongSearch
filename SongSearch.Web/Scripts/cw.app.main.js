@@ -489,3 +489,18 @@ function showUserDetailPanel(data) {
     }
 
 }
+
+//***********************************************
+//  showUserDetailPanel
+//***********************************************
+function showCatalogDetailPanel(data) {
+    //var url = '/User/Userdetail/' + userId;
+    
+    var catalogDetail = $(catalogDetailId);
+    catalogDetail.html(data);
+    if (!isCatalogDetailShowing) {
+        catalogDetail.show(); //fadeIn('slow');
+        isCatalogDetailShowing = true;
+    }
+
+}
