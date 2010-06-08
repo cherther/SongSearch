@@ -36,7 +36,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Index()
         {
 			try {
-				var catalogs = _catMgmtService.GetMyCatalogs();
+				var catalogs = _currentUser.MyAdminCatalogs();// _catMgmtService.GetMyCatalogs();
 				var vm = new CatalogViewModel();
 
 				vm.MyCatalogs = catalogs;
@@ -60,7 +60,7 @@ namespace SongSearch.Web.Controllers
 				var vm = new CatalogViewModel();
 
 				vm.MyCatalogs = new List<Catalog>() { catalog };
-				vm.Users = _currentUser.GetUserHierarchy();
+				vm.Users = _currentUser.MyUserHierarchy();
 				vm.Roles = ModelEnums.GetRoles().Where(r => r >= _currentUser.RoleId).ToArray();
 				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= _currentUser.RoleId).ToArray();
 				vm.NavigationLocation = "Admin";

@@ -237,7 +237,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 
 				//Assert
 				var preusr = svc.GetUserDetail(testUserId);
-				var prechildren = preusr.GetUserHierarchy(true);
+				var prechildren = preusr.MyUserHierarchy(true);
 				var prehasAccess = preusr.UserCatalogRoles.Any(x => x.CatalogId == testCatalogId);
 				var prechildrenHaveAccess = prechildren.Any(x => x.UserCatalogRoles.Any(r => r.CatalogId == testCatalogId));
 
@@ -250,7 +250,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 
 				//Assert
 				var usr = svc.GetUserDetail(testUserId);
-				var children = usr.GetUserHierarchy(true);
+				var children = usr.MyUserHierarchy(true);
 				var hasAccess = usr.UserCatalogRoles.Any(x => x.CatalogId == testCatalogId);
 				var childrenHaveAccess = children.Any(x => x.UserCatalogRoles.Any(r => r.CatalogId == testCatalogId));
 

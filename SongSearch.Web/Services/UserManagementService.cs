@@ -22,11 +22,11 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 
 		// **************************************
-		// GetUserHierarchy
+		// MyUserHierarchy
 		// **************************************
 		public IList<User> GetMyUserHierarchy() {
 
-			return ActiveUser.GetUserHierarchy();
+			return ActiveUser.MyUserHierarchy();
 
 		}
 
@@ -236,7 +236,7 @@ namespace SongSearch.Web.Services {
 					} else {
 
 						//also remove these catalogs from any child users, really?
-						var childUsers = user.GetUserHierarchy(withCatalogRoles: true);
+						var childUsers = user.MyUserHierarchy(withCatalogRoles: true);
 						foreach (var child in childUsers) {
 							var cat = DataSession.Single<UserCatalogRole>(x => x.CatalogId == catalogId && x.UserId == child.UserId);
 							if (cat != null) { DataSession.Delete<UserCatalogRole>(cat); }
@@ -259,46 +259,49 @@ namespace SongSearch.Web.Services {
 		// UpdateUserRoleAllCatalogs
 		// **************************************
 		public void UpdateAllCatalogs(int userId, int roleId) {
-			var usr = GetUser(userId);
-			var parentUsr = GetUser(usr.ParentUserId.GetValueOrDefault());
 
-			if (usr != null) {
-				var catalogs = DataSession.All<Catalog>();
+			var catalogs = DataSession.All<Catalog>();
+			var usr = DataSession.Single<User>(u => u.UserId == userId);
+			
+			if (!ActiveUser.IsSuperAdmin()){
+
+				var parentUsr = DataSession.GetObjectQuery<User>()
+					.Include("UserCatalogRoles.Catalog")
+					.SingleOrDefault(u => u.UserId == usr.ParentUserId); 
+				
 				// limit to catalogs with myUser admin access if not superadmin
-				if (!ActiveUser.IsSuperAdmin() && parentUsr != null) {
-					catalogs = from uc in parentUsr.UserCatalogRoles.AsQueryable()
-							   join c in catalogs on uc.CatalogId equals c.CatalogId
-							   select c;
-				}
+				catalogs = parentUsr != null ? catalogs.LimitToAdministeredBy(parentUsr) : catalogs;
+			}
 
-				foreach (var catalog in catalogs) {
-					var usrCatalog = usr.UserCatalogRoles.Where(uc => uc.CatalogId == catalog.CatalogId).SingleOrDefault();
-					
-					if (usrCatalog == null && roleId > 0) {
-					
-						// new catalog role
-						// check role against enum
-						roleId = ModelEnums.GetRoles().GetBestMatchForRole(roleId);
+			foreach (var catalog in catalogs) {
 
-						usrCatalog = new UserCatalogRole {
-							UserId = userId,
-							CatalogId = catalog.CatalogId,
-							RoleId = roleId
-						};
-						DataSession.Add<UserCatalogRole>(usrCatalog);
+				var usrCatalog = usr.UserCatalogRoles.SingleOrDefault(uc => uc.CatalogId == catalog.CatalogId);
+					
+				if (usrCatalog == null && roleId > 0) {
+					
+					// new catalog role
+					// check role against enum
+					roleId = ModelEnums.GetRoles().GetBestMatchForRole(roleId);
+
+					usrCatalog = new UserCatalogRole {
+						UserId = userId,
+						CatalogId = catalog.CatalogId,
+						RoleId = roleId
+					};
+					DataSession.Add<UserCatalogRole>(usrCatalog);
+				} else {
+					if (roleId > 0) {
+						usrCatalog.RoleId = roleId;
+
 					} else {
-						if (roleId > 0) {
-							usrCatalog.RoleId = roleId;
-
-						} else {
-							// revoke access
-							DataSession.Delete<UserCatalogRole>(usrCatalog);
-						}
+						// revoke access
+						DataSession.Delete<UserCatalogRole>(usrCatalog);
 					}
 				}
-
-				DataSession.CommitChanges();
 			}
+
+			DataSession.CommitChanges();
+			
 		}
 
 		// **************************************
@@ -310,7 +313,7 @@ namespace SongSearch.Web.Services {
 
 			if (cat != null) {
 				//var users = DataSession.GetObjectQuery<User>().Include("UserCatalogRoles").ToList();
-				var users = ActiveUser.GetUserHierarchy(true);
+				var users = ActiveUser.MyUserHierarchy(true);
 
 				SetCatalogRole(catalogId, roleId, users);
 				DataSession.CommitChanges();

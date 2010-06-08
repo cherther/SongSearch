@@ -8,14 +8,15 @@
 	   var rowId = String.Concat("user-", user.UserId.ToString());
 	   //var rowClass = user.ParentUserId.HasValue ? String.Concat("c-", user.ParentUserId.ToString()) : "";
 	   var rowClass = String.Concat("c-", user.UserId.ToString());
-
+	   var userDisplayName = user.FullName();
+	   
 	   //var childClass = user.ParentUserId.HasValue ? String.Concat("children-", user.UserId.ToString()) : "";
 	   %>
 
     <tr id="<%= rowId%>" class="cw-user-listing <%= rowClass%>">
 		<td>-</td>
 		<td>
-		    <%: Html.ActionLink(user.FullName(), MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link" })%>
+		    <%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
 		</td>
 	</tr>
 	<%

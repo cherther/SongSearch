@@ -78,21 +78,21 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
-		// IsAtLeastInDbRole
+		// IsAtLeastInRole
 		// **************************************    
 		public static bool IsAtLeastInRole(this User user, Roles role) {
 			return user != null && user.RoleId <= (int)role;
 		}
 
 		// **************************************
-		// IsInAnyDbRole
+		// IsInAnyRole
 		// **************************************    
 		public static bool IsInAnyRole(this User user, Roles[] roles) {
 			return user != null && roles.Contains((Roles)user.RoleId);
 		}
 
 		// **************************************
-		// UserAccessLevels
+		// FullName
 		// **************************************    
 		public static string FullName(this User user) {
 
@@ -102,6 +102,16 @@ namespace SongSearch.Web {
 
 		}
 
+		// **************************************
+		// FullName
+		// **************************************    
+		public static string FullDisplayName(this User user) {
+
+			string name = user != null ? String.Format("{0} <{1}>", user.FullName(), user.UserName) : "";
+
+			return String.IsNullOrEmpty(name.Trim()) ? user.UserName : name;
+
+		}
 		// **************************************
 		// ParentSignature
 		// **************************************    
@@ -158,9 +168,9 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
-		// GetUserHierarchy
+		// MyUserHierarchy
 		// **************************************    
-		public static IList<User> GetUserHierarchy(this User user, bool withCatalogRoles = false) {
+		public static IList<User> MyUserHierarchy(this User user, bool withCatalogRoles = false) {
 
 			using (var session = App.DataSessionReadOnly) {
 
@@ -178,6 +188,13 @@ namespace SongSearch.Web {
 			}
 		}
 
+		// **************************************
+		// MyAdminCatalogs
+		// **************************************    
+		public static IList<Catalog> MyAdminCatalogs(this User user) {
+
+			return CacheService.Catalogs().LimitToAdministeredBy(user);
+		}
 		// **************************************
 		// AttachChildren
 		// **************************************

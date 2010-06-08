@@ -141,16 +141,13 @@ namespace SongSearch.Web
 				var vm = new UserViewModel();
 
 				vm.MyUsers = new List<User>() { user };
-				vm.Catalogs = CacheService.Catalogs();
+				vm.Catalogs = _currentUser.IsSuperAdmin() ? CacheService.Catalogs() : _currentUser.MyAdminCatalogs();
 				vm.Roles = ModelEnums.GetRoles().Where(r => r >= _currentUser.RoleId).ToArray();
 				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= _currentUser.RoleId).ToArray();
 				vm.IsThisUser = user.UserId == _currentUser.UserId;
 				vm.NavigationLocation = "Admin";
 				vm.AllowEdit = !vm.IsThisUser && !user.IsSuperAdmin();
 
-				if (!_currentUser.IsSuperAdmin()) {
-					//vm.LookupCatalogs = vm.LookupCatalogs.LimitToAdministeredBy(user);
-				}
 				if (Request.IsAjaxRequest()) {
 					return View(Views.ctrlDetail, vm);
 				} else {

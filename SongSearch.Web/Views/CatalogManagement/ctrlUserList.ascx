@@ -17,19 +17,22 @@
 	   var userCatalog = catalog.UserCatalogRoles.SingleOrDefault(c => c.UserId == user.UserId);
 	   
 	   var userCatRoleId = userCatalog == null ? 0 : userCatalog.RoleId;
+	   var userDisplayName = user.FullName();
 	   
 	   %>
 
     <tr id="<%= rowId%>" class="cw-user-listing <%= rowClass%>">
 		<td>
 		<%for (var i = 0; i < Model.HierarchyLevel; i++) {%>
-		&nbsp;
+		&nbsp;&nbsp;
 		<%} %>
+		<span title="<%: user.UserName %>">
 		<%if (Model.HierarchyLevel > 0) { %>
-		- <%:user.FullName()%>
+		- <%:userDisplayName%>
 		<%} else {%>
-			<strong><%:user.FullName() %></strong>
+			<strong><%:userDisplayName%></strong>
 		<%} %>
+		</span>
 		</td>
 		 <td>
             <%=Html.Hidden(String.Concat("ur-", userId), userCatRoleId)%>

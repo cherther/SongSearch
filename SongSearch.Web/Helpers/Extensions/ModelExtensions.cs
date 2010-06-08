@@ -8,19 +8,20 @@ using System.IO;
 
 namespace SongSearch.Web {
 	public static class DataModelExtensions {
+
 		
-		public static int CountWithChildren(this IList<User> users) {
-			int count = users.Count;
-			users.ForEach(u => count += CountWithChildren(u.ChildUsers.ToList()));
 
-			return count;
-		}
-
-		public static SortType Flip(this SortType sort){
+		// **************************************
+		// Flip
+		// **************************************    
+		public static SortType Flip(this SortType sort) {
 
 			return sort == SortType.Ascending ? SortType.Descending : SortType.Ascending;
 		}
 
+		// **************************************
+		// IsDescending
+		// **************************************    
 		public static bool IsDescending(this SortType sort) {
 
 			return sort == SortType.Descending;
@@ -37,6 +38,31 @@ namespace SongSearch.Web {
 		
 		}
 
+		// **************************************
+		// CountWithChildren
+		// **************************************    
+		public static int CountWithChildren(this IList<User> users) {
+			int count = users.Count;
+			users.ForEach(u => count += CountWithChildren(u.ChildUsers.ToList()));
+
+			return count;
+		}
+
+		// **************************************
+		// LimitToAdministeredBy
+		// **************************************    
+		public static IQueryable<Catalog> LimitToAdministeredBy(this IQueryable<Catalog> catalogs, User user) {
+			var adminCatalogIds = user.UserCatalogRoles.Where(x => x.RoleId <= (int)Roles.Admin).Select(x => x.CatalogId);
+			return catalogs.Where(c => adminCatalogIds.Contains(c.CatalogId));
+
+			//			return catalogs.Where(c => c.UserCatalogRoles.Any(x => x.UserId == user.UserId && x.RoleId <= (int)Roles.Admin));
+		}
+		public static IList<Catalog> LimitToAdministeredBy(this IList<Catalog> catalogs, User user) {
+			var adminCatalogIds = user.UserCatalogRoles.Where(x => x.RoleId <= (int)Roles.Admin).Select(x => x.CatalogId);
+			return catalogs.Where(c => adminCatalogIds.Contains(c.CatalogId)).ToList();
+
+//			return catalogs.Where(c => c.UserCatalogRoles.Any(x => x.UserId == user.UserId && x.RoleId <= (int)Roles.Admin)).ToList();
+		}
 		// **************************************
 		// UpdateModel:
 		//	Content
