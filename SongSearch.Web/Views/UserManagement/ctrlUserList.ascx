@@ -13,14 +13,14 @@
 	   //var childClass = user.ParentUserId.HasValue ? String.Concat("children-", user.UserId.ToString()) : "";
 	   %>
 
-    <tr id="<%= rowId%>" class="cw-user-listing <%= rowClass%>">
+	<tr id="<%= rowId%>" class="cw-user-listing <%= rowClass%>">
 		<td>-</td>
 		<td>
-		    <%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
+			<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
 		</td>
 	</tr>
 	<%
-        if (user.ChildUsers.Count() > 0)
+		if (user.ChildUsers.Count() > 0)
 	{
 	 %>
 	<tr class="cw-user-child-listing <%= rowClass%>">

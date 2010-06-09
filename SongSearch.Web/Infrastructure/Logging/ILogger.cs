@@ -15,5 +15,5 @@ namespace SongSearch.Web.Logging {
 		void Fatal(string message);
 		void Fatal(Exception x);
 
-    }
+	}
 }

@@ -13,6 +13,28 @@
           <EntitySet Name="ContentRightTerritories" EntityType="SongSearch2Model.Store.ContentRightTerritories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Contents" EntityType="SongSearch2Model.Store.Contents" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContentTags" EntityType="SongSearch2Model.Store.ContentTags" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Import_SongData" EntityType="SongSearch2Model.Store.Import_SongData" store:Type="Tables" store:Schema="dbo" store:Name="Import_SongData">
+            <DefiningQuery>SELECT 
+      [Import_SongData].[SongID] AS [SongID], 
+      [Import_SongData].[Title] AS [Title], 
+      [Import_SongData].[Artist] AS [Artist], 
+      [Import_SongData].[RecordLabel] AS [RecordLabel], 
+      [Import_SongData].[ReleaseYear] AS [ReleaseYear], 
+      [Import_SongData].[Catalog] AS [Catalog], 
+      [Import_SongData].[Notes] AS [Notes], 
+      [Import_SongData].[Splits] AS [Splits], 
+      [Import_SongData].[MasterPerc] AS [MasterPerc], 
+      [Import_SongData].[CompPerc] AS [CompPerc], 
+      [Import_SongData].[AllIn] AS [AllIn], 
+      [Import_SongData].[IsAllIn] AS [IsAllIn], 
+      [Import_SongData].[Instrumentation] AS [Instrumentation], 
+      [Import_SongData].[SoundsLike] AS [SoundsLike], 
+      [Import_SongData].[Keywords] AS [Keywords], 
+      [Import_SongData].[Restictions] AS [Restictions], 
+      [Import_SongData].[Styles] AS [Styles], 
+      [Import_SongData].[SimilarSongs] AS [SimilarSongs]
+      FROM [dbo].[Import_SongData] AS [Import_SongData]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="Invitations" EntityType="SongSearch2Model.Store.Invitations" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="SongSearch2Model.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SearchProperties" EntityType="SongSearch2Model.Store.SearchProperties" store:Type="Tables" Schema="dbo" />
@@ -157,6 +179,32 @@
           </Key>
           <Property Name="ContentId" Type="int" Nullable="false" />
           <Property Name="TagId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'SongSearch2.dbo.Import_SongData' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="Import_SongData">
+          <Key>
+            <PropertyRef Name="SongID" />
+          </Key>
+          <Property Name="SongID" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="255" />
+          <Property Name="Artist" Type="nvarchar" MaxLength="255" />
+          <Property Name="RecordLabel" Type="nvarchar" MaxLength="255" />
+          <Property Name="ReleaseYear" Type="nvarchar" MaxLength="255" />
+          <Property Name="Catalog" Type="nvarchar" MaxLength="255" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Splits" Type="nvarchar" MaxLength="255" />
+          <Property Name="MasterPerc" Type="float" />
+          <Property Name="CompPerc" Type="float" />
+          <Property Name="AllIn" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsAllIn" Type="bit" />
+          <Property Name="Instrumentation" Type="nvarchar" MaxLength="255" />
+          <Property Name="SoundsLike" Type="nvarchar" MaxLength="255" />
+          <Property Name="Keywords" Type="nvarchar" MaxLength="255" />
+          <Property Name="Restictions" Type="nvarchar" MaxLength="255" />
+          <Property Name="Styles" Type="nvarchar" MaxLength="255" />
+          <Property Name="SimilarSongs" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="Invitations">
           <Key>
@@ -486,6 +534,7 @@
             <End Role="UserCatalogRole" EntitySet="UserCatalogRoles" />
           </AssociationSet>
           <EntitySet Name="SearchProperties" EntityType="SongSearch.Web.Data.Model.SearchProperty" />
+          <EntitySet Name="Import_SongData" EntityType="SongSearch.Web.Data.Model.Import_SongData" />
           </EntityContainer>
         <EntityType Name="Cart">
           <Key>
@@ -760,6 +809,29 @@
           <Property Type="Boolean" Name="IsIndexable" Nullable="false" />
           <Property Type="Boolean" Name="IncludeInSearchMenu" Nullable="false" />
         </EntityType>
+        <EntityType Name="Import_SongData">
+          <Key>
+            <PropertyRef Name="SongID" />
+          </Key>
+          <Property Type="Int32" Name="SongID" Nullable="false" />
+          <Property Type="String" Name="Title" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Artist" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="RecordLabel" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReleaseYear" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Catalog" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Splits" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="MasterPerc" />
+          <Property Type="Double" Name="CompPerc" />
+          <Property Type="String" Name="AllIn" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsAllIn" />
+          <Property Type="String" Name="Instrumentation" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SoundsLike" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Keywords" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Restictions" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Styles" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SimilarSongs" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -903,6 +975,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Import_SongData">
+            <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Import_SongData">
+              <MappingFragment StoreEntitySet="Import_SongData">
+                <ScalarProperty Name="SimilarSongs" ColumnName="SimilarSongs" />
+                <ScalarProperty Name="Styles" ColumnName="Styles" />
+                <ScalarProperty Name="Restictions" ColumnName="Restictions" />
+                <ScalarProperty Name="Keywords" ColumnName="Keywords" />
+                <ScalarProperty Name="SoundsLike" ColumnName="SoundsLike" />
+                <ScalarProperty Name="Instrumentation" ColumnName="Instrumentation" />
+                <ScalarProperty Name="IsAllIn" ColumnName="IsAllIn" />
+                <ScalarProperty Name="AllIn" ColumnName="AllIn" />
+                <ScalarProperty Name="CompPerc" ColumnName="CompPerc" />
+                <ScalarProperty Name="MasterPerc" ColumnName="MasterPerc" />
+                <ScalarProperty Name="Splits" ColumnName="Splits" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Catalog" ColumnName="Catalog" />
+                <ScalarProperty Name="ReleaseYear" ColumnName="ReleaseYear" />
+                <ScalarProperty Name="RecordLabel" ColumnName="RecordLabel" />
+                <ScalarProperty Name="Artist" ColumnName="Artist" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="SongID" ColumnName="SongID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -983,6 +1079,7 @@
           <ConnectorPoint PointX="7.5" PointY="14.086293945312502" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="12.125" PointY="1.125" Height="3.9033007812500031" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Import_SongData" Width="1.5" PointX="12.125" PointY="6.125" Height="4.4802050781250031" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -5,9 +5,9 @@ using System.Web;
 
 namespace SongSearch.Web.Services {
 		
-    public interface IFormsAuthenticationService
-    {
-        void SignIn(string userName, bool createPersistentCookie);
-        void SignOut();
-    }
+	public interface IFormsAuthenticationService
+	{
+		void SignIn(string userName, bool createPersistentCookie);
+		void SignOut();
+	}
 }

@@ -10,14 +10,14 @@ namespace SongSearch.Web.Data
 		SongSearchContext
 	}
 
-    // **************************************
-    // Configuration
-    // **************************************
-    public static class Connections
-    {
-        // **************************************
-        // Get
-        // **************************************
+	// **************************************
+	// Configuration
+	// **************************************
+	public static class Connections
+	{
+		// **************************************
+		// Get
+		// **************************************
 		//public static string Get(string key)
 		//{
 		//    string value = ConfigurationManager.AppSettings[key];
@@ -33,5 +33,5 @@ namespace SongSearch.Web.Data
 			if (String.IsNullOrEmpty(value)) { throw new KeyNotFoundException(String.Format("{0} is not specified in config file", key)); }
 			return value;
 		}
-    }
+	}
 }

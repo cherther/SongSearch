@@ -34,13 +34,13 @@ namespace SongSearch.Web.Controllers
 		// URL: /CatalogManagement/
 		// **************************************
 		public virtual ActionResult Index()
-        {
+		{
 			try {
 				var catalogs = _currentUser.MyAdminCatalogs();// _catMgmtService.GetMyCatalogs();
 				var vm = new CatalogViewModel();
 
 				vm.MyCatalogs = catalogs;
-				vm.PageTitle = "CatalogManagement";
+				vm.PageTitle = "Catalog Management";
 				vm.NavigationLocation = "Admin";
 
 				return View(vm);
@@ -49,7 +49,7 @@ namespace SongSearch.Web.Controllers
 				this.FeedbackError("There was an error loading the Catalog Management page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
-        }
+		}
 
 		// **************************************
 		// URL: /CatalogManagement/Detail/5
@@ -90,8 +90,26 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		[HttpPost]
 		public virtual ActionResult Delete(int id) {
-			return View();
+
+			try {
+				//_catMgmtService.DeleteCatalog(id);
+
+			}
+			catch (Exception ex) {
+				if (Request.IsAjaxRequest()) {
+					throw ex;
+				} else {
+					this.FeedbackError("There was an error deleting this Catalog...");
+				}
+			}
+
+			if (Request.IsAjaxRequest()) {
+				return Json(id);
+			} else {
+				this.FeedbackInfo("Testing: Catalog was not actually deleted");//Catalog Deleted");
+				return RedirectToAction(Actions.Index());
+			}
 		}
 
-    }
+	}
 }

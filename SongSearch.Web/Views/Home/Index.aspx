@@ -13,11 +13,25 @@
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
 		<div>&nbsp;</div>
+		<div>6/8/2010</div>
+        <ul class="cw-vertical">
+            <li>Catalog Management now working, catalog deletion disabled to avoid testing 'accidents'</li>
+            <li>Mediaplayer now has Repeat button, repeats last played version</li>
+			<li>Songs now searchable by Catalog name</li>
+            <li>
+			Song metadata uploaded, needs cleaning
+			</li>
+        </ul>
+		<div>&nbsp;</div>
+		<hr />
+		<div>&nbsp;</div>
 		<div></div>6/4/2010</div>
         <ul class="cw-vertical">
             <li>Song Edit now fully functional, no mp3 upload yet</li>
             <li>User Deletion and Take Ownership now enabled (was off for testing purposes)</li>
         </ul>
+		<div>&nbsp;</div>
+		<hr />
 		<div>&nbsp;</div>
 		<div>5/31/2010</div>
         <ul class="cw-vertical">
@@ -26,6 +40,8 @@
             <li>Playing another song now cancels any pending media player loads (cuts down bandwith use)</li>
 			</ul>
 		 <div>&nbsp;</div>
+		<hr />
+		<div>&nbsp;</div>
 		<div>5/30/2010</div>
         <ul class="cw-vertical">
             <li>Volume control now working!</li>
@@ -35,6 +51,8 @@
 					<li>Remembers volume setting from song to song on the same page (i.e. as long as page is not refreshed, sorted etc)</li>
 			</ul>
 		</ul>
+		<div>&nbsp;</div>
+		<hr />
 		<div>&nbsp;</div>
 		<div>5/29/2010</div>
         <ul class="cw-vertical">
@@ -48,6 +66,8 @@
 				</ul>
         </ul>
 		<div>&nbsp;</div>
+		<hr />
+		<div>&nbsp;</div>
         <div>5/28/2010</div>
         <ul class="cw-vertical">
             <li><%: Html.ActionLink("User Management", MVC.UserManagement.Views.Index)%> feature complete<br /> 
@@ -60,6 +80,8 @@
 			</li>
         </ul>
         <div>&nbsp;</div>
+		<hr />
+		<div>&nbsp;</div>
 		<div>5/25/2010</div>
         <ul class="cw-vertical">
             <li>Downloads now working</li>
@@ -67,6 +89,8 @@
             <li><%: Html.ActionLink("Cart", MVC.Cart.Views.Index)%> zipping, downloading, archiving etc all working</li>
         </ul>
         <div>&nbsp;</div>
+		<hr />
+		<div>&nbsp;</div>
         <div>5/21/2010</div>
         <ul class="cw-vertical">
             <li>Caching added</li>
@@ -75,6 +99,8 @@
             <li>Additional tag choices are no hidable/showable</li>
         </ul>
         <div>&nbsp;</div>
+		<hr />
+		<div>&nbsp;</div>
 		<div>5/18/2010</div>
         <ul class="cw-vertical">
             <li>Account management implemented (Change Password etc)</li>

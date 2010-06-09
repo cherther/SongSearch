@@ -8,9 +8,9 @@ using SongSearch.Web.Logging;
 namespace SongSearch.Web.Controllers
 {
 	public partial class ErrorController : Controller
-    {
-        //
-        // GET: /Error/
+	{
+		//
+		// GET: /Error/
 
 		
 		ILogger _logger;
@@ -44,5 +44,5 @@ namespace SongSearch.Web.Controllers
 			_logger.Warn(string.Format("404 - {0}", Request.UrlReferrer));
 			return View(Views.Index);
 		}
-    }
+	}
 }

@@ -12,7 +12,7 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization]
 	[HandleError]
 	public partial class ContentController : Controller
-    {
+	{
 		private User _currentUser;
 		IContentAdminService _cntAdmService;
 
@@ -29,7 +29,7 @@ namespace SongSearch.Web.Controllers
 
 		public ContentController(IContentAdminService cntAdmService) {
 			_cntAdmService = cntAdmService;
-        }
+		}
 
 		// **************************************
 		// Detail/5
@@ -202,5 +202,5 @@ namespace SongSearch.Web.Controllers
 
 
 
-    }
+	}
 }

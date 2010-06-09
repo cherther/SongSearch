@@ -12,7 +12,7 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization]
 	[HandleError]
 	public partial class SearchController : Controller
-    {
+	{
 
 		private const int _pageSize = 100;
 
@@ -24,10 +24,10 @@ namespace SongSearch.Web.Controllers
 		}
 
 		
-        //
-        // GET: /Search/
+		//
+		// GET: /Search/
 		public virtual ActionResult Index()
-        {
+		{
 			try {
 				var vm = GetSearchViewModel();
 
@@ -37,7 +37,7 @@ namespace SongSearch.Web.Controllers
 				this.FeedbackError("There was an error loading the Search page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
-        }
+		}
 
 		// ****************************************************************************
 		// Search/Results/ f = SearchField, p = PageIndex, s = SortField, o = SortType
@@ -137,5 +137,5 @@ namespace SongSearch.Web.Controllers
 		
 		
 
-    }
+	}
 }

@@ -37,6 +37,17 @@
     <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
     <PublishDatabases>false</PublishDatabases>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LocalRelease|AnyCPU'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AntiXSSLibrary">
       <HintPath>..\..\mvcstarter\lib\AntiXSSLibrary.dll</HintPath>
@@ -74,7 +85,7 @@
     <Reference Include="Spark.Web.Mvc">
       <HintPath>..\Ext Libraries\Spark.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="SquishIt.Framework, Version=0.5.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="SquishIt.Framework, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Ext Libraries\SquishIt\SquishIt.Framework.dll</HintPath>
     </Reference>
@@ -1849,6 +1860,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
+    <Content Include="Web.LocalRelease.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -52,6 +52,8 @@ namespace SongSearch.Web.Services {
 		// **************************************    
 		private Content UpdateTags(Content content, IList<int> tagsModel) {
 
+			if (tagsModel == null) { return content; }
+
 			var tags = DataSession.All<Tag>().ToList();
 			var contentTags = content.Tags.ToList();
 
@@ -75,6 +77,8 @@ namespace SongSearch.Web.Services {
 		//	Rights
 		// **************************************    
 		private Content UpdateRights (Content content, IList<ContentRightViewModel> rightsModel) {
+
+			if (rightsModel == null) { return content; } 
 
 			var territories = DataSession.All<Territory>().ToList();
 

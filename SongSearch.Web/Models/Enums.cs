@@ -6,11 +6,11 @@ namespace SongSearch.Web {
 	// AccessLevels
 	// **************************************    
 	public enum Roles {
-		None = 0,
+		None       = 0,
 		SuperAdmin = 1,
-		Admin = 2,
-		Plugger = 3,
-		Client = 4
+		Admin      = 2,
+		Plugger    = 3,
+		Client     = 4
 	}
 
 	// **************************************
@@ -32,7 +32,7 @@ namespace SongSearch.Web {
 	// CartStatusCodes
 	// **************************************    
 	public enum CartStatusCodes {
-		Active = 0,
+		Active     = 0,
 		Compressed = 1,
 		Downloaded = 2
 	}
@@ -48,20 +48,20 @@ namespace SongSearch.Web {
 	// TagType
 	// **************************************    
 	public enum TagType {
-		Moods = 10,
-		Styles = 11,
-		Gender = 9,
-		Tempo = 8,
-		SoundsLike = 13,
+		Moods       = 10,
+		Styles      = 11,
+		Gender      = 9,
+		Tempo       = 8,
+		SoundsLike  = 13,
 		Instruments = 14,
-		Language = 15,
-		Brands = 20
+		Language    = 15,
+		Brands      = 20
 		
 	}
 	
 	public enum SortType {
-		None = 0,
-		Ascending = 1,
+		None       = 0,
+		Ascending  = 1,
 		Descending = 2
 	}
 
@@ -70,9 +70,9 @@ namespace SongSearch.Web {
 	// InvitationStatusCodes
 	// **************************************    
 	public enum InvitationStatusCodes {
-		Open = 0,
+		Open       = 0,
 		Registered = 1,
-		Expired = 2
+		Expired    = 2
 	}
 
 	public enum SearchTypes {

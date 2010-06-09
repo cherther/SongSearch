@@ -13,7 +13,7 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization]
 	[HandleError]
 	public partial class MediaController : Controller
-    {
+	{
 		private User _currentUser;
 
 		protected override void Initialize(RequestContext requestContext) {
@@ -84,5 +84,5 @@ namespace SongSearch.Web.Controllers
 
 
 
-    }
+	}
 }

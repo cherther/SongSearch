@@ -13,7 +13,7 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization]
 	[HandleError]
 	public partial class CartController : AsyncController
-    {
+	{
 		private User _currentUser;
 
 		ICartService _cartService;
@@ -32,13 +32,13 @@ namespace SongSearch.Web.Controllers
 			ICartService cartService
 			) {
 			_cartService = cartService;
-        }
+		}
 
 		// **************************************
 		// URL: /Cart/
 		// **************************************
 		public virtual ActionResult Index()
-        {
+		{
 			try {
 
 				var vm = GetCartViewModel();
@@ -60,7 +60,7 @@ namespace SongSearch.Web.Controllers
 				return RedirectToAction(MVC.Home.Index());
 			}
 			
-        }
+		}
 
 		// **************************************
 		// URL: /Cart/CartCount
@@ -221,5 +221,5 @@ namespace SongSearch.Web.Controllers
 			};
 			
 		}
-    }
+	}
 }

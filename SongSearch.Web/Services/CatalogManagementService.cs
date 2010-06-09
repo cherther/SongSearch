@@ -22,7 +22,7 @@ namespace SongSearch.Web.Services {
 		// (Public)
 		// ----------------------------------------------------------------------------
 		public IList<Catalog> GetMyCatalogs() {
-			return DataSession.All<Catalog>().Where(c => c.UserCatalogRoles.Any(x => x.UserId == ActiveUser.UserId && x.RoleId == (int)Roles.Admin)).ToList();
+			return base.ActiveUser.MyAdminCatalogs();//DataSession.All<Catalog>().Where(c => c.UserCatalogRoles.Any(x => x.UserId == ActiveUser.UserId && x.RoleId == (int)Roles.Admin)).ToList();
 		}
 
 		// **************************************
@@ -74,7 +74,15 @@ namespace SongSearch.Web.Services {
 		// DeleteCatalog
 		// **************************************
 		public void DeleteCatalog(int catalogId) {
-			throw new NotImplementedException();
+
+			DataSession.Delete<Catalog>(c => c.CatalogId == catalogId);
+
+			/* delete orphaned
+			 *  - Content (db cascade?)
+			 *  - UserCatalogRoles (db cascade?)
+			 *  - Cart Contents
+			 *  - MP3s
+			 */
 		}
 
 		// ----------------------------------------------------------------------------

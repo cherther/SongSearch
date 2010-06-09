@@ -9,7 +9,7 @@ namespace SongSearch.Web.Controllers
 {
 	[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 	public partial class AdminController : Controller
-    {
+	{
 		public virtual ActionResult UpdateCache() {
 			return View(new ViewModel() { NavigationLocation = "Admin" });
 
@@ -23,5 +23,5 @@ namespace SongSearch.Web.Controllers
 
 		}
 
-    }
+	}
 }

@@ -10,10 +10,10 @@ using System.Text.RegularExpressions;
 
 namespace SongSearch.Web
 {
-    [HandleError]
+	[HandleError]
 	[RequireAuthorization(MinAccessLevel=Roles.Admin)]
 	public partial class UserManagementController : Controller
-    {
+	{
 		private IUserManagementService _usrMgmtService;
 		private User _currentUser;
 		
@@ -35,7 +35,7 @@ namespace SongSearch.Web
 
 		public UserManagementController(IUserManagementService usrMgmtService) {
 			_usrMgmtService = usrMgmtService;
-        }
+		}
 
 
 		// **************************************
@@ -318,5 +318,5 @@ namespace SongSearch.Web
 				return RedirectToAction(Actions.Index());
 			}
 		}
-    }
+	}
 }

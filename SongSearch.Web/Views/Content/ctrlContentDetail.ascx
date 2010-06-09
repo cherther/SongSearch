@@ -1,16 +1,16 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.ContentViewModel>" %>
 <%@ Import Namespace = "SongSearch.Web.Data" %>
 <%
-    var content = Model.Content;
+	var content = Model.Content;
 	var searchFields = Model.SearchFields;
 	var menuButtonClass = "cw-button cw-simple cw-small cw-gray"; //'.cw-content-detail-menu
 	var isEditing = Model.EditMode == EditModes.Editing;
 %>
-    <%--<div style="float: right">
-    <button id="detail-close" type="submit" title="Close" class="cw-button cw-small cw-simple cw-blue">
-    <span class="b-cancel">Close</span>
-    </button>
-    </div>--%>
+	<%--<div style="float: right">
+	<button id="detail-close" type="submit" title="Close" class="cw-button cw-small cw-simple cw-blue">
+	<span class="b-cancel">Close</span>
+	</button>
+	</div>--%>
 <div id="cw-content-detail">
 <%if (isEditing) { %>
 	<%Html.BeginForm(MVC.Content.Save(), FormMethod.Post, new { id = "cw-content-editor" }); %>
@@ -106,16 +106,6 @@
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Writers)%></td>
 			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Writers)%></td>
 		</tr>
-		<%if (Model.SectionsAllowed.Contains("Notes")) { %>
-		<%
-	var notesSearch = searchFields.Where(s => s.P == 19).SingleOrDefault();
-	Model.Content.Notes = isEditing ? content.Notes : Html.HighlightSearchTerm(Model.Content.Notes, notesSearch); 
-			%> 
-			<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Notes)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Notes) : Html.DisplayFor(m => m.Content.Notes)%></td>
-		</tr>      
-		<%} %>
 		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Keywords)%></td>
 			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Keywords) : Html.DisplayFor(m => m.Content.Keywords)%></td>
@@ -124,6 +114,17 @@
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.SimilarSongs)%></td>
 			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.SimilarSongs) : Html.DisplayFor(m => m.Content.SimilarSongs)%></td>
 		</tr>
+		<%if (Model.SectionsAllowed.Contains("Notes")) { %>
+		<%
+			var notesSearch = searchFields.Where(s => s.P == 19).SingleOrDefault();
+			Model.Content.Notes = isEditing ? content.Notes : Html.HighlightSearchTerm(Model.Content.Notes, notesSearch); 
+		%> 
+		<tr>
+			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Notes)%></td>
+			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Notes) : Html.DisplayFor(m => m.Content.Notes)%></td>
+		</tr>      
+		<%} %>
+
 	</table>
 </div>
 <div id="tabs-2">
@@ -151,7 +152,7 @@
 		//var tagTypeId = String.Format("tags[{0}].", tt++);
 		Func<Tag, bool> func = x => x.TagTypeId == (int)tagType;
 		var selectedTags = content.Tags.Where(func).Select(x => x.TagId).ToArray();
-		var tags = (isEditing ? Model.Tags : content.Tags.ToList()).Where(func).ToList();
+		var tags = (isEditing ? Model.Tags : content.Tags.ToList()).Where(func).OrderBy(t => t.TagName).ToList();
 		var model = new TagCloudViewModel<Tag>() { 
 			EditMode = Model.EditMode, 
 			TagCountSeed = tt,
@@ -184,11 +185,11 @@
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.ContentId)%></td>
 			<td class="cw-content-field"><%: content.ContentId%></td>
 		</tr>
-        <tr>
+		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Catalog.CatalogName)%></td>
 			<td class="cw-content-field"><%: content.Catalog.CatalogName%></td>
 		</tr>
-        <tr>
+		<tr>
 			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.IsControlledAllIn)%></td>
 			<td class="cw-content-field"><%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, !isEditing ? new { disabled = "disabled" } : null)%>
 			<%: !isEditing ? content.IsControlledAllIn.ToYesNo() : "" %>
@@ -197,6 +198,7 @@
 		<tr>
 			<td class="cw-content-label">Share %</td>
 			<td class="cw-content-field">
+				<%if (content.ContentRights != null && content.ContentRights.Count() > 0) { %>
 				<table class="cw-tbl-content-rights">
 					<tr>
 						<th>
@@ -244,7 +246,7 @@
 						<td>
 						<%if (isEditing) {%>
 						<%: Html.Hidden(String.Concat(rightId, "ModelAction"), (int)ModelAction.Update, new { @class = "cw-model-action" })%>
-					  	<a href="#" class="cw-delete-right-link"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
+						<a href="#" class="cw-delete-right-link"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
 						<%} %>
 						</td>
 					</tr>
@@ -252,15 +254,15 @@
 						<td colspan="3">
 						<%//if (contentRight.Territories != null && contentRight.Territories.Count() > 0) {%>
 						<%    
-							var selectedTerritories = contentRight.Territories.Select(x => x.TerritoryId).ToArray();
-							var territories = isEditing ? Model.Territories : contentRight.Territories.ToList();
-							var model = new TagCloudViewModel<Territory>() { 
-								EditMode = Model.EditMode, 
-								Tags = territories, 
-								SelectedTags = selectedTerritories,
-								TagClass = "cw-tagbox-label",
-								TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
-							};              
+					var selectedTerritories = contentRight.Territories.Select(x => x.TerritoryId).ToArray();
+					var territories = isEditing ? Model.Territories : contentRight.Territories.ToList();
+					var model = new TagCloudViewModel<Territory>() {
+						EditMode = Model.EditMode,
+						Tags = territories,
+						SelectedTags = selectedTerritories,
+						TagClass = "cw-tagbox-label",
+						TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
+					};              
 						%>    
 							<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
 						<%//} %>
@@ -275,7 +277,7 @@
 						<td class="cw-content-field">
 							<%: Html.Hidden(String.Concat(rightId, "ContentId"), Model.Content.ContentId)%>
 							<%: Html.Hidden(String.Concat(rightId, "ContentRightId"), 0)%>
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"),null, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
+							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"), null, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
 						</td>
 						<td class="cw-content-field">
 							<%: Html.DropDownList(String.Concat(rightId, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
@@ -291,13 +293,13 @@
 					<tr>
 						<td colspan="3">
 						<%    
-						var territories = Model.Territories;
-						var model = new TagCloudViewModel<Territory>() {
-							EditMode = Model.EditMode,
-							Tags = territories,
-							TagClass = "cw-tagbox-label",
-							TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
-						};              
+					var territories = Model.Territories;
+					var model = new TagCloudViewModel<Territory>() {
+						EditMode = Model.EditMode,
+						Tags = territories,
+						TagClass = "cw-tagbox-label",
+						TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
+					};              
 						%>    
 						<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
 						</td>
@@ -307,6 +309,9 @@
 				<%} %>
 
 				</table>
+				<%} else { %>
+				(N/A)
+				<%} %>
 				</td>
 		</tr>
 		<tr>
@@ -314,7 +319,7 @@
 			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.LicensingNotes) : Html.DisplayFor(m => m.Content.LicensingNotes)%></td>
 		</tr>
    
-        </table>
+		</table>
 
 </div>
 <%} %>
