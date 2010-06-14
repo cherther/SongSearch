@@ -17,7 +17,7 @@
 		<tr>
 		<td colspan="2" style="text-align: left; white-space: nowrap; padding-left: 1px">
 			<a href="<%: addAllToCartLink %>" id="cw-add-all-to-cart" class="cw-button cw-simple cw-small cw-blue">
-				<span class="b-cart">Add&nbsp;&nbsp;&nbsp;</span>
+				<span class="b-cart">Add</span>
 			</a>&nbsp;
 		</td>
 		<td colspan="<%: tableHeader.Count()-1%>" align="right">
