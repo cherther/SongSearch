@@ -6,7 +6,7 @@
  %>
 <div class="cw-pager">
     <%if (results.TotalPages > 1) { %>
-    Page <%= results.CurrentPage%> of <%= results.TotalPages%> total.&nbsp;
+    You're on page <%= results.CurrentPage%> of <%= results.TotalPages%> total.&nbsp;
     Go to:&nbsp;
     <%
         const int pageSetSize = 10;

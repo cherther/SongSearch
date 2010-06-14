@@ -6,7 +6,17 @@ if (!String.prototype.contains) String.prototype.contains = function (s) { retur
 if (!String.prototype.swap) String.prototype.swap = function (a, b) { return this.contains(a) ? this.replace(a, b) : this.replace(b, a); };
 
 //***********************************************
-//  wait
+//  Constants
+//***********************************************
+var _maxCart = 100;
+//***********************************************
+//  Messages
+//***********************************************
+var _cartOverMaxMsg = 'Sorry, you can only add up to ' + _maxCart + ' items to your cart.';
+var _cartAddErrorMsg = 'There was a problem adding the item(s) to your cart. Please make sure you have less than 100 items in your cart.'
+
+//***********************************************
+//  Rnd
 //***********************************************
 function Rnd() { return Math.floor(Math.random() * 100001).toString(); }
 
@@ -47,7 +57,7 @@ function unwait(elem) {
 //  flash
 //***********************************************
 function feedback(type, msg) {
-
+    unwait();
     if (type == "error") {
         msg += "<a class='close' href='#'>x</a>";
         var wrapperClass = 'feedback-bar-error';
@@ -144,9 +154,10 @@ function setupAutoComplete() {
             minLength: 2
         }
     );
-}
+    }
+
 //***********************************************
-//  showContentPanel
+//  clearSearchForm
 //***********************************************
 function clearSearchForm(form) {
 
@@ -156,7 +167,7 @@ function clearSearchForm(form) {
 }
 
 //***********************************************
-//  showContentPanel
+//  clearForm
 //***********************************************
 function clearForm(form) {
     // iterate over all of the inputs for the form
@@ -182,7 +193,7 @@ function clearForm(form) {
 };
 
 //***********************************************
-//  showContentPanel
+//  setSelectedSearchTagValue
 //***********************************************
 function setSelectedSearchTagValue(link) {
 
@@ -202,6 +213,14 @@ function setSelectedSearchTagValue(link) {
 
     $(valField).val(vals.join(';'));
     link.toggleClass(tagBoxSelectedClass);
+}
+
+//***********************************************
+//  updateAddToCartAllButtontext
+//***********************************************
+function updateAddToCartAllButtontext(count) {
+    var text = count > 0 ? 'Add (' + count + ')' : 'Add';
+    $('#cw-add-all-to-cart span').text(text);
 }
 
 //-----------------------------------------------------------------------------------

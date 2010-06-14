@@ -18,7 +18,11 @@
 	 <div class="cw-outl cw-padded">
 	<h2>Results</h2>
 	<% Html.RenderPartial(MVC.Search.Views.ctrlBreadcrumb, Model); %>
-	<p><%= results.TotalCount %> songs found.</p>
+	<p><%= results.TotalCount %> songs found.
+	<%if (results.TotalPages > 1) { %>
+    Showing  <%= results.Count %> results per page. 
+	<%} %>
+	</p>
 	<% if (results.TotalCount > 0){%>
 		<%// if (Model.ViewMode != ViewModes.Print) { %>
 			<% Html.RenderPartial(MVC.Search.Views.ctrlPager, Model); %>

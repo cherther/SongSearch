@@ -182,7 +182,7 @@ function addToCartMultipleAjax(link, items) {
 		data: { 'items': items },
 		success: function (data, status, xhr) {
 			if (status == 'error') {
-				unwait(); feedback('error', xhr.status + ' ' + xhr.statusText);
+			    unwait(); feedback('error', _cartAddErrorMsg);
 			} else {
 				feedback('info', data + ' item(s) added to your song cart');
 				updateCartCount();
@@ -190,7 +190,7 @@ function addToCartMultipleAjax(link, items) {
 			}
 		},
 		error: function (xhr, status, error) {
-			unwait(); feedback('error', 'There was a problem adding the item(s) to your cart. Please make sure you have less than 100 items in your cart.');
+		    unwait(); feedback('error', _cartAddErrorMsg);
 		}
 	}
 	);

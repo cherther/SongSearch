@@ -24,8 +24,8 @@
     %>
     <%if (activeCartCount  > 0) {%>
     <p>Your song cart contains <strong><%=activeCartCount%></strong> item(s).</p>
-    <% using (Html.BeginForm(MVC.Cart.Zip(), FormMethod.Post)){ %>
-    <%= Html.AntiForgeryToken() %>
+    <% using (Html.BeginForm(MVC.Cart.Zip(), FormMethod.Post, new { id ="cw-cart-form" })) { %>
+    <%= Html.AntiForgeryToken()%>
     <p>To create a single zip file containing all items, click the 'Zip My Song Cart' button below. </p>
     <div>&nbsp;</div>
         <div>

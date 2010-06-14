@@ -82,7 +82,7 @@
 	top: 5px;
 	font-weight: normal;
 	font-size: 13px;
-	color: #339933; /*#FFFFFF*/
+	color: #fff; /*#FFFFFF*/
 }
 /* ASP.NET MVC styles */
 .field-validation-error { color: #ff0000; }

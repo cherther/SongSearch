@@ -160,7 +160,38 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 		}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public virtual ActionResult RemoveMultiple() {
+			try {
+				var itemsPosted = Request.Form["removeFromCartItems"];
+				if (itemsPosted == null) {
+					return RedirectToAction(MVC.Cart.Index());
+				}
+				
+				var items = itemsPosted != null ? itemsPosted.Split(',') : new string[] { };
+				var count = items != null ? items.Count() : 0;
 
+				items.ForEach(i => _cartService.RemoveFromMyActiveCart(int.Parse(i)));
+				CacheService.RefreshMyActiveCart(_currentUser.UserName);
+
+				if (Request.IsAjaxRequest()) {
+					return Json(count, JsonRequestBehavior.AllowGet);
+				} else {
+					this.FeedbackInfo("Item(s) removed from cart");
+					return RedirectToAction(MVC.Cart.Index());
+				}
+			}
+			catch (Exception ex) {
+				if (Request.IsAjaxRequest()) {
+					throw ex;
+				} else {
+					this.FeedbackError("There was an error removing the item(s)");
+					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+
+				}
+			}
+		}
 		// **************************************
 		// URL: /Cart/Delete/3
 		// **************************************
