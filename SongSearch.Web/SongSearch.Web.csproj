@@ -142,6 +142,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CatalogManagementController.cs" />
+    <Compile Include="Controllers\CatalogUploadController.cs" />
     <Compile Include="Controllers\ContentController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -185,7 +186,10 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Services\CatalogManagementService.cs" />
+    <Compile Include="Services\CatalogUploadService.cs" />
     <Compile Include="Services\Interfaces\ICatalogManagementService.cs" />
+    <Compile Include="Services\Interfaces\ICatalogUploadService.cs" />
+    <Compile Include="Services\WorkflowEngine.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -198,6 +202,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CatalogViewModel.cs" />
+    <Compile Include="ViewModels\CatalogUploadViewModel.cs" />
     <Compile Include="ViewModels\SearchField.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -1778,6 +1783,13 @@
     <Content Include="Views\CatalogManagement\ctrlDetail.ascx" />
     <Content Include="Views\CatalogManagement\ctrlUserList.ascx" />
     <Content Include="Views\CatalogManagement\Index.aspx" />
+    <Content Include="Views\CatalogUpload\Index.aspx" />
+    <Content Include="Views\CatalogUpload\wfSaveCatalog.ascx" />
+    <Content Include="Views\CatalogUpload\wfEditMetadata.ascx" />
+    <Content Include="Views\CatalogUpload\wfAddPreviewFiles.ascx" />
+    <Content Include="Views\CatalogUpload\wfAddSongFiles.ascx" />
+    <Content Include="Views\CatalogUpload\Upload.aspx" />
+    <Content Include="Views\CatalogUpload\wfSelectCatalog.ascx" />
     <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Content\Print.aspx" />
     <Content Include="Views\Search\ctrlBreadcrumb.ascx" />

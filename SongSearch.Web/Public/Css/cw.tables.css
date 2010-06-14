@@ -1,54 +1,57 @@
 ﻿.text-right 
 {
-    text-align: right;
+	text-align: right;
 }
 .cw-row-selected
 {
-    background: #cccccc url(/public/images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;
-    /*background-color: #FFFFCC;*/  
-    font-weight: bold;
+	background: #cccccc url(/public/images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;
+	/*background-color: #FFFFCC;*/  
+	font-weight: bold;
 }
 /* Search Results */
 .cw-tbl-search-results 
 {
-    border: 1px solid gray;
-    border-collapse: collapse;
-    padding: 4px;
-    
+	border: 1px solid gray;
+	border-collapse: collapse;
+	padding: 4px;
+	
 }
 .cw-tbl-search-results tr
 {
-    border: 1px solid #aaaaaa;
+	border: 1px solid #aaaaaa;
 }
-
+.cw-tbl-search-results th
+{
+	background-color: #B5D2E8;
+}
 .cw-tbl-data td
 {
-    padding: 4px;
-    /*white-space: nowrap;   */
+	padding: 4px;
+	/*white-space: nowrap;   */
  }
 
 
 /* Content Detail */
 .cw-tbl-content-detail 
 {   width: 100%;
-    border: 0 none black;
-    border-collapse: collapse;
+	border: 0 none black;
+	border-collapse: collapse;
 }
 .cw-tbl-content-detail tr, td
 {
-    border: 0 none black;
+	border: 0 none black;
 }
 
 .cw-tbl-content-rights
 {
-    border: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 
 .cw-content-label
 {
-    width:25%;
-    font-weight: bold;
-    vertical-align:top;
+	width:25%;
+	font-weight: bold;
+	vertical-align:top;
 }
 .cw-content-field
 {
@@ -56,24 +59,24 @@
 /* Cart Contents */
 .cw-tbl-cart-contents 
 {
-    border: 1px solid gray;
-    border-collapse: collapse;
-    padding: 3px;
-    font-size: 90%;
-    white-space: nowrap;    
+	border: 1px solid gray;
+	border-collapse: collapse;
+	padding: 3px;
+	font-size: 90%;
+	white-space: nowrap;    
 }
 .cw-tbl-cart-contents tr
 {
-    border: 1px solid #aaaaaa;
+	border: 1px solid #aaaaaa;
 }
 
 .cw-tbl-cart-contents th, td
 {
-    padding: 3px;
+	padding: 3px;
 }
 .cw-tbl-cart-contents th
 {
-    text-align: left;
+	text-align: left;
 }
 
 
@@ -107,20 +110,20 @@
 }
 .cw-tbl-carts-details
 {
-    display: none;
+	display: none;
 }
 
 #cw-tbl-media-player
 {
-    width: 100%;
-    border: 1px solid #ccc;
-    background-color: #fff/*#eee;*/
+	width: 100%;
+	border: 1px solid #ccc;
+	background-color: #fff/*#eee;*/
 }
 #cw-tbl-media-player tr
 {
-    border: 1px solid #ccc;
+	border: 1px solid #ccc;
 }
 #cw-tbl-media-player td
 {
-    border: 0px none;
+	border: 0px none;
 }

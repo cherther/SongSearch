@@ -4,7 +4,7 @@
 	// AutoComplete
 	//-----------------------------------------------------------------------------------
 	setupAutoComplete();
-	
+
 	//-----------------------------------------------------------------------------------
 	// Search option panel
 	//-----------------------------------------------------------------------------------
@@ -62,6 +62,72 @@
 	//-----------------------------------------------------------------------------------
 	// Seatch results
 	//-----------------------------------------------------------------------------------
+
+
+	$('#cw-select-all-items-check').click(
+		function (evt) {
+			var checkboxes = $('.add-to-cart-checkbox');
+			if ($(this).is(':checked')) {
+				if (checkboxes.length >= 100) {
+					feedback('error', 'The maximum number of items to add to your cart is 100');
+				}
+				checkboxes.attr('checked', 'checked');
+				checkboxes.addClass('clicked');
+
+			} else {
+				checkboxes.filter('.clicked').removeAttr('checked');
+				checkboxes.removeClass('clicked');
+
+			}
+
+			updateAddToCartAllButtontext($('.clicked').length);
+		}
+	);
+
+	function updateAddToCartAllButtontext(count) {
+		var text = count > 0 ? 'Add (' + count + ')' : 'Add';
+		$('#cw-add-all-to-cart span').text(text);
+	}
+
+	$('#cw-add-all-to-cart').click(
+		function (evt) {
+			evt.preventDefault();
+			var checkboxes = $('.add-to-cart-checkbox').filter('.clicked');
+			if (checkboxes.length >= 100) {
+				feedback('error', 'The maximum number of items to add to your cart is 100');
+			} else {
+
+				var items = new Array();
+				checkboxes.each(function (i) {
+					var id = checkboxes[i].id;
+					items.push(id);
+				}
+				);
+				checkboxes.attr('disabled', 'disabled');
+				checkboxes.removeClass('clicked');
+				updateAddToCartAllButtontext(0)
+				addToCartMultipleAjax($(this), items);
+			}
+		}
+	);
+
+	$('.add-to-cart-checkbox').click(
+		function (evt) {
+
+			//		    var checkboxes = $('.add-to-cart-checkbox:checked');
+			$(this).toggleClass('clicked');
+			var count = $('.clicked').length;
+			var cartCount = getCartCountAjax();
+			if (count + cartCount > 100) {
+				feedback('error', 'The maximum number of items to add to your cart is 100');
+				$(this).removeClass('clicked');
+				evt.preventDefault();
+			} else {
+				updateAddToCartAllButtontext(count);
+			}
+		}
+	);
+	//
 
 	//***********************************************
 	//  Content detail link
@@ -174,7 +240,7 @@
 		}
 	);
 
-   $('.cw-media-repeat-link').live('click',
+	$('.cw-media-repeat-link').live('click',
 		function (evt) {
 
 			evt.preventDefault();
@@ -301,13 +367,13 @@
 	}
 	);
 
-		//
+	//
 
 	//-----------------------------------------------------------------------------------
 	// Catalog Management List
 	//-----------------------------------------------------------------------------------
 	//***********************************************
-		// Catalog detail link
+	// Catalog detail link
 	//***********************************************
 	$('.cw-catalog-detail-link').live('click',
 		function (evt) {

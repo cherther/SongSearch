@@ -169,6 +169,8 @@ namespace SongSearch.Web {
 				Bind<IContentAdminService>().To<ContentAdminService>();
 				Bind<IUserManagementService>().To<UserManagementService>();
 				Bind<ICatalogManagementService>().To<CatalogManagementService>();
+				Bind<ICatalogUploadService>().To<CatalogUploadService>();
+
 				Bind<IFormsAuthenticationService>().To<FormsAuthenticationService>();
 			}
 		}

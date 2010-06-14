@@ -62,7 +62,10 @@ namespace SongSearch.Web.Controllers
 
 					var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
 
-				
+					var activeCart = CacheService.MyActiveCart(_currentUser.UserName);
+					if (activeCart != null) {
+						results.ForEach(c => c.IsInMyActiveCart = activeCart.Contents.Select(con => con.ContentId).Contains(c.ContentId));
+					}
 					model.SearchResults = results;
 					model.SearchFields = searchFields;
 					CacheService.SessionUpdate(searchFields, "SearchFields");

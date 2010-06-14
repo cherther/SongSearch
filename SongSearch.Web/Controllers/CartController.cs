@@ -106,7 +106,33 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 		}
+		[HttpPost]
+		public virtual ActionResult AddMultiple() {
+			try {
+				var itemsPosted = Request.Form["items[]"];
+				var items = itemsPosted != null ? itemsPosted.Split(',') : new string[] {};
+				var count = items != null ? items.Count() : 0;
+				if (items != null) {
+					items.ForEach(id => _cartService.AddToMyActiveCart(int.Parse(id)));
+					CacheService.RefreshMyActiveCart(_currentUser.UserName);
+				}
+				if (Request.IsAjaxRequest()) {
+					return Json(count, JsonRequestBehavior.AllowGet);
+				} else {
+					this.FeedbackInfo("Items added to cart");
+					return RedirectToAction(MVC.Cart.Index());
+				}
+			}
+			catch (Exception ex) {
+				if (Request.IsAjaxRequest()) {
+					throw ex;
+				} else {
+					this.FeedbackError("There was an error adding the items");
+					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 
+				}
+			}
+		}
 		// **************************************
 		// URL: /Cart/Remove/5
 		// **************************************

@@ -102,24 +102,35 @@ function submitContentFormAjax(formId, link, altLink) {
 //-----------------------------------------------------------------------------------
 // Song Cart
 //-----------------------------------------------------------------------------------
-function updateCartCountAjax() {
+function updateCartCount() {
+    var count = getCartCountAjax();
+    var menuCartLink = $('#menu-cart a')
+    
+    menuCartLink.text('Song Cart (' + count + ')');
 
-	var menuCartLink = $('#menu-cart a')
-	var url = menuCartLink.attr('href');
-	url = url + '/CartCount?' + Rnd();
+    return count;
+	
+}
+function getCartCountAjax() {
+    var menuCartLink = $('#menu-cart a')
+    var url = menuCartLink.attr('href');
+    url = url + '/CartCount?' + Rnd();
+    var count = 0;
 	//alert(url);
+    $.ajax({
+        async: false,
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function (result) {
+            //var result = "count is \"<strong>" + json + "\"";
+            //alert("Result: " + result);
+            //			    result == null ? _cartCount = 0 : _cartCount = result;
+            count = result != null ? result : 0;
+        }
+    });
 
-	$.getJSON(
-			url,
-			'',
-			function (result) {
-				//var result = "count is \"<strong>" + json + "\"";
-				//alert("Result: " + result);
-				var count;
-				result == null ? count = 0 : count = result;
-				menuCartLink.text('Song Cart (' + count + ')');
-			}
-		);
+    return count;
 }
 
 function addToCartAjax(link) {
@@ -148,7 +159,7 @@ function addToCartAjax(link) {
 
 
 				//feedback('info', 'Added to Cart');
-				updateCartCountAjax();
+	            updateCartCount();
 				unwait();
 			}
 		},
@@ -156,6 +167,33 @@ function addToCartAjax(link) {
 			feedback('error', xhr.status + ' ' + xhr.statusText);
 		}
 	});
+
+}
+
+function addToCartMultipleAjax(link, items) {
+
+	var url = link[0].href;
+	wait();
+	$.ajax({
+		url: url,
+		type: 'POST',
+		cache: false,
+		dataType: 'json',
+		data: { 'items': items },
+		success: function (data, status, xhr) {
+			if (status == 'error') {
+				unwait(); feedback('error', xhr.status + ' ' + xhr.statusText);
+			} else {
+				feedback('info', data + ' item(s) added to your song cart');
+				updateCartCount();
+				unwait();
+			}
+		},
+		error: function (xhr, status, error) {
+			unwait(); feedback('error', 'There was a problem adding the item(s) to your cart. Please make sure you have less than 100 items in your cart.');
+		}
+	}
+	);
 
 }
 
@@ -173,7 +211,7 @@ function addToCartAjax(link) {
 //		    }
 //		    else {
 //		        feedback('info', 'Removed from Cart');
-//		        updateCartCountAjax();
+//		        updateCartCount();
 //		    }
 //		},
 //		error: function (xhr, status, error) {

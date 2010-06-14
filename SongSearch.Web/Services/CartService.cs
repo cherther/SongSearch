@@ -126,9 +126,13 @@ namespace SongSearch.Web.Services {
 
 				DataSession.Add<Cart>(cart);
 			}
-
-			cart.Contents.Add(content);
+			if (cart.Contents.Count() < 100) {
+				cart.Contents.Add(content);
+			} else {
+				throw new ArgumentOutOfRangeException("You cart already contains the maximum number of items (100)");
+			}
 			DataSession.CommitChanges();
+
 		}
 
 		// **************************************
