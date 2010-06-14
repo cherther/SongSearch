@@ -10,7 +10,8 @@
 		SearchMenuProperties = Model.SearchMenuProperties,
 		RequestUrl = Model.RequestUrl,
 		SortPropertyId = Model.SortPropertyId,
-		SortType = Model.SortType
+		SortType = Model.SortType,
+		ViewMode = Model.ViewMode
 	};
 	
 	 %>
@@ -18,9 +19,13 @@
 	<h2>Results</h2>
 	<% Html.RenderPartial(MVC.Search.Views.ctrlBreadcrumb, Model); %>
 	<p><%= results.TotalCount %> songs found.</p>
-	<% if (results.TotalCount > 0) { %>
-	<% Html.RenderPartial(MVC.Search.Views.ctrlPager, Model); %>
+	<% if (results.TotalCount > 0){%>
+		<%// if (Model.ViewMode != ViewModes.Print) { %>
+			<% Html.RenderPartial(MVC.Search.Views.ctrlPager, Model); %>
+		<%//} %>
+
 	<% Html.RenderPartial(MVC.Search.Views.ctrlSearchResultsTable, contentListViewModel); %>
+	
 	<% } %>
 	</div>
 	

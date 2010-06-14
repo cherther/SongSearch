@@ -18,8 +18,7 @@
         var contentListViewModel = new ContentListViewModel() { List = activeCartContent, ListHeaders = Model.CartContentHeaders, ShowDetails = true };
 
 
-        var compressedCarts = Model.MyCarts.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed).OrderByDescending(c => c.LastUpdatedOn).ToList();
-        var downloadedCarts = Model.MyCarts.Where(c => c.CartStatus == (int)CartStatusCodes.Downloaded).OrderByDescending(c => c.LastUpdatedOn).ToList();
+        var compressedCarts = Model.MyCarts.Where(c => c.CartStatus != (int)CartStatusCodes.Active).OrderByDescending(c => c.LastUpdatedOn).ToList();
         
         
     %>
@@ -60,15 +59,15 @@
 		  <h3>(2) Zipped Song Carts</h3>
           <%if (compressedCarts != null && compressedCarts.Count() > 0) { %>
           <p>Your zipped up song carts are listed below. To save them to your computer, click the 'Save' button next to the file you want to download.</p>
-		  <p>Zipped carts will be shown here for 7 days after you have requested them, then they will move to the 'Zipped Song Carts Archive' section below.</p>
-          <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status", "Save" }; %>
+		  <p>We'll keep zipped carts here for 14 days after you have requested them.</p>
+          <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status", "Save", "Delete" }; %>
           <% ViewData["CartContentHeaders"] = new string[] { "Title", "Artist", "Year" }; %>
           <% Html.RenderPartial(MVC.Cart.Views.ctrlCartTable, compressedCarts); %>
           <%} else {%>
           <p>You have no zip files waiting to be downloaded. </p>
           <%} %>
     </div>
-    <%if (downloadedCarts != null && downloadedCarts.Count() > 0) { %>
+    <%--<%if (downloadedCarts != null && downloadedCarts.Count() > 0) { %>
     <div>&nbsp;</div>
     <hr />
     <div>&nbsp;</div>
@@ -81,7 +80,7 @@
           <% ViewData["CartContentHeaders"] = new string[] { "Title", "Artist", "Year" }; %>
           <% Html.RenderPartial(MVC.Cart.Views.ctrlCartTable, downloadedCarts); %>    
     </div>
-    <%} %>
+    <%} %>--%>
 </div>
 </asp:Content>
 

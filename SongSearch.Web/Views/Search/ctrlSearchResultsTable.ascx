@@ -2,6 +2,7 @@
 <%
 	var results = Model.List;
 	var request = Model.RequestUrl;
+	var printUrl = request.Replace("Results?", "Print?");
 	var sortUrl = Model.HeaderSortUrl;
 	var props = Model.SearchMenuProperties;
 	var tableHeader = Model.ListHeaders;
@@ -10,19 +11,26 @@
  %>
 	
 	<table width="100%" class="cw-tbl-search-results">
+		<%if (Model.ViewMode != ViewModes.Print) { %>
 		<tr>
-		<td colspan="<%: tableHeader.Count()+1 %>" style="text-align: left; white-space: nowrap; padding-left: 1px">
-		<a href="<%: addAllToCartLink %>" id="cw-add-all-to-cart" class="cw-button cw-simple cw-small cw-blue">
-<%--			<img src="../../Public/Images/Icons/Silk/cart_add.png" alt="Add To Cart" />
---%>
-		<span class="b-cart">Add</span>
-		</a>
+		<td style="text-align: left; white-space: nowrap; padding-left: 1px">
+			<a href="<%: addAllToCartLink %>" id="cw-add-all-to-cart" class="cw-button cw-simple cw-small cw-blue">
+				<span class="b-cart">Add</span>
+			</a>&nbsp;
+		</td>
+		<td colspan="<%: tableHeader.Count()%>" align="right">
+			<a href="<%=printUrl%>" class="cw-button cw-simple cw-small cw-blue" target="_new">
+				<span class="b-print">Print</span>
+			</a>
 		</td>
 		</tr>
+		<%} %>
 		<tr>
+		<%if (Model.ViewMode != ViewModes.Print) { %>
 			<th style="text-align: left; white-space: nowrap; padding-left: 5px">
 			<input type="checkbox" id="cw-select-all-items-check" />
 			</th>
+		<%} %>
 		<%foreach(var col in tableHeader){ %>
 		<% var classId = rightCols.Contains(col) ? "text-right" : ""; %>
 			<th class="<%: classId %>">
@@ -51,9 +59,11 @@
 			var cartState = item.IsInMyActiveCart ? @"checked=checked disabled=disabled" : @"class=add-to-cart-checkbox";
 		%>
 		<tr class="cw-tbl-data">
+			<%if (Model.ViewMode != ViewModes.Print) { %>
 			<td>
 			<input type="checkbox" id="<%: item.ContentId.ToString() %>" <%: cartState %> />
 			</td>
+			<%} %>
 			<td width="40%">
 				<%: Html.ActionLink(!String.IsNullOrWhiteSpace(item.Title) ? item.Title.ToUpper() : "(N/A)", 
 					MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", rel = mediaUrl })%>

@@ -26,6 +26,7 @@ public static class MVC {
     public static SongSearch.Web.Controllers.AdminController Admin = new SongSearch.Web.Controllers.T4MVC_AdminController();
     public static SongSearch.Web.Controllers.CartController Cart = new SongSearch.Web.Controllers.T4MVC_CartController();
     public static SongSearch.Web.Controllers.CatalogManagementController CatalogManagement = new SongSearch.Web.Controllers.T4MVC_CatalogManagementController();
+    public static SongSearch.Web.Controllers.CatalogUploadController CatalogUpload = new SongSearch.Web.Controllers.T4MVC_CatalogUploadController();
     public static SongSearch.Web.Controllers.ContentController Content = new SongSearch.Web.Controllers.T4MVC_ContentController();
     public static SongSearch.Web.Controllers.ErrorController Error = new SongSearch.Web.Controllers.T4MVC_ErrorController();
     public static SongSearch.Web.Controllers.HomeController Home = new SongSearch.Web.Controllers.T4MVC_HomeController();

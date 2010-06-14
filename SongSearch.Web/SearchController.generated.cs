@@ -40,6 +40,11 @@ namespace SongSearch.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Print() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Print);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.JsonResult AutoComplete() {
             return new T4MVC_JsonResult(Area, Name, ActionNames.AutoComplete);
         }
@@ -58,6 +63,7 @@ namespace SongSearch.Web.Controllers {
         public class ActionNamesClass {
             public readonly string Index = "Index";
             public readonly string Results = "Results";
+            public readonly string Print = "Print";
             public readonly string AutoComplete = "AutoComplete";
         }
 
@@ -73,6 +79,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string ctrlSearchResults = "~/Views/Search/ctrlSearchResults.ascx";
             public readonly string ctrlSearchResultsTable = "~/Views/Search/ctrlSearchResultsTable.ascx";
             public readonly string Index = "~/Views/Search/Index.aspx";
+            public readonly string PrintResults = "~/Views/Search/PrintResults.aspx";
             public readonly string Results = "~/Views/Search/Results.aspx";
         }
     }
@@ -88,6 +95,15 @@ namespace SongSearch.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Results(System.Collections.Generic.IList<SongSearch.Web.SearchField> f, int? p, int? s, int? o) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Results);
+            callInfo.RouteValueDictionary.Add("f", f);
+            callInfo.RouteValueDictionary.Add("p", p);
+            callInfo.RouteValueDictionary.Add("s", s);
+            callInfo.RouteValueDictionary.Add("o", o);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Print(System.Collections.Generic.IList<SongSearch.Web.SearchField> f, int? p, int? s, int? o) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Print);
             callInfo.RouteValueDictionary.Add("f", f);
             callInfo.RouteValueDictionary.Add("p", p);
             callInfo.RouteValueDictionary.Add("s", s);

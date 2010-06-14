@@ -103,34 +103,34 @@ function submitContentFormAjax(formId, link, altLink) {
 // Song Cart
 //-----------------------------------------------------------------------------------
 function updateCartCount() {
-    var count = getCartCountAjax();
-    var menuCartLink = $('#menu-cart a')
-    
-    menuCartLink.text('Song Cart (' + count + ')');
+	var count = getCartCountAjax();
+	var menuCartLink = $('#menu-cart a')
+	
+	menuCartLink.text('Song Cart (' + count + ')');
 
-    return count;
+	return count;
 	
 }
 function getCartCountAjax() {
-    var menuCartLink = $('#menu-cart a')
-    var url = menuCartLink.attr('href');
-    url = url + '/CartCount?' + Rnd();
-    var count = 0;
+	var menuCartLink = $('#menu-cart a')
+	var url = menuCartLink.attr('href');
+	url = url + '/CartCount?' + Rnd();
+	var count = 0;
 	//alert(url);
-    $.ajax({
-        async: false,
-        url: url,
-        type: 'GET',
-        dataType: 'json',
-        success: function (result) {
-            //var result = "count is \"<strong>" + json + "\"";
-            //alert("Result: " + result);
-            //			    result == null ? _cartCount = 0 : _cartCount = result;
-            count = result != null ? result : 0;
-        }
-    });
+	$.ajax({
+		async: false,
+		url: url,
+		type: 'GET',
+		dataType: 'json',
+		success: function (result) {
+			//var result = "count is \"<strong>" + json + "\"";
+			//alert("Result: " + result);
+			//			    result == null ? _cartCount = 0 : _cartCount = result;
+			count = result != null ? result : 0;
+		}
+	});
 
-    return count;
+	return count;
 }
 
 function addToCartAjax(link) {
@@ -159,7 +159,7 @@ function addToCartAjax(link) {
 
 
 				//feedback('info', 'Added to Cart');
-	            updateCartCount();
+				updateCartCount();
 				unwait();
 			}
 		},

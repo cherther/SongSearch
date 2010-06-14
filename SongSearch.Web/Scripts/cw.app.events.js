@@ -68,15 +68,19 @@
 		function (evt) {
 			var checkboxes = $('.add-to-cart-checkbox');
 			if ($(this).is(':checked')) {
-				if (checkboxes.length >= 100) {
+				var cartCount = getCartCountAjax();
+				var unchecked = checkboxes.filter(':not(:checked) :not(:disabled)');
+				if (unchecked.length + cartCount > 100) {
 					feedback('error', 'The maximum number of items to add to your cart is 100');
+				} else {
+					unchecked.attr('checked', 'checked');
+					unchecked.addClass('clicked');
 				}
-				checkboxes.attr('checked', 'checked');
-				checkboxes.addClass('clicked');
 
 			} else {
-				checkboxes.filter('.clicked').removeAttr('checked');
-				checkboxes.removeClass('clicked');
+				var clicked = checkboxes.filter('.clicked'); // filter(':checked :not(:disabled)');
+				clicked.filter('.clicked').removeAttr('checked');
+				clicked.removeClass('clicked');
 
 			}
 
@@ -93,20 +97,25 @@
 		function (evt) {
 			evt.preventDefault();
 			var checkboxes = $('.add-to-cart-checkbox').filter('.clicked');
-			if (checkboxes.length >= 100) {
-				feedback('error', 'The maximum number of items to add to your cart is 100');
-			} else {
+			if (checkboxes.length > 0) {
+				var cartCount = getCartCountAjax();
 
-				var items = new Array();
-				checkboxes.each(function (i) {
-					var id = checkboxes[i].id;
-					items.push(id);
-				}
+				if (checkboxes.length + cartCount > 100) {
+					feedback('error', 'The maximum number of items in your cart is 100');
+				} else {
+
+					var items = new Array();
+					checkboxes.each(function (i) {
+						var id = checkboxes[i].id;
+						items.push(id);
+					}
 				);
-				checkboxes.attr('disabled', 'disabled');
-				checkboxes.removeClass('clicked');
-				updateAddToCartAllButtontext(0)
-				addToCartMultipleAjax($(this), items);
+					checkboxes.attr('disabled', 'disabled');
+					checkboxes.removeClass('clicked');
+					updateAddToCartAllButtontext(0)
+					addToCartMultipleAjax($(this), items);
+
+				}
 			}
 		}
 	);
@@ -119,7 +128,7 @@
 			var count = $('.clicked').length;
 			var cartCount = getCartCountAjax();
 			if (count + cartCount > 100) {
-				feedback('error', 'The maximum number of items to add to your cart is 100');
+				feedback('error', 'The maximum number of items in your cart is 100');
 				$(this).removeClass('clicked');
 				evt.preventDefault();
 			} else {

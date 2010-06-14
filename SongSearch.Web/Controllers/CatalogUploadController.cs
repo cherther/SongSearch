@@ -11,7 +11,7 @@ namespace SongSearch.Web.Controllers
 {
 	[HandleError]
 	[RequireAuthorization(MinAccessLevel = Roles.Admin)]
-	public class CatalogUploadController : Controller
+	public partial class CatalogUploadController : Controller
 	{
 		private ICatalogUploadService _catUploadService;
 		private User _currentUser;
@@ -33,7 +33,7 @@ namespace SongSearch.Web.Controllers
 
 		// GET: /CatalogUpload/
 
-		public ActionResult Index()
+		public virtual ActionResult Index()
 		{
 			return View();
 		}
@@ -41,7 +41,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Catalog/UploadWizard
 		// **************************************
-		public ActionResult Upload() {
+		public virtual ActionResult Upload() {
 
 			var state = new CatalogUploadState(_catUploadService.CatalogUploadWorkflow.WorkflowSteps.Count);
 
@@ -60,7 +60,7 @@ namespace SongSearch.Web.Controllers
 		}
 
 		[HttpPost]
-		public ActionResult Upload(int stepIndex) {
+		public virtual ActionResult Upload(int stepIndex) {
 			var state = Session["CatalogUploadState"] as CatalogUploadState;
 			if (state == null) {
 				state = new CatalogUploadState();

@@ -37,6 +37,10 @@
 
     </script>
     <%} %>
+	<div class="cw-outl cw-padded">
+		<h1><a href="/" class="cw-logo">Ford Music <span>SongSearch</span></a></h1>
+		<h3>Your professional music licensing resource</h3>
+	</div>
     <asp:ContentPlaceHolder ID="MainContent" runat="server" />
 	<div>
 	&copy; <%=DateTime.Now.Year %> Ford Music Services

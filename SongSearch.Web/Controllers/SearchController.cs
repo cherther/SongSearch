@@ -44,38 +44,14 @@ namespace SongSearch.Web.Controllers
 		// ****************************************************************************
 		public virtual ActionResult Results(IList<SearchField> f, int? p, int? s, int? o) {
 
-			var model = GetSearchViewModel();
-			model.SortPropertyId = s;
-			model.SortType = o.HasValue ? (SortType)o.GetValueOrDefault() : SortType.None;
-			
 			var isValid = f.Any(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v)));
 
 			if (isValid) {
+
 				try {
-					var searchFields = f.Where(x => x.V != null && 
-					x.V.Any(v => 
-					v != null && 
-					!String.IsNullOrWhiteSpace(v) 
-					&& !v.Equals(bool.FalseString, StringComparison.InvariantCultureIgnoreCase)
-					)
-					).ToList();
 
-					var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
-
-					var activeCart = CacheService.MyActiveCart(_currentUser.UserName);
-					if (activeCart != null) {
-						results.ForEach(c => c.IsInMyActiveCart = activeCart.Contents.Select(con => con.ContentId).Contains(c.ContentId));
-					}
-					model.SearchResults = results;
-					model.SearchFields = searchFields;
-					CacheService.SessionUpdate(searchFields, "SearchFields");
-
-					model.RequestUrl = Request.RawUrl.Replace(String.Format("&p={0}", results.PageIndex), "");
-					model.PagerSortUrl = model.SortPropertyId.HasValue ?
-						String.Format("&s={0}&o={1}", model.SortPropertyId.Value, (int)model.SortType) : "";
-					model.HeaderSortUrl = model.RequestUrl.Replace(String.Format("&s={0}&o={1}", model.SortPropertyId.GetValueOrDefault(), (int)model.SortType), "");
-					model.SearchResultsHeaders = new string[] { "Title", "Artist", "Pop", "Country", "ReleaseYear"};
-
+					var model = GetSearchResults(f, p, s, o);
+					model.ViewMode = ViewModes.Embedded;
 					return View(model);
 				}
 				catch {
@@ -88,6 +64,29 @@ namespace SongSearch.Web.Controllers
 		}
 
 		
+
+		// **************************************
+		// Print/5
+		// **************************************
+		public virtual ActionResult Print(IList<SearchField> f, int? p, int? s, int? o) {
+			var isValid = f.Any(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v)));
+
+			if (isValid) {
+
+				try {
+
+					var model = GetSearchResults(f, p, s, o);
+					model.ViewMode = ViewModes.Print;
+					return View(Views.PrintResults, model);
+				}
+				catch {
+					this.FeedbackError("There was an error getting your search results. Please try again in a bit.");
+				}
+			}
+
+			this.FeedbackWarning("Please try your search again.");
+			return RedirectToAction(Actions.Index());
+		}
 		// **************************************
 		// AutoComplete/f = fieldName, term = search term
 		// **************************************
@@ -124,6 +123,40 @@ namespace SongSearch.Web.Controllers
 		}
 
 		// **************************************
+		// GetSearchResults
+		// **************************************
+		private SearchViewModel GetSearchResults(IList<SearchField> f, int? p, int? s, int? o) {
+			var model = GetSearchViewModel();
+			model.SortPropertyId = s;
+			model.SortType = o.HasValue ? (SortType)o.GetValueOrDefault() : SortType.None;
+
+			var searchFields = f.Where(x => x.V != null &&
+			x.V.Any(v =>
+			v != null &&
+			!String.IsNullOrWhiteSpace(v)
+			&& !v.Equals(bool.FalseString, StringComparison.InvariantCultureIgnoreCase)
+			)
+			).ToList();
+
+			var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
+
+			var activeCart = CacheService.MyActiveCart(_currentUser.UserName);
+			if (activeCart != null) {
+				results.ForEach(c => c.IsInMyActiveCart = activeCart.Contents.Select(con => con.ContentId).Contains(c.ContentId));
+			}
+			model.SearchResults = results;
+			model.SearchFields = searchFields;
+			CacheService.SessionUpdate(searchFields, "SearchFields");
+
+			model.RequestUrl = Request.RawUrl.Replace(String.Format("&p={0}", results.PageIndex), "");
+			model.PagerSortUrl = model.SortPropertyId.HasValue ?
+				String.Format("&s={0}&o={1}", model.SortPropertyId.Value, (int)model.SortType) : "";
+			model.HeaderSortUrl = model.RequestUrl.Replace(String.Format("&s={0}&o={1}", model.SortPropertyId.GetValueOrDefault(), (int)model.SortType), "");
+			model.SearchResultsHeaders = new string[] { "Title", "Artist", "Pop", "Country", "ReleaseYear" };
+			return model;
+		}
+
+		// **************************************
 		// GetSearchViewModel
 		// **************************************
 		private SearchViewModel GetSearchViewModel() {
@@ -136,9 +169,5 @@ namespace SongSearch.Web.Controllers
 
 
 		}
-
-		
-		
-
 	}
 }

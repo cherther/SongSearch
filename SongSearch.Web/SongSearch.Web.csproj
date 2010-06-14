@@ -135,6 +135,9 @@
     <Compile Include="CatalogManagementController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="CatalogUploadController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="ContentController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1800,6 +1803,7 @@
     <Content Include="Views\Search\ctrlSearchResultsTable.ascx" />
     <Content Include="Views\Search\ctrlPager.ascx" />
     <Content Include="Views\Content\Detail.aspx" />
+    <Content Include="Views\Search\PrintResults.aspx" />
     <Content Include="Views\Shared\ctrlTerritoryCloud.ascx" />
     <Content Include="Views\Shared\ctrlMediaplayer.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />

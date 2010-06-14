@@ -7,18 +7,18 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class = "cw-outl">
 <table>
-    <tr>
-    <td align="left" width="200" id="cw-search-options-panel">
-        <% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
-    </td>
-    <td  align="left">
+	<tr>
+	<td align="left" width="200" id="cw-search-options-panel">
+		<% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
+	</td>
+	<td  align="left">
 		
-        <div id="cw-search-results-panel">
+		<div id="cw-search-results-panel">
 		
-        <% Html.RenderPartial(MVC.Search.Views.ctrlSearchResults); %>
-        </div>
-    </td>
-    </tr>
+		<% Html.RenderPartial(MVC.Search.Views.ctrlSearchResults); %>
+		</div>
+	</td>
+	</tr>
 </table>
 </div>
 </asp:Content>
