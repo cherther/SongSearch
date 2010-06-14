@@ -151,7 +151,7 @@ namespace SongSearch.Web
 				if (Request.IsAjaxRequest()) {
 					return View(Views.ctrlDetail, vm);
 				} else {
-					return RedirectToAction(Actions.Index()); //return View(vm);
+					return View(Views.ctrlDetail, vm); //RedirectToAction(Actions.Index()); //return View(vm);
 				}
 			}
 			catch (Exception ex){
@@ -184,6 +184,32 @@ namespace SongSearch.Web
 
 			if (Request.IsAjaxRequest()) {
 				return Json(roleId);
+			} else {
+				this.FeedbackInfo("Succesfully updated user's role");
+				return RedirectToAction(MVC.UserManagement.Index());
+			}
+		}
+
+		// **************************************
+		// URL: /UserManagement/ToggleSystemAdminAccess?user=5
+		// **************************************
+		[HttpPost]
+		public virtual ActionResult ToggleSystemAdminAccess(int userId) {
+			try {
+
+				_usrMgmtService.ToggleSystemAdminAccess(userId);
+
+			}
+			catch (Exception ex) {
+				if (Request.IsAjaxRequest()) {
+					throw ex;
+				} else {
+					this.FeedbackError("There was an error updating this user's role...");
+				}
+			}
+
+			if (Request.IsAjaxRequest()) {
+				return Json(userId);
 			} else {
 				this.FeedbackInfo("Succesfully updated user's role");
 				return RedirectToAction(MVC.UserManagement.Index());

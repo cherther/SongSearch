@@ -330,7 +330,7 @@
 		    evt.preventDefault();
 		    var link = $(this);
 
-		    updateRoleAjax(link, 'cw-green');
+		    setSystemAdminAccess(link);
 
 
 		}

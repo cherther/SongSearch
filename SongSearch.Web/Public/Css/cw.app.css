@@ -57,6 +57,11 @@ input.cw-input-highlight
 	background-color:#F5DF00;
 	padding:0.1em;
 }
+.cw-label-red 
+{
+    color: Red;
+    font-weight: bold;
+}
 /* boxes */
 .cw-outl
 {

@@ -3,9 +3,14 @@
 	var user = Model.MyUsers.First();
 	var roleClasses = new string[] { "cw-black", "cw-orange", "cw-green", "cw-purple", "cw-blue" };
 	var userDetailUrl = Request.Url;//String.Concat(Url.Content("/"), Url.Action("Detail", new { id = user.UserId }));
+	var admin = (int)SongSearch.Web.Roles.Admin;
+	var isCatAdmin = user.UserCatalogRoles.Any(r => r.RoleId == admin);
+	var isAdmin = user.IsSuperAdmin() || isCatAdmin || user.RoleId == admin;
 %>
 <div>
-	<strong><%= user.FullName() %></strong>
+	<h3>User:
+	<span><%= user.FullName() %></span>
+	</h3>
 <%if (Model.IsThisUser){%>
 	<span>(<%=Html.ActionLink("Edit your Profile", MVC.Account.UpdateProfile()) %>)</span>
 <%}%>
@@ -14,7 +19,7 @@
 <%=Html.Hidden("userid", user.UserId) %>
 <div>&nbsp;</div>
 <div>
-	<label>User Name:</label>
+	<label>E-mail:</label>
 	 <span><%= user.UserName%></span>
 </div>
 <div>&nbsp;</div>
@@ -23,20 +28,26 @@
 	 <span><%= user.RegisteredOn.ToShortDateString()%></span>
 </div>
 <div>&nbsp;</div>
-<label><em>System Role</em></label>
-<div>
-	<%foreach (var role in Model.Roles) {%>
+<hr />
+<div>&nbsp;</div>
+<label><strong>Allow this user to add <u>new</u> Catalogs & Users?</strong></label>&nbsp;&nbsp;
 	<%
-		string roleName = ((SongSearch.Web.Roles)role).ToString();
-		string roleClass = String.Concat("cw-tag-box cw-role-edit cw-button cw-simple cw-small", role == user.RoleId ? " cw-green" : " cw-black"); 
-		%>
-		<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateRole(user.UserId, role), new { @class = roleClass })%>
-	<%} %>
-</div>
+		//var roleName = ((SongSearch.Web.Roles)admin).ToString();
+		var labelClass = isAdmin ? " cw-label-red" : "";
+		var roleUrl = Url.Action(MVC.UserManagement.ToggleSystemAdminAccess(user.UserId));
+		var roleMsg = isAdmin ? "Yes" : "No";
+		var disable = user.IsSuperAdmin() || isCatAdmin;
+		var adminMsg = user.IsSuperAdmin() ? " (SuperAdmin)" : 
+			(isCatAdmin ? " (Admin in at least one Catalog)" : "");
+	%>
+		<input type="checkbox" id="cw-system-access" class="cw-role-edit" <%: isAdmin ? "checked=checked" : "" %> <%: disable ? "disabled=disabled" : "" %> value="<%: roleUrl %>" />
+		<label for="cw-system-access" class="<%: labelClass %>"><%: roleMsg %></label>
+		<span><%: adminMsg %></span>
+<div>&nbsp;</div>
 
 <hr />
 <div>&nbsp;</div>
-<label><em>Catalog Access</em></label>
+<label><strong>Catalog Privileges:</strong></label>
 <div style="overflow:auto ; height: 400px; width: 500px">
 		<table id="catalog-list" class="">
 			<tr>
@@ -47,8 +58,8 @@
 				<%
 					foreach (var role in Model.CatalogRoles)
 					{
-						string roleName = ((SongSearch.Web.Roles)role).ToString();
-						string roleClass = "cw-tag-box cw-usrcat-role-edit-all cw-button cw-simple cw-small"; 
+						var roleName = ((SongSearch.Web.Roles)role).ToString();
+						var roleClass = "cw-tag-box cw-usrcat-role-edit-all cw-button cw-simple cw-small"; 
 						%>
 						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllCatalogs(user.UserId, role), new { @class = roleClass, rel = userDetailUrl })%>
 					<%} %>

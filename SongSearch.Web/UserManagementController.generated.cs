@@ -42,6 +42,11 @@ namespace SongSearch.Web {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ToggleSystemAdminAccess() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ToggleSystemAdminAccess);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult UpdateCatalog() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.UpdateCatalog);
         }
@@ -82,6 +87,7 @@ namespace SongSearch.Web {
             public readonly string Invite = "Invite";
             public readonly string Detail = "Detail";
             public readonly string UpdateRole = "UpdateRole";
+            public readonly string ToggleSystemAdminAccess = "ToggleSystemAdminAccess";
             public readonly string UpdateCatalog = "UpdateCatalog";
             public readonly string UpdateAllCatalogs = "UpdateAllCatalogs";
             public readonly string UpdateAllUsers = "UpdateAllUsers";
@@ -134,6 +140,12 @@ namespace SongSearch.Web {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateRole);
             callInfo.RouteValueDictionary.Add("userId", userId);
             callInfo.RouteValueDictionary.Add("roleId", roleId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ToggleSystemAdminAccess(int userId) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ToggleSystemAdminAccess);
+            callInfo.RouteValueDictionary.Add("userId", userId);
             return callInfo;
         }
 

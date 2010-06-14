@@ -203,12 +203,28 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
+		// UpdateUsersRole
+		// **************************************
+		public void ToggleSystemAdminAccess(int userId) {
+
+			var admin = (int)Roles.Admin;
+			var user = GetUser(userId);
+
+			if (user != null && !user.IsSuperAdmin()) {
+
+				user.RoleId = user.RoleId != admin ? admin : (int)Roles.Client;
+				DataSession.Update<User>(user);
+				DataSession.CommitChanges();
+			}
+		}
+
+
+		// **************************************
 		// UpdateUserCatalogRole
 		// **************************************
 		public void UpdateUserCatalogRole(int userId, int catalogId, int roleId) {
 			var user = GetUserDetail(userId);
 			if (user != null && catalogId > 0) {
-
 				
 				var usrCatalogRole = user.UserCatalogRoles.Where(c => c.CatalogId == catalogId).SingleOrDefault();
 
@@ -249,6 +265,10 @@ namespace SongSearch.Web.Services {
 					}
 				}
 
+				// check if it's an admin role; if so, elevate the system role to Admin
+				if (roleId == (int)Roles.Admin) {
+					user.RoleId = roleId;
+				}
 				DataSession.CommitChanges();
 
 			}

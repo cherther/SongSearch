@@ -182,7 +182,7 @@ function addToCartMultipleAjax(link, items) {
 		data: { 'items': items },
 		success: function (data, status, xhr) {
 			if (status == 'error') {
-			    unwait(); feedback('error', _cartAddErrorMsg);
+				unwait(); feedback('error', _cartAddErrorMsg);
 			} else {
 				feedback('info', data + ' item(s) added to your song cart');
 				updateCartCount();
@@ -190,7 +190,7 @@ function addToCartMultipleAjax(link, items) {
 			}
 		},
 		error: function (xhr, status, error) {
-		    unwait(); feedback('error', _cartAddErrorMsg);
+			unwait(); feedback('error', _cartAddErrorMsg);
 		}
 	}
 	);
@@ -299,6 +299,41 @@ function updateRoleAjax(link) {
 
 }
 
+function setSystemAdminAccess(link) {
+
+	var url = link[0].value;
+
+	$.ajax({
+	    url: url,
+	    dataType: 'json',
+	    type: 'POST',
+	    cache: false,
+	    success: function (data, status, xhr) {
+	        if (status == "error") {
+	            feedback('error', xhr.status + ' ' + xhr.statusText);
+	        }
+	        else {
+	            var label = link.next('label');
+	            if (link.is(':checked')) {
+	                link.removeAttr('checked');
+	                label.text('No');
+	                label.removeClass('cw-label-red');
+	            } else {
+	                link.attr('checked', true);
+	                label.text('Yes');
+	                label.addClass('cw-label-red');
+	            }
+
+	            feedback('info', 'System access updated');
+	        }
+	    },
+	    error: function (xhr, status, error) {
+	        feedback('error', xhr.status + " " + xhr.statusText);
+	    }
+	}
+	);
+
+}
 
 function updateUserCatRoleAjax(link) {
 
@@ -318,6 +353,7 @@ function updateUserCatRoleAjax(link) {
 			else {
 				getUserDetailAjax(detUrl);
 				unwait();
+				feedback('info', 'Catalog access updated');
 			}
 		},
 		error: function (xhr, status, error) {
@@ -346,6 +382,7 @@ function updateCatRoleAjax(link) {
 			else {
 				getCatalogDetailAjax(detUrl);
 				unwait();
+				feedback('info', 'Catalog access updated');
 			}
 		},
 		error: function (xhr, status, error) {

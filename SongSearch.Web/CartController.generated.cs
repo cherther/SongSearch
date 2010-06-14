@@ -73,6 +73,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string Add = "Add";
             public readonly string AddMultiple = "AddMultiple";
             public readonly string Remove = "Remove";
+            public readonly string RemoveMultiple = "RemoveMultiple";
             public readonly string Delete = "Delete";
             public readonly string Zip = "Zip";
             public readonly string Download = "Download";
@@ -119,6 +120,11 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult Remove(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Remove);
             callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult RemoveMultiple() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.RemoveMultiple);
             return callInfo;
         }
 

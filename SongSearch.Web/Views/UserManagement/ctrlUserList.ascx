@@ -3,7 +3,7 @@
 	var users = Model;
 %>
 
-<% foreach (var user in users.OrderBy(u => u.RoleId).ThenBy(u => u.UserName))
+<% foreach (var user in users.OrderBy(u => u.UserName))
    {
 	   var rowId = String.Concat("user-", user.UserId.ToString());
 	   //var rowClass = user.ParentUserId.HasValue ? String.Concat("c-", user.ParentUserId.ToString()) : "";

@@ -25,7 +25,8 @@ namespace SongSearch.Web.Services {
 		void DeleteUser(int userId, bool takeOwnerShip = true);
 		void TakeOwnerShip(int userId);
 		void UpdateUsersRole(int userId, int roleId);
-		
+		void ToggleSystemAdminAccess(int userId);
+
 		void UpdateUserCatalogRole(int userId, int catalogId, int roleId);
 
 		void UpdateAllCatalogs(int userId, int roleId);
