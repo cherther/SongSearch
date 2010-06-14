@@ -8,10 +8,12 @@
 	var tableHeader = Model.ListHeaders;
 	var rightCols = new string[]{ "Pop", "Country", "ReleaseYear" };
 	var addAllToCartLink = Url.Action("AddMultiple", "Cart");
+	
+	var isPrint = Model.ViewMode == ViewModes.Print;
  %>
 	
 	<table width="100%" class="cw-tbl-search-results">
-		<%if (Model.ViewMode != ViewModes.Print) { %>
+		<%if (!isPrint) { %>
 		<tr>
 		<td colspan="2" style="text-align: left; white-space: nowrap; padding-left: 1px">
 			<a href="<%: addAllToCartLink %>" id="cw-add-all-to-cart" class="cw-button cw-simple cw-small cw-blue">
@@ -26,7 +28,7 @@
 		</tr>
 		<%} %>
 		<tr>
-		<%if (Model.ViewMode != ViewModes.Print) { %>
+		<%if (!isPrint) { %>
 			<th style="text-align: left; white-space: nowrap; padding-left: 5px">
 			<input type="checkbox" id="cw-select-all-items-check" />
 			</th>
@@ -70,17 +72,19 @@
 			var cartState = item.IsInMyActiveCart ? @"checked=checked disabled=disabled" : @"class=add-to-cart-checkbox";
 		%>
 		<tr class="cw-tbl-data">
-			<%if (Model.ViewMode != ViewModes.Print) { %>
+			<%if (!isPrint) { %>
 			<td>
 			<input type="checkbox" id="<%: item.ContentId.ToString() %>" <%: cartState %> />
 			</td>
 			<%} %>
 			<td width="40%" style="white-space: nowrap">
-				<%: Html.ActionLink(title, MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", rel = mediaUrl })%>
+				<%: !isPrint ? Html.ActionLink(title, MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", rel = mediaUrl }) : MvcHtmlString.Create(title) %>
 			</td>
 			<td width="30%" style="white-space: nowrap">
 				<%: artist %>
+				<% if (!isPrint) {%>
 				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist"><img src="/public/images/icons/arrow.gif" alt="right-arrow"/></a>
+				<%} %>
 			</td>
 			<td class="text-right">
 				<%: item.Pop %>

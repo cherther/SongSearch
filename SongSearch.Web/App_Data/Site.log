@@ -26977,3 +26977,4 @@ Stack Trace :   at System.Web.Compilation.BuildManager.PostProcessFoundBuildResu
    at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
 TargetSite :System.Web.Compilation.BuildResult PostProcessFoundBuildResult(System.Web.Compilation.BuildResult, Boolean, System.Web.VirtualPath)
 06/14/2010 17:34:45: App is shutting down
+06/14/2010 17:57:26: App is shutting down

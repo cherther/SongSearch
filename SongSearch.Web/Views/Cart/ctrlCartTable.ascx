@@ -13,8 +13,9 @@
 <%
 foreach (var cart in Model.OrderBy(m => m.CartStatus))
 {
+	var cartClass = cart.CartStatus == (int)CartStatusCodes.Downloaded ? " cw-tbl-carts-archived" : "";
 	%>                         
-	<tr class="cw-tbl-carts-main">
+	<tr class="cw-tbl-carts-main<%: cartClass %>">
 		<td><div id="s-<%: cart.CartId%>" class="cw-carts-contents cw-carts-contents-show">&nbsp;</div></td>
 		<td>
 			<%: cart.LastUpdatedOn.ToShortDateString()%>
