@@ -10,28 +10,33 @@
 	<%
 		var prop = properties.Where(p => p.PropertyId == searchField.P).Single();
 		var searchType = (SearchTypes) prop.SearchTypeId;
-	
+		var vals = searchField.V.Where(v => !String.IsNullOrWhiteSpace(v)).ToArray();		
+	   
 	%>
 		<a href="#" class="cw-tag-box cw-button cw-simple cw-small">
 
 		<%switch (searchType) {%>
 			<%case SearchTypes.Contains: {%>
 			<%: prop.DisplayName%>:
-			<%foreach (var v in searchField.V) {%>
-				<%:v%>&nbsp;
+			<%foreach (var v in vals) {%>
+				'<%:v%>'<%: Array.IndexOf(vals, v) < vals.Count()-1 ? " + " : "" %>
 			<%} %>
 			<%break;%>
 			<%} %>
-			<%case SearchTypes.Join: {%>
+<%--			<%case SearchTypes.Join: {%>
 			<%goto case (SearchTypes.Contains);	%>	
 			<%}%>
-			<%case SearchTypes.HasValue: {%>
+--%>			<%case SearchTypes.HasValue: {%>
 				<%:prop.DisplayName%>&nbsp;
 			<%break;%>
 			<%} %>
 			<%case SearchTypes.Range: {%>
-			<%foreach (var v in searchField.V) {%>
-				<%:v%> - 
+			<%: prop.ShortName%>:
+			<%for(var i=0; i<searchField.V.Count(); i++){%>
+				<% var v = searchField.V[i]; %>
+				<%if (!String.IsNullOrWhiteSpace(v)) { %>
+				<%: i == 0 ? "" : " < "%><%:v%>
+				<%} %>
 			<%} %>
 			<%break;%>
 			<%} %>
@@ -48,8 +53,17 @@
 			<%:tagType%>: 
 				<%foreach (var tagId in tagIds) { %>
 					<%var tag = tags.Where(t => t.TagId == tagId).Single(); %>
-					<%: tag.TagName %>&nbsp;
+					<%: tag.TagName %><%: Array.IndexOf(tagIds, tagId) < tagIds.Count() - 1 ? " + " : ""%>
 				<%} %>
+			<%break;%>
+			<%} %>
+			<%case SearchTypes.TagText: {%>
+			<% var tags = vals.SplitTagNames(','); %>
+			<%: prop.DisplayName%>:
+			<%foreach (var v in tags) {%>
+				'<%:v%>'
+				<%: Array.IndexOf(tags, v) < tags.Count() - 1 ? " + " : ""%>
+			<%} %>
 			<%break;%>
 			<%} %>
 		<%} %>

@@ -80,7 +80,7 @@ namespace SongSearch.Web {
 		HasValue,
 		Range,
 		Tag,
-		Join,
+		TagText,
 		IsTrue
 	}
 

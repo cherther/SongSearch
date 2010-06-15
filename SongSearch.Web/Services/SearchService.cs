@@ -268,17 +268,17 @@ namespace SongSearch.Web.Services {
 							}
 							break;
 
-						case SearchTypes.Join:
-							if (searchableValues.First() != null) {
-								var joinTable = prop.LookupName;
-								var predicate = String.Format("{0}.{1}.Contains(@0)", joinTable, columnName);
-								var val = searchableValues.First(); 
-								query = query.Where(predicate, val);
-								//sbJoin.AppendLine(String.Format(@"inner join dbo.{0} r_{1} on c.{1} = r_{1}.{1}", joinTable, joinField));
-								//sbWhere.AppendLine(String.Format(@"r_{0}.{1} {2}", joinField, searchField,
-								//    String.Format(prop.SearchPredicate, searchableValues.First())));
-							}
-							break;
+						//case SearchTypes.Join:
+						//    if (searchableValues.First() != null) {
+						//        var joinTable = prop.LookupName;
+						//        var predicate = String.Format("{0}.{1}.Contains(@0)", joinTable, columnName);
+						//        var val = searchableValues.First(); 
+						//        query = query.Where(predicate, val);
+						//        //sbJoin.AppendLine(String.Format(@"inner join dbo.{0} r_{1} on c.{1} = r_{1}.{1}", joinTable, joinField));
+						//        //sbWhere.AppendLine(String.Format(@"r_{0}.{1} {2}", joinField, searchField,
+						//        //    String.Format(prop.SearchPredicate, searchableValues.First())));
+						//    }
+						//    break;
 
 						case SearchTypes.HasValue:
 							if (searchableValues.First() != null) {
@@ -339,6 +339,21 @@ namespace SongSearch.Web.Services {
 							}
 							break;
 
+						case SearchTypes.TagText:
+							var tagTypeId = prop.PropertyId;
+							var tagNames = field.V.SplitTagNames(',');//searchableValues.SplitTagNames(';').Distinct().ToArray(); //could also just replace, but this way it throws for non-numeric values
+							//columnName = columnName.MakeSearchableColumnName();
+							//foreach (var itm in tagTextValues) {
+							//    var tagNames = itm.SplitTagNames(',');
+								foreach (var tagName in tagNames) {
+
+									var val = tagName.MakeSearchableValue().Replace(" ", String.Empty);
+									//var predicate = String.Format("{0}.StartsWith(@0)", columnName);//.MakeSearchableColumn(),
+									//query = query.Where(predicate, val);
+									query = query.Where(c => c.Tags.Any(t => t.TagName.Replace(" ", String.Empty).Contains(val) && t.TagTypeId == tagTypeId));
+								}
+							//}
+							break;
 						default:
 							goto case (SearchTypes.Contains);
 

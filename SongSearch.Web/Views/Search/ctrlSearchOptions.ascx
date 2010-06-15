@@ -29,7 +29,7 @@
 			  
 			  %>
 			<li>
-			<%if (!isGroup && (searchType == SearchTypes.Contains || searchType == SearchTypes.Range)) { %>
+			<%if (!isGroup && (searchType == SearchTypes.Contains || searchType == SearchTypes.Range || searchType == SearchTypes.TagText)) { %>
 			<label><%: item.DisplayName%></label>
 			<%} %>
 			<%: Html.Hidden(String.Format("f[{0}].P", i), item.PropertyId)%>
@@ -98,6 +98,14 @@
 				<% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, model); %>
 				</div>
 				<%: Html.Hidden(String.Format("f[{0}].V", i), "", new { @class = "cw-form-value" })%>
+				<%break;%>
+				<%} %>
+				<%case SearchTypes.TagText: {%>
+				<%
+					 var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
+					 valueClass = String.Concat(valueClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
+				%>
+				<%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyName.ToLower() })%>
 				<%break;%>
 				<%} %>
 			<%}%>

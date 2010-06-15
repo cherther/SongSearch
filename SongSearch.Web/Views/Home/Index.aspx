@@ -13,8 +13,17 @@
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
 		<div>&nbsp;</div>
-		<div>6/14/2010</div>
-		<ul class="cw-vertical">
+		<div><strong>6/15/2010</strong></div>
+		<ul class="cw-vertical cw-highlight">
+			<li>Instruments & SoundsLike now use textsearch</li>
+			<ul class="cw-vertical">
+				<li>Separate terms by comma, e.g. "Foo Fighters, Sum 41"</li>
+			</ul>
+		</ul>
+		<div>&nbsp;</div>
+		<hr /><div>&nbsp;</div>
+		<div><strong>6/14/2010</strong></div>
+		<ul class="cw-vertical cw-highlight">
 			<li>Add to Cart option in search results via checkboxes</li>
 			<li>Remove from Cart option in cart page via checkboxes</li>
 			<li>Carts can have a max of 100 items ( = 1 search results page)</li>

@@ -77,13 +77,37 @@ namespace SongSearch.Web {
 					IEnumerable<string> tagIdValues = tag.Split(separator).Where(t => !String.IsNullOrWhiteSpace(t));
 
 					foreach (string tagIdValue in tagIdValues) {
-						tagIds.Add(int.Parse(tagIdValue));
+						tagIds.Add(int.Parse(tagIdValue.Trim()));
 					}
 				}
 				return tagIds.ToArray();
+			} else {
+				return new int[] { };
 			}
-			else
-				return new int[] {};
+		}
+
+		public static string[] SplitTagNames(this string tags, char separator) {
+			return !String.IsNullOrWhiteSpace(tags) ?
+				tags.Split(separator).Where(t => !String.IsNullOrWhiteSpace(t)).Select(t => t.Trim()).ToArray()
+				: new string[] { };
+		}
+
+		public static string[] SplitTagNames(this IEnumerable<string> tags, char separator) {
+			//return tags.Where(t => !String.IsNullOrWhiteSpace(t)).ToArray();
+
+			if (tags.Count() > 0) {
+				IList<string> tagStrings = new List<string>();
+				foreach (string tag in tags) {
+					IEnumerable<string> tagValues = tag.Split(separator).Where(t => !String.IsNullOrWhiteSpace(t));
+
+					foreach (string tagValue in tagValues) {
+						tagStrings.Add(tagValue.Trim());
+					}
+				}
+				return tagStrings.ToArray();
+			} else {
+				return new string[] { };
+			}
 		}
 
 		public static string JoinTags(this string[] tags, char separator) {
