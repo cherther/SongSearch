@@ -4,81 +4,81 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="author" content="Ford Music Services" /> 
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <%= Bundle.Css()
-        .Add("~/public/css/cw.app.css")
-        .Add("~/public/css/cw.buttons.css")
-        .Add("~/public/css/cw.forms.css")
-        .Add("~/public/css/cw.tables.css")
-                .Add("~/public/css/cw.flashblock.css")
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="author" content="Ford Music Services" /> 
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+	<%= Bundle.Css()
+		.Add("~/public/css/cw.app.css")
+		.Add("~/public/css/cw.buttons.css")
+		.Add("~/public/css/cw.forms.css")
+		.Add("~/public/css/cw.tables.css")
+				.Add("~/public/css/cw.flashblock.css")
 						.Add("~/public/css/cw.feedback.css")
 						.Add("~/public/css/cw.twitlogin.css")
-        .Add("~/public/css/jquery-ui.css")
-        //.ForceRelease()
-        .WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
-        .Render("~/public/css/cw-combined_#.css")
-    %>
+		.Add("~/public/css/jquery-ui.css")
+		//.ForceRelease()
+		.WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
+		.Render("~/public/css/cw-combined_#.css")
+	%>
 
-    <title>Ford Music SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
-    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+	<title>Ford Music SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>
 	<%if (App.Environment == AppEnvironment.Production) { %>
-    <script type="text/javascript">
+	<script type="text/javascript">
 
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-12019666-3']);
-        _gaq.push(['_trackPageview']);
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-12019666-3']);
+		_gaq.push(['_trackPageview']);
 
-        (function () {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+		(function () {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
 
-    </script>
-    <%} %>
-    <%--<div id="fire" style="display:none"></div>--%>
+	</script>
+	<%} %>
+	<%--<div id="fire" style="display:none"></div>--%>
 
-    <table width="100%">
-    <tr>
-        <td align="left">
-            <h1><a href="/" class="cw-logo">Ford Music <span>SongSearch</span></a></h1>
-            <h3>Your professional music licensing resource</h3>
-        </td>
-        <td align="right">
-            <% Html.RenderPartial(MVC.Shared.Views.ctrlLogIn); %>
-        </td> 
-    </tr>
-    <tr>
-        <td colspan="2">
-            <% Html.RenderPartial(MVC.Shared.Views.ctrlMainMenu); %>
-        </td> 
-    </tr>
-    <tr>
-        <td colspan="2">
-            <asp:ContentPlaceHolder ID="SuvNavContent" runat="server" /> 
-        </td> 
-    </tr>
-    <tr>
-        <td colspan="2">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-	    </td> 
-    </tr>
-    
-    <tr>
-        <td align="left">
-            &copy; <%=DateTime.Now.Year %> Ford Music Services
-	    </td>
-        <td align="right">
-            <% Html.RenderPartial(MVC.Shared.Views.ctrlBuildInfo); %>
-            developed by <a href="http://www.codewerks.de/">codewerks.de</a>
-	    </td> 
-    </tr>
-    </table>
+	<table width="100%" style="border-collapse:collapse; padding:0px; margin:0px;">
+	<tr>
+		<td align="left">
+			<h1><a href="/" class="cw-logo">Ford Music <span>SongSearch</span></a></h1>
+			<h3>Your professional music licensing resource</h3>
+		</td>
+		<td align="right">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlLogIn); %>
+		</td> 
+	</tr>
+	<tr>
+		<td colspan="2" style="padding:0px;margin:0px;">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlMainMenu); %>
+		</td> 
+	</tr>
+	<tr>
+		<td colspan="2" style="padding:0px;margin:0px;">
+			<asp:ContentPlaceHolder ID="SuvNavContent" runat="server" /> 
+		</td> 
+	</tr>
+	<tr>
+		<td colspan="2">
+			<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+		</td> 
+	</tr>
+	
+	<tr>
+		<td align="left">
+			&copy; <%=DateTime.Now.Year %> Ford Music Services
+		</td>
+		<td align="right">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlBuildInfo); %>
+			developed by <a href="http://www.codewerks.de/">codewerks.de</a>
+		</td> 
+	</tr>
+	</table>
 <%
 	var debug = App.Environment != AppEnvironment.Production;
 	var d = debug ? "?d" : "";
@@ -97,14 +97,36 @@
 	
 	bundle
 		.Add(String.Concat(Links.Scripts.cw_app_main_js, d))
-        .Add(String.Concat(Links.Scripts.cw_app_ajax_js, d))
-        .Add(String.Concat(Links.Scripts.cw_app_events_js, d))
+		.Add(String.Concat(Links.Scripts.cw_app_ajax_js, d))
+		.Add(String.Concat(Links.Scripts.cw_app_events_js, d))
 		.Add(String.Concat(Links.Scripts.cw_app_sound_js, d))
 		.WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
-    //.ForceRelease()
+	//.ForceRelease()
 	;
 	%>
 	<%= bundle.Render("~/public/javascript/cw-combined_#.js")%>    		
+
+	<script type="text/javascript">
+		var uservoiceOptions = {
+			key: 'songsearch',
+			host: 'songsearch.uservoice.com',
+			forum: '56920',
+			alignment: 'right',
+			background_color: '#0066cc',
+			text_color: 'white',
+			hover_color: '#ff0000',
+			lang: 'en',
+			showTab: true
+		};
+		function _loadUserVoice() {
+			var s = document.createElement('script');
+			s.src = ("https:" == document.location.protocol ? "https://" : "http://") + "uservoice.com/javascripts/widgets/tab.js";
+			document.getElementsByTagName('head')[0].appendChild(s);
+		}
+		_loadSuper = window.onload;
+		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function () { _loadSuper(); _loadUserVoice(); };
+	</script>
+
 </body>
 
 <%
