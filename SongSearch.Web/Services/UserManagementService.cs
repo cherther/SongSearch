@@ -265,8 +265,8 @@ namespace SongSearch.Web.Services {
 					}
 				}
 
-				// check if it's an admin role; if so, elevate the system role to Admin
-				if (roleId == (int)Roles.Admin) {
+				// check if it's an admin role; if so, elevate the system role to Admin if user is not already there
+				if (roleId == (int)Roles.Admin & user.RoleId > roleId) {
 					user.RoleId = roleId;
 				}
 				DataSession.CommitChanges();

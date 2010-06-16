@@ -27223,3 +27223,4 @@ Stack Trace :   at System.Web.Mvc.AntiForgeryDataSerializer.Deserialize(String s
    at System.Web.HttpServerUtility.ExecuteInternal(IHttpHandler handler, TextWriter writer, Boolean preserveForm, Boolean setPreviousPage, VirtualPath path, VirtualPath filePath, String physPath, Exception error, String queryStringOverride)
 TargetSite :System.Web.Mvc.AntiForgeryData Deserialize(System.String)
 06/15/2010 10:38:36: App is shutting down
+06/16/2010 06:46:41: App is shutting down
