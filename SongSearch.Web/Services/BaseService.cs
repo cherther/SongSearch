@@ -19,7 +19,7 @@ namespace SongSearch.Web.Services {
 			}
 			set {
 				_activeUserIdentity = value;
-				ActiveUser = ActiveUser ?? CacheService.User(_activeUserIdentity);
+				ActiveUser = ActiveUser ?? SessionService.Session().User(_activeUserIdentity);
 			}
 
 		}
@@ -46,7 +46,7 @@ namespace SongSearch.Web.Services {
 			}
 
 			_activeUserIdentity = activeUserIdentity;
-			ActiveUser = CacheService.User(activeUserIdentity);
+			ActiveUser = SessionService.Session().User(activeUserIdentity);
 		}
 	}
 }

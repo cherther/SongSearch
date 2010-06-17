@@ -118,12 +118,7 @@ namespace SongSearch.Web.Services {
 					return;
 				}
 			} else {
-				cart = new Cart {
-					CreatedOn = DateTime.Now,
-					LastUpdatedOn = DateTime.Now,
-					UserId = ActiveUser.UserId,
-					CartStatus = (int)CartStatusCodes.Active					
-				};
+				cart = EmptyCart();
 
 				DataSession.Add<Cart>(cart);
 			}
@@ -136,16 +131,12 @@ namespace SongSearch.Web.Services {
 
 		}
 
+		
+
 		public void AddToMyActiveCart(int[] contentIds) {
 
 			// Check if open cart exists and if needed create new cart
-			var cart = MyActiveCart() ?? 
-				new Cart {
-					CreatedOn = DateTime.Now,
-					LastUpdatedOn = DateTime.Now,
-					UserId = ActiveUser.UserId,
-					CartStatus = (int)CartStatusCodes.Active
-				};
+			var cart = MyActiveCart() ?? EmptyCart();
 
 			if (cart.CartId == 0) { DataSession.Add<Cart>(cart); }
 			
@@ -219,6 +210,7 @@ namespace SongSearch.Web.Services {
 				CompressCart(cart, contentNames);
 				cart.MarkAsCompressed();
 				DataSession.CommitChanges();
+				SessionService.Session().SessionUpdate(cart.CartId, "ProcessingCartId");
 				cart = null;
 			}
 		}
@@ -226,6 +218,9 @@ namespace SongSearch.Web.Services {
 		private delegate void CompressCartDelegate(Cart cart, IList<ContentUserDownloadable> contentNames);
 		delegate void EndInvokeDelegate(IAsyncResult result);
 
+		//
+		// ATTENTION: This seems to require the Application Pool to run as an admin or some account with elevated privileges, have to check...
+		//
 		public void CompressMyActiveCartOffline(string userArchiveName = null, IList<ContentUserDownloadable> contentNames = null) {
 			//mark as processing
 			var cart = MyActiveCart();
@@ -269,7 +264,7 @@ namespace SongSearch.Web.Services {
 
 				cart.MarkAsCompressed();
 				DataSession.CommitChanges();
-				CacheService.SessionUpdate(cart.CartId, "ProcessingCartId");
+				
 				cart = null;
 			}
 			//object[] parameters = asyncResult.AsyncState as object[];
@@ -353,6 +348,18 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		// (Private(
 		// ----------------------------------------------------------------------------
+		// **************************************
+		// EmptyCart
+		// **************************************
+		private Cart EmptyCart() {
+			return new Cart {
+				CreatedOn = DateTime.Now,
+				LastUpdatedOn = DateTime.Now,
+				UserId = ActiveUser.UserId,
+				IsLastProcessed = false,
+				CartStatus = (int)CartStatusCodes.Active
+			};
+		}
 
 		// **************************************
 		// Zip

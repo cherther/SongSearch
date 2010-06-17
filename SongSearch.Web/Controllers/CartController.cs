@@ -12,7 +12,7 @@ namespace SongSearch.Web.Controllers
 {
 	[RequireAuthorization]
 	[HandleError]
-	public partial class CartController : AsyncController
+	public partial class CartController : Controller
 	{
 		private User _currentUser;
 
@@ -43,16 +43,16 @@ namespace SongSearch.Web.Controllers
 
 				var vm = GetCartViewModel();
 				vm.MyCarts = _cartService.MyCarts();
-				vm.CartToHighlight = GetLastProcessedCartId();
-
+				vm.CartToHighlight = vm.MyCarts.GetLastProcessedCartId();
+				
 				vm.CartContentHeaders = new string[] { "Title", "Artist", "Year", "File Name", "Download", "Remove" };
 				//Reset the searchFields to stop any previous highlighting preferences
-				CacheService.SessionUpdate(null, "SearchFields");
+				SessionService.Session().SessionUpdate(null, "SearchFields");
 
 				var msg = _currentUser != null ? 
 					(
-					_currentUser.ProcessingCartMessage() ?? 
-					_currentUser.DownloadCartMessage(vm.MyCarts)
+						vm.CartToHighlight != 0 ? _currentUser.ProcessingCartMessage(vm.CartToHighlight) : null ?? 
+						_currentUser.DownloadCartMessage(vm.MyCarts)
 					): "";
 
 				if (msg != null) {
@@ -74,7 +74,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult CartCount() {
 			var count = 0;
 			try {
-				count = CacheService.MyActiveCartCount(_currentUser.UserName);
+				count = SessionService.Session().MyActiveCartCount(_currentUser.UserName);
 			}
 			catch { }
 
@@ -93,7 +93,7 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				_cartService.AddToMyActiveCart(id);
-				CacheService.RefreshMyActiveCart(_currentUser.UserName);
+				SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
 
 				if (Request.IsAjaxRequest()) {
 					return Json(id, JsonRequestBehavior.AllowGet);
@@ -121,7 +121,7 @@ namespace SongSearch.Web.Controllers
 				if (items != null) {
 					var contentIds = items.Select(i => int.Parse(i)).ToArray();
 					_cartService.AddToMyActiveCart(contentIds);
-					CacheService.RefreshMyActiveCart(_currentUser.UserName);
+					SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
 				}
 				if (Request.IsAjaxRequest()) {
 					return Json(count, JsonRequestBehavior.AllowGet);
@@ -148,7 +148,7 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				_cartService.RemoveFromMyActiveCart(id);
-				CacheService.RefreshMyActiveCart(_currentUser.UserName);
+				SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
 
 				if (Request.IsAjaxRequest()) {
 					return Json(id, JsonRequestBehavior.AllowGet);
@@ -181,7 +181,7 @@ namespace SongSearch.Web.Controllers
 
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
 				_cartService.RemoveFromMyActiveCart(contentIds);
-				CacheService.RefreshMyActiveCart(_currentUser.UserName);
+				SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
 
 				if (Request.IsAjaxRequest()) {
 					return Json(count, JsonRequestBehavior.AllowGet);
@@ -230,12 +230,13 @@ namespace SongSearch.Web.Controllers
 			try {
 				if (contentNames.Count() > 10) {
 					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
-					CacheService.RefreshMyActiveCart(_currentUser.UserName);
+
+					SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
 					this.FeedbackInfo("Your cart is currently being zipped up and will be available for download shortly. Please check back on this page in a few minutes.");
 
 				} else {
 					_cartService.CompressMyActiveCart(userArchiveName, contentNames);
-					CacheService.RefreshMyActiveCart(_currentUser.UserName);
+					SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
 					this.FeedbackInfo("Your cart is ready for download");
 				}
 			}
@@ -260,9 +261,6 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				var cart = _cartService.DownloadCompressedCart(id);
-				if (cart.CartId == GetLastProcessedCartId()) {
-					CacheService.SessionUpdate(null, "ProcessingCartId");
-				}
 
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
@@ -279,14 +277,7 @@ namespace SongSearch.Web.Controllers
 			}
 		}
 
-		// **************************************
-		// GetLastProcessedCartId
-		// **************************************
-		private int GetLastProcessedCartId() {
-			var lastProcessedCart = CacheService.Session("ProcessingCartId");
-			var lastProcessedCartId = lastProcessedCart != null ? (int)lastProcessedCart : 0;
-			return lastProcessedCartId;
-		}
+	
 		//public ActionResult DownloadDone() {
 
 		//    var vm = GetCartViewModel();

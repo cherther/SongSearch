@@ -17,8 +17,13 @@ namespace SongSearch.Web.Controllers
 
 		[HttpPost]
 		public virtual ActionResult UpdateCache(FormCollection form) {
-			CacheService.InitializeSession(true);
+			SessionService.Session().InitializeSession(true);
 			CacheService.InitializeApp(true);
+			return View(new ViewModel() { NavigationLocation = "Admin" });
+
+		}
+
+		public virtual ActionResult MySession() {
 			return View(new ViewModel() { NavigationLocation = "Admin" });
 
 		}

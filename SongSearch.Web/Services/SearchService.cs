@@ -159,7 +159,7 @@ namespace SongSearch.Web.Services {
 				}
 				if (content != null) {
 					content.UserDownloadableName = content.DownloadableName(user.FileSignature());
-					content.IsInMyActiveCart = CacheService.IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
+					content.IsInMyActiveCart = SessionService.Session().IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
 				}
 				return content;
 			}

@@ -16,7 +16,7 @@ namespace SongSearch.Web.Controllers {
 			try {
 				if (User.Identity.IsAuthenticated) {
 
-					var msg = CacheService.User(User.Identity.Name).LoginMessage();
+					var msg = SessionService.Session().User(User.Identity.Name).LoginMessage();
 
 					this.FeedbackInfo(msg);
 				}

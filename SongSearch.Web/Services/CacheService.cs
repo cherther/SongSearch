@@ -12,23 +12,15 @@ namespace SongSearch.Web.Services {
 	public static class CacheService {
 
 		private static Cache _cache;
-		private static HttpSessionState _session;
 		
 		private static bool _appIsInitialized;
-		private static bool _sessionIsInitialized;
 		
 		private static bool _hasCache;
-		private static bool _hasSession;
-
+		
 		private delegate void UpdateDelegate(CacheKeys key, params object[] list);
-		private static IDictionary<CacheKeys, UpdateDelegate> _sessionMatrix = new Dictionary<CacheKeys, UpdateDelegate>();
 		private static IDictionary<CacheKeys, UpdateDelegate> _cacheMatrix = new Dictionary<CacheKeys, UpdateDelegate>();
 
 		static CacheService() {
-
-			// set up the caching matrices with keys and caching actions
-			_sessionMatrix.Add(CacheKeys.User, SessionUpdateUser);
-			_sessionMatrix.Add(CacheKeys.ActiveCartContents, SessionUpdateUserActiveCart);
 
 			_cacheMatrix.Add(CacheKeys.Catalogs, CacheUpdateCatalogs);
 			_cacheMatrix.Add(CacheKeys.Users, CacheUpdateUsers);
@@ -50,8 +42,6 @@ namespace SongSearch.Web.Services {
 		// (Public)
 		// ----------------------------------------------------------------------------
 		public enum CacheKeys {
-			User,
-			ActiveCartContents,
 			Catalogs,
 			Users,
 			SearchProperties,
@@ -68,10 +58,6 @@ namespace SongSearch.Web.Services {
 
 			InitializeApp(false);
 
-			if (HttpContext.Current.User != null && !String.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name)) {
-				string userName = HttpContext.Current.User.Identity.Name;
-				InitializeSession(userName, false);
-			}
 		}
 
 		public static void InitializeApp(bool force) {
@@ -95,114 +81,17 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
-		public static void InitializeSession() {
-			InitializeSession(false);
-		}
-		public static void InitializeSession(bool force) {
-
-			if (HttpContext.Current.User != null && !String.IsNullOrWhiteSpace(HttpContext.Current.User.Identity.Name)) {
-				string userName = HttpContext.Current.User.Identity.Name;
-				InitializeSession(userName, force);
-			} else {
-				InitializeSession(null, force);
-			}
-		}
-
-		public static void InitializeSession(string userName) {
-
-			InitializeSession(userName, false);
-		}
-
-		public static void InitializeSession(
-			string userName, bool force) {
-
-			if (HttpContext.Current != null) {
-				_session = HttpContext.Current.Session;
-				_hasSession = _session != null;
-
-				if ((!_sessionIsInitialized || force) &&
-					(userName != null && _hasSession)) {
-					// either app is not yet initialized 
-					// or we're forcing an update
-					foreach (var key in _sessionMatrix.Keys) {
-						_sessionMatrix[key](key, userName);
-					}
-
-					_sessionIsInitialized = true;
-				}
-			}
-		}
-
-
+		
 		// **************************************
 		// Quick Get method for cache or session 
 		//	values
 		// **************************************
 		public static string Get(string key) {
 
-			return (Session(key) ?? Cache(key)) as string;
+			return (Cache(key)) as string;
 		
 		}
 
-		// ----------------------------------------------------------------------------
-		// Session
-		// ----------------------------------------------------------------------------
-		public static User User(string userName) {
-			if (_hasSession) {
-
-				if (Session(CacheKeys.User) == null) { SessionUpdateUser(CacheKeys.User, userName); }
-				return Session(CacheKeys.User) as User;
-				
-			} else {
-				return GetDataUser(userName);
-			}
-		}
-
-		public static Cart MyActiveCart(string userName) {
-			if (_hasSession) {
-				if (Session(CacheKeys.ActiveCartContents) == null) { SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); }
-				return Session(CacheKeys.ActiveCartContents) as Cart;
-				
-			} else {
-				return GetDataUserActiveCart(userName);
-			}
-		}
-
-		public static bool IsInMyActiveCart(int contentId, string userName) {
-			Cart activeCart;
-
-			if (_hasSession) {
-				if (Session(CacheKeys.ActiveCartContents) == null) { SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); }
-				activeCart = Session(CacheKeys.ActiveCartContents) as Cart;
-
-			} else {
-				activeCart = GetDataUserActiveCart(userName);
-			}
-
-			return activeCart != null && activeCart.Contents != null && activeCart.Contents.Any(c => c.ContentId == contentId);
-			
-		}
-		public static int MyActiveCartCount(string userName) {
-			
-			Cart activeCart;
-
-			if (_hasSession) {
-				if (Session(CacheKeys.ActiveCartContents) == null) { SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); }
-				activeCart = Session(CacheKeys.ActiveCartContents) as Cart;
-
-			} else {
-				activeCart = GetDataUserActiveCart(userName);
-			}
-
-			return activeCart != null && activeCart.Contents != null ? activeCart.Contents.Count() : 0;
-
-		}
-
-		public static void RefreshMyActiveCart(string userName) {
-			if (_hasSession) {
-				SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); 
-			}
-		}
 		// ----------------------------------------------------------------------------
 		//  App
 		// ----------------------------------------------------------------------------
@@ -318,16 +207,6 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		
 		// **************************************
-		// DataSession
-		// **************************************
-		private static object Session(CacheKeys key) {
-			return Session(key.ToString());
-		}
-		public static object Session(string key) {
-			return _session[key];
-		}
-
-		// **************************************
 		// Cache
 		// **************************************
 		private static object Cache(CacheKeys key) {
@@ -338,40 +217,7 @@ namespace SongSearch.Web.Services {
 			return _cache[key];
 		}
 	
-		// **************************************
-		// SessionUpdate
-		// **************************************
-		public static void SessionUpdate(CacheKeys cacheKey) {
 
-			_sessionMatrix[cacheKey](cacheKey);
-		}
-		
-		public static void SessionUpdate(object cacheObject, CacheKeys cacheKey) {
-			SessionUpdate(cacheObject, cacheKey.ToString());
-		}
-		public static void SessionUpdate(object cacheObject, string cacheKey) {
-			if (_hasSession) {
-				_session.Remove(cacheKey.ToString());
-
-				if (cacheObject != null) {
-					_session.Add(
-						cacheKey.ToString(),
-						cacheObject
-						);
-				}
-			}
-		}
-
-		private static void SessionUpdateUser(CacheKeys key, params object[] list) {
-			var obj = GetDataUser(list[0] as string);
-			SessionUpdate(obj, key);				
-			
-		}
-		private static void SessionUpdateUserActiveCart(CacheKeys key, params object[] list) {
-			var obj = GetDataUserActiveCart(list[0] as string);
-			SessionUpdate(obj, key);
-
-		}
 		// **************************************
 		// CacheUpdate
 		// **************************************
@@ -435,17 +281,6 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetData
 		// **************************************
-		private static User GetDataUser(string userName) {
-			return AccountData.UserComplete(userName);
-		}
-
-		private static Cart GetDataUserActiveCart(string userName) {
-			using (var cartService = App.Container.Get<CartService>()) {
-				cartService.ActiveUserName = userName;
-				return cartService.MyActiveCartContents();
-			}
-		}
-
 		private static IList<Catalog> GetDataCatalogs() {
 			return SearchService.GetLookupList<Catalog>();
 		}

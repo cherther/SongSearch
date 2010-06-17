@@ -190,6 +190,7 @@
     </Compile>
     <Compile Include="Services\CatalogManagementService.cs" />
     <Compile Include="Services\CatalogUploadService.cs" />
+    <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\Interfaces\ICatalogManagementService.cs" />
     <Compile Include="Services\Interfaces\ICatalogUploadService.cs" />
     <Compile Include="Services\WorkflowEngine.cs" />
@@ -1778,6 +1779,7 @@
     <Content Include="Views\Account\ResetPasswordSuccess.aspx" />
     <Content Include="Views\Account\UpdateProfile.aspx" />
     <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
+    <Content Include="Views\Admin\MySession.aspx" />
     <Content Include="Views\Admin\UpdateCache.aspx" />
     <Content Include="Views\Cart\ctrlCartCount.ascx" />
     <Content Include="Views\Cart\ctrlCartTable.ascx" />

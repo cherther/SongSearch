@@ -119,6 +119,7 @@
           <Property Name="NumberItems" Type="int" />
           <Property Name="CompressedSize" Type="decimal" Precision="28" Scale="4" />
           <Property Name="ArchiveName" Type="varchar" MaxLength="256" />
+          <Property Name="IsLastProcessed" Type="bit" />
         </EntityType>
         <EntityType Name="Catalogs">
           <Key>
@@ -550,6 +551,7 @@
           <Property Name="ArchiveName" Type="String" MaxLength="256" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Contents" Relationship="SongSearch.Web.Data.Model.CartContents" FromRole="Cart" ToRole="Content" />
           <NavigationProperty Name="User" Relationship="SongSearch.Web.Data.Model.FK_Carts_Users" FromRole="Cart" ToRole="User" />
+          <Property Type="Boolean" Name="IsLastProcessed" />
         </EntityType>
         <EntityType Name="Catalog">
           <Key>
@@ -839,7 +841,8 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SongSearch2ModelStoreContainer" CdmEntityContainer="SongSearchContext">
           <EntitySetMapping Name="Carts"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Cart"><MappingFragment StoreEntitySet="Carts">
-            <ScalarProperty Name="CartId" ColumnName="CartId" />
+            <ScalarProperty Name="IsLastProcessed" ColumnName="IsLastProcessed" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
             <ScalarProperty Name="UserId" ColumnName="UserId" />
             <ScalarProperty Name="CartStatus" ColumnName="CartStatus" />
             <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />

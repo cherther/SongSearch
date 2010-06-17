@@ -150,7 +150,7 @@ namespace SongSearch.Web.Controllers
 				NavigationLocation = "Search",
 				Tags = CacheService.Tags(),
 				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" },
-				SearchFields = CacheService.Session("SearchFields") as IList<SearchField> ?? new List<SearchField>()
+				SearchFields = SessionService.Session().Session("SearchFields") as IList<SearchField> ?? new List<SearchField>()
 			};
 
 		}

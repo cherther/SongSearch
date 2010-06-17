@@ -77,6 +77,8 @@ namespace SongSearch.Web.Services {
 
 			return user;
 		}
+
+		
 		// **************************************
 		// DeleteUser
 		// **************************************

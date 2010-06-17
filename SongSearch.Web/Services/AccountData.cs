@@ -135,16 +135,17 @@ namespace SongSearch.Web {
 		public static string LoginMessage(this User user) {
 
 			string msg = null;
-			if (CacheService.Session("LoginMessageShown") == null) {
+			var session = SessionService.Session();
+			if (session.Session("LoginMessageShown") == null) {
 				msg = string.Concat("Welcome ", user.FullName());
-				CacheService.SessionUpdate("1", "LoginMessageShown");
+				session.SessionUpdate("1", "LoginMessageShown");
 
-				if (CacheService.Session("ActiveCartMessageShown") == null) {
-					var cart = CacheService.MyActiveCart(user.UserName);
+				if (session.Get("ActiveCartMessageShown") == null) {
+					var cart = SessionService.Session().MyActiveCart(user.UserName);
 					var activeItems = cart != null && cart.Contents != null ? cart.Contents.Count : 0;
 					msg = activeItems > 0 ? String.Concat(msg, String.Format(". You have <strong>{0}</strong> {1} waiting in your song cart.", activeItems, activeItems > 1 ? "items" : "item")) : msg;
 
-					CacheService.SessionUpdate("1", "ActiveCartMessageShown");
+					session.SessionUpdate("1", "ActiveCartMessageShown");
 				}
 			}
 			return msg;
@@ -155,14 +156,15 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string DownloadCartMessage(this User user, IList<Cart> carts) {
 			string msg = null;
-			if (CacheService.Session("DownloadCartMessageShown") == null) {
+			var session = SessionService.Session();
+			if (session.Get("DownloadCartMessageShown") == null) {
 				var compressedCarts = carts.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed);
 				var count = compressedCarts.Count();
 				if (count > 0) {
 					msg = String.Format("You have <strong>{0}</strong> {1} waiting to be downloaded.", count, count > 1 ? "carts" : "cart");
 
 				}
-				CacheService.SessionUpdate("1", "DownloadCartMessageShown");
+				session.SessionUpdate("1", "DownloadCartMessageShown");
 			}
 			return msg;
 		}
@@ -171,13 +173,15 @@ namespace SongSearch.Web {
 		// ProcessingCartMessage
 		// **************************************    
 		//CacheService.SessionUpdate(cart.CartId, "ProcessingCartId");
-		public static string ProcessingCartMessage(this User user) {
+		public static string ProcessingCartMessage(this User user, int cartId) {
 			string msg = null;
-			if (CacheService.Session("ProcessingCartId") != null && CacheService.Session("ProcessingCartMessageShown") == null) {
-				
+			var session = SessionService.Session();
+			var msgKey = String.Concat("NotifUserAboutProcessedCart_", cartId);
+			if (session.Get(msgKey) == null) {
+
 				msg = "Your requested zipped cart is now ready for downloading.";
-				
-				CacheService.SessionUpdate("1", "ProcessingCartMessageShown");
+
+				session.SessionUpdate("1", msgKey);
 			}
 			return msg;
 		}

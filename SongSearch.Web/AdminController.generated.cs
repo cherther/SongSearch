@@ -47,6 +47,7 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string UpdateCache = "UpdateCache";
+            public readonly string MySession = "MySession";
         }
 
 
@@ -55,6 +56,7 @@ namespace SongSearch.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string MySession = "~/Views/Admin/MySession.aspx";
             public readonly string UpdateCache = "~/Views/Admin/UpdateCache.aspx";
         }
     }
@@ -71,6 +73,11 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult UpdateCache(System.Web.Mvc.FormCollection form) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateCache);
             callInfo.RouteValueDictionary.Add("form", form);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult MySession() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.MySession);
             return callInfo;
         }
 

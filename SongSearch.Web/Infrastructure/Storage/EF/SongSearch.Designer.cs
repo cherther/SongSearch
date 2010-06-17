@@ -605,6 +605,30 @@ namespace SongSearch.Web.Data
         private global::System.String _ArchiveName;
         partial void OnArchiveNameChanging(global::System.String value);
         partial void OnArchiveNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> IsLastProcessed
+        {
+            get
+            {
+                return _IsLastProcessed;
+            }
+            set
+            {
+                OnIsLastProcessedChanging(value);
+                ReportPropertyChanging("IsLastProcessed");
+                _IsLastProcessed = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsLastProcessed");
+                OnIsLastProcessedChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _IsLastProcessed;
+        partial void OnIsLastProcessedChanging(Nullable<global::System.Boolean> value);
+        partial void OnIsLastProcessedChanged();
 
         #endregion
     

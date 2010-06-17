@@ -61,8 +61,11 @@ namespace SongSearch.Web.Controllers {
 
 					_authService.SignIn(model.Email, model.RememberMe);
 					//_usrMgmtService.ActiveUserName = contentModel.Email;
-					CacheService.InitializeSession(model.Email, true);
-					var user = CacheService.User(model.Email);
+					
+					var session = SessionService.Session();
+					session.InitializeSession(model.Email, true);
+
+					var user = session.User(model.Email);
 
 					SetFriendlyNameCookie(user.FullName());
 
@@ -278,7 +281,7 @@ namespace SongSearch.Web.Controllers {
 			try {
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-				var user = CacheService.User(User.Identity.Name);
+				var user = SessionService.Session().User(User.Identity.Name);
 
 				var vm = new UpdateProfileModel() {
 					NavigationLocation = "Account",
@@ -315,8 +318,9 @@ namespace SongSearch.Web.Controllers {
 				if (_acctService.UpdateProfile(user, null)) {
 					
 					// UpdateModelWith the user dataSession cached in dataSession
-					CacheService.InitializeSession(userName, true);
-					user = CacheService.User(User.Identity.Name);
+					var session = SessionService.Session();
+					session.InitializeSession(userName, true);
+					user = session.User(User.Identity.Name);
 					var friendly = user.FullName();
 					SetFriendlyNameCookie(friendly);
 

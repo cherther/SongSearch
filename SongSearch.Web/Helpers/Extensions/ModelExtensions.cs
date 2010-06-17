@@ -106,11 +106,11 @@ namespace SongSearch.Web {
 				DateTime cartDate = DateTime.Now;
 
 				string zipFormat = Settings.ZipFormat.Text();
-				downloadName = String.Format(zipFormat, cartDate.Year, cartDate.Month, cartDate.Day, cart.CartId);
+				downloadName = String.Format(zipFormat, cartDate.Year, cartDate.Month, cartDate.Day, cart.UserId, cart.CartId);
 			} else {
 				userArchiveName = userArchiveName.MakeFilePathSafe().TrimInside("_");
 				string zipFormat = Settings.ZipUserFormat.Text();
-				downloadName = String.Format(zipFormat, userArchiveName, cart.CartId);
+				downloadName = String.Format(zipFormat, userArchiveName, cart.UserId, cart.CartId);
 			}
 
 			return downloadName;
@@ -130,6 +130,7 @@ namespace SongSearch.Web {
 				cart.ArchiveName = zip.Name;
 				cart.NumberItems = numberItems ?? 0;
 				cart.CartStatus = (int)CartStatusCodes.Compressed;
+				cart.IsLastProcessed = true;
 				cart.LastUpdatedOn = DateTime.Now;
 
 			}
@@ -146,10 +147,20 @@ namespace SongSearch.Web {
 			if (cart != null) {
 				//SqlSession.Clear(q);
 				cart.LastUpdatedOn = DateTime.Now;
+				cart.IsLastProcessed = false;
 				cart.CartStatus = (int)CartStatusCodes.Downloaded;
 			}
 			return cart;
 
+		}
+
+		// **************************************
+		// GetLastProcessedCartId
+		// **************************************
+		public static int GetLastProcessedCartId(this IEnumerable<Cart> carts) {
+			var lastProcessedCart = carts.Where(c => c.IsLastProcessed == true).OrderByDescending(c => c.LastUpdatedOn).FirstOrDefault();
+			var lastProcessedCartId = lastProcessedCart != null ? lastProcessedCart.CartId : 0;
+			return lastProcessedCartId;
 		}
 	}
 }

@@ -16,7 +16,7 @@ namespace SongSearch.Web {
 			if (!princ.Identity.IsAuthenticated) {
 				return false;
 			}
-			var user = CacheService.User(princ.Identity.Name);
+			var user = SessionService.Session().User(princ.Identity.Name);
 			return user != null && user.IsAnyAdmin();
 		}
 
@@ -27,7 +27,7 @@ namespace SongSearch.Web {
 			if (!princ.Identity.IsAuthenticated) {
 				return false;
 			}
-			var user = CacheService.User(princ.Identity.Name);
+			var user = SessionService.Session().User(princ.Identity.Name);
 			return user != null && user.IsSuperAdmin();
 			
 		}
@@ -39,7 +39,7 @@ namespace SongSearch.Web {
 			if (!princ.Identity.IsAuthenticated) {
 				return false;
 			}
-			var user = CacheService.User(princ.Identity.Name);
+			var user = SessionService.Session().User(princ.Identity.Name);
 			return user != null && user.IsInRole(role);
 		}
 
@@ -50,7 +50,7 @@ namespace SongSearch.Web {
 			if (!princ.Identity.IsAuthenticated) {
 				return false;
 			}
-			var user = CacheService.User(princ.Identity.Name);
+			var user = SessionService.Session().User(princ.Identity.Name);
 			return user != null && user.IsAtLeastInRole(role);
 			
 		}
@@ -62,7 +62,7 @@ namespace SongSearch.Web {
 			if (!princ.Identity.IsAuthenticated) {
 				return false;
 			}
-			var user = CacheService.User(princ.Identity.Name);
+			var user = SessionService.Session().User(princ.Identity.Name);
 			return user != null && user.IsInAnyRole(roles);
 
 		}

@@ -19,18 +19,26 @@ namespace SongSearch.Web.Controllers
 		private User _currentUser;
 
 		protected override void Initialize(RequestContext requestContext) {
-			_currentUser = CacheService.User(requestContext.HttpContext.User.Identity.Name);
+			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
+				_cartService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+				_currentUser = _cartService.ActiveUser;
+			}
 			base.Initialize(requestContext);
 		}
 
-		
+		ICartService _cartService;
+
+		public SearchController(ICartService cartService) {
+			_cartService = cartService;
+		}
+
 		//
 		// GET: /Search/
 		public virtual ActionResult Index()
 		{
 			try {
-
-				var msg = _currentUser.ProcessingCartMessage();
+				var lastCart = GetLastCart();
+				var msg = lastCart != 0 ? _currentUser.ProcessingCartMessage(lastCart) : null;
 				if (msg != null) {
 					this.FeedbackInfo(msg);
 				}
@@ -43,6 +51,8 @@ namespace SongSearch.Web.Controllers
 				return RedirectToAction(MVC.Home.Index());
 			}
 		}
+
+		
 
 		// ****************************************************************************
 		// Search/Results/ f = SearchField, p = PageIndex, s = SortField, o = SortType
@@ -58,7 +68,8 @@ namespace SongSearch.Web.Controllers
 					var model = GetSearchResults(f, p, s, o);
 					model.ViewMode = ViewModes.Embedded;
 
-					var msg = _currentUser.ProcessingCartMessage();
+					var lastCart = GetLastCart();
+					var msg = lastCart != 0 ? _currentUser.ProcessingCartMessage(lastCart) : null;
 					if (msg != null) {
 						this.FeedbackInfo(msg);
 					}
@@ -151,13 +162,14 @@ namespace SongSearch.Web.Controllers
 
 			var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
 
-			var activeCart = CacheService.MyActiveCart(_currentUser.UserName);
+			var session = SessionService.Session();
+			var activeCart = session.MyActiveCart(_currentUser.UserName);
 			if (activeCart != null) {
 				results.ForEach(c => c.IsInMyActiveCart = activeCart.Contents.Select(con => con.ContentId).Contains(c.ContentId));
 			}
 			model.SearchResults = results;
 			model.SearchFields = searchFields;
-			CacheService.SessionUpdate(searchFields, "SearchFields");
+			session.SessionUpdate(searchFields, "SearchFields");
 
 			model.RequestUrl = Request.RawUrl.Replace(String.Format("&p={0}", results.PageIndex), "");
 			model.PagerSortUrl = model.SortPropertyId.HasValue ?
@@ -179,6 +191,11 @@ namespace SongSearch.Web.Controllers
 			};
 
 
+		}
+
+		private int GetLastCart() {
+			var lastCart = _cartService.MyCarts().GetLastProcessedCartId();
+			return lastCart;
 		}
 	}
 }

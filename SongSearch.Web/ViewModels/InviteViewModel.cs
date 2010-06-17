@@ -36,7 +36,7 @@ namespace SongSearch.Web {
 					return _recipients;
 				}
 
-				return Recipient != null ? Recipient.Split(',').Where(r => r.Length > 0).ToArray() : new string[] {};
+				return Recipient != null ? Recipient.Split(',').Where(r => r.Length > 0).Distinct().ToArray() : new string[] {};
 
 			}
 			set {

@@ -85,7 +85,7 @@ namespace SongSearch.Web {
 		// **************************************
 		protected void Session_Start() {
 			try {
-			CacheService.InitializeSession();
+				SessionService.Session().InitializeSession();
 			//DataSession["UserName"] = User.Identity.Name;
 			}
 			catch { }

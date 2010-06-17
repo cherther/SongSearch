@@ -7,6 +7,7 @@ using SongSearch.Web.Services;
 using System.Web.Routing;
 using SongSearch.Web.Data;
 using System.Text.RegularExpressions;
+using System.Runtime.Remoting.Messaging;
 
 namespace SongSearch.Web
 {
@@ -97,32 +98,8 @@ namespace SongSearch.Web
 					}
 				}
 
-				foreach (string recipient in recipients) {
-					string address = recipient.ToLower().Trim();
+				SendInvites(recipients, sender);
 
-					if (address != "sample@sample.com") {
-
-						var inviteId = _usrMgmtService.CreateNewInvitation(address);
-
-
-						if ((inviteId != null) && (!inviteId.Equals(Guid.Empty))) {
-							var inviteMsg = new InviteViewModel();
-							inviteMsg.NavigationLocation = "Admin";
-							inviteMsg.InviteId = inviteId.ToString();
-							inviteMsg.Sender = sender;
-							inviteMsg.Recipient = address;
-							inviteMsg.BaseUrl = Settings.BaseUrl.Text();
-							inviteMsg.InviteUrl = String.Format("{0}/{1}", inviteMsg.BaseUrl, "Account/Register");
-
-							//string inviteLink = String.Format("{0}", baseUrl);
-							string subject = Messages.InvitationSubjectLine.Text();
-							string message = this.RenderViewToString("InviteMessage", inviteMsg);
-
-							Mail.SendMail(sender, address, subject, message);
-						}
-
-					}
-				}
 				return View(Views.InviteComplete, model);
 			} else {
 				ModelState.AddModelError("", "There was an error processing your invites");
@@ -130,6 +107,8 @@ namespace SongSearch.Web
 				return View(model);
 			}
 		}
+
+		
 		
 		// **************************************
 		// URL: /UserManagement/User/5
@@ -342,6 +321,62 @@ namespace SongSearch.Web
 			} else {
 				this.FeedbackInfo("Sucessfully transferred user ownership");
 				return RedirectToAction(Actions.Index());
+			}
+		}
+
+
+		private delegate void SendInvitesDelegate(string[] recipients, string sender);
+		delegate void EndInvokeDelegate(IAsyncResult result);
+
+		private void SendInvitesAsync(string[] recipients, string sender) {
+			
+			//hand off compression work
+				SendInvitesDelegate inviteDelegate = new SendInvitesDelegate(SendInvites);
+				// Define the AsyncCallback delegate.
+				AsyncCallback callBack = new AsyncCallback(this.SendInvitesCallback);
+
+				inviteDelegate.BeginInvoke(recipients, sender,
+					callBack,
+					new object()
+					);
+
+		}
+
+		private void SendInvitesCallback(IAsyncResult asyncResult) {
+			// Extract the delegate from the 
+			// System.Runtime.Remoting.Messaging.AsyncResult.
+			SendInvitesDelegate inviteDelegate = (SendInvitesDelegate)((AsyncResult)asyncResult).AsyncDelegate;
+			int cartId = (int)asyncResult.AsyncState;
+
+			inviteDelegate.EndInvoke(asyncResult);
+		}
+
+		private void SendInvites(string[] recipients, string sender) {
+			foreach (string recipient in recipients) {
+				string address = recipient.ToLower().Trim();
+
+				if (address != "sample@sample.com") {
+
+					var inviteId = _usrMgmtService.CreateNewInvitation(address);
+
+
+					if ((inviteId != null) && (!inviteId.Equals(Guid.Empty))) {
+						var inviteMsg = new InviteViewModel();
+						inviteMsg.NavigationLocation = "Admin";
+						inviteMsg.InviteId = inviteId.ToString();
+						inviteMsg.Sender = sender;
+						inviteMsg.Recipient = address;
+						inviteMsg.BaseUrl = Settings.BaseUrl.Text();
+						inviteMsg.InviteUrl = String.Format("{0}/{1}", inviteMsg.BaseUrl, "Account/Register");
+
+						//string inviteLink = String.Format("{0}", baseUrl);
+						string subject = Messages.InvitationSubjectLine.Text();
+						string message = this.RenderViewToString("InviteMessage", inviteMsg);
+
+						Mail.SendMail(sender, address, subject, message);
+					}
+
+				}
 			}
 		}
 	}

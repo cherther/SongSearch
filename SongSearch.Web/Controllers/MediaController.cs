@@ -17,7 +17,7 @@ namespace SongSearch.Web.Controllers
 		private User _currentUser;
 
 		protected override void Initialize(RequestContext requestContext) {
-			_currentUser = CacheService.User(requestContext.HttpContext.User.Identity.Name);
+			_currentUser = SessionService.Session().User(requestContext.HttpContext.User.Identity.Name);
 			base.Initialize(requestContext);
 		}
 

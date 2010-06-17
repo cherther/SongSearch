@@ -13,17 +13,25 @@
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
 		<div>&nbsp;</div>
-		<div><strong>6/15/2010</strong></div>
+		<div><strong>6/17/2010</strong></div>
 		<ul class="cw-vertical cw-highlight">
+			<li>Zipping carts now done offline</li>
+			<ul class="cw-vertical">
+				<li>Carts containing 10 or more songs are now being zipped in the backgound, so the page is not blocked while waiting</li>
+				<li>When the zipping is complete, the user sees a message on the search and cart pages, also the cart page highlights the last completed zipped cart</li>
+			</ul>
+		</ul>
+		<div>&nbsp;</div>
+		<div>6/15/2010</div>
+		<ul class="cw-vertical">
 			<li>Instruments & SoundsLike now use textsearch</li>
 			<ul class="cw-vertical">
 				<li>Separate terms by comma, e.g. "Foo Fighters, Sum 41"</li>
 			</ul>
 		</ul>
 		<div>&nbsp;</div>
-		<hr /><div>&nbsp;</div>
-		<div><strong>6/14/2010</strong></div>
-		<ul class="cw-vertical cw-highlight">
+		<div>6/14/2010</div>
+		<ul class="cw-vertical">
 			<li>Add to Cart option in search results via checkboxes</li>
 			<li>Remove from Cart option in cart page via checkboxes</li>
 			<li>Carts can have a max of 100 items ( = 1 search results page)</li>
@@ -48,8 +56,6 @@
 			</li>
 		</ul>
 		<div>&nbsp;</div>
-		<hr />
-		<div>&nbsp;</div>
 		<div></div>6/4/2010</div>
 		<ul class="cw-vertical">
 			<li>Song Edit now fully functional, no mp3 upload yet</li>
@@ -65,8 +71,6 @@
 			<li>Playing another song now cancels any pending media player loads (cuts down bandwith use)</li>
 			</ul>
 		 <div>&nbsp;</div>
-		<hr />
-		<div>&nbsp;</div>
 		<div>5/30/2010</div>
 		<ul class="cw-vertical">
 			<li>Volume control now working!</li>
@@ -76,8 +80,6 @@
 					<li>Remembers volume setting from song to song on the same page (i.e. as long as page is not refreshed, sorted etc)</li>
 			</ul>
 		</ul>
-		<div>&nbsp;</div>
-		<hr />
 		<div>&nbsp;</div>
 		<div>5/29/2010</div>
 		<ul class="cw-vertical">

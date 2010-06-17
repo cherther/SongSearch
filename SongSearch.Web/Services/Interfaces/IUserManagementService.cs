@@ -22,6 +22,7 @@ namespace SongSearch.Web.Services {
 		Invitation GetInvitation(string inviteId, string inviteEmailAddress);
 
 		int GetNumberOfUsersByAccessLevel(Roles role);
+
 		void DeleteUser(int userId, bool takeOwnerShip = true);
 		void TakeOwnerShip(int userId);
 		void UpdateUsersRole(int userId, int roleId);

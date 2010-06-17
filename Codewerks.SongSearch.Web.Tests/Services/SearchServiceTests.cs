@@ -229,7 +229,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 		[ClassInitialize()]
 		public static void Initialize(TestContext testContext) {
 
-			_admin = CacheService.User("claus_herther@yahoo.com");
+			_admin = SessionService.Session().User("claus_herther@yahoo.com");
 //			_admin = AccountData.User("admin@junestreet.com");
 		}
 
