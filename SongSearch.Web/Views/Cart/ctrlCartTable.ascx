@@ -2,10 +2,13 @@
 <table class="cw-tbl-carts">
 <thead>
 <tr>
-<% var tableHeader = ViewData["CartHeaders"] as string[]; %>
+<% 
+	var tableHeader = ViewData["CartHeaders"] as string[];
+	var dontshow = new string[] { "Save", "Delete" };
+	%>
 <th>&nbsp;</th>
 <%foreach(var col in tableHeader){ %>
-<th><%: col%></th>
+<th><%: !dontshow.Contains(col) ? col : "" %></th>
 <%} %> 
 </tr>
 </thead>

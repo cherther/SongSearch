@@ -59,7 +59,7 @@
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-carts">
 		  <h3>Processing</h3>
-		  <p>We're currently compressing and creating a zip file with the song files in your active cart. Once this is complete, we'll move the finished zip file to the Zipped Song Carts section below.</p>
+		  <p>We're currently compressing and creating a zip file with the song files in your cart. Once this is complete, we'll move the finished zip file to the Zipped Song Carts section below.</p>
 		  <p>&nbsp;</p>
 		  <p>Please check back in a couple of minutes or <%: Html.ActionLink("refresh", MVC.Cart.Index()) %> this page.</p>
 		  <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status" }; %>
