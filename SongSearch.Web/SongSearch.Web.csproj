@@ -62,7 +62,7 @@
       <HintPath>..\Ext Libraries\EntityFramework.Profiler-Build-691\HibernatingRhinos.Profiler.Appender.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
-      <HintPath>..\..\FordMusic\ExternalAssemblies\Ionic.Zip.dll</HintPath>
+      <HintPath>..\Ext Libraries\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MvcUserControlHtmlHelpers">

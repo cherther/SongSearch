@@ -151,7 +151,7 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
-		// LoginMessage
+		// DownloadCartMessage
 		// **************************************    
 		public static string DownloadCartMessage(this User user, IList<Cart> carts) {
 			string msg = null;
@@ -167,6 +167,21 @@ namespace SongSearch.Web {
 			return msg;
 		}
 
+		// **************************************
+		// ProcessingCartMessage
+		// **************************************    
+		//CacheService.SessionUpdate(cart.CartId, "ProcessingCartId");
+		public static string ProcessingCartMessage(this User user) {
+			string msg = null;
+			if (CacheService.Session("ProcessingCartId") != null && CacheService.Session("ProcessingCartMessageShown") == null) {
+				
+				msg = "Your requested zipped cart is now ready for downloading.";
+				
+				CacheService.SessionUpdate("1", "ProcessingCartMessageShown");
+			}
+			return msg;
+		}
+		
 		// **************************************
 		// MyUserHierarchy
 		// **************************************    

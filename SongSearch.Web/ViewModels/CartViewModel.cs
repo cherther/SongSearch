@@ -16,7 +16,7 @@ namespace SongSearch.Web {
 		public SortType SortType { get; set; }
 		public string RequestUrl { get; set; }
 		public string HeaderSortUrl { get; set; }
-
+		public int CartToHighlight { get; set; }
 		public IList<SearchProperty> SearchMenuProperties { get; set; }
 		public string[] CartContentHeaders { get; set; }
 	}

@@ -108,6 +108,10 @@
 {
 	background:transparent url(/public/images/icons/ico_minus.png) no-repeat;
 }
+.cw-tbl-carts-processing
+{
+    background-color: #FFFF99;
+}
 .cw-tbl-carts-archived
 {
     color: Gray;

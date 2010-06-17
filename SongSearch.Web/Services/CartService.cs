@@ -8,6 +8,7 @@ using System.IO;
 using Ionic.Zip;
 using Ninject;
 using NLog;
+using System.Runtime.Remoting.Messaging;
 
 namespace SongSearch.Web.Services {
 	
@@ -135,6 +136,39 @@ namespace SongSearch.Web.Services {
 
 		}
 
+		public void AddToMyActiveCart(int[] contentIds) {
+
+			// Check if open cart exists and if needed create new cart
+			var cart = MyActiveCart() ?? 
+				new Cart {
+					CreatedOn = DateTime.Now,
+					LastUpdatedOn = DateTime.Now,
+					UserId = ActiveUser.UserId,
+					CartStatus = (int)CartStatusCodes.Active
+				};
+
+			if (cart.CartId == 0) { DataSession.Add<Cart>(cart); }
+			
+			if (cart.Contents.Count() + contentIds.Count() > 100){
+				throw new ArgumentOutOfRangeException("You cart already contains the maximum number of items (100)");
+			}
+
+			var contents = DataSession.All<Content>().Where(c => contentIds.Contains(c.ContentId)).ToList();
+			
+
+			foreach (var contentId in contentIds){
+				if (!cart.Contents.Any(i => i.ContentId == contentId)){
+					var content = contents.SingleOrDefault(c => c.ContentId == contentId);
+					if (content == null) {
+						throw new ArgumentException(Errors.ItemDoesNotExist.Text());
+					}
+					cart.Contents.Add(content);
+				}
+			}
+
+			DataSession.CommitChanges();
+
+		}
 		// **************************************
 		// RemoveFromMyActiveCart
 		// **************************************
@@ -154,6 +188,25 @@ namespace SongSearch.Web.Services {
 			cart = null;
 		}
 
+		public void RemoveFromMyActiveCart(int[] contentIds) {
+
+			var cart = MyActiveCart();
+
+			if (cart != null) {
+				foreach (var contentId in contentIds) {
+					var content = cart.Contents.Where(c => c.ContentId == contentId).SingleOrDefault();
+					if (content != null) {
+						cart.Contents.Remove(content);
+					}
+				}
+
+				DataSession.CommitChanges();
+
+			}
+
+			cart = null;
+		}
+
 		// **************************************
 		// CompressMyActiveCart
 		// **************************************
@@ -163,11 +216,69 @@ namespace SongSearch.Web.Services {
 			if (cart != null && cart.Contents.Count() > 0) {
 				string zipName = cart.ArchiveDownloadName(userArchiveName);
 				cart.ArchiveName = zipName;
-				string zipPath = CompressCart(cart, contentNames);
-				cart.MarkAsCompressed(zipPath);
+				CompressCart(cart, contentNames);
+				cart.MarkAsCompressed();
 				DataSession.CommitChanges();
 				cart = null;
 			}
+		}
+
+		private delegate void CompressCartDelegate(Cart cart, IList<ContentUserDownloadable> contentNames);
+		delegate void EndInvokeDelegate(IAsyncResult result);
+
+		public void CompressMyActiveCartOffline(string userArchiveName = null, IList<ContentUserDownloadable> contentNames = null) {
+			//mark as processing
+			var cart = MyActiveCart();
+
+			if (cart != null && cart.Contents.Count() > 0) {
+
+				cart.ArchiveName = cart.ArchiveDownloadName(userArchiveName);
+	
+				//hand off compression work
+				CompressCartDelegate compressDelegate = new CompressCartDelegate(CompressCart);
+				// Define the AsyncCallback delegate.
+				AsyncCallback callBack = new AsyncCallback(this.CompressCartCallback);
+
+				compressDelegate.BeginInvoke(cart, contentNames,
+					callBack, 
+					cart.CartId
+					);
+
+				cart.CartStatus = (int)CartStatusCodes.Processing;
+				DataSession.CommitChanges();
+
+				
+				
+				cart = null;
+				
+			}
+
+		}
+
+		public void CompressCartCallback(IAsyncResult asyncResult) {
+			// Extract the delegate from the 
+			// System.Runtime.Remoting.Messaging.AsyncResult.
+			CompressCartDelegate compressDelegate = (CompressCartDelegate)((AsyncResult)asyncResult).AsyncDelegate;
+			int cartId = (int)asyncResult.AsyncState;
+			
+			compressDelegate.EndInvoke(asyncResult);
+
+			var cart = DataSession.Single<Cart>(c => c.CartId == cartId);
+
+			if (cart != null && cart.Contents.Count() > 0) {
+
+				cart.MarkAsCompressed();
+				DataSession.CommitChanges();
+				CacheService.SessionUpdate(cart.CartId, "ProcessingCartId");
+				cart = null;
+			}
+			//object[] parameters = asyncResult.AsyncState as object[];
+			//if (parameters != null && parameters.Length > 0) {
+			//    EndInvokeDelegate endInvokeDelegate = parameters[0] as EndInvokeDelegate;
+			//    if (endInvokeDelegate != null) {
+			//        endInvokeDelegate.Invoke(asyncResult);
+			//    }
+
 		}
 
 		// **************************************
@@ -246,7 +357,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// Zip
 		// **************************************
-		private string CompressCart(Cart cart, IList<ContentUserDownloadable> contentNames) {
+		private void CompressCart(Cart cart, IList<ContentUserDownloadable> contentNames) {
 
 				string zipPath = cart.ArchivePath(); 
 				string signature = ActiveUser.IsAnyAdmin() ? ActiveUser.Signature : ActiveUser.ParentSignature();
@@ -254,6 +365,9 @@ namespace SongSearch.Web.Services {
 				var contents = cart.Contents.ToList();
 
 				using (var zip = new ZipFile()) {
+					
+					zip.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed;
+					
 					foreach (var content in contents) {
 						
 						if (content.HasMediaFullVersion) {
@@ -277,7 +391,7 @@ namespace SongSearch.Web.Services {
 					zip.Save(zipPath);
 				}
 			
-			return zipPath;
+			
 		}
 		
 

@@ -43,11 +43,17 @@ namespace SongSearch.Web.Controllers
 
 				var vm = GetCartViewModel();
 				vm.MyCarts = _cartService.MyCarts();
+				vm.CartToHighlight = GetLastProcessedCartId();
+
 				vm.CartContentHeaders = new string[] { "Title", "Artist", "Year", "File Name", "Download", "Remove" };
 				//Reset the searchFields to stop any previous highlighting preferences
 				CacheService.SessionUpdate(null, "SearchFields");
 
-				var msg = _currentUser != null ? _currentUser.DownloadCartMessage(vm.MyCarts) : "";
+				var msg = _currentUser != null ? 
+					(
+					_currentUser.ProcessingCartMessage() ?? 
+					_currentUser.DownloadCartMessage(vm.MyCarts)
+					): "";
 
 				if (msg != null) {
 					this.FeedbackInfo(msg);
@@ -113,7 +119,8 @@ namespace SongSearch.Web.Controllers
 				var items = itemsPosted != null ? itemsPosted.Split(',') : new string[] {};
 				var count = items != null ? items.Count() : 0;
 				if (items != null) {
-					items.ForEach(id => _cartService.AddToMyActiveCart(int.Parse(id)));
+					var contentIds = items.Select(i => int.Parse(i)).ToArray();
+					_cartService.AddToMyActiveCart(contentIds);
 					CacheService.RefreshMyActiveCart(_currentUser.UserName);
 				}
 				if (Request.IsAjaxRequest()) {
@@ -172,7 +179,8 @@ namespace SongSearch.Web.Controllers
 				var items = itemsPosted != null ? itemsPosted.Split(',') : new string[] { };
 				var count = items != null ? items.Count() : 0;
 
-				items.ForEach(i => _cartService.RemoveFromMyActiveCart(int.Parse(i)));
+				var contentIds = items.Select(i => int.Parse(i)).ToArray();
+				_cartService.RemoveFromMyActiveCart(contentIds);
 				CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
 				if (Request.IsAjaxRequest()) {
@@ -220,10 +228,16 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Zip(string userArchiveName, IList<ContentUserDownloadable> contentNames) {
 
 			try {
-				_cartService.CompressMyActiveCart(userArchiveName, contentNames);
-				CacheService.RefreshMyActiveCart(_currentUser.UserName);
-				this.FeedbackInfo("Your cart is ready for download");
+				if (contentNames.Count() > 10) {
+					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
+					CacheService.RefreshMyActiveCart(_currentUser.UserName);
+					this.FeedbackInfo("Your cart is currently being zipped up and will be available for download shortly. Please check back on this page in a few minutes.");
 
+				} else {
+					_cartService.CompressMyActiveCart(userArchiveName, contentNames);
+					CacheService.RefreshMyActiveCart(_currentUser.UserName);
+					this.FeedbackInfo("Your cart is ready for download");
+				}
 			}
 			catch {
 				this.FeedbackError("There was an error zipping this cart. Please try again in a bit.");
@@ -231,6 +245,9 @@ namespace SongSearch.Web.Controllers
 			}
 			return RedirectToAction(MVC.Cart.Index());
 		}
+
+		
+		
 		//[HttpPost]
 		//public ActionResult ZipCompleted() {
 		//    return RedirectToAction("Index");
@@ -243,12 +260,16 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				var cart = _cartService.DownloadCompressedCart(id);
+				if (cart.CartId == GetLastProcessedCartId()) {
+					CacheService.SessionUpdate(null, "ProcessingCartId");
+				}
+
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
 				if (cart == null) { throw new ArgumentException(); }
 
 				Response.ContentType = "application/zip";
-				Response.AddHeader("content-disposition", String.Format("filename={0}", cart.ArchiveName));
+				Response.AddHeader("content-disposition", String.Format("attachment; filename={0}", cart.ArchiveName));
 
 				return new FileStreamResult(new System.IO.FileStream(cart.ArchivePath(), System.IO.FileMode.Open), "application/zip");
 			}
@@ -256,6 +277,15 @@ namespace SongSearch.Web.Controllers
 				this.FeedbackError("There was an error downloading this cart. Please try again in a bit.");
 				return RedirectToAction(MVC.Cart.Index());
 			}
+		}
+
+		// **************************************
+		// GetLastProcessedCartId
+		// **************************************
+		private int GetLastProcessedCartId() {
+			var lastProcessedCart = CacheService.Session("ProcessingCartId");
+			var lastProcessedCartId = lastProcessedCart != null ? (int)lastProcessedCart : 0;
+			return lastProcessedCartId;
 		}
 		//public ActionResult DownloadDone() {
 

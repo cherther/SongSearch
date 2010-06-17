@@ -20,9 +20,12 @@ namespace SongSearch.Web.Services {
 		bool IsInMyActiveCart(int contentId);
 
 		void AddToMyActiveCart(int contentId);
+		void AddToMyActiveCart(int[] contentIds);
 		void RemoveFromMyActiveCart(int contentId);
+		void RemoveFromMyActiveCart(int[] contentIds);
 
 		void CompressMyActiveCart(string userArchiveName, IList<ContentUserDownloadable> contentNames);//, IList<Content> items);
+		void CompressMyActiveCartOffline(string userArchiveName, IList<ContentUserDownloadable> contentNames);//, IList<Content> items);
 		Cart DownloadCompressedCart(int cartId);
 
 		void DeleteCart(int cartId);

@@ -29,6 +29,11 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Index()
 		{
 			try {
+
+				var msg = _currentUser.ProcessingCartMessage();
+				if (msg != null) {
+					this.FeedbackInfo(msg);
+				}
 				var vm = GetSearchViewModel();
 
 				return View(vm);
@@ -52,6 +57,12 @@ namespace SongSearch.Web.Controllers
 
 					var model = GetSearchResults(f, p, s, o);
 					model.ViewMode = ViewModes.Embedded;
+
+					var msg = _currentUser.ProcessingCartMessage();
+					if (msg != null) {
+						this.FeedbackInfo(msg);
+					}
+
 					return View(model);
 				}
 				catch {

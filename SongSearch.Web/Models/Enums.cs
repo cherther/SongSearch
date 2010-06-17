@@ -34,7 +34,8 @@ namespace SongSearch.Web {
 	public enum CartStatusCodes {
 		Active     = 0,
 		Compressed = 1,
-		Downloaded = 2
+		Downloaded = 2,
+		Processing = 3
 	}
 
 	// **************************************

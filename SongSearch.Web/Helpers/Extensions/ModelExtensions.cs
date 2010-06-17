@@ -119,9 +119,9 @@ namespace SongSearch.Web {
 		// **************************************
 		// MarkAsCompressed
 		// **************************************
-		public static Cart MarkAsCompressed(this Cart cart, string zipPath) {
+		public static Cart MarkAsCompressed(this Cart cart) {
 
-
+			var zipPath = cart.ArchivePath();
 			if (cart != null && File.Exists(zipPath)) {
 				var zip = new FileInfo(zipPath);
 				int? numberItems = cart.Contents.Count;

@@ -17,8 +17,9 @@
 		
 		var contentListViewModel = new ContentListViewModel() { List = activeCartContent, ListHeaders = Model.CartContentHeaders, ShowDetails = true };
 
-
-		var compressedCarts = Model.MyCarts.Where(c => c.CartStatus != (int)CartStatusCodes.Active).OrderByDescending(c => c.LastUpdatedOn).ToList();
+		var processingCarts = Model.MyCarts.Where(c => c.CartStatus == (int)CartStatusCodes.Processing).OrderByDescending(c => c.LastUpdatedOn).ToList();
+		
+		var compressedCarts = Model.MyCarts.Where(c => c.CartStatus > (int)CartStatusCodes.Active && c.CartStatus < (int)CartStatusCodes.Processing).OrderByDescending(c => c.LastUpdatedOn).ToList();
 		
 		
 	%>
@@ -52,6 +53,22 @@
 	<% }%>
 
 	</div>
+	<%if (processingCarts != null && processingCarts.Count() > 0) { %>
+	<div>&nbsp;</div>
+	<hr />
+	<div>&nbsp;</div>
+	<div class="cw-outl cw-carts">
+		  <h3>Processing</h3>
+		  <p>We're currently compressing and creating a zip file with the song files in your active cart. Once this is complete, we'll move the finished zip file to the Zipped Song Carts section below.</p>
+		  <p>&nbsp;</p>
+		  <p>Please check back in a couple of minutes or <%: Html.ActionLink("refresh", MVC.Cart.Index()) %> this page.</p>
+		  <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status" }; %>
+		  <% ViewData["CartContentHeaders"] = new string[] { "Title", "Artist", "Year" }; %>
+		  <% Html.RenderPartial(MVC.Cart.Views.ctrlCartTable, processingCarts); %>
+	</div>
+	<%} %>
+
+
 	<div>&nbsp;</div>
 	<hr />
 	<div>&nbsp;</div>
@@ -62,6 +79,7 @@
 		  <p>We'll keep zipped carts here for 14 days after you have requested them.</p>
 		  <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status", "Save", "Delete" }; %>
 		  <% ViewData["CartContentHeaders"] = new string[] { "Title", "Artist", "Year" }; %>
+		  <% ViewData["CartToHighlight"] = Model.CartToHighlight; %>
 		  <% Html.RenderPartial(MVC.Cart.Views.ctrlCartTable, compressedCarts); %>
 		  <%} else {%>
 		  <p>You have no zip files waiting to be downloaded. </p>
