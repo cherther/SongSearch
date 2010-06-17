@@ -306,41 +306,48 @@ namespace SongSearch.Web.Controllers {
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
 		public virtual ActionResult UpdateProfile(UpdateProfileModel model) {
-			if (ModelState.IsValid) {
-				var userName = User.Identity.Name;
-				User user = new User() {
-					UserName = userName,
-					FirstName = model.FirstName,
-					LastName = model.LastName,
-					Signature = model.Signature
-				};
-				//update the user's profile in the database
-				if (_acctService.UpdateProfile(user, null)) {
+			
+			var userName = User.Identity.Name;
+			User user = new User() {
+				UserName = userName,
+				FirstName = model.FirstName,
+				LastName = model.LastName,
+				Signature = model.Signature
+			};
+
+
+			var session = SessionService.Session();
+				
+			//update the user's profile in the database
+			if (ModelState.IsValid && _acctService.UpdateProfile(user, null)) {
 					
-					// UpdateModelWith the user dataSession cached in dataSession
-					var session = SessionService.Session();
-					session.InitializeSession(userName, true);
-					user = session.User(User.Identity.Name);
-					var friendly = user.FullName();
-					SetFriendlyNameCookie(friendly);
+				// UpdateModelWith the user dataSession cached in dataSession
+				session.InitializeSession(userName, true);
+				
+				user = session.User(User.Identity.Name);
+				model.ShowSignatureField = user.IsAnyAdmin();
 
-					model.ShowSignatureField = user.IsAnyAdmin();
-					this.FeedbackInfo("Successfully updated your profile...");
+				var friendly = user.FullName();
+				SetFriendlyNameCookie(friendly);
 
-					return View(model);
+				
+				this.FeedbackInfo("Successfully updated your profile...");
 
-				} else {
-					ModelState.AddModelError("",
-						Errors.PasswordChangeFailed.Text());
-				}
+			} else {
+
+				model.ShowSignatureField = session.User(User.Identity.Name).IsAnyAdmin();
+
+				ModelState.AddModelError("",
+					Errors.PasswordChangeFailed.Text());
+				this.FeedbackError("There was an error updating your profile...");
+
 			}
-
+		
 			// If we got this far, something failed, redisplay form
 			ViewData["PasswordLength"] =
 				AccountService.MinPasswordLength;
 			model.NavigationLocation = "Account";
-			this.FeedbackError("There was an error updating your profile...");
-
+			
 			return View(model);
 		}
 

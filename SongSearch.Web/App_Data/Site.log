@@ -27547,3 +27547,49 @@ TargetSite :Boolean HandleError(System.Exception)
 06/17/2010 14:14:40: 29606 is missing.
 06/17/2010 14:14:40: 30084 is missing.
 06/17/2010 14:15:08: App is shutting down
+06/17/2010 14:46:13: App is shutting down
+06/17/2010 14:47:19: 
+Error in Path :/Account/UpdateProfile
+Raw Url :/Account/UpdateProfile
+Message :An error occurred loading a configuration file: The handle is invalid.
+ (C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config)
+Source :System.Configuration
+Stack Trace :   at System.Configuration.ConfigurationSchemaErrors.ThrowIfErrors(Boolean ignoreLocal)
+   at System.Configuration.BaseConfigurationRecord.ThrowIfParseErrors(ConfigurationSchemaErrors schemaErrors)
+   at System.Configuration.Configuration..ctor(String locationSubPath, Type typeConfigHost, Object[] hostInitConfigurationParams)
+   at System.Configuration.ClientConfigurationHost.OpenExeConfiguration(ConfigurationFileMap fileMap, Boolean isMachine, ConfigurationUserLevel userLevel, String exePath)
+   at System.Configuration.ConfigurationManager.OpenExeConfigurationImpl(ConfigurationFileMap fileMap, Boolean isMachine, ConfigurationUserLevel userLevel, String exePath)
+   at System.Configuration.ConfigurationManager.OpenMachineConfiguration()
+   at SquishIt.Framework.Utilities.DebugStatusReader.IsDebuggingEnabled() in D:\DevProjects\SquishIt\SquishIt.Framework\Utilities\DebugStatusReader.cs:line 29
+   at SquishIt.Framework.Css.CssBundle.Render(String renderTo, String key) in D:\DevProjects\SquishIt\SquishIt.Framework\Css\CssBundle.cs:line 106
+   at SquishIt.Framework.Css.CssBundle.SquishIt.Framework.Css.ICssBundleBuilder.Render(String renderTo) in D:\DevProjects\SquishIt\SquishIt.Framework\Css\CssBundle.cs:line 101
+   at ASP.views_shared_site_master.__Render__control1(HtmlTextWriter __w, Control parameterContainer) in d:\DevProjects\SongSearch\SongSearch.Web\Views\Shared\Site.Master:line 11
+   at System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   at System.Web.UI.Control.RenderChildren(HtmlTextWriter writer)
+   at System.Web.UI.Control.Render(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Control.RenderControl(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Control.RenderControl(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderChildrenInternal(HtmlTextWriter writer, ICollection children)
+   at System.Web.UI.Control.RenderChildren(HtmlTextWriter writer)
+   at System.Web.UI.Page.Render(HtmlTextWriter writer)
+   at System.Web.Mvc.ViewPage.Render(HtmlTextWriter writer)
+   at System.Web.UI.Control.RenderControlInternal(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Control.RenderControl(HtmlTextWriter writer, ControlAdapter adapter)
+   at System.Web.UI.Control.RenderControl(HtmlTextWriter writer)
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+   at System.Web.UI.Page.ProcessRequest()
+   at System.Web.UI.Page.ProcessRequestWithNoAssert(HttpContext context)
+   at System.Web.UI.Page.ProcessRequest(HttpContext context)
+   at System.Web.Mvc.ViewPage.ProcessRequest(HttpContext context)
+   at ASP.views_account_updateprofile_aspx.ProcessRequest(HttpContext context) in c:\Users\claus\AppData\Local\Temp\1\Temporary ASP.NET Files\root\2f7360af\e2c20da0\App_Web_11ckphut.2.cs:line 0
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.<>c__DisplayClass1.<ProcessRequest>b__0()
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.<>c__DisplayClass4.<Wrap>b__3()
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.Wrap[TResult](Func`1 func)
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.Wrap(Action action)
+   at System.Web.Mvc.HttpHandlerUtil.ServerExecuteHttpHandlerWrapper.ProcessRequest(HttpContext context)
+   at System.Web.HttpServerUtility.ExecuteInternal(IHttpHandler handler, TextWriter writer, Boolean preserveForm, Boolean setPreviousPage, VirtualPath path, VirtualPath filePath, String physPath, Exception error, String queryStringOverride)
+TargetSite :Void ThrowIfErrors(Boolean)
+06/17/2010 14:51:44: App is shutting down
+06/17/2010 14:53:08: App is shutting down
