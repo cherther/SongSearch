@@ -162,5 +162,15 @@ namespace SongSearch.Web {
 			var lastProcessedCartId = lastProcessedCart != null ? lastProcessedCart.CartId : 0;
 			return lastProcessedCartId;
 		}
+
+
+		public static IList<UploadFile> GetUploadFiles(this IList<string> tempFiles, MediaVersion mediaVersion) {
+			var uploadFiles = new List<UploadFile>();
+			tempFiles.ForEach(f =>
+				uploadFiles.Add(new UploadFile() { FileMediaVersion = mediaVersion, FilePath = f, FileName = Path.GetFileName(f) })
+			);
+
+			return uploadFiles;
+		}
 	}
 }

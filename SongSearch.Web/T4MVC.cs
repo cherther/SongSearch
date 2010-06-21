@@ -287,6 +287,8 @@ namespace Links {
                       
         public static readonly string cw_app_sound_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.sound.min.js") ? Url("cw.app.sound.min.js") : Url("cw.app.sound.js");
                       
+        public static readonly string gears_init_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/gears_init.min.js") ? Url("gears_init.min.js") : Url("gears_init.js");
+                      
         public static readonly string jquery_1_4_1_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.4.1-vsdoc.min.js") ? Url("jquery-1.4.1-vsdoc.min.js") : Url("jquery-1.4.1-vsdoc.js");
                       
         public static readonly string jquery_1_4_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.4.1.min.js") ? Url("jquery-1.4.1.min.js") : Url("jquery-1.4.1.js");
@@ -302,6 +304,7 @@ namespace Links {
         public static readonly string jquery_feedbackbar_min_js = Url("jquery.feedbackbar.min.js");
         public static readonly string jquery_form_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.form.min.js") ? Url("jquery.form.min.js") : Url("jquery.form.js");
                       
+        public static readonly string jquery_plupload_queue_min_js = Url("jquery.plupload.queue.min.js");
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
                       
         public static readonly string jquery_validate_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate.min.js") ? Url("jquery.validate.min.js") : Url("jquery.validate.js");
@@ -319,6 +322,14 @@ namespace Links {
                       
         public static readonly string MicrosoftMvcValidation_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/MicrosoftMvcValidation.min.js") ? Url("MicrosoftMvcValidation.min.js") : Url("MicrosoftMvcValidation.js");
                       
+        public static readonly string plupload_browserplus_min_js = Url("plupload.browserplus.min.js");
+        public static readonly string plupload_flash_min_js = Url("plupload.flash.min.js");
+        public static readonly string plupload_full_min_js = Url("plupload.full.min.js");
+        public static readonly string plupload_gears_min_js = Url("plupload.gears.min.js");
+        public static readonly string plupload_html4_min_js = Url("plupload.html4.min.js");
+        public static readonly string plupload_html5_min_js = Url("plupload.html5.min.js");
+        public static readonly string plupload_min_js = Url("plupload.min.js");
+        public static readonly string plupload_silverlight_min_js = Url("plupload.silverlight.min.js");
         public static readonly string soundmanager2_nodebug_jsmin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/soundmanager2-nodebug-jsmin.min.js") ? Url("soundmanager2-nodebug-jsmin.min.js") : Url("soundmanager2-nodebug-jsmin.js");
                       
         public static readonly string soundmanager2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/soundmanager2.min.js") ? Url("soundmanager2.min.js") : Url("soundmanager2.js");

@@ -75,6 +75,12 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
+        public override System.Web.Mvc.ActionResult Contact(SongSearch.Web.ContactModel model) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Contact);
+            callInfo.RouteValueDictionary.Add("model", model);
+            return callInfo;
+        }
+
     }
 }
 

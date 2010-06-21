@@ -14,5 +14,6 @@ namespace SongSearch.Web {
 		public CatalogUploadState CatalogUploadState { get; set; }
 		public IList<Catalog> MyCatalogs { get; set; }
 		public string StepView { get; set; }
+		public string StepActionName { get; set; }
 	}
 }

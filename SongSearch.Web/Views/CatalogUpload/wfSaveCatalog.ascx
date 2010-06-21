@@ -1,3 +1,3 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogUploadViewModel>" %>
-
-<h3><%: Model.PageTitle %></h3>
+<%: Html.Hidden("state.CatalogId", Model.CatalogUploadState.CatalogId) %>
+<%: Html.Hidden("state.CatalogName", Model.CatalogUploadState.CatalogName)%>

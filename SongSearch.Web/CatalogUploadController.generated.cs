@@ -53,6 +53,7 @@ namespace SongSearch.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string ctrlHiddenFormInputs = "~/Views/CatalogUpload/ctrlHiddenFormInputs.ascx";
             public readonly string Index = "~/Views/CatalogUpload/Index.aspx";
             public readonly string Upload = "~/Views/CatalogUpload/Upload.aspx";
             public readonly string wfAddPreviewFiles = "~/Views/CatalogUpload/wfAddPreviewFiles.ascx";
@@ -77,9 +78,9 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Upload(int stepIndex) {
+        public override System.Web.Mvc.ActionResult Upload(SongSearch.Web.Services.CatalogUploadState state) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Upload);
-            callInfo.RouteValueDictionary.Add("stepIndex", stepIndex);
+            callInfo.RouteValueDictionary.Add("state", state);
             return callInfo;
         }
 

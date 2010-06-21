@@ -18,6 +18,7 @@ namespace SongSearch.Web.Services {
 
 		bool AllCatalogStepsAreComplete();
 		bool Validate();
+		string GetUploadPath(string fileName, string mediaVersion = "");
 	}
 
 }

@@ -13,10 +13,11 @@
 		.Add("~/public/css/cw.buttons.css")
 		.Add("~/public/css/cw.forms.css")
 		.Add("~/public/css/cw.tables.css")
-				.Add("~/public/css/cw.flashblock.css")
-						.Add("~/public/css/cw.feedback.css")
-						.Add("~/public/css/cw.twitlogin.css")
+		.Add("~/public/css/cw.flashblock.css")
+		.Add("~/public/css/cw.feedback.css")
+		.Add("~/public/css/cw.twitlogin.css")
 		.Add("~/public/css/jquery-ui.css")
+		.Add("~/public/css/plupload.queue.css")
 		//.ForceRelease()
 		.WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
 		.Render("~/public/css/cw-combined_#.css")
@@ -93,7 +94,10 @@
 	} else {
 		bundle.Add(Links.Scripts.soundmanager2_js);
 	}
-	
+	bundle
+		.Add(Links.Scripts.gears_init_js)
+		.Add(Links.Scripts.plupload_full_min_js)
+		.Add(Links.Scripts.jquery_plupload_queue_min_js);
 	
 	bundle
 		.Add(String.Concat(Links.Scripts.cw_app_main_js, d))

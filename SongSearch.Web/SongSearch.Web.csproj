@@ -261,6 +261,9 @@
     <Content Include="Public\Css\cw.twitlogin.css" />
     <Content Include="Public\Css\cw.buttons.css" />
     <Content Include="Public\Css\jquery-ui.css" />
+    <Content Include="Public\Css\plupload.queue.css" />
+    <Content Include="Public\Flash\plupload.flash.swf" />
+    <Content Include="Public\Flash\plupload.silverlight.xap" />
     <Content Include="Public\Flash\soundmanager2.swf" />
     <Content Include="Public\Flash\soundmanager2_flash9.swf" />
     <Content Include="Public\Images\Icons\arrow.gif" />
@@ -1760,6 +1763,7 @@
     <Content Include="Scripts\cw.app.events.js" />
     <Content Include="Scripts\cw.app.ajax.js" />
     <Content Include="Scripts\cw.app.sound.js" />
+    <Content Include="Scripts\gears_init.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery-ui-1.8.1.min.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
@@ -1767,6 +1771,15 @@
     <Content Include="Scripts\jquery.feedbackbar.js" />
     <Content Include="Scripts\jquery.feedbackbar.min.js" />
     <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.plupload.queue.min.js" />
+    <Content Include="Scripts\plupload.browserplus.min.js" />
+    <Content Include="Scripts\plupload.flash.min.js" />
+    <Content Include="Scripts\plupload.full.min.js" />
+    <Content Include="Scripts\plupload.gears.min.js" />
+    <Content Include="Scripts\plupload.html4.min.js" />
+    <Content Include="Scripts\plupload.html5.min.js" />
+    <Content Include="Scripts\plupload.min.js" />
+    <Content Include="Scripts\plupload.silverlight.min.js" />
     <Content Include="Scripts\soundmanager2-nodebug-jsmin.js" />
     <Content Include="Scripts\soundmanager2.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
@@ -1788,6 +1801,7 @@
     <Content Include="Views\CatalogManagement\ctrlDetail.ascx" />
     <Content Include="Views\CatalogManagement\ctrlUserList.ascx" />
     <Content Include="Views\CatalogManagement\Index.aspx" />
+    <Content Include="Views\CatalogUpload\ctrlHiddenFormInputs.ascx" />
     <Content Include="Views\CatalogUpload\Index.aspx" />
     <Content Include="Views\CatalogUpload\wfSaveCatalog.ascx" />
     <Content Include="Views\CatalogUpload\wfEditMetadata.ascx" />
