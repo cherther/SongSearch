@@ -1797,6 +1797,7 @@
     <Content Include="Views\CatalogUpload\wfSelectCatalog.ascx" />
     <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Content\Print.aspx" />
+    <Content Include="Views\Home\Contact.aspx" />
     <Content Include="Views\Search\ctrlBreadcrumb.ascx" />
     <Content Include="Views\Content\ctrlContentDetail.ascx" />
     <Content Include="Views\Search\ctrlSearchResults.ascx" />
@@ -1846,7 +1847,6 @@
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
-    <Content Include="Views\Home\About.aspx" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\Site.Master" />

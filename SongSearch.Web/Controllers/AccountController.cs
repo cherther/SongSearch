@@ -47,6 +47,7 @@ namespace SongSearch.Web.Controllers {
 		[ValidateOnlyIncomingValues]
 		public virtual ActionResult LogIn(LogOnModel model) {
 			model.NavigationLocation = "Account";
+			model.RememberMe = true;
 			return View(model);
 		}
 

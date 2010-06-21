@@ -70,6 +70,27 @@ namespace SongSearch.Web {
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 			routes.MapRoute(
+				"Contact",
+				"Contact",
+				new { controller = "Home", action = "Contact" }
+				);
+
+			routes.MapRoute(
+				"Login",
+				"Login",
+				new { controller = "Account", action = "Login" }
+			);
+			routes.MapRoute(
+				"Logout",
+				"Logout",
+				new { controller = "Account", action = "Logout" }
+			);
+			routes.MapRoute(
+				"Register",
+				"Register",
+				new { controller = "Account", action = "Register" }
+			);
+			routes.MapRoute(
 				"Default", // Route name
 				"{controller}/{action}/{id}", // URL with parameters
 				new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults

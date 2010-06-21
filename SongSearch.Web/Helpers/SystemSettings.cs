@@ -44,6 +44,7 @@ namespace SongSearch.Web {
 		ZipUserFormat,
 		UploadPath,
 		AdminEmailAddress,
+		ContactEmailAddress,
 		LogSearchTerms,
 		LogSearchResults,
 		LogUserActions,

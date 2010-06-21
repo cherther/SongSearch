@@ -27,9 +27,9 @@ foreach (var cart in carts)
 			: null
 		);
 
-	cartClass = cartClass ?? (cart.CartId == cartToHighlight ? " cw-tbl-carts-processing" : "");
+	cartClass = cartClass ?? (cart.CartId == cartToHighlight ? "cw-tbl-carts-processing" : "");
 	%>                         
-	<tr class="cw-tbl-carts-main<%: cartClass %>">
+	<tr class="cw-tbl-carts-main <%: cartClass %>">
 		<td><div id="s-<%: cart.CartId%>" class="cw-carts-contents cw-carts-contents-show">&nbsp;</div></td>
 		<td>
 			<%: cart.LastUpdatedOn.ToShortDateString()%>

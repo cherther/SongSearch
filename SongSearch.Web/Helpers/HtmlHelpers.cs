@@ -5,6 +5,7 @@ using System.Web;
 using System.Text;
 using SongSearch.Web;
 using Microsoft.Security.Application;
+using System.Security.Principal;
 
 namespace System.Web.Mvc {
 	public static class HtmlHelpers {
@@ -22,6 +23,14 @@ namespace System.Web.Mvc {
 		public static string Friendly(this HtmlHelper helper) {
 			if (helper.ViewContext.HttpContext.Request.Cookies["friendly"] != null) {
 				return helper.h(helper.ViewContext.HttpContext.Request.Cookies["friendly"].Value);
+			} else {
+				return "";
+			}
+		}
+
+		public static string Friendly(this HttpContext ctx) {
+			if (ctx.Request.Cookies["friendly"] != null) {
+				return ctx.Request.Cookies["friendly"].Value;
 			} else {
 				return "";
 			}

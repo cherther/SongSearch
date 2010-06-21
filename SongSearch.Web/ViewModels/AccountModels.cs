@@ -160,6 +160,38 @@ namespace SongSearch.Web {
 
 	}
 
+	// **************************************
+	// ContactModel
+	// **************************************
+	public class ContactModel : ViewModel {
+		//[Required]
+		//[DisplayName("User name")]
+		//public string UserName { get; set; }
+
+		[Required]
+		[DisplayName("Name")]
+		public string Name { get; set; }
+
+		[Required]
+		[DataType(DataType.EmailAddress)]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
+		[DisplayName("Email")]
+		public string Email { get; set; }
+
+		[DisplayName("Company")]
+		public string Company { get; set; }
+
+
+		[Required]
+		[DisplayName("Regarding")]
+		public string Subject { get; set; }
+
+		[Required]
+		[DisplayName("Comments")]
+		public string Body { get; set; }
+
+	}
+
 	#endregion
 
 	#region Validation

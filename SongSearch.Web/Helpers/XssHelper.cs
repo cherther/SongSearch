@@ -5,8 +5,11 @@ using System.Web;
 using Microsoft.Security.Application;
 
 namespace System.Web.Mvc {
-	public static class XSSHelper {
+	public static class XSSHelpers {
 		public static string h(this HtmlHelper helper, string input) {
+			return AntiXss.HtmlEncode(input);
+		}
+		public static string h(string input) {
 			return AntiXss.HtmlEncode(input);
 		}
 		public static string Sanitize(this HtmlHelper helper, string input) {
@@ -16,6 +19,10 @@ namespace System.Web.Mvc {
 		/// Encodes Javascript
 		/// </summary>
 		public static string hscript(this HtmlHelper helper, string input) {
+			return AntiXss.JavaScriptEncode(input);
+		}
+
+		public static string hscript(string input) {
 			return AntiXss.JavaScriptEncode(input);
 		}
 	}

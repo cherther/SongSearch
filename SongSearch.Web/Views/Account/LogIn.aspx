@@ -47,7 +47,7 @@ Log In
 					
 					<div class="cw-fe-vert">
 						
-						<%= Html.CheckBoxFor(m => m.RememberMe) %> &nbsp<%= Html.LabelFor(m => m.RememberMe) %>
+						<%= Html.CheckBox("RememberMe", Model.RememberMe) %> &nbsp<label for="RememberMe">Remember me?</label>
 					</div>
 					<%= Html.HiddenFor(m => m.ReturnUrl)%>
 					<p>

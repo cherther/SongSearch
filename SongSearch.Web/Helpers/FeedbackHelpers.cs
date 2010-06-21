@@ -18,13 +18,13 @@ namespace System.Web.Mvc {
 		public static void FeedbackWarning(this Controller controller, string message) {
 			
 			var messages = controller.TempData["feedback"] as Dictionary<string, string> ?? new Dictionary<string, string>(); ;
-			messages.Add(message, "info");
+			messages.Add(message, "warning");
 			controller.TempData["feedback"] = messages;
 		}
 		public static void FeedbackError(this Controller controller, string message) {
 			
 			var messages = controller.TempData["feedback"] as Dictionary<string, string> ?? new Dictionary<string, string>(); ;
-			messages.Add(message, "info");
+			messages.Add(message, "error");
 			controller.TempData["feedback"] = messages;
 		}
 

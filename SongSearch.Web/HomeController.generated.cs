@@ -47,7 +47,7 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
-            public readonly string About = "About";
+            public readonly string Contact = "Contact";
         }
 
 
@@ -56,7 +56,7 @@ namespace SongSearch.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string About = "~/Views/Home/About.aspx";
+            public readonly string Contact = "~/Views/Home/Contact.aspx";
             public readonly string Index = "~/Views/Home/Index.aspx";
         }
     }
@@ -70,8 +70,8 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult About() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.About);
+        public override System.Web.Mvc.ActionResult Contact() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Contact);
             return callInfo;
         }
 

@@ -13,6 +13,7 @@ namespace SongSearch.Web {
 		public ViewModes ViewMode { get; set; }
 		public EditModes EditMode { get; set; }
 		public string PageTitle { get; set; }
+		public string PageMessage { get; set; }
 		public string NavigationLocation { get; set; }
 		public int MyActiveCartCount { get; set; }
 		public ModelAction ModelAction { get; set; }
@@ -21,6 +22,7 @@ namespace SongSearch.Web {
 			ViewMode = ViewModes.Normal;
 			EditMode = EditModes.Viewing;
 			PageTitle = "";
+			PageMessage = "";
 			NavigationLocation = "";
 		
 		}

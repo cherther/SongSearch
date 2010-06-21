@@ -27605,3 +27605,19 @@ Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWi
    at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
    at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
 TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+06/21/2010 08:43:00: App is shutting down
+06/21/2010 08:46:17: App is shutting down
+06/21/2010 09:10:01: App is shutting down
+06/21/2010 09:10:26: App is shutting down
+06/21/2010 09:27:28: App is shutting down
+06/21/2010 09:29:19: App is shutting down
+06/21/2010 09:42:04: App is shutting down
+06/21/2010 09:58:12: App is shutting down
+06/21/2010 09:59:44: App is shutting down
+06/21/2010 10:04:29: App is shutting down
+06/21/2010 10:08:15: App is shutting down
+06/21/2010 10:09:13: App is shutting down
+06/21/2010 10:11:05: App is shutting down
+06/21/2010 10:18:57: App is shutting down
+06/21/2010 10:20:52: App is shutting down
+06/21/2010 10:24:32: App is shutting down

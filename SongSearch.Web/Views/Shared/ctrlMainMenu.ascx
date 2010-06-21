@@ -23,7 +23,7 @@
 	{
 		menu.Add("Register", new string[3] { "Register", "Account", "Register" });
 	}
-	   
+	menu.Add("Contact", new string[3] { "Contact", "Home", "Contact Us" });   
 	%>
 	
 		<ul id="main-menu" class="cw-menu cw-menu-main">
