@@ -62,7 +62,7 @@
 				<%} %>
 				<%case SearchTypes.HasValue: {%>
 				<% var buttonId = String.Format("button-{0}", item.PropertyId); %>
-				<%: Html.CheckBox(String.Format("f[{0}].V", i), new { id = buttonId, @class = "cw-form-value-button" })%>
+				<%: Html.CheckBox(String.Format("f[{0}].V", i), new { id = buttonId, @class = "cw-form-value cw-form-value-button" })%>
 				<label for="<%= buttonId %>">
 				<%: item.DisplayName%>
 				</label>
@@ -70,7 +70,7 @@
 				<%} %>
 				<%case SearchTypes.IsTrue: {%>
 				<% var buttonId = String.Format("button-{0}", item.PropertyId); %>
-				<%: Html.CheckBox(String.Format("f[{0}].V", i), new { @class = "cw-form-value-button" })%>
+				<%: Html.CheckBox(String.Format("f[{0}].V", i), new { @class = "cw-form-value cw-form-value-button" })%>
 				<label for="<%= buttonId %>">
 				<%: item.DisplayName%>
 				</label>
