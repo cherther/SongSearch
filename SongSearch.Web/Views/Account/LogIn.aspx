@@ -33,7 +33,7 @@ Log In
 						<%= Html.LabelFor(m => m.Email) %>
 					</div>
 					<div class="cw-fe-vert">
-						<%= Html.TextBoxFor(m => m.Email)%>
+						<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%>
 						<%= Html.ValidationMessageFor(m => m.Email)%>
 					</div>
 					
@@ -41,7 +41,7 @@ Log In
 						<%= Html.LabelFor(m => m.Password) %>
 					</div>
 					<div class="cw-fe-vert">
-						<%= Html.PasswordFor(m => m.Password) %>
+						<%= Html.PasswordFor(m => m.Password, new { @class = "cw-field-large" })%>
 						<%= Html.ValidationMessageFor(m => m.Password) %>
 					</div>
 					

@@ -26,24 +26,24 @@
 
 				<table width="100%">
 				<tr>
-					<td valign="top"><%: Html.LabelFor(m => m.Name) %></td>
-					<td valign="top"><%: Html.TextBoxFor(m => m.Name) %><div><%= Html.ValidationMessageFor(m => m.Name)%></div></td>
+					<td class="text-top"><%: Html.LabelFor(m => m.Name) %></td>
+					<td class="text-top"><%: Html.TextBoxFor(m => m.Name, new { @class = "cw-field-large" })%><div><%= Html.ValidationMessageFor(m => m.Name)%></div></td>
 				</tr>
 				<tr>
-					<td valign="top"><%: Html.LabelFor(m => m.Email)%></td>
-					<td valign="top"><%: Html.TextBoxFor(m => m.Email) %><div><%= Html.ValidationMessageFor(m => m.Email)%></div></td>
+					<td class="text-top"><%: Html.LabelFor(m => m.Email)%></td>
+					<td class="text-top"><%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%><div><%= Html.ValidationMessageFor(m => m.Email)%></div></td>
 				</tr>
 				<tr>
-					<td valign="top"><%: Html.LabelFor(m => m.Company) %></td>
-					<td valign="top"><%: Html.TextBoxFor(m => m.Company)%><div><%= Html.ValidationMessageFor(m => m.Company)%></div></td>
+					<td class="text-top"><%: Html.LabelFor(m => m.Company) %></td>
+					<td class="text-top"><%: Html.TextBoxFor(m => m.Company, new { @class = "cw-field-large" })%><div><%= Html.ValidationMessageFor(m => m.Company)%></div></td>
 				</tr>
 				<tr>
-					<td valign="top"><%: Html.LabelFor(m => m.Subject) %></td>
-					<td valign="top"><%: Html.TextBoxFor(m => m.Subject)%><div><%= Html.ValidationMessageFor(m => m.Subject)%></div></td>
+					<td class="text-top"><%: Html.LabelFor(m => m.Subject) %></td>
+					<td class="text-top"><%: Html.TextBoxFor(m => m.Subject, new { @class = "cw-field-large" })%><div><%= Html.ValidationMessageFor(m => m.Subject)%></div></td>
 				</tr>
 				<tr>
-					<td valign="top"><%: Html.LabelFor(m => m.Body) %></td>
-					<td valign="top"><%: Html.TextAreaFor(m => m.Body)%><div><%= Html.ValidationMessageFor(m => m.Body)%></div></td>
+					<td class="text-top"><%: Html.LabelFor(m => m.Body) %></td>
+					<td class="text-top"><%: Html.TextAreaFor(m => m.Body, new { @class = "cw-field-large", rows = 8 })%><div><%= Html.ValidationMessageFor(m => m.Body)%></div></td>
 				</tr>
 				<tr>
 					<td>&nbsp;</td>

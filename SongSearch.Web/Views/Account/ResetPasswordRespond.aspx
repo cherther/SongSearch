@@ -40,7 +40,7 @@
                     <%= Html.LabelFor(m => m.Email) %>
                 </div>
                 <div class="cw-fe-vert">
-                    <%= Html.TextBoxFor(m => m.Email)%>
+                    <%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%>
                     <%= Html.ValidationMessageFor(m => m.Email)%>
                 </div>
 
@@ -48,7 +48,7 @@
                     <%= Html.LabelFor(m => m.NewPassword) %>
                 </div>
                 <div class="cw-fe-vert">
-                    <%= Html.PasswordFor(m => m.NewPassword) %>
+                    <%= Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large" })%>
                     <%= Html.ValidationMessageFor(m => m.NewPassword) %>
                 </div>
                 
@@ -56,7 +56,7 @@
                     <%= Html.LabelFor(m => m.ConfirmPassword) %>
                 </div>
                 <div class="cw-fe-vert">
-                    <%= Html.PasswordFor(m => m.ConfirmPassword) %>
+                    <%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large" })%>
                     <%= Html.ValidationMessageFor(m => m.ConfirmPassword) %>
                 </div>
                 

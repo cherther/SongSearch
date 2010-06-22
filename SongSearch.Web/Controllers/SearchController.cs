@@ -153,12 +153,12 @@ namespace SongSearch.Web.Controllers
 			model.SortType = o.HasValue ? (SortType)o.GetValueOrDefault() : SortType.None;
 
 			var searchFields = f.Where(x => x.V != null &&
-			x.V.Any(v =>
-			v != null &&
-			!String.IsNullOrWhiteSpace(v)
-			&& !v.Equals(bool.FalseString, StringComparison.InvariantCultureIgnoreCase)
-			)
-			).ToList();
+				x.V.Any(v =>
+					v != null &&
+					!String.IsNullOrWhiteSpace(v)
+					&& !v.Equals(bool.FalseString, StringComparison.InvariantCultureIgnoreCase)
+					)
+				).ToList();
 
 			var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
 

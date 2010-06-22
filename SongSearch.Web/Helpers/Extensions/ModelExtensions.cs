@@ -39,6 +39,23 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
+		// MediaPath
+		// **************************************    
+		public static string MediaPath(this Content content, MediaVersion mediaVersion) {
+
+			return mediaVersion == MediaVersion.FullSong ? Settings.MediaPathFullSong.Text() : Settings.MediaPathPreview.Text();
+		}
+
+		// **************************************
+		// MediaFilePath
+		// **************************************    
+		public static string MediaFilePath(this Content content, MediaVersion mediaVersion) {
+
+			var fileName = String.Concat(content.ContentId, Settings.MediaDefaultExtension.Text());
+			return Path.Combine(content.MediaPath(mediaVersion), fileName);
+		}
+
+		// **************************************
 		// CountWithChildren
 		// **************************************    
 		public static int CountWithChildren(this IList<User> users) {

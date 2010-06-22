@@ -33,10 +33,17 @@ namespace SongSearch.Web.Controllers
 
 
 		// GET: /CatalogUpload/
+		public ActionResult Index() {
 
-		public virtual ActionResult Index()
-		{
 			return View();
+		}
+
+		public virtual ActionResult Complete()
+		{
+			CacheService.InitializeApp(true);
+			SessionService.Session().InitializeSession(true);
+
+			return RedirectToAction(MVC.CatalogManagement.Index());
 		}
 
 		// **************************************
@@ -92,12 +99,12 @@ namespace SongSearch.Web.Controllers
 	
 				return View(vm);
 			} else {
-				return RedirectToAction("Index");
+				return RedirectToAction("Complete");
 			}
 
 		}
 
-		public ActionResult MediaUpload() {
+		public virtual ActionResult MediaUpload() {
 
 			IDictionary<string, string> files = new Dictionary<string, string>();
 			//foreach (string fileName in Request.Files) {
@@ -145,7 +152,7 @@ namespace SongSearch.Web.Controllers
 		private CatalogUploadViewModel GetCatalogViewModel(WorkflowStep<CatalogUploadState> nextStep, CatalogUploadState state){
 
 			var vm = new CatalogUploadViewModel();
-			vm.PageTitle = String.Format("({0}) {1}", state.CurrentStepIndex + 1, nextStep.StepName);
+			vm.PageTitle = nextStep.StepName;
 			vm.CatalogUploadState = state;
 			vm.StepView = nextStep.StepView;
 			vm.StepActionName = "Next";

@@ -92,7 +92,9 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Delete(int id) {
 
 			try {
-				//_catMgmtService.DeleteCatalog(id);
+				_catMgmtService.DeleteCatalog(id);
+				CacheService.InitializeApp(true);
+				SessionService.Session().InitializeSession(true);
 
 			}
 			catch (Exception ex) {
@@ -106,7 +108,7 @@ namespace SongSearch.Web.Controllers
 			if (Request.IsAjaxRequest()) {
 				return Json(id);
 			} else {
-				this.FeedbackInfo("Testing: Catalog was not actually deleted");//Catalog Deleted");
+				this.FeedbackInfo("Catalog deleted");//Catalog Deleted");
 				return RedirectToAction(Actions.Index());
 			}
 		}

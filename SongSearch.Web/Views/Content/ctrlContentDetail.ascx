@@ -198,7 +198,9 @@
 		<tr>
 			<td class="cw-content-label">Share %</td>
 			<td class="cw-content-field">
-				<%if (content.ContentRights != null && content.ContentRights.Count() > 0) { %>
+				<%if (!isEditing && (content.ContentRights == null || content.ContentRights.Count() == 0)) { %>
+				No Rightsholder information available.
+				<%} else { %>
 				<table class="cw-tbl-content-rights">
 					<tr>
 						<th>
@@ -214,6 +216,7 @@
 						</th>
 					</tr>
 				<%var r = 0; %>
+				<%if (content.ContentRights != null && content.ContentRights.Count() > 0) { %>
 				<%foreach (var contentRight in content.ContentRights) { %>
 				<%	
 					var rightId = String.Format("rights[{0}].", r++);
@@ -262,7 +265,7 @@
 						SelectedTags = selectedTerritories,
 						TagClass = "cw-tagbox-label",
 						TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
-					};              
+						};              
 						%>    
 							<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
 						<%//} %>
@@ -270,6 +273,7 @@
 						<td>
 						</td>
 					</tr>
+				<%} %>
 				<%} %>
 				<%if (isEditing) {%>
 				<%	var rightId = String.Format("rights[{0}].", r++); %>
@@ -309,9 +313,7 @@
 				<%} %>
 
 				</table>
-				<%} else { %>
-				(N/A)
-				<%} %>
+				<%}%>
 				</td>
 		</tr>
 		<tr>

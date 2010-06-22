@@ -14,7 +14,6 @@
 		//var cartMnuText = String.Concat("Song Cart", cartCount != null ? String.Format("({0})", cartCount) : "");
 		menu.Add("Cart", new string[3] { "Index", "Cart", "Song Cart" });
 	}
-	menu.Add("Help", new string[3] { "Index", "Help", "Help" });
 	if (Page.User.UserIsAnyAdmin())
 	{
 		menu.Add("Admin", new string[3] { "Index", "UserManagement", "Admin" });
@@ -23,6 +22,7 @@
 	{
 		menu.Add("Register", new string[3] { "Register", "Account", "Register" });
 	}
+	menu.Add("Help", new string[3] { "Index", "Help", "Help" });
 	menu.Add("Contact", new string[3] { "Contact", "Home", "Contact Us" });   
 	%>
 	

@@ -26,6 +26,7 @@ namespace SongSearch.Web.Data {
 	public partial class Content {
 		public bool IsInMyActiveCart { get; set; }
 		public string UserDownloadableName { get; set; }
+		public List<UploadFile> UploadFiles { get; set; }
 	}
 
 	public class ContentMetaData {
@@ -98,7 +99,11 @@ namespace SongSearch.Web.Data {
 		public string DownloadableName { get; set; }
 	}
 
-
+	public class UploadFile {
+		public string FileName { get; set; }
+		public string FilePath { get; set; }
+		public MediaVersion FileMediaVersion { get; set; }
+	}
 
 
 }

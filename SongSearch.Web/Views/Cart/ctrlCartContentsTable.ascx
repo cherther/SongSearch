@@ -77,7 +77,7 @@
 			<%if (tableHeader.Contains("File Name")) { %>
 			<td>
 				<%= Html.Hidden("contentNames[" + cartIndex + "].ContentId", item.ContentId)%>
-				<%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { size = "40", maxlength = "120" })%>
+				<%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { @class = "cw-field-large", maxlength = "120" })%>
 				<% cartIndex++;%>
 			</td>
 			<%} %>

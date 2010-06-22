@@ -6,6 +6,10 @@
 {
 	text-align: right;
 }
+.text-top
+{
+    vertical-align: top;
+}
 .cw-row-selected
 {
 	background: #cccccc url(/public/images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;

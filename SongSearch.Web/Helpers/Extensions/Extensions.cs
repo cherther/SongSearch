@@ -22,6 +22,10 @@ namespace SongSearch.Web {
 			return String.IsNullOrEmpty(item) ? null : item;
 		}
 
+		public static int? AsNullIfZero(this int number) {
+			return number > 0 ? (int?)number : null;
+		}
+
 		public static IEnumerable<T> AsNullIfEmptyElements<T>(this IEnumerable<T> items) {
 			return items.AsNullIfEmpty() == null ? null : items.Where(i => i != null);			
 		}
@@ -29,6 +33,5 @@ namespace SongSearch.Web {
 		public static IEnumerable<T> AsNullIfEmpty<T>(this IEnumerable<T> items) {
 			return (items == null || items.Any()) ? null : items;			
 		}
-
 	}
 }

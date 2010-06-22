@@ -51,7 +51,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static string GetContentMediaFilePath(int contentId, MediaVersion version) {
 
-			var assetPath = version == MediaVersion.FullSong ? Settings.AssetPathFullSong.Text() : Settings.AssetPathPreview.Text();
+			var assetPath = version == MediaVersion.FullSong ? Settings.MediaPathFullSong.Text() : Settings.MediaPathPreview.Text();
 			return Path.Combine(assetPath, GetContentMediaFileName(contentId));
 
 		}

@@ -125,7 +125,7 @@
           <Key>
             <PropertyRef Name="CatalogId" />
           </Key>
-          <Property Name="CatalogId" Type="int" Nullable="false" />
+          <Property Name="CatalogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CatalogName" Type="nvarchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <EntityType Name="ContentRights">
@@ -1024,7 +1024,7 @@
     <Diagrams>
       <Diagram Name="SongSearch2" ZoomLevel="79">
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Cart" Width="1.5" PointX="0.75" PointY="11" Height="2.7494921874999996" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Catalog" Width="1.5" PointX="8" PointY="9.625" Height="1.7879850260416657" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Catalog" Width="1.5" PointX="8" PointY="8.5" Height="1.7879850260416657" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentRight" Width="1.5" PointX="6.25" PointY="2.375" Height="2.3648893229166656" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="2" PointX="3" PointY="4" Height="5.8263151041666656" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Role" Width="1.5" PointX="3.625" PointY="10.875" Height="1.7879850260416674" IsExpanded="true" />
@@ -1032,9 +1032,8 @@
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Territory" Width="1.5" PointX="9.25" PointY="5" Height="1.787985026041671" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.User" Width="1.5" PointX="3.625" PointY="13.375" Height="4.0956022135416674" IsExpanded="true" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Contents_Catalogs" ManuallyRouted="false">
-          <ConnectorPoint PointX="8" PointY="10.398735410156251" />
-          <ConnectorPoint PointX="3.4531275" PointY="10.398735410156251" />
-          <ConnectorPoint PointX="3.4531275" PointY="9.8263151041666656" />
+          <ConnectorPoint PointX="8" PointY="9.2593082682291659" />
+          <ConnectorPoint PointX="5" PointY="9.2593082682291659" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentRights_Contents" ManuallyRouted="false">
           <ConnectorPoint PointX="5" PointY="4.3699446614583328" />
@@ -1069,7 +1068,7 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.UserCatalogRole" Width="1.5" PointX="7.5" PointY="12.625" Height="2.1725878906250031" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_UsersCatalogs_Catalogs" >
-          <ConnectorPoint PointX="8.5" PointY="11.412985026041667" />
+          <ConnectorPoint PointX="8.5" PointY="10.287985026041666" />
           <ConnectorPoint PointX="8.5" PointY="12.625" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_UsersCatalogs_Roles" >

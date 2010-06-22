@@ -3,7 +3,7 @@
 <div>
 Enter a name for a new Catalog:
 	<div>
-		<%: Html.TextBox("state.CatalogName") %>
+		<%: Html.TextBox("state.CatalogName", null, new { @class = "cw-field-large" })%>
 	</div>
 </div>
 <div>&nbsp;</div>

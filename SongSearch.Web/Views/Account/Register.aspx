@@ -36,42 +36,42 @@
 					<%= Html.LabelFor(m => m.Email) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.Email)%>
+					<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%>
 					<%= Html.ValidationMessageFor(m => m.Email)%>
 				</div>
 				<div class="cw-fe-vert cw-fe-req">
 					<%= Html.LabelFor(m => m.InviteId)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.InviteId)%>
+					<%= Html.TextBoxFor(m => m.InviteId, new { @class = "cw-field-xlarge" })%>
 					<%= Html.ValidationMessageFor(m => m.InviteId)%>
 				</div>                    
 				 <div class="cw-fe-vert">
 					<%= Html.LabelFor(m => m.FirstName)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.FirstName)%>
+					<%= Html.TextBoxFor(m => m.FirstName, new { @class = "cw-field-large" })%>
 					<%= Html.ValidationMessageFor(m => m.FirstName)%>
 				</div>                    
 				 <div class="cw-fe-vert">
 					<%= Html.LabelFor(m => m.LastName)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.LastName)%>
+					<%= Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large" })%>
 					<%= Html.ValidationMessageFor(m => m.LastName)%>
 				</div>                    
 				<div class="cw-fe-vert cw-fe-req">
 					<%= Html.LabelFor(m => m.Password) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.PasswordFor(m => m.Password)%>
+					<%= Html.PasswordFor(m => m.Password, new { @class = "cw-field-large" })%>
 					<%= Html.ValidationMessageFor(m => m.Password)%>
 				</div>                    
 				<div class="cw-fe-vert cw-fe-req">
 					<%= Html.LabelFor(m => m.ConfirmPassword) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.PasswordFor(m => m.ConfirmPassword)%>
+					<%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large" })%>
 					<%= Html.ValidationMessageFor(m => m.ConfirmPassword)%>
 				</div>                    
 				<p>

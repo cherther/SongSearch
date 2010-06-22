@@ -7,11 +7,7 @@ using System.IO;
 
 namespace SongSearch.Web.Services {
 
-	public class UploadFile {
-		public string FileName { get; set; }
-		public string FilePath { get; set; }
-		public MediaVersion FileMediaVersion { get; set; }
-	}
+	
 	// **************************************
 	// CatalogUploadState
 	//	Model to hold state information 
@@ -167,23 +163,7 @@ namespace SongSearch.Web.Services {
 				state.CatalogName = catalog.CatalogName;
 
 			} else {
-			    if (ActiveUser.IsAtLeastInRole(Roles.Admin)) {
-
-			        var catalog = DataSession.Single<Catalog>(c => c.CatalogName.ToUpper() == state.CatalogName) ??
-			            new Catalog() { CatalogName = state.CatalogName };
-
-					//Just for dev, take out!
-					var tempId = DataSession.All<Catalog>().Max(c => c.CatalogId) + 1;
-			        
-					if (catalog.CatalogId == 0) {
-			            DataSession.Add<Catalog>(catalog);
-			            //DataSession.CommitChanges();
-						catalog.CatalogId = tempId;
-			        }
-
-			        state.CatalogId = catalog.CatalogId;// CatalogManagementService.CreateCatalog(new Catalog() { CatalogName = model.CatalogName });
-					state.CatalogName = catalog.CatalogName;
-			    }
+				state.CatalogName = state.CatalogName.ToUpper();
 			}
 			return state;
 		}
@@ -224,10 +204,25 @@ namespace SongSearch.Web.Services {
 			var contentFiles = state.UploadFiles.Select(f => f.FileName).Distinct().ToList();
 			foreach (var file in contentFiles) {
 
-				var title = Path.GetFileNameWithoutExtension(file);
-				var hasFull = state.UploadFiles.Any(f => f.FileName == file && f.FileMediaVersion == MediaVersion.FullSong);
-				var hasPreview = state.UploadFiles.Any(f => f.FileName == file && f.FileMediaVersion == MediaVersion.Preview);
-				content.Add(new Content() { Title = title, HasMediaFullVersion = hasFull, HasMediaPreviewVersion = hasPreview });
+				var fileName = Path.GetFileNameWithoutExtension(file).Split('-');
+				var title = fileName.First();
+				var artist = fileName.Length > 1 ? fileName[1] : "(N/A)";
+				int releaseYear;
+				int.TryParse(fileName.Length > 2 ? fileName[2] : "", out releaseYear);
+
+				var files = state.UploadFiles.Where(f => f.FileName == file).ToList();
+
+				var full = files.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.FullSong);
+				var preview = files.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Preview);
+
+				content.Add(new Content() { 
+					Title = title, 
+					Artist = artist,
+					ReleaseYear = releaseYear.AsNullIfZero(),
+					HasMediaFullVersion = full != null, 
+					HasMediaPreviewVersion = preview != null,
+					UploadFiles = files
+				});
 			}
 
 			state.Content = content;
@@ -240,7 +235,16 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private CatalogUploadState EditMetadata(CatalogUploadState state) {
 			System.Diagnostics.Debug.Write("Step4");
-			
+			// Check Metadata, e.g. make stuff uppercase etc
+			var content = state.Content;
+			foreach (var itm in content) {
+				itm.Title = itm.Title.ToUpper();
+				itm.Artist = itm.Artist.ToUpper();
+				itm.RecordLabel = itm.RecordLabel.ToUpper();
+				itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
+			}
+			state.Content = content;
+
 			return state;
 		}
 
@@ -249,13 +253,59 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private CatalogUploadState SaveCatalog(CatalogUploadState state) {
 			System.Diagnostics.Debug.Write("Step5");
-			foreach (var file in state.UploadFiles) {
-				try {
-					File.Delete(file.FilePath);
+
+			// Save/create Catalog
+			if (ActiveUser.IsAtLeastInRole(Roles.Admin)) {
+
+				var catalog = DataSession.Single<Catalog>(c => c.CatalogName.ToUpper() == state.CatalogName) ??
+					new Catalog() { CatalogName = state.CatalogName };
+
+				if (catalog.CatalogId == 0) {
+
+					DataSession.Add<Catalog>(catalog);
+					
+					var userCatalog = new UserCatalogRole() {
+						UserId = ActiveUser.UserId,
+						CatalogId = catalog.CatalogId,
+						RoleId = (int)Roles.Admin
+					};
+					
+					//Make current user an admin
+					DataSession.Add<UserCatalogRole>(userCatalog);
+					// defer?
+					DataSession.CommitChanges();
 				}
-				catch { }
+
+				state.CatalogId = catalog.CatalogId;
+				state.CatalogName = catalog.CatalogName.ToUpper();
+
+
+				// Save Content
+				foreach (var itm in state.Content) {
+
+					itm.CatalogId = state.CatalogId;
+					itm.CreatedByUserId = ActiveUser.UserId;
+					itm.CreatedOn = DateTime.Now.Date;
+					itm.LastUpdatedByUserId = ActiveUser.UserId;
+					itm.LastUpdatedOn = DateTime.Now.Date;
+					
+					DataSession.Add<Content>(itm);
+					DataSession.CommitChanges();
+
+					foreach (var file in itm.UploadFiles) {
+
+						var filePath = itm.MediaFilePath(file.FileMediaVersion);
+
+						Files.SafeMove(file.FilePath, filePath, true);
+
+					}
+				}
+				
+			
 			}
 
+			CacheService.InitializeApp(true);
+			
 			return state;
 		}
 

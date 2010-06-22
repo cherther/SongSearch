@@ -33,7 +33,7 @@
 			<label>Zip file name (or leave blank for default):</label>
 		</div>
 		<div>
-			<%=Html.TextBox("userArchiveName", "", new { size = 50 })%>
+			<%=Html.TextBox("userArchiveName", "", new { @class = "cw-field-xlarge" })%>
 	   
 				
 			<button type="submit" class="cw-button cw-simple cw-blue">

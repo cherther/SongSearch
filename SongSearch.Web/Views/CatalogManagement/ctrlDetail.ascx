@@ -10,8 +10,24 @@
 </div>
 
 <%=Html.Hidden("catalogid", catalog.CatalogId)%>
+<%--<div>&nbsp;</div>
+<hr />
 <div>&nbsp;</div>
-
+<%--f%5B14%5D.P=16
+f%5B14%5D.T=1
+f%5B14%5D.V=_CLAUSTEST--%>
+<%--<%
+	var catSearch = new SearchField()
+	{
+		P = 16,
+		T = SearchTypes.Contains,
+		V = new string[] { String.Format(@"""{0}""", catalog.CatalogName) }
+	};
+	
+	%>
+View Contents: <a href="/Search/Results?f[0].P=<%: catSearch.P %>&f[0].T=<%: (int)catSearch.T %>&f[0].V=<%: catSearch.V.First() %>">
+<%: String.Format("{0} song(s)", catalog.Contents.Count())%></a>--%>
+<div>&nbsp;</div>
 <hr />
 <div>&nbsp;</div>
 <label><em>Catalog Access</em></label>
@@ -24,10 +40,9 @@
                 </td>
                 <td>
                 <%
-                    foreach (var role in Model.CatalogRoles)
-			        {
-                        string roleName = ((SongSearch.Web.Roles)role).ToString();
-                        string roleClass = "cw-tag-box cw-cat-role-edit-all cw-button cw-simple cw-small"; 
+											  foreach (var role in Model.CatalogRoles) {
+												  string roleName = ((SongSearch.Web.Roles)role).ToString();
+												  string roleClass = "cw-tag-box cw-cat-role-edit-all cw-button cw-simple cw-small"; 
 						
 				        %>
                         <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllUsers(catalog.CatalogId, role), new { @class = roleClass, rel = catalogDetailUrl })%>
@@ -47,11 +62,11 @@
 </div>
 
 
-<%if (Model.AllowEdit){ %>
+<%if (Model.AllowEdit) { %>
     <div>&nbsp;</div>
-    <%using (Html.BeginForm(MVC.CatalogManagement.Delete(), FormMethod.Post)){ %>
+    <%using (Html.BeginForm(MVC.CatalogManagement.Delete(), FormMethod.Post)) { %>
     <%= Html.Hidden("id", catalog.CatalogId)%>
-    <%= Html.AntiForgeryToken() %>
+    <%= Html.AntiForgeryToken()%>
     <div class="cw-outl cw-padded" >
 	    <label><em>Delete Catalog</em></label>
 	    <div>&nbsp;</div>

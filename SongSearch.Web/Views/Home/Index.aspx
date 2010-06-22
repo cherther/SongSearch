@@ -13,8 +13,15 @@
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
 		<div>&nbsp;</div>
-		<div><strong>6/17/2010</strong></div>
+		<div><strong>6/21/2010</strong></div>
 		<ul class="cw-vertical cw-highlight">
+			<li>Contact Us form added</li>
+			
+		</ul>
+		<div>&nbsp;</div>
+		
+		<div>6/17/2010</div>
+		<ul class="cw-vertical">
 			<li>Zipping carts now done offline</li>
 			<ul class="cw-vertical">
 				<li>Carts containing 10 or more songs are now being zipped in the backgound, so the page is not blocked while waiting</li>
@@ -35,7 +42,7 @@
 			<li>Add to Cart option in search results via checkboxes</li>
 			<li>Remove from Cart option in cart page via checkboxes</li>
 			<li>Carts can have a max of 100 items ( = 1 search results page)</li>
-			<li>User Management now simplies System access</li>
+			<li>User Management now simplifies System access</li>
 			<ul class="cw-vertical">
 					<li>You can allow users to add new catalogs and users via a checkbox</li>
 					<li>If the user is a SuperAdmin, or already has Admin access to at least one catalog this option is disabled, and the user can add new catalogs and users</li>

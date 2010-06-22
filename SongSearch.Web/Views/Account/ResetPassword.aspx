@@ -21,7 +21,7 @@
                 <%= Html.LabelFor(model => model.Email) %>
             </div>
             <div class="editor-field">
-                <%= Html.TextBoxFor(model => model.Email) %>
+                <%= Html.TextBoxFor(model => model.Email, new { @class = "cw-field-large" })%>
                 <%= Html.ValidationMessageFor(model => model.Email) %>
             </div>
              <p>&nbsp;</p>

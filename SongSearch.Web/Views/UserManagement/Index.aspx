@@ -9,6 +9,7 @@
 
 	menu.Add("Manage Users", new string[4] { "Index", "UserManagement", "Admin", "current" });
 	menu.Add("Manage Catalogs", new string[4] { "Index", "CatalogManagement", "Admin", "" });
+	menu.Add("Catalog Upload", new string[4] { "Upload", "CatalogUpload", "Admin", "" });
 	menu.Add("Invite", new string[4] { "Invite", "UserManagement", "Admin", "" });
 
 	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);

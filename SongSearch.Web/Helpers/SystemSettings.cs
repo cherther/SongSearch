@@ -37,8 +37,9 @@ namespace SongSearch.Web {
 	// **************************************
 	public enum Settings {
 		BaseUrl = 1,
-		AssetPathFullSong,
-		AssetPathPreview,
+		MediaPathFullSong,
+		MediaPathPreview,
+		MediaDefaultExtension,
 		ZipPath,
 		ZipFormat,
 		ZipUserFormat,

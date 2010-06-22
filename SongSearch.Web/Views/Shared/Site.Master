@@ -23,7 +23,7 @@
 		.Render("~/public/css/cw-combined_#.css")
 	%>
 
-	<title>Ford Music SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<title>SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>
@@ -47,7 +47,7 @@
 	<table width="100%" style="border-collapse:collapse; padding:0px; margin:0px;">
 	<tr>
 		<td align="left">
-			<h1><a href="/" class="cw-logo">Ford Music <span>SongSearch</span></a></h1>
+			<h1><a href="/" class="cw-logo">SongSearch</a></h1>
 			<h3>Your professional music licensing resource</h3>
 		</td>
 		<td align="right">

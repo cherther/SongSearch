@@ -75,14 +75,21 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public void DeleteCatalog(int catalogId) {
 
-			DataSession.Delete<Catalog>(c => c.CatalogId == catalogId);
+			var catalog = DataSession.Single<Catalog>(c => c.CatalogId == catalogId);
 
-			/* delete orphaned
-			 *  - Content (db cascade?)
-			 *  - UserCatalogRoles (db cascade?)
-			 *  - Cart Contents
-			 *  - MP3s
-			 */
+			var contents = catalog.Contents.ToList();
+			foreach (var content in contents) {
+
+				Files.SafeDelete(content.MediaFilePath(MediaVersion.Preview), true);
+				Files.SafeDelete(content.MediaFilePath(MediaVersion.FullSong), true);
+
+				DataSession.Delete<Content>(content);
+
+			}
+
+			DataSession.Delete<Catalog>(catalog);
+			DataSession.CommitChanges();
+
 		}
 
 		// ----------------------------------------------------------------------------

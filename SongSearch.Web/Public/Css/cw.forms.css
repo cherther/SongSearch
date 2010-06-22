@@ -1,5 +1,6 @@
-﻿input 
+﻿input, select
 {
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
 }
 .text-box 
 {
@@ -25,4 +26,26 @@
     /*text-indent: -9999999px;
     position: absolute;*/
     display: none;
+}
+.cw-field-xlarge
+{
+    width: 300px;
+}
+.cw-field-large
+{
+    width: 220px;
+}
+
+.cw-field-medium
+{
+    width: 120px;
+}
+
+.cw-field-small
+{
+    width: 45px;
+}
+.cw-field-xsmall
+{
+    width: 30px;
 }

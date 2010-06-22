@@ -180,7 +180,7 @@
     <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
     <Compile Include="Infrastructure\Storage\EF\DataSessionReadOnlyEF.cs" />
     <Compile Include="Infrastructure\Storage\EF\SongSearchDataSession.cs" />
-    <Compile Include="Infrastructure\Storage\File.cs" />
+    <Compile Include="Infrastructure\Storage\Files.cs" />
     <Compile Include="MediaController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
