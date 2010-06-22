@@ -68,7 +68,8 @@
 					item.Artist.Length > artistLength ? String.Concat(item.Artist.Substring(0, artistLength), "...")
 					: item.Artist
 					: "(N/A)").ToUpper();
-		    var artistUrl = String.Concat(Url.Action(MVC.Search.Results()), "?f[0].P=1&f[0].T=1&f[0].V=&f[1].P=2&f[1].T=1&f[1].V=", item.Artist, "*");
+		    var artistUrl = String.Concat(Url.Action(MVC.Search.Results()), "?f[0].P=2&f[0].T=1&f[0].V=", item.Artist, "*");
+				
 			var cartState = item.IsInMyActiveCart ? @"checked=checked disabled=disabled" : @"class=add-to-cart-checkbox";
 		%>
 		<tr class="cw-tbl-data">

@@ -46,7 +46,7 @@
 		<%}%>
 
 	<%} else {%>
-	 <p>&nbsp;</p><p>Your Song Cart is empty.</p>
+	<p>&nbsp;</p><p>Your Song Cart is empty.</p>
 	<p>&nbsp;</p>
 	<p>To put something in your Song Cart, start by <%: Html.ActionLink("searching", MVC.Search.Index()) %> our database. 
 	When you find a song you like, click the <em>Add to Cart</em> button.</p>
@@ -55,10 +55,8 @@
 	</div>
 	<%if (processingCarts != null && processingCarts.Count() > 0) { %>
 	<div>&nbsp;</div>
-	<hr />
-	<div>&nbsp;</div>
 	<div class="cw-outl cw-carts">
-		  <h3>Processing</h3>
+		  <h3><em>Processing</em></h3>
 		  <p>We're currently compressing and creating a zip file with the song files in your cart. Once this is complete, we'll move the finished zip file to the Zipped Song Carts section below.</p>
 		  <p>&nbsp;</p>
 		  <p>Please check back in a couple of minutes or <%: Html.ActionLink("refresh", MVC.Cart.Index()) %> this page.</p>
@@ -67,10 +65,6 @@
 		  <% Html.RenderPartial(MVC.Cart.Views.ctrlCartTable, processingCarts); %>
 	</div>
 	<%} %>
-
-
-	<div>&nbsp;</div>
-	<hr />
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-carts">
 		  <h3>(2) Zipped Song Carts</h3>

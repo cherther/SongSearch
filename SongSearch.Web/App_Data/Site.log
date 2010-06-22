@@ -45362,3 +45362,652 @@ Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance
    at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
 TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
 06/22/2010 13:34:07: App is shutting down
+06/22/2010 14:05:28: 
+Error in Path :/public/img/transp50.png
+Raw Url :/public/img/transp50.png
+Message :The controller for path '/public/img/transp50.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:05:29: 
+Error in Path :/public/img/buttons.png
+Raw Url :/public/img/buttons.png
+Message :The controller for path '/public/img/buttons.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:05:29: 
+Error in Path :/public/img/buttons-disabled.png
+Raw Url :/public/img/buttons-disabled.png
+Message :The controller for path '/public/img/buttons-disabled.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:05:30: 
+Error in Path :/public/img/backgrounds.gif
+Raw Url :/public/img/backgrounds.gif
+Message :The controller for path '/public/img/backgrounds.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:06:22: 
+Error in Path :/public/img/delete.gif
+Raw Url :/public/img/delete.gif
+Message :The controller for path '/public/img/delete.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:06:24: 
+Error in Path :/public/img/done.gif
+Raw Url :/public/img/done.gif
+Message :The controller for path '/public/img/done.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:06:25: 
+Error in Path :/public/img/transp50.png
+Raw Url :/public/img/transp50.png
+Message :The controller for path '/public/img/transp50.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:06:25: 
+Error in Path :/public/img/buttons-disabled.png
+Raw Url :/public/img/buttons-disabled.png
+Message :The controller for path '/public/img/buttons-disabled.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:06:26: 
+Error in Path :/public/img/buttons.png
+Raw Url :/public/img/buttons.png
+Message :The controller for path '/public/img/buttons.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:06:26: 
+Error in Path :/public/img/backgrounds.gif
+Raw Url :/public/img/backgrounds.gif
+Message :The controller for path '/public/img/backgrounds.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:06:38: 
+Error in Path :/public/img/delete.gif
+Raw Url :/public/img/delete.gif
+Message :The controller for path '/public/img/delete.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:06:39: 
+Error in Path :/public/img/done.gif
+Raw Url :/public/img/done.gif
+Message :The controller for path '/public/img/done.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 14:07:19: App is shutting down
+06/22/2010 15:09:57: 
+Error in Path :/public/img/backgrounds.gif
+Raw Url :/public/img/backgrounds.gif
+Message :The controller for path '/public/img/backgrounds.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:09:57: 
+Error in Path :/public/img/transp50.png
+Raw Url :/public/img/transp50.png
+Message :The controller for path '/public/img/transp50.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:09:57: 
+Error in Path :/public/img/buttons.png
+Raw Url :/public/img/buttons.png
+Message :The controller for path '/public/img/buttons.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:09:58: 
+Error in Path :/public/img/buttons-disabled.png
+Raw Url :/public/img/buttons-disabled.png
+Message :The controller for path '/public/img/buttons-disabled.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:10:04: 
+Error in Path :/public/img/delete.gif
+Raw Url :/public/img/delete.gif
+Message :The controller for path '/public/img/delete.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:10:09: 
+Error in Path :/public/img/buttons-disabled.png
+Raw Url :/public/img/buttons-disabled.png
+Message :The controller for path '/public/img/buttons-disabled.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:11:57: App is shutting down
+06/22/2010 15:12:42: 
+Error in Path :/public/img/transp50.png
+Raw Url :/public/img/transp50.png
+Message :The controller for path '/public/img/transp50.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:12:43: 
+Error in Path :/public/img/buttons-disabled.png
+Raw Url :/public/img/buttons-disabled.png
+Message :The controller for path '/public/img/buttons-disabled.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:12:43: 
+Error in Path :/public/img/buttons.png
+Raw Url :/public/img/buttons.png
+Message :The controller for path '/public/img/buttons.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:12:43: 
+Error in Path :/public/img/backgrounds.gif
+Raw Url :/public/img/backgrounds.gif
+Message :The controller for path '/public/img/backgrounds.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:13:01: 
+Error in Path :/CatalogUpload/Upload
+Raw Url :/CatalogUpload/Upload
+Message :Value cannot be null.
+Parameter name: source
+Source :System.Core
+Stack Trace :   at System.Linq.Enumerable.Distinct[TSource](IEnumerable`1 source)
+   at SongSearch.Web.Services.CatalogUploadService.AddSongFiles(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 177
+   at SongSearch.Web.Services.WorkflowStep`1.Process(T state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\WorkflowEngine.cs:line 68
+   at SongSearch.Web.Services.CatalogUploadService.RunNextStep(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 84
+   at SongSearch.Web.Controllers.CatalogUploadController.Upload(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Controllers\CatalogUploadController.cs:line 81
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<InvokeActionMethodWithFilters>b__a()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<>c__DisplayClassf.<InvokeActionMethodWithFilters>b__c()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Collections.Generic.IEnumerable`1[TSource] Distinct[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+06/22/2010 15:13:28: 
+Error in Path :/public/img/transp50.png
+Raw Url :/public/img/transp50.png
+Message :The controller for path '/public/img/transp50.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:13:28: 
+Error in Path :/public/img/buttons-disabled.png
+Raw Url :/public/img/buttons-disabled.png
+Message :The controller for path '/public/img/buttons-disabled.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:13:29: 
+Error in Path :/public/img/buttons.png
+Raw Url :/public/img/buttons.png
+Message :The controller for path '/public/img/buttons.png' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:13:29: 
+Error in Path :/public/img/backgrounds.gif
+Raw Url :/public/img/backgrounds.gif
+Message :The controller for path '/public/img/backgrounds.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:13:38: 
+Error in Path :/public/img/delete.gif
+Raw Url :/public/img/delete.gif
+Message :The controller for path '/public/img/delete.gif' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/22/2010 15:33:33: 
+Error in Path :/CatalogUpload/Upload
+Raw Url :/CatalogUpload/Upload
+Message :Value cannot be null.
+Parameter name: source
+Source :System.Core
+Stack Trace :   at System.Linq.Enumerable.Distinct[TSource](IEnumerable`1 source)
+   at SongSearch.Web.Services.CatalogUploadService.AddSongFiles(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 177
+   at SongSearch.Web.Services.WorkflowStep`1.Process(T state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\WorkflowEngine.cs:line 68
+   at SongSearch.Web.Services.CatalogUploadService.RunNextStep(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 84
+   at SongSearch.Web.Controllers.CatalogUploadController.Upload(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Controllers\CatalogUploadController.cs:line 81
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<InvokeActionMethodWithFilters>b__a()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<>c__DisplayClassf.<InvokeActionMethodWithFilters>b__c()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Collections.Generic.IEnumerable`1[TSource] Distinct[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+06/22/2010 15:33:43: 
+Error in Path :/CatalogUpload/Upload
+Raw Url :/CatalogUpload/Upload
+Message :Value cannot be null.
+Parameter name: source
+Source :System.Core
+Stack Trace :   at System.Linq.Enumerable.Distinct[TSource](IEnumerable`1 source)
+   at SongSearch.Web.Services.CatalogUploadService.AddSongFiles(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 177
+   at SongSearch.Web.Services.WorkflowStep`1.Process(T state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\WorkflowEngine.cs:line 68
+   at SongSearch.Web.Services.CatalogUploadService.RunNextStep(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 84
+   at SongSearch.Web.Controllers.CatalogUploadController.Upload(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Controllers\CatalogUploadController.cs:line 81
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<InvokeActionMethodWithFilters>b__a()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<>c__DisplayClassf.<InvokeActionMethodWithFilters>b__c()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Collections.Generic.IEnumerable`1[TSource] Distinct[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+06/22/2010 15:35:14: 
+Error in Path :/CatalogUpload/Upload
+Raw Url :/CatalogUpload/Upload
+Message :Value cannot be null.
+Parameter name: source
+Source :System.Core
+Stack Trace :   at System.Linq.Enumerable.Distinct[TSource](IEnumerable`1 source)
+   at SongSearch.Web.Services.CatalogUploadService.AddSongFiles(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 177
+   at SongSearch.Web.Services.WorkflowStep`1.Process(T state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\WorkflowEngine.cs:line 68
+   at SongSearch.Web.Services.CatalogUploadService.RunNextStep(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 84
+   at SongSearch.Web.Controllers.CatalogUploadController.Upload(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Controllers\CatalogUploadController.cs:line 81
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<InvokeActionMethodWithFilters>b__a()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<>c__DisplayClassf.<InvokeActionMethodWithFilters>b__c()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Collections.Generic.IEnumerable`1[TSource] Distinct[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+06/22/2010 15:35:59: 
+Error in Path :/CatalogUpload/Upload
+Raw Url :/CatalogUpload/Upload
+Message :Value cannot be null.
+Parameter name: source
+Source :System.Core
+Stack Trace :   at System.Linq.Enumerable.Distinct[TSource](IEnumerable`1 source)
+   at SongSearch.Web.Services.CatalogUploadService.AddSongFiles(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 177
+   at SongSearch.Web.Services.WorkflowStep`1.Process(T state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\WorkflowEngine.cs:line 68
+   at SongSearch.Web.Services.CatalogUploadService.RunNextStep(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 84
+   at SongSearch.Web.Controllers.CatalogUploadController.Upload(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Controllers\CatalogUploadController.cs:line 81
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<InvokeActionMethodWithFilters>b__a()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<>c__DisplayClassf.<InvokeActionMethodWithFilters>b__c()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Collections.Generic.IEnumerable`1[TSource] Distinct[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+06/22/2010 15:45:24: 
+Error in Path :/CatalogUpload/Upload
+Raw Url :/CatalogUpload/Upload
+Message :Value cannot be null.
+Parameter name: source
+Source :System.Core
+Stack Trace :   at System.Linq.Enumerable.Distinct[TSource](IEnumerable`1 source)
+   at SongSearch.Web.Services.CatalogUploadService.AddSongPreviews(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 195
+   at SongSearch.Web.Services.WorkflowStep`1.Process(T state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\WorkflowEngine.cs:line 68
+   at SongSearch.Web.Services.CatalogUploadService.RunNextStep(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 84
+   at SongSearch.Web.Controllers.CatalogUploadController.Upload(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Controllers\CatalogUploadController.cs:line 81
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<InvokeActionMethodWithFilters>b__a()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<>c__DisplayClassf.<InvokeActionMethodWithFilters>b__c()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Collections.Generic.IEnumerable`1[TSource] Distinct[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+06/22/2010 15:46:47: App is shutting down
+06/22/2010 15:48:25: 
+Error in Path :/public/images/jquery-ui/ui-anim_basic_16x16.gif
+Raw Url :/public/images/jquery-ui/ui-anim_basic_16x16.gif
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+06/22/2010 15:52:34: 
+Error in Path :/public/images/jquery-ui/ui-anim_basic_16x16.gif
+Raw Url :/public/images/jquery-ui/ui-anim_basic_16x16.gif
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+06/22/2010 16:12:19: 7902 is missing.
+06/22/2010 16:12:20: 29716 is missing.
+06/22/2010 16:12:20: 29925 is missing.
+06/22/2010 16:14:18: 
+Error in Path :/public/images/jquery-ui/ui-anim_basic_16x16.gif
+Raw Url :/public/images/jquery-ui/ui-anim_basic_16x16.gif
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+06/22/2010 16:15:48: App is shutting down

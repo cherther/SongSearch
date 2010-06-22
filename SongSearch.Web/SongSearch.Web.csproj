@@ -266,6 +266,12 @@
     <Content Include="Public\Flash\plupload.silverlight.xap" />
     <Content Include="Public\Flash\soundmanager2.swf" />
     <Content Include="Public\Flash\soundmanager2_flash9.swf" />
+    <Content Include="Public\Images\backgrounds.gif" />
+    <Content Include="Public\Images\buttons-disabled.png" />
+    <Content Include="Public\Images\buttons.png" />
+    <Content Include="Public\Images\delete.gif" />
+    <Content Include="Public\Images\done.gif" />
+    <Content Include="Public\Images\error.gif" />
     <Content Include="Public\Images\Icons\arrow.gif" />
     <Content Include="Public\Images\Icons\Silk\accept.png" />
     <Content Include="Public\Images\Icons\Silk\add.png" />
@@ -1759,6 +1765,8 @@
     <Content Include="Public\Images\skins\yellow\button_left.png" />
     <Content Include="Public\Images\skins\yellow\button_right.gif" />
     <Content Include="Public\Images\skins\yellow\button_right.png" />
+    <Content Include="Public\Images\throbber.gif" />
+    <Content Include="Public\Images\transp50.png" />
     <Content Include="Scripts\cw.app.main.js" />
     <Content Include="Scripts\cw.app.events.js" />
     <Content Include="Scripts\cw.app.ajax.js" />

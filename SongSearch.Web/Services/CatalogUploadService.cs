@@ -192,13 +192,20 @@ namespace SongSearch.Web.Services {
 		private CatalogUploadState AddSongPreviews(CatalogUploadState state) {
 			System.Diagnostics.Debug.Write("Step3");
 //			state.UploadFiles = MoveToMediaVersionFolder(state.TempFiles.Distinct().ToList(), state.MediaVersion);
-			var uploadFiles = MoveToMediaVersionFolder(state.TempFiles.Distinct().ToList(), state.MediaVersion);
-			uploadFiles = state.UploadFiles != null ?
-				(uploadFiles != null ?
-					uploadFiles.Union(state.UploadFiles).ToList()
-					: state.UploadFiles)
-				: uploadFiles;
-			state.UploadFiles = uploadFiles;
+			if (state.TempFiles != null && state.TempFiles.Count() > 0) {
+				
+				var uploadFiles = MoveToMediaVersionFolder(state.TempFiles.Distinct().ToList(), state.MediaVersion);
+				
+				//Attach previews
+				uploadFiles = state.UploadFiles != null ?
+					(uploadFiles != null ?
+						uploadFiles.Union(state.UploadFiles).ToList()
+						: state.UploadFiles)
+					: uploadFiles;
+
+				state.UploadFiles = uploadFiles;
+			}
+
 			IList<Content> content = new List<Content>();
 
 			var contentFiles = state.UploadFiles.Select(f => f.FileName).Distinct().ToList();
@@ -215,18 +222,18 @@ namespace SongSearch.Web.Services {
 				var full = files.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.FullSong);
 				var preview = files.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Preview);
 
-				content.Add(new Content() { 
-					Title = title, 
+				content.Add(new Content() {
+					Title = title,
 					Artist = artist,
 					ReleaseYear = releaseYear.AsNullIfZero(),
-					HasMediaFullVersion = full != null, 
+					HasMediaFullVersion = full != null,
 					HasMediaPreviewVersion = preview != null,
 					UploadFiles = files
 				});
 			}
 
 			state.Content = content;
-
+			
 			return state;
 		}
 

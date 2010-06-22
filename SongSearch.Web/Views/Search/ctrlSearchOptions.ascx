@@ -13,10 +13,12 @@
 		  var searchMenuProperties = Model.SearchMenuProperties;
 		  var searchFields = Model.SearchFields;
 		  //var lastGroup = "";
-		  var i = 0;
+		  //var i = 0;
 		%>
 		<%foreach (var prop in searchMenuProperties) { %>
 		<%
+			var i = searchMenuProperties.IndexOf(prop);
+		
 			var item = prop;
 			//var i = searchMenuProperties.IndexOf(item); 
 			var isGroup = item.SearchGroup != null;		
@@ -25,7 +27,7 @@
 			var searchType = (SearchTypes) item.SearchTypeId;
 			var searchField = searchFields != null ? searchFields.SingleOrDefault(f => f.P == item.PropertyId) : null;
 			var value = searchField != null ? searchField.V : new string[] { "", "" };
-			  
+			var valueClass = ""; 
 			  
 			  %>
 			<li>
@@ -38,10 +40,12 @@
 			<%switch (searchType) {%>
 				<%case SearchTypes.Contains: {%>
 				<%
-					 var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
+					 valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
 					 valueClass = String.Concat(valueClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
+					
 				%>
-				<%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyName.ToLower() })%>
+				<input type="text" name="<%: String.Format("f[{0}].V", i)%>" value="<%: value.First() %>" class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" />
+
 				<%break;%>
 				<%} %>
 				<%--<%case SearchTypes.Join: {%>
@@ -54,10 +58,12 @@
 				<%case SearchTypes.Range: {%>
 				<%
 					var value1 = value.First();
-					var value2 = value.Last();      
+					var value2 = value.Last();
+					var valueClass1 = !String.IsNullOrWhiteSpace(value1) ? "cw-form-value cw-input-highlight" : "cw-form-value";
+					var valueClass2 = !String.IsNullOrWhiteSpace(value2) ? "cw-form-value cw-input-highlight" : "cw-form-value";   
 				%>
-				<%: Html.TextBox(String.Format("f[{0}].V[0]", i), value1, new { size = 5, @class = !String.IsNullOrWhiteSpace(value1) ? "cw-form-value cw-input-highlight" : "cw-form-value" })%>&nbsp;to&nbsp;
-				<%: Html.TextBox(String.Format("f[{0}].V[1]", i), value2, new { size = 5, @class = !String.IsNullOrWhiteSpace(value2) ? "cw-form-value cw-input-highlight" : "cw-form-value" })%>
+				<input type="text" name="<%: String.Format("f[{0}].V[0]", i)%>" value="<%: value1 %>" size = 5 class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" />&nbsp;to&nbsp;
+				<input type="text" name="<%: String.Format("f[{0}].V[1]", i)%>" value="<%: value2 %>" size = 5 class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" />
 				<%break;%>
 				<%} %>
 				<%case SearchTypes.HasValue: {%>
@@ -102,7 +108,7 @@
 				<%} %>
 				<%case SearchTypes.TagText: {%>
 				<%
-					 var valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
+					 valueClass = item.IsCacheable ? "cw-autocomplete" : ""; // String.Concat("cw-autocomplete-", item.PropertyCode.ToLower());
 					 valueClass = String.Concat(valueClass, " ", "cw-form-value", !String.IsNullOrWhiteSpace(value.First()) ? " cw-input-highlight" : "");
 				%>
 				<%: Html.TextBox(String.Format("f[{0}].V", i), value.First(), new { @class = valueClass, alt = item.PropertyName.ToLower() })%>
@@ -111,7 +117,7 @@
 			<%}%>
 			</div>
 		</li>
-		<% i++; %>
+		<% //i++; %>
 		<%} %>
 	   
 		<%--<li>

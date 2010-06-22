@@ -2,6 +2,11 @@
 <%: Html.Hidden("state.CatalogId", Model.CatalogUploadState.CatalogId) %>
 <%: Html.Hidden("state.CatalogName", Model.CatalogUploadState.CatalogName)%>
 
+<div>
+We have tried to automatically populate a few fields for you based on the file name.
+</div>
+<div>&nbsp;</div>
+
 <%if (Model.CatalogUploadState.Content != null){ %>
 <table width="100%">
 	<tr>

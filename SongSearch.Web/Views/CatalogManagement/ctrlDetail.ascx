@@ -1,32 +1,21 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogViewModel>" %>
 <%
-    var catalog = Model.MyCatalogs.First();
+	var catalog = Model.MyCatalogs.First();
 	var users = Model.Users;// != null ? Model.Users.OrderBy(x => x.FullName()) : null;
-    var roleClasses = new string[] { "cw-black", "cw-orange", "cw-green", "cw-purple", "cw-blue" };
-    var catalogDetailUrl = Request.Url;//String.Concat(Url.Content("/"), Url.Action("Detail", new { id = user.UserId }));
+	var roleClasses = new string[] { "cw-black", "cw-orange", "cw-green", "cw-purple", "cw-blue" };
+	var catalogDetailUrl = Request.Url;//String.Concat(Url.Content("/"), Url.Action("Detail", new { id = user.UserId }));
+	
+	var catalogSearchUrl = String.Concat(Url.Action(MVC.Search.Results()), @"?f[0].P=16&f[0].T=1&f[0].V=", catalog.CatalogName);
 %>
 <div>
-    Catalog: <strong><%= catalog.CatalogName %></strong>
+	Catalog: <strong><%= catalog.CatalogName %></strong>
 </div>
 
 <%=Html.Hidden("catalogid", catalog.CatalogId)%>
-<%--<div>&nbsp;</div>
+<div>&nbsp;</div>
 <hr />
 <div>&nbsp;</div>
-<%--f%5B14%5D.P=16
-f%5B14%5D.T=1
-f%5B14%5D.V=_CLAUSTEST--%>
-<%--<%
-	var catSearch = new SearchField()
-	{
-		P = 16,
-		T = SearchTypes.Contains,
-		V = new string[] { String.Format(@"""{0}""", catalog.CatalogName) }
-	};
-	
-	%>
-View Contents: <a href="/Search/Results?f[0].P=<%: catSearch.P %>&f[0].T=<%: (int)catSearch.T %>&f[0].V=<%: catSearch.V.First() %>">
-<%: String.Format("{0} song(s)", catalog.Contents.Count())%></a>--%>
+View Contents: <a href="<%: catalogSearchUrl%>"><%: String.Format("{0} song(s)", catalog.Contents.Count())%></a>
 <div>&nbsp;</div>
 <hr />
 <div>&nbsp;</div>
@@ -34,49 +23,49 @@ View Contents: <a href="/Search/Results?f[0].P=<%: catSearch.P %>&f[0].T=<%: (in
 <div>&nbsp;</div>
 <div style="overflow:auto ; height: 400px; width: 500px">
 		<table id="catalog-list" class="">
-            <tr>
-                <td>
-                Set Role for All Users:
-                </td>
-                <td>
-                <%
+			<tr>
+				<td>
+				Set Role for All Users:
+				</td>
+				<td>
+				<%
 											  foreach (var role in Model.CatalogRoles) {
 												  string roleName = ((SongSearch.Web.Roles)role).ToString();
 												  string roleClass = "cw-tag-box cw-cat-role-edit-all cw-button cw-simple cw-small"; 
 						
-				        %>
-                        <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllUsers(catalog.CatalogId, role), new { @class = roleClass, rel = catalogDetailUrl })%>
-			        <%} %>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                &nbsp;
-                </td>
-                <td>
-                    <hr />
-                </td>
-            </tr>
+						%>
+						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllUsers(catalog.CatalogId, role), new { @class = roleClass, rel = catalogDetailUrl })%>
+					<%} %>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				&nbsp;
+				</td>
+				<td>
+					<hr />
+				</td>
+			</tr>
 			 <% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlUserList, Model); %>   
 		</table>
 </div>
 
 
 <%if (Model.AllowEdit) { %>
-    <div>&nbsp;</div>
-    <%using (Html.BeginForm(MVC.CatalogManagement.Delete(), FormMethod.Post)) { %>
-    <%= Html.Hidden("id", catalog.CatalogId)%>
-    <%= Html.AntiForgeryToken()%>
-    <div class="cw-outl cw-padded" >
-	    <label><em>Delete Catalog</em></label>
-	    <div>&nbsp;</div>
-	    <div style="text-align: center">
-            Note: By deleting this catalog, you are deleting all associated song mp3 files and metadata. You will NOT be able to recover this catalog.
-	        <div>&nbsp;</div>
-            <button type="submit" class="cw-button cw-simple cw-small cw-red"><span class="b-delete">Delete Catalog?</span></button>
-	        <div>&nbsp;</div>
-	    </div>
-    </div>
-    <%} %>
-    
+	<div>&nbsp;</div>
+	<%using (Html.BeginForm(MVC.CatalogManagement.Delete(), FormMethod.Post)) { %>
+	<%= Html.Hidden("id", catalog.CatalogId)%>
+	<%= Html.AntiForgeryToken()%>
+	<div class="cw-outl cw-padded" >
+		<label><em>Delete Catalog</em></label>
+		<div>&nbsp;</div>
+		<div style="text-align: center">
+			Note: By deleting this catalog, you are deleting all associated song mp3 files and metadata. You will NOT be able to recover this catalog.
+			<div>&nbsp;</div>
+			<button type="submit" class="cw-button cw-simple cw-small cw-red"><span class="b-delete">Delete Catalog?</span></button>
+			<div>&nbsp;</div>
+		</div>
+	</div>
+	<%} %>
+	
 <%} %>

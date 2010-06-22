@@ -48,7 +48,7 @@
 		--%>	
 		<div>&nbsp;</div>
 			<div>
-				<input type="submit" value="<%: Model.StepActionName %>" />
+				<input type="submit" id="stepAction" value="<%: Model.StepActionName %>" />
 			</div>
 			<%} %>
 			<div>&nbsp;</div>
