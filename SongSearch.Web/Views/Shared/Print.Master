@@ -4,47 +4,61 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <meta name="robots" content="noindex, nofollow" />
-    <meta name="author" content="Ford Music Services" /> 
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-    <%= Bundle.Css()
-        .Add("~/public/css/cw.app.css")
-        .Add("~/public/css/cw.buttons.css")
-        .Add("~/public/css/cw.forms.css")
-        .Add("~/public/css/cw.tables.css")
-        //.ForceRelease()
-        .WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="author" content="Ford Music Services" /> 
+	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+	 <!--[if lt IE 8]><link rel="stylesheet" href=""~/public/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
+	<%= Bundle.Css()
+				.Add("~/public/css/fluid.gs.css")
+				.Add("~/public/css/cw.app.css")
+		.Add("~/public/css/cw.buttons.css")
+		.Add("~/public/css/cw.forms.css")
+		.Add("~/public/css/cw.tables.css")
+		//.ForceRelease()
+			//.WithMedia("print")
+		.WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
 				.Render("~/public/css/cw-print_#.css")
-    %>
+	%>
 
-    <title>Ford Music SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
-    <asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+	<title>SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>
 	<%if (App.Environment == AppEnvironment.Production) { %>
-    <script type="text/javascript">
+	<script type="text/javascript">
 
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-12019666-3']);
-        _gaq.push(['_trackPageview']);
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-12019666-3']);
+		_gaq.push(['_trackPageview']);
 
-        (function () {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
+		(function () {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
 
-    </script>
-    <%} %>
-	<div class="cw-outl cw-padded">
-		<h1><a href="/" class="cw-logo">Ford Music <span>SongSearch</span></a></h1>
-		<h3>Your professional music licensing resource</h3>
-	</div>
-    <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-	<div>
-	&copy; <%=DateTime.Now.Year %> Ford Music Services
-	</div>
+	</script>
+	<%} %>
+	<div class="fluid_grid_layout"> 
+
+		 <div class="six_column section">
+			<div class="six column">
+				<% Html.RenderPartial(MVC.Shared.Views.ctrlHeader); %>
+			</div> 
+		 </div>
+		 <div class="six_column section">
+			<div class="six column">
+				<div>&nbsp;</div>
+				<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+			</div> 
+		 </div>
+		 <div class="six_column section">
+			<div class="six column">
+				<% Html.RenderPartial(MVC.Shared.Views.ctrlFooter); %>
+			</div> 
+		 </div>
+	 </div>
 
 	<%= Bundle.JavaScript()
 	.Add(Links.Scripts.jquery_1_4_2_min_js).WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)

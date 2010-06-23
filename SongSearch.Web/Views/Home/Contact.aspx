@@ -5,79 +5,71 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
-	<table width="90%">
-	<tr>
-		<th class="text-left" width="50%"><%: Model.PageTitle %></th>
-		<th class="text-left" width="50%">Contact Information:</th>
-	</tr>
-	<tr>
-		<td>
-			<%if (!String.IsNullOrWhiteSpace(Model.PageMessage)) {%>
-				<div>&nbsp;</div>
-				<div>&nbsp;</div>
-				<p><%: Model.PageMessage %></p>
-				<div>&nbsp;</div>
-				<div>&nbsp;</div>
-			<%} else { %>
-			<% using (Html.BeginForm()) { %>
-				
-				<%=Html.AntiForgeryToken() %>
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+	<h2>Contact Us</h2>
+	<div>&nbsp;</div>
 
-				<table width="100%">
-				<tr>
-					<td class="text-top"><%: Html.LabelFor(m => m.Name) %></td>
-					<td class="text-top"><%: Html.TextBoxFor(m => m.Name, new { @class = "cw-field-large" })%><div><%= Html.ValidationMessageFor(m => m.Name)%></div></td>
-				</tr>
-				<tr>
-					<td class="text-top"><%: Html.LabelFor(m => m.Email)%></td>
-					<td class="text-top"><%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%><div><%= Html.ValidationMessageFor(m => m.Email)%></div></td>
-				</tr>
-				<tr>
-					<td class="text-top"><%: Html.LabelFor(m => m.Company) %></td>
-					<td class="text-top"><%: Html.TextBoxFor(m => m.Company, new { @class = "cw-field-large" })%><div><%= Html.ValidationMessageFor(m => m.Company)%></div></td>
-				</tr>
-				<tr>
-					<td class="text-top"><%: Html.LabelFor(m => m.Subject) %></td>
-					<td class="text-top"><%: Html.TextBoxFor(m => m.Subject, new { @class = "cw-field-large" })%><div><%= Html.ValidationMessageFor(m => m.Subject)%></div></td>
-				</tr>
-				<tr>
-					<td class="text-top"><%: Html.LabelFor(m => m.Body) %></td>
-					<td class="text-top"><%: Html.TextAreaFor(m => m.Body, new { @class = "cw-field-large", rows = 8 })%><div><%= Html.ValidationMessageFor(m => m.Body)%></div></td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
+	<div class="six_column section">
+	
+	<div class="three column">
+				
+		<div class="cw-outl cw-padded cw-rounded-corners">
+			<h3><%: Model.PageTitle %></h3>
+			<div>&nbsp;</div>
+			<%if (!String.IsNullOrWhiteSpace(Model.PageMessage)) {%>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<p><%: Model.PageMessage %></p>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<%} else { %>
+			<% using (Html.BeginForm(MVC.Home.Contact(), FormMethod.Post)) { %>
+				<% Html.EnableClientValidation(); %>
+				<%: Html.AntiForgeryToken() %>
+				<fieldset>
+					<div>&nbsp;</div>
+					<div><%: Html.LabelFor(m => m.Name) %></div>
+					<div><%: Html.TextBoxFor(m => m.Name, new { @class = "cw-field-large" })%></div>
+					<div><%= Html.ValidationMessageFor(m => m.Name)%></div>
+					<div>&nbsp;</div>
+					<div><%: Html.LabelFor(m => m.Email) %></div>
+					<div><%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%></div>
+					<div><%= Html.ValidationMessageFor(m => m.Email)%></div>
+					<div>&nbsp;</div>
+					<div><%: Html.LabelFor(m => m.Company) %></div>
+					<div><%: Html.TextBoxFor(m => m.Company, new { @class = "cw-field-large" })%></div>
+					<div><%= Html.ValidationMessageFor(m => m.Company)%></div>
+					<div>&nbsp;</div>
+					<div><%: Html.LabelFor(m => m.Subject) %></div>
+					<div><%: Html.TextBoxFor(m => m.Subject, new { @class = "cw-field-xlarge" })%></div>
+					<div><%= Html.ValidationMessageFor(m => m.Subject)%></div>
+
+					<div>&nbsp;</div>
+					<div><%: Html.LabelFor(m => m.Body)%></div>
+					<div><%: Html.TextAreaFor(m => m.Body, new { @class = "cw-field-xlarge", rows = 8 })%></div>
+					<div><%= Html.ValidationMessageFor(m => m.Name)%></div>
+					<div>&nbsp;</div>
 					<button id="invite-send" type="submit" title="Send" class="cw-button cw-simple cw-blue">
 						<span class="b-email">Send</span>
 					</button>
-					</td>
-				</tr>
-				</table>
-
-				<%} %>
+				</fieldset>
+			<%} %>	
 			<%} %>
-		</td>
-		<td>
-		<div>
-			<p>
+			</div>
+		</div>
+		<div class="three column">
+
+			<div class="cw-outl cw-padded cw-buffered-left cw-rounded-corners">
+				<h3>Contact Information:</h3>
+				<div>&nbsp;</div>
 				Ford Music Services<br />
 				Office: (323) 939-2955<br />
 				Fax: (323) 939-2951<br />
 				E-Mail: artfordmusic@yahoo.com<br />
-			</p>
+			</div>
+
 		</div>
-		</td>
-	</tr>
-	</table>
-	
-	<div>&nbsp;</div>
-	<div>&nbsp;</div>
-	
-	<div>&nbsp;</div>
-	<div>&nbsp;</div>
-	<div>&nbsp;</div>
-	
+	</div>
 
 </div>
 </asp:Content>

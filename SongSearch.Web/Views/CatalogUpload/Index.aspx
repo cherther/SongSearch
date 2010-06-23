@@ -17,6 +17,6 @@
 %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 </div>
 </asp:Content>

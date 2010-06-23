@@ -17,7 +17,7 @@
 %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded  cw-rounded-corners-bottom">
 
 	<h2>Invite Sent</h2>
 	<%if (Model.Recipients.Count() > 0)

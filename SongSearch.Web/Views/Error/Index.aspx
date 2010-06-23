@@ -4,7 +4,7 @@
 </asp:Content>
 
 <asp:Content ID="errorContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div id="content" class = "cw-outl cw-padded">
+    <div id="content" class = "cw-outl cw-padded cw-rounded-corners">
     <h2>
         Oops! We're sorry, something bad happened while processing your request.
     </h2>

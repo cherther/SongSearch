@@ -13,7 +13,7 @@
 <link type="text/css" href="<%=baseUrl%>/public/css/cw.app.css" rel="stylesheet" media="screen" />
 </head>
 <body>
-<div id="content" class = "cw-outl">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
     <h3>Hello,</h3>
 
     <p>I'd like to invite you to register for <strong>Ford Music Services SongSearch System</strong>.</p>

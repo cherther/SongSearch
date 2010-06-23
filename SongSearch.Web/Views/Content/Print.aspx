@@ -1,7 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Print.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.ContentViewModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	Detail
+<% var content = Model.Content;%>
+'<%: content.Title%>' - <%: content.Artist%>
 </asp:Content>
 
 <asp:Content ID="Content5" ContentPlaceHolderID="Javascripts" runat="server">

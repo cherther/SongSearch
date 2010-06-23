@@ -17,18 +17,22 @@ Log In
 </asp:Content>
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
-		<h3>Log in</h3>
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+
+    <h2>Log in</h2>
+	<div>&nbsp;</div>
+	<div class="cw-outl cw-padded cw-rounded-corners">
 		<p>
 		Please enter your e-mail address and password. <%= Html.ActionLink("Register", MVC.Account.Register())%> if you don't have an account.
 		</p>
-	<%//= Html.ValidationSummary("Login was unsuccessful. Please correct the errors and try again.") %>
-	<% Html.EnableClientValidation(); %>
+	<div>&nbsp;</div>
+    <% Html.EnableClientValidation(); %>
 	<% using (Html.BeginForm(MVC.Account.LogIn(), FormMethod.Post, new { @class = "cw-form-small" }))
 	   { %><%=Html.AntiForgeryToken() %>
 			<fieldset>
 				
 				<legend>Account Information</legend>
+					<div>&nbsp;</div>
 					<div class="cw-fe-vert cw-fe-req">
 						<%= Html.LabelFor(m => m.Email) %>
 					</div>
@@ -36,7 +40,7 @@ Log In
 						<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%>
 						<%= Html.ValidationMessageFor(m => m.Email)%>
 					</div>
-					
+					<div>&nbsp;</div>
 					<div class="cw-fe-vert cw-fe-req">
 						<%= Html.LabelFor(m => m.Password) %>
 					</div>
@@ -44,21 +48,20 @@ Log In
 						<%= Html.PasswordFor(m => m.Password, new { @class = "cw-field-large" })%>
 						<%= Html.ValidationMessageFor(m => m.Password) %>
 					</div>
-					
+					<div>&nbsp;</div>
 					<div class="cw-fe-vert">
 						
 						<%= Html.CheckBox("RememberMe", Model.RememberMe) %> &nbsp<label for="RememberMe">Remember me?</label>
 					</div>
 					<%= Html.HiddenFor(m => m.ReturnUrl)%>
-					<p>
+					<div>&nbsp;</div>
 					<button type="submit" class="cw-button cw-simple cw-blue">
 					<span class="b-ok">Log in</span>
 					</button>
-					</p>
-					 <p>&nbsp;</p>
-					<p> <%= Html.ActionLink("Forgot your password?", MVC.Account.ResetPassword())%></p>
+					<div>&nbsp;</div>
+					<%= Html.ActionLink("Forgot your password?", MVC.Account.ResetPassword())%>
 			</fieldset>
 	<% } %>
-   
+   </div>
 </div>
 </asp:Content>

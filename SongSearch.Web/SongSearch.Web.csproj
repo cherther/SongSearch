@@ -261,6 +261,7 @@
     <Content Include="Public\Css\cw.tables.css" />
     <Content Include="Public\Css\cw.twitlogin.css" />
     <Content Include="Public\Css\cw.buttons.css" />
+    <Content Include="Public\Css\demo.css" />
     <Content Include="Public\Css\fluid.gs.css" />
     <Content Include="Public\Css\fluid.gs.lt_ie8.css" />
     <Content Include="Public\Css\jquery-ui.css" />
@@ -1832,6 +1833,8 @@
     <Content Include="Views\Search\ctrlPager.ascx" />
     <Content Include="Views\Content\Detail.aspx" />
     <Content Include="Views\Search\PrintResults.aspx" />
+    <Content Include="Views\Shared\ctrlHeader.ascx" />
+    <Content Include="Views\Shared\ctrlFooter.ascx" />
     <Content Include="Views\Shared\ctrlTerritoryCloud.ascx" />
     <Content Include="Views\Shared\ctrlMediaplayer.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />
@@ -1841,6 +1844,7 @@
     <Content Include="Views\Shared\ctrlLogIn.ascx" />
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
+    <Content Include="demo.html" />
     <Content Include="Views\Shared\DisplayTemplates\MultilineText.ascx" />
     <Content Include="Views\Shared\DisplayTemplates\_Object.ascx" />
     <Content Include="Views\Shared\EditorTemplates\MultilineText.ascx" />

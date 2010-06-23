@@ -12,68 +12,68 @@
 	</button>
 	</div>--%>
 <div id="cw-content-detail">
-<%if (isEditing) { %>
-	<%Html.BeginForm(MVC.Content.Save(), FormMethod.Post, new { id = "cw-content-editor" }); %>
+	<%if (isEditing) { %>
+		<%Html.BeginForm(MVC.Content.Save(), FormMethod.Post, new { id = "cw-content-editor" }); %>
 
-	<%: Html.HiddenFor(m => m.Content.ContentId)%>
-	<%: Html.HiddenFor(m => m.Content.CatalogId)%>
-	<%: Html.HiddenFor(m => m.Content.CreatedByUserId)%>
-	<%: Html.HiddenFor(m => m.Content.CreatedOn)%>
-	<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
-	<%: Html.HiddenFor(m => m.Content.LastUpdatedOn)%>
-	<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
-	<%: Html.HiddenFor(m => m.Content.HasMediaPreviewVersion)%>
-	<%: Html.HiddenFor(m => m.Content.HasMediaFullVersion)%>
-	<%: Html.AntiForgeryToken() %>
+		<%: Html.HiddenFor(m => m.Content.ContentId)%>
+		<%: Html.HiddenFor(m => m.Content.CatalogId)%>
+		<%: Html.HiddenFor(m => m.Content.CreatedByUserId)%>
+		<%: Html.HiddenFor(m => m.Content.CreatedOn)%>
+		<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
+		<%: Html.HiddenFor(m => m.Content.LastUpdatedOn)%>
+		<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
+		<%: Html.HiddenFor(m => m.Content.HasMediaPreviewVersion)%>
+		<%: Html.HiddenFor(m => m.Content.HasMediaFullVersion)%>
+		<%: Html.AntiForgeryToken() %>
 
-<%}%>
-<%if (Model.ViewMode == ViewModes.Normal | (Model.ViewMode == ViewModes.Embedded && Model.EditMode == EditModes.Viewing)) {%>
-	<div id="cw-media-player-panel">
-	<% Html.RenderPartial(MVC.Shared.Views.ctrlMediaplayer); %>
-	</div>
-	<hr />
-	<div id="cw-content-detail-menu">
-	<%if (content.HasMediaFullVersion) { %>
-	<%: Html.ActionLink("Download", MVC.Media.Download(content.ContentId), new { @class = menuButtonClass })%>
-	<%if(!content.IsInMyActiveCart){ %>
-	<%: Html.ActionLink("Add To Cart", MVC.Cart.Add(content.ContentId), new { @class = String.Concat(menuButtonClass, " cw-cart-add-link") })%>
-	<%} else { %>
-	<%: Html.ActionLink("In Cart", MVC.Cart.Index(), new { @class = menuButtonClass })%>
-	<%} %>
-	<%} %>
-	<%: Html.ActionLink("Print", MVC.Content.Print(content.ContentId), new { @class = menuButtonClass, target = "_new" })%>
-	<%if (Model.UserCanEdit) { %>
-	<%	
-		var linkClass = String.Concat(menuButtonClass, " cw-content-edit-link");
-		var linkAction = Model.EditMode == EditModes.Viewing ? "Edit" : "Save";
-	%>
-		<% if (Model.ViewMode == ViewModes.Embedded || Model.EditMode == EditModes.Viewing) {%>
-		<%: Html.ActionLink(linkAction, linkAction, "Content", new { id = content.ContentId }, new { rel = linkAction, @class = linkClass })%>
+	<%}%>
+	<%if (Model.ViewMode == ViewModes.Normal | (Model.ViewMode == ViewModes.Embedded && Model.EditMode == EditModes.Viewing)) {%>
+		<div id="cw-media-player-panel">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlMediaplayer); %>
+		</div>
+		<hr />
+		<div id="cw-content-detail-menu">
+		<%if (content.HasMediaFullVersion) { %>
+		<%: Html.ActionLink("Download", MVC.Media.Download(content.ContentId), new { @class = menuButtonClass })%>
+		<%if(!content.IsInMyActiveCart){ %>
+		<%: Html.ActionLink("Add To Cart", MVC.Cart.Add(content.ContentId), new { @class = String.Concat(menuButtonClass, " cw-cart-add-link") })%>
 		<%} else { %>
-		<button type="submit" class="<%: menuButtonClass %>"><%: linkAction %></button>
-		<%}%> 
-	<%} %>
-	</div>
-	<hr />
-<%}%>
+		<%: Html.ActionLink("In Cart", MVC.Cart.Index(), new { @class = menuButtonClass })%>
+		<%} %>
+		<%} %>
+		<%: Html.ActionLink("Print", MVC.Content.Print(content.ContentId), new { @class = menuButtonClass, target = "_new" })%>
+		<%if (Model.UserCanEdit) { %>
+		<%	
+			var linkClass = String.Concat(menuButtonClass, " cw-content-edit-link");
+			var linkAction = Model.EditMode == EditModes.Viewing ? "Edit" : "Save";
+		%>
+			<% if (Model.ViewMode == ViewModes.Embedded || Model.EditMode == EditModes.Viewing) {%>
+			<%: Html.ActionLink(linkAction, linkAction, "Content", new { id = content.ContentId }, new { rel = linkAction, @class = linkClass })%>
+			<%} else { %>
+			<button type="submit" class="<%: menuButtonClass %>"><%: linkAction %></button>
+			<%}%> 
+		<%} %>
+		</div>
+		<hr />
+	<%}%>
 
 	<div id="cw-content-detail-data">
 
 	<div id="cw-content-detail-tabs">
-<%if (Model.ViewMode == ViewModes.Print) {%>
-	<h3><%: content.Title%> by <%: content.Artist%></h3>
-	<div>&nbsp;</div>
-<%} else {%>
-	<ul>
-		<li><a href="#tabs-1">Overview</a></li>
-		<li><a href="#tabs-2">Lyrics</a></li>
-		<li><a href="#tabs-3">Tags</a></li>
-		<%if (Model.SectionsAllowed.Contains("Rights")) { %>
-		<li><a href="#tabs-4">Rights</a></li>
+		<%if (Model.ViewMode == ViewModes.Print) {%>
+			<h2>'<%: content.Title%>' - <%: content.Artist%></h2>
+			<div>&nbsp;</div>
+		<%} else {%>
+			<ul>
+				<li><a href="#tabs-1">Overview</a></li>
+				<li><a href="#tabs-2">Lyrics</a></li>
+				<li><a href="#tabs-3">Tags</a></li>
+				<%if (Model.SectionsAllowed.Contains("Rights")) { %>
+				<li><a href="#tabs-4">Rights</a></li>
 		
+				<%} %>
+			</ul>
 		<%} %>
-	</ul>
-<%} %>
 
 
 <div id="tabs-1">
@@ -327,11 +327,12 @@
 <%} %>
 <%if (isEditing) { Html.EndForm();  }%>
 <%if (Model.ViewMode == ViewModes.Embedded) { %>
-<div><a href="#" id="cw-detail-close-link">Close</a></div>
+	<div><a href="#" id="cw-detail-close-link">Close</a></div>
 <%} %>
-<%if (Model.ViewMode != ViewModes.Print) {%>
+<%--<%if (Model.ViewMode != ViewModes.Print) {%>
 </div>
-<%} %>
-</div>
+<%} %>--%>
+	</div>
+	</div>
 </div>
 	

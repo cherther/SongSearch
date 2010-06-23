@@ -21,22 +21,26 @@
     
 </asp:Content>
 <asp:Content ID="updateProfileContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 
-    <h3>Change Password</h3>
-    <p>
+    <h2>Change Password</h2>
+	<div>&nbsp;</div>
+	<div class="cw-outl cw-padded cw-rounded-corners">
+	<p>
         Use the form below to change your password. 
     </p>
     <p>
         New passwords are required to be a minimum of <%= Html.Encode(ViewData["PasswordLength"]) %> characters in length.
     </p>
     <%//= Html.ValidationSummary("Password change was unsuccessful. Please correct the errors and try again.")%>
+	<div>&nbsp;</div>
     <% Html.EnableClientValidation(); %>
     <% using (Html.BeginForm(MVC.Account.ChangePassword(), FormMethod.Post, new { @class = "cw-form-small" }))
        {%><%=Html.AntiForgeryToken() %>
             <fieldset>
                 <legend>Password Information</legend>
-                <div class="cw-fe-vert cw-fe-req">
+                <div>&nbsp;</div>
+				<div class="cw-fe-vert cw-fe-req">
                     <%= Html.LabelFor(m => m.OldPassword) %>
                 </div>
                 <div class="cw-fe-vert">
@@ -67,5 +71,7 @@
                 </p>
             </fieldset>
     <% } %>
+	</div>
+    
 </div>    
 </asp:Content>

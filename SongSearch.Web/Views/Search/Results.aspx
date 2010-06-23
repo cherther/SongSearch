@@ -5,22 +5,23 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
-<table>
-	<tr>
-	<td align="left" width="200" id="cw-search-options-panel">
-		<% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
-	</td>
-	<td  align="left">
-		
-		<div id="cw-search-results-panel">
-		
-		<% Html.RenderPartial(MVC.Search.Views.ctrlSearchResults); %>
+<div id="content" class="cw-outl cw-rounded-corners-bottom">
+	
+	<div class="nine_column section">
+	
+		<div class="two column">
+			<!--div id="cw-search-options-panel"-->
+			<% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
+			<!--/div-->
 		</div>
-	</td>
-	</tr>
-</table>
+		<div class="seven column">
+			<div class="cw-outl cw-padded cw-rounded-corners cw-buffered-left">
+				<% Html.RenderPartial(MVC.Search.Views.ctrlSearchResults); %>
+			</div>
+		</div>
+	</div>
 </div>
+
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="HeadContent" runat="server">

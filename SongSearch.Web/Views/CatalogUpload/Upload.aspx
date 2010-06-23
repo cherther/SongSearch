@@ -17,7 +17,7 @@
 %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 <%
 	var stepStatusMessage = String.Format("Step {0} / {1}", Model.CatalogUploadState.CurrentStepIndex+1, Model.CatalogUploadState.WorkflowStepsStatus.Count());
 %>
@@ -25,7 +25,7 @@
 	<div>&nbsp;</div>
 	<%: Html.ActionLink("(Start Over)", MVC.CatalogUpload.Upload()) %>
 	<div>&nbsp;</div>
-	<div class="cw-outl cw-padded">
+	<div class="cw-outl cw-padded cw-rounded-corners">
 		<div>&nbsp;</div>
 		<h3><%: stepStatusMessage %>: <%: Model.PageTitle %></h3>
 		<div>&nbsp;</div>
@@ -48,7 +48,7 @@
 		--%>	
 		<div>&nbsp;</div>
 			<div>
-				<input type="submit" id="stepAction" value="<%: Model.StepActionName %>" />
+				<input type="submit" id="stepAction" value="<%: Model.StepActionName %>" class="cw-button cw-simple cw-medium cw-blue" />
 			</div>
 			<%} %>
 			<div>&nbsp;</div>

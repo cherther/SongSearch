@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 	<h2>Welcome</h2>
 	<div>
 		<div>&nbsp;</div>
@@ -63,7 +63,7 @@
 			</li>
 		</ul>
 		<div>&nbsp;</div>
-		<div></div>6/4/2010</div>
+		<div>6/4/2010</div>
 		<ul class="cw-vertical">
 			<li>Song Edit now fully functional, no mp3 upload yet</li>
 			<li>User Deletion and Take Ownership now enabled (was off for testing purposes)</li>

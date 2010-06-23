@@ -5,49 +5,25 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
-<table>
-    <tr>
-    <td align="left" width="200" id="cw-search-options-panel">
-        <% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
-    </td>
-    <td>
-        <div class = "cw-outl cw-padded">
-        <h3>Search Tips</h3>
-        <div>&nbsp;</div>
-        <ul class="cw-vertical">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-            <li>Ut tincidunt erat ac diam molestie a vehicula libero ullamcorper.</li>
-            <li>Integer aliquam sagittis orci, sit amet scelerisque dolor mattis vitae.</li>
-        </ul>
-        <div>&nbsp;</div>
-        <ul class="cw-vertical">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-            <li>Ut tincidunt erat ac diam molestie a vehicula libero ullamcorper.</li>
-            <li>Integer aliquam sagittis orci, sit amet scelerisque dolor mattis vitae.</li>
-        </ul>
-        <div>&nbsp;</div>
-        <ul class="cw-vertical">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-            <li>Ut tincidunt erat ac diam molestie a vehicula libero ullamcorper.</li>
-            <li>Integer aliquam sagittis orci, sit amet scelerisque dolor mattis vitae.</li>
-        </ul>
-        <div>&nbsp;</div>
-        <ul class="cw-vertical">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-            <li>Ut tincidunt erat ac diam molestie a vehicula libero ullamcorper.</li>
-            <li>Integer aliquam sagittis orci, sit amet scelerisque dolor mattis vitae.</li>
-        </ul>
-        <div>&nbsp;</div>
-        <ul class="cw-vertical">
-            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</li>
-            <li>Ut tincidunt erat ac diam molestie a vehicula libero ullamcorper.</li>
-            <li>Integer aliquam sagittis orci, sit amet scelerisque dolor mattis vitae.</li>
-        </ul>
-        </div>
-    </td>
-    </tr>
-</table>
+<div id="content" class="cw-outl cw-rounded-corners-bottom">
+	
+	<div class="nine_column section">
+	
+		<div class="two column">
+			<!--div id="cw-search-options-panel"-->
+			<% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
+			<!--/div-->
+		</div>
+		<div class="seven column">
+			<div class="cw-outl cw-padded cw-rounded-corners cw-buffered-left">
+				<h3>Search Tips</h3>
+				<div>&nbsp;</div>
+			
+			</div>
+		</div>
+	
+	</div>
+
 </div>
 </asp:Content>
 

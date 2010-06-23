@@ -21,9 +21,10 @@
     
 </asp:Content>
 <asp:Content ID="updateProfileSuccessContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
     <h2>Change Password</h2>
-    <p>
+    <div>&nbsp;</div>
+	<p>
         Your password has been changed.
     </p>
     </div>

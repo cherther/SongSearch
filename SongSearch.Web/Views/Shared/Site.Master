@@ -8,8 +8,10 @@
 	<meta name="robots" content="noindex, nofollow" />
 	<meta name="author" content="Ford Music Services" /> 
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+	 <!--[if lt IE 8]><link rel="stylesheet" href=""~/public/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
 	<%= Bundle.Css()
-		.Add("~/public/css/cw.app.css")
+				.Add("~/public/css/fluid.gs.css")
+				.Add("~/public/css/cw.app.css")
 		.Add("~/public/css/cw.buttons.css")
 		.Add("~/public/css/cw.forms.css")
 		.Add("~/public/css/cw.tables.css")
@@ -17,12 +19,11 @@
 		.Add("~/public/css/cw.feedback.css")
 		.Add("~/public/css/cw.twitlogin.css")
 		.Add("~/public/css/jquery-ui.css")
-		.Add("~/public/css/plupload.queue.css")
+				.Add("~/public/css/plupload.queue.css")
 		//.ForceRelease()
 		.WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
 		.Render("~/public/css/cw-combined_#.css")
 	%>
-
 	<title>SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
@@ -43,43 +44,40 @@
 	</script>
 	<%} %>
 	<%--<div id="fire" style="display:none"></div>--%>
+ <div class="fluid_grid_layout"> 
 
-	<table width="100%" style="border-collapse:collapse; padding:0px; margin:0px;">
-	<tr>
-		<td align="left">
-			<h1><a href="/" class="cw-logo">SongSearch</a></h1>
-			<h3>Your professional music licensing resource</h3>
-		</td>
-		<td align="right">
+	 <div class="six_column section">
+		<div class="three column">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlHeader); %>
+		</div> 
+		<div class="three column">
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlLogIn); %>
-		</td> 
-	</tr>
-	<tr>
-		<td colspan="2" style="padding:0px;margin:0px;">
+		</div> 
+	 </div>
+	  <div class="six_column section">
+		<div class="six column">
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlMainMenu); %>
-		</td> 
-	</tr>
-	<tr>
-		<td colspan="2" style="padding:0px;margin:0px;">
+		</div> 
+	 </div>
+	  <div class="six_column section">
+		<div class="six column">
 			<asp:ContentPlaceHolder ID="SuvNavContent" runat="server" /> 
-		</td> 
-	</tr>
-	<tr>
-		<td colspan="2">
+		</div> 
+	 </div>
+	 <div class="six_column section">
+		<div class="six column">
 			<asp:ContentPlaceHolder ID="MainContent" runat="server" />
-		</td> 
-	</tr>
-	
-	<tr>
-		<td align="left">
-			&copy; <%=DateTime.Now.Year %> Ford Music Services
-		</td>
-		<td align="right">
-			<% Html.RenderPartial(MVC.Shared.Views.ctrlBuildInfo); %>
-			developed by <a href="http://www.codewerks.de/">codewerks.de</a>
-		</td> 
-	</tr>
-	</table>
+		</div> 
+	 </div>
+	 <div class="six_column section">
+		<div class="three column">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlFooter); %>
+		</div> 
+		<div class="three column text-right">
+		<% Html.RenderPartial(MVC.Shared.Views.ctrlBuildInfo); %>
+		</div> 
+	 </div>
+</div>
 <%
 	var debug = App.Environment != AppEnvironment.Production;
 	var d = debug ? "?d" : "";

@@ -26,20 +26,20 @@
 	menu.Add("Contact", new string[3] { "Contact", "Home", "Contact Us" });   
 	%>
 	
-		<ul id="main-menu" class="cw-menu cw-menu-main">
+		<ul id="main-menu" class="cw-menu cw-menu-main cw-rounded-corners-top">
 		<%
 		foreach(var menuItem in menu)
 		{
 			string[] values = menuItem.Value;        
 			string menuId = String.Format("menu-{0}", menuItem.Key.ToLower());
 				%>
-			<li id="<%=menuId %>" class="<%= menuItem.Key == navLocation ? "current" : ""%>">
+			<li id="<%=menuId %>" class="cw-rounded-corners-top <%= menuItem.Key == navLocation ? "current" : ""%>">
 			<%if (menuItem.Key == "Cart") { %>
 			<% Html.RenderAction(MVC.Cart.CartCount()); %>
 			<%} else if (menuItem.Key == "Help") { %>
-			<a href="#" onclick="UserVoice.Popin.show(uservoiceOptions); return false;"><%: values[2]%></a>
+			<a href="#"  class="cw-rounded-corners-top" onclick="UserVoice.Popin.show(uservoiceOptions); return false;"><%: values[2]%></a>
 			<%} else { %>
-			<%= Html.ActionLink(values[2], values[0], values[1])%>
+			<%= Html.ActionLink(values[2], values[0], values[1], null, new { @class = "cw-rounded-corners-top" })%>
 			<%} %>
 			</li>
 			<%

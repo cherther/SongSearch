@@ -74,8 +74,11 @@ foreach (var cart in carts)
 			var cartContent = new PagedList<SongSearch.Web.Data.Content>(cart.Contents.AsQueryable(), 0, 0);
 			var contentListViewModel = new ContentListViewModel() { List = cartContent, ListHeaders = cartContentHeaders, ShowDetails = cart.CartStatus == (int)CartStatusCodes.Active };
 		%>
-			
-		<% Html.RenderPartial(MVC.Cart.Views.ctrlCartContentsTable, contentListViewModel); %>  
+		<%if (cartContent != null && cartContent.TotalCount > 0) {%>	
+		<% Html.RenderPartial(MVC.Cart.Views.ctrlCartContentsTable, contentListViewModel); %> 
+		<%} else { %>
+			<div class="text-small">These songs are currently not available. However, they are still contained in your zip file.</div>
+		<%} %>
 		</td>
 	</tr>
 <%

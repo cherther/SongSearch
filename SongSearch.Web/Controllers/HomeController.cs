@@ -63,7 +63,7 @@ namespace SongSearch.Web.Controllers {
 
 				var vm = new ContactModel() { NavigationLocation = "Home" };
 				vm.PageTitle = "Thanks for e-mailing us!";
-				vm.PageMessage = "Your e-mail has successfully been sent to our team, and we will review your message and respond as quickly as possible.";
+				vm.PageMessage = "Your e-mail has been successfully sent to our team, and we will review your message and respond as quickly as possible.";
 				return View(vm);
 
 			} else {

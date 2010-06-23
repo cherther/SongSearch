@@ -1,15 +1,4 @@
-﻿.text-left 
-{
-	text-align: left;
-}
-.text-right 
-{
-	text-align: right;
-}
-.text-top
-{
-    vertical-align: top;
-}
+﻿
 .cw-row-selected
 {
 	background: #cccccc url(/public/images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;
@@ -129,17 +118,3 @@
 	display: none;
 }
 
-#cw-tbl-media-player
-{
-	width: 100%;
-	border: 1px solid #ccc;
-	background-color: #fff/*#eee;*/
-}
-#cw-tbl-media-player tr
-{
-	border: 1px solid #ccc;
-}
-#cw-tbl-media-player td
-{
-	border: 0px none;
-}

@@ -21,20 +21,23 @@
 	
 </asp:Content>
 <asp:Content ID="updateProfileContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 
-	<h3>Update Profile</h3>
+	<h2>Update Profile</h2>
+	<div>&nbsp;</div>
+	<div class="cw-outl cw-padded cw-rounded-corners">
 	<p>
 		Use the form below to update your user profile. 
 	</p>
 	<%//= Html.ValidationSummary("Profile update was unsuccessful. Please correct the errors and try again.")%>
-	
+	<div>&nbsp;</div>
 	<% using (Html.BeginForm(MVC.Account.UpdateProfile(), FormMethod.Post, new { @class = "cw-form-small" }))
 	   {%>
 	   <%=Html.AntiForgeryToken() %>
 	   <% Html.EnableClientValidation(); %>
 			<fieldset>
 				<legend>Profile Information</legend>
+				<div>&nbsp;</div>
 				<div class="cw-fe-vert">
 					<%= Html.LabelFor(m => m.Email) %>
 				</div>
@@ -42,6 +45,7 @@
 					<%= Html.Encode(Model.Email)%>
 					<%= Html.HiddenFor(m => Model.Email)%>
 				</div>
+				<div>&nbsp;</div>
 				<div class="cw-fe-vert">
 					<%= Html.LabelFor(m => m.FirstName) %>
 				</div>
@@ -49,6 +53,7 @@
 					<%= Html.TextBoxFor(m => m.FirstName, new { @class = "cw-field-large" })%>
 					<%= Html.ValidationMessageFor(m => m.FirstName)%>
 				</div>
+				<div>&nbsp;</div>
 				<div class="cw-fe-vert">
 					<%= Html.LabelFor(m => m.LastName) %>
 				</div>
@@ -58,6 +63,7 @@
 				</div>
 				<%if (Model.ShowSignatureField)
 				  {%>
+				<div>&nbsp;</div>
 				<div class="cw-fe-vert">
 					<%= Html.LabelFor(m => m.Signature)%>
 				</div>
@@ -75,5 +81,6 @@
 				</p>
 			</fieldset>
 	<% } %>
+	</div>
 </div>    
 </asp:Content>

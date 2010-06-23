@@ -17,7 +17,7 @@
 %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 	<h2><%: Model.PageTitle %></h2>
 
 	<%if (Model != null) {
@@ -30,14 +30,14 @@
 	<table>
 	<tr>
 		<td style="vertical-align: top">
-			<div class = "cw-outl cw-padded" style="overflow:auto ; height: 480px; width: 300px;">
+			<div class = "cw-outl cw-padded cw-rounded-corners" style="overflow:auto ; height: 480px; width: 300px;">
 				<table id="catalog-list" class="cw-tbl-cat">
 					<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogList, catalogs); %>
 				</table>
 			</div>            	
 		</td>
 		<td style="vertical-align: top">
-			<div id="cw-catalog-detail" class="cw-outl cw-padded" style="display: none">
+			<div id="cw-catalog-detail" class="cw-outl cw-padded cw-rounded-corners" style="display: none">
 			</div>
 		</td>
 	</tr>

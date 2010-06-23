@@ -1,5 +1,5 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.SearchViewModel>" %>
-<div class="cw-outl">
+<div class="cw-outl cw-rounded-corners">
 <ul id="search-menu" class="cw-list-searchoptions">
 	<%using (Html.BeginForm(MVC.Search.Results(), FormMethod.Get, new { id = "searchForm"})) { %>
 		<li>

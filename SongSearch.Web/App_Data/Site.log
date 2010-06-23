@@ -46860,3 +46860,194 @@ Stack Trace :   at System.Web.UI.Page.HandleError(Exception e)
    at System.Web.HttpServerUtility.ExecuteInternal(IHttpHandler handler, TextWriter writer, Boolean preserveForm, Boolean setPreviousPage, VirtualPath path, VirtualPath filePath, String physPath, Exception error, String queryStringOverride)
 TargetSite :Boolean HandleError(System.Exception)
 06/23/2010 12:01:29: App is shutting down
+06/23/2010 12:05:17: 
+Error in Path :/Views/Shared/demo.html
+Raw Url :/Views/Shared/demo.html
+Message :Path '/Views/Shared/demo.html' was not found.
+Source :System.Web
+Stack Trace :   at System.Web.HttpNotFoundHandler.ProcessRequest(HttpContext context)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :Void ProcessRequest(System.Web.HttpContext)
+06/23/2010 12:05:40: App is shutting down
+06/23/2010 12:05:48: 
+Error in Path :/stylesheets/fluid.gs.css
+Raw Url :/stylesheets/fluid.gs.css
+Message :The controller for path '/stylesheets/fluid.gs.css' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/23/2010 12:05:48: 
+Error in Path :/stylesheets/fluid.gs.css
+Raw Url :/stylesheets/fluid.gs.css
+Message :The controller for path '/stylesheets/fluid.gs.css' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/23/2010 12:05:48: 
+Error in Path :/stylesheets/demo.css
+Raw Url :/stylesheets/demo.css
+Message :The controller for path '/stylesheets/demo.css' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/23/2010 12:05:48: 
+Error in Path :/stylesheets/demo.css
+Raw Url :/stylesheets/demo.css
+Message :The controller for path '/stylesheets/demo.css' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/23/2010 12:06:02: App is shutting down
+06/23/2010 12:13:41: App is shutting down
+06/23/2010 12:23:04: App is shutting down
+06/23/2010 12:27:30: App is shutting down
+06/23/2010 12:27:39: 
+Error in Path :/
+Raw Url :/
+Message :d:\DevProjects\SongSearch\SongSearch.Web\Views\Shared\Site.Master(142): error CS0103: The name 'bundle' does not exist in the current context
+Source :System.Web
+Stack Trace :   at System.Web.Compilation.BuildManager.PostProcessFoundBuildResult(BuildResult result, Boolean keyFromVPP, VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetBuildResultFromCacheInternal(String cacheKey, Boolean keyFromVPP, VirtualPath virtualPath, Int64 hashCode, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultFromCacheInternal(VirtualPath virtualPath, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResult(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean ensureIsUpToDate)
+   at System.Web.UI.BaseTemplateParser.GetReferencedType(VirtualPath virtualPath, Boolean allowNoCompile)
+   at System.Web.UI.PageParser.ProcessMainDirectiveAttribute(String deviceName, String name, String value, IDictionary parseData)
+   at System.Web.UI.TemplateParser.ProcessMainDirective(IDictionary mainDirective)
+TargetSite :System.Web.Compilation.BuildResult PostProcessFoundBuildResult(System.Web.Compilation.BuildResult, Boolean, System.Web.VirtualPath)
+06/23/2010 12:36:10: App is shutting down
+06/23/2010 12:52:18: 
+Error in Path :/CatalogManagement/Contact
+Raw Url :/CatalogManagement/Contact?Length=4
+Message :A public action method 'Contact' was not found on controller 'SongSearch.Web.Controllers.CatalogManagementController'.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.Controller.HandleUnknownAction(String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :Void HandleUnknownAction(System.String)
+06/23/2010 12:57:01: App is shutting down
+06/23/2010 13:07:14: 
+Error in Path :/Catalog
+Raw Url :/Catalog
+Message :The controller for path '/Catalog' was not found or does not implement IController.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.DefaultControllerFactory.GetControllerInstance(RequestContext requestContext, Type controllerType)
+   at System.Web.Mvc.DefaultControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at Ninject.Web.Mvc.NinjectControllerFactory.CreateController(RequestContext requestContext, String controllerName)
+   at System.Web.Mvc.MvcHandler.ProcessRequestInit(HttpContextBase httpContext, IController& controller, IControllerFactory& factory)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContextBase httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.BeginProcessRequest(HttpContext httpContext, AsyncCallback callback, Object state)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.BeginProcessRequest(HttpContext context, AsyncCallback cb, Object extraData)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Web.Mvc.IController GetControllerInstance(System.Web.Routing.RequestContext, System.Type)
+06/23/2010 13:07:35: App is shutting down
+06/23/2010 13:17:02: App is shutting down
+06/23/2010 13:50:18: App is shutting down
+06/23/2010 14:13:13: App is shutting down
+06/23/2010 14:33:35: App is shutting down
+06/23/2010 14:52:22: App is shutting down
+06/23/2010 15:16:10: App is shutting down
+06/23/2010 15:24:44: App is shutting down
+06/23/2010 15:27:53: App is shutting down
+06/23/2010 16:11:11: 
+Error in Path :/CatalogUpload/Upload
+Raw Url :/CatalogUpload/Upload
+Message :Value cannot be null.
+Parameter name: source
+Source :System.Core
+Stack Trace :   at System.Linq.Enumerable.Distinct[TSource](IEnumerable`1 source)
+   at SongSearch.Web.Services.CatalogUploadService.AddSongFiles(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 164
+   at SongSearch.Web.Services.WorkflowStep`1.Process(T state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\WorkflowEngine.cs:line 68
+   at SongSearch.Web.Services.CatalogUploadService.RunNextStep(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Services\CatalogUploadService.cs:line 84
+   at SongSearch.Web.Controllers.CatalogUploadController.Upload(CatalogUploadState state) in D:\DevProjects\SongSearch\SongSearch.Web\Controllers\CatalogUploadController.cs:line 88
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ActionMethodDispatcher.Execute(ControllerBase controller, Object[] parameters)
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<InvokeActionMethodWithFilters>b__a()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodFilter(IActionFilter filter, ActionExecutingContext preContext, Func`1 continuation)
+   at System.Web.Mvc.ControllerActionInvoker.<>c__DisplayClassd.<>c__DisplayClassf.<InvokeActionMethodWithFilters>b__c()
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.Collections.Generic.IEnumerable`1[TSource] Distinct[TSource](System.Collections.Generic.IEnumerable`1[TSource])
+06/23/2010 16:14:12: App is shutting down
+06/23/2010 16:29:38: 
+Error in Path :/Contact
+Raw Url :/Contact
+Message :A required anti-forgery token was not supplied or was invalid.
+Source :System.Web.Mvc
+Stack Trace :   at System.Web.Mvc.ValidateAntiForgeryTokenAttribute.OnAuthorization(AuthorizationContext filterContext)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAuthorizationFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeAction(ControllerContext controllerContext, String actionName)
+   at System.Web.Mvc.Controller.ExecuteCore()
+   at System.Web.Mvc.ControllerBase.Execute(RequestContext requestContext)
+   at System.Web.Mvc.ControllerBase.System.Web.Mvc.IController.Execute(RequestContext requestContext)
+   at System.Web.Mvc.MvcHandler.<>c__DisplayClass8.<BeginProcessRequest>b__4()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass1.<MakeVoidDelegate>b__0()
+   at System.Web.Mvc.Async.AsyncResultWrapper.<>c__DisplayClass8`1.<BeginSynchronous>b__7(IAsyncResult _)
+   at System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.End()
+   at System.Web.Mvc.Async.AsyncResultWrapper.End[TResult](IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.Async.AsyncResultWrapper.End(IAsyncResult asyncResult, Object tag)
+   at System.Web.Mvc.MvcHandler.EndProcessRequest(IAsyncResult asyncResult)
+   at System.Web.Mvc.MvcHandler.System.Web.IHttpAsyncHandler.EndProcessRequest(IAsyncResult result)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :Void OnAuthorization(System.Web.Mvc.AuthorizationContext)
+06/23/2010 16:30:29: App is shutting down
