@@ -502,7 +502,7 @@
 					//                    }
 				} else {
 					evt.preventDefault();
-					alert('You must at least upload ' + min + ' file(s).');
+					$('#uploadMessage').text('Please select at least ' + min + ' file(s) to upload.').fadeIn();
 				}
 
 
