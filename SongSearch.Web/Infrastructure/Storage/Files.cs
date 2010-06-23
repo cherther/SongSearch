@@ -3,14 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.IO;
+using System.Security.AccessControl;
 
 namespace SongSearch.Web {
-	public static class Files {
+	public static class FileSystem {
+
+		public static void CreateFolder(string path) {
+
+			DirectoryInfo dInfo = new DirectoryInfo(path);
+			if (!dInfo.Exists) {
+				//DirectorySecurity dSecurity = dInfo.Parent.GetAccessControl();
+				dInfo.Create();
+			}
+		}
 		public static void SafeDelete(string path, bool withArchive = false) {
 
 			if (File.Exists(path)) {
 				if (withArchive) { Archive(path); };		
 				File.Delete(path);
+			}
+
+		}
+		
+		public static void SafeDeleteFolder(string path) {
+
+			if (Directory.Exists(path)) {
+				Directory.Delete(path, true);
 			}
 
 		}

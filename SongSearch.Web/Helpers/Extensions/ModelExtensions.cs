@@ -75,9 +75,12 @@ namespace SongSearch.Web {
 			//			return catalogs.Where(c => c.UserCatalogRoles.Any(x => x.UserId == user.UserId && x.RoleId <= (int)Roles.Admin));
 		}
 		public static IList<Catalog> LimitToAdministeredBy(this IList<Catalog> catalogs, User user) {
-			var adminCatalogIds = user.UserCatalogRoles.Where(x => x.RoleId <= (int)Roles.Admin).Select(x => x.CatalogId);
-			return catalogs.Where(c => adminCatalogIds.Contains(c.CatalogId)).ToList();
-
+			if (user.IsSuperAdmin()) {
+				return catalogs;
+			} else {
+				var adminCatalogIds = user.UserCatalogRoles.Where(x => x.RoleId <= (int)Roles.Admin).Select(x => x.CatalogId);
+				return catalogs.Where(c => adminCatalogIds.Contains(c.CatalogId)).ToList();
+			}
 //			return catalogs.Where(c => c.UserCatalogRoles.Any(x => x.UserId == user.UserId && x.RoleId <= (int)Roles.Admin)).ToList();
 		}
 		// **************************************

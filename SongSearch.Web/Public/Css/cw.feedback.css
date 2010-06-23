@@ -88,3 +88,21 @@
 .field-validation-error { color: #ff0000; }
 .input-validation-error { border: 1px solid #ff0000; background-color: #ffeeee; }
 .validation-summary-errors { font-weight: bold; color: #ff0000; }
+
+.feedback-box 
+{
+    border: 1px solid;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	width: 40%;
+    
+}
+.feedback-box-error
+{
+    color: #fff;
+    background-color: #ff3300;
+    border-color: #ff3300;
+}

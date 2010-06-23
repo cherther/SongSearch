@@ -1,8 +1,12 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogUploadViewModel>" %>
 <%: Html.Hidden("minimumFiles", 1) %>
+<%: Html.Hidden("maxFiles", 25) %>
+<%: Html.Hidden("maxBytes", 25*10*1024*1024) %>
+
 <div>
 For this step, please select full song files in MP3 format only. We will deal with short previews in the next step.
 </div>
+<div id="uploadMessage" class="feedback-box feedback-box-error" style="display:none"></div>
 <div>&nbsp;</div>
 <div id="uploader">
 	<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>

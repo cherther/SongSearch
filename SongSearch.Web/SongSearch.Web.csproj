@@ -163,6 +163,7 @@
     <Compile Include="Helpers\DynamicLinq.cs" />
     <Compile Include="Helpers\FeedbackHelpers.cs" />
     <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Helpers\ID3Reader.cs" />
     <Compile Include="Helpers\PagedList.cs" />
     <Compile Include="Helpers\RenderView.cs" />
     <Compile Include="Helpers\Url.cs" />
@@ -260,6 +261,8 @@
     <Content Include="Public\Css\cw.tables.css" />
     <Content Include="Public\Css\cw.twitlogin.css" />
     <Content Include="Public\Css\cw.buttons.css" />
+    <Content Include="Public\Css\fluid.gs.css" />
+    <Content Include="Public\Css\fluid.gs.lt_ie8.css" />
     <Content Include="Public\Css\jquery-ui.css" />
     <Content Include="Public\Css\plupload.queue.css" />
     <Content Include="Public\Flash\plupload.flash.swf" />

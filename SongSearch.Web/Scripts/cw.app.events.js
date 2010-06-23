@@ -437,7 +437,7 @@
         uploadQueue.pluploadQueue({
             // General settings
             runtimes: 'html5, flash, silverlight, html4',
-            url: '/CatalogUpload/MediaUpload',
+            url: '/CatalogUpload/UserMediaUpload',
             max_file_size: '20mb',
             chunk_size: '1mb',
             //unique_names: true,
@@ -451,8 +451,17 @@
 
         var uploader = uploadQueue.pluploadQueue();
         //var stateFileIndex = 0;
+        uploader.bind('FilesAdded', function (up, files) {
+
+            checkTotalUploadSize(up);
+
+        });
+
         uploader.bind('QueueChanged', function (up, files) {
             //            var index = total;
+
+            checkTotalUploadSize(up);
+
             $('#fileList').html('');
             $.each(up.files, function (i, file) {
                 //id="state_CatalogId" name="state.CatalogId" 
@@ -464,28 +473,28 @@
         var catalogUploadForm = $('#catalogUploadForm');
         // Client side form validation
         catalogUploadForm.submit(function (evt) {
-            var uploader = $('#uploader').pluploadQueue();
+            var up = $('#uploader').pluploadQueue();
 
             // Validate number of uploaded files
-            if (uploader.total.uploaded == 0) {
+            if (up.total.uploaded == 0) {
                 // Files in queue upload them first
                 var min = $('#minimumFiles').val();
                 min = min != null ? min : 0;
 
-                if (uploader.files.length >= min) {
+                if (up.files.length >= min) {
 
-                    if (uploader.files.length > 0) {// When all files are uploaded submit form
+                    if (up.files.length > 0) {// When all files are uploaded submit form
 
-                        uploader.bind('UploadProgress', function () {
-                            submitUploadFormWhenFilesDone();
+                        up.bind('UploadProgress', function () {
+                            submitUploadFormWhenFilesDone(up);
                         });
-                        uploader.bind('Error', function () {
+                        up.bind('Error', function () {
                             turnStepActionButtonOn(true);
                         });
 
                         evt.preventDefault();
 
-                        uploader.start();
+                        up.start();
                         turnStepActionButtonOn(false);
                     }
                     //                    } else {
@@ -508,14 +517,35 @@
             $('#stepAction').attr('disabled', 'true');
         }
     }
-    function submitUploadFormWhenFilesDone() {
+    function submitUploadFormWhenFilesDone(up) {
         var done = false;
-        $.each(uploader.files, function (i, file) {
-            done += uploader.files[i].percent == 100;
+        $.each(up.files, function (i, file) {
+            done += up.files[i].percent == 100;
         });
-        if (done == uploader.files.length) {
+        if (done == up.files.length) {
             catalogUploadForm.submit();
 
+        }
+    }
+
+    function checkTotalUploadSize(up) {
+
+        var maxNumber = parseInt($('#maxFiles').val());
+        var maxSize = parseInt($('#maxBytes').val());
+        var totalSize = 0;
+        var files = up.files;
+        $.each(files, function (i, file) {
+            totalSize += file.size;
+        });
+        if (files.length > maxNumber) {
+            var msg = 'Total number of files is more than ' + maxNumber + ' (' + files.length + ')';
+        } else if (totalSize > maxSize) {
+            var msg = 'Total file size is more than ' + toFileSizeDescription(maxSize) + ' (' + toFileSizeDescription(totalSize) + ')';
+        }
+        if (msg) {
+            $('#uploadMessage').text(msg).fadeIn();
+        } else {
+            $('#uploadMessage').fadeOut();
         }
     }
 

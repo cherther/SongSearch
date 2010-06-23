@@ -7,6 +7,7 @@ using System.Web;
 using SongSearch.Web.Data;
 using Ninject;
 using SongSearch.Web.Services;
+using System.IO;
 
 namespace SongSearch.Web {
 	public static class AccountData {
@@ -185,7 +186,28 @@ namespace SongSearch.Web {
 			}
 			return msg;
 		}
-		
+
+		// **************************************
+		// UploadFolder
+		// **************************************    
+		public static string UploadFolder(this User user, string mediaVersion = "", bool create = true) {
+
+			string uploadPath = Settings.UploadPath.Text(); 
+			
+			string userFolder = Path.Combine(uploadPath, user.UserId.ToString(), mediaVersion);
+			if (create) { FileSystem.CreateFolder(userFolder); }  
+
+			return userFolder;
+		}
+
+		// **************************************
+		// UploadFile
+		// **************************************    
+		public static string UploadFile(this User user, string fileName = "", string mediaVersion = "") {
+
+			return Path.Combine(user.UploadFolder(mediaVersion), fileName);
+		}
+
 		// **************************************
 		// MyUserHierarchy
 		// **************************************    

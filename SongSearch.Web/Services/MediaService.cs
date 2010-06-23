@@ -55,6 +55,8 @@ namespace SongSearch.Web.Services {
 			return Path.Combine(assetPath, GetContentMediaFileName(contentId));
 
 		}
+
+		
 		
 		// ----------------------------------------------------------------------------
 		// (Dispose)

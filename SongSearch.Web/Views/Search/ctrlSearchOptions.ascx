@@ -34,8 +34,8 @@
 			<%if (!isGroup && (searchType == SearchTypes.Contains || searchType == SearchTypes.Range || searchType == SearchTypes.TagText)) { %>
 			<label><%: item.DisplayName%></label>
 			<%} %>
-			<%: Html.Hidden(String.Format("f[{0}].P", i), item.PropertyId)%>
-			<%: Html.Hidden(String.Format("f[{0}].T", i), item.SearchTypeId)%>
+			<input type="hidden" name="<%: String.Format("f[{0}].P", i)%>" value="<%: item.PropertyId %>" />
+			<input type="hidden" name="<%: String.Format("f[{0}].T", i)%>" value="<%: item.SearchTypeId %>" />
 			<div>
 			<%switch (searchType) {%>
 				<%case SearchTypes.Contains: {%>

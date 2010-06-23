@@ -6,6 +6,7 @@
  <p>If you do not have previews now, you can always add them per song later.</p>
 </div>
 <div>&nbsp;</div>
+<div id="uploadMessage" class="feedback-box feedback-box-error" style="display:none">&nbsp;</div>
 <div id="uploader">
 	<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
 </div>

@@ -26,52 +26,52 @@ var waiting = false;
 //***********************************************
 function wait(elem, message) {
 
-    try {
-        if (!waiting) {
-            //$("body").css("cursor", "wait");
-            elem = elem == null ? $("body") : elem;
-            message = message == null ? "Loading" : message;
-            elem.css("cursor", "wait");
-            //elem.block({ message: '<h3><img src="/public/images/loading.gif" />' + message + '...</h3>' });
-            waiting = true;
-        }
-    }
-    catch (ex) {
-    }
+	try {
+		if (!waiting) {
+			//$("body").css("cursor", "wait");
+			elem = elem == null ? $("body") : elem;
+			message = message == null ? "Loading" : message;
+			elem.css("cursor", "wait");
+			//elem.block({ message: '<h3><img src="/public/images/loading.gif" />' + message + '...</h3>' });
+			waiting = true;
+		}
+	}
+	catch (ex) {
+	}
 }
 
 //***********************************************
 //  unwait
 //***********************************************
 function unwait(elem) {
-    if (waiting) {
-        elem = elem == null ? $("body") : elem;
-        //elem.unblock();
-        elem.css("cursor", "default");
-        //elem.css("cursor", "pointer");
-    }
-    waiting = false;
+	if (waiting) {
+		elem = elem == null ? $("body") : elem;
+		//elem.unblock();
+		elem.css("cursor", "default");
+		//elem.css("cursor", "pointer");
+	}
+	waiting = false;
 }
 
 //***********************************************
 //  flash
 //***********************************************
 function feedback(type, msg) {
-    unwait();
-    if (type == "error") {
-        msg += "<a class='close' href='#'>x</a>";
-        var wrapperClass = 'feedback-bar-error';
-        var autoClose = false;
-    } else {
-        var wrapperClass = 'feedback-bar';
-        var autoClose = 2000;
-    
-    }
-    
-    $.feedbackBar(msg, { autoClose: autoClose, wrapperClass: wrapperClass});
+	unwait();
+	if (type == "error") {
+		msg += "<a class='close' href='#'>x</a>";
+		var wrapperClass = 'feedback-bar-error';
+		var autoClose = false;
+	} else {
+		var wrapperClass = 'feedback-bar';
+		var autoClose = 2000;
+	
+	}
+	
+	$.feedbackBar(msg, { autoClose: autoClose, wrapperClass: wrapperClass});
 
-    var fb = $('.' + wrapperClass);
-    fb.click(function () { fb.toggle('highlight') });
+	var fb = $('.' + wrapperClass);
+	fb.click(function () { fb.toggle('highlight') });
 
 }
 
@@ -79,20 +79,28 @@ function feedback(type, msg) {
 //  toggleTagBoxSelection
 //***********************************************
 function toggleTagBoxSelection(box, selectedClass, toggle) {
-    box.siblings().removeClass(selectedClass);
-    if (toggle) {
-        box.addClass(selectedClass);
-    }
+	box.siblings().removeClass(selectedClass);
+	if (toggle) {
+		box.addClass(selectedClass);
+	}
 }
 
 
 function millSecsToTimeCode(millSec, returnAsString) {
-    // convert milliseconds to mm:ss, return as object literal or string
-    var secs = Math.floor(millSec / 1000);
-    var min = Math.floor(secs / 60);
-    var sec = secs - (min * 60);
-    // if (min == 0 && sec == 0) return null; // return 0:00 as null
-    return (returnAsString ? (min + ':' + (sec < 10 ? '0' + sec : sec)) : { 'min': min, 'sec': sec });
+	// convert milliseconds to mm:ss, return as object literal or string
+	var secs = Math.floor(millSec / 1000);
+	var min = Math.floor(secs / 60);
+	var sec = secs - (min * 60);
+	// if (min == 0 && sec == 0) return null; // return 0:00 as null
+	return (returnAsString ? (min + ':' + (sec < 10 ? '0' + sec : sec)) : { 'min': min, 'sec': sec });
+}
+
+function toFileSizeDescription(fileSize) {
+	return parseInt((fileSize/(1024*1024))).toString() + " MB";
+}
+
+function toYesNo(yes) {
+	return yes ? "Yes" : "No";
 }
 
 // UI functions
@@ -120,76 +128,76 @@ var lastContentEditLinkClicked;
 var aCache = {};
 function setupAutoComplete() {
 
-    $(".cw-autocomplete").autocomplete(
-        {
-            //source: "/Search/AutoComplete?f=" + this.rel,//["John", "Johnny", "Jon", "Joe" ],
-            source: function (request, response) {
+	$(".cw-autocomplete").autocomplete(
+		{
+			//source: "/Search/AutoComplete?f=" + this.rel,//["John", "Johnny", "Jon", "Joe" ],
+			source: function (request, response) {
 
-                var field = $(this)[0].element[0].alt; //little hack to store an extra field on the input elem, rel does not work cross-browser for input tags
-                if (field) {
-                    if (aCache.term == request.term && aCache.field == field && aCache.content) {
-                        response(aCache.content);
-                        return;
-                    }
-                    if (new RegExp(aCache.term).test(request.term) && aCache.content && aCache.content.length < 13) {
-                        response($.ui.autocomplete.filter(aCache.content, request.term));
-                        return;
-                    }
+				var field = $(this)[0].element[0].alt; //little hack to store an extra field on the input elem, rel does not work cross-browser for input tags
+				if (field) {
+					if (aCache.term == request.term && aCache.field == field && aCache.content) {
+						response(aCache.content);
+						return;
+					}
+					if (new RegExp(aCache.term).test(request.term) && aCache.content && aCache.content.length < 13) {
+						response($.ui.autocomplete.filter(aCache.content, request.term));
+						return;
+					}
 
-                    var url = "/Search/AutoComplete?f=";
-                    $.ajax({
-                        url: url + field,
-                        dataType: "json",
-                        data: request,
-                        success: function (data) {
-                            aCache.field = field;
-                            aCache.term = request.term;
-                            aCache.content = data;
-                            response(data);
-                        }
-                    });
-                }
+					var url = "/Search/AutoComplete?f=";
+					$.ajax({
+						url: url + field,
+						dataType: "json",
+						data: request,
+						success: function (data) {
+							aCache.field = field;
+							aCache.term = request.term;
+							aCache.content = data;
+							response(data);
+						}
+					});
+				}
 
-            },
-            minLength: 2
-        }
-    );
-    }
+			},
+			minLength: 2
+		}
+	);
+	}
 
 //***********************************************
 //  clearSearchForm
 //***********************************************
 function clearSearchForm(form) {
 
-    clearForm(form);
-    $('.cw-tagbox-search').removeClass(tagBoxSelectedClass);
-    $('.cw-form-value').removeClass(inputSelectedClass);
+	clearForm(form);
+	$('.cw-tagbox-search').removeClass(tagBoxSelectedClass);
+	$('.cw-form-value').removeClass(inputSelectedClass);
 }
 
 //***********************************************
 //  clearForm
 //***********************************************
 function clearForm(form) {
-    // iterate over all of the inputs for the form
-    // element that was passed in
-    $(':input.cw-form-value', form).each(function () {
-        var type = this.type;
-        var tag = this.tagName.toLowerCase(); // normalize case
+	// iterate over all of the inputs for the form
+	// element that was passed in
+	$(':input.cw-form-value', form).each(function () {
+		var type = this.type;
+		var tag = this.tagName.toLowerCase(); // normalize case
 
-        // it's ok to reset the value attr of text inputs,
-        // password inputs, and textareas
-        if (type == 'text' || type == 'password' || tag == 'textarea' || type == 'hidden') {
-            this.value = "";
-        }
-        // checkboxes and radios need to have their checked state cleared
-        // but should *not* have their 'value' changed
-        else if (type == 'checkbox' || type == 'radio')
-            this.checked = false;
-        // select elements need to have their 'selectedIndex' property set to -1
-        // (this works for both single and multiple select elements)
-        else if (tag == 'select')
-            this.selectedIndex = -1;
-    });
+		// it's ok to reset the value attr of text inputs,
+		// password inputs, and textareas
+		if (type == 'text' || type == 'password' || tag == 'textarea' || type == 'hidden') {
+			this.value = "";
+		}
+		// checkboxes and radios need to have their checked state cleared
+		// but should *not* have their 'value' changed
+		else if (type == 'checkbox' || type == 'radio')
+			this.checked = false;
+		// select elements need to have their 'selectedIndex' property set to -1
+		// (this works for both single and multiple select elements)
+		else if (tag == 'select')
+			this.selectedIndex = -1;
+	});
 };
 
 //***********************************************
@@ -197,30 +205,30 @@ function clearForm(form) {
 //***********************************************
 function setSelectedSearchTagValue(link) {
 
-    var id = link[0].id;
+	var id = link[0].id;
 
-    var valField = '#' + id.substring(0, id.indexOf('-'));
-    var tagId = id.substring(id.indexOf('-') + 1);
-    var vals = $(valField) != null ? $(valField).val().split(';') : null;
+	var valField = '#' + id.substring(0, id.indexOf('-'));
+	var tagId = id.substring(id.indexOf('-') + 1);
+	var vals = $(valField) != null ? $(valField).val().split(';') : null;
 
-    var pos = vals.indexOf(tagId)
-    if (pos > -1) {
-        vals.splice(pos, 1);
-    }
-    else {
-        vals.push(tagId);
-    }
+	var pos = vals.indexOf(tagId)
+	if (pos > -1) {
+		vals.splice(pos, 1);
+	}
+	else {
+		vals.push(tagId);
+	}
 
-    $(valField).val(vals.join(';'));
-    link.toggleClass(tagBoxSelectedClass);
+	$(valField).val(vals.join(';'));
+	link.toggleClass(tagBoxSelectedClass);
 }
 
 //***********************************************
 //  updateAddToCartAllButtontext
 //***********************************************
 function updateAddToCartAllButtontext(count) {
-    var text = count > 0 ? 'Add (' + count + ')' : 'Add';
-    $('#cw-add-all-to-cart span').text(text);
+	var text = count > 0 ? 'Add (' + count + ')' : 'Add';
+	$('#cw-add-all-to-cart span').text(text);
 }
 
 //-----------------------------------------------------------------------------------
@@ -231,28 +239,28 @@ function updateAddToCartAllButtontext(count) {
 //***********************************************
 function showContentPanel(link) {
 
-    var contentLink = link[0];
-    isContentEditMode = contentLink.rel == "Edit";
-    isContentSaveMode = contentLink.rel == "Save";
-    isContentViewMode = !isContentEditMode && !isContentSaveMode;
+	var contentLink = link[0];
+	isContentEditMode = contentLink.rel == "Edit";
+	isContentSaveMode = contentLink.rel == "Save";
+	isContentViewMode = !isContentEditMode && !isContentSaveMode;
 
-    if (isContentViewMode) {
-        mediaStop();
-    }
-    var sameContent = lastContentDetailLinkClicked != null ? link[0] == lastContentDetailLinkClicked[0] : false;
+	if (isContentViewMode) {
+		mediaStop();
+	}
+	var sameContent = lastContentDetailLinkClicked != null ? link[0] == lastContentDetailLinkClicked[0] : false;
 
-    if (!sameContent || !isContentViewMode) {
+	if (!sameContent || !isContentViewMode) {
 
-        var url = link[0].href;
-        getContentDetailAjax(url, link);
+		var url = link[0].href;
+		getContentDetailAjax(url, link);
 
-    } else {
-        
-        closeContentPanel();
+	} else {
+		
+		closeContentPanel();
 
-        lastContentDetailLinkClicked = null;
-    }
-    
+		lastContentDetailLinkClicked = null;
+	}
+	
 }
 
 //***********************************************
@@ -260,22 +268,22 @@ function showContentPanel(link) {
 //***********************************************
 function saveContentPanel(link, altLink) {
 
-    var contentLink = link[0];
-    isContentEditMode = contentLink.rel == "Edit";
-    isContentSaveMode = contentLink.rel == "Save";
-    isContentViewMode = !isContentEditMode && !isContentSaveMode;
+	var contentLink = link[0];
+	isContentEditMode = contentLink.rel == "Edit";
+	isContentSaveMode = contentLink.rel == "Save";
+	isContentViewMode = !isContentEditMode && !isContentSaveMode;
 
-    
-    // save the form data
-    if (isContentSaveMode){
-        submitContentFormAjax('#cw-content-editor', link, altLink);
-    } else {
-        
-        closeContentPanel();
+	
+	// save the form data
+	if (isContentSaveMode){
+		submitContentFormAjax('#cw-content-editor', link, altLink);
+	} else {
+		
+		closeContentPanel();
 
-        lastContentDetailLinkClicked = null;
-    }
-    
+		lastContentDetailLinkClicked = null;
+	}
+	
 }
 //***********************************************
 //  showContentPanelCallback
@@ -283,26 +291,26 @@ function saveContentPanel(link, altLink) {
 //***********************************************
 function showContentPanelCallback(data, link) {
 
-    if (isContentViewMode && isContentDetailShowing) { closeContentPanel(); }
+	if (isContentViewMode && isContentDetailShowing) { closeContentPanel(); }
 
-    var parentRow = link.closest('tr');
-    var numberofCells = 6;// parentRow.children('td').length;
-    var detailPanelRow = $('<tr id="cw-content-detail-row"><td colspan="' + numberofCells + '">' + data);
-    parentRow.addClass('cw-row-selected');
-    parentRow.after(detailPanelRow);
-    unwait(); 
-    
-    // cw-content-detail-tabs: calls jquery ui tabs widgets
-    setupContentPanelUIControls();
+	var parentRow = link.closest('tr');
+	var numberofCells = 6;// parentRow.children('td').length;
+	var detailPanelRow = $('<tr id="cw-content-detail-row"><td colspan="' + numberofCells + '">' + data);
+	parentRow.addClass('cw-row-selected');
+	parentRow.after(detailPanelRow);
+	unwait(); 
+	
+	// cw-content-detail-tabs: calls jquery ui tabs widgets
+	setupContentPanelUIControls();
 
-    var mediaUrl = link[0].rel;
-    if (mediaUrl) {
-        mediaPlay(mediaUrl, '#cw-play-full');
-        //togglePlayButton();
-    }
+	var mediaUrl = link[0].rel;
+	if (mediaUrl) {
+		mediaPlay(mediaUrl, '#cw-play-full');
+		//togglePlayButton();
+	}
 
-    isContentDetailShowing = true;
-    lastContentDetailLinkClicked = link;
+	isContentDetailShowing = true;
+	lastContentDetailLinkClicked = link;
 
 }
 
@@ -312,46 +320,46 @@ function showContentPanelCallback(data, link) {
 //***********************************************
 function showContentPanelCallbackEdit(data, link, altLink) {
 
-    if (isContentSaveMode) { feedback('info', 'Saved...'); }
-    lastContentEditLinkClicked = isContentSaveMode ? null : link;
+	if (isContentSaveMode) { feedback('info', 'Saved...'); }
+	lastContentEditLinkClicked = isContentSaveMode ? null : link;
 
-    if (altLink) {
-        unwait();
-        showContentPanel(altLink);
-    }
-    else {
-        var detailPanel = $('#cw-content-detail-data');
-        detailPanel.html(data);
-        unwait();
-        // cw-content-detail-tabs: calls jquery ui tabs widgets
-        setupContentPanelUIControls();
+	if (altLink) {
+		unwait();
+		showContentPanel(altLink);
+	}
+	else {
+		var detailPanel = $('#cw-content-detail-data');
+		detailPanel.html(data);
+		unwait();
+		// cw-content-detail-tabs: calls jquery ui tabs widgets
+		setupContentPanelUIControls();
 
-        link.text(link.text().swap('Edit', 'Save'));
-        link.toggleClass('cw-gray').toggleClass('cw-red');
-        link.toggleClass('cw-content-edit-link').toggleClass('cw-content-save-link');
-        link[0].href = link[0].href.swap('Edit', 'Save');
-        link[0].rel = link[0].rel.swap('Edit', 'Save');
+		link.text(link.text().swap('Edit', 'Save'));
+		link.toggleClass('cw-gray').toggleClass('cw-red');
+		link.toggleClass('cw-content-edit-link').toggleClass('cw-content-save-link');
+		link[0].href = link[0].href.swap('Edit', 'Save');
+		link[0].rel = link[0].rel.swap('Edit', 'Save');
 
-        isContentDetailShowing = true;
-        
-    }
+		isContentDetailShowing = true;
+		
+	}
 }
 
 function setupContentPanelUIControls() {
-    //$('.cw-content-detail-menu').button();
-    $('#cw-content-detail-tabs').tabs();
-    //$('.cw-tag-checkbox').button();
-    setupVolumeSlider();
-    setupAutoComplete();
+	//$('.cw-content-detail-menu').button();
+	$('#cw-content-detail-tabs').tabs();
+	//$('.cw-tag-checkbox').button();
+	setupVolumeSlider();
+	setupAutoComplete();
 }
 
 function deleteContentRight(link) {
 
-    var parentRow = link.closest('tr');
-    var modelAction = link.prev('.cw-model-action');
-    modelAction.val(2); // ModelAction=Delete
-    parentRow.hide().next().hide();
-    
+	var parentRow = link.closest('tr');
+	var modelAction = link.prev('.cw-model-action');
+	modelAction.val(2); // ModelAction=Delete
+	parentRow.hide().next().hide();
+	
 }
 
 //***********************************************
@@ -359,13 +367,13 @@ function deleteContentRight(link) {
 //***********************************************
 function closeContentPanel() {
 
-    if (isContentDetailShowing) {
-        var contentDetailRow = $('#cw-content-detail-row'); // $('.hello').remove();
-        if (contentDetailRow.length > 0) { contentDetailRow.remove(); }
-        $('.cw-row-selected').removeClass('cw-row-selected');
-        isContentDetailShowing = false;
-        mediaStop();
-    }
+	if (isContentDetailShowing) {
+		var contentDetailRow = $('#cw-content-detail-row'); // $('.hello').remove();
+		if (contentDetailRow.length > 0) { contentDetailRow.remove(); }
+		$('.cw-row-selected').removeClass('cw-row-selected');
+		isContentDetailShowing = false;
+		mediaStop();
+	}
 }
 
 //-----------------------------------------------------------------------------------
@@ -374,16 +382,16 @@ function closeContentPanel() {
 var _lastMediaButtonPressed;
 
 function mediaPlay(url, id) {
-    soundPlay(url);
-    togglePlayButton(id);
-    $('.cw-media-repeat-link').removeAttr('disabled');
-    _lastMediaButtonPressed = id;
+	soundPlay(url);
+	togglePlayButton(id);
+	$('.cw-media-repeat-link').removeAttr('disabled');
+	_lastMediaButtonPressed = id;
 }
 
 function mediaRepeat() {
-    if (soundPlayRepeat() == sm_ps_stopped) {
-        togglePlayButton(_lastMediaButtonPressed);
-    }
+	if (soundPlayRepeat() == sm_ps_stopped) {
+		togglePlayButton(_lastMediaButtonPressed);
+	}
 }
 
 
@@ -391,43 +399,43 @@ function mediaRepeat() {
 //  togglePlayButton
 //***********************************************
 function togglePlayButton(id) {
-    togglePlayButtons(id, true);
+	togglePlayButtons(id, true);
 }
 
 //***********************************************
 //  togglePlayButtons
 //***********************************************
 function togglePlayButtons(id, toggle) {
-    
-    var readyClass = 'b-play';
-    var playingClass = 'b-pause';
-    var readyColorClass = 'cw-green';
-    var playingColorClass = 'cw-red';
+	
+	var readyClass = 'b-play';
+	var playingClass = 'b-pause';
+	var readyColorClass = 'cw-green';
+	var playingColorClass = 'cw-red';
 
-    var button = $(id);
-    var icon = button.children('span');
+	var button = $(id);
+	var icon = button.children('span');
 
-    if (!toggle) {
-        // we're only concerned with resetting this link
-        if (button.hasClass(playingColorClass)) {
-            button.removeClass(playingColorClass).addClass(readyColorClass); //switchClass(playingColorClass, readyColorClass); //
-            icon.removeClass(playingClass).addClass(readyClass);
-        }
-    
-    } else {
-        
-        button.toggleClass(readyColorClass);
-        button.toggleClass(playingColorClass);
-        icon.toggleClass(playingClass);
-        icon.toggleClass(readyClass);
+	if (!toggle) {
+		// we're only concerned with resetting this link
+		if (button.hasClass(playingColorClass)) {
+			button.removeClass(playingColorClass).addClass(readyColorClass); //switchClass(playingColorClass, readyColorClass); //
+			icon.removeClass(playingClass).addClass(readyClass);
+		}
+	
+	} else {
+		
+		button.toggleClass(readyColorClass);
+		button.toggleClass(playingColorClass);
+		icon.toggleClass(playingClass);
+		icon.toggleClass(readyClass);
 
-        var otherButton = button.siblings('.cw-media-play-link');
+		var otherButton = button.siblings('.cw-media-play-link');
 
-        if (otherButton.length > 0) {
-            //recurse
-            togglePlayButtons('#' + otherButton[0].id, false);
-        }
-    }
+		if (otherButton.length > 0) {
+			//recurse
+			togglePlayButtons('#' + otherButton[0].id, false);
+		}
+	}
 }
 
 //***********************************************
@@ -435,14 +443,14 @@ function togglePlayButtons(id, toggle) {
 //***********************************************
 function toggleAllPlayButtons() {
 
-    var buttons = $('.cw-media-play-link');
+	var buttons = $('.cw-media-play-link');
 
-    buttons.each(
-        function (x) {
-            var button = buttons[x];
-            togglePlayButtons('#' + button.id, false);
-        }
-    );
+	buttons.each(
+		function (x) {
+			var button = buttons[x];
+			togglePlayButtons('#' + button.id, false);
+		}
+	);
 }
 
 //***********************************************
@@ -450,40 +458,40 @@ function toggleAllPlayButtons() {
 //***********************************************
 function setCurrentMediaTime(length) {
 
-    var totalTime = millSecsToTimeCode(length, true);
-    $('#cw-media-player-time').html(totalTime);
+	var totalTime = millSecsToTimeCode(length, true);
+	$('#cw-media-player-time').html(totalTime);
 
 }
 
 function setCurrentPosition(position, duration) {
-    duration = duration == 0 ? 1000 : duration; 
-    $('#cw-media-position').width((((position / duration) * 100) + '%'));
+	duration = duration == 0 ? 1000 : duration; 
+	$('#cw-media-position').width((((position / duration) * 100) + '%'));
 }
 function setCurrentLoadPercentage(loaded, total) {
-    total = total == 0 ? 1000 : total;
-    $('#cw-media-loaded').width((((loaded / total) * 100) + '%'));
+	total = total == 0 ? 1000 : total;
+	$('#cw-media-loaded').width((((loaded / total) * 100) + '%'));
 }
 //***********************************************
 //  toggleAllPlayButtons: sets the total duration value
 //***********************************************
 function setTotalMediaLength(length) {
 
-    var totalTime = millSecsToTimeCode(length, true);
-    $('#cw-media-player-length').html(totalTime);
+	var totalTime = millSecsToTimeCode(length, true);
+	$('#cw-media-player-length').html(totalTime);
 }
 
 function setupVolumeSlider() {
-    // setup master volume
-    var vol = _currentVolume != null && _currentVolume >= 0 ? _currentVolume : 60;
+	// setup master volume
+	var vol = _currentVolume != null && _currentVolume >= 0 ? _currentVolume : 60;
 
-    $("#cw-media-player-volume").slider({
-            value: vol,
-            orientation: "horizontal",
-            range: "min",
-            animate: true,
-            slide: function (evt, ui) { changeVolume(ui.value); }
-        }
-    );
+	$("#cw-media-player-volume").slider({
+			value: vol,
+			orientation: "horizontal",
+			range: "min",
+			animate: true,
+			slide: function (evt, ui) { changeVolume(ui.value); }
+		}
+	);
 }
 //-----------------------------------------------------------------------------------
 // User Management
@@ -498,14 +506,14 @@ var userDetailId = '#cw-user-detail';
 //  showUserDetailPanel
 //***********************************************
 function showUserDetailPanel(data) {
-    //var url = '/User/Userdetail/' + userId;
-    
-    var userDetail = $(userDetailId);
-    userDetail.html(data);
-    if (!isUserDetailShowing) {
-        userDetail.show(); //fadeIn('slow');
-        isUserDetailShowing = true;
-    }
+	//var url = '/User/Userdetail/' + userId;
+	
+	var userDetail = $(userDetailId);
+	userDetail.html(data);
+	if (!isUserDetailShowing) {
+		userDetail.show(); //fadeIn('slow');
+		isUserDetailShowing = true;
+	}
 
 }
 
@@ -513,13 +521,13 @@ function showUserDetailPanel(data) {
 //  showUserDetailPanel
 //***********************************************
 function showCatalogDetailPanel(data) {
-    //var url = '/User/Userdetail/' + userId;
-    
-    var catalogDetail = $(catalogDetailId);
-    catalogDetail.html(data);
-    if (!isCatalogDetailShowing) {
-        catalogDetail.show(); //fadeIn('slow');
-        isCatalogDetailShowing = true;
-    }
+	//var url = '/User/Userdetail/' + userId;
+	
+	var catalogDetail = $(catalogDetailId);
+	catalogDetail.html(data);
+	if (!isCatalogDetailShowing) {
+		catalogDetail.show(); //fadeIn('slow');
+		isCatalogDetailShowing = true;
+	}
 
 }

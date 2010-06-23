@@ -52,8 +52,38 @@ namespace SongSearch.Web.Controllers
 			}
 		}
 
-		
 
+		// ****************************************************************************
+		// Artist/Johnny
+		// ****************************************************************************
+		public virtual ActionResult Artist(string name) {
+
+			SearchField fld = new SearchField() {
+				P = 2,
+				T = SearchTypes.Contains,
+				V = new string[] { name }
+			};
+
+			IList<SearchField> f = new List<SearchField>() { fld };
+			return Results(f, null, null, null);
+		}
+
+		// ****************************************************************************
+		// Catalog/Ford
+		// ****************************************************************************
+		[RequireAuthorization(MinAccessLevel=Roles.Admin)]
+		public virtual ActionResult Catalog(string name) {
+
+			SearchField fld = new SearchField() {
+				P = 16,
+				T = SearchTypes.Contains,
+				V = new string[] { name }
+			};
+			IList<SearchField> f = new List<SearchField>();
+			f.Add(fld);
+			return RedirectToAction("Results", new { f = f, p = 0, s = 0, o = 0 });
+		}
+		
 		// ****************************************************************************
 		// Search/Results/ f = SearchField, p = PageIndex, s = SortField, o = SortType
 		// ****************************************************************************
@@ -74,7 +104,7 @@ namespace SongSearch.Web.Controllers
 						this.FeedbackInfo(msg);
 					}
 
-					return View(model);
+					return View("Results", model);
 				}
 				catch {
 					this.FeedbackError("There was an error getting your search results. Please try again in a bit.");

@@ -33,13 +33,17 @@ namespace SongSearch.Web.Controllers
 
 
 		// GET: /CatalogUpload/
-		public ActionResult Index() {
+		public virtual ActionResult Index() {
+
+			
 
 			return View();
 		}
 
 		public virtual ActionResult Complete()
 		{
+			// Cleanup upload folder
+			FileSystem.SafeDeleteFolder(_currentUser.UploadFolder(create: false));
 			CacheService.InitializeApp(true);
 			SessionService.Session().InitializeSession(true);
 
@@ -47,9 +51,12 @@ namespace SongSearch.Web.Controllers
 		}
 
 		// **************************************
-		// URL: /Catalog/UploadWizard
+		// URL: /Catalog/Upload
 		// **************************************
 		public virtual ActionResult Upload() {
+
+			// Cleanup upload folder
+			FileSystem.SafeDeleteFolder(_currentUser.UploadFolder(create: false));
 
 			var state = new CatalogUploadState(_catUploadService.CatalogUploadWorkflow.WorkflowSteps.Count);
 
@@ -104,28 +111,18 @@ namespace SongSearch.Web.Controllers
 
 		}
 
-		public virtual ActionResult MediaUpload() {
+		// **************************************
+		// URL: /Catalog/UserMediaUpload
+		// **************************************
+		public virtual ActionResult UserMediaUpload() {
 
 			IDictionary<string, string> files = new Dictionary<string, string>();
-			//foreach (string fileName in Request.Files) {
-			//    var file = Request.Files[fileName] as HttpPostedFileBase;
-
-			//    if (file.ContentLength > 0) {
-			//        //TODO: CommitChanges Asset Data
-			//        string uploadPath = Settings.UploadPath.Text(); // @"D:\Inetpub\wwwroot\Assets\Uploads";// Path.Combine(asset.AssetTypeLocation, "Uploads");
-
-			//        string userFileName = String.Concat(_currentUser.UserId, "_", Path.GetFileName(file.FileName));
-			//        string filePath = Path.Combine(uploadPath, userFileName);
-			//        file.SaveAs(filePath);
-			//        files.Add("FileName", userFileName);
-			//    }
-			//}
-
+			
 			int chunk = Request.QueryString["chunk"] != null ? int.Parse(Request.QueryString["chunk"]) : 0;
 			string fileName = Request.QueryString["name"] != null ? Request.QueryString["name"] : "";
 
-			var filePath = _catUploadService.GetUploadPath(fileName);
-
+			var filePath = _currentUser.UploadFile(fileName: fileName);
+			
 			var buffer = new Byte[Request.InputStream.Length];
 			Request.InputStream.Read(buffer, 0, buffer.Length);
 
@@ -136,17 +133,7 @@ namespace SongSearch.Web.Controllers
 			fs.Write(buffer, 0, buffer.Length);
 			fs.Close();
 
-			////open a file, if our chunk is 1 or more, we should be appending to an existing file, otherwise create a new file
-			//string uploadPath = Settings.UploadPath.Text(); // @"D:\Inetpub\wwwroot\Assets\Uploads";// Path.Combine(asset.AssetTypeLocation, "Uploads");
-
-			////string userFileName = String.Concat(User.UserID(), "_", Path.GetFileName(fileName));
-			//string filePath = Path.Combine(uploadPath, fileName);
-
-			//FileStream fs = new FileStream(filePath, chunk == 0 ? FileMode.OpenOrCreate : FileMode.Append);
-
-			//write our input stream to a buffer
-
-			return Json(new { Files = files.ToArray() });
+			return Json(new { Files = new string[] { filePath }});
 		}
 
 		private CatalogUploadViewModel GetCatalogViewModel(WorkflowStep<CatalogUploadState> nextStep, CatalogUploadState state){

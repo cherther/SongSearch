@@ -43,9 +43,10 @@ namespace SongSearch.Web.Controllers {
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
+            public readonly string Index = "Index";
             public readonly string Complete = "Complete";
             public readonly string Upload = "Upload";
-            public readonly string MediaUpload = "MediaUpload";
+            public readonly string UserMediaUpload = "UserMediaUpload";
         }
 
 
@@ -69,6 +70,11 @@ namespace SongSearch.Web.Controllers {
     public class T4MVC_CatalogUploadController: SongSearch.Web.Controllers.CatalogUploadController {
         public T4MVC_CatalogUploadController() : base(Dummy.Instance) { }
 
+        public override System.Web.Mvc.ActionResult Index() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Complete() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Complete);
             return callInfo;
@@ -85,8 +91,8 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult MediaUpload() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.MediaUpload);
+        public override System.Web.Mvc.ActionResult UserMediaUpload() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UserMediaUpload);
             return callInfo;
         }
 

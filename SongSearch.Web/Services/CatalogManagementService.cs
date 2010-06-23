@@ -80,8 +80,8 @@ namespace SongSearch.Web.Services {
 			var contents = catalog.Contents.ToList();
 			foreach (var content in contents) {
 
-				Files.SafeDelete(content.MediaFilePath(MediaVersion.Preview), true);
-				Files.SafeDelete(content.MediaFilePath(MediaVersion.FullSong), true);
+				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Preview), true);
+				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.FullSong), true);
 
 				DataSession.Delete<Content>(content);
 

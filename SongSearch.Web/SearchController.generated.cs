@@ -32,6 +32,16 @@ namespace SongSearch.Web.Controllers {
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Artist() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Artist);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Catalog() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Catalog);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Results() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Results);
         }
@@ -59,6 +69,8 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
+            public readonly string Artist = "Artist";
+            public readonly string Catalog = "Catalog";
             public readonly string Results = "Results";
             public readonly string Print = "Print";
             public readonly string AutoComplete = "AutoComplete";
@@ -87,6 +99,18 @@ namespace SongSearch.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Index() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Artist(string name) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Artist);
+            callInfo.RouteValueDictionary.Add("name", name);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Catalog(string name) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Catalog);
+            callInfo.RouteValueDictionary.Add("name", name);
             return callInfo;
         }
 

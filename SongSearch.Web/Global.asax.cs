@@ -90,6 +90,18 @@ namespace SongSearch.Web {
 				"Register",
 				new { controller = "Account", action = "Register" }
 			);
+
+			routes.MapRoute(
+				"Artist",
+				"Artist/{id}",
+				new { controller = "Search", action = "Artist" }
+			);
+
+			routes.MapRoute(
+				"Catalog",
+				"Catalog/{id}",
+				new { controller = "Search", action = "Catalog" }
+			);
 			routes.MapRoute(
 				"Default", // Route name
 				"{controller}/{action}/{id}", // URL with parameters

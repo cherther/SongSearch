@@ -307,7 +307,7 @@ namespace SongSearch.Web.Services {
 
 			cart = null;
 
-			Files.SafeDelete(path, false);
+			FileSystem.SafeDelete(path, false);
 
 		}
 

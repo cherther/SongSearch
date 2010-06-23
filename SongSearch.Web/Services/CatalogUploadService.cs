@@ -105,20 +105,7 @@ namespace SongSearch.Web.Services {
 			throw new NotImplementedException();
 		}
 
-		// **************************************
-		// GetUploadPath
-		// **************************************
-		public string GetUploadPath(string fileName, string mediaVersion = "") {
-			string uploadPath = Settings.UploadPath.Text(); // @"D:\Inetpub\wwwroot\Assets\Uploads";// Path.Combine(asset.AssetTypeLocation, "Uploads");
-
-			//string userFileName = String.Concat(_currentUser.UserId, "_", Path.GetFileName(fileName));
-			string userFolder = Path.Combine(uploadPath, ActiveUser.UserId.ToString(), mediaVersion);
-			if (!Directory.Exists(userFolder)) { Directory.CreateDirectory(userFolder); }
-
-			//string userFileName = String.Concat(User.UserId(), "_", Path.GetFileName(fileName));
-			return Path.Combine(userFolder, fileName);
-		}
-
+		
 		// **************************************
 		// CatalogUploadWorkflow
 		// **************************************
@@ -131,10 +118,10 @@ namespace SongSearch.Web.Services {
 			wf.WorkflowSteps = new List<WorkflowStep<CatalogUploadState>>();
 
 			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SelectCatalog, 0, "Select Catalog", "wfSelectCatalog"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongFiles, 1, "Add Song Files", "wfAddSongFiles"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongPreviews, 2, "Add Preview Files", "wfAddPreviewFiles"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(EditMetadata, 3, "Edit Metadata", "wfEditMetadata"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SaveCatalog, 4, "Save Catalog", "wfSaveCatalog"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongFiles, 1, "Upload Song Files", "wfAddSongFiles"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongPreviews, 2, "Upload Preview Files", "wfAddPreviewFiles"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(EditMetadata, 3, "Review Song Data", "wfEditMetadata"));
+			//wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SaveCatalog, 4, "Save Catalog", "wfSaveCatalog"));
 
 			return wf;
 		}
@@ -211,21 +198,28 @@ namespace SongSearch.Web.Services {
 			var contentFiles = state.UploadFiles.Select(f => f.FileName).Distinct().ToList();
 			foreach (var file in contentFiles) {
 
-				var fileName = Path.GetFileNameWithoutExtension(file).Split('-');
-				var title = fileName.First();
-				var artist = fileName.Length > 1 ? fileName[1] : "(N/A)";
-				int releaseYear;
-				int.TryParse(fileName.Length > 2 ? fileName[2] : "", out releaseYear);
-
 				var files = state.UploadFiles.Where(f => f.FileName == file).ToList();
 
 				var full = files.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.FullSong);
 				var preview = files.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Preview);
+				
+				
+				ID3Data id3 = ID3Reader.GetID3Metadata(full.FilePath);
 
+				var fileName = Path.GetFileNameWithoutExtension(file).Split('-');
+				var title = id3.Title.AsNullIfWhiteSpace() ?? fileName.First();
+				var artist = id3.Artist.AsNullIfWhiteSpace() ?? (fileName.Length > 1 ? fileName[1] : "(N/A)");
+				var album = id3.Album.AsNullIfWhiteSpace() ?? "";
+				string year = id3.Year.AsNullIfWhiteSpace() ?? (fileName.Length > 2 ? fileName[2] : "");
+				int releaseYear;
+				int.TryParse(year, out releaseYear);
+
+				
 				content.Add(new Content() {
 					Title = title,
 					Artist = artist,
 					ReleaseYear = releaseYear.AsNullIfZero(),
+					Notes = album,
 					HasMediaFullVersion = full != null,
 					HasMediaPreviewVersion = preview != null,
 					UploadFiles = files
@@ -251,6 +245,8 @@ namespace SongSearch.Web.Services {
 				itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
 			}
 			state.Content = content;
+			
+			state = SaveCatalog(state);
 
 			return state;
 		}
@@ -303,7 +299,7 @@ namespace SongSearch.Web.Services {
 
 						var filePath = itm.MediaFilePath(file.FileMediaVersion);
 
-						Files.SafeMove(file.FilePath, filePath, true);
+						FileSystem.SafeMove(file.FilePath, filePath, true);
 
 					}
 				}
@@ -323,8 +319,8 @@ namespace SongSearch.Web.Services {
 
 			var newFiles = new List<string>();
 			foreach (var file in files) {
-				var filePath = GetUploadPath(file);
-				var newFilePath = GetUploadPath(file, mediaVersion.ToString());
+				var filePath = ActiveUser.UploadFile(fileName: file);
+				var newFilePath = ActiveUser.UploadFile(file, mediaVersion.ToString());
 				if (File.Exists(newFilePath)) { File.Delete(newFilePath);}
 				File.Move(filePath, newFilePath);
 				newFiles.Add(newFilePath);

@@ -4,8 +4,8 @@
 	var users = Model.Users;// != null ? Model.Users.OrderBy(x => x.FullName()) : null;
 	var roleClasses = new string[] { "cw-black", "cw-orange", "cw-green", "cw-purple", "cw-blue" };
 	var catalogDetailUrl = Request.Url;//String.Concat(Url.Content("/"), Url.Action("Detail", new { id = user.UserId }));
-	
-	var catalogSearchUrl = String.Concat(Url.Action(MVC.Search.Results()), @"?f[0].P=16&f[0].T=1&f[0].V=", catalog.CatalogName);
+
+	var catalogSearchUrl = String.Concat("/Search/Results?f[0].P=16&f[0].T=1&f[0].V=", Url.Encode(catalog.CatalogName));
 %>
 <div>
 	Catalog: <strong><%= catalog.CatalogName %></strong>
