@@ -51,15 +51,17 @@ namespace SongSearch.Web.Services {
 		public int StepIndex { get; set; }
 		//public bool IsStepComplete { get; set; }
 		public string StepName { get; set; }
+		public string StepButton { get; set; }
 		public StepActionDelegate StepAction { get; set; }
 		public string StepView { get; set; }
 		public WorkflowStepStatus StepStatus {get;set;}
 
-		public WorkflowStep(StepActionDelegate stepAction, int stepIndex, string stepName, string stepView) {
+		public WorkflowStep(StepActionDelegate stepAction, int stepIndex, string stepName, string stepView, string stepButton) {
 			StepAction = stepAction;
 			StepIndex = stepIndex;
 			StepName = stepName;
 			StepView = stepView;
+			StepButton = stepButton.AsNullIfWhiteSpace() ?? "Next";
 		}
 
 		public T Process(T state) {

@@ -224,6 +224,33 @@ function setSelectedSearchTagValue(link) {
 }
 
 //***********************************************
+//  toggleRowCheckboxes
+//***********************************************
+function toggleRowCheckboxes(trigger) {
+	var checkboxes = $('.cw-row-checkbox:enabled');
+	if ($(trigger).is(':checked')) {
+		checkboxes.attr('checked', 'checked');
+	} else {
+		checkboxes.removeAttr('checked');
+	}
+}
+
+//***********************************************
+//  toggleRowCheckboxes
+//***********************************************
+function strikeoutRowCheckboxes() {
+    var checkboxes = $('.cw-row-checkbox:checked');
+    checkboxes.attr('disabled', 'disabled');
+    var cells = checkboxes.parent('td').siblings();
+    cells.css('text-decoration', 'line-through');
+    cells.attr('disabled', 'true');
+    cells.children('a').attr('disabled', 'true');
+}
+function removeCheckedRows() {
+    var checkboxes = $('.cw-row-checkbox:checked');
+    checkboxes.closest('tr').remove();
+}
+//***********************************************
 //  updateAddToCartAllButtontext
 //***********************************************
 function updateAddToCartAllButtontext(count) {
@@ -239,28 +266,29 @@ function updateAddToCartAllButtontext(count) {
 //***********************************************
 function showContentPanel(link) {
 
-	var contentLink = link[0];
-	isContentEditMode = contentLink.rel == "Edit";
-	isContentSaveMode = contentLink.rel == "Save";
-	isContentViewMode = !isContentEditMode && !isContentSaveMode;
+    var contentLink = link[0];
+    if (!link.is(':disabled')) {
+        isContentEditMode = contentLink.rel == "Edit";
+        isContentSaveMode = contentLink.rel == "Save";
+        isContentViewMode = !isContentEditMode && !isContentSaveMode;
 
-	if (isContentViewMode) {
-		mediaStop();
-	}
-	var sameContent = lastContentDetailLinkClicked != null ? link[0] == lastContentDetailLinkClicked[0] : false;
+        if (isContentViewMode) {
+            mediaStop();
+        }
+        var sameContent = lastContentDetailLinkClicked != null ? link[0] == lastContentDetailLinkClicked[0] : false;
 
-	if (!sameContent || !isContentViewMode) {
+        if (!sameContent || !isContentViewMode) {
 
-		var url = link[0].href;
-		getContentDetailAjax(url, link);
+            var url = link[0].href;
+            getContentDetailAjax(url, link);
 
-	} else {
-		
-		closeContentPanel();
+        } else {
 
-		lastContentDetailLinkClicked = null;
-	}
-	
+            closeContentPanel();
+
+            lastContentDetailLinkClicked = null;
+        }
+    }
 }
 
 //***********************************************

@@ -10,7 +10,7 @@ Enter the name of the new catalog:
 <div>
 Or, select one of your existing catalogs:
 	<div>
-		<%: Html.DropDownList("state.CatalogId", new SelectList(Model.MyCatalogs, "CatalogId", "CatalogName"), "")%>
+		<%: Html.DropDownList("state.CatalogId", new SelectList(Model.MyCatalogs, "CatalogId", "CatalogName", Model.CatalogUploadState.CatalogId), "")%>
 	</div>
 </div>
 <div>&nbsp;</div>

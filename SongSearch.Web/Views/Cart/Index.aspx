@@ -12,7 +12,11 @@
 		
 		var activeCart = Model.MyCarts.Where(c => c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();
 
-		var activeCartContent = activeCart != null ? new PagedList<SongSearch.Web.Data.Content>(activeCart.Contents.AsQueryable(), 0, 0) : null;
+		var activeCartContent = activeCart != null ? 
+			new PagedList<SongSearch.Web.Data.Content>(
+				activeCart.Contents.OrderBy(c => c.Artist).ThenBy(c => c.Title).AsQueryable()
+				, 0, 0) 
+				: null;
 		var activeCartCount = activeCartContent != null && activeCartContent.Count > 0 ? activeCartContent.Count() : 0;
 		
 		var contentListViewModel = new ContentListViewModel() { List = activeCartContent, ListHeaders = Model.CartContentHeaders, ShowDetails = true };

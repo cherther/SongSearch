@@ -64,6 +64,7 @@ namespace SongSearch.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string ctrlCatalogContentsTable = "~/Views/CatalogManagement/ctrlCatalogContentsTable.ascx";
             public readonly string ctrlCatalogList = "~/Views/CatalogManagement/ctrlCatalogList.ascx";
             public readonly string ctrlDetail = "~/Views/CatalogManagement/ctrlDetail.ascx";
             public readonly string ctrlUserList = "~/Views/CatalogManagement/ctrlUserList.ascx";

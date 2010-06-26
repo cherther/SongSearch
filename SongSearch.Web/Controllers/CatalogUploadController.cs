@@ -53,13 +53,15 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Catalog/Upload
 		// **************************************
-		public virtual ActionResult Upload() {
+		public virtual ActionResult Upload(int? id) {
 
 			// Cleanup upload folder
 			FileSystem.SafeDeleteFolder(_currentUser.UploadFolder(create: false));
 
 			var state = new CatalogUploadState(_catUploadService.CatalogUploadWorkflow.WorkflowSteps.Count);
-
+			if (id.GetValueOrDefault() > 0) {
+				state.CatalogId = id.GetValueOrDefault();
+			}
 			var nextStep = _catUploadService.NextStep(state);
 			state.CurrentStepIndex = nextStep.StepIndex;
 			Session["CatalogUploadState.WorkflowStepsStatus"] = state.WorkflowStepsStatus;
@@ -100,9 +102,7 @@ namespace SongSearch.Web.Controllers
 				//    : uploadFiles;
 				Session["CatalogUploadState.UploadFiles"] = state.UploadFiles != null ? state.UploadFiles.Distinct().ToList() : state.UploadFiles;
 				var vm = GetCatalogViewModel(nextStep, state);
-				if (state.CurrentStepIndex == state.WorkflowStepsStatus.Count() - 1) {
-					vm.StepActionName = "Save";
-				}
+				vm.StepActionName = nextStep.StepButton;
 	
 				return View(vm);
 			} else {

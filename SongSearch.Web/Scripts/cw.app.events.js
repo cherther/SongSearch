@@ -88,21 +88,16 @@
 		}
 	);
 	//
-	$('#cw-select-all-cart-items-check').click(
+	$('.cw-select-all-items-check').live('click',
 		function (evt) {
-			var checkboxes = $('.remove-from-cart-checkbox');
-			if ($(this).is(':checked')) {
-				checkboxes.attr('checked', 'checked');
-			} else {
-				checkboxes.removeAttr('checked');
-			}
+			toggleRowCheckboxes(this);
 		}
 	);
 
 	$('#cw-remove-all-from-cart').click(
 		function (evt) {
 			evt.preventDefault();
-			var checkboxes = $('.remove-from-cart-checkbox:checked');
+			var checkboxes = $('.cw-row-checkbox:checked');
 			if (checkboxes.length > 0) {
 				var form = $('#cw-cart-form');
 				form.attr('action', '/Cart/RemoveMultiple');
@@ -422,7 +417,7 @@
 			evt.preventDefault();
 			var link = $(this);
 			var url = link[0].href;
-			var listing = link.parents('.cw-catalog-listing');
+			var listing = link.parents('.cw-catalog-listing'); //???
 			$('.cw-catalog-listing').removeClass('cw-selected');
 			listing.addClass('cw-selected');
 
@@ -431,6 +426,24 @@
 		}
 	);
 
+	$('#cw-catalog-contents-show-link').live('click',
+		function (evt) {
+
+			evt.preventDefault();
+			$('.cw-tbl-catalog-contents').toggle();
+			$(this).text($(this).text().swap('Show', 'Hide'));
+
+		}
+	);
+
+	$('#cw-delete-multiple-content').live('click',
+		function (evt) {
+			evt.preventDefault();
+			if ($('.cw-row-checkbox:checked').length > 0 && confirm('Are you sure you want to permanently delete all selected songs?')) {
+				deleteContentMultipleAjax();
+			}
+		}
+	);
 
 	var uploadQueue = $("#uploader");
 	if (uploadQueue.length > 0) {

@@ -197,6 +197,34 @@ function addToCartMultipleAjax(link, items) {
 
 }
 
+//-----------------------------------------------------------------------------------
+// Catalog Contents Management
+//-----------------------------------------------------------------------------------
+function deleteContentMultipleAjax() {
+
+	var options = {
+		beforeSubmit: function () { wait(); },
+		success: function (data, status, xhr) {
+			if (status == 'error') {
+				unwait();
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+			} else {
+				feedback('info', data + ' item(s) deleted');
+				updateCartCount();
+				removeCheckedRows();
+				unwait();
+			}
+		},
+		error:
+			function (xhr, status, error) {
+				unwait();
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+
+			}
+	};
+
+	$('#cw-catalog-contents-form').ajaxSubmit(options);
+}
 
 //function removeFromCartAjax(url) {
 //   
@@ -304,32 +332,32 @@ function setSystemAdminAccess(link) {
 	var url = link[0].value;
 
 	$.ajax({
-	    url: url,
-	    dataType: 'json',
-	    type: 'POST',
-	    cache: false,
-	    success: function (data, status, xhr) {
-	        if (status == "error") {
-	            feedback('error', xhr.status + ' ' + xhr.statusText);
-	        }
-	        else {
-	            var label = link.next('label');
-	            if (link.is(':checked')) {
-	                link.removeAttr('checked');
-	                label.text('No');
-	                label.removeClass('cw-label-red');
-	            } else {
-	                link.attr('checked', true);
-	                label.text('Yes');
-	                label.addClass('cw-label-red');
-	            }
+		url: url,
+		dataType: 'json',
+		type: 'POST',
+		cache: false,
+		success: function (data, status, xhr) {
+			if (status == "error") {
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+			}
+			else {
+				var label = link.next('label');
+				if (link.is(':checked')) {
+					link.removeAttr('checked');
+					label.text('No');
+					label.removeClass('cw-label-red');
+				} else {
+					link.attr('checked', true);
+					label.text('Yes');
+					label.addClass('cw-label-red');
+				}
 
-	            feedback('info', 'System access updated');
-	        }
-	    },
-	    error: function (xhr, status, error) {
-	        feedback('error', xhr.status + " " + xhr.statusText);
-	    }
+				feedback('info', 'System access updated');
+			}
+		},
+		error: function (xhr, status, error) {
+			feedback('error', xhr.status + " " + xhr.statusText);
+		}
 	}
 	);
 

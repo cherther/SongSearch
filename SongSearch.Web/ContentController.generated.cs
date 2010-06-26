@@ -50,6 +50,11 @@ namespace SongSearch.Web.Controllers {
         public System.Web.Mvc.ActionResult Save() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Save);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Delete() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ContentController Actions { get { return MVC.Content; } }
@@ -67,6 +72,8 @@ namespace SongSearch.Web.Controllers {
             public readonly string Print = "Print";
             public readonly string Edit = "Edit";
             public readonly string Save = "Save";
+            public readonly string Delete = "Delete";
+            public readonly string DeleteMultiple = "DeleteMultiple";
         }
 
 
@@ -109,6 +116,17 @@ namespace SongSearch.Web.Controllers {
             callInfo.RouteValueDictionary.Add("tags", tags);
             callInfo.RouteValueDictionary.Add("rights", rights);
             callInfo.RouteValueDictionary.Add("returnData", returnData);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Delete(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+            callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DeleteMultiple() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteMultiple);
             return callInfo;
         }
 

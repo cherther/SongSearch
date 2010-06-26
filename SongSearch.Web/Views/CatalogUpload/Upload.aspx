@@ -27,6 +27,11 @@
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
 		<div>&nbsp;</div>
+			<div id="progressbarWrapper" style="height:16px;width:480px" class="ui-widget-default">
+			<div id="progressbar" style="height:100%;"></div> 
+		</div>
+		<div>&nbsp;</div>
+
 		<h3><%: stepStatusMessage %>: <%: Model.PageTitle %></h3>
 		<div>&nbsp;</div>
 		<div>
@@ -46,15 +51,15 @@
 			<%i++; %>
 			<%} %>
 		--%>	
-		<div>&nbsp;</div>
-			<div>
-				<input type="submit" id="stepAction" value="<%: Model.StepActionName %>" class="cw-button cw-simple cw-medium cw-blue" />
-			</div>
-			<%} %>
-			<div>&nbsp;</div>
-				<div id="progressbarWrapper" style="height:18px;width:220px" class="ui-widget-default">
-					<div id="progressbar" style="height:100%;"></div>
+			<%if (Model.CatalogUploadState.CurrentStepIndex < Model.CatalogUploadState.WorkflowStepsStatus.Count()-1) {%>
+				<div>&nbsp;</div>
+				<div>
+					<button type="submit" id="stepAction" class="cw-button cw-simple cw-medium cw-blue">
+						<span class="b-forward after"><%: Model.StepActionName%></span>
+					</button>
 				</div>
+			<%} %>
+			<%} %>
 		</div>
 	</div>
 </div>
@@ -64,7 +69,7 @@
 
 <asp:Content ID="Content5" ContentPlaceHolderID="Javascripts" runat="server">
 <%
-	var percentComplete = ((float)(Model.CatalogUploadState.CurrentStepIndex + 1) / (float)Model.CatalogUploadState.WorkflowStepsStatus.Count())*100;
+	var percentComplete = ((decimal)(Model.CatalogUploadState.CurrentStepIndex+1) / (decimal)Model.CatalogUploadState.WorkflowStepsStatus.Count()) * 100;
 %>
 <script language="javascript" type="text/javascript">
 	$(document).ready(function () {
@@ -73,4 +78,5 @@
 		});		
 	});
 </script>
+
 </asp:Content>

@@ -30,6 +30,11 @@ namespace SongSearch.Web.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Upload() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Upload);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public CatalogUploadController Actions { get { return MVC.CatalogUpload; } }
@@ -80,8 +85,9 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Upload() {
+        public override System.Web.Mvc.ActionResult Upload(int? id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Upload);
+            callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
 

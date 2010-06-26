@@ -11,21 +11,35 @@ namespace System.Web.Mvc {
 		public static void FeedbackInfo(this Controller controller, string message) {
 			
 			var messages = controller.TempData["feedback"] as Dictionary<string, string> ?? new Dictionary<string, string>();;
-			messages.Add(message, "info");
-			controller.TempData["feedback"] = messages;
-			
+			try {
+				messages.Add(message, "info");
+			}
+			catch { }
+			finally {
+				controller.TempData["feedback"] = messages;
+			}
 		}
 		public static void FeedbackWarning(this Controller controller, string message) {
 			
 			var messages = controller.TempData["feedback"] as Dictionary<string, string> ?? new Dictionary<string, string>(); ;
-			messages.Add(message, "warning");
-			controller.TempData["feedback"] = messages;
+			try {
+				messages.Add(message, "warning");
+			}
+			catch { }
+			finally {
+				controller.TempData["feedback"] = messages;
+			}
 		}
 		public static void FeedbackError(this Controller controller, string message) {
 			
 			var messages = controller.TempData["feedback"] as Dictionary<string, string> ?? new Dictionary<string, string>(); ;
-			messages.Add(message, "error");
-			controller.TempData["feedback"] = messages;
+			try {
+				messages.Add(message, "error");
+			}
+			catch { }
+			finally {
+				controller.TempData["feedback"] = messages;
+			}
 		}
 
 		public static string Feedback(this HtmlHelper helper) {

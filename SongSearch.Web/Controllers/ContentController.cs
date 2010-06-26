@@ -141,6 +141,50 @@ namespace SongSearch.Web.Controllers
 			}
 		}
 
+		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public virtual ActionResult Delete(int id) {
+
+			return View();
+		}
+
+		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public virtual ActionResult DeleteMultiple() {
+
+			try {
+				var itemsPosted = Request.Form["deleteContentItems"];
+
+				var items = itemsPosted != null ? itemsPosted.Split(',') : new string[] { };
+				var count = items != null ? items.Count() : 0;
+
+				var contentIds = items.Select(i => int.Parse(i)).ToArray();
+				_cntAdmService.Delete(contentIds);
+
+				CacheService.InitializeApp(true);
+				SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
+
+				if (Request.IsAjaxRequest()) {
+					return Json(count, JsonRequestBehavior.AllowGet);
+				} else {
+					this.FeedbackInfo("Item(s) deleted");
+					return RedirectToAction(MVC.CatalogManagement.Index());
+				}
+			}
+			catch (Exception ex) {
+				if (Request.IsAjaxRequest()) {
+					throw ex;
+				} else {
+					this.FeedbackError("There was an error removing the item(s)");
+					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+
+				}
+			}
+		}
+
+
 		// **************************************
 		// GetContentViewModel
 		// **************************************

@@ -1809,10 +1809,12 @@
     <Content Include="Views\Cart\ctrlCartCount.ascx" />
     <Content Include="Views\Cart\ctrlCartTable.ascx" />
     <Content Include="Views\Cart\Index.aspx" />
+    <Content Include="Views\CatalogManagement\ctrlCatalogContentsTable.ascx" />
     <Content Include="Views\CatalogManagement\ctrlCatalogList.ascx" />
     <Content Include="Views\CatalogManagement\ctrlDetail.ascx" />
     <Content Include="Views\CatalogManagement\ctrlUserList.ascx" />
     <Content Include="Views\CatalogManagement\Index.aspx" />
+    <Content Include="Views\CatalogUpload\wfComplete.ascx" />
     <Content Include="Views\CatalogUpload\ctrlHiddenFormInputs.ascx" />
     <Content Include="Views\CatalogUpload\Index.aspx" />
     <Content Include="Views\CatalogUpload\wfSaveCatalog.ascx" />
@@ -1835,6 +1837,7 @@
     <Content Include="Views\Search\PrintResults.aspx" />
     <Content Include="Views\Shared\ctrlHeader.ascx" />
     <Content Include="Views\Shared\ctrlFooter.ascx" />
+    <Content Include="Views\Shared\ctrlContentsGrid.ascx" />
     <Content Include="Views\Shared\ctrlTerritoryCloud.ascx" />
     <Content Include="Views\Shared\ctrlMediaplayer.ascx" />
     <Content Include="Views\Shared\ctrlTagCloud.ascx" />

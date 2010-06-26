@@ -143,9 +143,32 @@ namespace SongSearch.Web.Services {
 		//  Delete
 		// **************************************
 		public void Delete(int contentId) {
-			throw new NotImplementedException();
+
+			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
+			if (content != null) {
+				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Preview));
+				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.FullSong));
+				DataSession.Delete<Content>(content);
+			}
+
+			DataSession.CommitChanges();
 		}
 
+		public void Delete(int[] contentIds) {
+
+			foreach (var contentId in contentIds) {
+
+				var content = DataSession.Single<Content>(c => c.ContentId == contentId);
+				if (content != null) {
+					FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Preview));
+					FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.FullSong));
+					DataSession.Delete<Content>(content);
+				}
+			}
+
+			DataSession.CommitChanges();
+
+		}
 		// ----------------------------------------------------------------------------
 		// (Dispose)
 		// ----------------------------------------------------------------------------

@@ -107,14 +107,35 @@
 }
 .cw-tbl-carts-processing
 {
-    background-color: #FFFF99;
+	background-color: #FFFF99;
 }
 .cw-tbl-carts-archived
 {
-    color: Gray;
+	color: Gray;
 }
 .cw-tbl-carts-details
 {
 	display: none;
+}
+
+/* Catalog Contents */
+.cw-tbl-catalog-contents
+{
+	display: none;
+	border: 1px solid gray;
+	border-collapse: collapse;
+	padding: 3px;
+	font-size: 90%;
+	white-space: nowrap;    
+	
+}
+.cw-tbl-catalog-contents tr
+{
+	border: 1px solid #aaaaaa;
+}
+
+.cw-tbl-catalog-contents th, td
+{
+	padding: 3px;
 }
 

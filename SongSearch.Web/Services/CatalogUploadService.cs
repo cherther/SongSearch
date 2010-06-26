@@ -117,11 +117,12 @@ namespace SongSearch.Web.Services {
 
 			wf.WorkflowSteps = new List<WorkflowStep<CatalogUploadState>>();
 
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SelectCatalog, 0, "Select Catalog", "wfSelectCatalog"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongFiles, 1, "Upload Song Files", "wfAddSongFiles"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongPreviews, 2, "Upload Preview Files", "wfAddPreviewFiles"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(EditMetadata, 3, "Review Song Data", "wfEditMetadata"));
-			//wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SaveCatalog, 4, "Save Catalog", "wfSaveCatalog"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SelectCatalog, 0, "Select Catalog", "wfSelectCatalog", "Next"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongFiles, 1, "Upload Song Files", "wfAddSongFiles", "Upload"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongPreviews, 2, "Upload Preview Files", "wfAddPreviewFiles", "Upload"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(EditMetadata, 3, "Review Song Data", "wfEditMetadata", "Next"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SaveCatalog, 4, "Save Catalog", "wfSaveCatalog", "Save"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(ReviewComplete, 5, "Complete", "wfComplete", "Done"));
 
 			return wf;
 		}
@@ -246,7 +247,7 @@ namespace SongSearch.Web.Services {
 			}
 			state.Content = content;
 			
-			state = SaveCatalog(state);
+			//state = SaveCatalog(state);
 
 			return state;
 		}
@@ -312,6 +313,9 @@ namespace SongSearch.Web.Services {
 			return state;
 		}
 
+		private CatalogUploadState ReviewComplete(CatalogUploadState state) {
+			return state;
+		}
 		// **************************************	
 		// MoveToMediaVersionFolder
 		// **************************************

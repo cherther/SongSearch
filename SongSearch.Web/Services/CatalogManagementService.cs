@@ -100,10 +100,16 @@ namespace SongSearch.Web.Services {
 		// GetCatalog
 		// **************************************
 		private Catalog GetCatalog(int catalogId) {
-			return DataSession.Single<Catalog>(x => x.CatalogId == catalogId);
+			return DataSession.GetObjectQuery<Catalog>()
+				.Include("Contents")
+				.Where(x => x.CatalogId == catalogId).SingleOrDefault();			
+	//		return DataSession.Single<Catalog>(x => x.CatalogId == catalogId);
 		}
 		private Catalog GetCatalog(string catalogName) {
-			return DataSession.Single<Catalog>(x => x.CatalogName.Equals(catalogName, StringComparison.InvariantCultureIgnoreCase));
+			return DataSession.GetObjectQuery<Catalog>()
+//				.Include("Contents")
+				.Where(x => x.CatalogName.Equals(catalogName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();	
+//			return DataSession.Single<Catalog>(x => x.CatalogName.Equals(catalogName, StringComparison.InvariantCultureIgnoreCase));
 		}
 		// ----------------------------------------------------------------------------
 		// (Dispose)

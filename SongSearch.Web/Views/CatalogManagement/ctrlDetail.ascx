@@ -6,6 +6,18 @@
 	var catalogDetailUrl = Request.Url;//String.Concat(Url.Content("/"), Url.Action("Detail", new { id = user.UserId }));
 
 	var catalogSearchUrl = String.Concat("/Search/Results?f[0].P=16&f[0].T=1&f[0].V=", Url.Encode(catalog.CatalogName));
+	var catalogContents = catalog != null ?
+	new PagedList<SongSearch.Web.Data.Content>(
+		catalog.Contents.OrderBy(c => c.Artist).ThenBy(c => c.Title).AsQueryable()
+		, 0, 0)
+		: null;
+	var contentListViewModel = new ContentListViewModel() {
+		List = catalogContents,
+		ListHeaders = new string[] { "Title", "Artist", "ReleaseYear" },
+		GridActions = new GridAction[] { GridAction.Delete, GridAction.ShowDetails },
+		IsSortable = true
+	};
+
 %>
 <div>
 	Catalog: <strong><%= catalog.CatalogName %></strong>
@@ -15,11 +27,27 @@
 <div>&nbsp;</div>
 <hr />
 <div>&nbsp;</div>
-View Contents: <a href="<%: catalogSearchUrl%>"><%: String.Format("{0} song(s)", catalog.Contents.Count())%></a>
+<h4>Contents</h4>
 <div>&nbsp;</div>
+<%if (catalogContents.Count > 0){ %>
+<a href="#" id="cw-catalog-contents-show-link" class="cw-button cw-simple cw-small cw-blue">Show Songs</a>
+<%: Html.ActionLink("Upload", MVC.CatalogUpload.Upload(catalog.CatalogId), new { @class = "cw-button cw-simple cw-small cw-blue" })%>
+<%--(<%: String.Format("{0} {1}", catalogContents.Count, catalogContents.Count == 1 ? "song" : "songs")%>)--%>
+<div>&nbsp;</div>
+
+	<%using (Html.BeginForm(MVC.Content.DeleteMultiple(), FormMethod.Post, new { id = "cw-catalog-contents-form" })) { %>
+	<%= Html.Hidden("id", catalog.CatalogId)%>
+	<%= Html.AntiForgeryToken()%>
+	<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogContentsTable, contentListViewModel); %>
+	<%} %>
+<%} else {%>
+This catalog does not yet contain any songs.
+<%: Html.ActionLink("Upload", MVC.CatalogUpload.Upload(catalog.CatalogId), new { @class = "cw-button cw-simple cw-small cw-blue" })%>
+<div>&nbsp;</div>
+<%} %>
 <hr />
 <div>&nbsp;</div>
-<label><em>Catalog Access</em></label>
+<h4>Access</h4>
 <div>&nbsp;</div>
 <div style="overflow:auto ; height: 400px; width: 500px">
 		<table id="catalog-list" class="">
@@ -53,7 +81,7 @@ View Contents: <a href="<%: catalogSearchUrl%>"><%: String.Format("{0} song(s)",
 
 <%if (Model.AllowEdit) { %>
 	<div>&nbsp;</div>
-	<%using (Html.BeginForm(MVC.CatalogManagement.Delete(), FormMethod.Post)) { %>
+	<%using (Html.BeginForm(MVC.CatalogManagement.Delete(), FormMethod.Post, new { id = "cw-catalog-delete-form" })) { %>
 	<%= Html.Hidden("id", catalog.CatalogId)%>
 	<%= Html.AntiForgeryToken()%>
 	<div class="cw-outl cw-padded" >
