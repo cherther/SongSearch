@@ -145,7 +145,7 @@ namespace SongSearch.Web.Controllers
 		public virtual JsonResult AutoComplete(string f, string term) {
 
 			try {
-				term = term.ToUpper();
+				term = term.ToUpper().MakeSearchableValue();
 				var values = f.Equals("Catalog.CatalogName", StringComparison.InvariantCultureIgnoreCase) ?
 					CacheService.Catalogs().Select(c => c.CatalogName.ToUpper()).ToArray() :
 					(
@@ -158,16 +158,17 @@ namespace SongSearch.Web.Controllers
 						)
 					);
 
+				var searchValues = values.Select(v => new { Value = v, SearchValue = v.MakeSearchableValue() }).AsParallel().ToArray();
 				if (term.Length < 3) {
-					values = values != null ? values.Where(v => v.MakeSearchableValue().StartsWith(term.MakeSearchableValue())).ToArray() : values;
+					values = searchValues != null ? searchValues.Where(v => v.SearchValue.StartsWith(term)).Select(v => v.Value).ToArray() : values;
 				} else {
 
-					values = values != null ? values.Where(v => v.MakeSearchableValue().Contains(term.MakeSearchableValue())).ToArray() : values;
+					values = searchValues != null ? searchValues.Where(v => v.SearchValue.Contains(term)).Select(v => v.Value).ToArray() : values;
 				}
 
 				return Json(values, JsonRequestBehavior.AllowGet);
 			}
-			catch {
+			catch { //(Exception ex) {
 					
 				return Json("", JsonRequestBehavior.AllowGet);
 

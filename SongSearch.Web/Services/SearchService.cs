@@ -480,15 +480,7 @@ namespace SongSearch.Web.Services {
 		//    return value;
 		//}
 
-		// **************************************
-		// MakeSearchableColumn
-		// **************************************
-		private static string MakeSearchableColumnName(this string column) {
-			column = string.Format(@"{0}.ToUpper()", column);
-			var replacements = new string[] { @",", @"'", @";", @":", @"\", @"/", @"!", @"?", @"&" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
-			replacements.ForEach(x => column = String.Format(@"{0}.Replace(""{1}"","""")", column, x));
-			return column;
-		}
+		
 
 	}
 }

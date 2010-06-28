@@ -57,11 +57,31 @@ namespace SongSearch.Web {
 
 		//
 		// Removes non-alphanumeric characters, except ;
-		public static string MakeSearchableValue(this string value) {
-			value = Regex.Replace(value, @"[^a-zA-Z0-9; ]", Empty); //@"\W\s", "");
-			value = value.Replace("  ", " ").ToUpper();
+		private static string _replacements = @",';:\/!?&- ";
 
-			return value;
+		// **************************************
+		// MakeSearchableValue
+		// **************************************
+		public static string MakeSearchableValue(this string value) {
+			//var pattern = "";
+			//_replacements.ForEach(x => pattern += String.Format(@"\{0}", x));
+			//pattern = String.Format(@"[{0}]\s", pattern);
+			var newValue = value;
+			//var newvalue = Regex.Replace(value, pattern, String.Empty); //@"\W\s", "");
+			_replacements.ForEach(x => newValue = newValue.Replace(x.ToString(), ""));
+			newValue = newValue.Replace("  ", " ").ToUpper();
+
+			return newValue;
+		}
+
+		// **************************************
+		// MakeSearchableColumn
+		// **************************************
+		public static string MakeSearchableColumnName(this string column) {
+			column = string.Format(@"{0}.ToUpper()", column);
+			var replacements = new string[] { @",", @"'", @";", @":", @"\", @"/", @"!", @"?", @"&", @"-" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
+			_replacements.ForEach(x => column = String.Format(@"{0}.Replace(""{1}"","""")", column, x));
+			return column;
 		}
 
 		public static int[] SplitTags(this string tags, char separator) {

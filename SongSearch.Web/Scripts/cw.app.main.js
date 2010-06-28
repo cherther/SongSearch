@@ -135,14 +135,19 @@ function setupAutoComplete() {
 
 				var field = $(this)[0].element[0].alt; //little hack to store an extra field on the input elem, rel does not work cross-browser for input tags
 				if (field) {
-					if (aCache.term == request.term && aCache.field == field && aCache.content) {
-						response(aCache.content);
-						return;
-					}
-					if (new RegExp(aCache.term).test(request.term) && aCache.content && aCache.content.length < 13) {
-						response($.ui.autocomplete.filter(aCache.content, request.term));
-						return;
-					}
+					
+					try {
+						if (aCache.term == request.term && aCache.field == field && aCache.content) {
+							response(aCache.content);
+							return;
+						}
+						if (new RegExp(aCache.term).test(request.term) && aCache.content && aCache.content.length < 13) {
+							response($.ui.autocomplete.filter(aCache.content, request.term));
+							return;
+						}
+					}					catch (ex) {
+					}
+					//catch() {}
 
 					var url = "/Search/AutoComplete?f=";
 					$.ajax({
