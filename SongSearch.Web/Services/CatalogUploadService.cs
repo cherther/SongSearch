@@ -137,7 +137,6 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private CatalogUploadState SelectCatalog(CatalogUploadState state) {
 
-			
 			// lookup catalog id
 			if (state.CatalogId > 0) {
 			    if (!ActiveUser.IsAtLeastInCatalogRole(Roles.Admin, state.CatalogId)) {
@@ -160,8 +159,7 @@ namespace SongSearch.Web.Services {
 		// AddSongFiles
 		// **************************************
 		private CatalogUploadState AddSongFiles(CatalogUploadState state) {
-			System.Diagnostics.Debug.Write("Step2");
-			
+
 			var uploadFiles = MoveToMediaVersionFolder(state.TempFiles.Distinct().ToList(), state.MediaVersion);
 			uploadFiles = state.UploadFiles != null ?
 				(uploadFiles != null ?
@@ -178,8 +176,7 @@ namespace SongSearch.Web.Services {
 		// AddSongPreviews
 		// **************************************
 		private CatalogUploadState AddSongPreviews(CatalogUploadState state) {
-			System.Diagnostics.Debug.Write("Step3");
-//			state.UploadFiles = MoveToMediaVersionFolder(state.TempFiles.Distinct().ToList(), state.MediaVersion);
+
 			if (state.TempFiles != null && state.TempFiles.Count() > 0) {
 				
 				var uploadFiles = MoveToMediaVersionFolder(state.TempFiles.Distinct().ToList(), state.MediaVersion);
@@ -265,20 +262,16 @@ namespace SongSearch.Web.Services {
 		// EditMetadata
 		// **************************************
 		private CatalogUploadState EditMetadata(CatalogUploadState state) {
-			System.Diagnostics.Debug.Write("Step4");
+			
 			// Check Metadata, e.g. make stuff uppercase etc
-			var content = state.Content;
-			foreach (var itm in content) {
+			foreach (var itm in state.Content) {
 				itm.Title = itm.Title.AsEmptyIfNull().ToUpper();
 				itm.Artist = itm.Artist.AsEmptyIfNull().ToUpper();
 				itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull().ToUpper();
 				itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
 				itm.Notes = itm.Notes;
 			}
-			state.Content = content;
 			
-			//state = SaveCatalog(state);
-
 			return state;
 		}
 
@@ -323,6 +316,12 @@ namespace SongSearch.Web.Services {
 					itm.LastUpdatedByUserId = ActiveUser.UserId;
 					itm.LastUpdatedOn = DateTime.Now.Date;
 					
+					itm.Title = itm.Title.AsEmptyIfNull().ToUpper();
+					itm.Artist = itm.Artist.AsEmptyIfNull().ToUpper();
+					itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull().ToUpper();
+					itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
+					itm.Notes = itm.Notes;
+
 					DataSession.Add<Content>(itm);
 					DataSession.CommitChanges();
 

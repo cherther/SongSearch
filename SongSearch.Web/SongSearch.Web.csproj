@@ -1829,8 +1829,6 @@
     <Content Include="Views\Search\ctrlPager.ascx" />
     <Content Include="Views\Content\Detail.aspx" />
     <Content Include="Views\Search\PrintResults.aspx" />
-    <Content Include="Views\Shared\ctrlTerritoryEdit.ascx" />
-    <Content Include="Views\Shared\ctrlTagEdit.ascx" />
     <Content Include="Views\Shared\ctrlHeader.ascx" />
     <Content Include="Views\Shared\ctrlFooter.ascx" />
     <Content Include="Views\Shared\ctrlContentsGrid.ascx" />

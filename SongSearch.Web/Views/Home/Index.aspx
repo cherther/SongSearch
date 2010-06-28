@@ -12,9 +12,21 @@
 		<h4>What's New</h4>
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
-		<div>&nbsp;</div>
-		<div><strong>6/21/2010</strong></div>
+		<div>&nbsp;</div
+		<div><strong>6/28/2010</strong></div>
 		<ul class="cw-vertical cw-highlight">
+			<li>Catalog Song Management</li>
+			<ul class="cw-vertical">
+				<li>Each catalog shows a list of its contents with full edit features</li>
+				<li>Delete option for each song, or multiple songs</li>
+			</ul>
+			<li>
+				Better ID3 tag support: now reads old and newer formats more reliably
+			</li>
+		</ul>
+		<div>&nbsp;</div>
+		<div>6/21/2010</div>
+		<ul class="cw-vertical">
 			<li>Contact Us form added</li>
 			
 		</ul>
