@@ -58,8 +58,8 @@
     <Reference Include="DotNetOpenId">
       <HintPath>..\Ext Libraries\DotNetOpenId.dll</HintPath>
     </Reference>
-    <Reference Include="HibernatingRhinos.Profiler.Appender">
-      <HintPath>..\Ext Libraries\EntityFramework.Profiler-Build-691\HibernatingRhinos.Profiler.Appender.dll</HintPath>
+    <Reference Include="IdSharp">
+      <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
     </Reference>
     <Reference Include="Ionic.Zip">
       <HintPath>..\Ext Libraries\Ionic.Zip.dll</HintPath>
@@ -78,12 +78,6 @@
     </Reference>
     <Reference Include="NLog">
       <HintPath>..\..\mvcstarter\lib\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="Spark">
-      <HintPath>..\Ext Libraries\Spark.dll</HintPath>
-    </Reference>
-    <Reference Include="Spark.Web.Mvc">
-      <HintPath>..\Ext Libraries\Spark.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="SquishIt.Framework, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -1835,6 +1829,8 @@
     <Content Include="Views\Search\ctrlPager.ascx" />
     <Content Include="Views\Content\Detail.aspx" />
     <Content Include="Views\Search\PrintResults.aspx" />
+    <Content Include="Views\Shared\ctrlTerritoryEdit.ascx" />
+    <Content Include="Views\Shared\ctrlTagEdit.ascx" />
     <Content Include="Views\Shared\ctrlHeader.ascx" />
     <Content Include="Views\Shared\ctrlFooter.ascx" />
     <Content Include="Views\Shared\ctrlContentsGrid.ascx" />

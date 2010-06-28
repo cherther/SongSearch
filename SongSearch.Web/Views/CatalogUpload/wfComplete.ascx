@@ -7,6 +7,6 @@ You've successfully uploaded <%: Model.CatalogUploadState.UploadFiles.Count%> so
 </div>
 <div>&nbsp;</div>
 <div>
-<%: Html.ActionLink("Upload", MVC.CatalogUpload.Upload()) %> more songs or see a <%: Html.ActionLink("list", MVC.CatalogManagement.Index()) %> of your catalogs.
+<%: Html.ActionLink("Upload", MVC.CatalogUpload.Upload(Model.CatalogUploadState.CatalogId))%> more songs or see a <%: Html.ActionLink("list", MVC.CatalogManagement.Index()) %> of your catalogs.
 </div>
 <div>&nbsp;</div>

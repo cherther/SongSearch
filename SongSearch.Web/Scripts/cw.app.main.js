@@ -207,8 +207,8 @@ function setSelectedSearchTagValue(link) {
 
 	var id = link[0].id;
 
-	var valField = '#' + id.substring(0, id.indexOf('-'));
-	var tagId = id.substring(id.indexOf('-') + 1);
+	var valField = '#' + link[0].rev; // + id.substring(0, id.indexOf('-'));
+	var tagId = link[0].rel;// id.substring(id.indexOf('-') + 1);
 	var vals = $(valField) != null ? $(valField).val().split(';') : null;
 
 	var pos = vals.indexOf(tagId)
@@ -239,17 +239,45 @@ function toggleRowCheckboxes(trigger) {
 //  toggleRowCheckboxes
 //***********************************************
 function strikeoutRowCheckboxes() {
-    var checkboxes = $('.cw-row-checkbox:checked');
-    checkboxes.attr('disabled', 'disabled');
-    var cells = checkboxes.parent('td').siblings();
-    cells.css('text-decoration', 'line-through');
-    cells.attr('disabled', 'true');
-    cells.children('a').attr('disabled', 'true');
+	var checkboxes = $('.cw-row-checkbox:checked');
+	checkboxes.attr('disabled', 'disabled');
+	var cells = checkboxes.parent('td').siblings();
+	cells.css('text-decoration', 'line-through');
+	cells.attr('disabled', 'true');
+	cells.children('a').attr('disabled', 'true');
 }
 function removeCheckedRows() {
-    var checkboxes = $('.cw-row-checkbox:checked');
-    checkboxes.closest('tr').remove();
+	var checkboxes = $('.cw-row-checkbox:checked');
+	checkboxes.closest('tr').remove();
+
 }
+function isTableBodyEmpty(table) {
+    var $table = $(table + ' > TBODY > TR');
+    return ($table.length == 0);
+}
+
+function toggleContentsTable(link) {
+    if (link.length > 0) {
+        link.text(link.text().swap('Show', 'Hide'));
+    }
+    $('.cw-tbl-catalog-contents').toggle();
+
+}
+
+function hideEmptyContentsTable() {
+    
+    var table = $('.cw-tbl-catalog-contents');
+    var link = $('#cw-catalog-contents-show-link');
+
+    if (isTableBodyEmpty('.cw-tbl-catalog-contents')) {
+        table.hide();
+    
+        if (link.length > 0) {
+            link.text(link.text().swap('Show', 'Hide'));
+        }
+    }
+}
+
 //***********************************************
 //  updateAddToCartAllButtontext
 //***********************************************
@@ -266,29 +294,29 @@ function updateAddToCartAllButtontext(count) {
 //***********************************************
 function showContentPanel(link) {
 
-    var contentLink = link[0];
-    if (!link.is(':disabled')) {
-        isContentEditMode = contentLink.rel == "Edit";
-        isContentSaveMode = contentLink.rel == "Save";
-        isContentViewMode = !isContentEditMode && !isContentSaveMode;
+	var contentLink = link[0];
+	if (!link.is(':disabled')) {
+		isContentEditMode = contentLink.rel == "Edit";
+		isContentSaveMode = contentLink.rel == "Save";
+		isContentViewMode = !isContentEditMode && !isContentSaveMode;
 
-        if (isContentViewMode) {
-            mediaStop();
-        }
-        var sameContent = lastContentDetailLinkClicked != null ? link[0] == lastContentDetailLinkClicked[0] : false;
+		if (isContentViewMode) {
+			mediaStop();
+		}
+		var sameContent = lastContentDetailLinkClicked != null ? link[0] == lastContentDetailLinkClicked[0] : false;
 
-        if (!sameContent || !isContentViewMode) {
+		if (!sameContent || !isContentViewMode) {
 
-            var url = link[0].href;
-            getContentDetailAjax(url, link);
+			var url = link[0].href;
+			getContentDetailAjax(url, link);
 
-        } else {
+		} else {
 
-            closeContentPanel();
+			closeContentPanel();
 
-            lastContentDetailLinkClicked = null;
-        }
-    }
+			lastContentDetailLinkClicked = null;
+		}
+	}
 }
 
 //***********************************************

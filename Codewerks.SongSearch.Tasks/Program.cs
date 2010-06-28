@@ -41,6 +41,9 @@ namespace Codewerks.SongSearch.Tasks {
 				case "tags":
 					Importer.MakeTags();
 					break;
+				case "id3":
+					Importer.GetID3();
+					break;
 				
 				default:
 					response = "Don't know that one";

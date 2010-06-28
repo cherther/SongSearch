@@ -191,43 +191,72 @@ namespace SongSearch.Web.Services {
 						: state.UploadFiles)
 					: uploadFiles;
 
-				state.UploadFiles = uploadFiles;
+				state.UploadFiles = uploadFiles.Distinct().ToList();
 			}
 
-			IList<Content> content = new List<Content>();
+			IList<Content> contentList = new List<Content>();
+			IDictionary<UploadFile, ID3Data> taggedContent = new Dictionary<UploadFile, ID3Data>();
 
-			var contentFiles = state.UploadFiles.Select(f => f.FileName).Distinct().ToList();
-			foreach (var file in contentFiles) {
+			//var contentFiles = state.UploadFiles.Select(f => f.FileName).Distinct().ToList();
 
-				var files = state.UploadFiles.Where(f => f.FileName == file).ToList();
+			foreach (var file in state.UploadFiles) {
 
-				var full = files.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.FullSong);
-				var preview = files.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Preview);
+				taggedContent.Add(file, ID3Reader.GetID3Metadata(file.FilePath));
+			}
+
+			// try filename
+			// try title + artist
+			var taggedFullSongs = taggedContent.Where(c => c.Key.FileMediaVersion == MediaVersion.FullSong);
+			foreach (var itm in taggedFullSongs) {
+
+
+				//Get a matching preview file based on ID3 data or filename
+				var preview = 
+					(	(
+						taggedContent.Where(c =>
+							c.Key.FileMediaVersion == MediaVersion.Preview
+							&& c.Value.Title.Equals(itm.Value.Title, StringComparison.InvariantCultureIgnoreCase)
+							&& c.Value.Artist.Equals(itm.Value.Artist, StringComparison.InvariantCultureIgnoreCase)
+							) 
+							) ??
+						(
+						taggedContent.Where(c =>
+							c.Key.FileMediaVersion == MediaVersion.Preview
+							&& c.Key.FileName.Equals(itm.Key.FileName, StringComparison.InvariantCultureIgnoreCase)
+							) 
+							)
+					)
+					.Select(c => c.Key)
+					.Distinct()
+					.SingleOrDefault();
 				
-				
-				ID3Data id3 = ID3Reader.GetID3Metadata(full.FilePath);
+				var id3 = itm.Value;
 
-				var fileName = Path.GetFileNameWithoutExtension(file).Split('-');
-				var title = id3.Title.AsNullIfWhiteSpace() ?? fileName.First();
-				var artist = id3.Artist.AsNullIfWhiteSpace() ?? (fileName.Length > 1 ? fileName[1] : "(N/A)");
+				var fileNameData = Path.GetFileNameWithoutExtension(itm.Key.FileName).Split('-');
+				var title = id3.Title.AsNullIfWhiteSpace() ?? fileNameData.First();
+				var artist = id3.Artist.AsNullIfWhiteSpace() ?? (fileNameData.Length > 1 ? fileNameData[1] : "");
 				var album = id3.Album.AsNullIfWhiteSpace() ?? "";
-				string year = id3.Year.AsNullIfWhiteSpace() ?? (fileName.Length > 2 ? fileName[2] : "");
+				string year = id3.Year.AsNullIfWhiteSpace() ?? (fileNameData.Length > 2 ? fileNameData[2] : "");
 				int releaseYear;
 				int.TryParse(year, out releaseYear);
 
-				
-				content.Add(new Content() {
+				var content = new Content() {
 					Title = title,
 					Artist = artist,
 					ReleaseYear = releaseYear.AsNullIfZero(),
-					Notes = album,
-					HasMediaFullVersion = full != null,
+					Notes = !String.IsNullOrWhiteSpace(album) ? String.Concat("Album: ", album) : null,
+					HasMediaFullVersion = true,
 					HasMediaPreviewVersion = preview != null,
-					UploadFiles = files
-				});
+					UploadFiles = new List<UploadFile>()
+				};
+
+				content.UploadFiles.Add(itm.Key);
+				if (preview != null) { content.UploadFiles.Add(preview); }
+
+				contentList.Add(content);
 			}
 
-			state.Content = content;
+			state.Content = contentList;
 			
 			return state;
 		}
@@ -240,10 +269,11 @@ namespace SongSearch.Web.Services {
 			// Check Metadata, e.g. make stuff uppercase etc
 			var content = state.Content;
 			foreach (var itm in content) {
-				itm.Title = itm.Title.ToUpper();
-				itm.Artist = itm.Artist.ToUpper();
-				itm.RecordLabel = itm.RecordLabel.ToUpper();
+				itm.Title = itm.Title.AsEmptyIfNull().ToUpper();
+				itm.Artist = itm.Artist.AsEmptyIfNull().ToUpper();
+				itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull().ToUpper();
 				itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
+				itm.Notes = itm.Notes;
 			}
 			state.Content = content;
 			

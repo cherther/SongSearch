@@ -33,5 +33,10 @@ namespace SongSearch.Web {
 		public static IEnumerable<T> AsNullIfEmpty<T>(this IEnumerable<T> items) {
 			return (items == null || items.Any()) ? null : items;			
 		}
+
+		public static string AsEmptyIfNull(this string item) {
+			return String.IsNullOrEmpty(item) ? String.Empty : item;
+		}
+
 	}
 }

@@ -43,15 +43,16 @@ We have tried to automatically populate a few fields for you based on the file n
 	<%: content.HasMediaPreviewVersion.ToYesNo() %>
 	<%: Html.Hidden(String.Format("state.Content[{0}].HasMediaPreviewVersion", i), content.HasMediaPreviewVersion)%>
 	<%: Html.Hidden(String.Format("state.Content[{0}].HasMediaFullVersion", i), content.HasMediaFullVersion)%>
+	<%: Html.Hidden(String.Format("state.Content[{0}].Notes", i), content.Notes)%>
 	</td>
 	<td>
 	<%: Html.TextBox(String.Format("state.Content[{0}].Title", i), content.Title, new { @class = "cw-field-xlarge" })%>
 	</td>
 	<td>
-	<%: Html.TextBox(String.Format("state.Content[{0}].Artist", i), content.Artist.AsNullIfWhiteSpace() ?? "(N/A)", new { @class = "cw-field-large" })%>
+	<%: Html.TextBox(String.Format("state.Content[{0}].Artist", i), content.Artist.AsNullIfWhiteSpace() ?? "UNKNOWN", new { @class = "cw-field-large" })%>
 	</td>
 	<td>
-	<%: Html.TextBox(String.Format("state.Content[{0}].RecordLabel", i), content.RecordLabel.AsNullIfWhiteSpace() ?? "(N/A)", new { @class = "cw-field-medium" })%>
+	<%: Html.TextBox(String.Format("state.Content[{0}].RecordLabel", i), content.RecordLabel.AsNullIfWhiteSpace() ?? "", new { @class = "cw-field-medium" })%>
 	</td>
 	<td>
 	<%: Html.TextBox(String.Format("state.Content[{0}].ReleaseYear", i), content.ReleaseYear, new { @class = "cw-field-xsmall" })%>

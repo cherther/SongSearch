@@ -65,6 +65,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string Upload = "~/Views/CatalogUpload/Upload.aspx";
             public readonly string wfAddPreviewFiles = "~/Views/CatalogUpload/wfAddPreviewFiles.ascx";
             public readonly string wfAddSongFiles = "~/Views/CatalogUpload/wfAddSongFiles.ascx";
+            public readonly string wfComplete = "~/Views/CatalogUpload/wfComplete.ascx";
             public readonly string wfEditMetadata = "~/Views/CatalogUpload/wfEditMetadata.ascx";
             public readonly string wfSaveCatalog = "~/Views/CatalogUpload/wfSaveCatalog.ascx";
             public readonly string wfSelectCatalog = "~/Views/CatalogUpload/wfSelectCatalog.ascx";

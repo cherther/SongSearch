@@ -202,26 +202,28 @@ function addToCartMultipleAjax(link, items) {
 //-----------------------------------------------------------------------------------
 function deleteContentMultipleAjax() {
 
-	var options = {
-		beforeSubmit: function () { wait(); },
-		success: function (data, status, xhr) {
-			if (status == 'error') {
-				unwait();
-				feedback('error', xhr.status + ' ' + xhr.statusText);
-			} else {
-				feedback('info', data + ' item(s) deleted');
-				updateCartCount();
-				removeCheckedRows();
-				unwait();
-			}
-		},
-		error:
+    var options = {
+        beforeSubmit: function () { wait(); },
+        success: function (data, status, xhr) {
+            if (status == 'error') {
+                unwait();
+                feedback('error', xhr.status + ' ' + xhr.statusText);
+            } else {
+                feedback('info', data + ' item(s) deleted');
+                updateCartCount();
+                closeContentPanel();
+                removeCheckedRows();
+                hideEmptyContentsTable();
+                unwait();
+            }
+        },
+        error:
 			function (xhr, status, error) {
-				unwait();
-				feedback('error', xhr.status + ' ' + xhr.statusText);
+			    unwait();
+			    feedback('error', xhr.status + ' ' + xhr.statusText);
 
 			}
-	};
+    };
 
 	$('#cw-catalog-contents-form').ajaxSubmit(options);
 }

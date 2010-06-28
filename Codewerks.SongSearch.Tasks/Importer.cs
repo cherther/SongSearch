@@ -5,13 +5,34 @@ using System.Text;
 using SongSearch.Web;
 using SongSearch.Web.Data;
 using SongSearch.Web.Services;
-
+using IdSharp.Tagging.ID3v2;
 namespace Codewerks.SongSearch.Tasks {
 	public class Importer {
 
 		//private static IQueryable<Tag> _tags;
 		//private static IDataSession _session;
-		
+		public static void GetID3() {
+			string path = @"D:\Music\iTunes\iTunes Media\Music\Stevie Ray Vaughan\The Sky Is Crying";
+			var di = new System.IO.DirectoryInfo(path);
+
+			foreach (var file in di.GetFiles()) {
+				//ID3Data id3 = ID3Reader.GetID3MetadataV2(file.FullName);
+				//if (String.IsNullOrWhiteSpace(id3.Title)) {
+				//    id3 = ID3Reader.GetID3MetadataV4(file.FullName);
+				//}
+				var tag = ID3v2Helper.CreateID3v2(file.FullName);
+				var id3 = new ID3Data();
+
+				id3.Artist = tag.Artist;
+				id3.Title = tag.Title;
+				id3.Album = tag.Album;
+				//id3.Genre = tag.Genre;
+				id3.Year = tag.Year;
+				//id3.TrackNumber = tag.TrackNumber;
+
+				
+			}
+		}
 		public static void MakeTags() {
 
 			//_session = new SongSearchDataSession();

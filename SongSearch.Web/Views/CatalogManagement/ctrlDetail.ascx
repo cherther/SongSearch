@@ -13,7 +13,7 @@
 		: null;
 	var contentListViewModel = new ContentListViewModel() {
 		List = catalogContents,
-		ListHeaders = new string[] { "Title", "Artist", "ReleaseYear" },
+		ListHeaders = new string[] { "Title", "Artist", "Year" },
 		GridActions = new GridAction[] { GridAction.Delete, GridAction.ShowDetails },
 		IsSortable = true
 	};
@@ -41,7 +41,7 @@
 	<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogContentsTable, contentListViewModel); %>
 	<%} %>
 <%} else {%>
-This catalog does not yet contain any songs.
+This catalog does not contain any songs.
 <%: Html.ActionLink("Upload", MVC.CatalogUpload.Upload(catalog.CatalogId), new { @class = "cw-button cw-simple cw-small cw-blue" })%>
 <div>&nbsp;</div>
 <%} %>
@@ -90,7 +90,7 @@ This catalog does not yet contain any songs.
 		<div style="text-align: center">
 			Note: By deleting this catalog, you are deleting all associated song mp3 files and metadata. You will NOT be able to recover this catalog.
 			<div>&nbsp;</div>
-			<button type="submit" class="cw-button cw-simple cw-small cw-red"><span class="b-delete">Delete Catalog?</span></button>
+			<button type="submit" id="cw-catalog-delete-link" class="cw-button cw-simple cw-small cw-red"><span class="b-delete">Delete Catalog?</span></button>
 			<div>&nbsp;</div>
 		</div>
 	</div>

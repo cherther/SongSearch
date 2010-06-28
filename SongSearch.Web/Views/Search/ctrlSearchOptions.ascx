@@ -92,9 +92,13 @@
 						Tags = tags, 
 						TagTypeName = item.PropertyName, 
 						InitialTagNumber = 5, 
+						NumberTagsInRow = 3,
 						SelectedTags = selectedTags,
 						TagClass = "cw-tagbox-search", 
-						TagIdTemplate = String.Format("f_{0}__V", i) };
+						TagIdTemplate = String.Concat(String.Format("f_{0}__V-", i), "{0}"),
+						TagNameTemplate = String.Format("f_{0}__V", i)
+					};
+		  
 				%>
 				<div>
 				<label>

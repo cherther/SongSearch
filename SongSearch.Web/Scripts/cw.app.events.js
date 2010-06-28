@@ -199,6 +199,8 @@
 	}
 	);
 
+	
+
 	//***********************************************
 	//  Content save link
 	//***********************************************
@@ -403,7 +405,18 @@
 	}
 	);
 
-	//
+
+	//***********************************************
+	// Catalog delete link
+	//***********************************************
+	$('#cw-catalog-delete-link').live('click',
+		function (evt) {
+
+			if (!confirm('Are you sure you want to delete this Catalog and all of its Songs?')) {
+				evt.preventDefault();
+			}
+		}
+	);
 
 	//-----------------------------------------------------------------------------------
 	// Catalog Management List
@@ -420,7 +433,7 @@
 			var listing = link.parents('.cw-catalog-listing'); //???
 			$('.cw-catalog-listing').removeClass('cw-selected');
 			listing.addClass('cw-selected');
-
+			closeContentPanel();
 			getCatalogDetailAjax(url);
 
 		}
@@ -430,11 +443,12 @@
 		function (evt) {
 
 			evt.preventDefault();
-			$('.cw-tbl-catalog-contents').toggle();
-			$(this).text($(this).text().swap('Show', 'Hide'));
+			toggleContentsTable($(this))
 
 		}
 	);
+
+
 
 	$('#cw-delete-multiple-content').live('click',
 		function (evt) {

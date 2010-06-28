@@ -137,9 +137,9 @@ namespace SongSearch.Web {
 			RegisterRoutes(RouteTable.Routes);
 			RegisterAllControllersIn(Assembly.GetExecutingAssembly());
 
-			if (Environment == AppEnvironment.Development) {
-				HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
-			}
+			//if (Environment == AppEnvironment.Development) {
+			//    HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
+			//}
 			try {
 				CacheService.Initialize();
 			}

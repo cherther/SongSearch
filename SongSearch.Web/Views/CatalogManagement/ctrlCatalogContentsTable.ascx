@@ -15,6 +15,7 @@
 <% Html.BeginForm("RemoveMultiple", "Cart", FormMethod.Post); %>
 <%} %>--%>
 <table class="cw-tbl-catalog-contents">
+	<thead>
 	<tr>
 		<td colspan="<%: tableHeader.Count()+1 %>" style="text-align: left; white-space: nowrap; padding-left: 1px">
 			<input type="submit" id="cw-delete-multiple-content" class="cw-button cw-simple cw-small cw-red" value="Delete Selected" />
@@ -30,6 +31,8 @@
 		<%} %>
 		
 	</tr>
+	</thead>
+	<tbody>
 	<% foreach (var item in results) { %>
 		<%
 			var mediaUrl = Url.SiteRoot();
@@ -77,5 +80,5 @@
 		</tr>
 	
 	<% } %>
-
+	</tbody>
 	</table>

@@ -144,7 +144,7 @@
 <div id="tabs-3">
 <table class="cw-tbl-content-detail">           
 	<%
-	var tagTypes = ModelEnums.GetTagTypes();//.OrderBy(t => t);
+	var tagTypes = ModelEnums.GetTagTypes().Where(t => t != TagType.SoundsLike && t != TagType.Instruments);//.OrderBy(t => t);
 	var tt = 0;
 	%>
 	<%foreach (var tagType in tagTypes) { %>
@@ -160,7 +160,9 @@
 			TagType = tagType, 
 			SelectedTags = selectedTags,
 			TagClass = "cw-tagbox-label",
-			TagIdTemplate = isEditing ? "tags[{0}]" : "t",
+			TagIdTemplate = "t_{0}",
+			TagNameTemplate = "tags[{0}]",
+			NumberTagsInRow = 5
 		};
 
 		tt += tags.Count();
@@ -169,7 +171,11 @@
 		<tr>
 			<td class="cw-content-label"><%=tagType%></td>
 			<td>
+			<%--<%if (isEditing) { %>
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlTagEdit, model); %>
+			<%} else {%>--%>
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, model); %>
+			<%//} %>
 			</td>
 		</tr>
 		<%} %>
@@ -219,36 +225,39 @@
 				<%if (content.ContentRights != null && content.ContentRights.Count() > 0) { %>
 				<%foreach (var contentRight in content.ContentRights) { %>
 				<%	
-					var rightId = String.Format("rights[{0}].", r++);
+					var rightName = String.Format("rights[{0}].", r);
+					var rightId = String.Format("r_{0}_", r);
+					r++;
+		  
 					var rightsHolderShare = contentRight.RightsHolderShare.ToString("P2");
 				%>
 					<tr>
 						<td class="cw-content-field">
 							<%if (isEditing) {%> 
-							<%: Html.Hidden(String.Concat(rightId, "ContentId"), contentRight.ContentId)%>
-							<%: Html.Hidden(String.Concat(rightId, "ContentRightId"), contentRight.ContentRightId)%>
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"), contentRight.RightsHolderName, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
+							<%: Html.Hidden(String.Concat(rightName, "ContentId"), contentRight.ContentId)%>
+							<%: Html.Hidden(String.Concat(rightName, "ContentRightId"), contentRight.ContentRightId)%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderName"), contentRight.RightsHolderName, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
 							<%} else {%> 
 							<%: contentRight.RightsHolderName%>
 							<%} %>
 						</td>
 						<td class="cw-content-field">
 							<%if (isEditing) {%> 
-							<%: Html.DropDownList(String.Concat(rightId, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes(), (RightsTypes)contentRight.RightsTypeId))%>
+							<%: Html.DropDownList(String.Concat(rightName, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes(), (RightsTypes)contentRight.RightsTypeId))%>
 							<%} else {%> 
 							<%: (RightsTypes)contentRight.RightsTypeId%>
 							<%} %>
 						</td>
 						<td class="cw-content-field text-right">
 							<%if (isEditing) {%> 
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"), rightsHolderShare, new { width = 20 })%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), rightsHolderShare, new { width = 20 })%>
 							<%} else {%> 
 							<%: rightsHolderShare%>
 							<%} %>
 						</td>
 						<td>
 						<%if (isEditing) {%>
-						<%: Html.Hidden(String.Concat(rightId, "ModelAction"), (int)ModelAction.Update, new { @class = "cw-model-action" })%>
+						<%: Html.Hidden(String.Concat(rightName, "ModelAction"), (int)ModelAction.Update, new { @class = "cw-model-action" })%>
 						<a href="#" class="cw-delete-right-link"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
 						<%} %>
 						</td>
@@ -263,11 +272,14 @@
 						EditMode = Model.EditMode,
 						Tags = territories,
 						SelectedTags = selectedTerritories,
+						NumberTagsInRow = 7,
 						TagClass = "cw-tagbox-label",
-						TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
+						TagIdTemplate = String.Concat(rightId, "t_{0}"),
+						TagNameTemplate = String.Concat(rightName, "Territories[{0}]")
 						};              
 						%>    
-							<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
+							
+						<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
 						<%//} %>
 						</td>
 						<td>
@@ -276,21 +288,25 @@
 				<%} %>
 				<%} %>
 				<%if (isEditing) {%>
-				<%	var rightId = String.Format("rights[{0}].", r++); %>
+				<%	
+					var rightName = String.Format("rights[{0}].", r);
+					var rightId = String.Format("r_{0}_", r);
+					r++;
+					%>
 					<tr>
 						<td class="cw-content-field">
-							<%: Html.Hidden(String.Concat(rightId, "ContentId"), Model.Content.ContentId)%>
-							<%: Html.Hidden(String.Concat(rightId, "ContentRightId"), 0)%>
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderName"), null, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
+							<%: Html.Hidden(String.Concat(rightName, "ContentId"), Model.Content.ContentId)%>
+							<%: Html.Hidden(String.Concat(rightName, "ContentRightId"), 0)%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderName"), null, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
 						</td>
 						<td class="cw-content-field">
-							<%: Html.DropDownList(String.Concat(rightId, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
+							<%: Html.DropDownList(String.Concat(rightName, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
 						</td>
 						<td class="cw-content-field text-right">
-							<%: Html.TextBox(String.Concat(rightId, "RightsHolderShare"), null, new { width = 20 })%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), null, new { width = 20 })%>
 						</td>
 						<td>
-						<%: Html.Hidden(String.Concat(rightId, "ModelAction"), (int)ModelAction.Add, new { @class = "cw-model-action" })%>
+						<%: Html.Hidden(String.Concat(rightName, "ModelAction"), (int)ModelAction.Add, new { @class = "cw-model-action" })%>
 						<a href="#" class="cw-add-right-link"><img src="../../public/images/icons/silk/add.png" alt="Add" /></a>
 						</td>
 					</tr>
@@ -301,8 +317,10 @@
 					var model = new TagCloudViewModel<Territory>() {
 						EditMode = Model.EditMode,
 						Tags = territories,
+						NumberTagsInRow = 7,
 						TagClass = "cw-tagbox-label",
-						TagIdTemplate = isEditing ? String.Concat(rightId, "territories[{0}]") : "tr"
+						TagIdTemplate = String.Concat(rightId, "Territory_{0}"),
+						TagNameTemplate = String.Concat(rightName, "Territories[{0}]")
 					};              
 						%>    
 						<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>

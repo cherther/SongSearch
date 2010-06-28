@@ -36,6 +36,8 @@
 	<%: content.HasMediaPreviewVersion.ToYesNo() %>
 	<%: Html.Hidden(String.Format("state.Content[{0}].HasMediaPreviewVersion", i), content.HasMediaPreviewVersion)%>
 	<%: Html.Hidden(String.Format("state.Content[{0}].HasMediaFullVersion", i), content.HasMediaFullVersion)%>
+	<%: Html.Hidden(String.Format("state.Content[{0}].Notes", i), content.Notes)%>
+
 	</td>
 	<td>
 	<%: content.Title%>

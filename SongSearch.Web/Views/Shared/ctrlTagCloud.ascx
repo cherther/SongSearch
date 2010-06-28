@@ -1,6 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<TagCloudViewModel<SongSearch.Web.Data.Tag>>" %>
 <%
 	var tagCount = Model.InitialTagNumber > 0 ? Model.InitialTagNumber : Model.Tags.Count();
+	var rowSize = Model.NumberTagsInRow > 0 ? Model.NumberTagsInRow : 5;
 	
 	//if we're taking a top 5 etc, we'll sort the rest by alpha
 	var tags = Model.InitialTagNumber > 0 ? 
@@ -13,24 +14,40 @@
 	%>
 <div class="<%= tagDivClass %>">
 <%
+	var i = 1;
+	var rowIsComplete = true;
 	foreach (var tag in tags)
 	{
-		var tagName = tag.TagName;
-
-		var tagId = isEditing ? String.Format(Model.TagIdTemplate, Model.TagCountSeed) : String.Format("{0}-{1}", Model.TagIdTemplate, tag.TagId);
+		var tagDisplay = tag.TagName;
+		var tagId = isEditing ? String.Format(Model.TagIdTemplate, Model.TagCountSeed) : String.Format(Model.TagIdTemplate, tag.TagId);
+		var tagName = isEditing ? String.Format(Model.TagNameTemplate, Model.TagCountSeed) : String.Format(Model.TagNameTemplate, tag.TagId); 
+		// : String.Format("{0}-{1}", Model.TagNameTemplate, tag.TerritoryId);
 		var isSelected = Model.SelectedTags != null && Model.SelectedTags.Contains(tag.TagId);
 		var tagClass = String.Concat(Model.TagClass, isEditing ? "-edit" : "", " cw-button cw-simple cw-small ", isSelected ? " cw-blue" : "");
+
 		
 	 %>
+	 <%if (rowIsComplete){//(i == 1) || (i - 1 % 6 == 0)) { %>
+		<div>
+	<%} %>
+	<%rowIsComplete = false;%>
 	 <%if (isEditing) { %>
-	 <label for="<%= tagId %>" class="<%: tagClass %>"><%: tagName%></label>
-	 <%: Html.CheckBox(tagId, isSelected, new { id = tagId, value = tag.TagId, @class = "cw-tagbox-checkbox" })%>
+	 <label for="<%= tagId %>" class="<%: tagClass %>"><%: tagDisplay%></label>
+	 <%: Html.CheckBox(tagName, isSelected, new { id = tagId, value = tag.TagId, @class = "cw-tagbox-checkbox" })%>
 	 <%} else { %>
-	 <a id="<%= tagId%>" class="<%=tagClass %>"> <%=tagName%></a>
+	 <a id="<%= tagId%>" class="<%=tagClass %>" rev="<%: Model.TagNameTemplate %>" rel="<%: tag.TagId %>"> <%: tagDisplay%></a>
 	 <%} %>
+	 <%if (i % rowSize == 0) { %>
+		<% rowIsComplete = true; %>
+		</div>
+	<%} %>
 	<%
+		i++;
 		Model.TagCountSeed++;
 	} %>
+	<%if (!rowIsComplete) { %>
+	</div>
+	<%} %>
 </div>
 <%if (hasMoreLinks){ %>
 <% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, Model); %>

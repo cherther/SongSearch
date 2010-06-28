@@ -23,9 +23,9 @@
 }
 .cw-tagbox-checkbox
 {
-    /*text-indent: -9999999px;
-    position: absolute;*/
-    display: none;
+    left: -9999999px;
+    position: absolute;
+   
 }
 .cw-field-xlarge
 {
