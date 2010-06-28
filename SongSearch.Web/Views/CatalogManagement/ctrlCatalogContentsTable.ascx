@@ -5,7 +5,7 @@
 	//var sortUrl = Model.HeaderSortUrl;
 	//var props = Model.SearchMenuProperties;
 	var tableHeader = Model.ListHeaders; // new string[] { "Title", "Artist", "ReleaseYear", "Preview" }; ;
-	var rightCols = new string[] { "ReleaseYear" };
+	var rightCols = new string[] { "Year" };
 	var tableHeaderCount = tableHeader.Count();
 	var headerActions = Model.GridActions.Where(a => a != GridAction.ShowDetails);
 	tableHeaderCount += headerActions.Count();

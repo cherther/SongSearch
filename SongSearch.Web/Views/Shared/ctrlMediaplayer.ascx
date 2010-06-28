@@ -20,16 +20,23 @@
 				<%if (content.HasMediaFullVersion) { %>
 				<%var url = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.FullSong)); %>
 					<a href="<%: url %>" id="cw-play-full"
-					class = "cw-media-play-link cw-button cw-small cw-simple cw-green" title="Play/Pause"><span class="b-play">Full Song</span></a>
+					class = "cw-media-play-link cw-button cw-small cw-simple cw-gray" title="Play/Pause"><span class="b-play">Full Song</span></a>
 				<%} %>
 				<%if (content.HasMediaPreviewVersion) { %>
 				<%var url = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Preview)); %>
 					<a href="<%: url %>" id = "cw-play-preview"
-					class = "cw-media-play-link cw-button cw-small cw-simple cw-green" title="Play/Pause"><span class="b-play">:30</span></a>
+					class = "cw-media-play-link cw-button cw-small cw-simple cw-gray" title="Play/Pause"><span class="b-play">:30</span></a>
 				<%} %>
 				<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
-					<button id="cw-play-repeat" class="cw-media-repeat-link cw-button cw-small cw-simple" title="Repeat" disabled="disabled"><span class="b-undo" >Repeat</span></button>
+					<button id="cw-play-rew" class="cw-media-rew-link cw-button cw-small cw-simple cw-gray" title="Rewind" disabled="disabled"><span class="b-rewind" >Rev</span></button>
 				<%} %>
+				<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
+					<button id="cw-play-ffwd" class="cw-media-ffwd-link cw-button cw-small cw-simple cw-gray" title="Fast Forward" disabled="disabled"><span class="b-forward" >Fwd</span></button>
+				<%} %>
+				<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
+					<button id="cw-play-repeat" class="cw-media-repeat-link cw-button cw-small cw-simple cw-gray" title="Repeat" disabled="disabled"><span class="b-undo" >Repeat</span></button>
+				<%} %>
+				
 			</div>
 			<div class="one column cw-media-controls">
 				<div id="cw-media-player-volume"></div>

@@ -27,8 +27,10 @@ h4 { font-size: 1.125em; font-style: italic; }
 hr { color: #ccc; background-color: #ccc; } 
 pre 
 {
+	font-family: Lucida Console, "Courier New", "Courier", monospace;
 	white-space:pre-wrap;
 }
+
 ul.cw-vertical 
 {
 	padding: 0 0 0 1.6em;
@@ -63,6 +65,10 @@ input.cw-input-highlight
 	font-size: 10px;
 }
 
+.cw-hidden
+{
+	display: none;
+}
 .cw-optional
 {
 	display: none;
@@ -104,6 +110,11 @@ input.cw-input-highlight
 	
 }
 
+.cw-spaced
+{
+	margin: 0.8em 0 0.3em 0;
+	padding: 1em;
+}
 .cw-rounded-corners
 {
 	border-radius: 5px; 
@@ -206,6 +217,7 @@ ul.cw-list-searchoptions
 }
 ul.cw-list-searchoptions label
 { 
+	font-weight: normal;
 }
 ul.cw-list-searchoptions label, input
 { 
@@ -221,7 +233,8 @@ ul.cw-list-searchoptions li
 
 #cw-content-detail
 {
-   /* width: 640px;*/
+   /* width: 640px;*/   
+   font-size: 11px !important;
 }
 
 #cw-content-detail-menu

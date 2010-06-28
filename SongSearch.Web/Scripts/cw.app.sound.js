@@ -27,6 +27,7 @@ var _mySoundId = 0;
 var _mySound;
 var _lastUrlPlayed;
 var _currentVolume = 60;
+var _skipInterval = 0.15;
 
 var sm_rs_uninitialised = 0;
 var sm_rs_loading = 1;
@@ -35,6 +36,7 @@ var sm_rs_loaded_success = 3;
 
 var sm_ps_stopped = 0;
 var sm_ps_playing = 1;
+var sm_ps_paused = 2;
 
 //-----------------------------------------------------------------------------------
 //Sound manager controllers
@@ -43,6 +45,9 @@ var sm_ps_playing = 1;
 //  mediaPlay: starts, stops, toggles
 //***********************************************
 function soundPlay(url) {
+    return soundPlay(url, false, 0);
+}
+function soundPlay(url, repeat, fromPosition) {
 
     var begin_playState;
     var begin_readyState;
@@ -51,16 +56,19 @@ function soundPlay(url) {
 
         if (_mySound) {
             begin_readyState = _mySound.readyState;
-            begin_playState = _mySound.playState;
-            if (url == _lastUrlPlayed) { //second click on same link
+            begin_playState = _mySound.paused ? sm_ps_paused : _mySound.playState;
+
+            if (url == _lastUrlPlayed && !repeat && _mySound.playState == sm_ps_playing) { //second click on same link
                 if (begin_readyState != sm_rs_failed_error) {
-                    if (begin_playState != sm_ps_playing) {
-                        // not yet playing
-                        _mySound.play();
-                    } else {
+//                    if (_mySound.playState != sm_ps_playing) {
+//                        // not yet playing
+//                        _mySound.setPosition(0);
+//                        _mySound.play();
+//                    } else {
+//    
                         _mySound.togglePause();
-                    }
-                } else {
+//                    }
+               } else {
                     soundManager._writeDebug('Warning: sound failed to load (security restrictions, 404 or bad format)', 2);
                 }
             } else {
@@ -69,7 +77,6 @@ function soundPlay(url) {
                     _mySound.unload();
 
                     if (begin_playState == sm_ps_playing) {
-                        // still playing? huh?
                         _mySound.stop();
                     }
                     _mySound = getSound(url);
@@ -97,10 +104,14 @@ function soundPlay(url) {
 
 function soundPlayRepeat() {
     var url = _lastUrlPlayed;
-    _lastUrlPlayed = null;
-    return soundPlay(url);
+    //_lastUrlPlayed = null;
+    return soundPlay(url, true, null);
 }
-
+function soundPlayFastForward() {
+    var url = _lastUrlPlayed;
+    //_lastUrlPlayed = null;
+    return soundPlay(url, false, 30);
+}
 function getSound(url) {
     _currentVolume = _currentVolume != null && _currentVolume >= 0 ? _currentVolume : 60;
     return soundManager.createSound(
@@ -126,6 +137,9 @@ function getSound(url) {
                     whileplaying: function () {
                         setCurrentMediaTime(this.position);
                         setCurrentPosition(this.position, this.durationEstimate);
+                        var skip = _mySound.duration * _skipInterval;
+                        enableFastForward(this.position < (this.durationEstimate - skip));
+                        enableRewind(this.position > 0);
                     },
                     whileloading: function () {
                         setCurrentLoadPercentage(this.bytesLoaded, this.bytesTotal);
@@ -158,3 +172,25 @@ function changeVolume(value) {
     }
 }
 
+function fastForward() {
+    if (_isSoundManagerReady) {
+        if (_mySound && _mySound.readyState != sm_rs_failed_error && _mySound.playState == sm_ps_playing) {
+            var skip = _mySound.duration * _skipInterval;
+            var newPosition = _mySound.position + skip;
+            if (newPosition < _mySound.duration) {
+                _mySound.setPosition(newPosition);
+            }
+            enableFastForward(_mySound.position < (_mySound.duration - skip));
+        }
+    }
+}
+function rewind() {
+    if (_isSoundManagerReady) {
+        if (_mySound && _mySound.readyState != sm_rs_failed_error && _mySound.playState == sm_ps_playing) {
+            var skip = _mySound.duration * _skipInterval;
+            var newPosition = _mySound.position - skip;
+            _mySound.setPosition(newPosition > 0 ? newPosition : 0);
+//            enableRewind(_mySound.position > 0);
+        }
+    }
+}

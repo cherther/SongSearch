@@ -31,19 +31,19 @@
 <div>&nbsp;</div>
 <%if (catalogContents.Count > 0){ %>
 <a href="#" id="cw-catalog-contents-show-link" class="cw-button cw-simple cw-small cw-blue">Show Songs</a>
+<span id="cw-catalog-contents-msg" class="cw-hidden">This catalog does not contain any songs.</span>
+<%} else {%>
+<span>This catalog does not contain any songs.</span>
+<%} %>
 <%: Html.ActionLink("Upload", MVC.CatalogUpload.Upload(catalog.CatalogId), new { @class = "cw-button cw-simple cw-small cw-blue" })%>
 <%--(<%: String.Format("{0} {1}", catalogContents.Count, catalogContents.Count == 1 ? "song" : "songs")%>)--%>
 <div>&nbsp;</div>
-
+<%if (catalogContents.Count > 0){ %>
 	<%using (Html.BeginForm(MVC.Content.DeleteMultiple(), FormMethod.Post, new { id = "cw-catalog-contents-form" })) { %>
 	<%= Html.Hidden("id", catalog.CatalogId)%>
 	<%= Html.AntiForgeryToken()%>
 	<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogContentsTable, contentListViewModel); %>
 	<%} %>
-<%} else {%>
-This catalog does not contain any songs.
-<%: Html.ActionLink("Upload", MVC.CatalogUpload.Upload(catalog.CatalogId), new { @class = "cw-button cw-simple cw-small cw-blue" })%>
-<div>&nbsp;</div>
 <%} %>
 <hr />
 <div>&nbsp;</div>

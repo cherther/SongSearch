@@ -252,30 +252,29 @@ function removeCheckedRows() {
 
 }
 function isTableBodyEmpty(table) {
-    var $table = $(table + ' > TBODY > TR');
-    return ($table.length == 0);
+	var $table = $(table + ' > TBODY > TR');
+	return ($table.length == 0);
 }
 
 function toggleContentsTable(link) {
-    if (link.length > 0) {
-        link.text(link.text().swap('Show', 'Hide'));
-    }
-    $('.cw-tbl-catalog-contents').toggle();
+	if (link.length > 0) {
+		link.text(link.text().swap('Show', 'Hide'));
+	}
+	$('.cw-tbl-catalog-contents').toggle();
+	closeContentPanel();
 
 }
 
 function hideEmptyContentsTable() {
-    
-    var table = $('.cw-tbl-catalog-contents');
-    var link = $('#cw-catalog-contents-show-link');
+	
+	var table = $('.cw-tbl-catalog-contents');
+	var link = $('#cw-catalog-contents-show-link');
 
-    if (isTableBodyEmpty('.cw-tbl-catalog-contents')) {
-        table.hide();
-    
-        if (link.length > 0) {
-            link.text(link.text().swap('Show', 'Hide'));
-        }
-    }
+	if (isTableBodyEmpty('.cw-tbl-catalog-contents')) {
+		table.hide();
+		link.hide();
+		$('#cw-catalog-contents-msg').show();
+	}
 }
 
 //***********************************************
@@ -441,16 +440,38 @@ function mediaPlay(url, id) {
 	soundPlay(url);
 	togglePlayButton(id);
 	$('.cw-media-repeat-link').removeAttr('disabled');
+	$('.cw-media-skip-link').removeAttr('disabled');
 	_lastMediaButtonPressed = id;
 }
 
 function mediaRepeat() {
-	if (soundPlayRepeat() == sm_ps_stopped) {
+	if (soundPlayRepeat() != sm_ps_playing) {
 		togglePlayButton(_lastMediaButtonPressed);
 	}
 }
 
 
+function mediaFastForward() {
+	fastForward();
+}
+function mediaRewind() {
+	rewind();
+}
+
+function enableRewind(yes) {
+	if (yes) {
+		$('.cw-media-rew-link').removeAttr('disabled');
+	} else {
+		$('.cw-media-rew-link').attr('disabled', true);
+	}
+}
+function enableFastForward(yes) {
+	if (yes) {
+		$('.cw-media-ffwd-link').removeAttr('disabled');
+	} else {
+		$('.cw-media-ffwd-link').attr('disabled', true);
+	}
+}
 //***********************************************
 //  togglePlayButton
 //***********************************************
@@ -465,8 +486,8 @@ function togglePlayButtons(id, toggle) {
 	
 	var readyClass = 'b-play';
 	var playingClass = 'b-pause';
-	var readyColorClass = 'cw-green';
-	var playingColorClass = 'cw-red';
+	var readyColorClass = 'cw-gray';
+	var playingColorClass = 'cw-green';
 
 	var button = $(id);
 	var icon = button.children('span');

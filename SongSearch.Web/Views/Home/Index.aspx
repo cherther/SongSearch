@@ -15,13 +15,21 @@
 		<div>&nbsp;</div
 		<div><strong>6/28/2010</strong></div>
 		<ul class="cw-vertical cw-highlight">
-			<li>Catalog Song Management</li>
+			<li>Catalog Song Management
 			<ul class="cw-vertical">
 				<li>Each catalog shows a list of its contents with full edit features</li>
 				<li>Delete option for each song, or multiple songs</li>
+			</ul></li>
+			<li>Catalog Upload
+			<ul class="cw-vertical">
+				<li>Better ID3 tag support: now reads old and newer formats more reliably</li>
 			</ul>
-			<li>
-				Better ID3 tag support: now reads old and newer formats more reliably
+			</li>
+			<li>Media Player
+			<ul class="cw-vertical">
+				<li>Fast Forward & Rewind buttons</li>
+				<li>15% of song duration, e.g. 3 minute full song = +/- 27 secs., 30 second preview = +/- 5 secs.</li>
+			</ul>
 			</li>
 		</ul>
 		<div>&nbsp;</div>
@@ -34,19 +42,19 @@
 		
 		<div>6/17/2010</div>
 		<ul class="cw-vertical">
-			<li>Zipping carts now done offline</li>
+			<li>Zipping carts now done offline
 			<ul class="cw-vertical">
 				<li>Carts containing 10 or more songs are now being zipped in the backgound, so the page is not blocked while waiting</li>
 				<li>When the zipping is complete, the user sees a message on the search and cart pages, also the cart page highlights the last completed zipped cart</li>
-			</ul>
+			</ul></li>
 		</ul>
 		<div>&nbsp;</div>
 		<div>6/15/2010</div>
 		<ul class="cw-vertical">
-			<li>Instruments & SoundsLike now use textsearch</li>
+			<li>Instruments & SoundsLike now use textsearch
 			<ul class="cw-vertical">
 				<li>Separate terms by comma, e.g. "Foo Fighters, Sum 41"</li>
-			</ul>
+			</ul></li>
 		</ul>
 		<div>&nbsp;</div>
 		<div>6/14/2010</div>
@@ -54,11 +62,11 @@
 			<li>Add to Cart option in search results via checkboxes</li>
 			<li>Remove from Cart option in cart page via checkboxes</li>
 			<li>Carts can have a max of 100 items ( = 1 search results page)</li>
-			<li>User Management now simplifies System access</li>
+			<li>User Management now simplifies System access
 			<ul class="cw-vertical">
 					<li>You can allow users to add new catalogs and users via a checkbox</li>
 					<li>If the user is a SuperAdmin, or already has Admin access to at least one catalog this option is disabled, and the user can add new catalogs and users</li>
-			</ul>
+			</ul></li>
 			<li>Search results are printable (by page)</li>
 			
 		</ul>
@@ -92,24 +100,24 @@
 		 <div>&nbsp;</div>
 		<div>5/30/2010</div>
 		<ul class="cw-vertical">
-			<li>Volume control now working!</li>
+			<li>Volume control now working!
 			<ul class="cw-vertical">
 					<li>Default is 60% of full volume</li>
 					<li>No mute but can be dragged to 0%</li>
 					<li>Remembers volume setting from song to song on the same page (i.e. as long as page is not refreshed, sorted etc)</li>
-			</ul>
+			</ul></li>
 		</ul>
 		<div>&nbsp;</div>
 		<div>5/29/2010</div>
 		<ul class="cw-vertical">
-			<li>Media Player Beta:</li>
+			<li>Media Player Beta:
 				<ul class="cw-vertical">
 					<li>Pause/Start controls</li>
 					<li>Shows current & total time and position</li>
 					<li>Clicking on song in search results auto-starts full version</li>
 					<li>Detects missing or blocked Flash plug-in and shows error message</li>
 					<li>Volume control not yet implemented</li>
-				</ul>
+				</ul></li>
 		</ul>
 		<div>&nbsp;</div>
 		<hr />

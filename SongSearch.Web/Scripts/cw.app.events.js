@@ -277,7 +277,19 @@
 			mediaRepeat();
 		}
 	);
+    $('.cw-media-rew-link').live('click',
+		    function (evt) {
 
+		        evt.preventDefault();
+		        mediaRewind();
+		    }
+	    );    $('.cw-media-ffwd-link').live('click',
+		function (evt) {
+
+		    evt.preventDefault();
+		    mediaFastForward();
+		}
+	);
 	//-----------------------------------------------------------------------------------
 	// Cart Grid
 	//-----------------------------------------------------------------------------------

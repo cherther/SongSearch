@@ -75,74 +75,75 @@
 			</ul>
 		<%} %>
 
-
+<%
+	var sectionSize = "nine";
+	var columnOne = "two";
+	var columnTwo = "seven";
+%>
 <div id="tabs-1">
-	<table class="cw-tbl-content-detail">
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Title)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Title) : Html.DisplayFor(m => m.Content.Title)%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Artist)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Artist, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Artist)%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Pop)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Pop) : Html.DisplayFor(m => m.Content.Pop)%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Country)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Country) : Html.DisplayFor(m => m.Content.Country)%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.ReleaseYear)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.ReleaseYear) : Html.DisplayFor(m => m.Content.ReleaseYear)%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.RecordLabel)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel, "StringAutoComplete") : Html.DisplayFor(m => m.Content.RecordLabel)%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Writers)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Writers)%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Keywords)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Keywords) : Html.DisplayFor(m => m.Content.Keywords)%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.SimilarSongs)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.SimilarSongs) : Html.DisplayFor(m => m.Content.SimilarSongs)%></td>
-		</tr>
-		<%if (Model.SectionsAllowed.Contains("Notes")) { %>
-		<%
-			var notesSearch = searchFields.Where(s => s.P == 19).SingleOrDefault();
-			Model.Content.Notes = isEditing ? content.Notes : Html.HighlightSearchTerm(Model.Content.Notes, notesSearch); 
-		%> 
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Notes)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Notes) : Html.DisplayFor(m => m.Content.Notes)%></td>
-		</tr>      
-		<%} %>
-
-	</table>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Title)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Title) : Html.DisplayFor(m => m.Content.Title)%></div>
+	</div>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Artist)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Artist, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Artist)%></div>
+	</div>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Pop)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Pop) : Html.DisplayFor(m => m.Content.Pop)%></div>
+	</div>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Country)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Country) : Html.DisplayFor(m => m.Content.Country)%></div>
+	</div>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.ReleaseYear)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.ReleaseYear) : Html.DisplayFor(m => m.Content.ReleaseYear)%></div>
+	</div>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.RecordLabel)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.RecordLabel, "StringAutoComplete") : Html.DisplayFor(m => m.Content.RecordLabel)%></div>
+	</div>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Writers)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Writers)%></div>
+	</div>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Keywords)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Keywords) : Html.DisplayFor(m => m.Content.Keywords)%></div>
+	</div>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.SimilarSongs)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.SimilarSongs) : Html.DisplayFor(m => m.Content.SimilarSongs)%></div>
+	</div>
+	<%if (Model.SectionsAllowed.Contains("Notes")) { %>
+	<%
+		var notesSearch = searchFields.Where(s => s.P == 19).SingleOrDefault();
+		Model.Content.Notes = isEditing ? content.Notes : Html.HighlightSearchTerm(Model.Content.Notes, notesSearch); 
+	%> 
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column text-top"><%: Html.LabelFor(m => m.Content.Notes)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Notes) : Html.DisplayFor(m => m.Content.Notes)%></div>
+	</div>      
+	<%} %>
 </div>
 <div id="tabs-2">
 <%
+	columnOne = "two";
+	columnTwo = "seven";
+	
 	var lyricsSearch = searchFields.Where(s => s.P == 7).SingleOrDefault();
 
 	Model.Content.Lyrics = isEditing ? content.Lyrics : Html.HighlightSearchTerm(Model.Content.Lyrics, lyricsSearch); 
 %>
-	<table class="cw-tbl-content-detail">         
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Lyrics)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics,"MultilineText")%></td>
-		</tr>
-	</table>
+	<div class="<%: sectionSize%>_column section cw-spaced">
+		<div class="<%: columnOne%> column text-top"><%: Html.LabelFor(m => m.Content.Lyrics)%></div>
+		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics,"MultilineText")%></div>
+	</div>
 </div>
 <%if (Model.ViewMode != ViewModes.Print) {%>
 <div id="tabs-3">
-<table class="cw-tbl-content-detail">           
 	<%
 	var tagTypes = ModelEnums.GetTagTypes().Where(t => t != TagType.SoundsLike && t != TagType.Instruments);//.OrderBy(t => t);
 	var tt = 0;
@@ -166,44 +167,50 @@
 		};
 
 		tt += tags.Count();
+
+		columnOne = "one";
+		columnTwo = "eight";
+	
 	%>    
 		<%if (tags.Count() > 0) {%>
-		<tr>
-			<td class="cw-content-label"><%=tagType%></td>
-			<td>
+		<div class="<%: sectionSize%>_column section cw-spaced">
+			<div class="<%: columnOne%> column"><label><%=tagType%></label></div>
+			<div class="<%: columnTwo%> column">
 			<%--<%if (isEditing) { %>
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlTagEdit, model); %>
 			<%} else {%>--%>
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, model); %>
 			<%//} %>
-			</td>
-		</tr>
+			</div>
+		</div>
 		<%} %>
 	<%} %>
-</table>
 </div>
 
 <%} %>
 <%if (Model.SectionsAllowed.Contains("Rights")) { %>
+<%
+	columnOne = "two";
+	columnTwo = "seven";	  
+%>
 <div id="tabs-4">
-	<table class="cw-tbl-content-detail">         
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.ContentId)%></td>
-			<td class="cw-content-field"><%: content.ContentId%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.Catalog.CatalogName)%></td>
-			<td class="cw-content-field"><%: content.Catalog.CatalogName%></td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.IsControlledAllIn)%></td>
-			<td class="cw-content-field"><%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, !isEditing ? new { disabled = "disabled" } : null)%>
+		<div class="<%: sectionSize%>_column section cw-spaced">      
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.ContentId)%></div>
+			<div class="<%: columnTwo%> column"><%: content.ContentId%></div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">    
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Catalog.CatalogName)%></div>
+			<div class="<%: columnTwo%> column"><%: content.Catalog.CatalogName%></div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">    
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.IsControlledAllIn)%></div>
+			<div class="<%: columnTwo%> column"><%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, !isEditing ? new { disabled = "disabled" } : null)%>
 			<%: !isEditing ? content.IsControlledAllIn.ToYesNo() : "" %>
-			</td>
-		</tr>
-		<tr>
-			<td class="cw-content-label">Share %</td>
-			<td class="cw-content-field">
+			</div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">    
+			<div class="<%: columnOne%> column"><label>Share %</label></div>
+			<div class="<%: columnTwo%> column">
 				<%if (!isEditing && (content.ContentRights == null || content.ContentRights.Count() == 0)) { %>
 				No Rightsholder information available.
 				<%} else { %>
@@ -215,7 +222,7 @@
 						<th>
 							Rights Type
 						</th>
-						<th>
+						<th class="text-right">
 							Share
 						</th>
 						<th>
@@ -250,7 +257,7 @@
 						</td>
 						<td class="cw-content-field text-right">
 							<%if (isEditing) {%> 
-							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), rightsHolderShare, new { width = 20 })%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), rightsHolderShare, new { @class = "cw-field-small"})%>
 							<%} else {%> 
 							<%: rightsHolderShare%>
 							<%} %>
@@ -303,7 +310,7 @@
 							<%: Html.DropDownList(String.Concat(rightName, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
 						</td>
 						<td class="cw-content-field text-right">
-							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), null, new { width = 20 })%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), null, new { @class = "cw-field-small" })%>
 						</td>
 						<td>
 						<%: Html.Hidden(String.Concat(rightName, "ModelAction"), (int)ModelAction.Add, new { @class = "cw-model-action" })%>
@@ -332,14 +339,12 @@
 
 				</table>
 				<%}%>
-				</td>
-		</tr>
-		<tr>
-			<td class="cw-content-label"><%: Html.LabelFor(m => m.Content.LicensingNotes)%></td>
-			<td class="cw-content-field"><%: isEditing ? Html.EditorFor(m => m.Content.LicensingNotes) : Html.DisplayFor(m => m.Content.LicensingNotes)%></td>
-		</tr>
-   
-		</table>
+				</div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">    
+			<div class="<%: columnOne%> column text-top"><%: Html.LabelFor(m => m.Content.LicensingNotes)%></div>
+			<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.LicensingNotes) : Html.DisplayFor(m => m.Content.LicensingNotes)%></div>
+		</div>
 
 </div>
 <%} %>
