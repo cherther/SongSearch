@@ -61,7 +61,7 @@ namespace SongSearch.Web.Services {
 			StepIndex = stepIndex;
 			StepName = stepName;
 			StepView = stepView;
-			StepButton = stepButton.AsNullIfWhiteSpace() ?? "Next";
+			StepButton = stepButton.AsNullIfWhiteSpace() ?? "Next Step";
 		}
 
 		public T Process(T state) {

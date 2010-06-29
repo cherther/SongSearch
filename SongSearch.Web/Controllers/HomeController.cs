@@ -23,7 +23,7 @@ namespace SongSearch.Web.Controllers {
 				}
 			}
 			catch { }
-			return View(new ViewModel() { NavigationLocation = "Home" });
+			return View(new ViewModel() { NavigationLocation = new string[] { "Home" } });
 			
 		}
 
@@ -31,7 +31,7 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Home/Contact/
 		// **************************************
 		public virtual ActionResult Contact() {
-			var model = new ContactModel() { NavigationLocation = "Home" };
+			var model = new ContactModel() { NavigationLocation = new string[] { "Contact" } };
 			model.PageTitle = "Send us a question or comment:";
 			return View(model);
 		}
@@ -61,13 +61,13 @@ namespace SongSearch.Web.Controllers {
 					msg
 					);
 
-				var vm = new ContactModel() { NavigationLocation = "Home" };
+				var vm = new ContactModel() { NavigationLocation = new string[] { "Contact" } };
 				vm.PageTitle = "Thanks for e-mailing us!";
 				vm.PageMessage = "Your e-mail has been successfully sent to our team, and we will review your message and respond as quickly as possible.";
 				return View(vm);
 
 			} else {
-				model.NavigationLocation = "Home";
+				model.NavigationLocation = new string[] { "Contact" };
 				model.PageTitle = "Send us a question or comment:";
 				this.FeedbackError("There was an error with the contact request you sent...");
 

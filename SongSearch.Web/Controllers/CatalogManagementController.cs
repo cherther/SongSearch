@@ -41,7 +41,7 @@ namespace SongSearch.Web.Controllers
 
 				vm.MyCatalogs = catalogs;
 				vm.PageTitle = "Catalog Management";
-				vm.NavigationLocation = "Admin";
+				vm.NavigationLocation = new string[] { "Admin" };
 
 				return View(vm);
 			}
@@ -63,7 +63,7 @@ namespace SongSearch.Web.Controllers
 				vm.Users = _currentUser.MyUserHierarchy();
 				vm.Roles = ModelEnums.GetRoles().Where(r => r >= _currentUser.RoleId).ToArray();
 				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= _currentUser.RoleId).ToArray();
-				vm.NavigationLocation = "Admin";
+				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = _currentUser.IsSuperAdmin() || _currentUser.IsAtLeastInCatalogRole(Roles.Admin, id);
 
 				if (!_currentUser.IsSuperAdmin()) {

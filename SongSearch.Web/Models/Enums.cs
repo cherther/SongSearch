@@ -49,14 +49,14 @@ namespace SongSearch.Web {
 	// TagType
 	// **************************************    
 	public enum TagType {
-		Moods       = 10,
-		Styles      = 11,
+		Mood       = 10,
+		Style      = 11,
 		Gender      = 9,
 		Tempo       = 8,
 		SoundsLike  = 13,
-		Instruments = 14,
+		Instrument = 14,
 		Language    = 15,
-		Brands      = 20
+		Brand      = 20
 		
 	}
 	
@@ -148,14 +148,14 @@ namespace SongSearch.Web {
 		public static TagType[] GetTagTypes() {
 			return new[] 
 				{ 
-					TagType.Moods, 
-					TagType.Styles,
+					TagType.Mood, 
+					TagType.Style,
 					TagType.Gender,
 					TagType.Tempo,
 					TagType.SoundsLike,
-					TagType.Instruments,
+					TagType.Instrument,
 					TagType.Language,
-					TagType.Brands
+					TagType.Brand
 			};
 		}
 

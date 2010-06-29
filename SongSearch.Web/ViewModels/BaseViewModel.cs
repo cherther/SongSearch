@@ -14,17 +14,17 @@ namespace SongSearch.Web {
 		public EditModes EditMode { get; set; }
 		public string PageTitle { get; set; }
 		public string PageMessage { get; set; }
-		public string NavigationLocation { get; set; }
+		public string[] NavigationLocation { get; set; }
 		public int MyActiveCartCount { get; set; }
 		public ModelAction ModelAction { get; set; }
+		public int ActiveUserId { get; set; }
 
 		public ViewModel() {
 			ViewMode = ViewModes.Normal;
 			EditMode = EditModes.Viewing;
 			PageTitle = "";
 			PageMessage = "";
-			NavigationLocation = "";
-		
+			NavigationLocation = new string [] {""};
 		}
 	}
 

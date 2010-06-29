@@ -52,7 +52,7 @@ namespace SongSearch.Web
 				vm.MyUsers = users;
 				vm.MyInvites = invites;
 				vm.PageTitle = "User Management";
-				vm.NavigationLocation = "Admin";
+				vm.NavigationLocation = new string[] { "Admin" };
 
 				return View(vm);
 			}
@@ -68,7 +68,7 @@ namespace SongSearch.Web
 		public virtual ActionResult Invite() {
 			return View(
 				new InviteViewModel() {
-					NavigationLocation = "Admin",
+					NavigationLocation = new string[] { "Admin" },
 					InviteId = Guid.Empty.ToString()
 				});
 		}
@@ -124,7 +124,7 @@ namespace SongSearch.Web
 				vm.Roles = ModelEnums.GetRoles().Where(r => r >= _currentUser.RoleId).ToArray();
 				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= _currentUser.RoleId).ToArray();
 				vm.IsThisUser = user.UserId == _currentUser.UserId;
-				vm.NavigationLocation = "Admin";
+				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = !vm.IsThisUser && !user.IsSuperAdmin();
 
 				if (Request.IsAjaxRequest()) {
@@ -362,7 +362,7 @@ namespace SongSearch.Web
 
 					if ((inviteId != null) && (!inviteId.Equals(Guid.Empty))) {
 						var inviteMsg = new InviteViewModel();
-						inviteMsg.NavigationLocation = "Admin";
+						inviteMsg.NavigationLocation = new string[] { "Admin" };
 						inviteMsg.InviteId = inviteId.ToString();
 						inviteMsg.Sender = sender;
 						inviteMsg.Recipient = address;

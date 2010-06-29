@@ -294,7 +294,7 @@ namespace SongSearch.Web.Controllers
 		private CartViewModel GetCartViewModel() {
 			return new CartViewModel() {
 				PageTitle = "My Song Cart",
-				NavigationLocation = "Cart",
+				NavigationLocation = new string[] { "Cart" },
 				
 			};
 			

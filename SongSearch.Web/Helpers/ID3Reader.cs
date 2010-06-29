@@ -12,6 +12,10 @@ namespace SongSearch.Web {
 		public string Artist { get; set; }
 		public string Album { get; set; }
 		public string Year { get; set; }
+		public long? MediaSize { get; set; }
+		public long? MediaLength { get; set; }
+		public int? MediaBitRate { get; set; }
+		public string MediaType { get; set; }
 	}
 	public class ID3Reader {
 
@@ -26,6 +30,7 @@ namespace SongSearch.Web {
 			id3.Album = tag.Album;
 			//id3.Genre = tag.Genre;
 			id3.Year = tag.OriginalReleaseYear.AsNullIfWhiteSpace() ?? tag.Year;
+			id3.MediaLength = tag.LengthMilliseconds;
 			
 			return id3;
 		}

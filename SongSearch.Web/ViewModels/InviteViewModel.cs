@@ -48,7 +48,7 @@ namespace SongSearch.Web {
 		public InviteViewModel() {
 
 			PageTitle = "";
-			NavigationLocation = "";
+			NavigationLocation = new string[] { "" };
 
 		}
 	}

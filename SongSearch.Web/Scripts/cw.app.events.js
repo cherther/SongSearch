@@ -199,7 +199,15 @@
 	}
 	);
 
-	
+    $('.cw-delete-tag-link').live('click',
+	    function (evt) {
+
+	        evt.preventDefault();
+
+	        var link = $(this);
+	        deleteTagAjax(link);
+	    }
+	);
 
 	//***********************************************
 	//  Content save link

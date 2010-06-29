@@ -92,6 +92,21 @@ namespace SongSearch.Web.Data {
 		[DataType(DataType.MultilineText)]
 		public object LicensingNotes { get; set; }
 
+		[DisplayName("Date Uploaded")]
+		public object MediaDate { get; set; }
+
+		[DisplayName("Bitrate")]
+		public object MediaBitRate { get; set; }
+
+		[DisplayName("Media Type")]
+		public object MediaType { get; set; }
+
+		[DisplayName("Size")]
+		public object MediaSize { get; set; }
+
+		[DisplayName("Media Length")]
+		public object MediaLength { get; set; }
+
 	}
 
 	public partial class ContentUserDownloadable {

@@ -36,9 +36,7 @@ namespace T4MVC {
             public readonly string ctrlMediaplayer = "~/Views/Shared/ctrlMediaplayer.ascx";
             public readonly string ctrlSubMenu = "~/Views/Shared/ctrlSubMenu.ascx";
             public readonly string ctrlTagCloud = "~/Views/Shared/ctrlTagCloud.ascx";
-            public readonly string ctrlTagEdit = "~/Views/Shared/ctrlTagEdit.ascx";
             public readonly string ctrlTerritoryCloud = "~/Views/Shared/ctrlTerritoryCloud.ascx";
-            public readonly string ctrlTerritoryEdit = "~/Views/Shared/ctrlTerritoryEdit.ascx";
             public readonly string Error = "~/Views/Shared/Error.aspx";
             static readonly _DisplayTemplates s_DisplayTemplates = new _DisplayTemplates();
             public _DisplayTemplates DisplayTemplates { get { return s_DisplayTemplates; } }

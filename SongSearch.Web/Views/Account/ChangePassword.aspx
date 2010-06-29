@@ -40,10 +40,10 @@
             <fieldset>
                 <legend>Password Information</legend>
                 <div>&nbsp;</div>
-				<div class="cw-fe-vert cw-fe-req">
+				<div>
                     <%= Html.LabelFor(m => m.OldPassword) %>
                 </div>
-                <div class="cw-fe-vert">
+                <div>
                     <%= Html.PasswordFor(m => m.OldPassword, new { @class = "cw-field-large" } )%>
                     <%= Html.ValidationMessageFor(m => m.OldPassword) %>
                 </div>

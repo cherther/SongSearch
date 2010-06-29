@@ -62,7 +62,7 @@
                 
                 <p>
                     <button type="submit" class="cw-button cw-simple cw-blue">
-                    <span class="ok">Reset Password</span>
+                    <span class="b-ok">Reset Password</span>
                     </button>
                 </p>
             </fieldset>

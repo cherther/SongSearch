@@ -17,7 +17,10 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		//  UpdateModelWith
 		// **************************************
-		public void Update(Content contentModel, IList<int> tagsModel, IList<ContentRightViewModel> rightsModel) {
+		public void Update(Content contentModel, 
+			IList<int> tagsModel,
+			IDictionary<TagType, string> newTagsModel,
+			IList<ContentRightViewModel> rightsModel) {
 
 			//UpdateModelWith Content
 			var content = DataSession.GetObjectQuery<Content>()
@@ -35,6 +38,11 @@ namespace SongSearch.Web.Services {
 
 			//UpdateModelWith Tags
 			tagsModel = tagsModel.Where(t => t > 0).ToList();
+			// create new tags
+			var newTags = CreateTags(newTagsModel);
+			tagsModel = tagsModel.Union(newTags).ToList();
+
+			// add to tagsModel
 			content = UpdateTags(content, tagsModel);
 
 			//UpdateModelWith Rights
@@ -42,9 +50,44 @@ namespace SongSearch.Web.Services {
 
 			DataSession.CommitChanges();
 
-			CacheService.CacheUpdate(CacheService.CacheKeys.Content);
-			CacheService.CacheUpdate(CacheService.CacheKeys.Rights);
-			CacheService.CacheUpdate(CacheService.CacheKeys.TopTags);
+			CacheService.InitializeApp(true);
+			//CacheService.CacheUpdate(CacheService.CacheKeys.Content);
+			//CacheService.CacheUpdate(CacheService.CacheKeys.Rights);
+			//CacheService.CacheUpdate(CacheService.CacheKeys.TopTags);
+			//CacheService.CacheUpdate(CacheService.CacheKeys.Tags);
+			//CacheService.CacheUpdate(CacheService.CacheKeys.Territories);
+
+		}
+
+		private IList<int> CreateTags(IDictionary<TagType, string> newTagModel) {
+
+			IList<int> newTagIds = new List<int> { };
+			var tags = DataSession.All<Tag>();//.ToList();
+			var newTags = newTagModel.Where(t => !String.IsNullOrWhiteSpace(t.Value));
+			foreach (var newTag in newTags) {
+
+				var values = newTag.Value.Split(',').Where(v => !String.IsNullOrWhiteSpace(v)).Select(v => v.Trim());
+
+				foreach (var value in values) {
+					var tag = tags.SingleOrDefault(t =>
+						t.TagTypeId == (int)newTag.Key &&
+						t.TagName.ToUpper().Equals(value.ToUpper())) ??
+						new Tag() {
+							TagName = value,
+							CreatedByUserId = ActiveUser.UserId,
+							CreatedOn = DateTime.Now,
+							TagTypeId = (int)newTag.Key
+						};
+
+					if (tag.TagId == 0) {
+
+						DataSession.Add<Tag>(tag);
+						DataSession.CommitChanges();
+						newTagIds.Add(tag.TagId);
+					}
+				}
+			}
+			return newTagIds;
 		}
 
 		// **************************************
@@ -63,8 +106,10 @@ namespace SongSearch.Web.Services {
 			var contentTagsToAdd = tagsModel.Except(contentTags.Select(t => t.TagId).Intersect(tagsModel));
 
 			foreach (var contentTag in contentTagsToAdd) {
-				var tag = tags.Single(t => t.TagId == contentTag);
-				content.Tags.Add(tag);
+				var tag = tags.SingleOrDefault(t => t.TagId == contentTag);
+				if (tag != null) {
+					content.Tags.Add(tag);
+				}
 			}
 
 			return content;
@@ -170,6 +215,18 @@ namespace SongSearch.Web.Services {
 
 			DataSession.CommitChanges();
 
+		}
+
+		// **************************************
+		//  DeleteTag
+		// **************************************
+		public void DeleteTag(int tagId) {
+
+			var tag = DataSession.Single<Tag>(t => t.TagId == tagId && t.CreatedByUserId == ActiveUser.UserId); 
+			if (tag != null) {
+				DataSession.Delete<Tag>(tag);
+				DataSession.CommitChanges();
+			}
 		}
 		// ----------------------------------------------------------------------------
 		// (Dispose)

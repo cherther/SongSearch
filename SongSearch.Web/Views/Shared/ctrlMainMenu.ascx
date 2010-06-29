@@ -3,7 +3,7 @@
 
 	IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
 
-	var navLocation = Model == null ? "" : Model.NavigationLocation;
+	var navLocation = Model == null ? "" : Model.NavigationLocation.FirstOrDefault();
 	navLocation = String.IsNullOrEmpty(navLocation) ? ViewData["NavigationLocation"] as string : navLocation;
 
 	menu.Add("Home", new string[3] { "Index", "Home", "Home" });

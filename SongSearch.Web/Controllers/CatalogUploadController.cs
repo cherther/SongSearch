@@ -140,9 +140,10 @@ namespace SongSearch.Web.Controllers
 
 			var vm = new CatalogUploadViewModel();
 			vm.PageTitle = nextStep.StepName;
+			vm.NavigationLocation = new string[] { "Admin" };
 			vm.CatalogUploadState = state;
 			vm.StepView = nextStep.StepView;
-			vm.StepActionName = "Next";
+			vm.StepActionName = nextStep.StepButton;// "Next Step";
 			vm.MyCatalogs = _currentUser.MyAdminCatalogs().OrderBy(c => c.CatalogName).ToList();
 			return vm;
 		}

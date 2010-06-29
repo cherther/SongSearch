@@ -145,8 +145,10 @@ function setupAutoComplete() {
 							response($.ui.autocomplete.filter(aCache.content, request.term));
 							return;
 						}
-					}					catch (ex) {
-					}
+					}
+					catch (ex) {
+
+					}
 					//catch() {}
 
 					var url = "/Search/AutoComplete?f=";
@@ -419,7 +421,13 @@ function deleteContentRight(link) {
 	var modelAction = link.prev('.cw-model-action');
 	modelAction.val(2); // ModelAction=Delete
 	parentRow.hide().next().hide();
-	
+
+}
+
+function deleteTagCallback(data, link) {
+    var tagLocatorClass = link[0].rel;
+    $('.' + tagLocatorClass).hide();
+    link.hide();
 }
 
 //***********************************************

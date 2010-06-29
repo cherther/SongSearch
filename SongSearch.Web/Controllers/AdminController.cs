@@ -11,7 +11,7 @@ namespace SongSearch.Web.Controllers
 	public partial class AdminController : Controller
 	{
 		public virtual ActionResult UpdateCache() {
-			return View(new ViewModel() { NavigationLocation = "Admin" });
+			return View(new ViewModel() { NavigationLocation = new string[] { "Admin" } });
 
 		}
 
@@ -19,12 +19,12 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult UpdateCache(FormCollection form) {
 			SessionService.Session().InitializeSession(true);
 			CacheService.InitializeApp(true);
-			return View(new ViewModel() { NavigationLocation = "Admin" });
+			return View(new ViewModel() { NavigationLocation = new string[] { "Admin" } });
 
 		}
 
 		public virtual ActionResult MySession() {
-			return View(new ViewModel() { NavigationLocation = "Admin" });
+			return View(new ViewModel() { NavigationLocation = new string[] { "Admin" } });
 
 		}
 

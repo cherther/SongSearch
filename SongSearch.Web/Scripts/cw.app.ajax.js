@@ -197,6 +197,30 @@ function addToCartMultipleAjax(link, items) {
 
 }
 
+function deleteTagAjax(link) {
+
+    var url = link[0].href;
+    wait();
+    $.ajax({
+        url: url,
+        type: 'POST',
+        cache: false,
+        dataType: 'json',
+        success: function (data, status, xhr) {
+            if (status == 'error') {
+                feedback('error', xhr.status + ' ' + xhr.statusText);
+            }
+            else {
+                //callback
+                deleteTagCallback(data, link)
+                unwait();
+            }
+        },
+        error: function (xhr, status, error) {
+            feedback('error', xhr.status + ' ' + xhr.statusText);
+        }
+    });
+}
 //-----------------------------------------------------------------------------------
 // Catalog Contents Management
 //-----------------------------------------------------------------------------------

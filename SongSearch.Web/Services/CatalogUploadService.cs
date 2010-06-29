@@ -117,10 +117,10 @@ namespace SongSearch.Web.Services {
 
 			wf.WorkflowSteps = new List<WorkflowStep<CatalogUploadState>>();
 
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SelectCatalog, 0, "Select Catalog", "wfSelectCatalog", "Next"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongFiles, 1, "Upload Song Files", "wfAddSongFiles", "Upload"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongPreviews, 2, "Upload Preview Files", "wfAddPreviewFiles", "Upload"));
-			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(EditMetadata, 3, "Review Song Data", "wfEditMetadata", "Next"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SelectCatalog, 0, "Select Catalog", "wfSelectCatalog", "Next Step"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongFiles, 1, "Upload Song Files", "wfAddSongFiles", "Next Step"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(AddSongPreviews, 2, "Upload Preview Files", "wfAddPreviewFiles", "Next Step"));
+			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(EditMetadata, 3, "Review Song Data", "wfEditMetadata", "Next Step"));
 			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(SaveCatalog, 4, "Save Catalog", "wfSaveCatalog", "Save"));
 			wf.WorkflowSteps.Add(new WorkflowStep<CatalogUploadState>(ReviewComplete, 5, "Complete", "wfComplete", "Done"));
 
@@ -333,12 +333,21 @@ namespace SongSearch.Web.Services {
 					itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull().ToUpper();
 					itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
 					itm.Notes = itm.Notes;
-					itm.FileType = "mp3";
 					
 					var full = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.FullSong);
 					if (full != null){
 						var fi = new FileInfo(full.FilePath);
-						itm.FileSize = (int)fi.Length;
+						var id3 = ID3Reader.GetID3Metadata(full.FilePath);
+
+						itm.MediaSize = fi.Length;
+						itm.MediaType = "mp3";
+						itm.MediaLength = id3.MediaLength;
+
+						itm.MediaDate = fi.LastWriteTime > DateTime.MinValue ? fi.LastWriteTime : DateTime.Now;
+						if (!itm.MediaDate.HasValue) { itm.MediaDate = DateTime.Now; }
+
+						itm.MediaBitRate = id3.MediaLength != null ?
+							((long)id3.MediaLength).ToBitRate(itm.MediaSize.GetValueOrDefault()) : 0;
 					}
 
 					DataSession.Add<Content>(itm);

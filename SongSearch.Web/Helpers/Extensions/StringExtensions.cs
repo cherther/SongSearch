@@ -149,8 +149,13 @@ namespace SongSearch.Web {
 
 		public static string ToFileSizeDescription(this decimal? fileSize) {
 			
-			return String.Format("{0} MB", 
-				fileSize.HasValue ? Convert.ToInt32((fileSize.Value/(1024*1024))) : 0
+			return ToFileSizeDescription(fileSize.GetValueOrDefault());
+		}
+
+		public static string ToFileSizeDescription(this decimal fileSize) {
+
+			return String.Format("{0} MB",
+				Convert.ToInt32((fileSize / (1024 * 1024)))
 				);
 		}
 
@@ -158,5 +163,20 @@ namespace SongSearch.Web {
 			return yes ? "Yes" : "No";
 		}
 
+		public static int ToBitRate(this long lengthMilliseconds, long mediaSizeBytes){
+
+			var kb = ((decimal)(mediaSizeBytes * (decimal)8.00) / (decimal)1024.00); //kilobits = 3MB = (3*1024*1024)*8/1024 = 24576
+			var secs = ((decimal)lengthMilliseconds / (decimal)1000.00); // 3 min = 3*60*1000/1000 = 180
+			return (int)(secs > 0 ? (kb / secs) : 0); //24576 / 180 = 136
+
+		}
+		public static string millSecsToTimeCode(this decimal lengthMilliseconds) {
+			// convert milliseconds to mm:ss, return as object literal or string
+			var secs = Math.Floor(lengthMilliseconds / 1000);
+			var min = Math.Floor(secs / 60);
+			var sec = secs - (min * 60);
+			// if (min == 0 && sec == 0) return null; // return 0:00 as null
+			return (min.ToString() + ':' + (sec < 10 ? "0" + sec.ToString() : sec.ToString()));
+		}
 	}
 }

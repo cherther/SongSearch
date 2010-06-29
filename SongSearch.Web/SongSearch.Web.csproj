@@ -1928,8 +1928,7 @@
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>9001</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/SongSearch.Dev</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

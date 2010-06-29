@@ -46,7 +46,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		[ValidateOnlyIncomingValues]
 		public virtual ActionResult LogIn(LogOnModel model) {
-			model.NavigationLocation = "Account";
+			model.NavigationLocation = new string[] { "Home", "Login" };
 			model.RememberMe = true;
 			return View(model);
 		}
@@ -96,7 +96,7 @@ namespace SongSearch.Web.Controllers {
 			//something failed
 			ModelState.AddModelError("", Errors.LoginFailed.Text());
 
-			model.NavigationLocation = "Account";
+			model.NavigationLocation = new string[] { "Home", "Login" };
 
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
@@ -140,7 +140,7 @@ namespace SongSearch.Web.Controllers {
 
 			return View(new RegisterModel() {
 
-				NavigationLocation = "Register",
+				NavigationLocation = new string[] { "Register" },
 				InviteId = id,
 				Email = em
 
@@ -212,7 +212,7 @@ namespace SongSearch.Web.Controllers {
 			}
 
 			// If we got this far, something failed, redisplay form
-			model.NavigationLocation = "Register";
+			model.NavigationLocation = new string[] { "Register" };
 			this.FeedbackError("There was an error registering you...");
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
@@ -225,7 +225,7 @@ namespace SongSearch.Web.Controllers {
 		public virtual ActionResult ChangePassword() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-			return View(new UpdateProfileModel() { NavigationLocation = "Account" });
+			return View(new UpdateProfileModel() { NavigationLocation = new string[] { "Home", "ChangePassword" } });
 		}
 
 		[RequireAuthorization]
@@ -249,7 +249,7 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			this.FeedbackError("There was an error changing your password...");
 
-			model.NavigationLocation = "Account";
+			model.NavigationLocation = new string[] { "Home", "ChangePassword" };
 			return View(model);
 		}
 
@@ -269,7 +269,7 @@ namespace SongSearch.Web.Controllers {
 					);
 			}
 			catch { }
-			return View(new UpdateProfileModel() { NavigationLocation = "Account" });
+			return View(new UpdateProfileModel() { NavigationLocation = new string[] { "Home", "ChangePassword" } });
 		}
 
 
@@ -285,7 +285,7 @@ namespace SongSearch.Web.Controllers {
 				var user = SessionService.Session().User(User.Identity.Name);
 
 				var vm = new UpdateProfileModel() {
-					NavigationLocation = "Account",
+					NavigationLocation = new string[] { "Home", "Profile" },
 					Email = User.Identity.Name,
 					FirstName = user.FirstName,
 					LastName = user.LastName,
@@ -347,7 +347,7 @@ namespace SongSearch.Web.Controllers {
 			// If we got this far, something failed, redisplay form
 			ViewData["PasswordLength"] =
 				AccountService.MinPasswordLength;
-			model.NavigationLocation = "Account";
+			model.NavigationLocation = new string[] { "Home", "Profile" };
 			
 			return View(model);
 		}
@@ -381,7 +381,7 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(new ResetPasswordModel() {
-				NavigationLocation = "Account"
+				NavigationLocation = new string[] { "Home", "ResetPassword" }
 			});
 		}
 
@@ -411,7 +411,7 @@ namespace SongSearch.Web.Controllers {
 				return RedirectToAction(Actions.ResetPasswordSuccess());
 			}
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
-			model.NavigationLocation = "Account";
+			model.NavigationLocation = new string[] { "Home", "ResetPassword" };
 			this.FeedbackError("There was an error processing your password reset request...");
 
 			return View(model);
@@ -429,13 +429,12 @@ namespace SongSearch.Web.Controllers {
 		// **************************************        
 		public virtual ActionResult ResetPasswordRespond(string id, string rc) {
 			var model = new ResetPasswordModel() {
-				NavigationLocation = "Account",
 				Email = id,
 				ResetCode = rc
 			};
 
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
-			model.NavigationLocation = "Account";
+			model.NavigationLocation = new string[] { "Home", "ResetPassword" };
 
 			return View(model);
 		}
@@ -454,7 +453,7 @@ namespace SongSearch.Web.Controllers {
 				ModelState.AddModelError("", Errors.PasswordResetFailed.Text());
 
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
-				model.NavigationLocation = "Account";
+				model.NavigationLocation = new string[] { "Home", "ResetPassword" };
 				this.FeedbackError("There was an error processing your password reset request...");
 
 				return View(model);

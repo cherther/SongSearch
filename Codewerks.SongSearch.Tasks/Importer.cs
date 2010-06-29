@@ -26,16 +26,21 @@ namespace Codewerks.SongSearch.Tasks {
 					var file = new FileInfo(full);
 					if (file.Exists) {
 						var tag = ID3v2Helper.CreateID3v2(full);
-						System.Diagnostics.Debug.WriteLine(tag.EncoderSettings);
+						
 
 						content.HasMediaFullVersion = true;
-						content.FileSize = (int)(file.Length);
+						content.MediaSize = file.Length;
+						content.MediaLength = tag.LengthMilliseconds;
+						content.MediaDate = file.LastWriteTime > DateTime.MinValue ? file.LastWriteTime : DateTime.Now;
+						if (!content.MediaDate.HasValue) { content.MediaDate = DateTime.Now; }
 
-						content.FileType = tag.FileType ?? content.FileType;
-						var kb = (int)(file.Length * 8 / 1024);
-						var secs = (tag.LengthMilliseconds / 1000);
-						content.BitRate = secs > 0 ? (kb / secs) : 0;
+						content.MediaType = tag.FileType ?? content.MediaType;
+						content.MediaBitRate = tag.LengthMilliseconds != null ?
+							((long)tag.LengthMilliseconds).ToBitRate(content.MediaSize.GetValueOrDefault()) : 0;
 
+						if (content.MediaBitRate >= 160) {
+							System.Diagnostics.Debug.WriteLine(content.MediaBitRate);
+						}
 
 					} else {
 						content.HasMediaFullVersion = false;
@@ -48,7 +53,7 @@ namespace Codewerks.SongSearch.Tasks {
 					}
 
 				}
-//				session.CommitChanges();
+				session.CommitChanges();
 			}
 			
 		}
@@ -62,7 +67,7 @@ namespace Codewerks.SongSearch.Tasks {
 			foreach (var row in import) {
 
 				MakeATag(row.SongID, row.SoundsLike, TagType.SoundsLike);
-				MakeATag(row.SongID, row.Instrumentation, TagType.Instruments);
+				MakeATag(row.SongID, row.Instrumentation, TagType.Instrument);
 				//_session.CommitChanges();
 			}
 	

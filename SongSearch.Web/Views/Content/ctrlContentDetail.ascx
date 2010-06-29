@@ -51,7 +51,10 @@
 			<%: Html.ActionLink(linkAction, linkAction, "Content", new { id = content.ContentId }, new { rel = linkAction, @class = linkClass })%>
 			<%} else { %>
 			<button type="submit" class="<%: menuButtonClass %>"><%: linkAction %></button>
-			<%}%> 
+			<%}%>
+			<%--<%if (isEditing){ %>
+			<%: Html.ActionLink("Cancel", linkAction, "Content", new { id = content.ContentId }, new { rel = "Cancel", @class = linkClass })%>
+			<%} %>--%>
 		<%} %>
 		</div>
 		<hr />
@@ -70,7 +73,9 @@
 				<li><a href="#tabs-3">Tags</a></li>
 				<%if (Model.SectionsAllowed.Contains("Rights")) { %>
 				<li><a href="#tabs-4">Rights</a></li>
-		
+				<%} %>
+				<%if (Model.SectionsAllowed.Contains("Media")) { %>
+				<li><a href="#tabs-5">Media</a></li>
 				<%} %>
 			</ul>
 		<%} %>
@@ -128,12 +133,17 @@
 	</div>      
 	<%} %>
 </div>
+<%if (Model.ViewMode != ViewModes.Print || (Model.ViewMode == ViewModes.Print && !String.IsNullOrWhiteSpace(Model.Content.Lyrics))){%>
+<%if (Model.ViewMode == ViewModes.Print){%>
+<hr />
+<%} %>
 <div id="tabs-2">
 <%
 	columnOne = "two";
 	columnTwo = "seven";
-	
-	var lyricsSearch = searchFields.Where(s => s.P == 7).SingleOrDefault();
+	const int lyricsProp = 7;
+
+	var lyricsSearch = searchFields.Where(s => s.P == lyricsProp).SingleOrDefault();
 
 	Model.Content.Lyrics = isEditing ? content.Lyrics : Html.HighlightSearchTerm(Model.Content.Lyrics, lyricsSearch); 
 %>
@@ -142,11 +152,19 @@
 		<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Lyrics) : Html.DisplayFor(m => m.Content.Lyrics,"MultilineText")%></div>
 	</div>
 </div>
+<%} %>
 <%if (Model.ViewMode != ViewModes.Print) {%>
 <div id="tabs-3">
+	<%var tagCreationMsg = "Separate new tags with commas. They will be created and applied to the song when you click Save."; %>
+	<%if (isEditing) { %>
+	<div>
+	<label><em><%: tagCreationMsg %></em></label>
+	</div>
+	<%} %>
 	<%
-	var tagTypes = ModelEnums.GetTagTypes().Where(t => t != TagType.SoundsLike && t != TagType.Instruments);//.OrderBy(t => t);
-	var tt = 0;
+	var tagTypes = ModelEnums.GetTagTypes().Where(t => t != TagType.SoundsLike && t != TagType.Instrument);//.OrderBy(t => t);
+	var tagCount = 0;
+	var tagTypeCount = 0;
 	%>
 	<%foreach (var tagType in tagTypes) { %>
 	<%    
@@ -155,23 +173,24 @@
 		var selectedTags = content.Tags.Where(func).Select(x => x.TagId).ToArray();
 		var tags = (isEditing ? Model.Tags : content.Tags.ToList()).Where(func).OrderBy(t => t.TagName).ToList();
 		var model = new TagCloudViewModel<Tag>() { 
-			EditMode = Model.EditMode, 
-			TagCountSeed = tt,
+			EditMode = Model.EditMode,
+			TagCountSeed = tagCount,
 			Tags = tags, 
 			TagType = tagType, 
 			SelectedTags = selectedTags,
 			TagClass = "cw-tagbox-label",
 			TagIdTemplate = "t_{0}",
 			TagNameTemplate = "tags[{0}]",
-			NumberTagsInRow = 5
+			NumberTagsInRow = 5,
+			ActiveUserId = Model.ActiveUserId
 		};
-
-		tt += tags.Count();
+		tagCount += tags.Count();
 
 		columnOne = "one";
 		columnTwo = "eight";
 	
-	%>    
+	%>   
+	
 		<%if (tags.Count() > 0) {%>
 		<div class="<%: sectionSize%>_column section cw-spaced">
 			<div class="<%: columnOne%> column"><label><%=tagType%></label></div>
@@ -180,10 +199,27 @@
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlTagEdit, model); %>
 			<%} else {%>--%>
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, model); %>
+			
 			<%//} %>
 			</div>
 		</div>
 		<%} %>
+		<%if (isEditing) { %>
+		<div class="<%: sectionSize%>_column section cw-spaced">
+			<div class="<%: columnOne%> column"></div>
+			<div class="<%: columnTwo%> column">
+				<label>New <%: tagType %> tags:</label>
+				
+				<input type="hidden" name="newTags[<%: tagTypeCount %>].Key" value="<%: tagType%>" />				
+				<input type="text" name="newTags[<%: tagTypeCount %>].Value" title="<%: tagCreationMsg %>" />
+				
+<%--				<a href="#" class="cw-add-tag-link" rel="<%: tagType %>" title="Add a <%: tagType %> tag">
+					<img src="../../public/images/icons/silk/add.png" alt="Add" />
+				</a>--%>
+			</div>
+		</div>
+		<%} %>
+		<% tagTypeCount++; %>
 	<%} %>
 </div>
 
@@ -193,6 +229,9 @@
 	columnOne = "two";
 	columnTwo = "seven";	  
 %>
+<%if (Model.ViewMode == ViewModes.Print){%>
+<hr />
+<%} %>
 <div id="tabs-4">
 		<div class="<%: sectionSize%>_column section cw-spaced">      
 			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.ContentId)%></div>
@@ -347,6 +386,84 @@
 		</div>
 
 </div>
+<%} %>
+<%if ((Model.ViewMode != ViewModes.Print) && Model.SectionsAllowed.Contains("Media")) { %>
+<%
+	columnOne = "two";
+	columnTwo = "seven";
+%>
+<div id="tabs-5">
+<div class="<%: sectionSize%>_column section cw-spaced">  
+		<div class="<%: sectionSize%>_column section cw-spaced">      
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.HasMediaFullVersion)%></div>
+			<div class="<%: columnTwo%> column">
+			<% if (content.HasMediaFullVersion) { %>
+				<%: String.Concat(content.DownloadableName().Trim(), ".", content.MediaType.ToUpper().Trim())%>
+			<%} else { %>
+				(No song file)
+			<%} %>
+			</div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">
+			<div class="<%: columnOne%> column"> 
+			<%: Html.LabelFor(m => m.Content.MediaDate)%> 
+			</div>
+			<div class="<%: columnTwo%> column">
+			<%: content.MediaDate.Value%>
+			</div>
+		</div>
+		<%if (isEditing){ %>
+		<div class="<%: sectionSize%>_column section cw-spaced">
+			<div class="<%: columnOne%> column">   
+			</div>
+			<div class="<%: columnTwo%> column">
+			<% if (content.HasMediaFullVersion) { %>
+				<a class="cw-button cw-simple cw-small cw-gray">Replace</a>
+			<%} else { %>
+				<a class="cw-button cw-simple cw-small cw-gray">Upload</a>
+			<%} %>
+			</div>
+		</div>
+		<%} %>
+		<div class="<%: sectionSize%>_column section cw-spaced">      
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.HasMediaPreviewVersion)%></div>
+			<div class="<%: columnTwo%> column"><%: content.HasMediaPreviewVersion.ToYesNo() %></div>
+		</div>
+		<%if (isEditing){ %>
+		<div class="<%: sectionSize%>_column section cw-spaced">
+			<div class="<%: columnOne%> column">
+			</div>
+			<div class="<%: columnTwo%> column">
+			<% if (content.HasMediaPreviewVersion) { %>
+				<a class="cw-button cw-simple cw-small cw-gray">Replace</a>
+			<%} else { %>
+				<a class="cw-button cw-simple cw-small cw-gray">Upload</a>
+			<%} %>
+			</div>
+		</div>
+		<%} %>
+		<%if (Model.SectionsAllowed.Contains("MediaExtended")) {%>
+		<hr />
+		<div class="<%: sectionSize%>_column section cw-spaced">      
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.MediaBitRate)%></div>
+			<div class="<%: columnTwo%> column"><%: content.MediaBitRate%> kbps</div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">      
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.MediaType)%></div>
+			<div class="<%: columnTwo%> column"><%: content.MediaType%></div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">      
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.MediaSize)%></div>
+			<div class="<%: columnTwo%> column"><%: ((decimal)content.MediaSize.GetValueOrDefault()).ToFileSizeDescription()%></div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">      
+			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.MediaLength)%></div>
+			<div class="<%: columnTwo%> column"><%: ((decimal)content.MediaLength.GetValueOrDefault()).millSecsToTimeCode()%></div>
+		</div>
+		<hr />
+		<%} %>
+</div>
+
 <%} %>
 <%if (isEditing) { Html.EndForm();  }%>
 <%if (Model.ViewMode == ViewModes.Embedded) { %>

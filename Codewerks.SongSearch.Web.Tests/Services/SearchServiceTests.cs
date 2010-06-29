@@ -196,7 +196,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 
 			//Arrange
 			//Act
-			var styles = SearchService.GetTopTags(TagType.Styles);
+			var styles = SearchService.GetTopTags(TagType.Style);
 			//var label = SearchService.GetLookupListContent("RecordLabel");
 			//var catalogs = SearchService.GetLookupListContent("Catalog.CatalogName");
 			//var list = SearchService.GetLookupListContent("Artist");
@@ -212,7 +212,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 			//Arrange
 			int topLimit = 5;
 			//Act
-			var styles = SearchService.GetTopTags(TagType.Styles, topLimit);
+			var styles = SearchService.GetTopTags(TagType.Style, topLimit);
 			//var label = SearchService.GetLookupListContent("RecordLabel");
 			//var catalogs = SearchService.GetLookupListContent("Catalog.CatalogName");
 			//var list = SearchService.GetLookupListContent("Artist");

@@ -32,8 +32,13 @@
 	<%} %>
 	<%rowIsComplete = false;%>
 	 <%if (isEditing) { %>
-	 <label for="<%= tagId %>" class="<%: tagClass %>"><%: tagDisplay%></label>
-	 <%: Html.CheckBox(tagName, isSelected, new { id = tagId, value = tag.TagId, @class = "cw-tagbox-checkbox" })%>
+		<%var tagLocatorClass = String.Concat("tag_", tag.TagId); %>
+		<label for="<%= tagId %>" class="<%: tagClass %> <%: tagLocatorClass %>"><%: tagDisplay%></label>
+		<%: Html.CheckBox(tagName, isSelected, new { id = tagId, value = tag.TagId, @class = String.Concat("cw-tagbox-checkbox ", tagLocatorClass) })%>
+		<%if (tag.CreatedByUserId == Model.ActiveUserId) { %>
+		<%var deleteUrl = Url.Action(MVC.Content.DeleteTag(tag.TagId)); %>
+		<a href="<%: deleteUrl %>" class="cw-delete-tag-link" rel="<%: tagLocatorClass %>" title="Delete this tag"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
+		<%} %>
 	 <%} else { %>
 	 <a id="<%= tagId%>" class="<%=tagClass %>" rev="<%: Model.TagNameTemplate %>" rel="<%: tag.TagId %>"> <%: tagDisplay%></a>
 	 <%} %>
@@ -48,6 +53,7 @@
 	<%if (!rowIsComplete) { %>
 	</div>
 	<%} %>
+	
 </div>
 <%if (hasMoreLinks){ %>
 <% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, Model); %>

@@ -55,6 +55,11 @@ namespace SongSearch.Web.Controllers {
         public System.Web.Mvc.ActionResult Delete() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DeleteTag() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteTag);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ContentController Actions { get { return MVC.Content; } }
@@ -74,6 +79,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string Save = "Save";
             public readonly string Delete = "Delete";
             public readonly string DeleteMultiple = "DeleteMultiple";
+            public readonly string DeleteTag = "DeleteTag";
         }
 
 
@@ -110,10 +116,11 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Save(SongSearch.Web.Data.Content content, System.Collections.Generic.IList<int> tags, System.Collections.Generic.IList<SongSearch.Web.ContentRightViewModel> rights, bool returnData) {
+        public override System.Web.Mvc.ActionResult Save(SongSearch.Web.Data.Content content, System.Collections.Generic.IList<int> tags, System.Collections.Generic.IDictionary<SongSearch.Web.TagType,string> newTags, System.Collections.Generic.IList<SongSearch.Web.ContentRightViewModel> rights, bool returnData) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Save);
             callInfo.RouteValueDictionary.Add("content", content);
             callInfo.RouteValueDictionary.Add("tags", tags);
+            callInfo.RouteValueDictionary.Add("newTags", newTags);
             callInfo.RouteValueDictionary.Add("rights", rights);
             callInfo.RouteValueDictionary.Add("returnData", returnData);
             return callInfo;
@@ -127,6 +134,12 @@ namespace SongSearch.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult DeleteMultiple() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteMultiple);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DeleteTag(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteTag);
+            callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
 
