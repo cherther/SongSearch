@@ -425,9 +425,9 @@ function deleteContentRight(link) {
 }
 
 function deleteTagCallback(data, link) {
-    var tagLocatorClass = link[0].rel;
-    $('.' + tagLocatorClass).hide();
-    link.hide();
+	var tagLocatorClass = link[0].rel;
+	$('.' + tagLocatorClass).hide();
+	link.hide();
 }
 
 //***********************************************

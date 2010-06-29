@@ -107,7 +107,7 @@ namespace SongSearch.Web {
 			currentContent.SimilarSongs = content.SimilarSongs;
 			currentContent.LicensingNotes = content.LicensingNotes;
 
-		}
+	}
 
 
 		// **************************************
