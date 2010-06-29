@@ -6,32 +6,51 @@ using SongSearch.Web;
 using SongSearch.Web.Data;
 using SongSearch.Web.Services;
 using IdSharp.Tagging.ID3v2;
+using System.IO;
 namespace Codewerks.SongSearch.Tasks {
 	public class Importer {
 
 		//private static IQueryable<Tag> _tags;
 		//private static IDataSession _session;
 		public static void GetID3() {
-			string path = @"D:\Music\iTunes\iTunes Media\Music\Stevie Ray Vaughan\The Sky Is Crying";
-			var di = new System.IO.DirectoryInfo(path);
+			string fullpath = @"D:\Inetpub\wwwroot\Assets\Music\Full";
+			string previewPath = @"D:\Inetpub\wwwroot\Assets\Music\Previews";
 
-			foreach (var file in di.GetFiles()) {
-				//ID3Data id3 = ID3Reader.GetID3MetadataV2(file.FullName);
-				//if (String.IsNullOrWhiteSpace(id3.Title)) {
-				//    id3 = ID3Reader.GetID3MetadataV4(file.FullName);
-				//}
-				var tag = ID3v2Helper.CreateID3v2(file.FullName);
-				var id3 = new ID3Data();
+			using (var session = new SongSearchDataSession()) {
 
-				id3.Artist = tag.Artist;
-				id3.Title = tag.Title;
-				id3.Album = tag.Album;
-				//id3.Genre = tag.Genre;
-				id3.Year = tag.Year;
-				//id3.TrackNumber = tag.TrackNumber;
-
+				var contents = session.All<Content>();
 				
+				foreach (var content in contents) {
+
+					string full = Path.Combine(fullpath, String.Concat(content.ContentId, ".mp3"));
+					var file = new FileInfo(full);
+					if (file.Exists) {
+						var tag = ID3v2Helper.CreateID3v2(full);
+						System.Diagnostics.Debug.WriteLine(tag.EncoderSettings);
+
+						content.HasMediaFullVersion = true;
+						content.FileSize = (int)(file.Length);
+
+						content.FileType = tag.FileType ?? content.FileType;
+						var kb = (int)(file.Length * 8 / 1024);
+						var secs = (tag.LengthMilliseconds / 1000);
+						content.BitRate = secs > 0 ? (kb / secs) : 0;
+
+
+					} else {
+						content.HasMediaFullVersion = false;
+					}
+
+					if (File.Exists(Path.Combine(previewPath, String.Concat(content.ContentId, ".mp3")))) {
+						content.HasMediaPreviewVersion = true;
+					} else {
+						content.HasMediaPreviewVersion = false;
+					}
+
+				}
+//				session.CommitChanges();
 			}
+			
 		}
 		public static void MakeTags() {
 

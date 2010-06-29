@@ -31,7 +31,7 @@
 					<button id="cw-play-rew" class="cw-media-rew-link cw-button cw-small cw-simple cw-gray" title="Rewind" disabled="disabled"><span class="b-rewind" >Rev</span></button>
 				<%} %>
 				<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
-					<button id="cw-play-ffwd" class="cw-media-ffwd-link cw-button cw-small cw-simple cw-gray" title="Fast Forward" disabled="disabled"><span class="b-forward" >Fwd</span></button>
+					<button id="cw-play-ffwd" class="cw-media-ffwd-link cw-button cw-small cw-simple cw-gray" title="Fast Forward" disabled="disabled"><span class="b-forward after" >Fwd</span></button>
 				<%} %>
 				<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
 					<button id="cw-play-repeat" class="cw-media-repeat-link cw-button cw-small cw-simple cw-gray" title="Repeat" disabled="disabled"><span class="b-undo" >Repeat</span></button>

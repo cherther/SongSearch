@@ -228,7 +228,7 @@ namespace SongSearch.Web.Services {
 					.SingleOrDefault();
 				
 				var id3 = itm.Value;
-
+				//var file = new FileInfo(itm.Key.FilePath);
 				var fileNameData = Path.GetFileNameWithoutExtension(itm.Key.FileName).Split('-');
 				var title = id3.Title.AsNullIfWhiteSpace() ?? fileNameData.First();
 				var artist = id3.Artist.AsNullIfWhiteSpace() ?? (fileNameData.Length > 1 ? fileNameData[1] : "");
@@ -237,6 +237,10 @@ namespace SongSearch.Web.Services {
 				int releaseYear;
 				int.TryParse(year, out releaseYear);
 
+
+				//var kb = (int)(file.Length * 8 / 1024);
+				//var secs = (id3.LengthMilliseconds / 1000);
+				
 				var content = new Content() {
 					Title = title,
 					Artist = artist,
@@ -244,6 +248,9 @@ namespace SongSearch.Web.Services {
 					Notes = !String.IsNullOrWhiteSpace(album) ? String.Concat("Album: ", album) : null,
 					HasMediaFullVersion = true,
 					HasMediaPreviewVersion = preview != null,
+					//FileType = "mp3",
+					//FileSize = (int)file.Length,
+					//BitRate = secs > 0 ? (kb / secs) : 0,
 					UploadFiles = new List<UploadFile>()
 				};
 
@@ -285,7 +292,11 @@ namespace SongSearch.Web.Services {
 			if (ActiveUser.IsAtLeastInRole(Roles.Admin)) {
 
 				var catalog = DataSession.Single<Catalog>(c => c.CatalogName.ToUpper() == state.CatalogName) ??
-					new Catalog() { CatalogName = state.CatalogName };
+					new Catalog() { 
+						CatalogName = state.CatalogName,
+						CreatedByUserId = ActiveUser.UserId,
+						CreatedOn = DateTime.Now					
+					};
 
 				if (catalog.CatalogId == 0) {
 
@@ -306,9 +317,10 @@ namespace SongSearch.Web.Services {
 				state.CatalogId = catalog.CatalogId;
 				state.CatalogName = catalog.CatalogName.ToUpper();
 
-
 				// Save Content
 				foreach (var itm in state.Content) {
+
+					
 
 					itm.CatalogId = state.CatalogId;
 					itm.CreatedByUserId = ActiveUser.UserId;
@@ -321,17 +333,25 @@ namespace SongSearch.Web.Services {
 					itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull().ToUpper();
 					itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
 					itm.Notes = itm.Notes;
+					itm.FileType = "mp3";
+					
+					var full = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.FullSong);
+					if (full != null){
+						var fi = new FileInfo(full.FilePath);
+						itm.FileSize = (int)fi.Length;
+					}
 
 					DataSession.Add<Content>(itm);
 					DataSession.CommitChanges();
 
 					foreach (var file in itm.UploadFiles) {
-
-						var filePath = itm.MediaFilePath(file.FileMediaVersion);
-
-						FileSystem.SafeMove(file.FilePath, filePath, true);
-
+						if (itm.ContentId > 0) {
+							var filePath = itm.MediaFilePath(file.FileMediaVersion);
+							FileSystem.SafeMove(file.FilePath, filePath, true);
+						}
 					}
+
+					
 				}
 				
 			

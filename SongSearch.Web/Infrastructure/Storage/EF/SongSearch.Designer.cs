@@ -712,11 +712,15 @@ namespace SongSearch.Web.Data
         /// </summary>
         /// <param name="catalogId">Initial value of the CatalogId property.</param>
         /// <param name="catalogName">Initial value of the CatalogName property.</param>
-        public static Catalog CreateCatalog(global::System.Int32 catalogId, global::System.String catalogName)
+        /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
+        /// <param name="createdOn">Initial value of the CreatedOn property.</param>
+        public static Catalog CreateCatalog(global::System.Int32 catalogId, global::System.String catalogName, global::System.Int32 createdByUserId, global::System.DateTime createdOn)
         {
             Catalog catalog = new Catalog();
             catalog.CatalogId = catalogId;
             catalog.CatalogName = catalogName;
+            catalog.CreatedByUserId = createdByUserId;
+            catalog.CreatedOn = createdOn;
             return catalog;
         }
 
@@ -773,6 +777,54 @@ namespace SongSearch.Web.Data
         private global::System.String _CatalogName;
         partial void OnCatalogNameChanging(global::System.String value);
         partial void OnCatalogNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedByUserId
+        {
+            get
+            {
+                return _CreatedByUserId;
+            }
+            set
+            {
+                OnCreatedByUserIdChanging(value);
+                ReportPropertyChanging("CreatedByUserId");
+                _CreatedByUserId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedByUserId");
+                OnCreatedByUserIdChanged();
+            }
+        }
+        private global::System.Int32 _CreatedByUserId;
+        partial void OnCreatedByUserIdChanging(global::System.Int32 value);
+        partial void OnCreatedByUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedOn
+        {
+            get
+            {
+                return _CreatedOn;
+            }
+            set
+            {
+                OnCreatedOnChanging(value);
+                ReportPropertyChanging("CreatedOn");
+                _CreatedOn = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedOn");
+                OnCreatedOnChanged();
+            }
+        }
+        private global::System.DateTime _CreatedOn;
+        partial void OnCreatedOnChanging(global::System.DateTime value);
+        partial void OnCreatedOnChanged();
 
         #endregion
     
@@ -849,7 +901,8 @@ namespace SongSearch.Web.Data
         /// <param name="artist">Initial value of the Artist property.</param>
         /// <param name="hasMediaPreviewVersion">Initial value of the HasMediaPreviewVersion property.</param>
         /// <param name="hasMediaFullVersion">Initial value of the HasMediaFullVersion property.</param>
-        public static Content CreateContent(global::System.Int32 contentId, global::System.Int32 catalogId, global::System.Int32 createdByUserId, global::System.DateTime createdOn, global::System.Int32 lastUpdatedByUserId, global::System.DateTime lastUpdatedOn, global::System.Boolean isControlledAllIn, global::System.String title, global::System.String artist, global::System.Boolean hasMediaPreviewVersion, global::System.Boolean hasMediaFullVersion)
+        /// <param name="fileType">Initial value of the FileType property.</param>
+        public static Content CreateContent(global::System.Int32 contentId, global::System.Int32 catalogId, global::System.Int32 createdByUserId, global::System.DateTime createdOn, global::System.Int32 lastUpdatedByUserId, global::System.DateTime lastUpdatedOn, global::System.Boolean isControlledAllIn, global::System.String title, global::System.String artist, global::System.Boolean hasMediaPreviewVersion, global::System.Boolean hasMediaFullVersion, global::System.String fileType)
         {
             Content content = new Content();
             content.ContentId = contentId;
@@ -863,6 +916,7 @@ namespace SongSearch.Web.Data
             content.Artist = artist;
             content.HasMediaPreviewVersion = hasMediaPreviewVersion;
             content.HasMediaFullVersion = hasMediaFullVersion;
+            content.FileType = fileType;
             return content;
         }
 
@@ -1399,6 +1453,126 @@ namespace SongSearch.Web.Data
         private global::System.String _LyricsIndex;
         partial void OnLyricsIndexChanging(global::System.String value);
         partial void OnLyricsIndexChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FileType
+        {
+            get
+            {
+                return _FileType;
+            }
+            set
+            {
+                OnFileTypeChanging(value);
+                ReportPropertyChanging("FileType");
+                _FileType = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FileType");
+                OnFileTypeChanged();
+            }
+        }
+        private global::System.String _FileType;
+        partial void OnFileTypeChanging(global::System.String value);
+        partial void OnFileTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> BitRate
+        {
+            get
+            {
+                return _BitRate;
+            }
+            set
+            {
+                OnBitRateChanging(value);
+                ReportPropertyChanging("BitRate");
+                _BitRate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("BitRate");
+                OnBitRateChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _BitRate;
+        partial void OnBitRateChanging(Nullable<global::System.Int32> value);
+        partial void OnBitRateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> FileSize
+        {
+            get
+            {
+                return _FileSize;
+            }
+            set
+            {
+                OnFileSizeChanging(value);
+                ReportPropertyChanging("FileSize");
+                _FileSize = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FileSize");
+                OnFileSizeChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _FileSize;
+        partial void OnFileSizeChanging(Nullable<global::System.Int32> value);
+        partial void OnFileSizeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ExcerptStart
+        {
+            get
+            {
+                return _ExcerptStart;
+            }
+            set
+            {
+                OnExcerptStartChanging(value);
+                ReportPropertyChanging("ExcerptStart");
+                _ExcerptStart = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExcerptStart");
+                OnExcerptStartChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ExcerptStart;
+        partial void OnExcerptStartChanging(Nullable<global::System.Int32> value);
+        partial void OnExcerptStartChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ExcerptEnd
+        {
+            get
+            {
+                return _ExcerptEnd;
+            }
+            set
+            {
+                OnExcerptEndChanging(value);
+                ReportPropertyChanging("ExcerptEnd");
+                _ExcerptEnd = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ExcerptEnd");
+                OnExcerptEndChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ExcerptEnd;
+        partial void OnExcerptEndChanging(Nullable<global::System.Int32> value);
+        partial void OnExcerptEndChanged();
 
         #endregion
     
@@ -1529,7 +1703,9 @@ namespace SongSearch.Web.Data
         /// <param name="rightsTypeId">Initial value of the RightsTypeId property.</param>
         /// <param name="rightsHolderShare">Initial value of the RightsHolderShare property.</param>
         /// <param name="rightsHolderName">Initial value of the RightsHolderName property.</param>
-        public static ContentRight CreateContentRight(global::System.Int32 contentRightId, global::System.Int32 contentId, global::System.Int32 rightsTypeId, global::System.Decimal rightsHolderShare, global::System.String rightsHolderName)
+        /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
+        /// <param name="createdOn">Initial value of the CreatedOn property.</param>
+        public static ContentRight CreateContentRight(global::System.Int32 contentRightId, global::System.Int32 contentId, global::System.Int32 rightsTypeId, global::System.Decimal rightsHolderShare, global::System.String rightsHolderName, global::System.Int32 createdByUserId, global::System.DateTime createdOn)
         {
             ContentRight contentRight = new ContentRight();
             contentRight.ContentRightId = contentRightId;
@@ -1537,6 +1713,8 @@ namespace SongSearch.Web.Data
             contentRight.RightsTypeId = rightsTypeId;
             contentRight.RightsHolderShare = rightsHolderShare;
             contentRight.RightsHolderName = rightsHolderName;
+            contentRight.CreatedByUserId = createdByUserId;
+            contentRight.CreatedOn = createdOn;
             return contentRight;
         }
 
@@ -1665,6 +1843,54 @@ namespace SongSearch.Web.Data
         private global::System.String _RightsHolderName;
         partial void OnRightsHolderNameChanging(global::System.String value);
         partial void OnRightsHolderNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedByUserId
+        {
+            get
+            {
+                return _CreatedByUserId;
+            }
+            set
+            {
+                OnCreatedByUserIdChanging(value);
+                ReportPropertyChanging("CreatedByUserId");
+                _CreatedByUserId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedByUserId");
+                OnCreatedByUserIdChanged();
+            }
+        }
+        private global::System.Int32 _CreatedByUserId;
+        partial void OnCreatedByUserIdChanging(global::System.Int32 value);
+        partial void OnCreatedByUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedOn
+        {
+            get
+            {
+                return _CreatedOn;
+            }
+            set
+            {
+                OnCreatedOnChanging(value);
+                ReportPropertyChanging("CreatedOn");
+                _CreatedOn = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedOn");
+                OnCreatedOnChanged();
+            }
+        }
+        private global::System.DateTime _CreatedOn;
+        partial void OnCreatedOnChanging(global::System.DateTime value);
+        partial void OnCreatedOnChanged();
 
         #endregion
     
@@ -2932,13 +3158,17 @@ namespace SongSearch.Web.Data
         /// </summary>
         /// <param name="tagId">Initial value of the TagId property.</param>
         /// <param name="tagName">Initial value of the TagName property.</param>
+        /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
         /// <param name="tagTypeId">Initial value of the TagTypeId property.</param>
-        public static Tag CreateTag(global::System.Int32 tagId, global::System.String tagName, global::System.Int32 tagTypeId)
+        /// <param name="createdOn">Initial value of the CreatedOn property.</param>
+        public static Tag CreateTag(global::System.Int32 tagId, global::System.String tagName, global::System.Int32 createdByUserId, global::System.Int32 tagTypeId, global::System.DateTime createdOn)
         {
             Tag tag = new Tag();
             tag.TagId = tagId;
             tag.TagName = tagName;
+            tag.CreatedByUserId = createdByUserId;
             tag.TagTypeId = tagTypeId;
+            tag.CreatedOn = createdOn;
             return tag;
         }
 
@@ -2999,9 +3229,9 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> CreatedByUserId
+        public global::System.Int32 CreatedByUserId
         {
             get
             {
@@ -3016,8 +3246,8 @@ namespace SongSearch.Web.Data
                 OnCreatedByUserIdChanged();
             }
         }
-        private Nullable<global::System.Int32> _CreatedByUserId;
-        partial void OnCreatedByUserIdChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _CreatedByUserId;
+        partial void OnCreatedByUserIdChanging(global::System.Int32 value);
         partial void OnCreatedByUserIdChanged();
     
         /// <summary>
@@ -3043,6 +3273,30 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _TagTypeId;
         partial void OnTagTypeIdChanging(global::System.Int32 value);
         partial void OnTagTypeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedOn
+        {
+            get
+            {
+                return _CreatedOn;
+            }
+            set
+            {
+                OnCreatedOnChanging(value);
+                ReportPropertyChanging("CreatedOn");
+                _CreatedOn = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedOn");
+                OnCreatedOnChanged();
+            }
+        }
+        private global::System.DateTime _CreatedOn;
+        partial void OnCreatedOnChanging(global::System.DateTime value);
+        partial void OnCreatedOnChanged();
 
         #endregion
     

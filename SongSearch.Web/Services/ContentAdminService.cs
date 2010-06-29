@@ -100,7 +100,8 @@ namespace SongSearch.Web.Services {
 
 			foreach (var rm in rightsModel) {
 
-				ContentRight contentRight = contentRights.SingleOrDefault(x => x.ContentRightId == rm.ContentRightId) ?? new ContentRight();
+				ContentRight contentRight = contentRights.SingleOrDefault(x => x.ContentRightId == rm.ContentRightId) ?? 
+					new ContentRight(){ CreatedByUserId = ActiveUser.UserId, CreatedOn = DateTime.Now };
 
 				// RightsHolderName
 				contentRight.RightsHolderName = rm.RightsHolderName.ToUpper();
@@ -131,6 +132,7 @@ namespace SongSearch.Web.Services {
 
 				// Add to collection if a new contentRight
 				if (contentRight.ContentRightId == 0) {
+					
 					content.ContentRights.Add(contentRight);
 				}
 			}

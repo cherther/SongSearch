@@ -127,6 +127,8 @@
           </Key>
           <Property Name="CatalogId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CatalogName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ContentRights">
           <Key>
@@ -137,6 +139,8 @@
           <Property Name="RightsTypeId" Type="int" Nullable="false" />
           <Property Name="RightsHolderName" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="RightsHolderShare" Type="decimal" Nullable="false" Precision="28" Scale="4" />
+          <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ContentRightTerritories">
           <Key>
@@ -159,6 +163,11 @@
           <Property Name="IsControlledAllIn" Type="bit" Nullable="false" />
           <Property Name="HasMediaPreviewVersion" Type="bit" Nullable="false" />
           <Property Name="HasMediaFullVersion" Type="bit" Nullable="false" />
+          <Property Name="FileType" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="BitRate" Type="int" />
+          <Property Name="FileSize" Type="int" />
+          <Property Name="ExcerptStart" Type="int" />
+          <Property Name="ExcerptEnd" Type="int" />
           <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Writers" Type="nvarchar" MaxLength="500" />
@@ -251,7 +260,8 @@
           <Property Name="TagId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TagName" Type="nvarchar" Nullable="false" MaxLength="100" />
           <Property Name="TagTypeId" Type="int" Nullable="false" />
-          <Property Name="CreatedByUserId" Type="int" />
+          <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Territories">
           <Key>
@@ -561,6 +571,8 @@
           <Property Name="CatalogName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Contents" Relationship="SongSearch.Web.Data.Model.FK_Contents_Catalogs" FromRole="Catalogs" ToRole="Contents" />
           <NavigationProperty Name="UserCatalogRoles" Relationship="SongSearch.Web.Data.Model.FK_UsersCatalogs_Catalogs" FromRole="Catalog" ToRole="UserCatalogRole" />
+          <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
         </EntityType>
         <EntityType Name="ContentRight">
           <Key>
@@ -573,6 +585,8 @@
           <NavigationProperty Name="Content" Relationship="SongSearch.Web.Data.Model.FK_ContentRights_Contents" FromRole="ContentRights" ToRole="Contents" />
           <NavigationProperty Name="Territories" Relationship="SongSearch.Web.Data.Model.ContentRightTerritories" FromRole="ContentRights" ToRole="Territories" />
           <Property Type="String" Name="RightsHolderName" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
         </EntityType>
         <EntityType Name="Content">
           <Key>
@@ -604,6 +618,11 @@
           <Property Type="Int32" Name="Pop" />
           <Property Type="Int32" Name="Country" />
           <Property Type="String" Name="LyricsIndex" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FileType" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="BitRate" />
+          <Property Type="Int32" Name="FileSize" />
+          <Property Type="Int32" Name="ExcerptStart" />
+          <Property Type="Int32" Name="ExcerptEnd" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -620,9 +639,10 @@
           </Key>
           <Property Name="TagId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TagName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Contents" Relationship="SongSearch.Web.Data.Model.ContentTags" FromRole="Tags" ToRole="Contents" />
           <Property Type="Int32" Name="TagTypeId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
         </EntityType>
         <EntityType Name="Territory">
           <Key>
@@ -852,18 +872,27 @@
             <ScalarProperty Name="ArchiveName" ColumnName="ArchiveName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Catalogs"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Catalog"><MappingFragment StoreEntitySet="Catalogs">
-            <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
+            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
             <ScalarProperty Name="CatalogName" ColumnName="CatalogName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="ContentRights"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.ContentRight"><MappingFragment StoreEntitySet="ContentRights">
-            <ScalarProperty Name="RightsHolderName" ColumnName="RightsHolderName" />
+            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="RightsHolderName" ColumnName="RightsHolderName" />
                 <ScalarProperty Name="ContentRightId" ColumnName="ContentRightId" />
             <ScalarProperty Name="ContentId" ColumnName="ContentId" />
             <ScalarProperty Name="RightsTypeId" ColumnName="RightsTypeId" />
             <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
-            <ScalarProperty Name="LyricsIndex" ColumnName="LyricsIndex" />
+            <ScalarProperty Name="ExcerptEnd" ColumnName="ExcerptEnd" />
+                <ScalarProperty Name="ExcerptStart" ColumnName="ExcerptStart" />
+                <ScalarProperty Name="FileSize" ColumnName="FileSize" />
+                <ScalarProperty Name="BitRate" ColumnName="BitRate" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="LyricsIndex" ColumnName="LyricsIndex" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Pop" ColumnName="Pop" />
                 <ScalarProperty Name="LicensingNotes" ColumnName="LicensingNotes" />
@@ -891,7 +920,8 @@
             <ScalarProperty Name="RoleName" ColumnName="RoleName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Tags"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Tag"><MappingFragment StoreEntitySet="Tags">
-            <ScalarProperty Name="TagTypeId" ColumnName="TagTypeId" />
+            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="TagTypeId" ColumnName="TagTypeId" />
                 <ScalarProperty Name="TagId" ColumnName="TagId" />
             <ScalarProperty Name="TagName" ColumnName="TagName" />
             <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
