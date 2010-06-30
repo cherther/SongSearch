@@ -446,7 +446,7 @@
 		<hr />
 		<div class="<%: sectionSize%>_column section cw-spaced">      
 			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.MediaBitRate)%></div>
-			<div class="<%: columnTwo%> column"><%: content.MediaBitRate%> kbps</div>
+			<div class="<%: columnTwo%> column"><%: content.MediaBitRate.GetValueOrDefault().ToBitRateDescription()%></div>
 		</div>
 		<div class="<%: sectionSize%>_column section cw-spaced">      
 			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.MediaType)%></div>
@@ -458,7 +458,7 @@
 		</div>
 		<div class="<%: sectionSize%>_column section cw-spaced">      
 			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.MediaLength)%></div>
-			<div class="<%: columnTwo%> column"><%: ((decimal)content.MediaLength.GetValueOrDefault()).millSecsToTimeCode()%></div>
+			<div class="<%: columnTwo%> column"><%: ((decimal)content.MediaLength.GetValueOrDefault()).MillSecsToTimeCode()%></div>
 		</div>
 		<hr />
 		<%} %>

@@ -170,7 +170,21 @@ namespace SongSearch.Web {
 			return (int)(secs > 0 ? (kb / secs) : 0); //24576 / 180 = 136
 
 		}
-		public static string millSecsToTimeCode(this decimal lengthMilliseconds) {
+
+		public static string ToBitRateDescription(this long lengthMilliseconds, long mediaSizeBytes) {
+
+			var kb = ((decimal)(mediaSizeBytes * (decimal)8.00) / (decimal)1024.00); //kilobits = 3MB = (3*1024*1024)*8/1024 = 24576
+			var secs = ((decimal)lengthMilliseconds / (decimal)1000.00); // 3 min = 3*60*1000/1000 = 180
+			return String.Format("{0} kbps", (int)(secs > 0 ? (kb / secs) : 0)); //24576 / 180 = 136
+
+		}
+
+		public static string ToBitRateDescription(this int bitRate) {
+
+			return String.Format("{0} kbps", bitRate);
+		}
+
+		public static string MillSecsToTimeCode(this decimal lengthMilliseconds) {
 			// convert milliseconds to mm:ss, return as object literal or string
 			var secs = Math.Floor(lengthMilliseconds / 1000);
 			var min = Math.Floor(secs / 60);

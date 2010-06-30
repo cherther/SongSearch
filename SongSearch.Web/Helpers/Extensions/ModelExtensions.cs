@@ -55,6 +55,18 @@ namespace SongSearch.Web {
 			return Path.Combine(content.MediaPath(mediaVersion), fileName);
 		}
 
+		public static bool IsAvailableTo(this Content content, User user) {
+			if (content == null) {
+				return false;
+			}
+			if (user.IsSuperAdmin()) {
+				return true;
+			} else if (user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId)) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 		// **************************************
 		// CountWithChildren
 		// **************************************    

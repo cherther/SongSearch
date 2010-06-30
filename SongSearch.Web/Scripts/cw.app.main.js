@@ -449,8 +449,9 @@ function closeContentPanel() {
 //-----------------------------------------------------------------------------------
 var _lastMediaButtonPressed;
 
+
 function mediaPlay(url, id) {
-	soundPlay(url);
+	soundPlay(url, false);
 	togglePlayButton(id);
 	$('.cw-media-repeat-link').removeAttr('disabled');
 	$('.cw-media-skip-link').removeAttr('disabled');
@@ -470,7 +471,10 @@ function mediaFastForward() {
 function mediaRewind() {
 	rewind();
 }
-
+function mediaCue(range) {
+	var start = range.length > 0 ? range[0] : 45*1000;
+	cue(start);
+}
 function enableRewind(yes) {
 	if (yes) {
 		$('.cw-media-rew-link').removeAttr('disabled');

@@ -45,9 +45,10 @@ var sm_ps_paused = 2;
 //  mediaPlay: starts, stops, toggles
 //***********************************************
 function soundPlay(url) {
-    return soundPlay(url, false, 0);
+    return soundPlay(url, false);
 }
-function soundPlay(url, repeat, fromPosition) {
+
+function soundPlay(url, repeat) {
 
     var begin_playState;
     var begin_readyState;
@@ -80,7 +81,7 @@ function soundPlay(url, repeat, fromPosition) {
                         _mySound.stop();
                     }
                     _mySound = getSound(url);
-
+                   
                     _mySound.play();
                     _lastUrlPlayed = url;
 
@@ -93,6 +94,7 @@ function soundPlay(url, repeat, fromPosition) {
             begin_playState = sm_ps_stopped;
             begin_readyState = sm_rs_uninitialised;
             _mySound = getSound(url);
+            
             _mySound.play();
             _lastUrlPlayed = url;
         }
@@ -107,19 +109,19 @@ function soundPlayRepeat() {
     //_lastUrlPlayed = null;
     return soundPlay(url, true, null);
 }
-function soundPlayFastForward() {
-    var url = _lastUrlPlayed;
-    //_lastUrlPlayed = null;
-    return soundPlay(url, false, 30);
-}
+
 function getSound(url) {
-    _currentVolume = _currentVolume != null && _currentVolume >= 0 ? _currentVolume : 60;
+	_currentVolume = _currentVolume != null && _currentVolume >= 0 ? _currentVolume : 60;
+	
     return soundManager.createSound(
                 {
                     id: 'cw-sound' + _mySoundId++,
                     url: url,
+                   // autoLoad: true,
+					autoPlay: false,
                     stream: true,
                     volume: _currentVolume,
+					multiShot: false,
                     onload: function () { setTotalMediaLength(this.durationEstimate); },
                     onfinish: function () {
                         toggleAllPlayButtons();
@@ -127,7 +129,7 @@ function getSound(url) {
                         setTotalMediaLength(0);
                         setCurrentPosition(0, 1);
                         setCurrentLoadPercentage(0, this.bytesTotal)
-                    },
+                       },
                     onstop: function () {
                         setCurrentMediaTime(0);
                         setTotalMediaLength(0);
@@ -193,4 +195,12 @@ function rewind() {
 //            enableRewind(_mySound.position > 0);
         }
     }
+         }
+function cue(start) {
+	if (_isSoundManagerReady) {
+		if (_mySound && _mySound.readyState != sm_rs_failed_error && _mySound.playState == sm_ps_playing) {
+			_mySound.setPosition(start);
+			//            enableRewind(_mySound.position > 0);
+		}
+	}
 }
