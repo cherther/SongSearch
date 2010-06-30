@@ -13,13 +13,12 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 	public partial class CatalogManagementController : Controller {
 		private ICatalogManagementService _catMgmtService;
-		private User _currentUser;
-
+		
 		protected override void Initialize(RequestContext requestContext) {
 
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_catMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
-				_currentUser = _catMgmtService.ActiveUser;
+				
 			}
 			base.Initialize(requestContext);
 
@@ -36,10 +35,9 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Index()
 		{
 			try {
-				var catalogs = _currentUser.MyAdminCatalogs();// _catMgmtService.GetMyCatalogs();
 				var vm = new CatalogViewModel();
-
-				vm.MyCatalogs = catalogs;
+				
+				vm.MyCatalogs = Account.User(false).MyAdminCatalogs();;
 				vm.PageTitle = "Catalog Management";
 				vm.NavigationLocation = new string[] { "Admin" };
 
@@ -58,15 +56,16 @@ namespace SongSearch.Web.Controllers
 			try {
 				var catalog = _catMgmtService.GetCatalogDetail(id);
 				var vm = new CatalogViewModel();
+				var user = Account.User();
 
 				vm.MyCatalogs = new List<Catalog>() { catalog };
-				vm.Users = _currentUser.MyUserHierarchy();
-				vm.Roles = ModelEnums.GetRoles().Where(r => r >= _currentUser.RoleId).ToArray();
-				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= _currentUser.RoleId).ToArray();
+				vm.Users = user.MyUserHierarchy();
+				vm.Roles = ModelEnums.GetRoles().Where(r => r >= user.RoleId).ToArray();
+				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= user.RoleId).ToArray();
 				vm.NavigationLocation = new string[] { "Admin" };
-				vm.AllowEdit = _currentUser.IsSuperAdmin() || _currentUser.IsAtLeastInCatalogRole(Roles.Admin, id);
+				vm.AllowEdit = user.IsSuperAdmin() || user.IsAtLeastInCatalogRole(Roles.Admin, id);
 
-				if (!_currentUser.IsSuperAdmin()) {
+				if (!user.IsSuperAdmin()) {
 					//vm.LookupCatalogs = vm.LookupCatalogs.LimitToAdministeredBy(user);
 				}
 				if (Request.IsAjaxRequest()) {

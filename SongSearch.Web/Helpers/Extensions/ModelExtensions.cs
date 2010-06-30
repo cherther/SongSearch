@@ -55,13 +55,17 @@ namespace SongSearch.Web {
 			return Path.Combine(content.MediaPath(mediaVersion), fileName);
 		}
 
+		// **************************************
+		// IsAvailableTo
+		// **************************************    
 		public static bool IsAvailableTo(this Content content, User user) {
 			if (content == null) {
 				return false;
 			}
 			if (user.IsSuperAdmin()) {
 				return true;
-			} else if (user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId)) {
+			} else if (user.UserCatalogRoles != null && 
+				user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId)) {
 				return true;
 			} else {
 				return false;
@@ -105,8 +109,8 @@ namespace SongSearch.Web {
 			currentContent.IsControlledAllIn = content.IsControlledAllIn;
 			currentContent.HasMediaPreviewVersion = content.HasMediaPreviewVersion;
 			currentContent.HasMediaFullVersion = content.HasMediaFullVersion;
-			currentContent.Title = (content.Title ?? currentContent.Title).ToUpper();
-			currentContent.Artist = (content.Artist ?? currentContent.Artist).ToUpper();
+			currentContent.Title = (content.Title ?? currentContent.Title);//.ToUpper();
+			currentContent.Artist = (content.Artist ?? currentContent.Artist);//.ToUpper();
 			currentContent.Writers = content.Writers;
 			currentContent.Pop = content.Pop;
 			currentContent.Country = content.Country;

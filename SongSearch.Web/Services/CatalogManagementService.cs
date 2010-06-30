@@ -22,14 +22,14 @@ namespace SongSearch.Web.Services {
 		// (Public)
 		// ----------------------------------------------------------------------------
 		public IList<Catalog> GetMyCatalogs() {
-			return base.ActiveUser.MyAdminCatalogs();//DataSession.All<Catalog>().Where(c => c.UserCatalogRoles.Any(x => x.UserId == ActiveUser.UserId && x.RoleId == (int)Roles.Admin)).ToList();
+			return Account.User().MyAdminCatalogs();//DataSession.All<Catalog>().Where(c => c.UserCatalogRoles.Any(x => x.UserId == ActiveUser.UserId && x.RoleId == (int)Roles.Admin)).ToList();
 		}
 
 		// **************************************
 		// GetCatalog
 		// **************************************
 		public Catalog GetCatalogDetail(int catalogId) {
-			if(!ActiveUser.IsAtLeastInCatalogRole(Roles.Admin, catalogId)){
+			if (!Account.User().IsAtLeastInCatalogRole(Roles.Admin, catalogId)) {
 				return null;
 			}
 			return GetCatalog(catalogId);	
@@ -41,6 +41,7 @@ namespace SongSearch.Web.Services {
 		public int CreateCatalog(Catalog catalog) {
 
 			var cat = GetCatalog(catalog.CatalogName);
+			var user = Account.User();
 
 			if (cat == null) {
 
@@ -49,9 +50,9 @@ namespace SongSearch.Web.Services {
 
 				DataSession.CommitChanges();
 				using (var um = new UserManagementService(DataSession)) {
-					um.UpdateUserCatalogRole(ActiveUser.UserId, cat.CatalogId, (int)Roles.Admin);
+					um.UpdateUserCatalogRole(user.UserId, cat.CatalogId, (int)Roles.Admin);
 				}
-			} else if (!ActiveUser.IsAtLeastInCatalogRole(Roles.Admin, cat.CatalogId)) {
+			} else if (!user.IsAtLeastInCatalogRole(Roles.Admin, cat.CatalogId)) {
 					throw new AccessViolationException("You do not have admin rights to this catalog");				
 			}
 

@@ -11,7 +11,7 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	public interface ICatalogManagementService : IDisposable {
 		string ActiveUserName { get; set; }
-		User ActiveUser { get; set; }
+		//User ActiveUser { get; set; }
 
 		IList<Catalog> GetMyCatalogs();
 		Catalog GetCatalogDetail(int catalogId);

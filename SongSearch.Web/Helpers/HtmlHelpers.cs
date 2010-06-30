@@ -28,14 +28,17 @@ namespace System.Web.Mvc {
 			}
 		}
 
-		public static string Friendly(this HttpContext ctx) {
-			if (ctx.Request.Cookies["friendly"] != null) {
-				return ctx.Request.Cookies["friendly"].Value;
+		public static string Friendly(this Controller controller ) {
+			if (controller.ControllerContext.HttpContext.Request.Cookies["friendly"] != null) {
+				return controller.ControllerContext.HttpContext.Request.Cookies["friendly"].Value;
 			} else {
 				return "";
 			}
 		}
-		
+		public static string UserName(this Controller controller) {
+			return controller.ControllerContext.HttpContext.User.Identity.Name;
+		}
+
 		public static string Script(this HtmlHelper helper, string fileName) {
 			if (!fileName.EndsWith(".js"))
 				fileName += ".js";
@@ -71,4 +74,18 @@ namespace System.Web.Mvc {
 			return value;
 		}
 	}
+}
+
+namespace System.Web {
+	public static class HtmlHelpers {
+
+		public static string Friendly(this HttpContext ctx) {
+			if (ctx.Request.Cookies["friendly"] != null) {
+				return ctx.Request.Cookies["friendly"].Value;
+			} else {
+				return "";
+			}
+		}
+	}
+	
 }

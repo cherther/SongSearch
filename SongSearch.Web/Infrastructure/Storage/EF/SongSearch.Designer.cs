@@ -3523,22 +3523,16 @@ namespace SongSearch.Web.Data
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="userName">Initial value of the UserName property.</param>
         /// <param name="password">Initial value of the Password property.</param>
-        /// <param name="firstName">Initial value of the FirstName property.</param>
-        /// <param name="lastName">Initial value of the LastName property.</param>
         /// <param name="roleId">Initial value of the RoleId property.</param>
         /// <param name="registeredOn">Initial value of the RegisteredOn property.</param>
-        /// <param name="showDebugInfo">Initial value of the ShowDebugInfo property.</param>
-        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.String firstName, global::System.String lastName, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Boolean showDebugInfo)
+        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn)
         {
             User user = new User();
             user.UserId = userId;
             user.UserName = userName;
             user.Password = password;
-            user.FirstName = firstName;
-            user.LastName = lastName;
             user.RoleId = roleId;
             user.RegisteredOn = registeredOn;
-            user.ShowDebugInfo = showDebugInfo;
             return user;
         }
 
@@ -3623,7 +3617,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String FirstName
         {
@@ -3635,7 +3629,7 @@ namespace SongSearch.Web.Data
             {
                 OnFirstNameChanging(value);
                 ReportPropertyChanging("FirstName");
-                _FirstName = StructuralObject.SetValidValue(value, false);
+                _FirstName = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("FirstName");
                 OnFirstNameChanged();
             }
@@ -3647,7 +3641,7 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String LastName
         {
@@ -3659,7 +3653,7 @@ namespace SongSearch.Web.Data
             {
                 OnLastNameChanging(value);
                 ReportPropertyChanging("LastName");
-                _LastName = StructuralObject.SetValidValue(value, false);
+                _LastName = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("LastName");
                 OnLastNameChanged();
             }
@@ -3791,9 +3785,9 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Boolean ShowDebugInfo
+        public Nullable<global::System.Boolean> ShowDebugInfo
         {
             get
             {
@@ -3808,8 +3802,8 @@ namespace SongSearch.Web.Data
                 OnShowDebugInfoChanged();
             }
         }
-        private global::System.Boolean _ShowDebugInfo;
-        partial void OnShowDebugInfoChanging(global::System.Boolean value);
+        private Nullable<global::System.Boolean> _ShowDebugInfo;
+        partial void OnShowDebugInfoChanging(Nullable<global::System.Boolean> value);
         partial void OnShowDebugInfoChanged();
 
         #endregion

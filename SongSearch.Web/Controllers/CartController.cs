@@ -14,15 +14,12 @@ namespace SongSearch.Web.Controllers
 	[HandleError]
 	public partial class CartController : Controller
 	{
-		private User _currentUser;
-
 		ICartService _cartService;
 
 		protected override void Initialize(RequestContext requestContext) {
 			
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_cartService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
-				_currentUser = _cartService.ActiveUser;
 			}
 			base.Initialize(requestContext);
 
@@ -49,10 +46,11 @@ namespace SongSearch.Web.Controllers
 				//Reset the searchFields to stop any previous highlighting preferences
 				SessionService.Session().SessionUpdate(null, "SearchFields");
 
-				var msg = _currentUser != null ? 
+				var user = Account.User();
+				var msg = user != null ? 
 					(
-						vm.CartToHighlight != 0 ? _currentUser.ProcessingCartMessage(vm.CartToHighlight) : null ?? 
-						_currentUser.DownloadCartMessage(vm.MyCarts)
+						vm.CartToHighlight != 0 ? this.HttpContext.Session.ProcessingCartMessage(vm.CartToHighlight) : null ??
+						HttpContext.Session.DownloadCartMessage(vm.MyCarts)
 					): "";
 
 				if (msg != null) {
@@ -74,7 +72,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult CartCount() {
 			var count = 0;
 			try {
-				count = SessionService.Session().MyActiveCartCount(_currentUser.UserName);
+				count = SessionService.Session().MyActiveCartCount(this.UserName());
 			}
 			catch { }
 
@@ -93,7 +91,7 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				_cartService.AddToMyActiveCart(id);
-				SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
+				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
 					return Json(id, JsonRequestBehavior.AllowGet);
@@ -121,7 +119,7 @@ namespace SongSearch.Web.Controllers
 				if (items != null) {
 					var contentIds = items.Select(i => int.Parse(i)).ToArray();
 					_cartService.AddToMyActiveCart(contentIds);
-					SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
+					SessionService.Session().RefreshMyActiveCart(this.UserName());
 				}
 				if (Request.IsAjaxRequest()) {
 					return Json(count, JsonRequestBehavior.AllowGet);
@@ -148,7 +146,7 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				_cartService.RemoveFromMyActiveCart(id);
-				SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
+				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
 					return Json(id, JsonRequestBehavior.AllowGet);
@@ -181,7 +179,7 @@ namespace SongSearch.Web.Controllers
 
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
 				_cartService.RemoveFromMyActiveCart(contentIds);
-				SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
+				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
 					return Json(count, JsonRequestBehavior.AllowGet);
@@ -231,12 +229,12 @@ namespace SongSearch.Web.Controllers
 				if (contentNames.Count() > 10) {
 					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
 
-					SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
+					SessionService.Session().RefreshMyActiveCart(this.UserName());
 					this.FeedbackInfo("Your cart is currently being zipped up and will be available for download shortly. Please check back on this page in a few minutes.");
 
 				} else {
 					_cartService.CompressMyActiveCart(userArchiveName, contentNames);
-					SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
+					SessionService.Session().RefreshMyActiveCart(this.UserName());
 					this.FeedbackInfo("Your cart is ready for download");
 				}
 			}

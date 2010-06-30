@@ -26,7 +26,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public IList<User> GetMyUserHierarchy() {
 
-			return ActiveUser.MyUserHierarchy();
+			return Account.User().MyUserHierarchy();
 
 		}
 
@@ -35,26 +35,30 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public IList<UserCatalogRole> GetUserCatalogHierarchy(int? parentUserId) {
 			var query = GetUsersCatalog();
-			var roleId = ActiveUser.RoleId;
+			var user = Account.User();
+			var roleId = user.RoleId;
 
 			// Only users with same or lesser access rightsModel
 			query = query.Where(x => x.Role.RoleId >= roleId);
 
 			// For anyone other than SuperAdmin, get child users only
-			parentUserId = !ActiveUser.IsSuperAdmin() ? ActiveUser.UserId : parentUserId;
+			parentUserId = !user.IsSuperAdmin() ? user.UserId : parentUserId;
 			query = !parentUserId.HasValue ? query : query.Where(x => x.User.ParentUser.UserId == parentUserId.Value);
 
 			var users = query.ToList();
 
-			return ActiveUser.IsSuperAdmin() ? users.Where(u => !u.User.ParentUserId.HasValue).ToList()
+			return user.IsSuperAdmin() ? users.Where(u => !u.User.ParentUserId.HasValue).ToList()
 												: users;
 
 		}
-
-
+		
+		// **************************************
+		// GetUserCatalogHierarchy
+		// **************************************
 		public IList<Invitation> GetMyInvites(InvitationStatusCodes status) {
+			var userId = Account.User().UserId;
 			return DataSession.All<Invitation>()
-				.Where(i => i.InvitedByUserId == ActiveUser.UserId
+				.Where(i => i.InvitedByUserId == userId
 							&& i.InvitationStatus == (int)status)
 				.ToList();				
 		}
@@ -86,7 +90,7 @@ namespace SongSearch.Web.Services {
 			var user = GetUser(userId);
 
 			if (user != null) {
-				if (user.UserId == ActiveUser.UserId) {
+				if (user.UserId == Account.User().UserId) {
 					throw new ArgumentException("You cannot delete yourself");
 				}
 				if (user.IsSuperAdmin() && GetNumberOfUsersByAccessLevel(Roles.SuperAdmin) <= 1) {
@@ -124,18 +128,19 @@ namespace SongSearch.Web.Services {
 		private void TakeOwnerShip(User user) {
 			
 			//become the parent users
-			user.ParentUserId = ActiveUser.UserId;
+			var userId = Account.User().UserId;
+			user.ParentUserId = userId;
 
 			// take over the child users
 			var childUsers = DataSession.All<User>().Where(u => u.ParentUserId == user.UserId);
 			foreach (var child in childUsers) {
-				child.ParentUserId = ActiveUser.UserId;
+				child.ParentUserId = userId;
 			}
 
 			//Re-assign contentModel from this myUser to active myUser
 			var invites = DataSession.All<Invitation>().Where(i => i.InvitedByUserId == user.UserId);
 			foreach (var invite in invites) {
-				invite.InvitedByUserId = ActiveUser.UserId;
+				invite.InvitedByUserId = userId;
 			}
 
 			DataSession.CommitChanges();
@@ -147,18 +152,18 @@ namespace SongSearch.Web.Services {
 		public Guid CreateNewInvitation(string inviteEmailAddress) {
 
 			inviteEmailAddress = inviteEmailAddress.ToLower();
-
+			var userId = Account.User().UserId;
 			var inv = DataSession.Single<Invitation>(
 				i => i.InvitationEmailAddress.ToLower() == inviteEmailAddress.ToLower()
 				&& i.InvitationStatus == (int)InvitationStatusCodes.Open
-				&& i.InvitedByUserId == ActiveUser.UserId);
+				&& i.InvitedByUserId == userId);
 
 			if (inv == null) {
 				inv = new Invitation {
 					InvitationId = Guid.NewGuid(),
 					InvitationEmailAddress = inviteEmailAddress,
 					ExpirationDate = DateTime.Now.AddDays(30).Date,
-					InvitedByUserId = ActiveUser.UserId,
+					InvitedByUserId = userId,
 					InvitationStatus = (int)InvitationStatusCodes.Open
 				};
 
@@ -285,7 +290,7 @@ namespace SongSearch.Web.Services {
 			var catalogs = DataSession.All<Catalog>();
 			var usr = DataSession.Single<User>(u => u.UserId == userId);
 			
-			if (!ActiveUser.IsSuperAdmin()){
+			if (!Account.User().IsSuperAdmin()){
 
 				var parentUsr = DataSession.GetObjectQuery<User>()
 					.Include("UserCatalogRoles.Catalog")
@@ -335,7 +340,7 @@ namespace SongSearch.Web.Services {
 
 			if (cat != null) {
 				//var users = DataSession.GetObjectQuery<User>().Include("UserCatalogRoles").ToList();
-				var users = ActiveUser.MyUserHierarchy(true);
+				var users = Account.User().MyUserHierarchy(true);
 
 				SetCatalogRole(catalogId, roleId, users);
 				DataSession.CommitChanges();

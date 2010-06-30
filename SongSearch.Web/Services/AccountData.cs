@@ -10,30 +10,75 @@ using SongSearch.Web.Services;
 using System.IO;
 
 namespace SongSearch.Web {
-	public static class AccountData {
+	public static class Account {
 
 		// **************************************
 		// User
 		// **************************************
-		public static User User(string userName) {
-			using (var session = App.DataSessionReadOnly) {
-				return session.Single<User>(u => u.UserName.ToUpper() == userName.ToUpper());
-			}
-		}
-
-		public static User UserComplete(string userName) {
-
-			using (var session = App.DataSessionReadOnly) {
-
-				return session.GetObjectQuery<User>()
-					.Include("Carts")
-					.Include("UserCatalogRoles")
-					.Where(u => u.UserName.ToUpper() == userName.ToUpper()).SingleOrDefault();
-
-			}
-
+		public static User User(bool cached = true) {
+			return User(HttpContext.Current.User.Identity.Name, cached);
 		}
 		
+		public static User User(string userName, bool cached = true) {
+			if (cached) {
+				return SessionService.Session().User(userName);
+			} else {
+				using (var session = App.DataSessionReadOnly) {
+					var user = session.GetObjectQuery<User>()
+						.Include("Carts")
+						.Include("Carts.Contents")
+						.Include("UserCatalogRoles")
+						.Where(u => u.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
+
+					return user;
+				}
+			}
+		}
+
+		public static Cart Cart() {
+			return Cart(true);
+		}
+		public static Cart Cart(bool cached = true) {
+			return Cart(HttpContext.Current.User.Identity.Name, cached);
+		}
+		public static Cart Cart(string userName, bool cached = true) {
+			if (cached) {
+				return SessionService.Session().MyActiveCart(userName);
+			} else {
+				return User(userName, cached).Carts.SingleOrDefault(c => c.CartStatus == (int)CartStatusCodes.Active);
+			}
+		}
+
+		public static IList<int> CartContents() {
+			var contents = CartContents(true);
+			return contents;
+		}
+		public static IList<int> CartContents(bool cached = true) {
+			return CartContents(HttpContext.Current.User.Identity.Name, cached);
+		}
+		public static IList<int> CartContents(string userName, bool cached = true) {
+			var cart = Cart(userName, cached);
+			return cart != null && cart.Contents != null ?
+				cart.Contents.Select(c => c.ContentId).ToList()
+				: new List<int> { };
+		}
+
+		// **************************************
+		// User
+		// **************************************
+		public static bool UserHasAccessToContent(int userId, int contentId) {
+
+			using (var session = App.DataSessionReadOnly) {
+
+				var content = session.All<Content>().Where(c => c.ContentId == contentId
+						&& c.Catalog.UserCatalogRoles.Any(u => u.UserId == userId));
+				
+				return content.Count() > 0;
+
+			}
+
+		}
+
 		// ----------------------------------------------------------------------------
 		// Extensions
 		// ----------------------------------------------------------------------------
@@ -92,6 +137,13 @@ namespace SongSearch.Web {
 			return user != null && roles.Contains((Roles)user.RoleId);
 		}
 
+		public static bool HasAccessToContent(this User user, Content content) {
+			if (user.IsSuperAdmin()) {
+				return true;
+			} else {
+				return user.UserCatalogRoles.Any(c => c.CatalogId == content.CatalogId);
+			}
+		}
 		// **************************************
 		// FullName
 		// **************************************    
@@ -120,7 +172,7 @@ namespace SongSearch.Web {
 
 			var parent = user != null ? user.ParentUser : null ; //rep.Single<User>(u => u.UserId == user.UserId).ParentUser;
 
-			return parent == null ? "" : (parent.Signature ?? parent.UserName);
+			return parent == null ? "" : (parent.Signature.AsEmptyIfNull());
 		}
 
 		// **************************************
@@ -152,40 +204,7 @@ namespace SongSearch.Web {
 			return msg;
 		}
 
-		// **************************************
-		// DownloadCartMessage
-		// **************************************    
-		public static string DownloadCartMessage(this User user, IList<Cart> carts) {
-			string msg = null;
-			var session = SessionService.Session();
-			if (session.Get("DownloadCartMessageShown") == null) {
-				var compressedCarts = carts.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed);
-				var count = compressedCarts.Count();
-				if (count > 0) {
-					msg = String.Format("You have <strong>{0}</strong> {1} waiting to be downloaded.", count, count > 1 ? "carts" : "cart");
-
-				}
-				session.SessionUpdate("1", "DownloadCartMessageShown");
-			}
-			return msg;
-		}
-
-		// **************************************
-		// ProcessingCartMessage
-		// **************************************    
-		//CacheService.SessionUpdate(cart.CartId, "ProcessingCartId");
-		public static string ProcessingCartMessage(this User user, int cartId) {
-			string msg = null;
-			var session = SessionService.Session();
-			var msgKey = String.Concat("NotifUserAboutProcessedCart_", cartId);
-			if (session.Get(msgKey) == null) {
-
-				msg = "Your requested zipped cart is now ready for downloading.";
-
-				session.SessionUpdate("1", msgKey);
-			}
-			return msg;
-		}
+		
 
 		// **************************************
 		// UploadFolder

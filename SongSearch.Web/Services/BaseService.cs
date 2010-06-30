@@ -18,13 +18,12 @@ namespace SongSearch.Web.Services {
 				return _activeUserIdentity;
 			}
 			set {
+
 				_activeUserIdentity = value;
-				ActiveUser = ActiveUser ?? SessionService.Session().User(_activeUserIdentity);
+				
 			}
 
 		}
-
-		public User ActiveUser { get; set; }
 
 		public BaseService(IDataSession session) {
 			DataSession = session;
@@ -46,7 +45,7 @@ namespace SongSearch.Web.Services {
 			}
 
 			_activeUserIdentity = activeUserIdentity;
-			ActiveUser = SessionService.Session().User(activeUserIdentity);
+			
 		}
 	}
 }

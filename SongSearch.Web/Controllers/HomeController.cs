@@ -31,7 +31,12 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Home/Contact/
 		// **************************************
 		public virtual ActionResult Contact() {
-			var model = new ContactModel() { NavigationLocation = new string[] { "Contact" } };
+			var model = new ContactModel() { 
+				Email = User.Identity.IsAuthenticated ? User.Identity.Name : "",
+				Name = User.Identity.IsAuthenticated ? this.Friendly() : "",
+				NavigationLocation = new string[] { "Contact" } 
+			
+			};
 			model.PageTitle = "Send us a question or comment:";
 			return View(model);
 		}

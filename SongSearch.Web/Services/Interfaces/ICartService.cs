@@ -10,7 +10,7 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	public interface ICartService : IDisposable {
 		string ActiveUserName { get; set; }
-		User ActiveUser { get; set; }
+//		User ActiveUser { get; set; }
 
 		IList<Cart> MyCarts();
 		Cart MyActiveCart();

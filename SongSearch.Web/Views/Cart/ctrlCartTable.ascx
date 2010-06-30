@@ -71,7 +71,9 @@ foreach (var cart in carts)
 		<td colspan="<%= tableHeader.Count() %>">
 		<%
 			var cartContentHeaders = ViewData["CartContentHeaders"] as string[]; 
-			var cartContent = new PagedList<SongSearch.Web.Data.Content>(cart.Contents.AsQueryable(), 0, 0);
+			var cartContent = new PagedList<SongSearch.Web.Data.Content>(
+				cart.Contents.OrderBy(c => c.Title).ThenBy(c => c.Artist).AsQueryable()
+				, 0, 0);
 			var contentListViewModel = new ContentListViewModel() { List = cartContent, ListHeaders = cartContentHeaders, ShowDetails = cart.CartStatus == (int)CartStatusCodes.Active };
 		%>
 		<%if (cartContent != null && cartContent.TotalCount > 0) {%>	

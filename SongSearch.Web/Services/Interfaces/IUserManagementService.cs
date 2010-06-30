@@ -11,7 +11,7 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	public interface IUserManagementService : IDisposable {
 		string ActiveUserName { get; set; }
-		User ActiveUser { get; set; }
+		//User ActiveUser { get; set; }
 
 		IList<User> GetMyUserHierarchy();
 		IList<Invitation> GetMyInvites(InvitationStatusCodes status);

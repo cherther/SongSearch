@@ -14,7 +14,8 @@ namespace SongSearch.Web.Services {
 		User RegisterUser(User user, Guid invitationCode);
 		bool UserIsValid(string userName, string password);
 		bool UserExists(string userName);
-		bool UpdateProfile(User user, string newPassword);
+		bool UpdateProfile(User user);
+		bool ChangePassword(User user, string newPassword);
 		bool ResetPassword(string userName, string resetCode, string newPassword);
 	}
 }

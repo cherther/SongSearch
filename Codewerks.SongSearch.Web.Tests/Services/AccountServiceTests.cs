@@ -105,7 +105,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 			};
 			var newpassword = "1234567890";
 			// Act
-			_acc.UpdateProfile(user, newpassword);
+			_acc.ChangePassword(user, newpassword);
 
 			var isvalid = _acc.UserIsValid(_dummyuser, newpassword);
 			// Assert
@@ -113,7 +113,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 
 			//reset
 			user.Password = newpassword;
-			_acc.UpdateProfile(user, _dummypw);
+			_acc.ChangePassword(user, _dummypw);
 			user = null;
 
 		}
@@ -131,7 +131,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 				LastName = name
 			};
 			// Act
-			_acc.UpdateProfile(user, "");
+			_acc.UpdateProfile(user);
 
 			var dbuser = _usr.GetUserDetail(_dummyuser);
 			// Assert
@@ -149,7 +149,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 				Signature = signature
 			};
 			// Act
-			_acc.UpdateProfile(user, "");
+			_acc.UpdateProfile(user);
 
 			var usersig = _usr.GetUserDetail(_plugger).Signature;
 			// Assert
@@ -168,7 +168,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 				Signature = signature
 			};
 			// Act
-			_acc.UpdateProfile(user, "");
+			_acc.UpdateProfile(user);
 
 			var usersig = _usr.GetUserDetail(_dummyuser).Signature;
 			// Assert

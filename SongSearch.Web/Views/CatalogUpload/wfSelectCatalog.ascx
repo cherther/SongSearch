@@ -6,6 +6,7 @@ Enter the name of the new catalog:
 		<%: Html.TextBox("state.CatalogName", null, new { @class = "cw-field-large" })%>
 	</div>
 </div>
+<%if (Model.MyCatalogs.Count > 0){ %>
 <div>&nbsp;</div>
 <div>
 Or, select one of your existing catalogs:
@@ -13,6 +14,7 @@ Or, select one of your existing catalogs:
 		<%: Html.DropDownList("state.CatalogId", new SelectList(Model.MyCatalogs, "CatalogId", "CatalogName", Model.CatalogUploadState.CatalogId), "")%>
 	</div>
 </div>
+<%} %>
 <div>&nbsp;</div>
 <div>
 	<strong>Next</strong>, you select which songs to upload. For this step, you’ll need to have MP3 files of your songs on your local or connected USB drive.

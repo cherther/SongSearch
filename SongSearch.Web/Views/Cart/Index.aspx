@@ -14,7 +14,7 @@
 
 		var activeCartContent = activeCart != null ? 
 			new PagedList<SongSearch.Web.Data.Content>(
-				activeCart.Contents.OrderBy(c => c.Artist).ThenBy(c => c.Title).AsQueryable()
+				activeCart.Contents.OrderBy(c => c.Title).ThenBy(c => c.Artist).AsQueryable()
 				, 0, 0) 
 				: null;
 		var activeCartCount = activeCartContent != null && activeCartContent.Count > 0 ? activeCartContent.Count() : 0;

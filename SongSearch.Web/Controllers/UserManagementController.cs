@@ -16,13 +16,11 @@ namespace SongSearch.Web
 	public partial class UserManagementController : Controller
 	{
 		private IUserManagementService _usrMgmtService;
-		private User _currentUser;
 		
 		protected override void Initialize(RequestContext requestContext) {
 			
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
-				_currentUser = _usrMgmtService.ActiveUser;
 			}
 			base.Initialize(requestContext);
 
@@ -86,7 +84,7 @@ namespace SongSearch.Web
 					return View(model);
 				
 				}
-				string sender = String.Format("{0} <{1}>", _currentUser.FullName(), _currentUser.UserName); // Configuration.Get("AdminAddress");
+				string sender = String.Format("{0} <{1}>", this.Friendly(), this.UserName()); // Configuration.Get("AdminAddress");
 
 				foreach (string recipient in recipients) {
 					string address = recipient.ToLower().Trim();
@@ -118,12 +116,13 @@ namespace SongSearch.Web
 			try {
 				var user = _usrMgmtService.GetUserDetail(id);
 				var vm = new UserViewModel();
+				var activeUser = Account.User();
 
 				vm.MyUsers = new List<User>() { user };
-				vm.Catalogs = _currentUser.IsSuperAdmin() ? CacheService.Catalogs() : _currentUser.MyAdminCatalogs();
-				vm.Roles = ModelEnums.GetRoles().Where(r => r >= _currentUser.RoleId).ToArray();
-				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= _currentUser.RoleId).ToArray();
-				vm.IsThisUser = user.UserId == _currentUser.UserId;
+				vm.Catalogs = activeUser.IsSuperAdmin() ? CacheService.Catalogs() : activeUser.MyAdminCatalogs();
+				vm.Roles = ModelEnums.GetRoles().Where(r => r >= activeUser.RoleId).ToArray();
+				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= activeUser.RoleId).ToArray();
+				vm.IsThisUser = user.UserId == activeUser.UserId;
 				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = !vm.IsThisUser && !user.IsSuperAdmin();
 

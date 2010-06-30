@@ -87,31 +87,41 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateProfile
 		// **************************************    
-		public bool UpdateProfile(User user, string newPassword) {
+		public bool UpdateProfile(User user) {
 
 			var dbuser = GetUser(user);
 			if (dbuser == null) {
 				return false;
 			}
-			if (!String.IsNullOrEmpty(user.FirstName))
-				dbuser.FirstName = user.FirstName;
-			if (!String.IsNullOrEmpty(user.LastName))
-				dbuser.LastName = user.LastName;
-			if (!String.IsNullOrEmpty(user.Signature) && dbuser.IsAtLeastInRole(Roles.Plugger))
-				dbuser.Signature = user.Signature;
+			dbuser.FirstName = user.FirstName;
+			dbuser.LastName = user.LastName;
+			dbuser.Signature = user.Signature;
 
-			if (!String.IsNullOrEmpty(newPassword) && PasswordHashMatches(dbuser.Password, user.Password)) {
-				dbuser.Password = newPassword.PasswordHashString();
-			}
-
-			DataSession.Update<User>(dbuser);
 			DataSession.CommitChanges();
 			dbuser = null;
 			return true;
 			
 		}
 
-		
+		// **************************************
+		// UpdateProfile
+		// **************************************    
+		public bool ChangePassword(User user, string newPassword) {
+
+			var dbuser = GetUser(user);
+			if (dbuser == null) {
+				return false;
+			}
+
+			if (!String.IsNullOrEmpty(newPassword) && PasswordHashMatches(dbuser.Password, user.Password)) {
+				dbuser.Password = newPassword.PasswordHashString();
+			}
+
+			DataSession.CommitChanges();
+			dbuser = null;
+			return true;
+
+		}
 		// **************************************
 		// ResetPassword
 		// **************************************    

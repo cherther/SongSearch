@@ -220,7 +220,7 @@ namespace SongSearch.Web.Services {
 		// GetData
 		// **************************************
 		private User GetDataUser(string userName) {
-			return AccountData.UserComplete(userName);
+			return Account.User(userName, false);
 		}
 
 		private Cart GetDataUserActiveCart(string userName) {

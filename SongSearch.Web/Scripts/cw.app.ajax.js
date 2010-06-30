@@ -137,6 +137,7 @@ function addToCartAjax(link) {
 
 	var url = link[0].href;
 	wait();
+	
 	$.ajax({
 		url: url,
 		type: 'POST',
@@ -147,15 +148,16 @@ function addToCartAjax(link) {
 				feedback('error', xhr.status + ' ' + xhr.statusText);
 			}
 			else {
-				link.fadeTo('slow', 0.2, function () {
-					link.text('In Cart');
-					link.attr('title', 'In Cart');
-					link.attr('href', '/Cart');
-					link.fadeTo('slow', 1);
-					link.removeClass('cw-cart-add-link');
-					//setupContentPanelUIControls();
-				}
-				);
+				link.fadeOut('slow', function() { 
+						link.text('In Cart');
+						link.attr('title', 'In Cart');
+						link.attr('href', '/Cart');
+						//link.fadeTo('slow', 1);
+						link.removeClass('cw-cart-add-link');
+						//setupContentPanelUIControls();
+						link.fadeIn('highlight');//, 0.2, function () {
+					}
+					);
 
 
 				//feedback('info', 'Added to Cart');
@@ -199,55 +201,89 @@ function addToCartMultipleAjax(link, items) {
 
 function deleteTagAjax(link) {
 
-    var url = link[0].href;
-    wait();
-    $.ajax({
-        url: url,
-        type: 'POST',
-        cache: false,
-        dataType: 'json',
-        success: function (data, status, xhr) {
-            if (status == 'error') {
-                feedback('error', xhr.status + ' ' + xhr.statusText);
-            }
-            else {
-                //callback
-                deleteTagCallback(data, link)
-                unwait();
-            }
-        },
-        error: function (xhr, status, error) {
-            feedback('error', xhr.status + ' ' + xhr.statusText);
-        }
-    });
+	var url = link[0].href;
+	wait();
+	$.ajax({
+		url: url,
+		type: 'POST',
+		cache: false,
+		dataType: 'json',
+		success: function (data, status, xhr) {
+			if (status == 'error') {
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+			}
+			else {
+				//callback
+				deleteTagCallback(data, link)
+				unwait();
+			}
+		},
+		error: function (xhr, status, error) {
+			feedback('error', xhr.status + ' ' + xhr.statusText);
+		}
+	});
+}
+
+function writeID3Ajax(link) {
+
+	var url = link[0].href;
+	wait();
+	link.fadeOut('slow');
+	$.ajax({
+		url: url,
+		type: 'POST',
+		cache: false,
+		dataType: 'json',
+		success: function (data, status, xhr) {
+			if (status == 'error') {
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+			}
+			else {
+				var text = link.text();
+				link.text('Saving...');
+				link.fadeOut('slow', function () {
+
+					link.fadeIn('highlight');
+					link.text(text);
+				}
+					);
+			}
+			unwait();
+
+		},
+		error: function (xhr, status, error) {
+			feedback('error', xhr.status + ' ' + xhr.statusText);
+		}
+	});
+
 }
 //-----------------------------------------------------------------------------------
 // Catalog Contents Management
 //-----------------------------------------------------------------------------------
 function deleteContentMultipleAjax() {
 
-    var options = {
-        beforeSubmit: function () { wait(); },
-        success: function (data, status, xhr) {
-            if (status == 'error') {
-                unwait();
-                feedback('error', xhr.status + ' ' + xhr.statusText);
-            } else {
-                feedback('info', data + ' item(s) deleted');
-                updateCartCount();
-                closeContentPanel();
-                removeCheckedRows();
-                hideEmptyContentsTable();
-                unwait();
-            }
-        },
-        error:
+	var options = {
+		beforeSubmit: function () { wait(); },
+		success: function (data, status, xhr) {
+			if (status == 'error') {
+				unwait();
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+			} else {
+				feedback('info', data + ' item(s) deleted');
+				updateCartCount();
+				closeContentPanel();
+				removeCheckedRows();
+				hideEmptyContentsTable();
+				unwait();
+			}
+		},
+		error:
 			function (xhr, status, error) {
-			    unwait();
-			    feedback('error', xhr.status + ' ' + xhr.statusText);
+				unwait();
+				feedback('error', xhr.status + ' ' + xhr.statusText);
 
 			}
-    };
+	};
 
 	$('#cw-catalog-contents-form').ajaxSubmit(options);
 }

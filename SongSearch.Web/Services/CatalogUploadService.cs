@@ -139,7 +139,7 @@ namespace SongSearch.Web.Services {
 
 			// lookup catalog id
 			if (state.CatalogId > 0) {
-			    if (!ActiveUser.IsAtLeastInCatalogRole(Roles.Admin, state.CatalogId)) {
+			    if (!Account.User().IsAtLeastInCatalogRole(Roles.Admin, state.CatalogId)) {
 			        throw new AccessViolationException("You do not have admin rights to this catalog");
 			    }
 
@@ -272,9 +272,9 @@ namespace SongSearch.Web.Services {
 			
 			// Check Metadata, e.g. make stuff uppercase etc
 			foreach (var itm in state.Content) {
-				itm.Title = itm.Title.AsEmptyIfNull().ToUpper();
-				itm.Artist = itm.Artist.AsEmptyIfNull().ToUpper();
-				itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull().ToUpper();
+				itm.Title = itm.Title.AsEmptyIfNull();//.ToUpper();
+				itm.Artist = itm.Artist.AsEmptyIfNull();//.ToUpper();
+				itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull();//.ToUpper();
 				itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
 				itm.Notes = itm.Notes;
 			}
@@ -288,13 +288,14 @@ namespace SongSearch.Web.Services {
 		private CatalogUploadState SaveCatalog(CatalogUploadState state) {
 			System.Diagnostics.Debug.Write("Step5");
 
+			var user = Account.User();
 			// Save/create Catalog
-			if (ActiveUser.IsAtLeastInRole(Roles.Admin)) {
+			if (user.IsAtLeastInRole(Roles.Admin)) {
 
 				var catalog = DataSession.Single<Catalog>(c => c.CatalogName.ToUpper() == state.CatalogName) ??
 					new Catalog() { 
 						CatalogName = state.CatalogName,
-						CreatedByUserId = ActiveUser.UserId,
+						CreatedByUserId = user.UserId,
 						CreatedOn = DateTime.Now					
 					};
 
@@ -303,7 +304,7 @@ namespace SongSearch.Web.Services {
 					DataSession.Add<Catalog>(catalog);
 					
 					var userCatalog = new UserCatalogRole() {
-						UserId = ActiveUser.UserId,
+						UserId = user.UserId,
 						CatalogId = catalog.CatalogId,
 						RoleId = (int)Roles.Admin
 					};
@@ -323,14 +324,14 @@ namespace SongSearch.Web.Services {
 					
 
 					itm.CatalogId = state.CatalogId;
-					itm.CreatedByUserId = ActiveUser.UserId;
+					itm.CreatedByUserId = user.UserId;
 					itm.CreatedOn = DateTime.Now.Date;
-					itm.LastUpdatedByUserId = ActiveUser.UserId;
+					itm.LastUpdatedByUserId = user.UserId;
 					itm.LastUpdatedOn = DateTime.Now.Date;
 					
-					itm.Title = itm.Title.AsEmptyIfNull().ToUpper();
-					itm.Artist = itm.Artist.AsEmptyIfNull().ToUpper();
-					itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull().ToUpper();
+					itm.Title = itm.Title.AsEmptyIfNull();//.ToUpper();
+					itm.Artist = itm.Artist.AsEmptyIfNull();//.ToUpper();
+					itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull();//.ToUpper();
 					itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
 					itm.Notes = itm.Notes;
 					
@@ -366,6 +367,7 @@ namespace SongSearch.Web.Services {
 			
 			}
 
+			SessionService.Session().InitializeSession(true);
 			CacheService.InitializeApp(true);
 			
 			return state;
@@ -380,9 +382,11 @@ namespace SongSearch.Web.Services {
 		private IList<UploadFile> MoveToMediaVersionFolder(List<string> files, MediaVersion mediaVersion) {
 
 			var newFiles = new List<string>();
+			var user = Account.User();
+
 			foreach (var file in files) {
-				var filePath = ActiveUser.UploadFile(fileName: file);
-				var newFilePath = ActiveUser.UploadFile(file, mediaVersion.ToString());
+				var filePath = user.UploadFile(fileName: file);
+				var newFilePath = user.UploadFile(file, mediaVersion.ToString());
 				if (File.Exists(newFilePath)) { File.Delete(newFilePath);}
 				File.Move(filePath, newFilePath);
 				newFiles.Add(newFilePath);

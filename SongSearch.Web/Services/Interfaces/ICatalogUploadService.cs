@@ -8,7 +8,7 @@ namespace SongSearch.Web.Services {
 
 	public interface ICatalogUploadService : IDisposable {
 		string ActiveUserName { get; set; }
-		User ActiveUser { get; set; }
+		//User ActiveUser { get; set; }
 
 		WorkflowEngine<CatalogUploadState> CatalogUploadWorkflow { get; set; }
 		

@@ -118,7 +118,7 @@ function getSound(url) {
                     id: 'cw-sound' + _mySoundId++,
                     url: url,
                    // autoLoad: true,
-					autoPlay: false,
+					//autoPlay: false,
                     stream: true,
                     volume: _currentVolume,
 					multiShot: false,

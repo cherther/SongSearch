@@ -4,10 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Security.Principal;
 using SongSearch.Web.Services;
+using SongSearch.Web.Data;
 
 namespace SongSearch.Web {
 	public static class UserExtensions {
 
+		public static User User(this IPrincipal princ) {
+			if (!princ.Identity.IsAuthenticated) {
+				return null;
+			}
+			return SessionService.Session().User(princ.Identity.Name);
+			
+		}
 
 		// **************************************
 		// UserIsAnyAdmin
@@ -31,7 +39,14 @@ namespace SongSearch.Web {
 			return user != null && user.IsSuperAdmin();
 			
 		}
+		//public static bool UserIsSuperAdmin(this HttpContext ctx) {
+		//    if (!ctx.User.Identity.IsAuthenticated) {
+		//        return false;
+		//    }
+		//    var user = ctx.ActiveUserComplete();
+		//    return user != null && user.IsSuperAdmin();
 
+		//}
 		// **************************************
 		// UserIsInRole
 		// **************************************    

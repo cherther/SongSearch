@@ -10,11 +10,13 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	public interface IContentAdminService : IDisposable {
 		string ActiveUserName { get; set; }
-		User ActiveUser { get; set; }
+		//User ActiveUser { get; set; }
 		void Update(Content content, 
 			IList<int> tags,
 			IDictionary<TagType, string> newTagsModel, 
 			IList<ContentRightViewModel> rights);
+
+		void SaveMetaDataToFile(int contentId);
 		void Delete(int contentId);
 		void Delete(int[] contentIds);
 		void DeleteTag(int tagId);

@@ -16,12 +16,9 @@ namespace SongSearch.Web.Controllers
 
 		private const int _pageSize = 100;
 
-		private User _currentUser;
-
 		protected override void Initialize(RequestContext requestContext) {
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_cartService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
-				_currentUser = _cartService.ActiveUser;
+				_cartService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;				
 			}
 			base.Initialize(requestContext);
 		}
@@ -38,11 +35,12 @@ namespace SongSearch.Web.Controllers
 		{
 			try {
 				var lastCart = GetLastCart();
-				var msg = lastCart != 0 ? _currentUser.ProcessingCartMessage(lastCart) : null;
+				var msg = lastCart != 0 ? this.HttpContext.Session.ProcessingCartMessage(lastCart) : null;
 				if (msg != null) {
 					this.FeedbackInfo(msg);
 				}
-				var vm = GetSearchViewModel();
+				var user = Account.User();
+				var vm = GetSearchViewModel(user);
 
 				return View(vm);
 			}
@@ -99,7 +97,7 @@ namespace SongSearch.Web.Controllers
 					model.ViewMode = ViewModes.Embedded;
 
 					var lastCart = GetLastCart();
-					var msg = lastCart != 0 ? _currentUser.ProcessingCartMessage(lastCart) : null;
+					var msg = lastCart != 0 ? this.HttpContext.Session.ProcessingCartMessage(lastCart) : null;
 					if (msg != null) {
 						this.FeedbackInfo(msg);
 					}
@@ -179,7 +177,9 @@ namespace SongSearch.Web.Controllers
 		// GetSearchResults
 		// **************************************
 		private SearchViewModel GetSearchResults(IList<SearchField> f, int? p, int? s, int? o) {
-			var model = GetSearchViewModel();
+			var user = Account.User();
+			var model = GetSearchViewModel(user);
+
 			model.SortPropertyId = s;
 			model.SortType = o.HasValue ? (SortType)o.GetValueOrDefault() : SortType.None;
 
@@ -191,12 +191,13 @@ namespace SongSearch.Web.Controllers
 					)
 				).ToList();
 
-			var results = SearchService.GetContentSearchResults(searchFields, _currentUser, s, o, _pageSize, p);
+			
+			var results = SearchService.GetContentSearchResults(searchFields, user, s, o, _pageSize, p);
 
 			var session = SessionService.Session();
-			var activeCart = session.MyActiveCart(_currentUser.UserName);
+			var activeCart = Account.CartContents();
 			if (activeCart != null) {
-				results.ForEach(c => c.IsInMyActiveCart = activeCart.Contents.Select(con => con.ContentId).Contains(c.ContentId));
+				results.ForEach(c => c.IsInMyActiveCart = activeCart.Contains(c.ContentId));
 			}
 			model.SearchResults = results;
 			model.SearchFields = searchFields;
@@ -213,11 +214,11 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// GetSearchViewModel
 		// **************************************
-		private SearchViewModel GetSearchViewModel() {
+		private SearchViewModel GetSearchViewModel(User user) {
 
 			return new SearchViewModel() {
 				NavigationLocation = new string[] { "Search" },
-				SearchMenuProperties = CacheService.SearchProperties((Roles)_currentUser.RoleId),
+				SearchMenuProperties = CacheService.SearchProperties((Roles)user.RoleId),
 				SearchTags = CacheService.TopTags()
 			};
 

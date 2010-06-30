@@ -14,10 +14,8 @@ namespace SongSearch.Web.Controllers
 	[HandleError]
 	public partial class MediaController : Controller
 	{
-		private User _currentUser;
 
 		protected override void Initialize(RequestContext requestContext) {
-			_currentUser = SessionService.Session().User(requestContext.HttpContext.User.Identity.Name);
 			base.Initialize(requestContext);
 		}
 
@@ -41,7 +39,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Get(int id, MediaVersion version = MediaVersion.Preview) {
 
 			var media = MediaService.GetContentMedia(id, (MediaVersion)version);
-			var content = SearchService.GetContent(id, _currentUser);
+			var content = SearchService.GetContent(id, Account.User());
 			if (content != null) {
 				var downloadName = String.Concat(content.UserDownloadableName, MediaService.ContentMediaExtension);
 				var contentType = "application/unknown";
@@ -62,7 +60,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Stream(int id, MediaVersion version = MediaVersion.Preview) {
 			try {
 				var mediaPath = MediaService.GetContentMediaFilePath(id, (MediaVersion)version);
-				var content = SearchService.GetContent(id, _currentUser);
+				var content = SearchService.GetContent(id, Account.User());
 				if (content != null) {
 					//var downloadName = String.Concat(contentModel.UserDownloadableName, MediaService.ContentMediaExtension);
 					var contentType = "application/mp3";

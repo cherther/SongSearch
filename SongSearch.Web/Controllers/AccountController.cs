@@ -17,7 +17,7 @@ namespace SongSearch.Web.Controllers {
 		protected override void Initialize(RequestContext requestContext) {
 			try {
 				if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-					_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+					_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;					
 				}
 			}
 			catch { }
@@ -63,10 +63,9 @@ namespace SongSearch.Web.Controllers {
 					_authService.SignIn(model.Email, model.RememberMe);
 					//_usrMgmtService.ActiveUserName = contentModel.Email;
 					
-					var session = SessionService.Session();
-					session.InitializeSession(model.Email, true);
+					SessionService.Session().InitializeSession(model.Email, true);
 
-					var user = session.User(model.Email);
+					var user = Account.User(model.Email);
 
 					SetFriendlyNameCookie(user.FullName());
 
@@ -129,6 +128,7 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/Register
 		// **************************************        
 		public virtual ActionResult Register(string id, string em) {
+
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			ViewData["inviteId"] = id;
 			ViewData["email"] = em;
@@ -235,9 +235,9 @@ namespace SongSearch.Web.Controllers {
 		public virtual ActionResult ChangePassword(UpdateProfileModel model) {
 
 			if (ModelState.IsValid) {
-				var userName = User.Identity.Name;
+				var userName = this.UserName();
 				var user = new User() { UserName = userName, Password = model.OldPassword };
-				if (_acctService.UpdateProfile(user, model.NewPassword)) {
+				if (_acctService.ChangePassword(user, model.NewPassword)) {
 					//_acctService.UpdateCurrentUserInSession();
 					return RedirectToAction(Actions.ChangePasswordSuccess());
 				} else {
@@ -258,7 +258,7 @@ namespace SongSearch.Web.Controllers {
 		// **************************************        
 		[RequireAuthorization]
 		public virtual ActionResult ChangePasswordSuccess() {
-			string email = User.Identity.Name;
+			string email = this.UserName();
 
 			try {
 				Mail.SendMail(
@@ -282,11 +282,11 @@ namespace SongSearch.Web.Controllers {
 			try {
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-				var user = SessionService.Session().User(User.Identity.Name);
+				var user = Account.User();// SessionService.Session().User(User.Identity.Name);
 
 				var vm = new UpdateProfileModel() {
 					NavigationLocation = new string[] { "Home", "Profile" },
-					Email = User.Identity.Name,
+					Email = this.UserName(),
 					FirstName = user.FirstName,
 					LastName = user.LastName,
 					ShowSignatureField = user.IsAnyAdmin(),
@@ -308,25 +308,24 @@ namespace SongSearch.Web.Controllers {
 		[ValidateAntiForgeryToken]
 		public virtual ActionResult UpdateProfile(UpdateProfileModel model) {
 			
-			var userName = User.Identity.Name;
 			User user = new User() {
-				UserName = userName,
+				UserName = this.UserName(),
 				FirstName = model.FirstName,
 				LastName = model.LastName,
 				Signature = model.Signature
 			};
 
 
-			var session = SessionService.Session();
-				
+			//var session = SessionService.Session();
+			var currentUser = Account.User();//session.User(User.Identity.Name);
+			model.ShowSignatureField = currentUser.IsAnyAdmin();
+	
 			//update the user's profile in the database
-			if (ModelState.IsValid && _acctService.UpdateProfile(user, null)) {
+			if (ModelState.IsValid && _acctService.UpdateProfile(user)) {
 					
 				// UpdateModelWith the user dataSession cached in dataSession
-				session.InitializeSession(userName, true);
-				
-				user = session.User(User.Identity.Name);
-				model.ShowSignatureField = user.IsAnyAdmin();
+				//session.InitializeSession(userName, true);
+
 
 				var friendly = user.FullName();
 				SetFriendlyNameCookie(friendly);
@@ -336,7 +335,7 @@ namespace SongSearch.Web.Controllers {
 
 			} else {
 
-				model.ShowSignatureField = session.User(User.Identity.Name).IsAnyAdmin();
+				model.ShowSignatureField = user.IsAnyAdmin();
 
 				ModelState.AddModelError("",
 					Errors.PasswordChangeFailed.Text());

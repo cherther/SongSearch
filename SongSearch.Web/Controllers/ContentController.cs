@@ -13,14 +13,13 @@ namespace SongSearch.Web.Controllers
 	[HandleError]
 	public partial class ContentController : Controller
 	{
-		private User _currentUser;
 		IContentAdminService _cntAdmService;
 
 		protected override void Initialize(RequestContext requestContext) {
 
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_cntAdmService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
-				_currentUser = _cntAdmService.ActiveUser;
+				
 			}
 
 
@@ -83,7 +82,7 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				var model = GetEditModel(id);
-				model.ActiveUserId = _currentUser.UserId;
+				model.ActiveUserId = Account.User().UserId;
 
 				model.EditMode = EditModes.Editing;
 
@@ -143,6 +142,19 @@ namespace SongSearch.Web.Controllers
 				
 			}
 		}
+		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
+		[HttpPost]
+		public virtual ActionResult SaveMetaDataToFile(int id) {
+
+			_cntAdmService.SaveMetaDataToFile(id);
+	
+			if (Request.IsAjaxRequest()) {
+				return Json(id);
+
+			} else {
+				return View();
+			}
+		}
 
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 		[HttpPost]
@@ -167,7 +179,7 @@ namespace SongSearch.Web.Controllers
 				_cntAdmService.Delete(contentIds);
 
 				CacheService.InitializeApp(true);
-				SessionService.Session().RefreshMyActiveCart(_currentUser.UserName);
+				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
 					return Json(count, JsonRequestBehavior.AllowGet);
@@ -220,19 +232,20 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		private ContentViewModel GetDetailModel(int id) {
 
-			var content = SearchService.GetContentDetails(id, _currentUser);
+			var user = Account.User();
+			var content = SearchService.GetContentDetails(id, user);
 			
 			var model = GetContentViewModel();
 
 			model.IsEdit = false;
 			model.Content = content;
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
+			if (user.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
 				model.SectionsAllowed.Add("Rights");
 			}
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+			if (user.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
 				model.SectionsAllowed.Add("Notes");
 				model.SectionsAllowed.Add("Media");
-				if (_currentUser.ShowDebugInfo) {
+				if (user.ShowDebugInfo.GetValueOrDefault(false)) {
 					model.SectionsAllowed.Add("MediaExtended");
 				}
 				model.UserCanEdit = true;
@@ -249,21 +262,23 @@ namespace SongSearch.Web.Controllers
 			//var user = AccountData.User(User.Identity.Name);
 			var model = GetContentViewModel();
 			model.Territories = CacheService.Territories();
-			
 
-			var content = SearchService.GetContentDetails(id, _currentUser);
-			
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
+			var user = Account.User();
+			var content = SearchService.GetContentDetails(id, user);
+
+			if (user.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
 				model.SectionsAllowed.Add("Rights");
 			}
 
-			if (_currentUser.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+			if (user.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
 
 				model.UserCanEdit = true;
 				model.Content = content;
 				model.SectionsAllowed.Add("Notes");
 				model.SectionsAllowed.Add("Media");
-
+				if (user.ShowDebugInfo.GetValueOrDefault(false)) {
+					model.SectionsAllowed.Add("MediaExtended");
+				}
 			}
 
 			return model;

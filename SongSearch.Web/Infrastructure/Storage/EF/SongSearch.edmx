@@ -289,14 +289,14 @@
           <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="500" />
           <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="100" />
-          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
           <Property Name="ParentUserId" Type="int" />
           <Property Name="RoleId" Type="int" Nullable="false" />
           <Property Name="InvitationId" Type="uniqueidentifier" />
           <Property Name="RegisteredOn" Type="datetime" Nullable="false" />
           <Property Name="Signature" Type="nvarchar" MaxLength="1000" />
-          <Property Name="ShowDebugInfo" Type="bit" Nullable="false" />
+          <Property Name="ShowDebugInfo" Type="bit" />
         </EntityType>
         <Association Name="FK_CartContents_Contents">
           <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1">
@@ -665,8 +665,8 @@
           <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserName" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
           <Property Name="ParentUserId" Type="Int32" />
           <Property Name="RoleId" Type="Int32" Nullable="false" />
           <Property Name="InvitationId" Type="Guid" />
@@ -676,7 +676,7 @@
           <NavigationProperty Name="Invitation" Relationship="SongSearch.Web.Data.Model.FK_Users_Invitations" FromRole="User" ToRole="Invitation" />
           <NavigationProperty Name="Carts" Relationship="SongSearch.Web.Data.Model.FK_Carts_Users" FromRole="User" ToRole="Cart" />
           <NavigationProperty Name="UserCatalogRoles" Relationship="SongSearch.Web.Data.Model.FK_UsersCatalogs_Users" FromRole="User" ToRole="UserCatalogRole" />
-          <Property Type="Boolean" Name="ShowDebugInfo" Nullable="false" />
+          <Property Type="Boolean" Name="ShowDebugInfo" />
           </EntityType>
         <Association Name="FK_Contents_Catalogs">
           <End Role="Catalogs" Type="SongSearch.Web.Data.Model.Catalog" Multiplicity="1" />

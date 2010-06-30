@@ -122,19 +122,21 @@ namespace SongSearch.Web.Services {
 		public static Content GetContent(int contentId, User user) {
 
 			using (var session = App.DataSessionReadOnly) {
+				Content content;
 
-				var content = session.GetObjectQuery<Content>()
-					.Where(c => c.ContentId == contentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
-
-				// check if user has access to catalog
-				//if (content == null || (content != null && !user.IsSuperAdmin() && !user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId))) {
-				if (!content.IsAvailableTo(user)){
-					return null;
+				var query = session.All<Content>().Where(c => c.ContentId == contentId);
+				if (!user.IsSuperAdmin() && user.UserCatalogRoles == null) {
+					query = query.Where(c => c.Catalog.UserCatalogRoles.Any(u => u.UserId == user.UserId));				
 				}
 	
+				content = query.SingleOrDefault();
+
+				if (!content.IsAvailableTo(user)) {
+					throw new ArgumentOutOfRangeException("Content does not exist or you do not have access");
+				}
+
 				if (content != null) {
 					content.UserDownloadableName = content.DownloadableName(user.FileSignature());
-					//contentModel.IsInMyActiveCart = CacheService.IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
 				}
 				return content;
 				
@@ -163,7 +165,7 @@ namespace SongSearch.Web.Services {
 
 				if (content != null) {
 					content.UserDownloadableName = content.DownloadableName(user.FileSignature());
-					content.IsInMyActiveCart = SessionService.Session().IsInMyActiveCart(contentId, user.UserName);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
+					content.IsInMyActiveCart = Account.CartContents().Contains(content.ContentId);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
 				}
 				return content;
 			}

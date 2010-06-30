@@ -460,6 +460,12 @@
 			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.MediaLength)%></div>
 			<div class="<%: columnTwo%> column"><%: ((decimal)content.MediaLength.GetValueOrDefault()).MillSecsToTimeCode()%></div>
 		</div>
+		<%if (isEditing) { %>
+		<div class="<%: sectionSize%>_column section cw-spaced">      
+			<div class="<%: columnOne%> column"></div>
+			<div class="<%: columnTwo%> column"><%: Html.ActionLink("Write Metadata to ID3", MVC.Content.SaveMetaDataToFile(content.ContentId), new { id = "cw-write-id3-link", @class = menuButtonClass })%></div>
+		</div>
+		<%} %>
 		<hr />
 		<%} %>
 </div>

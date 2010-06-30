@@ -15,13 +15,11 @@ namespace SongSearch.Web.Controllers
 	public partial class CatalogUploadController : Controller
 	{
 		private ICatalogUploadService _catUploadService;
-		private User _currentUser;
-
+		
 		protected override void Initialize(RequestContext requestContext) {
 
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_catUploadService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
-				_currentUser = _catUploadService.ActiveUser;
 			}
 			base.Initialize(requestContext);
 
@@ -43,9 +41,9 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Complete()
 		{
 			// Cleanup upload folder
-			FileSystem.SafeDeleteFolder(_currentUser.UploadFolder(create: false));
-			CacheService.InitializeApp(true);
-			SessionService.Session().InitializeSession(true);
+			FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
+			//SessionService.Session().InitializeSession(true);
+			//CacheService.InitializeApp(true);
 
 			return RedirectToAction(MVC.CatalogManagement.Index());
 		}
@@ -56,7 +54,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Upload(int? id) {
 
 			// Cleanup upload folder
-			FileSystem.SafeDeleteFolder(_currentUser.UploadFolder(create: false));
+			FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
 
 			var state = new CatalogUploadState(_catUploadService.CatalogUploadWorkflow.WorkflowSteps.Count);
 			if (id.GetValueOrDefault() > 0) {
@@ -121,7 +119,7 @@ namespace SongSearch.Web.Controllers
 			int chunk = Request.QueryString["chunk"] != null ? int.Parse(Request.QueryString["chunk"]) : 0;
 			string fileName = Request.QueryString["name"] != null ? Request.QueryString["name"] : "";
 
-			var filePath = _currentUser.UploadFile(fileName: fileName);
+			var filePath = User.User().UploadFile(fileName: fileName);
 			
 			var buffer = new Byte[Request.InputStream.Length];
 			Request.InputStream.Read(buffer, 0, buffer.Length);
@@ -144,7 +142,7 @@ namespace SongSearch.Web.Controllers
 			vm.CatalogUploadState = state;
 			vm.StepView = nextStep.StepView;
 			vm.StepActionName = nextStep.StepButton;// "Next Step";
-			vm.MyCatalogs = _currentUser.MyAdminCatalogs().OrderBy(c => c.CatalogName).ToList();
+			vm.MyCatalogs = Account.User(false).MyAdminCatalogs().OrderBy(c => c.CatalogName).ToList();
 			return vm;
 		}
 

@@ -7,7 +7,7 @@ using SongSearch.Web.Services;
 
 namespace SongSearch.Web.Controllers
 {
-	[RequireAuthorization(MinAccessLevel = Roles.Admin)]
+	[RequireAuthorization(MinAccessLevel = Roles.SuperAdmin)]
 	public partial class AdminController : Controller
 	{
 		public virtual ActionResult UpdateCache() {

@@ -34,17 +34,17 @@ namespace SongSearch.Web.Services {
 		// MyCarts
 		// **************************************
 		public IList<Cart> MyCarts() {
-
+			var userId = Account.User().UserId;
 			var carts = ReadSession.GetObjectQuery<Cart>()
 				.Include("Contents")
-				.Where(c => c.UserId == ActiveUser.UserId).ToList();
+				.Where(c => c.UserId == userId).ToList();
 
 			return AddUserDownloadableNames(carts);
 		}
 
 		private List<Cart> AddUserDownloadableNames(List<Cart> carts) {
 
-			var signature = ActiveUser.Signature;
+			var signature = Account.User().Signature;
 			foreach (var cart in carts) {
 
 				if (cart.CartStatus == (int)CartStatusCodes.Active) {
@@ -63,18 +63,18 @@ namespace SongSearch.Web.Services {
 		// MyActiveCart
 		// **************************************
 		public Cart MyActiveCart() {
-
-			return DataSession.Single<Cart>(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active);
+			var userId = Account.User().UserId;
+			return DataSession.Single<Cart>(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active);
 		}
 
 		// **************************************
 		// MyActiveCartContents
 		// **************************************
 		public Cart MyActiveCartContents() {
-
+			var userId = Account.User().UserId;
 			return ReadSession.GetObjectQuery<Cart>()
 				.Include("Contents")
-				.Where(c => c.UserId == ActiveUser.UserId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();			
+				.Where(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();			
 		}
 		
 		// **************************************
@@ -280,8 +280,8 @@ namespace SongSearch.Web.Services {
 		// DownloadPackagedCart
 		// **************************************
 		public Cart DownloadCompressedCart(int cartId) {
-
-			var cart = DataSession.Single<Cart>(c => c.UserId == ActiveUser.UserId && c.CartId == cartId);
+			var userId = Account.User().UserId;
+			var cart = DataSession.Single<Cart>(c => c.UserId == userId && c.CartId == cartId);
 			if (cart == null) {
 				throw new ArgumentOutOfRangeException();
 			}
@@ -294,8 +294,8 @@ namespace SongSearch.Web.Services {
 		// DeleteCart
 		// **************************************
 		public void DeleteCart(int cartId) {
-
-			var cart = DataSession.Single<Cart>(c => c.UserId == ActiveUser.UserId && c.CartId == cartId);
+			var userId = Account.User().UserId;
+			var cart = DataSession.Single<Cart>(c => c.UserId == userId && c.CartId == cartId);
 			if (cart == null) {
 				throw new ArgumentOutOfRangeException();
 			}
@@ -355,7 +355,7 @@ namespace SongSearch.Web.Services {
 			return new Cart {
 				CreatedOn = DateTime.Now,
 				LastUpdatedOn = DateTime.Now,
-				UserId = ActiveUser.UserId,
+				UserId = Account.User().UserId,
 				IsLastProcessed = false,
 				CartStatus = (int)CartStatusCodes.Active
 			};
@@ -366,37 +366,38 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private void CompressCart(Cart cart, IList<ContentUserDownloadable> contentNames) {
 
-				string zipPath = cart.ArchivePath(); 
-				string signature = ActiveUser.IsAnyAdmin() ? ActiveUser.Signature : ActiveUser.ParentSignature();
+			var user = Account.User();
+			string zipPath = cart.ArchivePath();
+			string signature = user.IsAnyAdmin() ? user.Signature : user.ParentSignature();
 				
-				var contents = cart.Contents.ToList();
+			var contents = cart.Contents.ToList();
 
-				using (var zip = new ZipFile()) {
+			using (var zip = new ZipFile()) {
 					
-					zip.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed;
+				zip.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed;
 					
-					foreach (var content in contents) {
+				foreach (var content in contents) {
 						
-						if (content.HasMediaFullVersion) {
+					if (content.HasMediaFullVersion) {
 
-							var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
-														contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
-							var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
+						var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
+													contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
+						var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
 								
-							try {
-								var asset = MediaService.GetContentMedia(content.ContentId, MediaVersion.FullSong);
+						try {
+							var asset = MediaService.GetContentMedia(content.ContentId, MediaVersion.FullSong);
 
-								zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, MediaService.ContentMediaExtension),
-											asset);
-							}
-							catch {
+							zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, MediaService.ContentMediaExtension),
+										asset);
+						}
+						catch {
 
-								App.Logger.Info(String.Concat(content.ContentId, " is missing."));
-							}
+							App.Logger.Info(String.Concat(content.ContentId, " is missing."));
 						}
 					}
-					zip.Save(zipPath);
 				}
+				zip.Save(zipPath);
+			}
 			
 			
 		}
