@@ -18,7 +18,19 @@ namespace SongSearch.Web {
 		public static User User(bool cached = true) {
 			return User(HttpContext.Current.User.Identity.Name, cached);
 		}
-		
+
+		public static User User(int userId) {
+			
+			using (var session = App.DataSessionReadOnly) {
+				var user = session.GetObjectQuery<User>()
+					.Include("Carts")
+					.Include("Carts.Contents")
+					.Include("UserCatalogRoles")
+					.Where(u => u.UserId == userId).SingleOrDefault();
+
+				return user;	
+			}
+		}
 		public static User User(string userName, bool cached = true) {
 			if (cached) {
 				return SessionService.Session().User(userName);

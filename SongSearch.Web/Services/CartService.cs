@@ -366,7 +366,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private void CompressCart(Cart cart, IList<ContentUserDownloadable> contentNames) {
 
-			var user = Account.User();
+			var user = cart.User;// Account.User(cart.UserId);
 			string zipPath = cart.ArchivePath();
 			string signature = user.IsAnyAdmin() ? user.Signature : user.ParentSignature();
 				
