@@ -58,7 +58,7 @@ namespace SongSearch.Web {
 
 		//
 		// Removes non-alphanumeric characters, except ;
-		private static string _replacements = @",';:\/!?&-";
+		private static string _replacements = @",';:\/!?&-.";
 
 		// **************************************
 		// MakeSearchableValue
@@ -80,7 +80,7 @@ namespace SongSearch.Web {
 		// **************************************
 		public static string MakeSearchableColumnName(this string column) {
 			column = string.Format(@"{0}.ToUpper()", column);
-			var replacements = new string[] { @",", @"'", @";", @":", @"\", @"/", @"!", @"?", @"&", @"-" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
+			//var replacements = new string[] { @",", @"'", @";", @":", @"\", @"/", @"!", @"?", @"&", @"-", @"." };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
 			_replacements.ForEach(x => column = String.Format(@"{0}.Replace(""{1}"","""")", column, x));
 			return column;
 		}
