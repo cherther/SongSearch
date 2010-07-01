@@ -172,6 +172,9 @@ namespace SongSearch.Web {
 				: fullString;
 		}
 
+		public static string Pluralize(this string item, int numberofItems) {
+			return numberofItems == 1 ? item : String.Format("{0}s", item);
+		}
 
 		public static string ToFileSizeDescription(this decimal? fileSize) {
 			

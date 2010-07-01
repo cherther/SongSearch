@@ -134,8 +134,9 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Zip(string userArchiveName, System.Collections.Generic.IList<SongSearch.Web.Data.ContentUserDownloadable> contentNames) {
+        public override System.Web.Mvc.ActionResult Zip(int id, string userArchiveName, System.Collections.Generic.IList<SongSearch.Web.Data.ContentUserDownloadable> contentNames) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Zip);
+            callInfo.RouteValueDictionary.Add("id", id);
             callInfo.RouteValueDictionary.Add("userArchiveName", userArchiveName);
             callInfo.RouteValueDictionary.Add("contentNames", contentNames);
             return callInfo;

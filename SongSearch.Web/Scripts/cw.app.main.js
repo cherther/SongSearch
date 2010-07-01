@@ -59,20 +59,36 @@ function unwait(elem) {
 function feedback(type, msg) {
 	unwait();
 	if (type == "error") {
-		msg += "<a class='close' href='#'>x</a>";
-		var wrapperClass = 'feedback-bar-error';
-		var autoClose = false;
+//		msg += "<a class='close' href='#'>x</a>";
+//		var wrapperClass = 'feedback-bar-error';
+		//		var autoClose = false;
+		var title = 'Error';
+		var img = '/public/images/icons/silk/error.png';
+		var duration = 8000;
 	} else {
-		var wrapperClass = 'feedback-bar';
-		var autoClose = 2000;
-	
+//		var wrapperClass = 'feedback-bar';
+//		var autoClose = 2000;
+		var title = 'Message';
+		var img = '/public/images/icons/silk/information.png';
+		var duration = 3000;
 	}
-	
-	$.feedbackBar(msg, { autoClose: autoClose, wrapperClass: wrapperClass});
+//	
+//	$.feedbackBar(msg, { autoClose: autoClose, wrapperClass: wrapperClass});
 
-	var fb = $('.' + wrapperClass);
-	fb.click(function () { fb.toggle('highlight') });
+//	var fb = $('.' + wrapperClass);
+//	fb.click(function () { fb.toggle('highlight') });
+	$.gritter.add({
+		// (string | mandatory) the heading of the notification
+		title: title,
+		time: duration,
+		image: img,
+		// (string | mandatory) the text inside the notification
+		text: msg
+	});
+}
 
+function pluralize(item, numberofItems) {
+	return numberofItems == 1 ? item : item + 's';
 }
 
 //***********************************************

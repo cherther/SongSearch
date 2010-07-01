@@ -30,7 +30,8 @@
 	<%if (activeCartCount  > 0) {%>
 	<p>Your song cart contains <strong><%=activeCartCount%></strong> item(s).</p>
 	<% using (Html.BeginForm(MVC.Cart.Zip(), FormMethod.Post, new { id ="cw-cart-form" })) { %>
-	<%= Html.AntiForgeryToken()%>
+	<%: Html.AntiForgeryToken()%>
+	<%: Html.Hidden("id", activeCart.CartId) %>
 	<p>To create a single zip file containing all items, click the 'Zip My Song Cart' button below. </p>
 	<div>&nbsp;</div>
 		<div>
@@ -64,7 +65,7 @@
 		  <p>We're currently compressing and creating a zip file with the song files in your cart. Once this is complete, we'll move the finished zip file to the Zipped Song Carts section below.</p>
 		  <p>&nbsp;</p>
 		  <p>Please check back in a couple of minutes or <%: Html.ActionLink("refresh", MVC.Cart.Index()) %> this page.</p>
-		  <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status" }; %>
+		  <% ViewData["CartHeaders"] = new string[] { "Date", "Zip File", "# Songs", "Size", "Status", "Delete" }; %>
 		  <% ViewData["CartContentHeaders"] = new string[] { "Title", "Artist", "Year" }; %>
 		  <% Html.RenderPartial(MVC.Cart.Views.ctrlCartTable, processingCarts); %>
 	</div>

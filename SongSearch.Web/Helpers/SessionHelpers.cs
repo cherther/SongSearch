@@ -21,7 +21,9 @@ namespace System.Web.Mvc {
 				var compressedCarts = carts.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed);
 				var count = compressedCarts.Count();
 				if (count > 0) {
-					msg = String.Format("You have <strong>{0}</strong> {1} waiting to be downloaded.", count, count > 1 ? "carts" : "cart");
+					msg = String.Format(
+						@"You have <strong>{0}</strong> <a href=""/Cart/"">{1}</a> waiting to be downloaded.", 
+						count, "carts".Pluralize(count));
 
 				}
 				session["DownloadCartMessageShown"] = "1";
@@ -35,12 +37,15 @@ namespace System.Web.Mvc {
 		//CacheService.SessionUpdate(cart.CartId, "ProcessingCartId");
 		public static string ProcessingCartMessage(this HttpSessionStateBase session, int cartId) {
 			string msg = null;
-			var msgKey = String.Concat("NotifUserAboutProcessedCart_", cartId);
-			if (session[msgKey] == null) {
+			
+			var msgKey = String.Concat("ShowProcessedCart_", cartId);
+			var doneKey = String.Concat("Done", msgKey);
+			if (session[msgKey] == "1" && session[doneKey] == null) {
 
-				msg = "Your requested zipped cart is now ready for downloading.";
+				msg = @"Your requested <a href=""/Cart/"">zipped cart</a> is now ready for downloading.";
 
-				session[msgKey] = "1";
+				session.Remove(msgKey);
+				session.Add(doneKey, "1");
 			}
 			return msg;
 		}

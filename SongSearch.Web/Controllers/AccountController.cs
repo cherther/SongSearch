@@ -119,7 +119,7 @@ namespace SongSearch.Web.Controllers {
 			_authService.SignOut();
 
 			Session.Abandon();
-
+			this.FeedbackInfo("Goodbye!");
 			return RedirectToAction(Actions.LogIn());
 		}
 

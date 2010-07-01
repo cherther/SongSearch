@@ -148,6 +148,7 @@ function addToCartAjax(link) {
 				feedback('error', xhr.status + ' ' + xhr.statusText);
 			}
 			else {
+				feedback('info', '1 item added to your song cart');
 				link.fadeOut('slow', function() { 
 						link.text('In Cart');
 						link.attr('title', 'In Cart');
@@ -186,7 +187,8 @@ function addToCartMultipleAjax(link, items) {
 			if (status == 'error') {
 				unwait(); feedback('error', _cartAddErrorMsg);
 			} else {
-				feedback('info', data + ' item(s) added to your song cart');
+				var msg = data + ' ' + pluralize('item', data)  + ' added to your song cart';
+				feedback('info', msg);
 				updateCartCount();
 				unwait();
 			}
@@ -269,7 +271,7 @@ function deleteContentMultipleAjax() {
 				unwait();
 				feedback('error', xhr.status + ' ' + xhr.statusText);
 			} else {
-				feedback('info', data + ' item(s) deleted');
+				feedback('info', data + ' ' + pluralize('item', data)  + ' deleted');
 				updateCartCount();
 				closeContentPanel();
 				removeCheckedRows();

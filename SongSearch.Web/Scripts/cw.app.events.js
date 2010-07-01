@@ -453,7 +453,7 @@
 	$('#cw-catalog-delete-link').live('click',
 		function (evt) {
 
-			if (!confirm('Are you sure you want to delete this Catalog and all of its Songs?')) {
+			if (!confirm('Are you sure you want to delete this catalog and all of its songs?')) {
 				evt.preventDefault();
 			}
 		}
@@ -537,6 +537,12 @@
 				//stateFileIndex++;
 			});
 		});
+		uploader.bind('UploadProgress', function () {
+			notifyFilesDone(uploader);
+		});
+		uploader.bind('Error', function () {
+			turnStepActionButtonOn(true);
+		});
 
 		var catalogUploadForm = $('#catalogUploadForm');
 		// Client side form validation
@@ -570,7 +576,7 @@
 					//                    }
 				} else {
 					evt.preventDefault();
-					$('#uploadMessage').text('Please select at least ' + min + ' file(s) to upload.').fadeIn();
+					feedback('info', 'Please select at least ' + min + pluralize(' file', min) + ' to upload.');
 				}
 
 
@@ -595,7 +601,16 @@
 
 		}
 	}
+	function notifyFilesDone(up) {
+		var done = false;
+		$.each(up.files, function (i, file) {
+			done += up.files[i].percent == 100;
+		});
+		if (done == up.files.length) {
+			feedback('info', done + pluralize(' file', done) + ' uploaded. Please go to the next step now.');// or upload additional files');
 
+		}
+	}
 	function checkTotalUploadSize(up) {
 
 		var maxNumber = parseInt($('#maxFiles').val());
@@ -611,9 +626,10 @@
 			var msg = 'Total file size is more than ' + toFileSizeDescription(maxSize) + ' (' + toFileSizeDescription(totalSize) + ')';
 		}
 		if (msg) {
-			$('#uploadMessage').text(msg).fadeIn();
-		} else {
-			$('#uploadMessage').fadeOut();
+			//$('#uploadMessage').text(msg).fadeIn();
+			feedback('info', msg);
+			//		} else {
+			//			$('#uploadMessage').fadeOut();
 		}
 	}
 

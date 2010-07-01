@@ -304,6 +304,9 @@ namespace Links {
         public static readonly string jquery_feedbackbar_min_js = Url("jquery.feedbackbar.min.js");
         public static readonly string jquery_form_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.form.min.js") ? Url("jquery.form.min.js") : Url("jquery.form.js");
                       
+        public static readonly string jquery_gritter_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.gritter.min.js") ? Url("jquery.gritter.min.js") : Url("jquery.gritter.js");
+                      
+        public static readonly string jquery_gritter_min_js = Url("jquery.gritter.min.js");
         public static readonly string jquery_plupload_queue_min_js = Url("jquery.plupload.queue.min.js");
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
                       

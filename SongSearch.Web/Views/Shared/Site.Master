@@ -19,6 +19,7 @@
 		.Add("~/public/css/cw.feedback.css")
 		.Add("~/public/css/cw.twitlogin.css")
 		.Add("~/public/css/jquery-ui.css")
+					.Add("~/public/css/jquery.gritter.css")
 				.Add("~/public/css/plupload.queue.css")
 		//.ForceRelease()
 		.WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
@@ -86,7 +87,8 @@
 	.Add(Links.Scripts.jquery_form_js)
 	.Add(Links.Scripts.jquery_blockUI_js)
 	.Add(Links.Scripts.jquery_ui_min_js)
-	.Add(Links.Scripts.jquery_feedbackbar_js);
+	.Add(Links.Scripts.jquery_feedbackbar_js)
+	.Add(Links.Scripts.jquery_gritter_js);
 	if (!debug) {
 		bundle.Add(Links.Scripts.soundmanager2_nodebug_jsmin_js);
 	} else {

@@ -260,6 +260,9 @@
     <Content Include="Public\Css\fluid.gs.css" />
     <Content Include="Public\Css\fluid.gs.lt_ie8.css" />
     <Content Include="Public\Css\jquery-ui.css" />
+    <Content Include="Public\Css\jquery.gritter.css" />
+    <Content Include="Scripts\jquery.gritter.js" />
+    <Content Include="Scripts\jquery.gritter.min.js" />
     <Content Include="Public\Css\plupload.queue.css" />
     <Content Include="Public\Flash\plupload.flash.swf" />
     <Content Include="Public\Flash\plupload.silverlight.xap" />
@@ -271,6 +274,9 @@
     <Content Include="Public\Images\delete.gif" />
     <Content Include="Public\Images\done.gif" />
     <Content Include="Public\Images\error.gif" />
+    <Content Include="Public\Images\gritter-close-ie6.gif" />
+    <Content Include="Public\Images\gritter-long.png" />
+    <Content Include="Public\Images\gritter.png" />
     <Content Include="Public\Images\Icons\arrow.gif" />
     <Content Include="Public\Images\Icons\Silk\accept.png" />
     <Content Include="Public\Images\Icons\Silk\add.png" />
@@ -1766,6 +1772,7 @@
     <Content Include="Public\Images\skins\yellow\button_right.png" />
     <Content Include="Public\Images\throbber.gif" />
     <Content Include="Public\Images\transp50.png" />
+    <Content Include="Public\Images\trees.jpg" />
     <Content Include="Scripts\cw.app.main.js" />
     <Content Include="Scripts\cw.app.events.js" />
     <Content Include="Scripts\cw.app.ajax.js" />

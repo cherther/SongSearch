@@ -96,7 +96,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					return Json(id, JsonRequestBehavior.AllowGet);
 				} else {
-					this.FeedbackInfo("Item added to cart");
+					this.FeedbackInfo("1 item added to your song cart");
 					return RedirectToAction(MVC.Cart.Index());
 				}
 			}
@@ -124,7 +124,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					return Json(count, JsonRequestBehavior.AllowGet);
 				} else {
-					this.FeedbackInfo("Items added to cart");
+					this.FeedbackInfo(String.Format("{0} {1} added to your song cart", items.Count(), "item".Pluralize(items.Count())));
 					return RedirectToAction(MVC.Cart.Index());
 				}
 			}
@@ -151,7 +151,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					return Json(id, JsonRequestBehavior.AllowGet);
 				} else {
-					this.FeedbackInfo("Item removed from cart");
+					this.FeedbackInfo("1 item removed from your song cart");
 					return RedirectToAction(MVC.Cart.Index());
 				}
 			}
@@ -184,7 +184,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					return Json(count, JsonRequestBehavior.AllowGet);
 				} else {
-					this.FeedbackInfo("Item(s) removed from cart");
+					this.FeedbackInfo(String.Format("{0} {1} removed from your your song cart", items.Count(), "item".Pluralize(items.Count())));
 					return RedirectToAction(MVC.Cart.Index());
 				}
 			}
@@ -209,7 +209,7 @@ namespace SongSearch.Web.Controllers
 				_cartService.DeleteCart(id);
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
-				this.FeedbackInfo("Cart Deleted");
+				this.FeedbackInfo("Cart deleted");
 			}
 			catch {
 				this.FeedbackError("There was an error deleting this cart");				
@@ -223,13 +223,15 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public virtual ActionResult Zip(string userArchiveName, IList<ContentUserDownloadable> contentNames) {
+		public virtual ActionResult Zip(int id, string userArchiveName, IList<ContentUserDownloadable> contentNames) {
 
 			try {
 				if (contentNames.Count() > 10) {
 					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
 
 					SessionService.Session().RefreshMyActiveCart(this.UserName());
+					var msgKey = String.Concat("ShowProcessedCart_", id);
+					SessionService.Session().SessionUpdate("1", msgKey);
 					this.FeedbackInfo("Your cart is currently being zipped up and will be available for download shortly. Please check back on this page in a few minutes.");
 
 				} else {
