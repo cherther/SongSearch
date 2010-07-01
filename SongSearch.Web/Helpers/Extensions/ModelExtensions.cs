@@ -122,6 +122,8 @@ namespace SongSearch.Web {
 			currentContent.Keywords = content.Keywords;
 			currentContent.SimilarSongs = content.SimilarSongs;
 			currentContent.LicensingNotes = content.LicensingNotes;
+			currentContent.SoundsLike = content.SoundsLike;
+			currentContent.Instruments = content.Instruments;
 
 	}
 

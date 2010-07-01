@@ -183,6 +183,8 @@
           <Property Name="Keywords" Type="nvarchar(max)" />
           <Property Name="SimilarSongs" Type="nvarchar(max)" />
           <Property Name="LicensingNotes" Type="nvarchar(max)" />
+          <Property Name="SoundsLike" Type="nvarchar(max)" />
+          <Property Name="Instruments" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="ContentTags">
           <Key>
@@ -628,6 +630,8 @@
           <Property Type="Int64" Name="MediaExcerptStart" />
           <Property Type="Int64" Name="MediaExcerptEnd" />
           <Property Type="DateTime" Name="MediaDate" />
+          <Property Type="String" Name="SoundsLike" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Instruments" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -893,6 +897,8 @@
             <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
+                <ScalarProperty Name="Instruments" ColumnName="Instruments" />
+                <ScalarProperty Name="SoundsLike" ColumnName="SoundsLike" />
                 <ScalarProperty Name="MediaDate" ColumnName="MediaDate" />
                 <ScalarProperty Name="MediaExcerptEnd" ColumnName="MediaExcerptEnd" />
                 <ScalarProperty Name="MediaExcerptStart" ColumnName="MediaExcerptStart" />

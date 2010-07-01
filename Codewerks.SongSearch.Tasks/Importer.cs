@@ -73,6 +73,29 @@ namespace Codewerks.SongSearch.Tasks {
 	
 		}
 
+		public static void ConvertTextTags() {
+
+			using (var session = new SongSearchDataSession()) {
+
+				var contents = session.All<Content>();
+				var tags = session.All<Tag>();
+
+				foreach (var content in contents) {
+
+					var instruments = content.Tags.Where(t => t.TagTypeId == (int)TagType.Instrument);
+					var soundsLike = content.Tags.Where(t => t.TagTypeId == (int)TagType.SoundsLike);
+					content.Instruments = instruments.Count() > 0 ? 
+						String.Join(";", instruments.Select(t => t.TagName).ToArray())
+						: null;
+					content.SoundsLike = soundsLike.Count() > 0 ? 
+						String.Join(";", soundsLike.Select(t => t.TagName).ToArray())
+						: null;
+				}
+
+				session.CommitChanges();
+			}
+			
+		}
 		private static void MakeATag(int contentId, string field, TagType tagType) {
 			
 			if (field != null) {
@@ -101,6 +124,8 @@ namespace Codewerks.SongSearch.Tasks {
 				}
 			}
 		}
+	
+	
 	}
 }
 		

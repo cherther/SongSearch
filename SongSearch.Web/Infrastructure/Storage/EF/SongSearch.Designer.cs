@@ -1621,6 +1621,54 @@ namespace SongSearch.Web.Data
         private Nullable<global::System.DateTime> _MediaDate;
         partial void OnMediaDateChanging(Nullable<global::System.DateTime> value);
         partial void OnMediaDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SoundsLike
+        {
+            get
+            {
+                return _SoundsLike;
+            }
+            set
+            {
+                OnSoundsLikeChanging(value);
+                ReportPropertyChanging("SoundsLike");
+                _SoundsLike = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SoundsLike");
+                OnSoundsLikeChanged();
+            }
+        }
+        private global::System.String _SoundsLike;
+        partial void OnSoundsLikeChanging(global::System.String value);
+        partial void OnSoundsLikeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Instruments
+        {
+            get
+            {
+                return _Instruments;
+            }
+            set
+            {
+                OnInstrumentsChanging(value);
+                ReportPropertyChanging("Instruments");
+                _Instruments = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Instruments");
+                OnInstrumentsChanged();
+            }
+        }
+        private global::System.String _Instruments;
+        partial void OnInstrumentsChanging(global::System.String value);
+        partial void OnInstrumentsChanged();
 
         #endregion
     

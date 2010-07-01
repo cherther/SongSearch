@@ -152,8 +152,8 @@ namespace SongSearch.Web {
 					TagType.Style,
 					TagType.Gender,
 					TagType.Tempo,
-					TagType.SoundsLike,
-					TagType.Instrument,
+					//TagType.SoundsLike,
+					//TagType.Instrument,
 					TagType.Language,
 					TagType.Brand
 			};

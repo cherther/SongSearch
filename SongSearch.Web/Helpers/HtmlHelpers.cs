@@ -68,7 +68,15 @@ namespace System.Web.Mvc {
 			
 			if (searchField != null && value != null) {
 				var searchVal = searchField.V.FirstOrDefault() ?? "";
-				value = value.Replace(searchVal.ToUpper(), String.Format(@"<span class='cw-highlight'>{0}</span>", searchVal.ToUpper()));
+				if (!searchVal.IsPreciseSearch() && !searchVal.IsStartsWithSearch()) {
+					var searchValSplit = searchVal.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+					searchValSplit.ForEach(v =>
+						value = value.Replace(v.ToUpper(), String.Format(@"<span class='cw-highlight'>{0}</span>", v.ToUpper()))
+					);
+				} else {
+					searchVal = searchVal.TrimPreciseSearch().TrimStartsWithSearch();
+					value = value.Replace(searchVal.ToUpper(), String.Format(@"<span class='cw-highlight'>{0}</span>", searchVal.ToUpper()));
+				}
 			}
 
 			return value;

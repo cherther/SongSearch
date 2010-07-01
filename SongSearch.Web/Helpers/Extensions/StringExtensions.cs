@@ -10,10 +10,11 @@ namespace SongSearch.Web {
 
 		private const bool UseIndex = false;
 
-		private const char Space = ' ';
-		private const string Quote = @"""";
-		private const string LeftSearchChar = @"*";
-		private const int FullSearchMin = 3;
+		private const char _space = ' ';
+		private const string _quote = @"""";
+		private const string _leftSearchChar = @"*";
+		private const int _fullSearchMin = 3;
+
 		private static readonly string Empty = String.Empty;
 
 
@@ -57,7 +58,7 @@ namespace SongSearch.Web {
 
 		//
 		// Removes non-alphanumeric characters, except ;
-		private static string _replacements = @",';:\/!?&- ";
+		private static string _replacements = @",';:\/!?&-";
 
 		// **************************************
 		// MakeSearchableValue
@@ -82,6 +83,31 @@ namespace SongSearch.Web {
 			var replacements = new string[] { @",", @"'", @";", @":", @"\", @"/", @"!", @"?", @"&", @"-" };//, @"|", @"{", @"}", @"[", @"]", @"?", @"<", @">", @".", @"!", "*" };
 			_replacements.ForEach(x => column = String.Format(@"{0}.Replace(""{1}"","""")", column, x));
 			return column;
+		}
+
+		// **************************************
+		// IsPreciseSearch
+		// **************************************
+		public static bool IsPreciseSearch(this string value) {
+			return (value.StartsWith(_quote) && value.EndsWith(_quote));
+		}
+		public static string TrimPreciseSearch(this string value) {
+			return value.Replace(_quote, "");// && value.EndsWith(_quote));
+		}
+		// **************************************
+		// IsStartsWithSearch
+		// **************************************
+		public static bool IsStartsWithSearch(this string value) {
+			return (value.EndsWith(_leftSearchChar) || value.Length < _fullSearchMin);
+		}
+		public static string TrimStartsWithSearch(this string value) {
+			return value.Replace(_leftSearchChar, "");// && value.EndsWith(_quote));
+		}
+		// **************************************
+		// IsMultiSearch
+		// **************************************
+		public static bool IsMultiSearch(this string[] searchValues) {
+			return (searchValues.Length > 1 && searchValues.All(x => !String.IsNullOrWhiteSpace(x)));
 		}
 
 		public static int[] SplitTags(this string tags, char separator) {

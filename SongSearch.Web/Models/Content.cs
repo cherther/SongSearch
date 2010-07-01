@@ -107,6 +107,14 @@ namespace SongSearch.Web.Data {
 		[DisplayName("Media Length")]
 		public object MediaLength { get; set; }
 
+		[DisplayName("Instruments")]
+		[DataType(DataType.MultilineText)]
+		public object Instruments { get; set; }
+
+		[DisplayName("Sounds Like")]
+		[DataType(DataType.MultilineText)]
+		public object SoundsLike { get; set; }
+
 	}
 
 	public partial class ContentUserDownloadable {

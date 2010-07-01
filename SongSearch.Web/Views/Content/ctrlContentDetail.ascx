@@ -162,7 +162,8 @@
 	</div>
 	<%} %>
 	<%
-	var tagTypes = ModelEnums.GetTagTypes().Where(t => t != TagType.SoundsLike && t != TagType.Instrument);//.OrderBy(t => t);
+	  
+	var tagTypes = ModelEnums.GetTagTypes();//.Where(t => t != TagType.SoundsLike && t != TagType.Instrument);//.OrderBy(t => t);
 	var tagCount = 0;
 	var tagTypeCount = 0;
 	%>
@@ -219,8 +220,15 @@
 			</div>
 		</div>
 		<%} %>
-		<% tagTypeCount++; %>
-	<%} %>
+		<%} %>
+		<div class="<%: sectionSize%>_column section cw-spaced">
+			<div class="<%: columnOne%> column text-top"><%: Html.LabelFor(m => m.Content.SoundsLike)%></div>
+			<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.SoundsLike) : Html.DisplayFor(m => m.Content.SoundsLike)%></div>
+		</div>
+		<div class="<%: sectionSize%>_column section cw-spaced">
+			<div class="<%: columnOne%> column text-top"><%: Html.LabelFor(m => m.Content.Instruments)%></div>
+			<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Instruments) : Html.DisplayFor(m => m.Content.Instruments)%></div>
+		</div>
 </div>
 
 <%} %>

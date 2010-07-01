@@ -13,11 +13,9 @@ using Ninject;
 namespace SongSearch.Web.Services {
 	public static class SearchService {
 
-		private const string _quote = @"""";
-		private const string _leftSearchChar = @"*";
-		private const string _add = " and ";
-		private const int _fullSearchMin = 3;
-
+		
+		//private const string _add = " and ";
+		
 
 		// **************************************
 		// GetLookupList: 
@@ -269,6 +267,7 @@ namespace SongSearch.Web.Services {
 									var predicate = String.Format(
 										startsWithSearch ? "{0}.StartsWith(@0)" : "{0}.Contains(@0)"
 										, columnName);//.MakeSearchableColumn(),
+									val = val.TrimPreciseSearch().TrimStartsWithSearch();
 									query = query.Where(predicate, val);
 								}
 							}
@@ -457,25 +456,7 @@ namespace SongSearch.Web.Services {
 		}
 
 	
-		// **************************************
-		// IsPreciseSearch
-		// **************************************
-		private static bool IsPreciseSearch(this string value) {
-			return (value.StartsWith(_quote) && value.EndsWith(_quote));
-		}
-		// **************************************
-		// IsStartsWithSearch
-		// **************************************
-		private static bool IsStartsWithSearch(this string value) {
-			return (value.EndsWith(_leftSearchChar) || value.Length < _fullSearchMin);
-		}
-		// **************************************
-		// IsMultiSearch
-		// **************************************
-		private static bool IsMultiSearch(this string[] searchValues) {
-			return (searchValues.Length > 1 && searchValues.All(x => !String.IsNullOrWhiteSpace(x)));
-		}
-
+		
 		//// **************************************
 		//// MakeSearchableColumn
 		//// **************************************
