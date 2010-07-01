@@ -23,6 +23,7 @@ namespace SongSearch.Web {
 			
 			using (var session = App.DataSessionReadOnly) {
 				var user = session.GetObjectQuery<User>()
+					.Include("ParentUser")
 					.Include("Carts")
 					.Include("Carts.Contents")
 					.Include("UserCatalogRoles")
@@ -37,6 +38,7 @@ namespace SongSearch.Web {
 			} else {
 				using (var session = App.DataSessionReadOnly) {
 					var user = session.GetObjectQuery<User>()
+						.Include("ParentUser")
 						.Include("Carts")
 						.Include("Carts.Contents")
 						.Include("UserCatalogRoles")
@@ -156,6 +158,13 @@ namespace SongSearch.Web {
 				return user.UserCatalogRoles.Any(c => c.CatalogId == content.CatalogId);
 			}
 		}
+		public static bool HasAccessToContentWithRole(this User user, Content content, Roles role) {
+			if (user.IsSuperAdmin()) {
+				return true;
+			} else {
+				return user.UserCatalogRoles.Any(c => c.CatalogId == content.CatalogId && c.RoleId <= (int)role);
+			}
+		}
 		// **************************************
 		// FullName
 		// **************************************    
@@ -190,8 +199,12 @@ namespace SongSearch.Web {
 		// **************************************
 		// FileSignature
 		// **************************************    
-		public static string FileSignature(this User user) {
-			return user != null ? (user.IsAnyAdmin() ? user.Signature : user.ParentSignature()) : "";
+		public static string FileSignature(this User user, Content content) {
+			return user != null ? (
+				user.HasAccessToContentWithRole(content, Roles.Admin) ? 
+					user.Signature 
+					: user.ParentSignature()) 
+				: "";
 		}
 
 		// **************************************

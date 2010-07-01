@@ -324,7 +324,7 @@ namespace SongSearch.Web.Controllers {
 			if (ModelState.IsValid && _acctService.UpdateProfile(user)) {
 					
 				// UpdateModelWith the user dataSession cached in dataSession
-				//session.InitializeSession(userName, true);
+				SessionService.Session().InitializeSession(true);
 
 
 				var friendly = user.FullName();
@@ -335,7 +335,7 @@ namespace SongSearch.Web.Controllers {
 
 			} else {
 
-				model.ShowSignatureField = user.IsAnyAdmin();
+				model.ShowSignatureField = currentUser.IsAnyAdmin();
 
 				ModelState.AddModelError("",
 					Errors.PasswordChangeFailed.Text());

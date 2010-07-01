@@ -44,13 +44,13 @@ namespace SongSearch.Web.Services {
 
 		private List<Cart> AddUserDownloadableNames(List<Cart> carts) {
 
-			var signature = Account.User().Signature;
 			foreach (var cart in carts) {
 
 				if (cart.CartStatus == (int)CartStatusCodes.Active) {
 					var contents = cart.Contents;
 
 					foreach (var content in contents) {
+						var signature = Account.User().FileSignature(content);// Signature;
 						content.UserDownloadableName = content.DownloadableName(signature);
 					}
 				}
