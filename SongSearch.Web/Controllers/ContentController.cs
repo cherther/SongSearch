@@ -39,14 +39,14 @@ namespace SongSearch.Web.Controllers
 				var model = GetDetailModel(id);
 				model.EditMode = EditModes.Viewing;
 
-				if (Request.IsAjaxRequest()) {
+				//if (Request.IsAjaxRequest()) {
 					model.ViewMode = ViewModes.Embedded;
 					return View(Views.ctrlContentDetail, model);
 
-				} else {
-					model.ViewMode = ViewModes.Normal;
-					return View(model);
-				}
+				//} else {
+				//    model.ViewMode = ViewModes.Normal;
+				//    return View(model);
+				//}
 			}
 			catch (Exception ex) {
 				this.FeedbackError(ex.Message);
@@ -86,14 +86,14 @@ namespace SongSearch.Web.Controllers
 
 				model.EditMode = EditModes.Editing;
 
-				if (Request.IsAjaxRequest()) {
+				//if (Request.IsAjaxRequest()) {
 					model.ViewMode = ViewModes.Embedded;
 					return View("ctrlContentDetail", model);
 
-				} else {
-					model.ViewMode = ViewModes.Normal;
-					return View("Detail", model);
-				}
+				//} else {
+				//    model.ViewMode = ViewModes.Normal;
+				//    return View("Detail", model);
+				//}
 			}
 			catch (Exception ex) {
 				this.FeedbackError(ex.Message);
@@ -122,16 +122,16 @@ namespace SongSearch.Web.Controllers
 					var vm = GetEditModel(content.ContentId);
 					
 
-					if (Request.IsAjaxRequest()) {
+					//if (Request.IsAjaxRequest()) {
 						vm.ViewMode = ViewModes.Embedded;
 						vm.EditMode = EditModes.Saving;
 						return View("ctrlContentDetail", vm);
 
-					} else {
-						vm.ViewMode = ViewModes.Normal;
-						vm.EditMode = EditModes.Viewing;
-						return View("Detail", vm);
-					}
+					//} else {
+					//    vm.ViewMode = ViewModes.Normal;
+					//    vm.EditMode = EditModes.Viewing;
+					//    return View("Detail", vm);
+					//}
 				} else {
 					return Content(content.ContentId.ToString());
 				}
@@ -158,6 +158,22 @@ namespace SongSearch.Web.Controllers
 
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 		[HttpPost]
+		public virtual ActionResult SaveMediaFiles(int contentId, IList<UploadFile> uploadFiles) {
+
+			//_cntAdmService.SaveMetaDataToFile(id);
+			// Move to Perm Media Folder
+			// Update Content with hasMedia flags
+
+			if (Request.IsAjaxRequest()) {
+				return Json(contentId);
+
+			} else {
+				return View();
+			}
+		}
+
+		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
+		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public virtual ActionResult Delete(int id) {
 
@@ -166,12 +182,11 @@ namespace SongSearch.Web.Controllers
 
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 		[HttpPost]
-		[ValidateAntiForgeryToken]
 		public virtual ActionResult DeleteMultiple() {
 
 			try {
-				var itemsPosted = Request.Form["deleteContentItems"];
-
+				//var itemsPosted = Request.Form["deleteContentItems"];
+				var itemsPosted = Request.Form["items[]"];
 				var items = itemsPosted != null ? itemsPosted.Split(',') : new string[] { };
 				var count = items != null ? items.Count() : 0;
 

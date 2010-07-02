@@ -14,10 +14,11 @@
 	var contentListViewModel = new ContentListViewModel() {
 		List = catalogContents,
 		ListHeaders = new string[] { "Title", "Artist", "Year" },
-		GridActions = new GridAction[] { GridAction.Delete, GridAction.ShowDetails },
+		HeaderActions = new GridAction[] { GridAction.Delete },
+		GridActions = new GridAction[] { GridAction.ShowDetails, GridAction.Media },
 		IsSortable = true
 	};
-
+	
 %>
 <div>
 	Catalog: <strong><%= catalog.CatalogName %></strong>
@@ -30,20 +31,21 @@
 <h4>Contents</h4>
 <div>&nbsp;</div>
 <%if (catalogContents.Count > 0){ %>
-<a href="#" id="cw-catalog-contents-show-link" class="cw-button cw-simple cw-small cw-blue">Show Songs</a>
+<a href="#" id="cw-catalog-contents-show-link" class="cw-button cw-simple cw-small cw-blue">Show Song List</a>
 <span id="cw-catalog-contents-msg" class="cw-hidden">This catalog does not contain any songs.</span>
 <%} else {%>
 <span>This catalog does not contain any songs.</span>
 <%} %>
-<%: Html.ActionLink("Upload", MVC.CatalogUpload.Upload(catalog.CatalogId), new { @class = "cw-button cw-simple cw-small cw-blue" })%>
+<% var uploadLink = Url.Action(MVC.CatalogUpload.Upload(catalog.CatalogId)); %>
+<a href="<%: uploadLink %>" class="cw-button cw-simple cw-small cw-blue" title="Go to the Catalog Upload Wizard"><span class="b-wand">Upload New Songs</span></a>
 <%--(<%: String.Format("{0} {1}", catalogContents.Count, catalogContents.Count == 1 ? "song" : "songs")%>)--%>
 <div>&nbsp;</div>
 <%if (catalogContents.Count > 0){ %>
-	<%using (Html.BeginForm(MVC.Content.DeleteMultiple(), FormMethod.Post, new { id = "cw-catalog-contents-form" })) { %>
-	<%= Html.Hidden("id", catalog.CatalogId)%>
-	<%= Html.AntiForgeryToken()%>
+	<%//using (Html.BeginForm(MVC.Content.DeleteMultiple(), FormMethod.Post, new { id = "cw-catalog-contents-form" })) { %>
+	<%: Html.Hidden("id", catalog.CatalogId)%>
+	<%//= Html.AntiForgeryToken()%>
 	<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogContentsTable, contentListViewModel); %>
-	<%} %>
+	<%//} %>
 <%} %>
 <hr />
 <div>&nbsp;</div>

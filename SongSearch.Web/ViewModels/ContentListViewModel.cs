@@ -19,7 +19,7 @@ namespace SongSearch.Web {
 		public string HeaderSortUrl { get; set; }
 
 		public bool ShowDetails { get; set; }
-
+		public GridAction[] HeaderActions { get; set; }
 		public GridAction[] GridActions { get; set; }
 	}
 
@@ -28,7 +28,8 @@ namespace SongSearch.Web {
 		Download,
 		AddToCart,
 		RemoveFromCart,
-		Delete
+		Delete,
+		Media
 	}
 
 }

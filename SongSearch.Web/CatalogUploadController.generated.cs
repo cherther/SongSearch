@@ -51,7 +51,6 @@ namespace SongSearch.Web.Controllers {
             public readonly string Index = "Index";
             public readonly string Complete = "Complete";
             public readonly string Upload = "Upload";
-            public readonly string UserMediaUpload = "UserMediaUpload";
         }
 
 
@@ -95,11 +94,6 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult Upload(SongSearch.Web.Services.CatalogUploadState state) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Upload);
             callInfo.RouteValueDictionary.Add("state", state);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult UserMediaUpload() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UserMediaUpload);
             return callInfo;
         }
 

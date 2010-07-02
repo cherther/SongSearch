@@ -52,12 +52,6 @@
     <Reference Include="AntiXSSLibrary">
       <HintPath>..\..\mvcstarter\lib\AntiXSSLibrary.dll</HintPath>
     </Reference>
-    <Reference Include="DotNetOpenAuth">
-      <HintPath>..\Ext Libraries\DotNetOpenAuth.dll</HintPath>
-    </Reference>
-    <Reference Include="DotNetOpenId">
-      <HintPath>..\Ext Libraries\DotNetOpenId.dll</HintPath>
-    </Reference>
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
     </Reference>
@@ -261,6 +255,7 @@
     <Content Include="Public\Css\fluid.gs.lt_ie8.css" />
     <Content Include="Public\Css\jquery-ui.css" />
     <Content Include="Public\Css\jquery.gritter.css" />
+    <Content Include="Scripts\cw.app.upload.js" />
     <Content Include="Scripts\jquery.gritter.js" />
     <Content Include="Scripts\jquery.gritter.min.js" />
     <Content Include="Public\Css\plupload.queue.css" />
@@ -1785,14 +1780,22 @@
     <Content Include="Scripts\jquery.feedbackbar.js" />
     <Content Include="Scripts\jquery.feedbackbar.min.js" />
     <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.plupload.queue.js" />
     <Content Include="Scripts\jquery.plupload.queue.min.js" />
+    <Content Include="Scripts\plupload.browserplus.js" />
     <Content Include="Scripts\plupload.browserplus.min.js" />
+    <Content Include="Scripts\plupload.flash.js" />
     <Content Include="Scripts\plupload.flash.min.js" />
     <Content Include="Scripts\plupload.full.min.js" />
+    <Content Include="Scripts\plupload.gears.js" />
     <Content Include="Scripts\plupload.gears.min.js" />
+    <Content Include="Scripts\plupload.html4.js" />
     <Content Include="Scripts\plupload.html4.min.js" />
+    <Content Include="Scripts\plupload.html5.js" />
     <Content Include="Scripts\plupload.html5.min.js" />
+    <Content Include="Scripts\plupload.js" />
     <Content Include="Scripts\plupload.min.js" />
+    <Content Include="Scripts\plupload.silverlight.js" />
     <Content Include="Scripts\plupload.silverlight.min.js" />
     <Content Include="Scripts\soundmanager2-nodebug-jsmin.js" />
     <Content Include="Scripts\soundmanager2.js" />

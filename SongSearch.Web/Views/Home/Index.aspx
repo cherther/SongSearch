@@ -12,9 +12,16 @@
 		<h4>What's New</h4>
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
-		<div>&nbsp;</div
-		<div><strong>6/28/2010</strong></div>
+		<div>&nbsp;</div>
+		<div><strong>7/1/2010</strong></div>
 		<ul class="cw-vertical cw-highlight">
+			<li>Media Player: FFWD + REW now 10% of playing time but maximum 30 secs</li>
+			<li>User Notification: swapped old system for Growl style floating notification box on right hand side</li>
+			<li>SoundsLike + Instruments now editable text fields</li>
+		</ul>
+		<div>&nbsp;</div>
+		<div>6/28/2010</div>
+		<ul class="cw-vertical">
 			<li>Catalog Song Management
 			<ul class="cw-vertical">
 				<li>Each catalog shows a list of its contents with full edit features</li>

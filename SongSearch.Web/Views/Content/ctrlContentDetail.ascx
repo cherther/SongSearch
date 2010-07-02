@@ -395,6 +395,7 @@
 
 </div>
 <%} %>
+
 <%if ((Model.ViewMode != ViewModes.Print) && Model.SectionsAllowed.Contains("Media")) { %>
 <%
 	columnOne = "two";
@@ -420,36 +421,6 @@
 			<%: content.MediaDate.Value%>
 			</div>
 		</div>
-		<%if (isEditing){ %>
-		<div class="<%: sectionSize%>_column section cw-spaced">
-			<div class="<%: columnOne%> column">   
-			</div>
-			<div class="<%: columnTwo%> column">
-			<% if (content.HasMediaFullVersion) { %>
-				<a class="cw-button cw-simple cw-small cw-gray">Replace</a>
-			<%} else { %>
-				<a class="cw-button cw-simple cw-small cw-gray">Upload</a>
-			<%} %>
-			</div>
-		</div>
-		<%} %>
-		<div class="<%: sectionSize%>_column section cw-spaced">      
-			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.HasMediaPreviewVersion)%></div>
-			<div class="<%: columnTwo%> column"><%: content.HasMediaPreviewVersion.ToYesNo() %></div>
-		</div>
-		<%if (isEditing){ %>
-		<div class="<%: sectionSize%>_column section cw-spaced">
-			<div class="<%: columnOne%> column">
-			</div>
-			<div class="<%: columnTwo%> column">
-			<% if (content.HasMediaPreviewVersion) { %>
-				<a class="cw-button cw-simple cw-small cw-gray">Replace</a>
-			<%} else { %>
-				<a class="cw-button cw-simple cw-small cw-gray">Upload</a>
-			<%} %>
-			</div>
-		</div>
-		<%} %>
 		<%if (Model.SectionsAllowed.Contains("MediaExtended")) {%>
 		<hr />
 		<div class="<%: sectionSize%>_column section cw-spaced">      
@@ -479,7 +450,10 @@
 </div>
 
 <%} %>
-<%if (isEditing) { Html.EndForm();  }%>
+<%if (isEditing) {%>
+
+<% Html.EndForm();%>
+<%}%>
 <%if (Model.ViewMode == ViewModes.Embedded) { %>
 	<div><a href="#" id="cw-detail-close-link">Close</a></div>
 <%} %>
@@ -489,4 +463,12 @@
 	</div>
 	</div>
 </div>
-	
+<%if (isEditing) { %>
+<script language="javascript" type="text/javascript">
+	$(document).ready(function () {
+		//alert('here');
+		//setupMediaUploader('fullUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'FullSong', 0);
+		//setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload','previewVersionFilelist','Preview', 1);
+	});
+</script>
+<%} %>

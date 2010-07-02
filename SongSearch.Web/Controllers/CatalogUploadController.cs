@@ -85,26 +85,31 @@ namespace SongSearch.Web.Controllers
 //				state.TempFiles = state.TempFiles ?? sessionFiles;
 			}
 			var wf = _catUploadService.CatalogUploadWorkflow;
-			state = _catUploadService.RunNextStep(state);
+			try {
+				state = _catUploadService.RunNextStep(state);
 
-			var nextStep = _catUploadService.NextStep(state);
+				var nextStep = _catUploadService.NextStep(state);
 
-			if (nextStep != null) {
-				state.CurrentStepIndex = nextStep.StepIndex;
-				Session["CatalogUploadState.WorkflowStepsStatus"] = state.WorkflowStepsStatus;
-				// Add any new files from this step
-				//uploadFiles = state.UploadFiles != null ?
-				//    (uploadFiles != null ?
-				//        uploadFiles.Union(state.UploadFiles).ToList()
-				//        : state.UploadFiles)
-				//    : uploadFiles;
-				Session["CatalogUploadState.UploadFiles"] = state.UploadFiles != null ? state.UploadFiles.Distinct().ToList() : state.UploadFiles;
-				var vm = GetCatalogViewModel(nextStep, state);
-				vm.StepActionName = nextStep.StepButton;
-	
-				return View(vm);
-			} else {
-				return RedirectToAction("Complete");
+				if (nextStep != null) {
+					state.CurrentStepIndex = nextStep.StepIndex;
+					Session["CatalogUploadState.WorkflowStepsStatus"] = state.WorkflowStepsStatus;
+					// Add any new files from this step
+					//uploadFiles = state.UploadFiles != null ?
+					//    (uploadFiles != null ?
+					//        uploadFiles.Union(state.UploadFiles).ToList()
+					//        : state.UploadFiles)
+					//    : uploadFiles;
+					Session["CatalogUploadState.UploadFiles"] = state.UploadFiles != null ? state.UploadFiles.Distinct().ToList() : state.UploadFiles;
+					var vm = GetCatalogViewModel(nextStep, state);
+					vm.StepActionName = nextStep.StepButton;
+
+					return View(vm);
+				} else {
+					return RedirectToAction("Complete");
+				}
+			}
+			catch {
+				return RedirectToAction(Actions.Upload());
 			}
 
 		}
@@ -112,14 +117,15 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /Catalog/UserMediaUpload
 		// **************************************
-		public virtual ActionResult UserMediaUpload() {
+		public virtual void UserMediaUpload() {
 
-			IDictionary<string, string> files = new Dictionary<string, string>();
+			//IDictionary<string, string> files = new Dictionary<string, string>();
 			
 			int chunk = Request.QueryString["chunk"] != null ? int.Parse(Request.QueryString["chunk"]) : 0;
 			string fileName = Request.QueryString["name"] != null ? Request.QueryString["name"] : "";
+			string mediaVersion = Request.QueryString["mediaVersion"] != null ? Request.QueryString["mediaVersion"] : "";
 
-			var filePath = User.User().UploadFile(fileName: fileName);
+			var filePath = User.User().UploadFile(fileName: fileName, mediaVersion: mediaVersion);
 			
 			var buffer = new Byte[Request.InputStream.Length];
 			Request.InputStream.Read(buffer, 0, buffer.Length);
@@ -131,7 +137,7 @@ namespace SongSearch.Web.Controllers
 			fs.Write(buffer, 0, buffer.Length);
 			fs.Close();
 
-			return Json(new { Files = new string[] { filePath }});
+			//return Json("1");//new { Files = new string[] { filePath }});
 		}
 
 		private CatalogUploadViewModel GetCatalogViewModel(WorkflowStep<CatalogUploadState> nextStep, CatalogUploadState state){

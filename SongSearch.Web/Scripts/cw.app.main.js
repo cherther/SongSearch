@@ -8,6 +8,7 @@ if (!String.prototype.swap) String.prototype.swap = function (a, b) { return thi
 //***********************************************
 //  Constants
 //***********************************************
+var _debug = true;//false;// 
 var _maxCart = 100;
 //***********************************************
 //  Messages
@@ -56,21 +57,28 @@ function unwait(elem) {
 //***********************************************
 //  flash
 //***********************************************
+function debug(msg) {
+	if (_debug) {
+		feedback('debug', msg);
+	}
+}
 function feedback(type, msg) {
 	unwait();
-	if (type == "error") {
-//		msg += "<a class='close' href='#'>x</a>";
-//		var wrapperClass = 'feedback-bar-error';
-		//		var autoClose = false;
-		var title = 'Error';
-		var img = '/public/images/icons/silk/error.png';
-		var duration = 8000;
-	} else {
-//		var wrapperClass = 'feedback-bar';
-//		var autoClose = 2000;
-		var title = 'Message';
-		var img = '/public/images/icons/silk/information.png';
-		var duration = 3000;
+	switch (type) {
+		case "error":
+			var title = 'Error';
+			var img = '/public/images/icons/silk/error.png';
+			var duration = 8000;
+			break;
+		case "debug":
+			var title = 'Debugging';
+			var img = '/public/images/icons/silk/plugin.png';
+			var duration = 8000;
+			break;
+		default:
+			var title = 'Message';
+			var img = '/public/images/icons/silk/information.png';
+			var duration = 3000;
 	}
 //	
 //	$.feedbackBar(msg, { autoClose: autoClose, wrapperClass: wrapperClass});
@@ -308,6 +316,51 @@ function updateAddToCartAllButtontext(count) {
 	$('#cw-add-all-to-cart span').text(text);
 }
 
+function setUpMediaFileDialog(link) {
+	var dialog = $("#upload-form");
+	var contentId = link[0].rel;
+	$('#contentId').val(contentId);
+
+	if (dialog) {
+		dialog.dialog("destroy");
+		var template = dialog.html();
+		dialog.dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+			buttons: {
+				'Upload': function () {
+
+					saveMediaFilesAjax('#saveMediaFilesForm', function () {
+						feedback('info', 'Files uploaded');
+						resetMediaFileDialog(template);
+						$(this).dialog('close');
+					});
+
+				},
+				Cancel: function () {
+					resetMediaFileDialog(template);
+					$(this).dialog('close');
+				}
+			},
+			close: function () {
+				resetMediaFileDialog(template);
+			}
+		});
+		dialog.dialog('open');
+		resetUploaders();
+		setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload', 'previewVersionFilelist', 'Preview', 0);
+		setupMediaUploader('fullVersionUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'FullSong', 1);
+	}
+}
+function resetMediaFileDialog(template) {
+	var dialog = $("#upload-form");
+	if (dialog) {
+		dialog.dialog("destroy");
+		dialog.html(template);
+	}
+}
 //-----------------------------------------------------------------------------------
 //  content detail panel
 //-----------------------------------------------------------------------------------
@@ -398,7 +451,7 @@ function showContentPanelCallback(data, link) {
 //***********************************************
 function showContentPanelCallbackEdit(data, link, altLink) {
 
-	if (isContentSaveMode) { feedback('info', 'Saved...'); }
+	if (isContentSaveMode) { feedback('info', 'Item Saved'); }
 	lastContentEditLinkClicked = isContentSaveMode ? null : link;
 
 	if (altLink) {

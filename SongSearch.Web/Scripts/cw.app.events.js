@@ -489,149 +489,33 @@
 		}
 	);
 
-
-
 	$('#cw-delete-multiple-content').live('click',
 		function (evt) {
 			evt.preventDefault();
-			if ($('.cw-row-checkbox:checked').length > 0 && confirm('Are you sure you want to permanently delete all selected songs?')) {
-				deleteContentMultipleAjax();
+			var checkboxes = $('.cw-row-checkbox-delete:checked');
+			if (checkboxes.length > 0 && confirm('Are you sure you want to permanently delete all selected songs?')) {
+
+				var items = new Array();
+				checkboxes.each(function (i) {
+					var id = checkboxes[i].value;
+					items.push(id);
+				});
+				checkboxes.attr('disabled', 'disabled');
+				deleteContentMultipleAjax($(this), items);
+
 			}
 		}
 	);
 
-	var uploadQueue = $("#uploader");
-	if (uploadQueue.length > 0) {
-		uploadQueue.pluploadQueue({
-			// General settings
-			runtimes: 'gears,flash,silverlight,html5',
-			url: '/CatalogUpload/UserMediaUpload',
-			max_file_size: '20mb',
-			chunk_size: '1mb',
-			//unique_names: true,
-			// Specify what files to browse for
-			filters: [{ title: "Audio files", extensions: "mp3"}],
-			// Flash settings
-			flash_swf_url: '/Public/Flash/plupload.flash.swf',
-			// Silverlight settings
-			silverlight_xap_url: '/Public/Flash/plupload.silverlight.xap'
-		});
-
-		var uploader = uploadQueue.pluploadQueue();
-		//var stateFileIndex = 0;
-		uploader.bind('FilesAdded', function (up, files) {
-
-			checkTotalUploadSize(up);
-
-		});
-
-		uploader.bind('QueueChanged', function (up, files) {
-			//            var index = total;
-
-			checkTotalUploadSize(up);
-
-			$('#fileList').html('');
-			$.each(up.files, function (i, file) {
-				//id="state_CatalogId" name="state.CatalogId" 
-				$('#fileList').append('<input type="hidden" name="state.TempFiles[' + i + ']" value="' + file.name + '" />');
-				//stateFileIndex++;
-			});
-		});
-		uploader.bind('UploadProgress', function () {
-			notifyFilesDone(uploader);
-		});
-		uploader.bind('Error', function () {
-			turnStepActionButtonOn(true);
-		});
-
-		var catalogUploadForm = $('#catalogUploadForm');
-		// Client side form validation
-		catalogUploadForm.submit(function (evt) {
-			var up = $('#uploader').pluploadQueue();
-
-			// Validate number of uploaded files
-			if (up.total.uploaded == 0) {
-				// Files in queue upload them first
-				var min = $('#minimumFiles').val();
-				min = min != null ? min : 0;
-
-				if (up.files.length >= min) {
-
-					if (up.files.length > 0) {// When all files are uploaded submit form
-
-						up.bind('UploadProgress', function () {
-							submitUploadFormWhenFilesDone(up);
-						});
-						up.bind('Error', function () {
-							turnStepActionButtonOn(true);
-						});
-
-						evt.preventDefault();
-
-						up.start();
-						turnStepActionButtonOn(false);
-					}
-					//                    } else {
-
-					//                    }
-				} else {
-					evt.preventDefault();
-					feedback('info', 'Please select at least ' + min + pluralize(' file', min) + ' to upload.');
-				}
-
-
-			}
-		});
-	}
-	function turnStepActionButtonOn(on) {
-		if (on) {
-			$('#stepAction').removeAttr('disabled');
-		}
-		else {
-			$('#stepAction').attr('disabled', 'true');
-		}
-	}
-	function submitUploadFormWhenFilesDone(up) {
-		var done = false;
-		$.each(up.files, function (i, file) {
-			done += up.files[i].percent == 100;
-		});
-		if (done == up.files.length) {
-			catalogUploadForm.submit();
+	//cw-media-upload-link
+	$('.cw-media-upload-link').live('click',
+		function (evt) {
+			evt.preventDefault();
+			var link = $(this);
+			
+			setUpMediaFileDialog(link);
 
 		}
-	}
-	function notifyFilesDone(up) {
-		var done = false;
-		$.each(up.files, function (i, file) {
-			done += up.files[i].percent == 100;
-		});
-		if (done == up.files.length) {
-			feedback('info', done + pluralize(' file', done) + ' uploaded. Please go to the next step now.');// or upload additional files');
-
-		}
-	}
-	function checkTotalUploadSize(up) {
-
-		var maxNumber = parseInt($('#maxFiles').val());
-		var maxSize = parseInt($('#maxBytes').val());
-		var totalSize = 0;
-		var files = up.files;
-		$.each(files, function (i, file) {
-			totalSize += file.size;
-		});
-		if (files.length > maxNumber) {
-			var msg = 'Total number of files is more than ' + maxNumber + ' (' + files.length + ')';
-		} else if (totalSize > maxSize) {
-			var msg = 'Total file size is more than ' + toFileSizeDescription(maxSize) + ' (' + toFileSizeDescription(totalSize) + ')';
-		}
-		if (msg) {
-			//$('#uploadMessage').text(msg).fadeIn();
-			feedback('info', msg);
-			//		} else {
-			//			$('#uploadMessage').fadeOut();
-		}
-	}
-
+	);
 }
 );

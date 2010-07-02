@@ -259,19 +259,53 @@ function writeID3Ajax(link) {
 	});
 
 }
+function saveMediaFilesAjax(formId, callback) {
+
+	var form = $(formId);
+	
+	var options = {
+		beforeSubmit: function () { wait(); },
+		success: function (data, status, xhr) {
+			if (status == 'error') {
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+			}
+			else {
+				callback();
+				//				resetMediaFileDialog(template);
+				//				dialog.dialog('close');
+			}
+			unwait();
+		},
+		error:
+			function (xhr, status, error) {
+				unwait();
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+
+			}
+	};
+
+	form.ajaxSubmit(options);
+
+}
 //-----------------------------------------------------------------------------------
 // Catalog Contents Management
 //-----------------------------------------------------------------------------------
-function deleteContentMultipleAjax() {
+function deleteContentMultipleAjax(link, items) {
 
-	var options = {
-		beforeSubmit: function () { wait(); },
+	var url = link[0].href;
+	wait();
+	$.ajax({
+		url: url,
+		type: 'POST',
+		cache: false,
+		dataType: 'json',
+		data: { 'items': items },
 		success: function (data, status, xhr) {
 			if (status == 'error') {
 				unwait();
 				feedback('error', xhr.status + ' ' + xhr.statusText);
 			} else {
-				feedback('info', data + ' ' + pluralize('item', data)  + ' deleted');
+				feedback('info', data + ' ' + pluralize('item', data) + ' deleted');
 				updateCartCount();
 				closeContentPanel();
 				removeCheckedRows();
@@ -285,9 +319,7 @@ function deleteContentMultipleAjax() {
 				feedback('error', xhr.status + ' ' + xhr.statusText);
 
 			}
-	};
-
-	$('#cw-catalog-contents-form').ajaxSubmit(options);
+	});
 }
 
 //function removeFromCartAjax(url) {

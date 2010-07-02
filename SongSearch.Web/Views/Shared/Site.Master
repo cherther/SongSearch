@@ -97,6 +97,8 @@
 	bundle
 		.Add(Links.Scripts.gears_init_js)
 		.Add(Links.Scripts.plupload_full_min_js)
+		//.Add(Links.Scripts.plupload_js)
+		//.Add(Links.Scripts.plupload_flash_js)
 		.Add(Links.Scripts.jquery_plupload_queue_min_js);
 	
 	bundle
@@ -104,6 +106,7 @@
 		.Add(String.Concat(Links.Scripts.cw_app_ajax_js, d))
 		.Add(String.Concat(Links.Scripts.cw_app_events_js, d))
 		.Add(String.Concat(Links.Scripts.cw_app_sound_js, d))
+		.Add(String.Concat(Links.Scripts.cw_app_upload_js, d))
 		.WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
 	//.ForceRelease()
 	;

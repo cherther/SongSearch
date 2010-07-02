@@ -28,7 +28,10 @@ namespace SongSearch.Web {
 		public static void SafeDeleteFolder(string path) {
 
 			if (Directory.Exists(path)) {
-				Directory.Delete(path, true);
+				try {
+					Directory.Delete(path, true);
+				}
+				catch { }
 			}
 
 		}

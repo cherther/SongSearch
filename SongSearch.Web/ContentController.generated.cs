@@ -57,6 +57,11 @@ namespace SongSearch.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult SaveMediaFiles() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.SaveMediaFiles);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Delete() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
         }
@@ -83,6 +88,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string Edit = "Edit";
             public readonly string Save = "Save";
             public readonly string SaveMetaDataToFile = "SaveMetaDataToFile";
+            public readonly string SaveMediaFiles = "SaveMediaFiles";
             public readonly string Delete = "Delete";
             public readonly string DeleteMultiple = "DeleteMultiple";
             public readonly string DeleteTag = "DeleteTag";
@@ -135,6 +141,13 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult SaveMetaDataToFile(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SaveMetaDataToFile);
             callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult SaveMediaFiles(int contentId, System.Collections.Generic.IList<SongSearch.Web.Data.UploadFile> uploadFiles) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SaveMediaFiles);
+            callInfo.RouteValueDictionary.Add("contentId", contentId);
+            callInfo.RouteValueDictionary.Add("uploadFiles", uploadFiles);
             return callInfo;
         }
 

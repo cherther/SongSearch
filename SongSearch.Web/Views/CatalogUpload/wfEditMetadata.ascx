@@ -3,7 +3,7 @@
 <%: Html.Hidden("state.CatalogName", Model.CatalogUploadState.CatalogName)%>
 
 <div>
-We have tried to automatically populate a few fields for you based on the file name.
+We have tried to automatically populate a few fields for you based on the embedded ID3 tags we've found.
 </div>
 <div>&nbsp;</div>
 

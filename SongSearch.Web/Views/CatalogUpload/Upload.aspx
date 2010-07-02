@@ -23,7 +23,7 @@
 %>
 	<h2>Catalog Upload Wizard</h2>
 	<div>&nbsp;</div>
-	<%: Html.ActionLink("(Start Over)", MVC.CatalogUpload.Upload()) %>
+	<%: Html.ActionLink("(Start Over)", MVC.CatalogUpload.Upload(Model.CatalogUploadState.CatalogId)) %>
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
 		<div>&nbsp;</div>
