@@ -343,13 +343,15 @@ namespace SongSearch.Web.Services {
 						itm.MediaSize = fi.Length;
 						itm.MediaType = "mp3";
 						itm.MediaLength = id3.MediaLength;
+						itm.HasMediaFullVersion = true;
 
 						itm.MediaDate = fi.LastWriteTime > DateTime.MinValue ? fi.LastWriteTime : DateTime.Now;
 						if (!itm.MediaDate.HasValue) { itm.MediaDate = DateTime.Now; }
 
-						itm.MediaBitRate = id3.MediaLength != null ?
+						itm.MediaBitRate = id3.MediaLength.HasValue ?
 							((long)id3.MediaLength).ToBitRate(itm.MediaSize.GetValueOrDefault()) : 0;
 					}
+					itm.HasMediaPreviewVersion = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Preview) != null;
 
 					DataSession.Add<Content>(itm);
 					DataSession.CommitChanges();

@@ -64,6 +64,7 @@ namespace SongSearch.Web {
 		public bool RememberMe { get; set; }
 
 		public string ReturnUrl { get; set; }
+		public string TokenUrl { get; set; }
 
 
 	}

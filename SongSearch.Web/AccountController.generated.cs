@@ -37,6 +37,11 @@ namespace SongSearch.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult OpenId() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.OpenId);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Register() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Register);
         }
@@ -59,6 +64,7 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string LogIn = "LogIn";
+            public readonly string OpenId = "OpenId";
             public readonly string LogOut = "LogOut";
             public readonly string Register = "Register";
             public readonly string ChangePassword = "ChangePassword";
@@ -101,6 +107,13 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult LogIn(SongSearch.Web.LogOnModel model, string returnUrl) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogIn);
             callInfo.RouteValueDictionary.Add("model", model);
+            callInfo.RouteValueDictionary.Add("returnUrl", returnUrl);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult OpenId(string token, string returnUrl) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.OpenId);
+            callInfo.RouteValueDictionary.Add("token", token);
             callInfo.RouteValueDictionary.Add("returnUrl", returnUrl);
             return callInfo;
         }

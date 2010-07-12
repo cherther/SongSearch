@@ -48,6 +48,7 @@ namespace SongSearch.Web.Controllers {
 		public virtual ActionResult LogIn(LogOnModel model) {
 			model.NavigationLocation = new string[] { "Home", "Login" };
 			model.RememberMe = true;
+			model.TokenUrl = Url.ActionAbsolute(MVC.Account.OpenId());
 			return View(model);
 		}
 
@@ -100,6 +101,21 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(model);
+		}
+
+		[HttpPost]
+		public virtual ActionResult OpenId(string token, string returnUrl) {
+
+			var rpx = new Rpx("2f7539e29ea2db3cec07a79945c64b5e35b1b29d", "https://rpxnow.com/");
+			var data = rpx.AuthInfo(token);
+
+			
+
+			if (!String.IsNullOrEmpty(returnUrl)) {
+				return Redirect(returnUrl);
+			} else {
+				return RedirectToAction(MVC.Home.Index());
+			}
 		}
 
 		private void SetFriendlyNameCookie(string friendly) {

@@ -62,6 +62,28 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
+		//  UpdateContentMedia
+		// **************************************
+		public void UpdateContentMedia(int contentId, IList<UploadFile> uploadFiles) {
+
+			if (contentId > 0) {
+				var content = DataSession.Single<Content>(c => c.ContentId == contentId);
+
+				foreach (var file in uploadFiles) {
+					if (file.FileName != null) {
+						content.HasMediaFullVersion = content.HasMediaFullVersion || file.FileMediaVersion == MediaVersion.FullSong;
+						content.HasMediaPreviewVersion = content.HasMediaPreviewVersion || file.FileMediaVersion == MediaVersion.Preview;
+						var mediaPath = content.MediaFilePath(file.FileMediaVersion);
+						var filePath = Account.User().UploadFile(fileName: file.FileName, mediaVersion: file.FileMediaVersion.ToString());
+						FileSystem.SafeMove(filePath, mediaPath, true);
+					}
+				}
+
+				DataSession.CommitChanges();
+			}
+		}
+		
+		// **************************************
 		//  SaveMetaDataToFile
 		// **************************************
 		public void SaveMetaDataToFile(int contentId) {

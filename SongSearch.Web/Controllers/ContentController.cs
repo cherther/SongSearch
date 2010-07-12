@@ -160,10 +160,8 @@ namespace SongSearch.Web.Controllers
 		[HttpPost]
 		public virtual ActionResult SaveMediaFiles(int contentId, IList<UploadFile> uploadFiles) {
 
-			//_cntAdmService.SaveMetaDataToFile(id);
-			// Move to Perm Media Folder
-			// Update Content with hasMedia flags
-
+			_cntAdmService.UpdateContentMedia(contentId, uploadFiles);
+			
 			if (Request.IsAjaxRequest()) {
 				return Json(contentId);
 

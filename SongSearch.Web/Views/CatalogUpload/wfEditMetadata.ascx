@@ -12,7 +12,7 @@ We have tried to automatically populate a few fields for you based on the embedd
 	<tr>
 		<th>Uploaded File
 		</th>
-		<th>Preview?
+		<th class="text-center">Preview?
 		</th>
 		<th>Title
 		</th>
@@ -37,10 +37,14 @@ We have tried to automatically populate a few fields for you based on the embedd
 	<%} %>
 	<%} %>
 	</td>
-	<td>
+	<td class="text-center">
 <%--	<%: Html.CheckBox(String.Format("state.Content[{0}].HasMediaPreviewVersion", i), content.HasMediaPreviewVersion, new { disabled = "disabled" }) %>
 --%>
-	<%: content.HasMediaPreviewVersion.ToYesNo() %>
+	<% if (content.HasMediaPreviewVersion) {%>
+	<img src="../../Public/Images/Icons/Silk/tick.png" alt="Ok" title="Found matching preview file"/>	
+	<% } else {%>
+	<img src="../../Public/Images/Icons/Silk/error.png" alt="Error" title="No matching preview file!"/>
+	<%} %>
 	<%: Html.Hidden(String.Format("state.Content[{0}].HasMediaPreviewVersion", i), content.HasMediaPreviewVersion)%>
 	<%: Html.Hidden(String.Format("state.Content[{0}].HasMediaFullVersion", i), content.HasMediaFullVersion)%>
 	<%: Html.Hidden(String.Format("state.Content[{0}].Notes", i), content.Notes)%>

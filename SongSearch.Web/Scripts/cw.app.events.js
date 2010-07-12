@@ -97,7 +97,7 @@
 	$('#cw-remove-all-from-cart').click(
 		function (evt) {
 			evt.preventDefault();
-			var checkboxes = $('.cw-row-checkbox:checked');
+			var checkboxes = $('.cw-row-checkbox-cart-remove:checked');
 			if (checkboxes.length > 0) {
 				var form = $('#cw-cart-form');
 				form.attr('action', '/Cart/RemoveMultiple');
@@ -512,7 +512,7 @@
 		function (evt) {
 			evt.preventDefault();
 			var link = $(this);
-			
+			closeContentPanel();
 			setUpMediaFileDialog(link);
 
 		}

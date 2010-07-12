@@ -8,7 +8,7 @@ if (!String.prototype.swap) String.prototype.swap = function (a, b) { return thi
 //***********************************************
 //  Constants
 //***********************************************
-var _debug = true;//false;// 
+var _debug = false;// 
 var _maxCart = 100;
 //***********************************************
 //  Messages
@@ -258,7 +258,7 @@ function setSelectedSearchTagValue(link) {
 //  toggleRowCheckboxes
 //***********************************************
 function toggleRowCheckboxes(trigger) {
-	var checkboxes = $('.cw-row-checkbox:enabled');
+	var checkboxes = $('.' + trigger.id + ':enabled');
 	if ($(trigger).is(':checked')) {
 		checkboxes.attr('checked', 'checked');
 	} else {
@@ -278,7 +278,7 @@ function strikeoutRowCheckboxes() {
 	cells.children('a').attr('disabled', 'true');
 }
 function removeCheckedRows() {
-	var checkboxes = $('.cw-row-checkbox:checked');
+	var checkboxes = $('.cw-row-checkbox-delete:checked');// $('.cw-row-checkbox:checked');
 	checkboxes.closest('tr').remove();
 
 }
@@ -319,7 +319,10 @@ function updateAddToCartAllButtontext(count) {
 function setUpMediaFileDialog(link) {
 	var dialog = $("#upload-form");
 	var contentId = link[0].rel;
+	var title = link[0].title;
+
 	$('#contentId').val(contentId);
+	$('#uploadTitle').text(title);
 
 	if (dialog) {
 		dialog.dialog("destroy");

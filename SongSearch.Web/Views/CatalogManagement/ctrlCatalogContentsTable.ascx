@@ -34,8 +34,9 @@
 	</tr>
 	<tr>
 		<%foreach(var action in headerActions){ %>
+		<% var actionClass = action.ToString().ToLower(); %>
 		<th>
-			<input type="checkbox" class="cw-select-all-items-check" />
+			<input type="checkbox" class="cw-select-all-items-check" id="cw-row-checkbox-<%: actionClass %>" />
 		</th>
 		<%} %>
 		<%foreach(var col in tableHeader){ %>
@@ -96,7 +97,7 @@
 				<%: Html.ActionLink("Download", MVC.Media.Download(item.ContentId), new { @class = "cw-button cw-simple cw-small cw-blue", title = "Download" })%>
 			<%break; %>
 			<%case GridAction.Media:%>
-				<%: Html.ActionLink("Select New", MVC.Content.SaveMediaFiles(item.ContentId, null), new { rel = item.ContentId, @class = "cw-media-upload-link cw-button cw-simple cw-small cw-blue", title = "Upload" })%>
+				<%: Html.ActionLink("Select New", MVC.Content.SaveMediaFiles(item.ContentId, null), new { rel = item.ContentId, @class = "cw-media-upload-link cw-button cw-simple cw-small cw-blue", title = String.Format("{0} - '{1}'", item.Artist, item.Title) })%>
 			<%break; %>
 			<%} %>
 			</td>
@@ -109,17 +110,19 @@
 	<div id="upload-form" style="display:none" title="Upload New Media Files">
 		<%using (Html.BeginForm(MVC.Content.SaveMediaFiles(), FormMethod.Post, new { @id = "saveMediaFilesForm" })) { %>
 		<input type="hidden" id="contentId" name="contentId" value="" />
-		<input type="hidden" id="uploadFiles_0_FileMediaVersion" name="uploadFiles[0].FileMediaVersion" value="FullSong" />
+		<input type="hidden" id="uploadFiles_0_FileMediaVersion" name="uploadFiles[0].FileMediaVersion" value="Preview" />
 		<input type="hidden" id="uploadFiles_0_FileName" name="uploadFiles[0].FileName" value="" />
-		<input type="hidden" id="uploadFiles_1_FileMediaVersion" name="uploadFiles[1].FileMediaVersion" value="Preview" />
+		<input type="hidden" id="uploadFiles_1_FileMediaVersion" name="uploadFiles[1].FileMediaVersion" value="FullSong" />
 		<input type="hidden" id="uploadFiles_1_FileName" name="uploadFiles[1].FileName" value="" />
-
+		<h3 id="uploadTitle"></h3>
+		<div>&nbsp;</div>
 		<div id="previewVersionUploadContainer">
 			<a id="previewVersionUpload" href="#" class="cw-media-upload cw-button cw-simple cw-small cw-gray">
 			Select New Preview
 			</a>
 			<div id="previewVersionFilelist" style="white-space: pre-wrap"></div>
 		</div>
+		<div>&nbsp;</div>
 		<div id="fullVersionUploadContainer">					
 			<a id="fullVersionUpload" href="#" class="cw-media-upload cw-button cw-simple cw-small cw-gray">
 			Select New Full Song

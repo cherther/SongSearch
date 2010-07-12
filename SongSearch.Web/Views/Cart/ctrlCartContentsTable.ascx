@@ -23,7 +23,7 @@
 	<tr>
 	<%if (hasRemoveOption) { %>
 	<th>
-		<input type="checkbox" class="cw-select-all-items-check" />
+		<input type="checkbox" class="cw-select-all-items-check" id="cw-row-checkbox-cart-remove"/>
 	</th>
 	<%} %>
 	<%foreach(var col in tableHeader.Where(t => !t.Equals("Remove"))){ %>
@@ -56,7 +56,7 @@
 		<tr class="cw-tbl-data">
 			<%if (hasRemoveOption) { %>
 			<td>
-				<input type="checkbox" id="<%: itemId %>" name="<%: itemId %>" value="<%: item.ContentId %>" class="cw-row-checkbox"/>
+				<input type="checkbox" id="<%: itemId %>" name="<%: itemId %>" value="<%: item.ContentId %>" class="cw-row-checkbox-cart-remove"/>
 			</td>
 			<%} %>
 			<td width="40%">

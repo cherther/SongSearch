@@ -16,6 +16,7 @@ namespace SongSearch.Web.Services {
 			IDictionary<TagType, string> newTagsModel, 
 			IList<ContentRightViewModel> rights);
 
+		void UpdateContentMedia(int contentId, IList<UploadFile> uploadFiles);
 		void SaveMetaDataToFile(int contentId);
 		void Delete(int contentId);
 		void Delete(int[] contentIds);

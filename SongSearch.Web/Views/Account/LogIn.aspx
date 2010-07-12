@@ -19,16 +19,14 @@ Log In
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 
-    <h2>Log in</h2>
-	<div>&nbsp;</div>
-	<div class="cw-outl cw-padded cw-rounded-corners">
-		<p>
-		Please enter your e-mail address and password. <%= Html.ActionLink("Register", MVC.Account.Register())%> if you don't have an account.
-		</p>
-	<div>&nbsp;</div>
-    <% Html.EnableClientValidation(); %>
-	<% using (Html.BeginForm(MVC.Account.LogIn(), FormMethod.Post, new { @class = "cw-form-small" }))
-	   { %><%=Html.AntiForgeryToken() %>
+	<%--<h2>Log in</h2>
+	<div>&nbsp;</div>--%>
+	<div class="cw-outl cw-padded cw-rounded-corners text-top">
+		<h2 style="display:inline;">Log in</h2> using your e-mail address and SongSearch password you've set up previously. <%= Html.ActionLink("Register", MVC.Account.Register())%> if you don't have an account.
+		<div>&nbsp;</div>
+		<% Html.EnableClientValidation(); %>
+		<% using (Html.BeginForm(MVC.Account.LogIn(), FormMethod.Post, new { @class = "cw-form-small" }))
+			{ %><%=Html.AntiForgeryToken() %>
 			<fieldset>
 				
 				<legend>Account Information</legend>
@@ -61,7 +59,7 @@ Log In
 					<div>&nbsp;</div>
 					<%= Html.ActionLink("Forgot your password?", MVC.Account.ResetPassword())%>
 			</fieldset>
-	<% } %>
-   </div>
+		<% } %>
+	</div>
 </div>
 </asp:Content>

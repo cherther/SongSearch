@@ -148,6 +148,7 @@
     </Compile>
     <Compile Include="Helpers\Configuration.cs" />
     <Compile Include="Helpers\Connections.cs" />
+    <Compile Include="Helpers\Rpx.cs" />
     <Compile Include="Helpers\SessionHelpers.cs" />
     <Compile Include="Helpers\DynamicLinq.cs" />
     <Compile Include="Helpers\FeedbackHelpers.cs" />
