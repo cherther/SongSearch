@@ -8,6 +8,10 @@ using System.Security.AccessControl;
 namespace SongSearch.Web {
 	public static class FileSystem {
 
+		public static DateTime GetMediaDate(this FileInfo fi) {
+			return fi.LastWriteTime > DateTime.MinValue ? fi.LastWriteTime : DateTime.Now;
+		}
+
 		public static void CreateFolder(string path) {
 
 			DirectoryInfo dInfo = new DirectoryInfo(path);
@@ -35,7 +39,14 @@ namespace SongSearch.Web {
 			}
 
 		}
+		public static void SafeCopy(string file, string target, bool withArchive = false) {
+			if (File.Exists(target)) {
 
+				Archive(target);
+			}
+
+			File.Copy(file, target);
+		}
 		public static void SafeMove(string file, string target, bool withArchive = false) {
 			if (File.Exists(target)) {
 

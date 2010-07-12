@@ -340,13 +340,12 @@ namespace SongSearch.Web.Services {
 						var fi = new FileInfo(full.FilePath);
 						var id3 = ID3Reader.GetID3Metadata(full.FilePath);
 
-						itm.MediaSize = fi.Length;
 						itm.MediaType = "mp3";
+						itm.MediaSize = id3.MediaSize;
 						itm.MediaLength = id3.MediaLength;
 						itm.HasMediaFullVersion = true;
 
-						itm.MediaDate = fi.LastWriteTime > DateTime.MinValue ? fi.LastWriteTime : DateTime.Now;
-						if (!itm.MediaDate.HasValue) { itm.MediaDate = DateTime.Now; }
+						itm.MediaDate = fi.GetMediaDate();
 
 						itm.MediaBitRate = id3.MediaLength.HasValue ?
 							((long)id3.MediaLength).ToBitRate(itm.MediaSize.GetValueOrDefault()) : 0;
@@ -359,7 +358,7 @@ namespace SongSearch.Web.Services {
 					foreach (var file in itm.UploadFiles) {
 						if (itm.ContentId > 0) {
 							var filePath = itm.MediaFilePath(file.FileMediaVersion);
-							FileSystem.SafeMove(file.FilePath, filePath, true);
+							FileSystem.SafeCopy(file.FilePath, filePath, true);
 						}
 					}
 
@@ -375,6 +374,7 @@ namespace SongSearch.Web.Services {
 			return state;
 		}
 
+		
 		private CatalogUploadState ReviewComplete(CatalogUploadState state) {
 			return state;
 		}

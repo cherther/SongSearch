@@ -31,6 +31,7 @@ namespace SongSearch.Web {
 			//id3.Genre = tag.Genre;
 			id3.Year = tag.OriginalReleaseYear.AsNullIfWhiteSpace() ?? tag.Year;
 			id3.MediaLength = tag.LengthMilliseconds;
+			id3.MediaSize = tag.FileSizeExcludingTag;
 			
 			return id3;
 		}

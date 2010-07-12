@@ -69,12 +69,27 @@ namespace SongSearch.Web.Services {
 			if (contentId > 0) {
 				var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 
-				foreach (var file in uploadFiles) {
-					if (file.FileName != null) {
-						content.HasMediaFullVersion = content.HasMediaFullVersion || file.FileMediaVersion == MediaVersion.FullSong;
-						content.HasMediaPreviewVersion = content.HasMediaPreviewVersion || file.FileMediaVersion == MediaVersion.Preview;
-						var mediaPath = content.MediaFilePath(file.FileMediaVersion);
-						var filePath = Account.User().UploadFile(fileName: file.FileName, mediaVersion: file.FileMediaVersion.ToString());
+				foreach (var uploadFile in uploadFiles) {
+					if (uploadFile.FileName != null) {
+						var filePath = Account.User().UploadFile(uploadFile.FileName, uploadFile.FileMediaVersion.ToString());
+						switch (uploadFile.FileMediaVersion) {
+							case MediaVersion.FullSong:
+								content.HasMediaFullVersion = true;
+
+								var file = new FileInfo(filePath);
+								content.MediaSize = file.Length;
+								content.MediaDate = file.GetMediaDate();
+								var id3 = ID3Reader.GetID3Metadata(filePath);
+								content.MediaLength = id3.MediaLength;
+								content.MediaBitRate = id3.MediaLength.HasValue ? ((long)id3.MediaLength).ToBitRate(
+									content.MediaSize.GetValueOrDefault()) : 0;
+								break;
+							case MediaVersion.Preview:
+								content.HasMediaPreviewVersion = true;
+								break;
+
+						}
+						var mediaPath = content.MediaFilePath(uploadFile.FileMediaVersion);
 						FileSystem.SafeMove(filePath, mediaPath, true);
 					}
 				}
