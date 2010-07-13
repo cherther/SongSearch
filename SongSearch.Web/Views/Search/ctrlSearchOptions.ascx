@@ -62,8 +62,8 @@
 					var valueClass1 = !String.IsNullOrWhiteSpace(value1) ? "cw-form-value cw-input-highlight" : "cw-form-value";
 					var valueClass2 = !String.IsNullOrWhiteSpace(value2) ? "cw-form-value cw-input-highlight" : "cw-form-value";   
 				%>
-				<input type="text" name="<%: String.Format("f[{0}].V[0]", i)%>" value="<%: value1 %>" size = "5" class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" title="Enter a four digit year <br /> for an exact search" />&nbsp;to&nbsp;
-				<input type="text" name="<%: String.Format("f[{0}].V[1]", i)%>" value="<%: value2 %>" size = "5" class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" title="Enter a four digit year for an 'ending' search<br/>or a second four digit year for a range search" />
+				<input type="text" name="<%: String.Format("f[{0}].V[0]", i)%>" value="<%: value1 %>" size = "5" class="<%: valueClass1 %>" alt="<%: item.PropertyName.ToLower()%>" title="Enter a four digit year <br /> for an exact search" />&nbsp;to&nbsp;
+				<input type="text" name="<%: String.Format("f[{0}].V[1]", i)%>" value="<%: value2 %>" size = "5" class="<%: valueClass2 %>" alt="<%: item.PropertyName.ToLower()%>" title="Enter a four digit year for an 'ending' search<br/>or a second four digit year for a range search" />
 				<%break;%>
 				<%} %>
 				<%case SearchTypes.HasValue: {%>
