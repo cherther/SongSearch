@@ -323,7 +323,7 @@ function updateAddToCartAllButtontext(count) {
 function setUpMediaFileDialog(link) {
 	var dialog = $("#upload-form");
 	var contentId = link[0].rel;
-	var title = link[0].title;
+	var title = link[0].rev;
 
 	$('#contentId').val(contentId);
 	$('#uploadTitle').text(title);
@@ -336,6 +336,7 @@ function setUpMediaFileDialog(link) {
 			height: 300,
 			width: 350,
 			modal: true,
+			title: 'Select & upload new media files',//title,
 			buttons: {
 				'Upload': function () {
 
