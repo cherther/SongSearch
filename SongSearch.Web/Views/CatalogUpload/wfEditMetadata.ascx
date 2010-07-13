@@ -50,16 +50,16 @@ We have tried to automatically populate a few fields for you based on the embedd
 	<%: Html.Hidden(String.Format("state.Content[{0}].Notes", i), content.Notes)%>
 	</td>
 	<td>
-	<%: Html.TextBox(String.Format("state.Content[{0}].Title", i), content.Title, new { @class = "cw-field-xlarge" })%>
+	<%: Html.TextBox(String.Format("state.Content[{0}].Title", i), content.Title, new { @class = "cw-field-xlarge", title = "The name of the song we extracted from the song's id3 tag" })%>
 	</td>
 	<td>
-	<%: Html.TextBox(String.Format("state.Content[{0}].Artist", i), content.Artist.AsNullIfWhiteSpace() ?? "UNKNOWN", new { @class = "cw-field-large" })%>
+	<%: Html.TextBox(String.Format("state.Content[{0}].Artist", i), content.Artist.AsNullIfWhiteSpace() ?? "UNKNOWN", new { @class = "cw-field-large", title = "The artist name we extracted from the song's id3 tag" })%>
 	</td>
 	<td>
-	<%: Html.TextBox(String.Format("state.Content[{0}].RecordLabel", i), content.RecordLabel.AsNullIfWhiteSpace() ?? "", new { @class = "cw-field-medium" })%>
+	<%: Html.TextBox(String.Format("state.Content[{0}].RecordLabel", i), content.RecordLabel.AsNullIfWhiteSpace() ?? "", new { @class = "cw-field-medium", title = "Please enter the name of the record label" })%>
 	</td>
 	<td>
-	<%: Html.TextBox(String.Format("state.Content[{0}].ReleaseYear", i), content.ReleaseYear, new { @class = "cw-field-xsmall" })%>
+	<%: Html.TextBox(String.Format("state.Content[{0}].ReleaseYear", i), content.ReleaseYear, new { @class = "cw-field-xsmall", title = "The release year we extracted from the song's id3 tag" })%>
 	</td>
 	
 	</tr>

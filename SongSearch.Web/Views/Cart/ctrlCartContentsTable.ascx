@@ -16,14 +16,14 @@
 	<%if (hasRemoveOption){ %>
 	<tr>
 		<td colspan="<%: tableHeader.Count() + 1%>" style="text-align: left; white-space: nowrap; padding-left: 1px">
-			<input type="submit" id="cw-remove-all-from-cart" class="cw-button cw-simple cw-small cw-red" value="Remove Selected" />
+			<input type="submit" id="cw-remove-all-from-cart" class="cw-button cw-simple cw-small cw-red" value="Remove Selected" title = "Remove selected songs<br />from your song cart"/>
 		</td>
 	</tr>
 	<%} %>
 	<tr>
 	<%if (hasRemoveOption) { %>
 	<th>
-		<input type="checkbox" class="cw-select-all-items-check" id="cw-row-checkbox-cart-remove"/>
+		<input type="checkbox" class="cw-select-all-items-check" id="cw-row-checkbox-cart-remove" title = "Click to select<br />all songs in your song cart"/>
 	</th>
 	<%} %>
 	<%foreach(var col in tableHeader.Where(t => !t.Equals("Remove"))){ %>
@@ -61,7 +61,7 @@
 			<%} %>
 			<td width="40%">
 			<%if (Model.ShowDetails) { %>
-				<%: Html.ActionLink(title, MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", rel = mediaUrl })%>
+				<%: Html.ActionLink(title, MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", title = "Show/hide song details", rel = mediaUrl })%>
 			<%} else { %>
 				<%: title %>
 			<%} %>
@@ -69,7 +69,7 @@
 			
 			<td width="30%">
 				<%: artist%>
-				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist" style="vertical-align: middle"><img src="/public/images/icons/arrow.gif" alt="right-arrow" /></a>
+				&nbsp;<a href="<%: artistUrl%>" title="Show more songs by <%: artist%>" style="vertical-align: middle"><img src="/public/images/icons/arrow.gif" alt="right-arrow" /></a>
 			</td>
 			<td class="text-right">
 				<%: item.ReleaseYear %>
@@ -77,13 +77,13 @@
 			<%if (tableHeader.Contains("File Name")) { %>
 			<td>
 				<%= Html.Hidden("contentNames[" + cartIndex + "].ContentId", item.ContentId)%>
-				<%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { @class = "cw-field-large", maxlength = "120" })%>
+				<%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { @class = "cw-field-large", maxlength = "120", title = "This is the file name of the song<br />when downloaded or <br>zipped. You can overwrite this here." })%>
 				<% cartIndex++;%>
 			</td>
 			<%} %>
 			<%if (tableHeader.Contains("Download")) { %>
 			<td>
-				<%: Html.ActionLink("Download", MVC.Media.Download(item.ContentId), new { @class = "cw-button cw-simple cw-small cw-blue", title = "Download" })%>
+				<%: Html.ActionLink("Download", MVC.Media.Download(item.ContentId), new { @class = "cw-button cw-simple cw-small cw-blue", title = "Download the song now (unzipped)" })%>
 			</td>
 			<%} %>
 			<%--<%if (hasRemoveOption) { %>

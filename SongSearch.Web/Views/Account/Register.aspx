@@ -40,7 +40,7 @@
 					<%= Html.LabelFor(m => m.Email) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%>
+					<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", title = "This should be the e-mail address<br/>where you received your registration invitation" })%>
 					<%= Html.ValidationMessageFor(m => m.Email)%>
 				</div>
 				<div>&nbsp;</div>
@@ -48,7 +48,7 @@
 					<%= Html.LabelFor(m => m.InviteId)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.InviteId, new { @class = "cw-field-xlarge" })%>
+					<%= Html.TextBoxFor(m => m.InviteId, new { @class = "cw-field-xlarge", title = "The invitation code we e-mailed you"  })%>
 					<%= Html.ValidationMessageFor(m => m.InviteId)%>
 				</div>                    
 				<div>&nbsp;</div>
@@ -72,7 +72,7 @@
 					<%= Html.LabelFor(m => m.Password) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.PasswordFor(m => m.Password, new { @class = "cw-field-large" })%>
+					<%= Html.PasswordFor(m => m.Password, new { @class = "cw-field-large", title = "Please enter a secure password<br />with at least 6 characters" })%>
 					<%= Html.ValidationMessageFor(m => m.Password)%>
 				</div>                    
 				<div>&nbsp;</div>
@@ -80,12 +80,12 @@
 					<%= Html.LabelFor(m => m.ConfirmPassword) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large" })%>
+					<%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large", title="Please enter your password again" })%>
 					<%= Html.ValidationMessageFor(m => m.ConfirmPassword)%>
 				</div>                    
 				<div>&nbsp;</div>
 				<p>
-					<button type="submit" class="cw-button cw-simple cw-blue">
+					<button type="submit" class="cw-button cw-simple cw-blue" title="Click to Register">
 					<span class="b-ok">Register</span>
 					</button>
 				</p>

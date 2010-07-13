@@ -44,7 +44,7 @@
                 var roleName = ((SongSearch.Web.Roles)role).ToString();
                         
 				%>
-                <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, catalog.CatalogId, roleId), new { @class = roleClass, rel = catalogDetailUrl })%>
+                <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, catalog.CatalogId, roleId), new { @class = roleClass, rel = catalogDetailUrl, title="Click to select this role, unlick to remove this role" })%>
 			<%} %>
             </td>
 	</tr>

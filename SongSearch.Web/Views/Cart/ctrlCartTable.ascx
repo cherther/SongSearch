@@ -30,7 +30,7 @@ foreach (var cart in carts)
 	cartClass = cartClass ?? (cart.CartId == cartToHighlight ? "cw-tbl-carts-processing" : "");
 	%>                         
 	<tr class="cw-tbl-carts-main <%: cartClass %>">
-		<td><div id="s-<%: cart.CartId%>" class="cw-carts-contents cw-carts-contents-show">&nbsp;</div></td>
+		<td><div id="s-<%: cart.CartId%>" class="cw-carts-contents cw-carts-contents-show" title = "Click to show/hide<br />the contents of this song cart">&nbsp;</div></td>
 		<td>
 			<%: cart.LastUpdatedOn.ToShortDateString()%>
 		</td>
@@ -50,7 +50,7 @@ foreach (var cart in carts)
 		<%if ((CartStatusCodes)cart.CartStatus != CartStatusCodes.Processing) {%>
 		<% using (Html.BeginForm(MVC.Cart.Download(cart.CartId), FormMethod.Post)) { %>
 		<%: Html.AntiForgeryToken()%>
-			<button type="submit" class="cw-button cw-simple cw-small cw-blue">Download</button>
+			<button type="submit" class="cw-button cw-simple cw-small cw-blue" title = "Download this zipped song cart to your computer">Download</button>
 <%--	        <span class="b-save">Download</span></button>
 --%>	    <%}%>
 		<%} %>
@@ -60,7 +60,7 @@ foreach (var cart in carts)
 		<td>
 		<% using (Html.BeginForm(MVC.Cart.Delete(cart.CartId), FormMethod.Post)) {%>
 		<%: Html.AntiForgeryToken() %>
-			<button type="submit" class="cw-button cw-simple cw-small cw-blue">
+			<button type="submit" class="cw-button cw-simple cw-small cw-blue" title = "Delete this zipped song cart">
 			<span class="b-delete"><%: (CartStatusCodes)cart.CartStatus == CartStatusCodes.Processing ? "Cancel" : "Delete" %></span></button>
 		<%}%>
 		</td>

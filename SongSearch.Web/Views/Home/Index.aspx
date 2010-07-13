@@ -11,10 +11,18 @@
 		<div>&nbsp;</div>
 		<h4>What's New</h4>
 		<div>&nbsp;</div>
-		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%></div>
+		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%> - <% = SongSearch.Web.VersionInfo.BuildTime()%></div>
 		<div>&nbsp;</div>
-		<div><strong>7/1/2010</strong></div>
+		<div><strong>7/13/2010</strong></div>
 		<ul class="cw-vertical cw-highlight">
+			<li>Single-file upload per song for full songs and previews now working
+			<ul class="cw-vertical"><li>For space and logic reasons, accessible from Admin/Catalog Management/Song list only</li></ul>
+			</li>
+			<li>Tooltip feature in place, wording can be easily changed</li>
+		</ul>
+		<div>&nbsp;</div>
+		<div>7/1/2010</div>
+		<ul class="cw-vertical">
 			<li>Media Player: FFWD + REW now 10% of playing time but maximum 30 secs</li>
 			<li>User Notification: swapped old system for Growl style floating notification box on right hand side</li>
 			<li>SoundsLike + Instruments now editable text fields</li>

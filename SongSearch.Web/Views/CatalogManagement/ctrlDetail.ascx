@@ -59,12 +59,12 @@
 				</td>
 				<td>
 				<%
-											  foreach (var role in Model.CatalogRoles) {
-												  string roleName = ((SongSearch.Web.Roles)role).ToString();
-												  string roleClass = "cw-tag-box cw-cat-role-edit-all cw-button cw-simple cw-small"; 
+				foreach (var role in Model.CatalogRoles) {
+					string roleName = ((SongSearch.Web.Roles)role).ToString();
+					string roleClass = "cw-tag-box cw-cat-role-edit-all cw-button cw-simple cw-small"; 
 						
 						%>
-						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllUsers(catalog.CatalogId, role), new { @class = roleClass, rel = catalogDetailUrl })%>
+						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllUsers(catalog.CatalogId, role), new { @class = roleClass, rel = catalogDetailUrl, title = "Make all users " + roleName + "s for this catalog"})%>
 					<%} %>
 				</td>
 			</tr>
@@ -99,3 +99,11 @@
 	<%} %>
 	
 <%} %>
+<script language="javascript" type="text/javascript">
+	$(document).ready(function () {
+		//alert('here');
+		setupTooltips();
+		//setupMediaUploader('fullUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'FullSong', 0);
+		//setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload','previewVersionFilelist','Preview', 1);
+	});
+</script>

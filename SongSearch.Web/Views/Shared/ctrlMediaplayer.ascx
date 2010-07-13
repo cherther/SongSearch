@@ -26,14 +26,14 @@
 			<div class="four column cw-media-controls">
 				<%if (content.HasMediaFullVersion) { %>
 					<a href="<%: fullSong %>" id="cw-play-full"
-					class = "cw-media-play-link cw-button cw-small cw-simple cw-gray" title="Play/Pause"><span class="b-play">Full Song</span></a>
+					class = "cw-media-play-link cw-button cw-small cw-simple cw-gray" title="Play the full song"><span class="b-play">Full Song</span></a>
 				<%} %>
 				<%if (content.HasMediaPreviewVersion) { %>
 					<a href="<%: preview %>" id = "cw-play-preview"
-					class = "cw-media-play-link cw-button cw-small cw-simple cw-gray" title="Play/Pause"><span class="b-play">:30</span></a>
+					class = "cw-media-play-link cw-button cw-small cw-simple cw-gray" title="Play a short excerpt"><span class="b-play">:30</span></a>
 				<%} else if (content.MediaExcerptStart.HasValue) { %>
 					<a href="<%: fullSong %>" id = "cw-play-cue"
-					class = "cw-media-cue-link cw-button cw-small cw-simple cw-gray" rel="<%: excerptRange %>" title="Play Cue from <%: startText %>"><span class="b-reload">Cue</span></a>
+					class = "cw-media-cue-link cw-button cw-small cw-simple cw-gray" rel="<%: excerptRange %>" title="Play a cue from <%: startText %>"><span class="b-reload">Cue</span></a>
 				<%} %>
 				<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
 					<button id="cw-play-rew" class="cw-media-rew-link cw-button cw-small cw-simple cw-gray" title="Rewind" disabled="disabled"><span class="b-rewind" >Rev</span></button>
@@ -47,7 +47,7 @@
 				
 			</div>
 			<div class="one column cw-media-controls">
-				<div id="cw-media-player-volume"></div>
+				<div id="cw-media-player-volume" title="Slide to change the volume"></div>
 			</div>
 			<div class="one column  cw-media-controls text-right text-small-fixed">
 				<span id="cw-media-player-time">0:00</span>&nbsp;/&nbsp;

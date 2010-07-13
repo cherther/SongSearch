@@ -98,6 +98,10 @@ function feedback(type, msg) {
 function pluralize(item, numberofItems) {
 	return numberofItems == 1 ? item : item + 's';
 }
+function setupTooltips() {
+	$('[title]').tooltip({ predelay: 800, effect: 'fade', opacity: 0.7 });
+	$('.cw-tooltip').tooltip();
+}
 
 //***********************************************
 //  toggleTagBoxSelection

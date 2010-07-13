@@ -61,7 +61,9 @@
 						var roleName = ((SongSearch.Web.Roles)role).ToString();
 						var roleClass = "cw-tag-box cw-usrcat-role-edit-all cw-button cw-simple cw-small"; 
 						%>
-						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllCatalogs(user.UserId, role), new { @class = roleClass, rel = userDetailUrl })%>
+						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllCatalogs(user.UserId, role), 
+							new { @class = roleClass, rel = userDetailUrl, 
+								title = String.Format("Make this user {0} {1} in all catalogs", roleName.IndefArticle(), roleName) })%>
 					<%} %>
 				</td>
 			</tr>
@@ -102,7 +104,10 @@
 						var roleName = ((SongSearch.Web.Roles)role).ToString();
 						
 						%>
-						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, cat.CatalogId, roleId), new { @class = roleClass, rel = userDetailUrl })%>
+						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, cat.CatalogId, roleId), 
+							new { @class = roleClass, rel = userDetailUrl,
+							title = String.Format("Make this user {0} {1} in this catalog", roleName.IndefArticle(), roleName) })%>
+							
 					<%} %>
 					</td>
 				</tr>
@@ -144,3 +149,11 @@
 	</div>
 	<%} %>
 <%} %>
+<script language="javascript" type="text/javascript">
+	$(document).ready(function () {
+		//alert('here');
+		setupTooltips();
+		//setupMediaUploader('fullUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'FullSong', 0);
+		//setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload','previewVersionFilelist','Preview', 1);
+	});
+</script>

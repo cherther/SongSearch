@@ -35,7 +35,7 @@ Log In
 						<%= Html.LabelFor(m => m.Email) %>
 					</div>
 					<div class="cw-fe-vert">
-						<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%>
+						<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", title = "Your e-mail address is also your user name" })%>
 						<%= Html.ValidationMessageFor(m => m.Email)%>
 					</div>
 					<div>&nbsp;</div>
@@ -49,7 +49,7 @@ Log In
 					<div>&nbsp;</div>
 					<div class="cw-fe-vert">
 						
-						<%= Html.CheckBox("RememberMe", Model.RememberMe) %> &nbsp<label for="RememberMe">Remember me?</label>
+						<%= Html.CheckBox("RememberMe", Model.RememberMe, new { title = "Check this box to help us remember you!" })%> &nbsp<label for="RememberMe">Remember me?</label>
 					</div>
 					<%= Html.HiddenFor(m => m.ReturnUrl)%>
 					<div>&nbsp;</div>
@@ -57,7 +57,7 @@ Log In
 					<span class="b-ok">Log in</span>
 					</button>
 					<div>&nbsp;</div>
-					<%= Html.ActionLink("Forgot your password?", MVC.Account.ResetPassword())%>
+					<%= Html.ActionLink("Forgot your password?", MVC.Account.ResetPassword(), new { title = "Did you forget your password? We can help you!" })%>
 			</fieldset>
 		<% } %>
 	</div>

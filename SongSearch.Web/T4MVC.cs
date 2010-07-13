@@ -312,6 +312,7 @@ namespace Links {
         public static readonly string jquery_plupload_queue_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.plupload.queue.min.js") ? Url("jquery.plupload.queue.min.js") : Url("jquery.plupload.queue.js");
                       
         public static readonly string jquery_plupload_queue_min_js = Url("jquery.plupload.queue.min.js");
+        public static readonly string jquery_tools_min_js = Url("jquery.tools.min.js");
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
                       
         public static readonly string jquery_validate_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate.min.js") ? Url("jquery.validate.min.js") : Url("jquery.validate.js");

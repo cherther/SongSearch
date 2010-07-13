@@ -1,8 +1,8 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
 <%@ Import Namespace="SongSearch.Web" %>
 <%@ Import Namespace="SquishIt.Framework" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html><!--PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"-->
+<html> <!--xmlns="http://www.w3.org/1999/xhtml"-->
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 	<meta name="robots" content="noindex, nofollow" />
@@ -79,15 +79,17 @@
 		</div> 
 	 </div>
 </div>
+<script src="http://cdn.jquerytools.org/1.2.3/jquery.tools.min.js"></script>
 <%
 	var debug = App.Environment != AppEnvironment.Production;
 	var d = debug ? "?d" : "";
 	var bundle = Bundle.JavaScript()
-	.Add(Links.Scripts.jquery_1_4_2_min_js)
+	//.Add(Links.Scripts.jquery_1_4_2_min_js)
 	.Add(Links.Scripts.jquery_form_js)
 	.Add(Links.Scripts.jquery_blockUI_js)
 	.Add(Links.Scripts.jquery_ui_min_js)
-	.Add(Links.Scripts.jquery_feedbackbar_js)
+//	.Add(Links.Scripts.jquery_feedbackbar_js)
+	//.Add(Links.Scripts.jquery_tools_min_js)
 	.Add(Links.Scripts.jquery_gritter_js);
 	if (!debug) {
 		bundle.Add(Links.Scripts.soundmanager2_nodebug_jsmin_js);

@@ -1783,6 +1783,7 @@
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.plupload.queue.js" />
     <Content Include="Scripts\jquery.plupload.queue.min.js" />
+    <Content Include="Scripts\jquery.tools.min.js" />
     <Content Include="Scripts\plupload.browserplus.js" />
     <Content Include="Scripts\plupload.browserplus.min.js" />
     <Content Include="Scripts\plupload.flash.js" />

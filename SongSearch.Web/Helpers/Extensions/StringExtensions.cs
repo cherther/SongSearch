@@ -173,9 +173,23 @@ namespace SongSearch.Web {
 		}
 
 		public static string Pluralize(this string item, int numberofItems) {
-			return numberofItems == 1 ? item : String.Format("{0}s", item);
-		}
+			switch (item) {
+				case "is":
+					return numberofItems == 1 ? item : item.Replace(item, "are");
+				default:
+					return numberofItems == 1 ? item : String.Format("{0}s", item);
 
+			}
+		}
+		public static string IndefArticle(this string item) {
+			var vowels = "aeiou";
+			foreach(var v in vowels){
+				if (item.StartsWith(v.ToString(), StringComparison.InvariantCultureIgnoreCase)) {
+					return "an";
+				}
+			}
+			return "a";
+		}
 		public static string ToFileSizeDescription(this decimal? fileSize) {
 			
 			return ToFileSizeDescription(fileSize.GetValueOrDefault());

@@ -29,11 +29,11 @@
 				<fieldset>
 					<div>&nbsp;</div>
 					<div><%: Html.LabelFor(m => m.Name) %></div>
-					<div><%: Html.TextBoxFor(m => m.Name, new { @class = "cw-field-large" })%></div>
+					<div><%: Html.TextBoxFor(m => m.Name, new { @class = "cw-field-large", title = "Please enter you full name" })%></div>
 					<div><%= Html.ValidationMessageFor(m => m.Name)%></div>
 					<div>&nbsp;</div>
 					<div><%: Html.LabelFor(m => m.Email) %></div>
-					<div><%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large" })%></div>
+					<div><%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", title = "Please enter a valid e-mail address so we can get back to you" })%></div>
 					<div><%= Html.ValidationMessageFor(m => m.Email)%></div>
 					<div>&nbsp;</div>
 					<div><%: Html.LabelFor(m => m.Company) %></div>
@@ -41,7 +41,7 @@
 					<div><%= Html.ValidationMessageFor(m => m.Company)%></div>
 					<div>&nbsp;</div>
 					<div><%: Html.LabelFor(m => m.Subject) %></div>
-					<div><%: Html.TextBoxFor(m => m.Subject, new { @class = "cw-field-xlarge" })%></div>
+					<div><%: Html.TextBoxFor(m => m.Subject, new { @class = "cw-field-xlarge", title = "Please enter a short subject line" })%></div>
 					<div><%= Html.ValidationMessageFor(m => m.Subject)%></div>
 
 					<div>&nbsp;</div>
@@ -49,7 +49,7 @@
 					<div><%: Html.TextAreaFor(m => m.Body, new { @class = "cw-field-xlarge", rows = 8 })%></div>
 					<div><%= Html.ValidationMessageFor(m => m.Name)%></div>
 					<div>&nbsp;</div>
-					<button id="invite-send" type="submit" title="Send" class="cw-button cw-simple cw-blue">
+					<button id="invite-send" type="submit" title="Click to Send" class="cw-button cw-simple cw-blue">
 						<span class="b-email">Send</span>
 					</button>
 				</fieldset>

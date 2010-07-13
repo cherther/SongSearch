@@ -47,10 +47,10 @@
 				</div>
 				<div>&nbsp;</div>
 				<div class="cw-fe-vert">
-					<%= Html.LabelFor(m => m.FirstName) %>
+					<%= Html.LabelFor(m => m.FirstName)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.FirstName, new { @class = "cw-field-large" })%>
+					<%= Html.TextBoxFor(m => m.FirstName, new { @class = "cw-field-large", title = "Your First Name" })%>
 					<%= Html.ValidationMessageFor(m => m.FirstName)%>
 				</div>
 				<div>&nbsp;</div>
@@ -58,7 +58,7 @@
 					<%= Html.LabelFor(m => m.LastName) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large" })%>
+					<%= Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large", title = "Your Last Name" })%>
 					<%= Html.ValidationMessageFor(m => m.LastName)%>
 				</div>
 				<%if (Model.ShowSignatureField)
@@ -68,14 +68,14 @@
 					<%= Html.LabelFor(m => m.Signature)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.Signature, new { @class = "cw-field-xlarge", maxlength = "80" })%>
+					<%= Html.TextBoxFor(m => m.Signature, new { @class = "cw-field-xlarge", maxlength = "80", title = "Your signature is automatically appended<br/>to the file names of songs your users download.<br/>It cannot contain special characters such as '/' and ':'." })%>
 					<%= Html.ValidationMessageFor(m => m.Signature)%>
 				</div>
 				<%} %>
 				
 				 <p>&nbsp;</p>
 				<p>
-					<button type="submit" class="cw-button cw-simple cw-blue">
+					<button type="submit" class="cw-button cw-simple cw-blue" title="Click to save your changes">
 					<span class="b-save">Update Profile</span>
 					</button>
 				</p>

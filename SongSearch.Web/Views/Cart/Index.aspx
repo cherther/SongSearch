@@ -38,10 +38,10 @@
 			<label>Zip file name (or leave blank for default):</label>
 		</div>
 		<div>
-			<%=Html.TextBox("userArchiveName", "", new { @class = "cw-field-xlarge" })%>
+			<%=Html.TextBox("userArchiveName", "", new { @class = "cw-field-xlarge", title = "Enter a name for your zip file<br />or leave it blank and we'll create one" })%>
 	   
 				
-			<button type="submit" class="cw-button cw-simple cw-blue">
+			<button type="submit" class="cw-button cw-simple cw-blue" title = "Click to zip the contents of your Song Cart">
 			<span class="b-download2">Zip My Song Cart</span>
 			</button>
 		</div>

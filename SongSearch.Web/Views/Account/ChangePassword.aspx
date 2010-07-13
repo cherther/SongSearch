@@ -52,7 +52,7 @@
                     <%= Html.LabelFor(m => m.NewPassword) %>
                 </div>
                 <div class="cw-fe-vert">
-                    <%= Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large" })%>
+                    <%= Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large", title="Please enter a new secure password<br/>with at least 6 characters" })%>
                     <%= Html.ValidationMessageFor(m => m.NewPassword) %>
                 </div>
                 
@@ -60,12 +60,12 @@
                     <%= Html.LabelFor(m => m.ConfirmPassword) %>
                 </div>
                 <div class="cw-fe-vert">
-                    <%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large" })%>
+                    <%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large", title="Please enter your new password again"  })%>
                     <%= Html.ValidationMessageFor(m => m.ConfirmPassword) %>
                 </div>
                  <p>&nbsp;</p>
                 <p>
-                   <button type="submit" class="cw-button cw-simple cw-blue">
+                   <button type="submit" class="cw-button cw-simple cw-blue" title="Click to change your password">
                     <span class="b-save">Change Password</span>
                     </button>
                 </p>

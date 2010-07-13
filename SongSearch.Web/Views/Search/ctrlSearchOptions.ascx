@@ -3,10 +3,10 @@
 <ul id="search-menu" class="cw-list-searchoptions">
 	<%using (Html.BeginForm(MVC.Search.Results(), FormMethod.Get, new { id = "searchForm"})) { %>
 		<li>
-			<button id="submit-top" type="submit" title="Search" class="cw-button cw-simple cw-blue">
+			<button id="submit-top" type="submit" title="Click to search" class="cw-button cw-simple cw-blue">
 			<span class="b-search">Search</span>
 			</button>
-			&nbsp;<a href="#" class="cw-reset-form" title="Reset the search form to start over">Clear</a>
+			&nbsp;<a href="#" class="cw-reset-form" title="Start over">Clear</a>
 			<div>&nbsp;</div>
 		</li>
 		<%
@@ -62,8 +62,8 @@
 					var valueClass1 = !String.IsNullOrWhiteSpace(value1) ? "cw-form-value cw-input-highlight" : "cw-form-value";
 					var valueClass2 = !String.IsNullOrWhiteSpace(value2) ? "cw-form-value cw-input-highlight" : "cw-form-value";   
 				%>
-				<input type="text" name="<%: String.Format("f[{0}].V[0]", i)%>" value="<%: value1 %>" size = 5 class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" />&nbsp;to&nbsp;
-				<input type="text" name="<%: String.Format("f[{0}].V[1]", i)%>" value="<%: value2 %>" size = 5 class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" />
+				<input type="text" name="<%: String.Format("f[{0}].V[0]", i)%>" value="<%: value1 %>" size = "5" class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" title="Enter a four digit year <br /> for an exact search" />&nbsp;to&nbsp;
+				<input type="text" name="<%: String.Format("f[{0}].V[1]", i)%>" value="<%: value2 %>" size = "5" class="<%: valueClass %>" alt="<%: item.PropertyName.ToLower()%>" title="Enter a four digit year for an 'ending' search<br/>or a second four digit year for a range search" />
 				<%break;%>
 				<%} %>
 				<%case SearchTypes.HasValue: {%>
@@ -104,7 +104,7 @@
 				<label>
 				<%: item.DisplayName%>
 				</label>
-				<%if (tags.Count > model.InitialTagNumber) {  %><a class="cw-small cw-tags-more-link" href="#">more...</a><%} %>
+				<%if (tags.Count > model.InitialTagNumber) {  %><a class="cw-small cw-tags-more-link" href="#" title="Show more <%: item.DisplayName%> choices">more...</a><%} %>
 				<% Html.RenderPartial(MVC.Shared.Views.ctrlTagCloud, model); %>
 				</div>
 				<%: Html.Hidden(String.Format("f[{0}].V", i), "", new { @class = "cw-form-value" })%>
@@ -130,10 +130,10 @@
 			<div>&nbsp;</div>
 		 </li>--%>
 		<li>
-			<button id="submit-bottom" type="submit" title="Search" class="cw-button cw-simple cw-blue">
+			<button id="submit-bottom" type="submit" title="Click to search" class="cw-button cw-simple cw-blue">
 			<span class="b-search">Search</span>
 			</button>
-			&nbsp;<a href="#" class="cw-reset-form" title="Reset the search form to start over">Clear</a>
+			&nbsp;<a href="#" class="cw-reset-form" title="Start over">Clear</a>
 		</li>
 	<%
 		

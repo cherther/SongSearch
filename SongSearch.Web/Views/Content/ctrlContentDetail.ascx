@@ -34,21 +34,21 @@
 		<hr />
 		<div id="cw-content-detail-menu">
 		<%if (content.HasMediaFullVersion) { %>
-		<%: Html.ActionLink("Download", MVC.Media.Download(content.ContentId), new { @class = menuButtonClass })%>
+		<%: Html.ActionLink("Download", MVC.Media.Download(content.ContentId), new { @class = menuButtonClass, title = "Download the song now (unzipped)"})%>
 		<%if(!content.IsInMyActiveCart){ %>
-		<%: Html.ActionLink("Add To Cart", MVC.Cart.Add(content.ContentId), new { @class = String.Concat(menuButtonClass, " cw-cart-add-link") })%>
+		<%: Html.ActionLink("Add To Cart", MVC.Cart.Add(content.ContentId), new { @class = String.Concat(menuButtonClass, " cw-cart-add-link"), title = "Add to your song cart" })%>
 		<%} else { %>
 		<%: Html.ActionLink("In Cart", MVC.Cart.Index(), new { @class = menuButtonClass })%>
 		<%} %>
 		<%} %>
-		<%: Html.ActionLink("Print", MVC.Content.Print(content.ContentId), new { @class = menuButtonClass, target = "_new" })%>
+		<%: Html.ActionLink("Print", MVC.Content.Print(content.ContentId), new { @class = menuButtonClass, target = "_new", title = "Print the song details" })%>
 		<%if (Model.UserCanEdit) { %>
 		<%	
 			var linkClass = String.Concat(menuButtonClass, " cw-content-edit-link");
 			var linkAction = Model.EditMode == EditModes.Viewing ? "Edit" : "Save";
 		%>
 			<% if (Model.ViewMode == ViewModes.Embedded || Model.EditMode == EditModes.Viewing) {%>
-			<%: Html.ActionLink(linkAction, linkAction, "Content", new { id = content.ContentId }, new { rel = linkAction, @class = linkClass })%>
+			<%: Html.ActionLink(linkAction, linkAction, "Content", new { id = content.ContentId }, new { rel = linkAction, @class = linkClass, title = linkAction + " this song" })%>
 			<%} else { %>
 			<button type="submit" class="<%: menuButtonClass %>"><%: linkAction %></button>
 			<%}%>
@@ -251,8 +251,13 @@
 		</div>
 		<div class="<%: sectionSize%>_column section cw-spaced">    
 			<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.IsControlledAllIn)%></div>
-			<div class="<%: columnTwo%> column"><%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, !isEditing ? new { disabled = "disabled" } : null)%>
-			<%: !isEditing ? content.IsControlledAllIn.ToYesNo() : "" %>
+			<div class="<%: columnTwo%> column">
+			<%if (!isEditing) { %>
+			<%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, new { disabled = "disabled" } )%>
+			<%: content.IsControlledAllIn.ToYesNo()%>
+			<%} else { %>
+			<%: Html.CheckBoxFor(x => x.Content.IsControlledAllIn, new { title = "Check if this song is controlled 100%" })%>
+			<%} %>
 			</div>
 		</div>
 		<div class="<%: sectionSize%>_column section cw-spaced">    
@@ -290,21 +295,21 @@
 							<%if (isEditing) {%> 
 							<%: Html.Hidden(String.Concat(rightName, "ContentId"), contentRight.ContentId)%>
 							<%: Html.Hidden(String.Concat(rightName, "ContentRightId"), contentRight.ContentRightId)%>
-							<%: Html.TextBox(String.Concat(rightName, "RightsHolderName"), contentRight.RightsHolderName, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderName"), contentRight.RightsHolderName, new { @class = "cw-autocomplete cw-field-large", alt = "RightsHolderName", title = "Enter the name of the rights holder" })%>
 							<%} else {%> 
 							<%: contentRight.RightsHolderName%>
 							<%} %>
 						</td>
 						<td class="cw-content-field">
 							<%if (isEditing) {%> 
-							<%: Html.DropDownList(String.Concat(rightName, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes(), (RightsTypes)contentRight.RightsTypeId))%>
+							<%: Html.DropDownList(String.Concat(rightName, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes(), (RightsTypes)contentRight.RightsTypeId), new { title = "Select a rights type from the list"})%>
 							<%} else {%> 
 							<%: (RightsTypes)contentRight.RightsTypeId%>
 							<%} %>
 						</td>
 						<td class="cw-content-field text-right">
 							<%if (isEditing) {%> 
-							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), rightsHolderShare, new { @class = "cw-field-small"})%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), rightsHolderShare, new { @class = "cw-field-small", title="Enter a percentage, e.g. 33.33% = 33.33"})%>
 							<%} else {%> 
 							<%: rightsHolderShare%>
 							<%} %>
@@ -312,7 +317,7 @@
 						<td>
 						<%if (isEditing) {%>
 						<%: Html.Hidden(String.Concat(rightName, "ModelAction"), (int)ModelAction.Update, new { @class = "cw-model-action" })%>
-						<a href="#" class="cw-delete-right-link"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
+						<a href="#" class="cw-delete-right-link" title="Delete this rights holder"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
 						<%} %>
 						</td>
 					</tr>
@@ -332,7 +337,7 @@
 						TagNameTemplate = String.Concat(rightName, "Territories[{0}]")
 						};              
 						%>    
-							
+						Territories:
 						<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
 						<%//} %>
 						</td>
@@ -351,13 +356,13 @@
 						<td class="cw-content-field">
 							<%: Html.Hidden(String.Concat(rightName, "ContentId"), Model.Content.ContentId)%>
 							<%: Html.Hidden(String.Concat(rightName, "ContentRightId"), 0)%>
-							<%: Html.TextBox(String.Concat(rightName, "RightsHolderName"), null, new { @class = "cw-autocomplete", alt = "RightsHolderName" })%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderName"), null, new { @class = "cw-autocomplete cw-field-large", alt = "RightsHolderName", title = "Enter the name of the rights holder" })%>
 						</td>
 						<td class="cw-content-field">
-							<%: Html.DropDownList(String.Concat(rightName, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()))%>
+							<%: Html.DropDownList(String.Concat(rightName, "RightsTypeId"), new SelectList(ModelEnums.GetRightsTypes()), new { title = "Select a rights type from the list"})%>
 						</td>
 						<td class="cw-content-field text-right">
-							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), null, new { @class = "cw-field-small" })%>
+							<%: Html.TextBox(String.Concat(rightName, "RightsHolderShare"), null, new { @class = "cw-field-small", title="Enter a percentage, e.g. 33.33% = 33.33" })%>
 						</td>
 						<td>
 						<%: Html.Hidden(String.Concat(rightName, "ModelAction"), (int)ModelAction.Add, new { @class = "cw-model-action" })%>
@@ -376,7 +381,8 @@
 						TagIdTemplate = String.Concat(rightId, "Territory_{0}"),
 						TagNameTemplate = String.Concat(rightName, "Territories[{0}]")
 					};              
-						%>    
+						%>
+						Territories:    
 						<% Html.RenderPartial(MVC.Shared.Views.ctrlTerritoryCloud, model); %>
 						</td>
 						<td>
@@ -463,12 +469,13 @@
 	</div>
 	</div>
 </div>
-<%if (isEditing) { %>
+<%//if (isEditing) { %>
 <script language="javascript" type="text/javascript">
 	$(document).ready(function () {
 		//alert('here');
+		setupTooltips();
 		//setupMediaUploader('fullUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'FullSong', 0);
 		//setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload','previewVersionFilelist','Preview', 1);
 	});
 </script>
-<%} %>
+<%//} %>

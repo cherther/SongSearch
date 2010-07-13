@@ -16,12 +16,12 @@
 		<%if (!isPrint) { %>
 		<tr>
 		<td colspan="2" style="text-align: left; white-space: nowrap; padding-left: 1px">
-			<a href="<%: addAllToCartLink %>" id="cw-add-all-to-cart" class="cw-button cw-simple cw-small cw-blue">
+			<a href="<%: addAllToCartLink %>" id="cw-add-all-to-cart" title="Add all selected songs to your cart" class="cw-button cw-simple cw-small cw-blue">
 				<span class="b-cart">Add</span>
 			</a>&nbsp;
 		</td>
 		<td colspan="<%: tableHeader.Count()-1%>" align="right">
-			<a href="<%=printUrl%>" class="cw-button cw-simple cw-small cw-blue" target="_new">
+			<a href="<%=printUrl%>" class="cw-button cw-simple cw-small cw-blue" title="Print these search results" target="_new">
 				<span class="b-print">Print</span>
 			</a>
 		</td>
@@ -30,7 +30,7 @@
 		<tr>
 		<%if (!isPrint) { %>
 			<th style="text-align: left; white-space: nowrap; padding-left: 5px">
-			<input type="checkbox" id="cw-select-all-items-check" />
+			<input type="checkbox" id="cw-select-all-items-check" title="Click to select all songs shown" />
 			</th>
 		<%} %>
 		<%foreach(var col in tableHeader){ %>
@@ -43,7 +43,7 @@
 						var ord = Model.SortPropertyId.GetValueOrDefault().Equals(sp) ? (int)Model.SortType.Flip() : (int)SortType.Ascending;
 						var colUrl = String.Format("{0}&s={1}&o={2}", sortUrl, sp, ord);
 					%>
-					<a href="<%=colUrl%>"><%: prop.ShortName%></a>
+					<a href="<%=colUrl%>"  title="Sort by <%: prop.DisplayName%>"><%: prop.ShortName%></a>
 					<%} else { %>
 					<%: col%>
 					<%}%>
@@ -80,12 +80,12 @@
 			</td>
 			<%} %>
 			<td width="40%" style="white-space: nowrap">
-				<%: !isPrint ? Html.ActionLink(title, MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", rel = mediaUrl }) : MvcHtmlString.Create(title) %>
+				<%: !isPrint ? Html.ActionLink(title, MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", title = "Show/hide song details", rel = mediaUrl }) : MvcHtmlString.Create(title) %>
 			</td>
 			<td width="30%" style="white-space: nowrap">
 				<%: artist %>
 				<% if (!isPrint) {%>
-				&nbsp;<a href="<%: artistUrl%>" title="More by this Artist"><img src="/public/images/icons/arrow.gif" alt="right-arrow"/></a>
+				&nbsp;<a href="<%: artistUrl%>" title="Show more songs by <%: artist%>"><img src="/public/images/icons/arrow.gif" alt="right-arrow"/></a>
 				<%} %>
 			</td>
 			<td class="text-right">

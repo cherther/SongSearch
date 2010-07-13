@@ -3,7 +3,7 @@
 <div>
 Enter the name of the new catalog:
 	<div>
-		<%: Html.TextBox("state.CatalogName", null, new { @class = "cw-field-large" })%>
+		<%: Html.TextBox("state.CatalogName", null, new { @class = "cw-field-large", title = "Enter a unique name for the new catalog" })%>
 	</div>
 </div>
 <%if (Model.MyCatalogs.Count > 0){ %>

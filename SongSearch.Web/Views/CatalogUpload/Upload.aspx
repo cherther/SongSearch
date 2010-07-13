@@ -19,6 +19,8 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 <%
+	var percentComplete = ((decimal)(Model.CatalogUploadState.CurrentStepIndex + 1) / (decimal)Model.CatalogUploadState.WorkflowStepsStatus.Count()) * 100;
+
 	var stepStatusMessage = String.Format("Step {0} / {1}", Model.CatalogUploadState.CurrentStepIndex+1, Model.CatalogUploadState.WorkflowStepsStatus.Count());
 %>
 	<h2>Catalog Upload Wizard</h2>
@@ -27,7 +29,7 @@
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
 		<div>&nbsp;</div>
-			<div id="progressbarWrapper" style="height:16px;width:480px" class="ui-widget-default">
+			<div id="progressbarWrapper" style="height:16px;width:480px" class="ui-widget-default" title="You're on <%: stepStatusMessage%>">
 			<div id="progressbar" style="height:100%;"></div> 
 		</div>
 		<div>&nbsp;</div>
