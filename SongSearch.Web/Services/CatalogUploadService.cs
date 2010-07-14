@@ -321,17 +321,15 @@ namespace SongSearch.Web.Services {
 				// Save Content
 				foreach (var itm in state.Content) {
 
-					
-
 					itm.CatalogId = state.CatalogId;
 					itm.CreatedByUserId = user.UserId;
 					itm.CreatedOn = DateTime.Now.Date;
 					itm.LastUpdatedByUserId = user.UserId;
 					itm.LastUpdatedOn = DateTime.Now.Date;
 					
-					itm.Title = itm.Title.AsEmptyIfNull();//.ToUpper();
-					itm.Artist = itm.Artist.AsEmptyIfNull();//.ToUpper();
-					itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull();//.ToUpper();
+					itm.Title = itm.Title.AsEmptyIfNull();//.CamelCase();//.ToUpper();
+					itm.Artist = itm.Artist.AsEmptyIfNull();//.CamelCase();//.ToUpper();
+					itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull();//.CamelCase();//.ToUpper();
 					itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
 					itm.Notes = itm.Notes;
 					

@@ -186,7 +186,7 @@ namespace SongSearch.Web.Services {
 						t.TagTypeId == (int)newTag.Key &&
 						t.TagName.ToUpper().Equals(value.ToUpper())) ??
 						new Tag() {
-							TagName = value,
+							TagName = value.CamelCase(),
 							CreatedByUserId = Account.User().UserId,
 							CreatedOn = DateTime.Now,
 							TagTypeId = (int)newTag.Key

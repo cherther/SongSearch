@@ -181,6 +181,21 @@ namespace SongSearch.Web {
 
 			}
 		}
+
+		public static string CamelCase(this string term, char trigger = _space, string replaceWith = null){
+			if (term != null && term.Length > 0) {
+				var parts = term.Split(trigger);
+
+				for (var i = 0; i < parts.Length; i++) {
+					var part = parts[i];
+					parts[i] = String.Concat(part.Substring(0, 1).ToUpper(), part.Substring(1, part.Length - 1).ToLower());
+				}
+
+				var sep = replaceWith ?? trigger.ToString();
+				return String.Join(sep, parts);
+			} else return term;
+		}
+
 		public static string IndefArticle(this string item) {
 			var vowels = "aeiou";
 			foreach(var v in vowels){
