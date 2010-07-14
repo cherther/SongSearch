@@ -40,7 +40,7 @@ namespace System.Web.Mvc {
 			
 			var msgKey = String.Concat("ShowProcessedCart_", cartId);
 			var doneKey = String.Concat("Done", msgKey);
-			if (session[msgKey] == "1" && session[doneKey] == null) {
+			if (session[msgKey] as string == "1" && session[doneKey] == null) {
 
 				msg = @"Your requested <a href=""/Cart/"">zipped cart</a> is now ready for downloading.";
 
