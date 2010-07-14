@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Services\CatalogManagementService.cs" />
     <Compile Include="Services\CatalogUploadService.cs" />
+    <Compile Include="Services\SiteProfileData.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\Interfaces\ICatalogManagementService.cs" />
     <Compile Include="Services\Interfaces\ICatalogUploadService.cs" />
@@ -1854,7 +1855,6 @@
     <Content Include="Views\Shared\ctrlLogIn.ascx" />
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
-    <Content Include="demo.html" />
     <Content Include="Views\Shared\DisplayTemplates\MultilineText.ascx" />
     <Content Include="Views\Shared\DisplayTemplates\_Object.ascx" />
     <Content Include="Views\Shared\EditorTemplates\MultilineText.ascx" />

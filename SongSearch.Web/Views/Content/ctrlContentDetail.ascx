@@ -219,6 +219,7 @@
 				</a>--%>
 			</div>
 		</div>
+		<% tagTypeCount++; %>
 		<%} %>
 		<%} %>
 		<div class="<%: sectionSize%>_column section cw-spaced">

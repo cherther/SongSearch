@@ -10,6 +10,8 @@ namespace SongSearch.Web {
 	// ViewModel
 	// **************************************
 	public class ViewModel {
+		public string Company { get; set; }
+		public SiteProfile SiteProfile { get; set; }
 		public ViewModes ViewMode { get; set; }
 		public EditModes EditMode { get; set; }
 		public string PageTitle { get; set; }
@@ -20,6 +22,8 @@ namespace SongSearch.Web {
 		public int ActiveUserId { get; set; }
 
 		public ViewModel() {
+			Company = Settings.Company.Text();
+			SiteProfile = SiteProfileData.SiteProfile();
 			ViewMode = ViewModes.Normal;
 			EditMode = EditModes.Viewing;
 			PageTitle = "";

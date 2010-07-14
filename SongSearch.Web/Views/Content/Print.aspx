@@ -16,7 +16,7 @@ $(document).ready(function () {
 </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class = "cw-outl">
+<div id="content" class = "cw-outl cw-padded cw-rounded-corners">
 	<% Html.RenderPartial(MVC.Content.Views.ctrlContentDetail, Model); %>
    </div>
 </asp:Content>

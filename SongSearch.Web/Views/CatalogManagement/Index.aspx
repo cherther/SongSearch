@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.CatalogViewModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
-	User Management
+	<%: Model.PageTitle %>
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="SuvNavContent" runat="server">
 <%

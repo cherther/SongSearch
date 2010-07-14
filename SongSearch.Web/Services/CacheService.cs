@@ -22,6 +22,7 @@ namespace SongSearch.Web.Services {
 
 		static CacheService() {
 
+			_cacheMatrix.Add(CacheKeys.SiteProfile, CacheUpdateSiteProfiles);
 			_cacheMatrix.Add(CacheKeys.Catalogs, CacheUpdateCatalogs);
 			_cacheMatrix.Add(CacheKeys.Users, CacheUpdateUsers);
 			_cacheMatrix.Add(CacheKeys.SearchProperties, CacheUpdateSearchProperties);
@@ -42,6 +43,7 @@ namespace SongSearch.Web.Services {
 		// (Public)
 		// ----------------------------------------------------------------------------
 		public enum CacheKeys {
+			SiteProfile,
 			Catalogs,
 			Users,
 			SearchProperties,
@@ -95,6 +97,18 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		//  App
 		// ----------------------------------------------------------------------------
+		// **************************************
+		// SiteProfiles
+		// **************************************
+		public static IList<SiteProfile> SiteProfiles() {
+			if (_hasCache) {
+				if (Cache(CacheKeys.SiteProfile) == null) { CacheUpdateSiteProfiles(CacheKeys.SiteProfile); }
+				return Cache(CacheKeys.SiteProfile) as IList<SiteProfile>;
+
+			} else {
+				return GetDataSiteProfiles();
+			}
+		}
 
 		// **************************************
 		// Catalogs
@@ -248,6 +262,9 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
+		private static void CacheUpdateSiteProfiles(CacheKeys key, params object[] list) {
+			CacheUpdate(GetDataSiteProfiles(), key);
+		}
 		private static void CacheUpdateCatalogs(CacheKeys key, params object[] list) {
 			CacheUpdate(GetDataCatalogs(), key);
 		}
@@ -281,6 +298,9 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetData
 		// **************************************
+		private static IList<SiteProfile> GetDataSiteProfiles() {
+			return SearchService.GetLookupList<SiteProfile>();
+		}
 		private static IList<Catalog> GetDataCatalogs() {
 			return SearchService.GetLookupList<Catalog>();
 		}

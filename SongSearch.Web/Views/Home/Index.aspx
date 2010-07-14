@@ -13,8 +13,8 @@
 		<div>&nbsp;</div>
 		<div>Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%> - <% = SongSearch.Web.VersionInfo.BuildTime()%></div>
 		<div>&nbsp;</div>
-		<div><strong>7/13/2010</strong></div>
-		<ul class="cw-vertical cw-highlight">
+		<div class="cw-input-highlight"><strong>7/13/2010</strong></div>
+		<ul class="cw-vertical cw-input-highlight">
 			<li>Single-file upload per song for full songs and previews now working
 			<ul class="cw-vertical"><li>For space and logic reasons, accessible from Admin/Catalog Management/Song list only</li></ul>
 			</li>

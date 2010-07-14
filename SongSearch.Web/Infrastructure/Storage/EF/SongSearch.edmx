@@ -38,6 +38,7 @@
           <EntitySet Name="Invitations" EntityType="SongSearch2Model.Store.Invitations" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="SongSearch2Model.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SearchProperties" EntityType="SongSearch2Model.Store.SearchProperties" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SiteProfiles" EntityType="SongSearch2Model.Store.SiteProfiles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Tags" EntityType="SongSearch2Model.Store.Tags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Territories" EntityType="SongSearch2Model.Store.Territories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserCatalogRoles" EntityType="SongSearch2Model.Store.UserCatalogRoles" store:Type="Tables" Schema="dbo" />
@@ -261,6 +262,26 @@
           <Property Name="IsIndexable" Type="bit" Nullable="false" />
           <Property Name="IncludeInSearchMenu" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="SiteProfiles">
+          <Key>
+            <PropertyRef Name="ProfileId" />
+          </Key>
+          <Property Name="ProfileId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProfileName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CompanyName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="ContactAddress" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="ContactAddress2" Type="varchar" MaxLength="100" />
+          <Property Name="ContactCity" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="ContactStateRegion" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ContactPostalCode" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ContactCountry" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ContactPhone" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ContactFax" Type="varchar" MaxLength="50" />
+          <Property Name="ContactEmail" Type="varchar" Nullable="false" MaxLength="250" />
+          <Property Name="AdminEmail" Type="varchar" Nullable="false" MaxLength="250" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Tags">
           <Key>
             <PropertyRef Name="TagId" />
@@ -299,6 +320,7 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="100" />
           <Property Name="ParentUserId" Type="int" />
           <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="SiteProfileId" Type="int" Nullable="false" />
           <Property Name="InvitationId" Type="uniqueidentifier" />
           <Property Name="RegisteredOn" Type="datetime" Nullable="false" />
           <Property Name="Signature" Type="nvarchar" MaxLength="1000" />
@@ -571,6 +593,7 @@
             <End Role="User" EntitySet="Users" />
             <End Role="User1" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="SiteProfiles" EntityType="SongSearch.Web.Data.Model.SiteProfile" />
           </EntityContainer>
         <EntityType Name="Cart">
           <Key>
@@ -702,6 +725,7 @@
           <NavigationProperty Name="UserCatalogRoles" Relationship="SongSearch.Web.Data.Model.FK_UsersCatalogs_Users" FromRole="User" ToRole="UserCatalogRole" />
           <Property Type="Boolean" Name="ShowDebugInfo" />
           <NavigationProperty Name="ParentUser" Relationship="SongSearch.Web.Data.Model.FK_Users_Users" FromRole="User1" ToRole="User" />
+          <Property Type="Int32" Name="SiteProfileId" Nullable="false" />
           </EntityType>
         <Association Name="FK_Contents_Catalogs">
           <End Role="Catalogs" Type="SongSearch.Web.Data.Model.Catalog" Multiplicity="1" />
@@ -897,6 +921,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SiteProfile">
+          <Key>
+            <PropertyRef Name="ProfileId" />
+          </Key>
+          <Property Type="Int32" Name="ProfileId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ProfileName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactAddress2" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactCity" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactStateRegion" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactPostalCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactCountry" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactPhone" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ContactEmail" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AdminEmail" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
+          <Property Type="String" Name="ContactFax" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -979,7 +1023,8 @@
             <ScalarProperty Name="TerritoryName" ColumnName="TerritoryName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.User"><MappingFragment StoreEntitySet="Users">
-            <ScalarProperty Name="ShowDebugInfo" ColumnName="ShowDebugInfo" />
+            <ScalarProperty Name="SiteProfileId" ColumnName="SiteProfileId" />
+                <ScalarProperty Name="ShowDebugInfo" ColumnName="ShowDebugInfo" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
             <ScalarProperty Name="UserName" ColumnName="UserName" />
             <ScalarProperty Name="Password" ColumnName="Password" />
@@ -1080,6 +1125,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SiteProfiles">
+            <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SiteProfile">
+              <MappingFragment StoreEntitySet="SiteProfiles">
+                <ScalarProperty Name="ContactFax" ColumnName="ContactFax" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="AdminEmail" ColumnName="AdminEmail" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="ContactCountry" ColumnName="ContactCountry" />
+                <ScalarProperty Name="ContactPostalCode" ColumnName="ContactPostalCode" />
+                <ScalarProperty Name="ContactStateRegion" ColumnName="ContactStateRegion" />
+                <ScalarProperty Name="ContactCity" ColumnName="ContactCity" />
+                <ScalarProperty Name="ContactAddress2" ColumnName="ContactAddress2" />
+                <ScalarProperty Name="ContactAddress" ColumnName="ContactAddress" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ProfileName" ColumnName="ProfileName" />
+                <ScalarProperty Name="ProfileId" ColumnName="ProfileId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1119,8 +1185,8 @@
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Roles" ManuallyRouted="false">
           <ConnectorPoint PointX="6.96875" PointY="12.412985026041667" />
-          <ConnectorPoint PointX="6.96875" PointY="16.165345052083335" />
-          <ConnectorPoint PointX="5.125" PointY="16.165345052083335" />
+          <ConnectorPoint PointX="6.96875" PointY="16.261495768229167" />
+          <ConnectorPoint PointX="5.125" PointY="16.261495768229167" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentRightTerritories" ManuallyRouted="false">
           <ConnectorPoint PointX="7" PointY="4.7398893229166656" />
@@ -1163,11 +1229,12 @@
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="12.125" PointY="1.125" Height="3.9033007812500031" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Import_SongData" Width="1.5" PointX="12.125" PointY="6.125" Height="4.4802050781250031" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Users" >
-          <ConnectorPoint PointX="4.1569230769230767" PointY="17.470602213541667" />
-          <ConnectorPoint PointX="4.1569230769230767" PointY="17.720602213541667" />
-          <ConnectorPoint PointX="4.6034615384615378" PointY="17.720602213541667" />
-          <ConnectorPoint PointX="4.6034615384615378" PointY="17.470602213541667" />
+          <ConnectorPoint PointX="4.1569230769230767" PointY="17.662903645833335" />
+          <ConnectorPoint PointX="4.1569230769230767" PointY="17.912903645833335" />
+          <ConnectorPoint PointX="4.6034615384615378" PointY="17.912903645833335" />
+          <ConnectorPoint PointX="4.6034615384615378" PointY="17.662903645833335" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SiteProfile" Width="1.5" PointX="10.375" PointY="11.75" Height="3.7109993489583388" />
       </Diagram>
     </Diagrams>
   </Designer>

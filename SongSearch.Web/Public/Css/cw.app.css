@@ -40,7 +40,7 @@ fieldset legend
 	font-weight: bold;	
 }
 
-input.cw-input-highlight
+.cw-input-highlight
 {
 	background-color: #FFFFCC;
 }
@@ -111,10 +111,10 @@ input.cw-input-highlight
 	background-color: #FFFFFF;
 }
 
-.cw-highlight 
+.cw-highlight
 {
-	background-color:#FFFFCC;
-	padding:0.1em;
+	background-color: #FFFF00;
+	padding: 0.1em;
 }
 .cw-label-red 
 {

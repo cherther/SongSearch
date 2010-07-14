@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<SongSearch.Web.ViewModel>" %>
 <%@ Import Namespace="SongSearch.Web" %>
 <%@ Import Namespace="SquishIt.Framework" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -6,7 +6,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 	<meta name="robots" content="noindex, nofollow" />
-	<meta name="author" content="Ford Music Services" /> 
+	<meta name="author" content="<%: Model.SiteProfile.CompanyName %>" /> 
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 	 <!--[if lt IE 8]><link rel="stylesheet" href=""~/public/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
 	<%= Bundle.Css()
@@ -21,7 +21,7 @@
 				.Render("~/public/css/cw-print_#.css")
 	%>
 
-	<title>SongSearch - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<title><%: Model.SiteProfile.CompanyName %> - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>

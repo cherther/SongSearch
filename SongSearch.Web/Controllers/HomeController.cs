@@ -47,8 +47,12 @@ namespace SongSearch.Web.Controllers {
 		public virtual ActionResult Contact(ContactModel model) {
 
 			if (ModelState.IsValid) {
+				var vm = new ContactModel() { NavigationLocation = new string[] { "Contact" } };
+				vm.PageTitle = "Thanks for e-mailing us!";
+				vm.PageMessage = "Your e-mail has been successfully sent to our team, and we will review your message and respond as quickly as possible.";
+
 				string sender = String.Format("{0} <{1}>", model.Name, model.Email);
-				string subject = String.Concat("[SongSearch Contact Us] ", model.Subject);
+				string subject = String.Format("[{0} Contact Us] {1}", vm.SiteProfile.CompanyName, model.Subject);
 				StringBuilder sb = new StringBuilder();
 				sb.AppendFormat("<p>Name: {0}</p>", model.Name);
 				sb.AppendFormat("<p>Email: {0}</p>", model.Email);
@@ -59,16 +63,14 @@ namespace SongSearch.Web.Controllers {
 				string msg = sb.ToString();
 				sb = null;
 
+
 				Mail.SendMail(
 					sender,
-					Settings.ContactEmailAddress.Text(),
+					vm.SiteProfile.ContactEmail,//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
 					subject,
 					msg
 					);
 
-				var vm = new ContactModel() { NavigationLocation = new string[] { "Contact" } };
-				vm.PageTitle = "Thanks for e-mailing us!";
-				vm.PageMessage = "Your e-mail has been successfully sent to our team, and we will review your message and respond as quickly as possible.";
 				return View(vm);
 
 			} else {

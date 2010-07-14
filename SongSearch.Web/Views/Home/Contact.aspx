@@ -62,10 +62,10 @@
 			<div class="cw-outl cw-padded cw-buffered-left cw-rounded-corners">
 				<h3>Contact Information:</h3>
 				<div>&nbsp;</div>
-				Ford Music Services<br />
-				Office: (323) 939-2955<br />
-				Fax: (323) 939-2951<br />
-				E-Mail: artfordmusic@yahoo.com<br />
+				<%: Model.SiteProfile.CompanyName %><br />
+				Phone: <%: Model.SiteProfile.ContactPhone %><br />
+				Fax: <%: Model.SiteProfile.ContactFax %><br />
+				E-Mail: <%: Model.SiteProfile.ContactEmail %><br />
 			</div>
 
 		</div>
