@@ -423,7 +423,7 @@ function updateRoleAjax(link) {
 
 }
 
-function setSystemAdminAccess(link) {
+function setSystemAdminAccessAjax(link) {
 
 	var url = link[0].value;
 
@@ -437,16 +437,16 @@ function setSystemAdminAccess(link) {
 				feedback('error', xhr.status + ' ' + xhr.statusText);
 			}
 			else {
-				var label = link.next('label');
-				if (link.is(':checked')) {
-					link.removeAttr('checked');
-					label.text('No');
-					label.removeClass('cw-label-red');
-				} else {
-					link.attr('checked', true);
-					label.text('Yes');
-					label.addClass('cw-label-red');
-				}
+//				var label = link.next('label');
+//				if (link.is(':checked')) {
+//					link.removeAttr('checked');
+//					label.text('No');
+//					label.removeClass('cw-label-red');
+//				} else {
+//					link.attr('checked', true);
+//					label.text('Yes');
+//					label.addClass('cw-label-red');
+//				}
 
 				feedback('info', 'System access updated');
 			}

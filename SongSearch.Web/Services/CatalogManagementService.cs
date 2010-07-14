@@ -32,7 +32,10 @@ namespace SongSearch.Web.Services {
 			if (!Account.User().IsAtLeastInCatalogRole(Roles.Admin, catalogId)) {
 				return null;
 			}
-			return GetCatalog(catalogId);	
+			var cat = GetCatalog(catalogId);
+
+			//cat.Owner = cat.Owner();
+			return cat;
 		}
 
 		// **************************************
@@ -103,6 +106,7 @@ namespace SongSearch.Web.Services {
 		private Catalog GetCatalog(int catalogId) {
 			return DataSession.GetObjectQuery<Catalog>()
 				.Include("Contents")
+				.Include("Creator")
 				.Where(x => x.CatalogId == catalogId).SingleOrDefault();			
 	//		return DataSession.Single<Catalog>(x => x.CatalogId == catalogId);
 		}

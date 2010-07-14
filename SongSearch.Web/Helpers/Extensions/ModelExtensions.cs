@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using SongSearch.Web.Data;
 using SongSearch.Web.Services;
 using System.IO;
+using Ninject;
 
 namespace SongSearch.Web {
 	public static class DataModelExtensions {
@@ -98,6 +98,12 @@ namespace SongSearch.Web {
 				return catalogs.Where(c => adminCatalogIds.Contains(c.CatalogId)).ToList();
 			}
 //			return catalogs.Where(c => c.UserCatalogRoles.Any(x => x.UserId == user.UserId && x.RoleId <= (int)Roles.Admin)).ToList();
+		}
+
+		public static User Owner(this Catalog catalog) {
+			using (var svc = App.Container.Get<IUserManagementService>()){
+				return svc.GetUserDetail(catalog.CreatedByUserId);
+			}
 		}
 		// **************************************
 		// UpdateModel:

@@ -172,6 +172,10 @@ fieldset legend
 {
 	padding: 0.5em;
 }
+.cw-hidden-dialog 
+{
+	display:none;
+}
 #cw-media-player
 {
 	border: 1px solid #ccc;

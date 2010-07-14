@@ -97,7 +97,7 @@
 				<%: Html.ActionLink("Download", MVC.Media.Download(item.ContentId), new { @class = "cw-button cw-simple cw-small cw-blue", title = "Download" })%>
 			<%break; %>
 			<%case GridAction.Media:%>
-				<%: Html.ActionLink("Select New", MVC.Content.SaveMediaFiles(item.ContentId, null), new { rel = item.ContentId, rev = String.Format("{0} - '{1}'", item.Artist, item.Title), @class = "cw-media-upload-link cw-button cw-simple cw-small cw-blue", title = String.Format("Select & upload new media files for<br />{0} - '{1}'", item.Artist, item.Title) })%>
+				<%: Html.ActionLink("Add/Replace Media", MVC.Content.SaveMediaFiles(item.ContentId, null), new { rel = item.ContentId, rev = String.Format("{0} - '{1}'", item.Artist, item.Title), @class = "cw-media-upload-link cw-button cw-simple cw-small cw-blue", title = String.Format("Select & upload new media files for<br />{0} - '{1}'", item.Artist, item.Title) })%>
 			<%break; %>
 			<%} %>
 			</td>
@@ -107,7 +107,11 @@
 	<% } %>
 	</tbody>
 	</table>
-	<div id="upload-form" style="display:none" title="Upload New Media Files">
+	<div id="dialog-confirm-song-delete" class="cw-hidden-dialog" title="Delete Songs?">
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+		Are you sure you want to permanently delete all selected songs?</p>
+	</div>
+	<div id="upload-form" class="cw-hidden-dialog" title="Upload New Media Files">
 		<%using (Html.BeginForm(MVC.Content.SaveMediaFiles(), FormMethod.Post, new { @id = "saveMediaFilesForm" })) { %>
 		<input type="hidden" id="contentId" name="contentId" value="" />
 		<input type="hidden" id="uploadFiles_0_FileMediaVersion" name="uploadFiles[0].FileMediaVersion" value="Preview" />
@@ -116,18 +120,20 @@
 		<input type="hidden" id="uploadFiles_1_FileName" name="uploadFiles[1].FileName" value="" />
 		<h3 id="uploadTitle"></h3>
 		<div>&nbsp;</div>
+		<div class="cw-outl cw-padded cw-rounded-corners text-top">
 		<div id="previewVersionUploadContainer">
 			<a id="previewVersionUpload" href="#" class="cw-media-upload cw-button cw-simple cw-small cw-gray">
-			Select New Preview
+			Select New Preview File
 			</a>
 			<div id="previewVersionFilelist" style="white-space: pre-wrap"></div>
 		</div>
 		<div>&nbsp;</div>
 		<div id="fullVersionUploadContainer">					
 			<a id="fullVersionUpload" href="#" class="cw-media-upload cw-button cw-simple cw-small cw-gray">
-			Select New Full Song
+			Select New Full Song File
 			</a>
 			<div id="fullVersionFilelist" style="white-space: pre-wrap"></div>
 		</div>
+	</div>
 		<%} %>
 	</div>

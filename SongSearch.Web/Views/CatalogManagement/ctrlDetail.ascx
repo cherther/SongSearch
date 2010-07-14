@@ -23,8 +23,14 @@
 <div>
 	Catalog: <strong><%= catalog.CatalogName %></strong>
 </div>
-
 <%=Html.Hidden("catalogid", catalog.CatalogId)%>
+<div>&nbsp;</div>
+<div>
+	Created By: <%= catalog.Creator.FullName() %>
+</div>
+<div>
+	Created On: <%= catalog.CreatedOn.ToShortDateString() %>
+</div>
 <div>&nbsp;</div>
 <hr />
 <div>&nbsp;</div>
@@ -37,7 +43,7 @@
 <span>This catalog does not contain any songs.</span>
 <%} %>
 <% var uploadLink = Url.Action(MVC.CatalogUpload.Upload(catalog.CatalogId)); %>
-<a href="<%: uploadLink %>" class="cw-button cw-simple cw-small cw-blue" title="Go to the Catalog Upload Wizard"><span class="b-wand">Upload New Songs</span></a>
+<a href="<%: uploadLink %>" class="cw-button cw-simple cw-small cw-blue" title="Go to the Catalog Upload Wizard"><span class="b-add">Add New Songs</span></a>
 <%--(<%: String.Format("{0} {1}", catalogContents.Count, catalogContents.Count == 1 ? "song" : "songs")%>)--%>
 <div>&nbsp;</div>
 <%if (catalogContents.Count > 0){ %>

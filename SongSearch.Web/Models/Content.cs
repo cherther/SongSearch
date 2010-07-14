@@ -10,6 +10,7 @@ namespace SongSearch.Web.Data {
 
 	[MetadataType(typeof(CatalogMetaData))]
 	public partial class Catalog {
+		//public User Owner { get; set; }
 	}
 	public class CatalogMetaData {
 

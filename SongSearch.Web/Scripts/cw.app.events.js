@@ -370,18 +370,73 @@
 	//***********************************************
 	// User role edit link
 	//***********************************************
-	$('.cw-role-edit').live('click',
+	$("input[name='cw-system-access']").live('click',
 		function (evt) {
-
-			evt.preventDefault();
 			var link = $(this);
-
-			setSystemAdminAccess(link);
-
-
+			if (link.is(':checked')) {
+				
+				setSystemAdminAccessAjax(link);
+			}
 		}
 	);
 
+	//	$('.cw-role-edit').live('click',
+	//		function (evt) {
+
+	//			evt.preventDefault();
+	//			var link = $(this);
+	//			
+
+	//			//setSystemAdminAccessAjax(link);
+
+
+	//		}
+	//	);
+
+	$('#cw-user-delete-link').live('click',
+		function (evt) {
+			evt.preventDefault();
+			$("#dialog-confirm-user-delete").dialog({
+				resizable: false,
+				height: 280,
+				width: 360,
+				modal: true,
+				title: 'Delete User?',
+				buttons: {
+					'Delete User': function () {
+						$('#cw-user-delete-form').submit();
+						$(this).dialog('close');
+					},
+					Cancel: function () {
+						evt.preventDefault();
+						$(this).dialog('close');
+					}
+				}
+			});
+		}
+	);
+	$('#cw-user-takeowner-link').live('click',
+		function (evt) {
+			evt.preventDefault();
+			$("#dialog-confirm-user-takeowner").dialog({
+				resizable: false,
+				height: 280,
+				width: 360,
+				modal: true,
+				title: 'Take Ownership?',
+				buttons: {
+					'Take Ownership': function () {
+						$('#cw-user-takeowner-form').submit();
+						$(this).dialog('close');
+					},
+					Cancel: function () {
+						evt.preventDefault();
+						$(this).dialog('close');
+					}
+				}
+			});
+		}
+	);
 	//***********************************************
 	// Catalog role edit link
 	//***********************************************
@@ -492,17 +547,34 @@
 	$('#cw-delete-multiple-content').live('click',
 		function (evt) {
 			evt.preventDefault();
+			var link = $(this);
 			var checkboxes = $('.cw-row-checkbox-delete:checked');
-			if (checkboxes.length > 0 && confirm('Are you sure you want to permanently delete all selected songs?')) {
+			if (checkboxes.length > 0) {
+				$("#dialog-confirm-song-delete").dialog({
+					resizable: false,
+					height: 200,
+					width: 360,
+					modal: true,
+					title: 'Delete Songs?',
+					buttons: {
+						'Delete Songs': function () {
 
-				var items = new Array();
-				checkboxes.each(function (i) {
-					var id = checkboxes[i].value;
-					items.push(id);
+							var items = new Array();
+							checkboxes.each(function (i) {
+								var id = checkboxes[i].value;
+								items.push(id);
+							});
+							checkboxes.attr('disabled', 'disabled');
+							deleteContentMultipleAjax(link, items);
+
+
+							$(this).dialog('close');
+						},
+						Cancel: function () {
+							$(this).dialog('close');
+						}
+					}
 				});
-				checkboxes.attr('disabled', 'disabled');
-				deleteContentMultipleAjax($(this), items);
-
 			}
 		}
 	);
