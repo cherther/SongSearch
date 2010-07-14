@@ -412,7 +412,7 @@ function updateRoleAjax(link) {
 			}
 			else {
 				toggleTagBoxSelection(link, 'cw-green', true)
-				feedback('info', 'User role updated');
+				//feedback('info', 'User role updated');
 			}
 		},
 		error: function (xhr, status, error) {
@@ -477,7 +477,7 @@ function updateUserCatRoleAjax(link) {
 			else {
 				getUserDetailAjax(detUrl);
 				unwait();
-				feedback('info', 'Catalog access updated');
+				//feedback('info', 'Catalog access updated');
 			}
 		},
 		error: function (xhr, status, error) {
@@ -506,7 +506,7 @@ function updateCatRoleAjax(link) {
 			else {
 				getCatalogDetailAjax(detUrl);
 				unwait();
-				feedback('info', 'Catalog access updated');
+				//feedback('info', 'Catalog access updated');
 			}
 		},
 		error: function (xhr, status, error) {

@@ -11,7 +11,7 @@
 	menu.Add("Manage Catalogs", new string[4] { "Index", "Catalog", "Admin", "" });
 	menu.Add("Catalog Upload", new string[4] { "Upload", "CatalogUpload", "Admin", "" });
 	menu.Add("Invite", new string[4] { "Invite", "UserManagement", "Admin", "current" });
-	
+
 	Html.RenderPartial("ctrlSubMenu", menu);
 		
 %>

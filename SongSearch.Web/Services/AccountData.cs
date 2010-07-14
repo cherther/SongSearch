@@ -122,7 +122,13 @@ namespace SongSearch.Web {
 
 		// **************************************
 		// IsAtLeastInCatalogRole
-		// **************************************    
+		// **************************************   
+		public static bool IsAtLeastInCatalogRole(this User user, Roles role) {
+			return user != null && (user.IsSuperAdmin() ||
+				(user.UserCatalogRoles != null ?
+				user.UserCatalogRoles.Any(x => x.RoleId <= (int)role) :
+				false));
+		}
 		public static bool IsAtLeastInCatalogRole(this User user, Roles role, Catalog catalog) {
 			return user != null &&  (user.IsSuperAdmin() || 
 				(user.UserCatalogRoles != null ?
@@ -201,7 +207,7 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string FileSignature(this User user, Content content) {
 			return user != null ? (
-				user.HasAccessToContentWithRole(content, Roles.Admin) ? 
+				user.HasAccessToContentWithRole(content, Roles.Plugger) ? 
 					user.Signature 
 					: user.ParentSignature()) 
 				: "";

@@ -28,14 +28,19 @@
 	<div>&nbsp;</div>
 	<h3>Users</h3>
 	<div>&nbsp;</div>
+	
 	<table>
 	<tr>
 		<td style="vertical-align: top">
+			<%if (users.Count() > 0) { %>
 			<div class = "cw-outl cw-padded cw-rounded-corners" style="overflow:auto ; height: 300px; width: 300px;">
 				<table id="user-list" class="cw-tbl-usr">
-					<% Html.RenderPartial(MVC.UserManagement.Views.ctrlUserList, users ); %>
+					<% Html.RenderPartial(MVC.UserManagement.Views.ctrlUserList, users); %>
 				</table>
 			</div>
+			<%} else { %>
+			You do not have any registered users yet.
+			<%} %>
 			<div>&nbsp;</div>
 			<h3>Open Invites</h3><%= Html.ActionLink("Invite New", "Invite", "UserManagement") %>
 			<div>&nbsp;</div>

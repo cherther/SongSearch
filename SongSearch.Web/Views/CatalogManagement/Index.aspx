@@ -30,11 +30,18 @@
 	<table>
 	<tr>
 		<td style="vertical-align: top">
+			<%if (catalogs.Count() > 0) { %>
 			<div class = "cw-outl cw-padded cw-rounded-corners" style="overflow:auto ; height: 480px; width: 300px;">
 				<table id="catalog-list" class="cw-tbl-cat">
 					<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogList, catalogs); %>
 				</table>
-			</div>            	
+			</div>
+			<%} else { %>
+			<div>You do not have any catalogs yet.</div>
+			<div>&nbsp;</div>
+			<div>Get started with our <%: Html.ActionLink("Catalog Upload Wizard", MVC.CatalogUpload.Upload()) %>.</div>
+			<div>&nbsp;</div>
+			<%} %>
 		</td>
 		<td style="vertical-align: top">
 			<div id="cw-catalog-detail" class="cw-outl cw-padded cw-rounded-corners" style="display: none">

@@ -305,7 +305,7 @@ namespace SongSearch.Web.Controllers {
 					Email = this.UserName(),
 					FirstName = user.FirstName,
 					LastName = user.LastName,
-					ShowSignatureField = user.IsAnyAdmin(),
+					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger),
 					Signature = user.Signature
 
 				};
@@ -324,7 +324,7 @@ namespace SongSearch.Web.Controllers {
 		[ValidateAntiForgeryToken]
 		public virtual ActionResult UpdateProfile(UpdateProfileModel model) {
 			
-			User user = new User() {
+			User userModel = new User() {
 				UserName = this.UserName(),
 				FirstName = model.FirstName,
 				LastName = model.LastName,
@@ -334,28 +334,28 @@ namespace SongSearch.Web.Controllers {
 
 			//var session = SessionService.Session();
 			var currentUser = Account.User();//session.User(User.Identity.Name);
-			model.ShowSignatureField = currentUser.IsAnyAdmin();
+			model.ShowSignatureField = currentUser.IsAtLeastInCatalogRole(Roles.Plugger);
 	
 			//update the user's profile in the database
-			if (ModelState.IsValid && _acctService.UpdateProfile(user)) {
+			if (ModelState.IsValid && _acctService.UpdateProfile(userModel)) {
 					
 				// UpdateModelWith the user dataSession cached in dataSession
 				SessionService.Session().InitializeSession(true);
 
 
-				var friendly = user.FullName();
+				var friendly = userModel.FullName();
 				SetFriendlyNameCookie(friendly);
 
 				
-				this.FeedbackInfo("Successfully updated your profile...");
+				this.FeedbackInfo("Successfully updated your profile");
 
 			} else {
 
-				model.ShowSignatureField = currentUser.IsAnyAdmin();
+				//model.ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger);
 
 				ModelState.AddModelError("",
 					Errors.PasswordChangeFailed.Text());
-				this.FeedbackError("There was an error updating your profile...");
+				this.FeedbackError("There was an error updating your profile");
 
 			}
 		
