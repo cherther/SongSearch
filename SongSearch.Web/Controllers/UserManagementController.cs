@@ -369,7 +369,7 @@ namespace SongSearch.Web
 						inviteMsg.InviteUrl = String.Format("{0}/{1}", inviteMsg.BaseUrl, "Account/Register");
 
 						//string inviteLink = String.Format("{0}", baseUrl);
-						string subject = Messages.InvitationSubjectLine.Text();
+						string subject = String.Format("{0} {1}", SiteProfileData.SiteProfile().CompanyName, Messages.InvitationSubjectLine.Text());
 						string message = this.RenderViewToString("InviteMessage", inviteMsg);
 
 						Mail.SendMail(sender, address, subject, message);
