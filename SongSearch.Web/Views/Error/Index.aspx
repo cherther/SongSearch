@@ -1,15 +1,20 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.ErrorViewModel>" %>
 <asp:Content ID="errorTitle" ContentPlaceHolderID="TitleContent" runat="server">
-    Error
+	Error
 </asp:Content>
 
 <asp:Content ID="errorContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div id="content" class = "cw-outl cw-padded cw-rounded-corners">
-    <h2>
-        Oops! We're sorry, something bad happened while processing your request.
-    </h2>
+	<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+	<h2>Oops!</h2>
+	<div>&nbsp;</div>
 
-    <hr />
+	<div>
+		 We're sorry, something bad happened. We're looking into it.
+	</div>
+	<div>&nbsp;</div>
+
+	<%if (User.User().ShowDebugInfo.GetValueOrDefault()){ %>
+	<hr />
 	<div>
 	
 		<h3>Some technical error detail:</h3>
@@ -20,5 +25,6 @@
 		<%=Model.Error.Exception != null ? Model.Error.Exception.Message : ""%>
 		</p>
 	</div>
-    </div>
+	<%} %>
+	</div>
 </asp:Content>
