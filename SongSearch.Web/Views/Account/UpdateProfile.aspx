@@ -71,6 +71,12 @@
 					<%= Html.TextBoxFor(m => m.Signature, new { @class = "cw-field-xlarge", maxlength = "80", title = "Your signature is automatically appended<br/>to the file names of songs your users download.<br/>It cannot contain special characters such as '/' and ':'." })%>
 					<%= Html.ValidationMessageFor(m => m.Signature)%>
 				</div>
+				<%--<div>&nbsp;</div>
+				<div class="cw-fe-vert">
+					<%= Html.LabelFor(m => m.AppendSignatureToTitle)%>
+					<%= Html.CheckBoxFor(m => m.AppendSignatureToTitle, new { title = "Check to embed your signature in all download/zipped mp3 id3 tags" })%>
+					<%= Html.ValidationMessageFor(m => m.AppendSignatureToTitle)%>
+				</div>--%>
 				<%} %>
 				
 				 <p>&nbsp;</p>

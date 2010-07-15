@@ -470,7 +470,12 @@
 	</div>
 	</div>
 </div>
-<%//if (isEditing) { %>
+<%if (isEditing) { %>
+<div id="dialog-confirm-save-changes" class="cw-hidden-dialog" title="Save Changes?">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+	You're currently in Edit mode. Do you want to save any changes you've made?</p>
+</div>
+<%} %>
 <script language="javascript" type="text/javascript">
 	$(document).ready(function () {
 		//alert('here');
@@ -479,4 +484,3 @@
 		//setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload','previewVersionFilelist','Preview', 1);
 	});
 </script>
-<%//} %>

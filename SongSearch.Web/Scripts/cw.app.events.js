@@ -162,13 +162,26 @@
 		var link = $(this);
 
 		if (isContentEditMode) {
-			if (window.confirm('You\'re in Edit mode. Do you want to SAVE changes you\'ve made?')) {
-				// save stuff, then showContentPanel, maybe pass in as a delegate? for now:
-				saveContentPanel(lastContentEditLinkClicked, link);
-			} else {
-				feedback('warning', 'Save cancelled...');
-				showContentPanel(link);
-			}
+
+			$("#dialog-confirm-save-changes").dialog({
+				resizable: false,
+				height: 200,
+				width: 360,
+				modal: true,
+				title: 'Save Changes?',
+				buttons: {
+					'Save Changes': function () {
+
+						saveContentPanel(lastContentEditLinkClicked, link);
+
+						$(this).dialog('close');
+					},
+					Cancel: function () {
+						showContentPanel(link);
+						$(this).dialog('close');
+					}
+				}
+			});
 
 		} else {
 			showContentPanel(link);

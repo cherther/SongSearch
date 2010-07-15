@@ -96,6 +96,7 @@ namespace SongSearch.Web.Services {
 			dbuser.FirstName = user.FirstName;
 			dbuser.LastName = user.LastName;
 			dbuser.Signature = user.Signature;
+			dbuser.AppendSignatureToTitle = user.AppendSignatureToTitle;
 
 			DataSession.CommitChanges();
 			dbuser = null;
@@ -169,6 +170,9 @@ namespace SongSearch.Web.Services {
 			user.Password = user.Password.PasswordHashString();
 			user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
 			user.RoleId = (int) Roles.Client;
+			user.SiteProfileId = int.Parse(Settings.SiteProfile.Text());
+			user.ShowDebugInfo = false;
+			user.AppendSignatureToTitle = false;
 
 			DataSession.Add<User>(user);
 

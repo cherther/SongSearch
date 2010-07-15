@@ -254,8 +254,8 @@ namespace SongSearch.Web.Services {
 						cacheKey,
 						cacheObject,
 						null,
-						DateTime.Now.AddSeconds(3600),
-						System.Web.Caching.Cache.NoSlidingExpiration
+						System.Web.Caching.Cache.NoAbsoluteExpiration,
+						new TimeSpan(24,0,0)
 						);
 				}
 				

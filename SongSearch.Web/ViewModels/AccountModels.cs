@@ -155,9 +155,12 @@ namespace SongSearch.Web {
 
 		[Required]
 		[DataType(DataType.EmailAddress)]
-		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "This is a not valid e-mail address.")]
 		[DisplayName("Email address")]
 		public string Email { get; set; }
+
+		[DisplayName("Embed signature in song files?")]
+		public bool AppendSignatureToTitle { get; set; }
 
 	}
 

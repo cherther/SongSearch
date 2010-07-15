@@ -4053,7 +4053,8 @@ namespace SongSearch.Web.Data
         /// <param name="roleId">Initial value of the RoleId property.</param>
         /// <param name="registeredOn">Initial value of the RegisteredOn property.</param>
         /// <param name="siteProfileId">Initial value of the SiteProfileId property.</param>
-        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Int32 siteProfileId)
+        /// <param name="appendSignatureToTitle">Initial value of the AppendSignatureToTitle property.</param>
+        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Int32 siteProfileId, global::System.Boolean appendSignatureToTitle)
         {
             User user = new User();
             user.UserId = userId;
@@ -4062,6 +4063,7 @@ namespace SongSearch.Web.Data
             user.RoleId = roleId;
             user.RegisteredOn = registeredOn;
             user.SiteProfileId = siteProfileId;
+            user.AppendSignatureToTitle = appendSignatureToTitle;
             return user;
         }
 
@@ -4358,6 +4360,30 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _SiteProfileId;
         partial void OnSiteProfileIdChanging(global::System.Int32 value);
         partial void OnSiteProfileIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean AppendSignatureToTitle
+        {
+            get
+            {
+                return _AppendSignatureToTitle;
+            }
+            set
+            {
+                OnAppendSignatureToTitleChanging(value);
+                ReportPropertyChanging("AppendSignatureToTitle");
+                _AppendSignatureToTitle = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AppendSignatureToTitle");
+                OnAppendSignatureToTitleChanged();
+            }
+        }
+        private global::System.Boolean _AppendSignatureToTitle;
+        partial void OnAppendSignatureToTitleChanging(global::System.Boolean value);
+        partial void OnAppendSignatureToTitleChanged();
 
         #endregion
     

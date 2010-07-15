@@ -200,7 +200,7 @@ namespace SongSearch.Web.Controllers {
 									try {
 										user = _acctService.RegisterUser(user, inv.InvitationId);
 
-										_authService.SignIn(user.UserName, false /* createPersistentCookie */);
+										_authService.SignIn(user.UserName, true /* createPersistentCookie */);
 
 										return RedirectToAction(MVC.Home.Index());
 									}
@@ -328,7 +328,8 @@ namespace SongSearch.Web.Controllers {
 				UserName = this.UserName(),
 				FirstName = model.FirstName,
 				LastName = model.LastName,
-				Signature = model.Signature
+				Signature = model.Signature,
+				AppendSignatureToTitle = model.AppendSignatureToTitle
 			};
 
 

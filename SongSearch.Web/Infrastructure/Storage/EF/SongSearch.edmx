@@ -329,6 +329,7 @@
           <Property Name="RegisteredOn" Type="datetime" Nullable="false" />
           <Property Name="Signature" Type="nvarchar" MaxLength="1000" />
           <Property Name="ShowDebugInfo" Type="bit" />
+          <Property Name="AppendSignatureToTitle" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="FK_CartContents_Contents">
           <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1">
@@ -748,6 +749,7 @@
           <NavigationProperty Name="ParentUser" Relationship="SongSearch.Web.Data.Model.FK_Users_Users" FromRole="User1" ToRole="User" />
           <Property Type="Int32" Name="SiteProfileId" Nullable="false" />
           <NavigationProperty Name="CreatedCatalogs" Relationship="SongSearch.Web.Data.Model.FK_Catalogs_Creators" FromRole="User" ToRole="Catalog" />
+          <Property Type="Boolean" Name="AppendSignatureToTitle" Nullable="false" />
           </EntityType>
         <Association Name="FK_Contents_Catalogs">
           <End Role="Catalogs" Type="SongSearch.Web.Data.Model.Catalog" Multiplicity="1" />
@@ -1057,7 +1059,8 @@
             <ScalarProperty Name="TerritoryName" ColumnName="TerritoryName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.User"><MappingFragment StoreEntitySet="Users">
-            <ScalarProperty Name="SiteProfileId" ColumnName="SiteProfileId" />
+            <ScalarProperty Name="AppendSignatureToTitle" ColumnName="AppendSignatureToTitle" />
+                <ScalarProperty Name="SiteProfileId" ColumnName="SiteProfileId" />
                 <ScalarProperty Name="ShowDebugInfo" ColumnName="ShowDebugInfo" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
             <ScalarProperty Name="UserName" ColumnName="UserName" />
