@@ -192,6 +192,7 @@ namespace SongSearch.Web {
 			return String.IsNullOrEmpty(name.Trim()) ? user.UserName : name;
 
 		}
+
 		// **************************************
 		// ParentSignature
 		// **************************************    
@@ -244,7 +245,7 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string UploadFolder(this User user, string mediaVersion = "", bool create = true) {
 
-			string uploadPath = Settings.UploadPath.Text(); 
+			string uploadPath = Settings.UploadPath.Value(); 
 			
 			string userFolder = Path.Combine(uploadPath, user.UserId.ToString(), mediaVersion);
 			if (create) { FileSystem.CreateFolder(userFolder); }  

@@ -66,30 +66,30 @@ namespace SongSearch.Web {
 		// Log Settings
 		// **************************************
 		public static bool LogSearchTerms {
-			get { return bool.Parse(Settings.LogSearchTerms.Text()); }
+			get { return bool.Parse(Settings.LogSearchTerms.Value()); }
 		}
 
 		public static bool LogSearchResults {
-			get { return bool.Parse(Settings.LogSearchResults.Text()); }
+			get { return bool.Parse(Settings.LogSearchResults.Value()); }
 		}
 
 		public static bool LogUserActions {
-			get { return bool.Parse(Settings.LogUserActions.Text()); }
+			get { return bool.Parse(Settings.LogUserActions.Value()); }
 		}
 
 		public static bool LogUserContentActions {
-			get { return bool.Parse(Settings.LogUserContentActions.Text()); }
+			get { return bool.Parse(Settings.LogUserContentActions.Value()); }
 		}
 
-		public static string Text(this Errors error) {
+		public static string Value(this Errors error) {
 			return GetErrorMessage(error);
 		}
 
-		public static string Text(this Messages message) {
+		public static string Value(this Messages message) {
 			return GetMessage(message);
 		}
 
-		public static string Text(this Settings setting) {
+		public static string Value(this Settings setting) {
 			return GetSetting(setting);
 		}
 

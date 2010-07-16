@@ -16,7 +16,7 @@ namespace SongSearch.Web {
 		// User
 		// **************************************
 		public static SiteProfile SiteProfile(bool cached = true) {
-			return SiteProfile(Settings.SiteProfile.Text(), cached);
+			return SiteProfile(Settings.SiteProfile.Value(), cached);
 		}
 
 

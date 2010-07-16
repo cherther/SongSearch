@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using SongSearch.Web.Data;
 using System.IO;
+using IdSharp.Tagging.ID3v2;
 
 namespace SongSearch.Web.Services {
 
@@ -36,6 +37,36 @@ namespace SongSearch.Web.Services {
 			}
 
 		}
+		public static byte[] GetContentMedia(int contentId, MediaVersion version, User user) {
+			var bytes = GetContentMedia(contentId, version);
+
+			if (!user.AppendSignatureToTitle) {
+				return bytes;
+			} else {
+
+				var content = SearchService.GetContent(contentId, user);
+				var sig = user.FileSignature(content);
+				var tempPath = String.Concat(Settings.ZipPath.Value(), "\\", Guid.NewGuid(), ".mp3");
+
+				File.WriteAllBytes(tempPath, bytes);
+				var tag = ID3v2Helper.CreateID3v2(tempPath);
+
+				tag.Title = String.Format("{0} - {1}", content.Title, sig);
+				tag.Artist = content.Artist;
+				
+				ID3v2Helper.RemoveTag(tempPath);
+				tag.Save(tempPath);
+				var assetFile = new FileInfo(tempPath);
+
+				if (assetFile.Exists) {
+					var assetBytes = File.ReadAllBytes(tempPath);
+					File.Delete(tempPath);
+					return assetBytes;
+				} else {
+					throw new ArgumentOutOfRangeException("Content media file is missing");
+				}
+			}
+		}
 
 		// **************************************
 		// GetContentMediaFileName
@@ -51,7 +82,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static string GetContentMediaFilePath(int contentId, MediaVersion version) {
 
-			var assetPath = version == MediaVersion.FullSong ? Settings.MediaPathFullSong.Text() : Settings.MediaPathPreview.Text();
+			var assetPath = version == MediaVersion.FullSong ? Settings.MediaPathFullSong.Value() : Settings.MediaPathPreview.Value();
 			return Path.Combine(assetPath, GetContentMediaFileName(contentId));
 
 		}

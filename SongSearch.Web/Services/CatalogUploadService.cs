@@ -204,32 +204,31 @@ namespace SongSearch.Web.Services {
 			// try filename
 			// try title + artist
 			var taggedFullSongs = taggedContent.Where(c => c.Key.FileMediaVersion == MediaVersion.FullSong);
+			var taggedPreviews = taggedContent.Where(c => c.Key.FileMediaVersion == MediaVersion.Preview);
 			foreach (var itm in taggedFullSongs) {
 
+				var preview = new KeyValuePair<UploadFile, ID3Data>();
 
-				//Get a matching preview file based on ID3 data or filename
-				var preview = 
-					(	(
-						taggedContent.Where(c =>
-							c.Key.FileMediaVersion == MediaVersion.Preview
-							&& c.Value.Title.Equals(itm.Value.Title, StringComparison.InvariantCultureIgnoreCase)
-							&& c.Value.Artist.Equals(itm.Value.Artist, StringComparison.InvariantCultureIgnoreCase)
-							) 
-							) ??
-						(
-						taggedContent.Where(c =>
-							c.Key.FileMediaVersion == MediaVersion.Preview
-							&& c.Key.FileName.Equals(itm.Key.FileName, StringComparison.InvariantCultureIgnoreCase)
-							) 
-							)
-					)
-					.Select(c => c.Key)
-					.Distinct()
-					.SingleOrDefault();
+				if (itm.Value.Title != null && itm.Value.Artist != null) {
+					//Get a matching preview file based on ID3 data or filename
+					preview = taggedPreviews.Where(c => c.Value.Title != null && c.Value.Artist != null)
+										.FirstOrDefault(c =>
+										c.Value.Title.Equals(itm.Value.Title, StringComparison.InvariantCultureIgnoreCase) &&
+										c.Value.Artist.Equals(itm.Value.Artist, StringComparison.InvariantCultureIgnoreCase)
+										);
+				}
+				if (preview.Key == null && itm.Key.FileName != null) {
+					preview = taggedPreviews.Where(c => c.Key.FileName != null)
+							.FirstOrDefault(c =>
+							c.Key.FileName.Equals(itm.Key.FileName, StringComparison.InvariantCultureIgnoreCase)
+							);
+				}
+							
 				
 				var id3 = itm.Value;
 				//var file = new FileInfo(itm.Key.FilePath);
 				var fileNameData = Path.GetFileNameWithoutExtension(itm.Key.FileName).Split('-');
+
 				var title = id3.Title.AsNullIfWhiteSpace() ?? fileNameData.First();
 				var artist = id3.Artist.AsNullIfWhiteSpace() ?? (fileNameData.Length > 1 ? fileNameData[1] : "");
 				var album = id3.Album.AsNullIfWhiteSpace() ?? "";
@@ -247,7 +246,7 @@ namespace SongSearch.Web.Services {
 					ReleaseYear = releaseYear.AsNullIfZero(),
 					Notes = !String.IsNullOrWhiteSpace(album) ? String.Concat("Album: ", album) : null,
 					HasMediaFullVersion = true,
-					HasMediaPreviewVersion = preview != null,
+					HasMediaPreviewVersion = preview.Key != null,
 					//FileType = "mp3",
 					//FileSize = (int)file.Length,
 					//BitRate = secs > 0 ? (kb / secs) : 0,
@@ -255,7 +254,7 @@ namespace SongSearch.Web.Services {
 				};
 
 				content.UploadFiles.Add(itm.Key);
-				if (preview != null) { content.UploadFiles.Add(preview); }
+				if (preview.Key != null) { content.UploadFiles.Add(preview.Key); }
 
 				contentList.Add(content);
 			}

@@ -21,19 +21,25 @@ namespace SongSearch.Web {
 
 		public static ID3Data GetID3Metadata(string fileName) {
 
-			var id3 = new ID3Data();
-			var tag = ID3v2Helper.CreateID3v2(fileName);
 
-			//'Does a tag exist?
-			id3.Artist = tag.Artist;
-			id3.Title = tag.Title;
-			id3.Album = tag.Album;
-			//id3.Genre = tag.Genre;
-			id3.Year = tag.OriginalReleaseYear.AsNullIfWhiteSpace() ?? tag.Year;
-			id3.MediaLength = tag.LengthMilliseconds;
-			id3.MediaSize = tag.FileSizeExcludingTag;
+			var id3 = new ID3Data();
+
+			try {
+				var tag = ID3v2Helper.CreateID3v2(fileName);
+
+				//'Does a tag exist?
+				id3.Artist = tag.Artist;
+				id3.Title = tag.Title;
+				id3.Album = tag.Album;
+				//id3.Genre = tag.Genre;
+				id3.Year = tag.OriginalReleaseYear.AsNullIfWhiteSpace() ?? tag.Year;
+				id3.MediaLength = tag.LengthMilliseconds;
+				id3.MediaSize = tag.FileSizeExcludingTag;
+
+				return id3;
+			}
+			finally { }
 			
-			return id3;
 		}
 
 		public static ID3Data GetID3MetadataV2(string fileName) {

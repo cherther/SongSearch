@@ -20,7 +20,7 @@
 		uploader.bind('FilesAdded', function (up, files) {
 
 			debug('FilesAdded event fired');
-			checkTotalUploadSize(up);
+			//checkTotalUploadSize(up);
 		});
 
 		uploader.bind('QueueChanged', function (up, files) {
@@ -35,7 +35,7 @@
 		//		uploader.bind('UploadProgress', function () {
 		//			notifyFilesDone(uploader);
 		//		});
-		uploader.bind('UploadProgress', function (up, file) { notifyFilesDone(up); });
+		//uploader.bind('UploadProgress', function (up, file) { notifyFilesDone(up); });
 
 		uploader.bind('Error', function (up, error) {
 	
@@ -69,10 +69,14 @@
 					if (formUp.files.length > 0) {// When all files are uploaded submit form
 
 
-						formUp.bind('UploadProgress', function (up, file) {
+//						formUp.bind('UploadProgress', function (up, file) {
+//							debug('UploadProgress event fired');
+//							
+//						});
+						formUp.bind('FileUploaded', function (up, file, response) {
+							debug('FileUploaded event fired');
 							submitUploadFormWhenFilesDone(up);
 						});
-
 						formUp.bind('Error', function (up, error) {
 
 							handleError(up, error);
@@ -145,27 +149,28 @@ function turnStepActionButtonOn(on) {
 function submitUploadFormWhenFilesDone(up) {
 	var done = 0;
 	$.each(up.files, function (i, file) {
-		done += up.files[i].percent == 100; //up.files[i].status == plupload.DONE; // 5; // 
+		done += up.files[i].status == plupload.DONE; // 5; // 
 	});
 	
 	if (done == up.files.length) {//  && up.total.percent == 100) {
 		//if (!catalogFormIsSubmitted) {
 		//	catalogFormIsSubmitted = true;
-			catalogUploadForm.submit();
+		debug('catalogUploadForm submit at done = ' + done);
+		catalogUploadForm.submit();
 		//}
 
 	}
 }
-function notifyFilesDone(up) {
-	var done = 0;
-	$.each(up.files, function (i, file) {
-		done += up.files[i].percent == 100; //up.files[i].status == plupload.DONE;//.percent == 100;
-	});
-	if (done == up.files.length) {
-		feedback('info', done + pluralize(' file', done) + ' uploaded.');// or upload additional files');
+//function notifyFilesDone(up) {
+//	var done = 0;
+//	$.each(up.files, function (i, file) {
+//		done += up.files[i].percent == 100; //up.files[i].status == plupload.DONE;//.percent == 100;
+//	});
+//	if (done == up.files.length) {
+//		feedback('info', done + pluralize(' file', done) + ' uploaded.');// or upload additional files');
 
-	}
-}
+//	}
+//}
 function checkTotalUploadSize(up) {
 
 	var maxNumber = parseInt($('#maxFiles').val());

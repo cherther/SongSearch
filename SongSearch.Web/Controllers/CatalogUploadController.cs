@@ -54,7 +54,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Upload(int? id) {
 
 			// Cleanup upload folder
-			FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
+			//FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
 
 			var state = new CatalogUploadState(_catUploadService.CatalogUploadWorkflow.WorkflowSteps.Count);
 			if (id.GetValueOrDefault() > 0) {
@@ -108,8 +108,10 @@ namespace SongSearch.Web.Controllers
 					return RedirectToAction("Complete");
 				}
 			}
-			catch {
-				return RedirectToAction(Actions.Upload());
+			catch (Exception ex){
+			    App.Logger.Error(ex);
+			    this.FeedbackError("There was an error uploading your song files. Please try again.");
+			    return RedirectToAction(Actions.Upload());
 			}
 
 		}

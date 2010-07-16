@@ -170,7 +170,7 @@ namespace SongSearch.Web.Services {
 			user.Password = user.Password.PasswordHashString();
 			user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
 			user.RoleId = (int) Roles.Client;
-			user.SiteProfileId = int.Parse(Settings.SiteProfile.Text());
+			user.SiteProfileId = int.Parse(Settings.SiteProfile.Value());
 			user.ShowDebugInfo = false;
 			user.AppendSignatureToTitle = false;
 

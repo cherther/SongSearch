@@ -107,7 +107,7 @@ namespace SongSearch.Web.Services {
 
 			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 			if (content == null) {
-				throw new ArgumentException(Errors.ItemDoesNotExist.Text());
+				throw new ArgumentException(Errors.ItemDoesNotExist.Value());
 			}
 
 			// Check if open cart exists and if needed create new cart
@@ -151,7 +151,7 @@ namespace SongSearch.Web.Services {
 				if (!cart.Contents.Any(i => i.ContentId == contentId)){
 					var content = contents.SingleOrDefault(c => c.ContentId == contentId);
 					if (content == null) {
-						throw new ArgumentException(Errors.ItemDoesNotExist.Text());
+						throw new ArgumentException(Errors.ItemDoesNotExist.Value());
 					}
 					cart.Contents.Add(content);
 				}
@@ -385,7 +385,7 @@ namespace SongSearch.Web.Services {
 						var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
 								
 						try {
-							var asset = MediaService.GetContentMedia(content.ContentId, MediaVersion.FullSong);
+							var asset = MediaService.GetContentMedia(content.ContentId, MediaVersion.FullSong, user);
 
 							zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, MediaService.ContentMediaExtension),
 										asset);

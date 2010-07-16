@@ -37,9 +37,9 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		//[OutputCache(Duration = 60, VaryByParam = "id;version")]
 		public virtual ActionResult Get(int id, MediaVersion version = MediaVersion.Preview) {
-
-			var media = MediaService.GetContentMedia(id, (MediaVersion)version);
-			var content = SearchService.GetContent(id, Account.User());
+			var user = Account.User();
+			var media = MediaService.GetContentMedia(id, (MediaVersion)version, user);
+			var content = SearchService.GetContent(id, user);
 			if (content != null) {
 				var downloadName = String.Concat(content.UserDownloadableName, MediaService.ContentMediaExtension);
 				var contentType = "application/unknown";
