@@ -425,7 +425,7 @@
 			<%: Html.LabelFor(m => m.Content.MediaDate)%> 
 			</div>
 			<div class="<%: columnTwo%> column">
-			<%: content.MediaDate.Value%>
+			<%: content.MediaDate.GetValueOrDefault()%>
 			</div>
 		</div>
 		<%if (Model.SectionsAllowed.Contains("MediaExtended")) {%>
@@ -461,13 +461,14 @@
 
 <% Html.EndForm();%>
 <%}%>
-<%if (Model.ViewMode == ViewModes.Embedded) { %>
-	<div><a href="#" id="cw-detail-close-link">Close</a></div>
-<%} %>
+
 <%--<%if (Model.ViewMode != ViewModes.Print) {%>
 </div>
 <%} %>--%>
 	</div>
+	<%if (Model.ViewMode == ViewModes.Embedded) { %>
+	<div><a href="#" id="cw-detail-close-link">Close</a></div>
+<%} %>
 	</div>
 </div>
 <%if (isEditing) { %>
