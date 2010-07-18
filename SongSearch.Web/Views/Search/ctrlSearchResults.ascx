@@ -29,6 +29,7 @@
 
 	<% Html.RenderPartial(MVC.Search.Views.ctrlSearchResultsTable, contentListViewModel); %>
 	
+	<% Html.RenderPartial(MVC.Search.Views.ctrlPager, Model); %>
 	<% } %>
 	
   
