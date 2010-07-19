@@ -41,8 +41,11 @@ namespace Codewerks.SongSearch.Tasks {
 				case "tags":
 					Importer.MakeTags();
 					break;
-				case "id3":
+				case "getid3":
 					Importer.GetID3();
+					break;
+				case "cleanid3":
+					Importer.CleanID3();
 					break;
 				case "texttag":
 					Importer.ConvertTextTags();

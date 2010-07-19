@@ -289,8 +289,7 @@ namespace SongSearch.Web.Services {
 				}
 
 				// Add to collection if a new contentRight
-				if (contentRight.ContentRightId == 0) {
-
+				if (contentRight.ContentRightId == 0) {					
 					content.ContentRights.Add(contentRight);
 				}
 			}

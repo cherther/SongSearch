@@ -215,6 +215,23 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
+		// FileSignature
+		// **************************************    
+		public static string AppendToTitleData(this User user, Content content) {
+			
+			string append = null;
+			
+			if (user != null){
+				if (user.HasAccessToContentWithRole(content, Roles.Plugger)) {
+					append = user.AppendSignatureToTitle ? user.Signature : null;
+				} else if (user.ParentUser != null && user.ParentUser.AppendSignatureToTitle) {
+					append = user.ParentSignature();
+				}
+			}
+
+			return append;
+		}
+		// **************************************
 		// LoginMessage
 		// **************************************    
 		public static string LoginMessage(this User user) {

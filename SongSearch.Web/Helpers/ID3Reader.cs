@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using IdSharp.Tagging.ID3v2;
+using SongSearch.Web.Data;
 
 namespace SongSearch.Web {
 
@@ -22,90 +23,73 @@ namespace SongSearch.Web {
 		public static ID3Data GetID3Metadata(string fileName) {
 
 
-			var id3 = new ID3Data();
+			
 
 			try {
 				var tag = ID3v2Helper.CreateID3v2(fileName);
-
-				//'Does a tag exist?
-				id3.Artist = tag.Artist;
-				id3.Title = tag.Title;
-				id3.Album = tag.Album;
-				//id3.Genre = tag.Genre;
-				id3.Year = tag.OriginalReleaseYear.AsNullIfWhiteSpace() ?? tag.Year;
-				id3.MediaLength = tag.LengthMilliseconds;
-				id3.MediaSize = tag.FileSizeExcludingTag;
-
-				return id3;
+				return GetId3Data(tag);
 			}
 			finally { }
 			
 		}
 
-		public static ID3Data GetID3MetadataV2(string fileName) {
-
-			// Reads the MP3 tag details
-			var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-			var br = new BinaryReader(fs);
+		public static ID3Data GetId3Data(IID3v2 tag) {
 			var id3 = new ID3Data();
+			//'Does a tag exist?
+			id3.Artist = tag.Artist;
+			id3.Title = tag.Title;
+			id3.Album = tag.Album;
+			//id3.Genre = tag.Genre;
+			id3.Year = tag.OriginalReleaseYear.AsNullIfWhiteSpace() ?? tag.Year;
+			id3.MediaLength = tag.LengthMilliseconds;
+			id3.MediaSize = tag.FileSizeExcludingTag;
 
-			try {
-				// Move to the end of the stream - 127 places from the end...
-				br.BaseStream.Seek(-128, SeekOrigin.End);
+			return id3;
+		}		
+	}
 
-				//'Begin reading the data
-				var tag = new String(br.ReadChars(3));
+	public class ID3Writer {
 
-				//'Does a tag exist?
-				if (tag == "TAG") {
-					id3.Title = new String(br.ReadChars(30)).TrimEnd('\0');
-					id3.Artist = new String(br.ReadChars(30)).TrimEnd('\0');
-					id3.Album = new String(br.ReadChars(30)).TrimEnd('\0');
-					id3.Year = new String(br.ReadChars(4)).TrimEnd('\0');
-				}
-				return id3;
-			}
-			finally {
-				//Cleanup
-				br.Close();
-				fs.Close();
-				br = null;
-				fs = null;
+		public static ID3Data NormalizeTag(string filePath, Content content) {
+
+			var file = new FileInfo(filePath);
+			if (file.Exists) {
+				var oldTag = ID3v2Helper.CreateID3v2(file.FullName);
+				var newTag = ID3v2Helper.CreateID3v2();
+				newTag.Title = content.Title;
+				newTag.Artist = content.Artist;
+				newTag.OriginalArtist = content.Artist;
+				newTag.Album = oldTag.Album;
+				newTag.Year = content.ReleaseYear.HasValue ? content.ReleaseYear.Value.ToString() : "";
+				newTag.OriginalReleaseYear = newTag.Year;
+				newTag.LengthMilliseconds = oldTag.LengthMilliseconds;
+				newTag.FileSizeExcludingTag = oldTag.FileSizeExcludingTag;
+
+				ID3v2Helper.RemoveTag(file.FullName);
+				newTag.Save(file.FullName);
+
+				return ID3Reader.GetId3Data(newTag);
+
+			} else {
+				return new ID3Data();
 			}
 		}
 
-		public static ID3Data GetID3MetadataV4(string fileName) {
+		public static void UpdateUserTag(string filePath, Content content, User user) {
 
-			// Reads the MP3 tag details
-			var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-			var br = new BinaryReader(fs);
-			var id3 = new ID3Data();
+			var sig = user.AppendToTitleData(content);
+			var tag = ID3v2Helper.CreateID3v2(filePath);
+			
+			if (!String.IsNullOrWhiteSpace(sig)) {
+				tag.Title = !String.IsNullOrWhiteSpace(sig) ? String.Format("{0} - {1}", content.Title, sig) : content.Title;
+			}
+			
+			tag.Artist = content.Artist;
 
-			try {
-				//byte[] tag = new byte[128];
-				//var pos = br.BaseStream.Read(tag, 0, 128);
-				//var tagChars = new String(br.ReadChars(128));
+			ID3v2Helper.RemoveTag(filePath);
+			tag.Save(filePath);
 				
-				//'Begin reading the data
-				var header = new String(br.ReadChars(10)).TrimEnd('\0');
-				
-				//'Does a tag exist?
-				if (header.StartsWith("ID3")) {
-					id3.Title = new String(br.ReadChars(30)).TrimEnd('\0');
-					id3.Artist = new String(br.ReadChars(30)).TrimEnd('\0');
-					id3.Album = new String(br.ReadChars(30)).TrimEnd('\0');
-					id3.Year = new String(br.ReadChars(4)).TrimEnd('\0');
-				}
-				return id3;
-			}
-			finally {
-				//Cleanup
-				br.Close();
-				fs.Close();
-				br = null;
-				fs = null;
-			}
 		}
-		
+
 	}
 }

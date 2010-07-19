@@ -335,7 +335,7 @@ namespace SongSearch.Web.Services {
 					var full = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.FullSong);
 					if (full != null){
 						var fi = new FileInfo(full.FilePath);
-						var id3 = ID3Reader.GetID3Metadata(full.FilePath);
+						var id3 = ID3Writer.NormalizeTag(full.FilePath, itm);
 
 						itm.MediaType = "mp3";
 						itm.MediaSize = id3.MediaSize;
@@ -346,9 +346,16 @@ namespace SongSearch.Web.Services {
 
 						itm.MediaBitRate = id3.MediaLength.HasValue ?
 							((long)id3.MediaLength).ToBitRate(itm.MediaSize.GetValueOrDefault()) : 0;
-					}
-					itm.HasMediaPreviewVersion = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Preview) != null;
 
+
+					}
+					var preview = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Preview);
+					if (preview != null) {
+
+						itm.HasMediaPreviewVersion = true;
+						ID3Writer.NormalizeTag(preview.FilePath, itm);
+
+					}
 					DataSession.Add<Content>(itm);
 					DataSession.CommitChanges();
 

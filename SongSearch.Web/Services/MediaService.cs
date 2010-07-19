@@ -40,22 +40,18 @@ namespace SongSearch.Web.Services {
 		public static byte[] GetContentMedia(int contentId, MediaVersion version, User user) {
 			var bytes = GetContentMedia(contentId, version);
 
-			if (!user.AppendSignatureToTitle) {
-				return bytes;
-			} else {
+			//if (!user.AppendSignatureToTitle) {
+			//    return bytes;
+			//} else {
 
 				var content = SearchService.GetContent(contentId, user);
-				var sig = user.FileSignature(content);
+				
 				var tempPath = String.Concat(Settings.ZipPath.Value(), "\\", Guid.NewGuid(), ".mp3");
 
 				File.WriteAllBytes(tempPath, bytes);
-				var tag = ID3v2Helper.CreateID3v2(tempPath);
-
-				tag.Title = String.Format("{0} - {1}", content.Title, sig);
-				tag.Artist = content.Artist;
+				// id3
+				ID3Writer.UpdateUserTag(tempPath, content, user);
 				
-				ID3v2Helper.RemoveTag(tempPath);
-				tag.Save(tempPath);
 				var assetFile = new FileInfo(tempPath);
 
 				if (assetFile.Exists) {
@@ -65,7 +61,7 @@ namespace SongSearch.Web.Services {
 				} else {
 					throw new ArgumentOutOfRangeException("Content media file is missing");
 				}
-			}
+			//}
 		}
 
 		// **************************************

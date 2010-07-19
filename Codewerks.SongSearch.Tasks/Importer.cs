@@ -57,6 +57,37 @@ namespace Codewerks.SongSearch.Tasks {
 			}
 			
 		}
+
+		public static void CleanID3() {
+			string fullpath = @"D:\Inetpub\wwwroot\Assets\Music\Full";
+			string previewPath = @"D:\Inetpub\wwwroot\Assets\Music\Previews";
+
+			using (var session = new SongSearchDataSession()) {
+
+				var contents = session.All<Content>();
+
+				foreach (var content in contents) {
+
+					string preview = Path.Combine(previewPath, String.Concat(content.ContentId, ".mp3"));
+					var file = new FileInfo(preview);
+					if (file.Exists) {
+						var tag = ID3v2Helper.CreateID3v2(file.FullName);
+						ID3v2Helper.RemoveTag(file.FullName);
+						var newTag = ID3v2Helper.CreateID3v2();
+						newTag.Title = content.Title;
+						newTag.Artist = content.Artist;
+						newTag.OriginalArtist = content.Artist;
+						newTag.Year = content.ReleaseYear.HasValue ? content.ReleaseYear.Value.ToString() : "";
+						newTag.OriginalReleaseYear = newTag.Year;
+
+						newTag.Save(file.FullName);
+						
+					}
+				}
+			}
+				
+
+		}
 		public static void MakeTags() {
 
 			//_session = new SongSearchDataSession();
