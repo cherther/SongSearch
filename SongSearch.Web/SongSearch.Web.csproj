@@ -257,6 +257,7 @@
     <Content Include="Public\Css\fluid.gs.lt_ie8.css" />
     <Content Include="Public\Css\jquery-ui.css" />
     <Content Include="Public\Css\jquery.gritter.css" />
+    <Content Include="Public\Images\error_404.jpg" />
     <Content Include="Scripts\cw.app.upload.js" />
     <Content Include="Scripts\jquery.gritter.js" />
     <Content Include="Scripts\jquery.gritter.min.js" />
@@ -1831,6 +1832,7 @@
     <Content Include="Views\CatalogUpload\wfAddSongFiles.ascx" />
     <Content Include="Views\CatalogUpload\Upload.aspx" />
     <Content Include="Views\CatalogUpload\wfSelectCatalog.ascx" />
+    <Content Include="Views\Error\404.aspx" />
     <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Content\Print.aspx" />
     <Content Include="Views\Home\Contact.aspx" />

@@ -306,6 +306,7 @@ namespace SongSearch.Web.Controllers {
 					FirstName = user.FirstName,
 					LastName = user.LastName,
 					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger),
+					AppendSignatureToTitle = user.AppendSignatureToTitle,
 					Signature = user.Signature
 
 				};

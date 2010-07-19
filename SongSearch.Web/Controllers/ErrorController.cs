@@ -32,7 +32,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Problem() {
 			//no logging here - let the app do it 
 			//we don't get reliable error traps here
-			return View(Views.Index);
+			return RedirectToAction(Actions.Index());
 		}
 		/// <summary>
 		/// This is fired when the site gets a bad URL
@@ -42,7 +42,7 @@ namespace SongSearch.Web.Controllers
 			//you should probably log this - if you're getting 
 			//bad links you'll want to know...
 			_logger.Warn(string.Format("404 - {0}", Request.UrlReferrer));
-			return View(Views.Index);
+			return View("404", new ErrorViewModel());
 		}
 	}
 }
