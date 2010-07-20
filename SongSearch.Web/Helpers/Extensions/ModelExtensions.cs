@@ -9,7 +9,7 @@ using Ninject;
 namespace SongSearch.Web {
 	public static class DataModelExtensions {
 
-		
+
 
 		// **************************************
 		// Flip
@@ -35,7 +35,7 @@ namespace SongSearch.Web {
 			signature = signature != null ? String.Format("({0})", signature) : "";
 
 			return (String.Format("{0} by {1} {2}", content.Title.ToUpper(), content.Artist.ToUpper(), signature)).MakeFilePathSafe();
-		
+
 		}
 
 		// **************************************
@@ -64,7 +64,7 @@ namespace SongSearch.Web {
 			}
 			if (user.IsSuperAdmin()) {
 				return true;
-			} else if (user.UserCatalogRoles != null && 
+			} else if (user.UserCatalogRoles != null &&
 				user.UserCatalogRoles.AsParallel().Any(x => x.CatalogId == content.CatalogId)) {
 				return true;
 			} else {
@@ -97,11 +97,11 @@ namespace SongSearch.Web {
 				var adminCatalogIds = user.UserCatalogRoles.Where(x => x.RoleId <= (int)Roles.Admin).Select(x => x.CatalogId);
 				return catalogs.Where(c => adminCatalogIds.Contains(c.CatalogId)).ToList();
 			}
-//			return catalogs.Where(c => c.UserCatalogRoles.Any(x => x.UserId == user.UserId && x.RoleId <= (int)Roles.Admin)).ToList();
+			//			return catalogs.Where(c => c.UserCatalogRoles.Any(x => x.UserId == user.UserId && x.RoleId <= (int)Roles.Admin)).ToList();
 		}
 
 		public static User Owner(this Catalog catalog) {
-			using (var svc = App.Container.Get<IUserManagementService>()){
+			using (var svc = App.Container.Get<IUserManagementService>()) {
 				return svc.GetUserDetail(catalog.CreatedByUserId);
 			}
 		}
@@ -131,7 +131,7 @@ namespace SongSearch.Web {
 			currentContent.SoundsLike = content.SoundsLike;
 			currentContent.Instruments = content.Instruments;
 
-	}
+		}
 
 
 		// **************************************
@@ -222,27 +222,23 @@ namespace SongSearch.Web {
 		// **************************************
 		public static Contact GetContactInfo(this SiteProfile profile, User user) {
 
-			return user.GetContactInfo() ?? profile.Contacts.FirstOrDefault(c => c.IsDefault);
+			return (user != null ? user.GetContactInfo() : null) ?? profile.Contacts.FirstOrDefault(c => c.IsDefault);
 
 		}
 
 		public static Contact GetContactInfo(this User user, bool checkParent = true) {
 
-			if (user.IsAtLeastInCatalogRole(Roles.Plugger)) {
+			if (user == null) { return null; }
 
-				var contact = user.Contacts.FirstOrDefault(c => c.IsDefault);
-				if (contact == null) {
-					return checkParent && user.ParentUser != null ?
-					user.ParentUser.GetContactInfo() :
-					null;
-				} else {
-					return contact;
-				}
-			} else {
-				return checkParent && user.ParentUser != null ?
-					user.ParentUser.GetContactInfo() :
-					null; 
+			Contact contact = null;
+			// Pluggers and above can set up their own contact info, everyone else inherits down
+			if (user.IsAtLeastInCatalogRole(Roles.Plugger)) {
+				contact = user.Contacts.FirstOrDefault(c => c.IsDefault);
 			}
+			return contact ?? 
+				(checkParent && user.ParentUser != null ?
+					user.ParentUser.GetContactInfo() :
+					null);
 		}
 	}
 }

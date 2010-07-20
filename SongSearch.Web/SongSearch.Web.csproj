@@ -293,6 +293,7 @@
     <Content Include="Public\Javascript\cw.plugins.js">
       <DependentUpon>scriptmash.chirp.config</DependentUpon>
     </Content>
+    <Content Include="robots.txt" />
     <Content Include="Scripts\cw.app.ajax.min.js">
       <DependentUpon>cw.app.ajax.chirp.js</DependentUpon>
     </Content>

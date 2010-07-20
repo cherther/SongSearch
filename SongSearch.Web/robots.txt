@@ -1,0 +1,6 @@
+﻿User-agent: *
+Allow: /Home/Index
+Allow: /Home/Contact
+Disallow: /Account/
+Crwal-delay: 10
+Request-rateL 1/10m
