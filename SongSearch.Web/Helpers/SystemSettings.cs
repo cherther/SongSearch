@@ -37,7 +37,8 @@ namespace SongSearch.Web {
 	// **************************************
 	public enum Settings {
 		Company,
-		SiteProfile,
+		DefaultSiteProfileName,
+		DefaultSiteProfileId,
 		BaseUrl,
 		MediaPathFullSong,
 		MediaPathPreview,

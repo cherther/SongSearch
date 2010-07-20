@@ -13,12 +13,45 @@ namespace SongSearch.Web {
 	public static class SiteProfileData {
 
 		// **************************************
-		// User
+		// SiteProfile
 		// **************************************
 		public static SiteProfile SiteProfile(bool cached = true) {
-			return SiteProfile(Settings.SiteProfile.Value(), cached);
-		}
+			var user = Account.User();
+			return SiteProfile(user.GetSiteProfileId(), cached);
+			//var pricingPlanId = user != null ? user.PricingPlanId : (int)PricingPlans.Level1;
 
+			//switch (pricingPlanId) {
+
+			//    case (int)PricingPlans.Level1:
+			//        return SiteProfile(int.Parse(Settings.DefaultSiteProfileId.Value()), cached);
+			//    case (int)PricingPlans.Level2:
+			//        return SiteProfile(int.Parse(Settings.DefaultSiteProfileId.Value()), cached);
+			//    case (int)PricingPlans.Level3:
+			//        return SiteProfile(user.GetSiteProfileId(), cached);
+			//    case (int)PricingPlans.Level4:
+			//        return SiteProfile(user.GetSiteProfileId(), cached);
+			//    default:
+			//        return SiteProfile(Settings.DefaultSiteProfileName.Value(), cached);
+
+			//}
+
+		}
+		
+		public static SiteProfile SiteProfile(int profileId, bool cached = true) {
+			if (cached) {
+				return CacheService
+					.SiteProfiles()
+					.SingleOrDefault(s => s.ProfileId == profileId);
+			} else {
+				using (var session = App.DataSessionReadOnly) {
+					var profile = session.GetObjectQuery<SiteProfile>()
+						.Include("Contacts")
+						.Where(s => s.ProfileId == profileId).SingleOrDefault();
+					return profile;
+				
+				}
+			}
+		}
 
 		public static SiteProfile SiteProfile(string profileName, bool cached = true) {
 			if (cached) {
@@ -31,10 +64,11 @@ namespace SongSearch.Web {
 						.Include("Contacts")
 						.Where(s => s.ProfileName.Equals(profileName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
 					return profile;
-				
+
 				}
 			}
 		}
+		
 		public static IList<SiteProfile> SiteProfiles() {
 			using (var session = App.DataSessionReadOnly) {
 				var profiles = session.GetObjectQuery<SiteProfile>()

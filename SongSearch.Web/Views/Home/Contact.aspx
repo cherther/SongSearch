@@ -10,23 +10,20 @@
 	<div>&nbsp;</div>
 
 	<div class="six_column section">
-	
-	<div class="three column">
-				
-		<div class="cw-outl cw-padded cw-rounded-corners">
-			<h3><%: Model.PageTitle %></h3>
-			<div>&nbsp;</div>
-			<%if (!String.IsNullOrWhiteSpace(Model.PageMessage)) {%>
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-			<p><%: Model.PageMessage %></p>
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-			<%} else { %>
-			<% using (Html.BeginForm(MVC.Home.Contact(), FormMethod.Post)) { %>
-				<% Html.EnableClientValidation(); %>
-				<%: Html.AntiForgeryToken() %>
-				<fieldset>
+		<div class="three column">
+			<div class="cw-outl cw-padded cw-rounded-corners">
+				<h3><%: Model.PageTitle %></h3>
+				<div>&nbsp;</div>
+				<%if (!String.IsNullOrWhiteSpace(Model.PageMessage)) {%>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<p><%: Model.PageMessage %></p>
+				<div>&nbsp;</div>
+				<div>&nbsp;</div>
+				<%} else { %>
+				<% using (Html.BeginForm(MVC.Home.Contact(), FormMethod.Post)) { %>
+					<% Html.EnableClientValidation(); %>
+					<%: Html.AntiForgeryToken() %>
 					<div>&nbsp;</div>
 					<div><%: Html.LabelFor(m => m.Name) %></div>
 					<div><%: Html.TextBoxFor(m => m.Name, new { @class = "cw-field-large", title = "Please enter you full name" })%></div>
@@ -52,35 +49,33 @@
 					<button id="invite-send" type="submit" title="Click to Send" class="cw-button cw-simple cw-blue">
 						<span class="b-email">Send</span>
 					</button>
-				</fieldset>
-			<%} %>	
-			<%} %>
+				<%} %>	
+				<%} %>
+				</div>
 			</div>
-		</div>
-		<div class="three column">
-			<div class="cw-outl cw-padded cw-buffered-left cw-rounded-corners">
-				<h3>Contact Information:</h3>
-				<div>&nbsp;</div>
-				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.ContactName)) {%>
-				<%: Model.ContactInfo.ContactName%><br />
-				<%} %>
-				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.CompanyName)) {%>
-				<%: Model.ContactInfo.CompanyName%><br />
-				<%} %>
-				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Phone1)) {%>
-				Phone: <%: Model.ContactInfo.Phone1%><br />
-				<%} %>
-				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Fax)) {%>
-				Fax: <%: Model.ContactInfo.Fax%><br />
-				<%} %>
-				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Email)) {%>
-				E-Mail: <%: Model.ContactInfo.Email%><br />
-				<%} %>
-			</div>
+			<div class="three column">
+				<div class="cw-outl cw-padded cw-buffered-left cw-rounded-corners">
+					<h3>Contact Information:</h3>
+					<div>&nbsp;</div>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.ContactName)) {%>
+					<div class="cw-padded"><strong><%: Model.ContactInfo.ContactName%></strong></div>
+					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.CompanyName)) {%>
+					<div class="cw-padded"><%: Model.ContactInfo.CompanyName%></div>
+					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Phone1)) {%>
+					<div class="cw-padded">Phone: <%: Model.ContactInfo.Phone1%></div>
+					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Fax)) {%>
+					<div class="cw-padded">Fax: <%: Model.ContactInfo.Fax%></div>
+					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Email)) {%>
+					<div class="cw-padded">Email: <%: Model.ContactInfo.Email%></div>
+					<%} %>
+				</div>
 
+			</div>
 		</div>
 	</div>
-
-</div>
 </asp:Content>
 

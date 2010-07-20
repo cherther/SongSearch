@@ -51,7 +51,18 @@
 	<label>Registered On:</label>
 	 <span><%= user.RegisteredOn.ToShortDateString()%></span>
 	</div>
+
 </div>
+ <%if (Account.User().ShowDebugInfo.GetValueOrDefault()) { %>
+<div>&nbsp;</div>
+<div class="six_column section">
+	
+	<div class="six column">
+	<label>Pricing Plan:</label>
+	 <span><%: (PricingPlans)user.PricingPlanId%></span>
+	</div>
+</div>
+<%} %>
 <div>&nbsp;</div>
 <hr />
 <div>&nbsp;</div>

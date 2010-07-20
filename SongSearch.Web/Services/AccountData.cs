@@ -8,6 +8,7 @@ using SongSearch.Web.Data;
 using Ninject;
 using SongSearch.Web.Services;
 using System.IO;
+using System.Data.Objects;
 
 namespace SongSearch.Web {
 	public static class Account {
@@ -22,13 +23,7 @@ namespace SongSearch.Web {
 		public static User User(int userId) {
 			
 			using (var session = App.DataSessionReadOnly) {
-				var user = session.GetObjectQuery<User>()
-					.Include("ParentUser")
-					.Include("Carts")
-					.Include("Carts.Contents")
-					.Include("UserCatalogRoles")
-					.Include("Contacts")
-					.Include("ParentUser.Contacts")
+				var user = session.GetUserQuery()
 					.Where(u => u.UserId == userId).SingleOrDefault();
 
 				return user;	
@@ -39,13 +34,7 @@ namespace SongSearch.Web {
 				return SessionService.Session().User(userName);
 			} else {
 				using (var session = App.DataSessionReadOnly) {
-					var user = session.GetObjectQuery<User>()
-						.Include("ParentUser")
-						.Include("Carts")
-						.Include("Carts.Contents")
-						.Include("UserCatalogRoles")
-						.Include("Contacts")
-						.Include("ParentUser.Contacts")
+					var user = session.GetUserQuery()
 						.Where(u => u.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
 
 					return user;
@@ -53,6 +42,11 @@ namespace SongSearch.Web {
 			}
 		}
 
+		
+
+		// **************************************
+		// Cart
+		// **************************************
 		public static Cart Cart() {
 			return Cart(true);
 		}
@@ -67,6 +61,10 @@ namespace SongSearch.Web {
 			}
 		}
 
+
+		// **************************************
+		// CartContents
+		// **************************************
 		public static IList<int> CartContents() {
 			var contents = CartContents(true);
 			return contents;
@@ -82,7 +80,7 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
-		// User
+		// UserHasAccessToContent
 		// **************************************
 		public static bool UserHasAccessToContent(int userId, int contentId) {
 
@@ -96,7 +94,20 @@ namespace SongSearch.Web {
 			}
 
 		}
+		// **************************************
+		// GetUserQuery
+		// **************************************
+		private static ObjectQuery<User> GetUserQuery(this IDataSessionReadOnly session) {
 
+			return session.GetObjectQuery<User>()
+					.Include("ParentUser")
+					.Include("Carts")
+					.Include("Carts.Contents")
+					.Include("UserCatalogRoles")
+					.Include("Contacts")
+					.Include("ParentUser.Contacts")
+					.Include("PricingPlan");
+		}
 		// ----------------------------------------------------------------------------
 		// Extensions
 		// ----------------------------------------------------------------------------
@@ -219,7 +230,7 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
-		// FileSignature
+		// AppendToTitleData
 		// **************************************    
 		public static string AppendToTitleData(this User user, Content content) {
 			
@@ -309,6 +320,46 @@ namespace SongSearch.Web {
 		public static IList<Catalog> MyAdminCatalogs(this User user) {
 
 			return CacheService.Catalogs().LimitToAdministeredBy(user);
+		}
+
+		// **************************************
+		// GetContactInfo
+		// **************************************
+		public static Contact GetContactInfo(this SiteProfile profile, User user) {
+
+			return (user != null ? user.GetContactInfo() : null) ?? profile.Contacts.FirstOrDefault(c => c.IsDefault);
+
+		}
+
+		public static Contact GetContactInfo(this User user, bool checkParent = true) {
+
+			if (user == null) { return null; }
+
+			Contact contact = null;
+			// Pluggers and above can set up their own contact info, everyone else inherits down
+			if (user.IsAtLeastInCatalogRole(Roles.Plugger)) {
+				contact = user.Contacts.FirstOrDefault(c => c.IsDefault);
+			}
+			return contact ??
+				(checkParent && user.ParentUser != null ?
+					user.ParentUser.GetContactInfo() :
+					null);
+		}
+
+		public static int GetSiteProfileId(this User user) {
+			int siteProfileId = int.Parse(Settings.DefaultSiteProfileId.Value());
+			if (user == null){
+				return siteProfileId;
+			}
+
+			if (user.IsSuperAdmin() || user.PricingPlanId >= (int)PricingPlans.Level3) {
+				siteProfileId = user.SiteProfileId;
+			} else if (user.ParentUser != null) {
+				siteProfileId = user.ParentUser.GetSiteProfileId();
+			}
+
+			return siteProfileId;
+		
 		}
 		// **************************************
 		// AttachChildren

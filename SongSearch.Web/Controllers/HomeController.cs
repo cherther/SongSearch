@@ -74,7 +74,7 @@ namespace SongSearch.Web.Controllers {
 
 				Mail.SendMail(
 					sender,
-					vm.ContactInfo.Email,//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
+					String.Concat(vm.ContactInfo.Email,";",vm.ContactInfo.AdminEmail),//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
 					subject,
 					msg
 					);

@@ -45,6 +45,8 @@ namespace SongSearch.Web.Services {
 					user.Password = user.Password.PasswordHashString();
 					user.ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : 1;
 					user.RoleId = (int)Roles.Client;
+					user.PricingPlanId = (int)PricingPlans.Level1;
+					user.SiteProfileId = int.Parse(Settings.DefaultSiteProfileId.Value());
 					user.RegisteredOn = DateTime.Now;
 
 					// Get parent users catalog where parent user is at least a plugger and assign to new user in client role
@@ -193,19 +195,19 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// CreateUser
 		// **************************************
-		private void CreateUser(User user) {
+		//private void CreateUser(User user) {
 
-			user.Password = user.Password.PasswordHashString();
-			user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
-			user.RoleId = (int) Roles.Client;
-			user.SiteProfileId = int.Parse(Settings.SiteProfile.Value());
-			user.ShowDebugInfo = false;
-			user.AppendSignatureToTitle = false;
+		//    user.Password = user.Password.PasswordHashString();
+		//    user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
+		//    user.RoleId = (int) Roles.Client;
+		//    user.SiteProfileId = int.Parse(Settings.DefaultSiteProfileId.Value());
+		//    user.ShowDebugInfo = false;
+		//    user.AppendSignatureToTitle = false;
 
-			DataSession.Add<User>(user);
+		//    DataSession.Add<User>(user);
 
-			user = null;
-		}
+		//    user = null;
+		//}
 
 		// **************************************
 		// PasswordHashMatches

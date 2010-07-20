@@ -3,7 +3,7 @@
 namespace SongSearch.Web {
 
 	// **************************************
-	// AccessLevels
+	// Roles
 	// **************************************    
 	public enum Roles {
 		None       = 0,
@@ -13,6 +13,16 @@ namespace SongSearch.Web {
 		Client     = 4
 	}
 
+	// **************************************
+	// Roles
+	// **************************************    
+	public enum PricingPlans {
+		Level1 = 1,
+		Level2 = 2,
+		Level3 = 3,
+		Level4 = 4
+	}
+	
 	// **************************************
 	// MediaVersion
 	// **************************************    

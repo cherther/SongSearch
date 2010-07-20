@@ -217,28 +217,6 @@ namespace SongSearch.Web {
 			return uploadFiles;
 		}
 
-		// **************************************
-		// GetContactInfo
-		// **************************************
-		public static Contact GetContactInfo(this SiteProfile profile, User user) {
-
-			return (user != null ? user.GetContactInfo() : null) ?? profile.Contacts.FirstOrDefault(c => c.IsDefault);
-
-		}
-
-		public static Contact GetContactInfo(this User user, bool checkParent = true) {
-
-			if (user == null) { return null; }
-
-			Contact contact = null;
-			// Pluggers and above can set up their own contact info, everyone else inherits down
-			if (user.IsAtLeastInCatalogRole(Roles.Plugger)) {
-				contact = user.Contacts.FirstOrDefault(c => c.IsDefault);
-			}
-			return contact ?? 
-				(checkParent && user.ParentUser != null ?
-					user.ParentUser.GetContactInfo() :
-					null);
-		}
+		
 	}
 }
