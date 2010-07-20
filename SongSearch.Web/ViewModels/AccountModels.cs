@@ -136,6 +136,7 @@ namespace SongSearch.Web {
 		public string Signature { get; set; }
 
 		public bool ShowSignatureField { get; set; }
+		public bool ShowContactInfo { get; set; }
 
 		[Required]
 		[DataType(DataType.Password)]
@@ -162,12 +163,14 @@ namespace SongSearch.Web {
 		[DisplayName("Embed signature in song files?")]
 		public bool AppendSignatureToTitle { get; set; }
 
+		public Contact Contact { get; set; }
+
 	}
 
 	// **************************************
 	// ContactModel
 	// **************************************
-	public class ContactModel : ViewModel {
+	public class ContactUsModel : ViewModel {
 		//[Required]
 		//[DisplayName("User name")]
 		//public string UserName { get; set; }
@@ -193,6 +196,8 @@ namespace SongSearch.Web {
 		[Required]
 		[DisplayName("Comments")]
 		public string Body { get; set; }
+
+		public Contact ContactInfo { get; set; }
 
 	}
 

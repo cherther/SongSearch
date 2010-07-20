@@ -216,5 +216,33 @@ namespace SongSearch.Web {
 
 			return uploadFiles;
 		}
+
+		// **************************************
+		// GetContactInfo
+		// **************************************
+		public static Contact GetContactInfo(this SiteProfile profile, User user) {
+
+			return user.GetContactInfo() ?? profile.Contacts.FirstOrDefault(c => c.IsDefault);
+
+		}
+
+		public static Contact GetContactInfo(this User user, bool checkParent = true) {
+
+			if (user.IsAtLeastInCatalogRole(Roles.Plugger)) {
+
+				var contact = user.Contacts.FirstOrDefault(c => c.IsDefault);
+				if (contact == null) {
+					return checkParent && user.ParentUser != null ?
+					user.ParentUser.GetContactInfo() :
+					null;
+				} else {
+					return contact;
+				}
+			} else {
+				return checkParent && user.ParentUser != null ?
+					user.ParentUser.GetContactInfo() :
+					null; 
+			}
+		}
 	}
 }

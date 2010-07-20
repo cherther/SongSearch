@@ -59,6 +59,7 @@ namespace SongSearch.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string _404 = "~/Views/Error/404.aspx";
             public readonly string Index = "~/Views/Error/Index.aspx";
         }
     }

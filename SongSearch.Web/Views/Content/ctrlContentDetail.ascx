@@ -477,6 +477,7 @@
 	You're currently in Edit mode. Do you want to save any changes you've made?</p>
 </div>
 <%} %>
+<%if (Model.ViewMode != ViewModes.Print) { %>
 <script language="javascript" type="text/javascript">
 	$(document).ready(function () {
 		//alert('here');
@@ -485,3 +486,4 @@
 		//setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload','previewVersionFilelist','Preview', 1);
 	});
 </script>
+<%} %>

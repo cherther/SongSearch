@@ -279,25 +279,24 @@ namespace Links {
         private const string URLPATH = "~/Scripts";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string cw_app_ajax_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.ajax.min.js") ? Url("cw.app.ajax.min.js") : Url("cw.app.ajax.js");
+        public static readonly string cw_app_ajax_chirp_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.ajax.chirp.min.js") ? Url("cw.app.ajax.chirp.min.js") : Url("cw.app.ajax.chirp.js");
                       
-        public static readonly string cw_app_events_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.events.min.js") ? Url("cw.app.events.min.js") : Url("cw.app.events.js");
+        public static readonly string cw_app_ajax_min_js = Url("cw.app.ajax.min.js");
+        public static readonly string cw_app_events_chirp_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.events.chirp.min.js") ? Url("cw.app.events.chirp.min.js") : Url("cw.app.events.chirp.js");
                       
-        public static readonly string cw_app_main_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.main.min.js") ? Url("cw.app.main.min.js") : Url("cw.app.main.js");
+        public static readonly string cw_app_events_min_js = Url("cw.app.events.min.js");
+        public static readonly string cw_app_main_chirp_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.main.chirp.min.js") ? Url("cw.app.main.chirp.min.js") : Url("cw.app.main.chirp.js");
                       
-        public static readonly string cw_app_sound_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.sound.min.js") ? Url("cw.app.sound.min.js") : Url("cw.app.sound.js");
+        public static readonly string cw_app_main_min_js = Url("cw.app.main.min.js");
+        public static readonly string cw_app_sound_chirp_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.sound.chirp.min.js") ? Url("cw.app.sound.chirp.min.js") : Url("cw.app.sound.chirp.js");
                       
-        public static readonly string cw_app_upload_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.upload.min.js") ? Url("cw.app.upload.min.js") : Url("cw.app.upload.js");
+        public static readonly string cw_app_sound_min_js = Url("cw.app.sound.min.js");
+        public static readonly string cw_app_upload_chirp_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cw.app.upload.chirp.min.js") ? Url("cw.app.upload.chirp.min.js") : Url("cw.app.upload.chirp.js");
                       
+        public static readonly string cw_app_upload_min_js = Url("cw.app.upload.min.js");
         public static readonly string gears_init_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/gears_init.min.js") ? Url("gears_init.min.js") : Url("gears_init.js");
                       
-        public static readonly string jquery_1_4_1_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.4.1-vsdoc.min.js") ? Url("jquery-1.4.1-vsdoc.min.js") : Url("jquery-1.4.1-vsdoc.js");
-                      
-        public static readonly string jquery_1_4_1_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.4.1.min.js") ? Url("jquery-1.4.1.min.js") : Url("jquery-1.4.1.js");
-                      
-        public static readonly string jquery_1_4_1_min_js = Url("jquery-1.4.1.min.js");
         public static readonly string jquery_1_4_2_min_js = Url("jquery-1.4.2.min.js");
-        public static readonly string jquery_ui_1_8_1_min_js = Url("jquery-ui-1.8.1.min.js");
         public static readonly string jquery_ui_min_js = Url("jquery-ui.min.js");
         public static readonly string jquery_blockUI_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.blockUI.min.js") ? Url("jquery.blockUI.min.js") : Url("jquery.blockUI.js");
                       

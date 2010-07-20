@@ -31,6 +31,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "UserCatalogRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserCatalogRole), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.User), "User1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Catalogs_Creators", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Catalog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Catalog), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "SiteProfilesContacts", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Contact), "SiteProfile", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.SiteProfile))]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "UsersContacts", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Contact), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User))]
 
 #endregion
 
@@ -277,6 +279,22 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<Contact> Contacts
+        {
+            get
+            {
+                if ((_Contacts == null))
+                {
+                    _Contacts = base.CreateObjectSet<Contact>("Contacts");
+                }
+                return _Contacts;
+            }
+        }
+        private ObjectSet<Contact> _Contacts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<SiteProfile> SiteProfiles
         {
             get
@@ -387,6 +405,14 @@ namespace SongSearch.Web.Data
         public void AddToImport_SongData(Import_SongData import_SongData)
         {
             base.AddObject("Import_SongData", import_SongData);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Contacts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToContacts(Contact contact)
+        {
+            base.AddObject("Contacts", contact);
         }
     
         /// <summary>
@@ -934,6 +960,498 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Catalogs_Creators", "User", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="Contact")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Contact : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Contact object.
+        /// </summary>
+        /// <param name="contactId">Initial value of the ContactId property.</param>
+        /// <param name="isDefault">Initial value of the IsDefault property.</param>
+        /// <param name="createdOn">Initial value of the CreatedOn property.</param>
+        /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
+        public static Contact CreateContact(global::System.Int32 contactId, global::System.Boolean isDefault, global::System.DateTime createdOn, global::System.Int32 createdByUserId)
+        {
+            Contact contact = new Contact();
+            contact.ContactId = contactId;
+            contact.IsDefault = isDefault;
+            contact.CreatedOn = createdOn;
+            contact.CreatedByUserId = createdByUserId;
+            return contact;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ContactId
+        {
+            get
+            {
+                return _ContactId;
+            }
+            set
+            {
+                if (_ContactId != value)
+                {
+                    OnContactIdChanging(value);
+                    ReportPropertyChanging("ContactId");
+                    _ContactId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ContactId");
+                    OnContactIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ContactId;
+        partial void OnContactIdChanging(global::System.Int32 value);
+        partial void OnContactIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ContactName
+        {
+            get
+            {
+                return _ContactName;
+            }
+            set
+            {
+                OnContactNameChanging(value);
+                ReportPropertyChanging("ContactName");
+                _ContactName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ContactName");
+                OnContactNameChanged();
+            }
+        }
+        private global::System.String _ContactName;
+        partial void OnContactNameChanging(global::System.String value);
+        partial void OnContactNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CompanyName
+        {
+            get
+            {
+                return _CompanyName;
+            }
+            set
+            {
+                OnCompanyNameChanging(value);
+                ReportPropertyChanging("CompanyName");
+                _CompanyName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CompanyName");
+                OnCompanyNameChanged();
+            }
+        }
+        private global::System.String _CompanyName;
+        partial void OnCompanyNameChanging(global::System.String value);
+        partial void OnCompanyNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Address1
+        {
+            get
+            {
+                return _Address1;
+            }
+            set
+            {
+                OnAddress1Changing(value);
+                ReportPropertyChanging("Address1");
+                _Address1 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Address1");
+                OnAddress1Changed();
+            }
+        }
+        private global::System.String _Address1;
+        partial void OnAddress1Changing(global::System.String value);
+        partial void OnAddress1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Address2
+        {
+            get
+            {
+                return _Address2;
+            }
+            set
+            {
+                OnAddress2Changing(value);
+                ReportPropertyChanging("Address2");
+                _Address2 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Address2");
+                OnAddress2Changed();
+            }
+        }
+        private global::System.String _Address2;
+        partial void OnAddress2Changing(global::System.String value);
+        partial void OnAddress2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String City
+        {
+            get
+            {
+                return _City;
+            }
+            set
+            {
+                OnCityChanging(value);
+                ReportPropertyChanging("City");
+                _City = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("City");
+                OnCityChanged();
+            }
+        }
+        private global::System.String _City;
+        partial void OnCityChanging(global::System.String value);
+        partial void OnCityChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String StateRegion
+        {
+            get
+            {
+                return _StateRegion;
+            }
+            set
+            {
+                OnStateRegionChanging(value);
+                ReportPropertyChanging("StateRegion");
+                _StateRegion = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("StateRegion");
+                OnStateRegionChanged();
+            }
+        }
+        private global::System.String _StateRegion;
+        partial void OnStateRegionChanging(global::System.String value);
+        partial void OnStateRegionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PostalCode
+        {
+            get
+            {
+                return _PostalCode;
+            }
+            set
+            {
+                OnPostalCodeChanging(value);
+                ReportPropertyChanging("PostalCode");
+                _PostalCode = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PostalCode");
+                OnPostalCodeChanged();
+            }
+        }
+        private global::System.String _PostalCode;
+        partial void OnPostalCodeChanging(global::System.String value);
+        partial void OnPostalCodeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Country
+        {
+            get
+            {
+                return _Country;
+            }
+            set
+            {
+                OnCountryChanging(value);
+                ReportPropertyChanging("Country");
+                _Country = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Country");
+                OnCountryChanged();
+            }
+        }
+        private global::System.String _Country;
+        partial void OnCountryChanging(global::System.String value);
+        partial void OnCountryChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Phone1
+        {
+            get
+            {
+                return _Phone1;
+            }
+            set
+            {
+                OnPhone1Changing(value);
+                ReportPropertyChanging("Phone1");
+                _Phone1 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Phone1");
+                OnPhone1Changed();
+            }
+        }
+        private global::System.String _Phone1;
+        partial void OnPhone1Changing(global::System.String value);
+        partial void OnPhone1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Phone2
+        {
+            get
+            {
+                return _Phone2;
+            }
+            set
+            {
+                OnPhone2Changing(value);
+                ReportPropertyChanging("Phone2");
+                _Phone2 = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Phone2");
+                OnPhone2Changed();
+            }
+        }
+        private global::System.String _Phone2;
+        partial void OnPhone2Changing(global::System.String value);
+        partial void OnPhone2Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Fax
+        {
+            get
+            {
+                return _Fax;
+            }
+            set
+            {
+                OnFaxChanging(value);
+                ReportPropertyChanging("Fax");
+                _Fax = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Fax");
+                OnFaxChanged();
+            }
+        }
+        private global::System.String _Fax;
+        partial void OnFaxChanging(global::System.String value);
+        partial void OnFaxChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Email
+        {
+            get
+            {
+                return _Email;
+            }
+            set
+            {
+                OnEmailChanging(value);
+                ReportPropertyChanging("Email");
+                _Email = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Email");
+                OnEmailChanged();
+            }
+        }
+        private global::System.String _Email;
+        partial void OnEmailChanging(global::System.String value);
+        partial void OnEmailChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AdminEmail
+        {
+            get
+            {
+                return _AdminEmail;
+            }
+            set
+            {
+                OnAdminEmailChanging(value);
+                ReportPropertyChanging("AdminEmail");
+                _AdminEmail = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AdminEmail");
+                OnAdminEmailChanged();
+            }
+        }
+        private global::System.String _AdminEmail;
+        partial void OnAdminEmailChanging(global::System.String value);
+        partial void OnAdminEmailChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsDefault
+        {
+            get
+            {
+                return _IsDefault;
+            }
+            set
+            {
+                OnIsDefaultChanging(value);
+                ReportPropertyChanging("IsDefault");
+                _IsDefault = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDefault");
+                OnIsDefaultChanged();
+            }
+        }
+        private global::System.Boolean _IsDefault;
+        partial void OnIsDefaultChanging(global::System.Boolean value);
+        partial void OnIsDefaultChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedOn
+        {
+            get
+            {
+                return _CreatedOn;
+            }
+            set
+            {
+                OnCreatedOnChanging(value);
+                ReportPropertyChanging("CreatedOn");
+                _CreatedOn = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedOn");
+                OnCreatedOnChanged();
+            }
+        }
+        private global::System.DateTime _CreatedOn;
+        partial void OnCreatedOnChanging(global::System.DateTime value);
+        partial void OnCreatedOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 CreatedByUserId
+        {
+            get
+            {
+                return _CreatedByUserId;
+            }
+            set
+            {
+                OnCreatedByUserIdChanging(value);
+                ReportPropertyChanging("CreatedByUserId");
+                _CreatedByUserId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedByUserId");
+                OnCreatedByUserIdChanged();
+            }
+        }
+        private global::System.Int32 _CreatedByUserId;
+        partial void OnCreatedByUserIdChanging(global::System.Int32 value);
+        partial void OnCreatedByUserIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "SiteProfilesContacts", "SiteProfile")]
+        public EntityCollection<SiteProfile> SiteProfiles
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SiteProfile>("SongSearch.Web.Data.Model.SiteProfilesContacts", "SiteProfile");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SiteProfile>("SongSearch.Web.Data.Model.SiteProfilesContacts", "SiteProfile", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "UsersContacts", "User")]
+        public EntityCollection<User> Users
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.UsersContacts", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.UsersContacts", "User", value);
                 }
             }
         }
@@ -3597,6 +4115,30 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ContactFax
+        {
+            get
+            {
+                return _ContactFax;
+            }
+            set
+            {
+                OnContactFaxChanging(value);
+                ReportPropertyChanging("ContactFax");
+                _ContactFax = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ContactFax");
+                OnContactFaxChanged();
+            }
+        }
+        private global::System.String _ContactFax;
+        partial void OnContactFaxChanging(global::System.String value);
+        partial void OnContactFaxChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
         public global::System.String ContactEmail
@@ -3689,33 +4231,34 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _CreatedByUserId;
         partial void OnCreatedByUserIdChanging(global::System.Int32 value);
         partial void OnCreatedByUserIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        public global::System.String ContactFax
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "SiteProfilesContacts", "Contact")]
+        public EntityCollection<Contact> Contacts
         {
             get
             {
-                return _ContactFax;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Contact>("SongSearch.Web.Data.Model.SiteProfilesContacts", "Contact");
             }
             set
             {
-                OnContactFaxChanging(value);
-                ReportPropertyChanging("ContactFax");
-                _ContactFax = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("ContactFax");
-                OnContactFaxChanged();
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Contact>("SongSearch.Web.Data.Model.SiteProfilesContacts", "Contact", value);
+                }
             }
         }
-        private global::System.String _ContactFax;
-        partial void OnContactFaxChanging(global::System.String value);
-        partial void OnContactFaxChanged();
 
         #endregion
-    
     }
     
     /// <summary>
@@ -4565,6 +5108,28 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Catalog>("SongSearch.Web.Data.Model.FK_Catalogs_Creators", "Catalog", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "UsersContacts", "Contact")]
+        public EntityCollection<Contact> Contacts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Contact>("SongSearch.Web.Data.Model.UsersContacts", "Contact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Contact>("SongSearch.Web.Data.Model.UsersContacts", "Contact", value);
                 }
             }
         }

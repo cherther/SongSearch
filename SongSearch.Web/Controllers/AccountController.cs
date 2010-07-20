@@ -299,17 +299,21 @@ namespace SongSearch.Web.Controllers {
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 				var user = Account.User();// SessionService.Session().User(User.Identity.Name);
-
 				var vm = new UpdateProfileModel() {
 					NavigationLocation = new string[] { "Home", "Profile" },
 					Email = this.UserName(),
 					FirstName = user.FirstName,
 					LastName = user.LastName,
 					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger),
-					AppendSignatureToTitle = user.AppendSignatureToTitle,
-					Signature = user.Signature
-
+					ShowContactInfo = user.IsAtLeastInCatalogRole(Roles.Plugger)
 				};
+				if (vm.ShowSignatureField){
+					vm.AppendSignatureToTitle = user.AppendSignatureToTitle;
+					vm.Signature = user.Signature;
+				}
+				if (vm.ShowContactInfo){
+					vm.Contact = user.GetContactInfo(false);
+				}
 
 				return View(vm);
 			}
@@ -324,8 +328,8 @@ namespace SongSearch.Web.Controllers {
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
 		public virtual ActionResult UpdateProfile(UpdateProfileModel model) {
-			
-			User userModel = new User() {
+
+			var userModel = new User() {
 				UserName = this.UserName(),
 				FirstName = model.FirstName,
 				LastName = model.LastName,
@@ -333,13 +337,15 @@ namespace SongSearch.Web.Controllers {
 				AppendSignatureToTitle = model.AppendSignatureToTitle
 			};
 
+			var contact = model.Contact;
 
 			//var session = SessionService.Session();
 			var currentUser = Account.User();//session.User(User.Identity.Name);
 			model.ShowSignatureField = currentUser.IsAtLeastInCatalogRole(Roles.Plugger);
+			model.ShowContactInfo = currentUser.IsAtLeastInCatalogRole(Roles.Plugger);
 	
 			//update the user's profile in the database
-			if (ModelState.IsValid && _acctService.UpdateProfile(userModel)) {
+			if (_acctService.UpdateProfile(userModel, contact)) {
 					
 				// UpdateModelWith the user dataSession cached in dataSession
 				SessionService.Session().InitializeSession(true);

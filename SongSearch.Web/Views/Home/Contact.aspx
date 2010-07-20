@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.ContactModel>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.ContactUsModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Contact Us
@@ -32,15 +32,15 @@
 					<div><%: Html.TextBoxFor(m => m.Name, new { @class = "cw-field-large", title = "Please enter you full name" })%></div>
 					<div><%= Html.ValidationMessageFor(m => m.Name)%></div>
 					<div>&nbsp;</div>
-					<div><%: Html.LabelFor(m => m.Email) %></div>
+					<div><%: Html.LabelFor(m => m.Email)%></div>
 					<div><%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", title = "Please enter a valid e-mail address so we can get back to you" })%></div>
 					<div><%= Html.ValidationMessageFor(m => m.Email)%></div>
 					<div>&nbsp;</div>
-					<div><%: Html.LabelFor(m => m.Company) %></div>
+					<div><%: Html.LabelFor(m => m.Company)%></div>
 					<div><%: Html.TextBoxFor(m => m.Company, new { @class = "cw-field-large" })%></div>
 					<div><%= Html.ValidationMessageFor(m => m.Company)%></div>
 					<div>&nbsp;</div>
-					<div><%: Html.LabelFor(m => m.Subject) %></div>
+					<div><%: Html.LabelFor(m => m.Subject)%></div>
 					<div><%: Html.TextBoxFor(m => m.Subject, new { @class = "cw-field-xlarge", title = "Please enter a short subject line" })%></div>
 					<div><%= Html.ValidationMessageFor(m => m.Subject)%></div>
 
@@ -58,14 +58,24 @@
 			</div>
 		</div>
 		<div class="three column">
-
 			<div class="cw-outl cw-padded cw-buffered-left cw-rounded-corners">
 				<h3>Contact Information:</h3>
 				<div>&nbsp;</div>
-				<%: Model.SiteProfile.CompanyName %><br />
-				Phone: <%: Model.SiteProfile.ContactPhone %><br />
-				Fax: <%: Model.SiteProfile.ContactFax %><br />
-				E-Mail: <%: Model.SiteProfile.ContactEmail %><br />
+				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.ContactName)) {%>
+				<%: Model.ContactInfo.ContactName%><br />
+				<%} %>
+				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.CompanyName)) {%>
+				<%: Model.ContactInfo.CompanyName%><br />
+				<%} %>
+				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Phone1)) {%>
+				Phone: <%: Model.ContactInfo.Phone1%><br />
+				<%} %>
+				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Fax)) {%>
+				Fax: <%: Model.ContactInfo.Fax%><br />
+				<%} %>
+				<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Email)) {%>
+				E-Mail: <%: Model.ContactInfo.Email%><br />
+				<%} %>
 			</div>
 
 		</div>

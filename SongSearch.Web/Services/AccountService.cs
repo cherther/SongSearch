@@ -87,7 +87,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateProfile
 		// **************************************    
-		public bool UpdateProfile(User user) {
+		public bool UpdateProfile(User user, Contact contact) {
 
 			var dbuser = GetUser(user);
 			if (dbuser == null) {
@@ -97,6 +97,34 @@ namespace SongSearch.Web.Services {
 			dbuser.LastName = user.LastName;
 			dbuser.Signature = user.Signature;
 			dbuser.AppendSignatureToTitle = user.AppendSignatureToTitle;
+
+			if (contact != null && (!String.IsNullOrWhiteSpace(contact.Phone1) || !String.IsNullOrWhiteSpace(contact.Email))) {
+				var dbContact = dbuser.Contacts.SingleOrDefault(c => c.ContactId == contact.ContactId) ??
+					new Contact() {
+						IsDefault = true,
+						CreatedByUserId = dbuser.UserId,
+						CreatedOn = DateTime.Now
+					};
+
+				dbContact.ContactName = contact.ContactName;
+				dbContact.CompanyName = contact.CompanyName;
+				dbContact.Address1 = contact.Address1;
+				dbContact.Address2 = contact.Address2;
+				dbContact.City = contact.City;
+				dbContact.StateRegion = contact.StateRegion;
+				dbContact.PostalCode = contact.PostalCode;
+				dbContact.Country = contact.Country;
+				dbContact.Phone1 = contact.Phone1;
+				dbContact.Phone2 = contact.Phone2;
+				dbContact.Fax = contact.Fax;
+				dbContact.Email = contact.Email;
+				dbContact.AdminEmail = contact.AdminEmail;
+
+				if (dbContact.ContactId == 0) {
+					DataSession.Add<Contact>(dbContact);
+					dbuser.Contacts.Add(dbContact);
+				}
+			}
 
 			DataSession.CommitChanges();
 			dbuser = null;

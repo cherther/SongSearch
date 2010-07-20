@@ -1,0 +1,108 @@
+﻿.info
+{
+    background-color: #CCFFCC;
+    border-top: 1px solid #FFCC66;
+    border-bottom: 4px solid #006600;
+    padding: 6px;
+    font-family: "Helvetica Neue" , Helvetica, Arial, non-serif;
+    font-size: 1.1em;
+    text-align: center;
+    border-top-color: #006600;
+    border-bottom-color: #006600;
+    font-weight: bold;
+    color: #339933;
+    cursor: pointer;
+}
+.warning
+{
+    background-color: #FFFF99;
+    border-top: 1px solid #FFCC66;
+    border-bottom: 4px solid #FFCC66;
+    padding: 6px;
+    font-family: "Helvetica Neue" , Helvetica, Arial, non-serif;
+    font-size: 0.9em;
+    text-align: center;
+    border-top-color: #CC9900;
+    border-bottom-color: #CC9900;
+    font-weight: bold;
+    color: #333333;
+    cursor: pointer;
+}
+.error
+{
+    background-color: #FF3300;
+    border-top: 1px solid #FFCC66;
+    border-bottom: 4px solid #FFCC66;
+    padding: 4px;
+    font-family: "Helvetica Neue" , Helvetica, Arial, non-serif;
+    font-size: 1.1em;
+    text-align: center;
+    border-top-color: #666666;
+    border-bottom-color: #666666;
+    font-weight: bold;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.feedback-bar
+{
+    background-color: #CCFFCC; /*#999999*/
+    color: #339933; /*#FFFFFF*/
+    border-bottom: 2px solid #006600; /*#333333*/
+    font-family: "Helvetica Neue" , Helvetica, Arial, non-serif;
+    font-size: 1.1em;
+    text-align: center;
+    cursor: pointer;
+}
+
+.feedback-bar-error
+{
+    background-color: #FF3300;
+    color: #FFFFFF;
+    border-bottom: 2px solid #333333;
+    font-family: "Helvetica Neue" , Helvetica, Arial, non-serif;
+    font-size: 1.1em;
+    text-align: center;
+    cursor: pointer;
+}
+
+.feedback-bar-content {
+	padding: 7px 0;
+	text-align: center;
+	font-weight: bold;
+	font-size: 16px;
+}
+.feedback-bar-content .close {
+	border: 2px solid;
+	padding-left: 4px;
+	padding-right: 4px;
+	text-decoration: none;
+	position: absolute;
+	right: 30px;
+	top: 5px;
+	font-weight: normal;
+	font-size: 13px;
+	color: #fff; /*#FFFFFF*/
+}
+/* ASP.NET MVC styles */
+.field-validation-error { color: #ff0000; }
+.input-validation-error { border: 1px solid #ff0000; background-color: #ffeeee; }
+.validation-summary-errors { font-weight: bold; color: #ff0000; }
+
+.feedback-box 
+{
+    border: 1px solid;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px; 
+	width: 40%;
+    
+}
+.feedback-box-error
+{
+    color: #fff;
+    background-color: #ff3300;
+    border-color: #ff3300;
+}

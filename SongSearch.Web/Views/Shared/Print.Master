@@ -9,18 +9,8 @@
 	<meta name="author" content="<%: Model.SiteProfile.CompanyName %>" /> 
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
 	 <!--[if lt IE 8]><link rel="stylesheet" href=""~/public/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
-	<%= Bundle.Css()
-				.Add("~/public/css/fluid.gs.css")
-				.Add("~/public/css/cw.app.css")
-		.Add("~/public/css/cw.buttons.css")
-		.Add("~/public/css/cw.forms.css")
-		.Add("~/public/css/cw.tables.css")
-		//.ForceRelease()
-			//.WithMedia("print")
-		.WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
-				.Render("~/public/css/cw-print_#.css")
-	%>
-
+	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
+	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
 	<title><%: Model.SiteProfile.CompanyName %> - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
@@ -59,10 +49,8 @@
 			</div> 
 		 </div>
 	 </div>
-
-	<%= Bundle.JavaScript()
-	.Add(Links.Scripts.jquery_1_4_2_min_js).WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
-	.Render("~/public/javascript/cw-print_#.js")%>  
+	
+	<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.3/jquery.tools.min.js"></script>
 
 </body>
 <asp:ContentPlaceHolder id="Javascripts" runat="server" />

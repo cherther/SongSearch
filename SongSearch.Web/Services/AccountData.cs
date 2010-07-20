@@ -27,6 +27,8 @@ namespace SongSearch.Web {
 					.Include("Carts")
 					.Include("Carts.Contents")
 					.Include("UserCatalogRoles")
+					.Include("Contacts")
+					.Include("ParentUser.Contacts")
 					.Where(u => u.UserId == userId).SingleOrDefault();
 
 				return user;	
@@ -42,6 +44,8 @@ namespace SongSearch.Web {
 						.Include("Carts")
 						.Include("Carts.Contents")
 						.Include("UserCatalogRoles")
+						.Include("Contacts")
+						.Include("ParentUser.Contacts")
 						.Where(u => u.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
 
 					return user;

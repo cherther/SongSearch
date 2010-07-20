@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SongSearch.Web.Services;
 using System.Text;
+using SongSearch.Web.Data;
 
 namespace SongSearch.Web.Controllers {
 	[HandleError]
@@ -31,28 +32,35 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Home/Contact/
 		// **************************************
 		public virtual ActionResult Contact() {
-			var model = new ContactModel() { 
+
+			var model = new ContactUsModel() {
+				
 				Email = User.Identity.IsAuthenticated ? User.Identity.Name : "",
 				Name = User.Identity.IsAuthenticated ? this.Friendly() : "",
-				NavigationLocation = new string[] { "Contact" } 
-			
+				NavigationLocation = new string[] { "Contact" }, 
+				PageTitle = "Send us a question or comment:"
+				
 			};
-			model.PageTitle = "Send us a question or comment:";
+
+			model.ContactInfo = model.SiteProfile.GetContactInfo(Account.User());
 			return View(model);
 		}
 
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
-		public virtual ActionResult Contact(ContactModel model) {
+		public virtual ActionResult Contact(ContactUsModel model) {
 
 			if (ModelState.IsValid) {
-				var vm = new ContactModel() { NavigationLocation = new string[] { "Contact" } };
+				var vm = new ContactUsModel() { 
+					NavigationLocation = new string[] { "Contact" } 
+				};
 				vm.PageTitle = "Thanks for e-mailing us!";
 				vm.PageMessage = "Your e-mail has been successfully sent to our team, and we will review your message and respond as quickly as possible.";
+				vm.ContactInfo = vm.SiteProfile.GetContactInfo(Account.User());
 
 				string sender = String.Format("{0} <{1}>", model.Name, model.Email);
-				string subject = String.Format("[{0} Contact Us] {1}", vm.SiteProfile.CompanyName, model.Subject);
+				string subject = String.Format("[{0} Contact Us] {1}", vm.ContactInfo.CompanyName, model.Subject);
 				StringBuilder sb = new StringBuilder();
 				sb.AppendFormat("<p>Name: {0}</p>", model.Name);
 				sb.AppendFormat("<p>Email: {0}</p>", model.Email);
@@ -66,7 +74,7 @@ namespace SongSearch.Web.Controllers {
 
 				Mail.SendMail(
 					sender,
-					vm.SiteProfile.ContactEmail,//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
+					vm.ContactInfo.Email,//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
 					subject,
 					msg
 					);
@@ -76,10 +84,14 @@ namespace SongSearch.Web.Controllers {
 			} else {
 				model.NavigationLocation = new string[] { "Contact" };
 				model.PageTitle = "Send us a question or comment:";
+				model.ContactInfo = model.SiteProfile.GetContactInfo(Account.User());
+
 				this.FeedbackError("There was an error with the contact request you sent...");
 
 				return View(model);
 			}
 		}
+
+		
 	}
 }

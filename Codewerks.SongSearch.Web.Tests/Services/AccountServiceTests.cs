@@ -131,7 +131,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 				LastName = name
 			};
 			// Act
-			_acc.UpdateProfile(user);
+			_acc.UpdateProfile(user, null);
 
 			var dbuser = _usr.GetUserDetail(_dummyuser);
 			// Assert
@@ -149,7 +149,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 				Signature = signature
 			};
 			// Act
-			_acc.UpdateProfile(user);
+			_acc.UpdateProfile(user, null);
 
 			var usersig = _usr.GetUserDetail(_plugger).Signature;
 			// Assert
@@ -168,7 +168,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 				Signature = signature
 			};
 			// Act
-			_acc.UpdateProfile(user);
+			_acc.UpdateProfile(user, null);
 
 			var usersig = _usr.GetUserDetail(_dummyuser).Signature;
 			// Assert

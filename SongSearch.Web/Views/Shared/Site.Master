@@ -8,23 +8,9 @@
 	<meta name="robots" content="noindex, nofollow" />
 	<meta name="author" content="<%: Model.SiteProfile.CompanyName %>" /> 
 	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-	 <!--[if lt IE 8]><link rel="stylesheet" href=""~/public/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
-	<%= Bundle.Css()
-				.Add("~/public/css/fluid.gs.css")
-				.Add("~/public/css/cw.app.css")
-		.Add("~/public/css/cw.buttons.css")
-		.Add("~/public/css/cw.forms.css")
-		.Add("~/public/css/cw.tables.css")
-		.Add("~/public/css/cw.flashblock.css")
-		.Add("~/public/css/cw.feedback.css")
-		.Add("~/public/css/cw.twitlogin.css")
-		.Add("~/public/css/jquery-ui.css")
-					.Add("~/public/css/jquery.gritter.css")
-				.Add("~/public/css/plupload.queue.css")
-		//.ForceRelease()
-		.WithCompressor(SquishIt.Framework.Css.Compressors.CssCompressors.YuiCompressor)
-		.Render("~/public/css/cw-combined_#.css")
-	%>
+	 <!--[if lt IE 8]><link rel="stylesheet" href=""~/public/css/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
+	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
+	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
 	<title><%: Model.SiteProfile.CompanyName %> - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
@@ -79,65 +65,45 @@
 		</div> 
 	 </div>
 </div>
-<script src="http://cdn.jquerytools.org/1.2.3/jquery.tools.min.js"></script>
 <%
 	var debug = App.Environment != AppEnvironment.Production;
 	var d = debug ? "?d" : "";
-	var bundle = Bundle.JavaScript()
-	//.Add(Links.Scripts.jquery_1_4_2_min_js)
-	.Add(Links.Scripts.jquery_form_js)
-	.Add(Links.Scripts.jquery_blockUI_js)
-	.Add(Links.Scripts.jquery_ui_min_js)
-//	.Add(Links.Scripts.jquery_feedbackbar_js)
-	//.Add(Links.Scripts.jquery_tools_min_js)
-	.Add(Links.Scripts.jquery_gritter_js);
-	if (!debug) {
-		bundle.Add(Links.Scripts.soundmanager2_nodebug_jsmin_js);
-	} else {
-		bundle.Add(Links.Scripts.soundmanager2_js);
-	}
-	bundle
-		.Add(Links.Scripts.gears_init_js)
-		.Add(Links.Scripts.plupload_full_min_js)
-		//.Add(Links.Scripts.plupload_js)
-		//.Add(Links.Scripts.plupload_flash_js)
-		.Add(Links.Scripts.jquery_plupload_queue_min_js);
-	
-	bundle
-		.Add(String.Concat(Links.Scripts.cw_app_main_js, d))
-		.Add(String.Concat(Links.Scripts.cw_app_ajax_js, d))
-		.Add(String.Concat(Links.Scripts.cw_app_events_js, d))
-		.Add(String.Concat(Links.Scripts.cw_app_sound_js, d))
-		.Add(String.Concat(Links.Scripts.cw_app_upload_js, d))
-		.WithMinifier(SquishIt.Framework.JavaScript.Minifiers.JavaScriptMinifiers.Yui)
-	//.ForceRelease()
-	;
-	%>
-	<%= bundle.Render("~/public/javascript/cw-combined_#.js")%>    		
-	<script type="text/javascript">
-		var uservoiceOptions = {
-			/* required */
-			key: 'worldsongnet',
-			host: 'worldsongnet.uservoice.com',
-			forum: '56920',
-			showTab: true,
-			/* optional */
-			alignment: 'right',
-			background_color: '#0066cc',
-			text_color: 'white',
-			hover_color: '#ff0000',
-			lang: 'en'
-		};
+%>
+<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.3/jquery.tools.min.js"></script>
+<script type="text/javascript" src="/public/javascript/cw.plugins.js"></script>
+<%if (debug) {%>
+<script type="text/javascript" src="/scripts/cw.app.main.chirp.js<%: d %>" ></script>
+<script type="text/javascript" src="/scripts/cw.app.events.chirp.js<%: d %>" ></script>
+<script type="text/javascript" src="/scripts/cw.app.ajax.chirp.js<%: d %>" ></script>
+<script type="text/javascript" src="/scripts/cw.app.sound.chirp.js<%: d %>" ></script>
+<script type="text/javascript" src="/scripts/cw.app.upload.chirp.js<%: d %>" ></script>
+<%} else {%>
+<script type="text/javascript" src="/public/javascript/cw.application.js"></script>
+<%} %>
+<script type="text/javascript">
+	var uservoiceOptions = {
+		/* required */
+		key: 'worldsongnet',
+		host: 'worldsongnet.uservoice.com',
+		forum: '56920',
+		showTab: true,
+		/* optional */
+		alignment: 'right',
+		background_color: '#0066cc',
+		text_color: 'white',
+		hover_color: '#ff0000',
+		lang: 'en'
+	};
 
-		function _loadUserVoice() {
-			var s = document.createElement('script');
-			s.setAttribute('type', 'text/javascript');
-			s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
-			document.getElementsByTagName('head')[0].appendChild(s);
-		}
-		_loadSuper = window.onload;
-		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function () { _loadSuper(); _loadUserVoice(); };
-	</script>
+	function _loadUserVoice() {
+		var s = document.createElement('script');
+		s.setAttribute('type', 'text/javascript');
+		s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+		document.getElementsByTagName('head')[0].appendChild(s);
+	}
+	_loadSuper = window.onload;
+	window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function () { _loadSuper(); _loadUserVoice(); };
+</script>
 	
 
 </body>

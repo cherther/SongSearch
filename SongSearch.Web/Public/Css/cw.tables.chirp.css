@@ -1,0 +1,141 @@
+﻿
+.cw-row-selected
+{
+	background: #cccccc url(/public/images/jquery-ui/ui-bg_highlight-soft_75_cccccc_1x100.png) 50% 50% repeat-x; color: #222222;
+	/*background-color: #FFFFCC;*/  
+	font-weight: bold;
+}
+/* Search Results */
+.cw-tbl-search-results 
+{
+	border: 1px solid gray;
+	border-collapse: collapse;
+	padding: 4px;
+	
+}
+.cw-tbl-search-results tr
+{
+	border: 1px solid #aaaaaa;
+}
+.cw-tbl-search-results th
+{
+	background-color: #B5D2E8;
+}
+.cw-tbl-data td
+{
+	padding: 4px;
+	/*white-space: nowrap;   */
+ }
+
+
+/* Content Detail */
+.cw-tbl-content-detail 
+{   width: 100%;
+	border: 0 none black;
+	border-collapse: collapse;
+}
+.cw-tbl-content-detail tr, td
+{
+	border: 0 none black;
+}
+
+.cw-tbl-content-rights
+{
+	border: 1px solid #ccc;
+}
+
+.cw-content-label
+{
+	width:25%;
+	font-weight: bold;
+	vertical-align:top;
+}
+.cw-content-field
+{
+}
+/* Cart Contents */
+.cw-tbl-cart-contents 
+{
+	border: 1px solid gray;
+	border-collapse: collapse;
+	padding: 3px;
+	font-size: 90%;
+	white-space: nowrap;    
+}
+.cw-tbl-cart-contents tr
+{
+	border: 1px solid #aaaaaa;
+}
+
+.cw-tbl-cart-contents th, td
+{
+	padding: 3px;
+}
+.cw-tbl-cart-contents th
+{
+	text-align: left;
+}
+
+
+/* Cart Grid  */
+.cw-tbl-carts
+{
+	/*font-family: Tahoma, Verdana, helvetica,verdana,sans-serif;*/
+	border: 1px solid #c0c0c0;
+	border-collapse: collapse;
+	vertical-align: middle;
+	margin: 10px 0;
+}
+
+.cw-tbl-carts th { background-color: #cecece; font-weight: normal; text-align: left; }
+.cw-tbl-carts .cw-tbl-carts-main { border-top: 1px solid #c0c0c0; }
+.cw-tbl-carts td, th { padding: 0.25em 0.8em;  vertical-align: middle; text-align: left; }
+.cw-carts-contents
+{
+	width: 15px;
+	height: 20px;
+	cursor: pointer;
+}
+.cw-carts-contents-show
+{
+	background:transparent url(/public/images/icons/ico_plus.png) no-repeat;
+}
+
+.cw-carts-contents-hide
+{
+	background:transparent url(/public/images/icons/ico_minus.png) no-repeat;
+}
+.cw-tbl-carts-processing
+{
+	background-color: #FFFF99;
+}
+.cw-tbl-carts-archived
+{
+	color: Gray;
+}
+.cw-tbl-carts-details
+{
+	display: none;
+}
+
+/* Catalog Contents */
+.cw-tbl-catalog-contents
+{
+	display: none;
+	border: 1px solid gray;
+	border-collapse: collapse;
+	padding: 3px;
+	font-size: 90%;
+	white-space: nowrap;    
+	
+}
+.cw-tbl-catalog-contents tr
+{
+	border: 1px solid #aaaaaa;
+}
+
+.cw-tbl-catalog-contents th, td
+{
+	padding: 3px;
+}
+

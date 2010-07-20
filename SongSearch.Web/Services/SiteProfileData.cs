@@ -28,10 +28,21 @@ namespace SongSearch.Web {
 			} else {
 				using (var session = App.DataSessionReadOnly) {
 					var profile = session.GetObjectQuery<SiteProfile>()
+						.Include("Contacts")
 						.Where(s => s.ProfileName.Equals(profileName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
-
 					return profile;
+				
 				}
+			}
+		}
+		public static IList<SiteProfile> SiteProfiles() {
+			using (var session = App.DataSessionReadOnly) {
+				var profiles = session.GetObjectQuery<SiteProfile>()
+					.Include("Contacts")
+					.ToList();
+
+				return profiles;
+
 			}
 		}
 	}

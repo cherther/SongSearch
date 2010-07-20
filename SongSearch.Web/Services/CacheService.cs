@@ -299,7 +299,7 @@ namespace SongSearch.Web.Services {
 		// GetData
 		// **************************************
 		private static IList<SiteProfile> GetDataSiteProfiles() {
-			return SearchService.GetLookupList<SiteProfile>();
+			return SiteProfileData.SiteProfiles();
 		}
 		private static IList<Catalog> GetDataCatalogs() {
 			return SearchService.GetLookupList<Catalog>();

@@ -52,6 +52,7 @@
     <Reference Include="AntiXSSLibrary">
       <HintPath>..\..\mvcstarter\lib\AntiXSSLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="dotless.Core, Version=1.0.0.5, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL" />
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
     </Reference>
@@ -175,6 +176,7 @@
     <Compile Include="MediaController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContactInfo.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="SearchController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -245,20 +247,69 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Public\Css\cw.app.css" />
-    <Content Include="Public\Css\cw.feedback.css" />
-    <Content Include="Public\Css\cw.flashblock.css" />
-    <Content Include="Public\Css\cw.forms.css" />
-    <Content Include="Public\Css\cw.tables.css" />
-    <Content Include="Public\Css\cw.twitlogin.css" />
-    <Content Include="Public\Css\cw.buttons.css" />
+    <Content Include="Public\Css\cw.app.chirp.css" />
+    <Content Include="Public\Css\cw.app.css">
+      <DependentUpon>stylemash.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Public\Css\cw.app.min.css">
+      <DependentUpon>cw.app.chirp.css</DependentUpon>
+    </Content>
+    <Content Include="Public\Css\cw.buttons.min.css">
+      <DependentUpon>cw.buttons.chirp.css</DependentUpon>
+    </Content>
+    <Content Include="Public\Css\cw.feedback.chirp.css" />
+    <Content Include="Public\Css\cw.feedback.min.css">
+      <DependentUpon>cw.feedback.chirp.css</DependentUpon>
+    </Content>
+    <Content Include="Public\Css\cw.flashblock.chirp.css" />
+    <Content Include="Public\Css\cw.flashblock.min.css">
+      <DependentUpon>cw.flashblock.chirp.css</DependentUpon>
+    </Content>
+    <Content Include="Public\Css\cw.forms.chirp.css" />
+    <Content Include="Public\Css\cw.forms.min.css">
+      <DependentUpon>cw.forms.chirp.css</DependentUpon>
+    </Content>
+    <Content Include="Public\Css\cw.plugins.css">
+      <DependentUpon>stylemash.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Public\Css\cw.tables.chirp.css" />
+    <Content Include="Public\Css\cw.tables.min.css">
+      <DependentUpon>cw.tables.chirp.css</DependentUpon>
+    </Content>
+    <Content Include="Public\Css\cw.twitlogin.chirp.css" />
+    <Content Include="Public\Css\cw.buttons.chirp.css" />
+    <Content Include="Public\Css\cw.twitlogin.min.css">
+      <DependentUpon>cw.twitlogin.chirp.css</DependentUpon>
+    </Content>
     <Content Include="Public\Css\demo.css" />
     <Content Include="Public\Css\fluid.gs.css" />
     <Content Include="Public\Css\fluid.gs.lt_ie8.css" />
     <Content Include="Public\Css\jquery-ui.css" />
     <Content Include="Public\Css\jquery.gritter.css" />
     <Content Include="Public\Images\error_404.jpg" />
-    <Content Include="Scripts\cw.app.upload.js" />
+    <Content Include="Public\Javascript\cw.application.js">
+      <DependentUpon>scriptmash.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Public\Javascript\cw.plugins.js">
+      <DependentUpon>scriptmash.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\cw.app.ajax.min.js">
+      <DependentUpon>cw.app.ajax.chirp.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\cw.app.events.min.js">
+      <DependentUpon>cw.app.events.chirp.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\cw.app.main.chirp.js" />
+    <Content Include="Scripts\cw.app.main.min.js">
+      <DependentUpon>cw.app.main.chirp.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\cw.app.sound.min.js">
+      <DependentUpon>cw.app.sound.chirp.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\cw.app.upload.chirp.js" />
+    <Content Include="Scripts\cw.app.upload.min.js">
+      <DependentUpon>cw.app.upload.chirp.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.gritter.js" />
     <Content Include="Scripts\jquery.gritter.min.js" />
     <Content Include="Public\Css\plupload.queue.css" />
@@ -1771,13 +1822,11 @@
     <Content Include="Public\Images\throbber.gif" />
     <Content Include="Public\Images\transp50.png" />
     <Content Include="Public\Images\trees.jpg" />
-    <Content Include="Scripts\cw.app.main.js" />
-    <Content Include="Scripts\cw.app.events.js" />
-    <Content Include="Scripts\cw.app.ajax.js" />
-    <Content Include="Scripts\cw.app.sound.js" />
+    <Content Include="Scripts\cw.app.events.chirp.js" />
+    <Content Include="Scripts\cw.app.ajax.chirp.js" />
+    <Content Include="Scripts\cw.app.sound.chirp.js" />
     <Content Include="Scripts\gears_init.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
-    <Content Include="Scripts\jquery-ui-1.8.1.min.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.feedbackbar.js" />
@@ -1876,9 +1925,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery-1.4.1.js" />
-    <Content Include="Scripts\jquery-1.4.1.min.js" />
-    <Content Include="Scripts\jquery-1.4.1-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
@@ -1895,7 +1941,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Public\Javascript\" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Infrastructure\Storage\EF\SongSearch.edmx">
@@ -1914,6 +1959,8 @@
     <Content Include="Views\Shared\Print.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Public\Javascript\scriptmash.chirp.config" />
+    <Content Include="Public\Css\stylemash.chirp.config" />
     <None Include="T4MVC.settings.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
