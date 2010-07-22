@@ -292,7 +292,7 @@ namespace SongSearch.Web.Controllers {
 					Email = this.UserName(),
 					FirstName = user.FirstName,
 					LastName = user.LastName,
-					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Admin),
+					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger),
 					ShowContactInfo = user.IsAtLeastInCatalogRole(Roles.Admin)
 				};
 				if (vm.ShowSignatureField){
@@ -329,7 +329,7 @@ namespace SongSearch.Web.Controllers {
 
 			//var session = SessionService.Session();
 			var currentUser = Account.User();//session.User(User.Identity.Name);
-			model.ShowSignatureField = currentUser.IsAtLeastInCatalogRole(Roles.Admin);
+			model.ShowSignatureField = currentUser.IsAtLeastInCatalogRole(Roles.Plugger);
 			model.ShowContactInfo = currentUser.IsAtLeastInCatalogRole(Roles.Admin);
 	
 			//update the user's profile in the database
