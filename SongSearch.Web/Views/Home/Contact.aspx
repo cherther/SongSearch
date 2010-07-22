@@ -63,7 +63,28 @@
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.CompanyName)) {%>
 					<div class="cw-padded"><%: Model.ContactInfo.CompanyName%></div>
 					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Address1)) {%>
+					<div class="cw-padded"><%: Model.ContactInfo.Address1%></div>
+					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Address2)) {%>
+					<div class="cw-padded"><%: Model.ContactInfo.Address2%></div>
+					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.City)) {%>
+					<div class="cw-padded">
+						<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.StateRegion)) {%>
+						<%: Model.ContactInfo.City%>,&nbsp;<%: Model.ContactInfo.StateRegion%>&nbsp;<%: Model.ContactInfo.PostalCode%>
+						<%} else {%>
+						<%: Model.ContactInfo.PostalCode%>&nbsp;<%: Model.ContactInfo.City%>
+						<%} %>
+					</div>
+					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Country)) {%>
+					<div class="cw-padded"><%: Model.ContactInfo.Country%></div>
+					<%} %>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Phone1)) {%>
+					<div class="cw-padded">Phone: <%: Model.ContactInfo.Phone1%></div>
+					<%} %>
+					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Phone2)) {%>
 					<div class="cw-padded">Phone: <%: Model.ContactInfo.Phone1%></div>
 					<%} %>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Fax)) {%>

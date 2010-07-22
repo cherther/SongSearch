@@ -48,13 +48,15 @@ namespace SongSearch.Web.Controllers {
 		public virtual ActionResult LogIn(LogOnModel model) {
 			model.NavigationLocation = new string[] { "Home", "Login" };
 			model.RememberMe = true;
-			model.TokenUrl = Url.ActionAbsolute(MVC.Account.OpenId());
+			
 			return View(model);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public virtual ActionResult LogIn(LogOnModel model, string returnUrl) {
+
+			model.Email = model.Email.Trim();
 
 			if (ModelState.IsValid) {
 				if (_acctService.UserIsValid(model.Email, model.Password))
@@ -103,21 +105,7 @@ namespace SongSearch.Web.Controllers {
 			return View(model);
 		}
 
-		[HttpPost]
-		public virtual ActionResult OpenId(string token, string returnUrl) {
-
-			var rpx = new Rpx("2f7539e29ea2db3cec07a79945c64b5e35b1b29d", "https://rpxnow.com/");
-			var data = rpx.AuthInfo(token);
-
-			
-
-			if (!String.IsNullOrEmpty(returnUrl)) {
-				return Redirect(returnUrl);
-			} else {
-				return RedirectToAction(MVC.Home.Index());
-			}
-		}
-
+		
 		private void SetFriendlyNameCookie(string friendly) {
 			Response.Cookies["friendly"].Value = friendly;
 			Response.Cookies["friendly"].Expires = DateTime.Now.AddDays(30);
@@ -304,8 +292,8 @@ namespace SongSearch.Web.Controllers {
 					Email = this.UserName(),
 					FirstName = user.FirstName,
 					LastName = user.LastName,
-					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger),
-					ShowContactInfo = user.IsAtLeastInCatalogRole(Roles.Plugger)
+					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Admin),
+					ShowContactInfo = user.IsAtLeastInCatalogRole(Roles.Admin)
 				};
 				if (vm.ShowSignatureField){
 					vm.AppendSignatureToTitle = user.AppendSignatureToTitle;
@@ -341,8 +329,8 @@ namespace SongSearch.Web.Controllers {
 
 			//var session = SessionService.Session();
 			var currentUser = Account.User();//session.User(User.Identity.Name);
-			model.ShowSignatureField = currentUser.IsAtLeastInCatalogRole(Roles.Plugger);
-			model.ShowContactInfo = currentUser.IsAtLeastInCatalogRole(Roles.Plugger);
+			model.ShowSignatureField = currentUser.IsAtLeastInCatalogRole(Roles.Admin);
+			model.ShowContactInfo = currentUser.IsAtLeastInCatalogRole(Roles.Admin);
 	
 			//update the user's profile in the database
 			if (_acctService.UpdateProfile(userModel, contact)) {
@@ -417,7 +405,7 @@ namespace SongSearch.Web.Controllers {
 
 				//Send email
 
-				string link = String.Format(@"<a href='{0}/Account/ResetPasswordRespond/{1}?rc={2}'>visit our Password Reset page</a>",
+				string link = String.Format(@"visit our <a href='{0}/Account/ResetPasswordRespond/{1}?rc={2}'>Password Reset page</a>",
 					Settings.BaseUrl.Value(),
 					model.Email,
 					model.ResetCode);
@@ -427,7 +415,7 @@ namespace SongSearch.Web.Controllers {
 					Settings.AdminEmailAddress.Value(),
 					model.Email,
 					Messages.PasswordResetRequestSubjectLine.Value(),
-					String.Format("{0} {1}", Messages.PasswordResetRequest.Value(), msg)
+					String.Format("{0} {1}", String.Format(Messages.PasswordResetRequest.Value(), SiteProfileData.SiteProfile().CompanyName), msg)
 
 					);
 				return RedirectToAction(Actions.ResetPasswordSuccess());
@@ -443,7 +431,7 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/ResetPasswordSuccess
 		// **************************************        
 		public virtual ActionResult ResetPasswordSuccess() {
-			return View();
+			return View(new ResetPasswordModel() { NavigationLocation = new string[] { "Home", "ResetPassword" } });
 		}
 
 		// **************************************

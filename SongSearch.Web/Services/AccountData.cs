@@ -139,7 +139,7 @@ namespace SongSearch.Web {
 		// IsAtLeastInCatalogRole
 		// **************************************   
 		public static bool IsAtLeastInCatalogRole(this User user, Roles role) {
-			return user != null && (user.IsSuperAdmin() ||
+			return user != null && (user.IsSuperAdmin() || user.RoleId <=(int)role ||
 				(user.UserCatalogRoles != null ?
 				user.UserCatalogRoles.Any(x => x.RoleId <= (int)role) :
 				false));
@@ -337,7 +337,7 @@ namespace SongSearch.Web {
 
 			Contact contact = null;
 			// Pluggers and above can set up their own contact info, everyone else inherits down
-			if (user.IsAtLeastInCatalogRole(Roles.Plugger)) {
+			if (user.IsAtLeastInCatalogRole(Roles.Admin)) {
 				contact = user.Contacts.FirstOrDefault(c => c.IsDefault);
 			}
 			return contact ??
