@@ -38,7 +38,6 @@
     <% using (Html.BeginForm(MVC.Account.ChangePassword(), FormMethod.Post, new { @class = "cw-form-small" }))
        {%><%=Html.AntiForgeryToken() %>
             <fieldset>
-                <legend>Password Information</legend>
                 <div>&nbsp;</div>
 				<div>
                     <%= Html.LabelFor(m => m.OldPassword) %>

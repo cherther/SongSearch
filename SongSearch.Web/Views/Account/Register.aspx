@@ -37,7 +37,6 @@
 	
 		
 			<fieldset>
-				<legend>Account Information</legend>
 				<div>&nbsp;</div>
 				<div class="cw-fe-vert cw-fe-req">
 					<%= Html.LabelFor(m => m.Email) %>

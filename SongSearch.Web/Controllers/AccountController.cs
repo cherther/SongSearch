@@ -337,7 +337,8 @@ namespace SongSearch.Web.Controllers {
 					
 				// UpdateModelWith the user dataSession cached in dataSession
 				SessionService.Session().InitializeSession(true);
-				
+				CacheService.CacheUpdate(CacheService.CacheKeys.SiteProfile);
+
 				var friendly = userModel.FullName();
 				SetFriendlyNameCookie(friendly);
 

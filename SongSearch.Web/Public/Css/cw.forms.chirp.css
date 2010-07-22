@@ -1,14 +1,14 @@
 ﻿input, select
 {
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
+	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
 	/*vertical-align: top;*/
 }
 
 label
 {
-	font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Helvetica, Arial, sans-serif;
-	font-weight: 500; 
-	/*vertical-align: top;  */
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;/*'Lucida Grande' , 'Lucida Sans Unicode' , Verdana, Helvetica, Arial, sans-serif;*/
+	font-weight: bold;
+
 }
 .text-box 
 {

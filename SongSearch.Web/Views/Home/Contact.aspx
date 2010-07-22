@@ -64,10 +64,11 @@
 					<div class="cw-padded"><%: Model.ContactInfo.CompanyName%></div>
 					<%} %>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Address1)) {%>
-					<div class="cw-padded"><%: Model.ContactInfo.Address1%></div>
-					<%} %>
+					<div class="cw-padded"><%: Model.ContactInfo.Address1%>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Address2)) {%>
-					<div class="cw-padded"><%: Model.ContactInfo.Address2%></div>
+					,&nbsp;<%: Model.ContactInfo.Address2%>
+					<%} %>
+					</div>
 					<%} %>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.City)) {%>
 					<div class="cw-padded">
@@ -76,10 +77,10 @@
 						<%} else {%>
 						<%: Model.ContactInfo.PostalCode%>&nbsp;<%: Model.ContactInfo.City%>
 						<%} %>
+						<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Country)) {%>
+						,&nbsp;<%: Model.ContactInfo.Country%>
+						<%} %>
 					</div>
-					<%} %>
-					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Country)) {%>
-					<div class="cw-padded"><%: Model.ContactInfo.Country%></div>
 					<%} %>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Phone1)) {%>
 					<div class="cw-padded">Phone: <%: Model.ContactInfo.Phone1%></div>

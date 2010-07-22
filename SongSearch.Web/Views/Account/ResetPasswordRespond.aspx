@@ -20,9 +20,11 @@
     
 </asp:Content>
 <asp:Content ID="resetPasswordContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded">
+<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 
-    <h3>Reset Password</h3>
+    <h2>Reset Password</h2>
+	<div>&nbsp;</div>
+	<div class="cw-outl cw-padded cw-rounded-corners">
     <p>
         Use the form below to reset your password. 
     </p>
@@ -33,39 +35,38 @@
 
     <% using (Html.BeginForm(MVC.Account.ResetPasswordRespond(), FormMethod.Post, new { @class = "cw-form-small" }))
        {%><%=Html.AntiForgeryToken() %>
-            <fieldset>
-                <legend>Password Information</legend>
-                <%= Html.HiddenFor(m => m.ResetCode) %>
-                <div class="cw-fe-vert cw-fe-req">
-                    <%= Html.LabelFor(m => m.Email) %>
-                </div>
-                <div class="cw-fe-vert">
-                    <%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder = "Your email address", required = true })%>
-                    <%= Html.ValidationMessageFor(m => m.Email)%>
-                </div>
+            <%= Html.HiddenFor(m => m.ResetCode) %>
+            <div class="cw-fe-vert cw-fe-req">
+                <%= Html.LabelFor(m => m.Email) %>
+            </div>
+            <div class="cw-fe-vert">
+                <%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder = "Your email address", required = true })%>
+                <%= Html.ValidationMessageFor(m => m.Email)%>
+            </div>
 
-                <div class="cw-fe-vert cw-fe-req">
-                    <%= Html.LabelFor(m => m.NewPassword) %>
-                </div>
-                <div class="cw-fe-vert">
-                    <%= Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large", placeholder = "New password", required = true })%>
-                    <%= Html.ValidationMessageFor(m => m.NewPassword) %>
-                </div>
+            <div class="cw-fe-vert cw-fe-req">
+                <%= Html.LabelFor(m => m.NewPassword) %>
+            </div>
+            <div class="cw-fe-vert">
+                <%= Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large", placeholder = "New password", required = true })%>
+                <%= Html.ValidationMessageFor(m => m.NewPassword) %>
+            </div>
                 
-                <div class="cw-fe-vert cw-fe-req">
-                    <%= Html.LabelFor(m => m.ConfirmPassword) %>
-                </div>
-                <div class="cw-fe-vert">
-                    <%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large" })%>
-                    <%= Html.ValidationMessageFor(m => m.ConfirmPassword) %>
-                </div>
+            <div class="cw-fe-vert cw-fe-req">
+                <%= Html.LabelFor(m => m.ConfirmPassword) %>
+            </div>
+            <div class="cw-fe-vert">
+                <%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large" })%>
+                <%= Html.ValidationMessageFor(m => m.ConfirmPassword) %>
+            </div>
                 
-                <p>
-                    <button type="submit" class="cw-button cw-simple cw-blue">
-                    <span class="b-ok">Reset Password</span>
-                    </button>
-                </p>
-            </fieldset>
+            <p>
+                <button type="submit" class="cw-button cw-simple cw-blue">
+                <span class="b-ok">Reset Password</span>
+                </button>
+            </p>
     <% } %>
+	</div>
+
 </div>    
 </asp:Content>

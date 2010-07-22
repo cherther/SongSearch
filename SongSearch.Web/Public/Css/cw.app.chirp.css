@@ -31,9 +31,10 @@ pre
 	white-space:pre-wrap;
 }
 
-ul.cw-vertical 
+.cw-bullet
 {
 	padding: 0 0 0 1.6em;
+	list-style-type: square;
 }
 fieldset legend
 {
@@ -128,6 +129,19 @@ fieldset legend
 	padding:0.4em;
 	
 }
+.cw-outl-orange
+{
+	border: 1px solid #FF8000;
+	padding: 0.4em;
+}
+.cw-fill
+{
+	background-color: #E2EDF5;
+}
+.cw-fill-orange
+{
+	background-color: #FFECA8;
+}
 .cw-buffered-left
 {
 	margin-left: 1em;
@@ -148,6 +162,7 @@ fieldset legend
 	border-radius: 5px; 
 	-moz-border-radius: 5px; 
 	-webkit-border-radius: 5px; 
+	margin-bottom: 10px;
 }
 .cw-rounded-corners-top
 {
@@ -167,7 +182,10 @@ fieldset legend
 	-webkit-border-border-bottom-left-radius: 5px;
 	-webkit-border-border-bottom-right-radius: 5px;
 }
-
+.cw-small-cap
+{
+	font-variant: small-caps;
+}
 .cw-media-controls
 {
 	padding: 0.5em;
@@ -249,7 +267,8 @@ ul.cw-list-searchoptions
 }
 ul.cw-list-searchoptions label
 { 
-	font-weight: normal;
+	font-weight: normal !important;
+	font-variant: small-caps;
 }
 ul.cw-list-searchoptions label, input
 { 
