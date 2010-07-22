@@ -103,7 +103,7 @@
 							<label>Contact Name</label>
 						</div>
 						<div>
-							<%= Html.TextBoxFor(m => m.Contact.ContactName, new { @class = "cw-field-large", title = "Site Contact Name" })%>
+							<%= Html.TextBoxFor(m => m.Contact.ContactName, new { @class = "cw-field-large", placeholder = "Site Contact Name", title = "Site Contact Name" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.ContactName)%>
 						</div>
 						<div>&nbsp;</div>
@@ -111,7 +111,7 @@
 							<label>Company Name</label>
 						</div>
 						<div>
-							<%= Html.TextBoxFor(m => m.Contact.CompanyName, new { @class = "cw-field-large", title = "Site Company Name" })%>
+							<%= Html.TextBoxFor(m => m.Contact.CompanyName, new { @class = "cw-field-large", placeholder = "Site Company Name", title = "Site Company Name" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.CompanyName)%>
 						</div>
 						<div>&nbsp;</div>
@@ -119,7 +119,7 @@
 							<label>Address</label>
 						</div>
 						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Address1, new { @class = "cw-field-large", title = "Site Contact Address" })%>
+							<%= Html.TextBoxFor(m => m.Contact.Address1, new { @class = "cw-field-large", placeholder = "Site Contact Address", title = "Site Contact Address" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.Address1)%>
 						</div>
 						<div>&nbsp;</div>
@@ -134,7 +134,7 @@
 							<label>City</label>
 						</div>
 						<div>
-							<%= Html.TextBoxFor(m => m.Contact.City, new { @class = "cw-field-large", title = "Site Contact City" })%>
+							<%= Html.TextBoxFor(m => m.Contact.City, new { @class = "cw-field-large", placeholder = "Site Contact City", title = "Site Contact City" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.City)%>
 						</div>
 						<div>&nbsp;</div>
@@ -143,7 +143,8 @@
 						</div>
 						<div>
 							<%= Html.TextBoxFor(m => m.Contact.StateRegion, new { @class = "cw-field-xsmall", title = "Site Contact State/Region" })%>
-							<%= Html.TextBoxFor(m => m.Contact.PostalCode, new { @class = "cw-field-small", title = "Site Contact Zip/PostalCode" })%>
+							
+							<%= Html.TextBoxFor(m => m.Contact.PostalCode, new { @class = "cw-field-small", placeholder = "Zip/PostalCode", title = "Site Contact Zip/PostalCode" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.StateRegion)%>
 							<%= Html.ValidationMessageFor(m => m.Contact.PostalCode)%>
 						</div>
@@ -156,7 +157,7 @@
 							<label>Phone</label>
 						</div>
 						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Phone1, new { @class = "cw-field-large", title = "Site Contact Phone 1" })%>
+							<%= Html.TextBoxFor(m => m.Contact.Phone1, new { @class = "cw-field-large", placeholder = "Site Contact Phone", title = "Site Contact Phone 1" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.Phone1)%>
 						</div>
 						<div>&nbsp;</div>
@@ -172,7 +173,7 @@
 							<label>Fax</label>
 						</div>
 						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Fax, new { @class = "cw-field-large", title = "Site Contact Fax" })%>
+							<%= Html.TextBoxFor(m => m.Contact.Fax, new { @class = "cw-field-large", placeholder = "Site Contact Fax", title = "Site Contact Fax" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.Fax)%>
 						</div>
 						<div>&nbsp;</div>
@@ -180,7 +181,7 @@
 							<label>Contact Email</label>
 						</div>
 						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Email, new { @class = "cw-field-large", title = "Site Contact Email" })%>
+							<%= Html.TextBoxFor(m => m.Contact.Email, new { @class = "cw-field-large", placeholder = "Site Contact Email", title = "Site Contact Email" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.Email)%>
 						</div>
 						<div>&nbsp;</div>
@@ -188,7 +189,7 @@
 							<label>Administrative Email</label>
 						</div>
 						<div>
-							<%= Html.TextBoxFor(m => m.Contact.AdminEmail, new { @class = "cw-field-large", title = "Site Administrative Email" })%>
+							<%= Html.TextBoxFor(m => m.Contact.AdminEmail, new { @class = "cw-field-large", placeholder = "Site Administrative Email", title = "Site Administrative Email" })%>
 							<%= Html.ValidationMessageFor(m => m.Contact.AdminEmail)%>
 						</div>
 					</div>

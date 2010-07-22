@@ -60,7 +60,7 @@ namespace SongSearch.Web.Controllers {
 				vm.ContactInfo = vm.SiteProfile.GetContactInfo(Account.User());
 
 				string sender = String.Format("{0} <{1}>", model.Name, model.Email);
-				string subject = String.Format("[{0} Contact Us] {1}", vm.ContactInfo.CompanyName, model.Subject);
+				string subject = String.Format("[{0} Contact Us] {1}", vm.SiteProfile.CompanyName, model.Subject);
 				StringBuilder sb = new StringBuilder();
 				sb.AppendFormat("<p>Name: {0}</p>", model.Name);
 				sb.AppendFormat("<p>Email: {0}</p>", model.Email);
@@ -74,7 +74,7 @@ namespace SongSearch.Web.Controllers {
 
 				Mail.SendMail(
 					sender,
-					String.Concat(vm.ContactInfo.Email,";",vm.ContactInfo.AdminEmail),//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
+					String.Concat(vm.ContactInfo.Email,",",vm.ContactInfo.AdminEmail),//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
 					subject,
 					msg
 					);

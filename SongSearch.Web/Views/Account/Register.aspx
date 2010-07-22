@@ -22,7 +22,10 @@
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
 	<p>
-		Use the form below to create a new account. Or, <%= Html.ActionLink("log in", "LogIn") %> if you already have an account.
+		Use the form below to create a new account using the registration we sent to you. Or, <%= Html.ActionLink("log in", "LogIn") %> if you already have an account.
+	</p>
+	<p>
+	If you'd like to receive an invitation code, please <%: Html.ActionLink("contact us", MVC.Home.Contact()) %>.
 	</p>
 	<p>
 		Passwords are required to be a minimum of <%=Html.Encode(ViewData["PasswordLength"])%> characters in length.
@@ -40,7 +43,7 @@
 					<%= Html.LabelFor(m => m.Email) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", title = "This should be the e-mail address<br/>where you received your registration invitation" })%>
+					<%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder="Your email address", required=true, title = "This should be the e-mail address<br/>where you received your registration invitation" })%>
 					<%= Html.ValidationMessageFor(m => m.Email)%>
 				</div>
 				<div>&nbsp;</div>
@@ -48,7 +51,7 @@
 					<%= Html.LabelFor(m => m.InviteId)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.InviteId, new { @class = "cw-field-xlarge", title = "The invitation code we e-mailed you"  })%>
+					<%= Html.TextBoxFor(m => m.InviteId, new { @class = "cw-field-xlarge", placeholder = "Your invitation code", required = true, title = "The invitation code we e-mailed you" })%>
 					<%= Html.ValidationMessageFor(m => m.InviteId)%>
 				</div>                    
 				<div>&nbsp;</div>
@@ -56,7 +59,7 @@
 					<%= Html.LabelFor(m => m.FirstName)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.FirstName, new { @class = "cw-field-large" })%>
+					<%= Html.TextBoxFor(m => m.FirstName, new { @class = "cw-field-large", placeholder="First Name" })%>
 					<%= Html.ValidationMessageFor(m => m.FirstName)%>
 				</div>                    
 				<div>&nbsp;</div>
@@ -64,7 +67,7 @@
 					<%= Html.LabelFor(m => m.LastName)%>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large" })%>
+					<%= Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large", placeholder = "Last Name" })%>
 					<%= Html.ValidationMessageFor(m => m.LastName)%>
 				</div>                    
 				<div>&nbsp;</div>
@@ -72,7 +75,7 @@
 					<%= Html.LabelFor(m => m.Password) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.PasswordFor(m => m.Password, new { @class = "cw-field-large", title = "Please enter a secure password<br />with at least 6 characters" })%>
+					<%= Html.PasswordFor(m => m.Password, new { @class = "cw-field-large", placeholder="Password", required=true, title = "Please enter a secure password<br />with at least 6 characters" })%>
 					<%= Html.ValidationMessageFor(m => m.Password)%>
 				</div>                    
 				<div>&nbsp;</div>
@@ -80,7 +83,7 @@
 					<%= Html.LabelFor(m => m.ConfirmPassword) %>
 				</div>
 				<div class="cw-fe-vert">
-					<%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large", title="Please enter your password again" })%>
+					<%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large", required=true, title="Please enter your password again" })%>
 					<%= Html.ValidationMessageFor(m => m.ConfirmPassword)%>
 				</div>                    
 				<div>&nbsp;</div>
