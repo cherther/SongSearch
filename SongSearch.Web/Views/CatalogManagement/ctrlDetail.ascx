@@ -21,15 +21,15 @@
 	
 %>
 <div>
-	Catalog: <strong><%= catalog.CatalogName %></strong>
+	Catalog: <strong><%: catalog.CatalogName %></strong>
 </div>
-<%=Html.Hidden("catalogid", catalog.CatalogId)%>
+<%:Html.Hidden("catalogid", catalog.CatalogId)%>
 <div>&nbsp;</div>
 <div>
-	Created By: <%= catalog.Creator.FullName() %>
+	Created By: <%: catalog.Creator.FullName() %>
 </div>
 <div>
-	Created On: <%= catalog.CreatedOn.ToShortDateString() %>
+	Created On: <%: catalog.CreatedOn.ToShortDateString() %>
 </div>
 <div>&nbsp;</div>
 <hr />
@@ -70,7 +70,7 @@
 					string roleClass = "cw-tag-box cw-cat-role-edit-all cw-button cw-simple cw-small"; 
 						
 						%>
-						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllUsers(catalog.CatalogId, role), new { @class = roleClass, rel = catalogDetailUrl, title = "Make all users " + roleName + "s for this catalog"})%>
+						<%:Html.ActionLink(roleName, MVC.UserManagement.UpdateAllUsers(catalog.CatalogId, role), new { @class = roleClass, rel = catalogDetailUrl, title = "Make all users " + roleName + "s for this catalog"})%>
 					<%} %>
 				</td>
 			</tr>
@@ -90,8 +90,8 @@
 <%if (Model.AllowEdit) { %>
 	<div>&nbsp;</div>
 	<%using (Html.BeginForm(MVC.CatalogManagement.Delete(), FormMethod.Post, new { id = "cw-catalog-delete-form" })) { %>
-	<%= Html.Hidden("id", catalog.CatalogId)%>
-	<%= Html.AntiForgeryToken()%>
+	<%: Html.Hidden("id", catalog.CatalogId)%>
+	<%: Html.AntiForgeryToken()%>
 	<div class="cw-outl cw-padded" >
 		<label><em>Delete Catalog</em></label>
 		<div>&nbsp;</div>

@@ -97,7 +97,7 @@
 				<%: Html.ActionLink("Download", MVC.Media.Download(item.ContentId), new { @class = "cw-button cw-simple cw-small cw-blue", title = "Download" })%>
 			<%break; %>
 			<%case GridAction.Media:%>
-				<%: Html.ActionLink("Add/Replace Media", MVC.Content.SaveMediaFiles(item.ContentId, null), new { rel = item.ContentId, rev = String.Format("{0} - '{1}'", item.Artist, item.Title), @class = "cw-media-upload-link cw-button cw-simple cw-small cw-blue", title = String.Format("Select & upload new media files for<br />{0} - '{1}'", item.Artist, item.Title) })%>
+				<%: Html.ActionLink("Add/Replace Media", MVC.Content.SaveMediaFiles(item.ContentId, null), new { rel = item.ContentId, rev = String.Format("{0} - '{1}'", item.Artist, item.Title), @class = "cw-media-upload-link cw-button cw-simple cw-small cw-blue", title = String.Format("Select & upload new media files for {0} - '{1}'", item.Artist, item.Title) })%>
 			<%break; %>
 			<%} %>
 			</td>

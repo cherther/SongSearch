@@ -17,9 +17,9 @@
 	 %>
 	<%--<h2>Results</h2>--%>
 	<% Html.RenderPartial(MVC.Search.Views.ctrlBreadcrumb, Model); %>
-	<p><%= results.TotalCount %> songs found.
+	<p><%: results.TotalCount %> songs found.
 	<%if (results.TotalPages > 1) { %>
-	Showing  <%= results.Count %> results per page. 
+	Showing  <%: results.Count %> results per page. 
 	<%} %>
 	</p>
 	<% if (results.TotalCount > 0){%>

@@ -19,10 +19,10 @@
 	
 		<h3>Some technical error detail:</h3>
 		<p>
-		We got a <strong><%= Model.Error.Exception != null ? Model.Error.Exception.GetType().Name : ""%></strong> in <strong><%=Model.Error.ControllerName%></strong>.<strong><%=Model.Error.ActionName%></strong> with a message:
+		We got a <strong><%: Model.Error.Exception != null ? Model.Error.Exception.GetType().Name : ""%></strong> in <strong><%:Model.Error.ControllerName%></strong>.<strong><%:Model.Error.ActionName%></strong> with a message:
 		</p>
 		<p>
-		<%=Model.Error.Exception != null ? Model.Error.Exception.Message : ""%>
+		<%:Model.Error.Exception != null ? Model.Error.Exception.Message : ""%>
 		</p>
 	</div>
 	<%} %>

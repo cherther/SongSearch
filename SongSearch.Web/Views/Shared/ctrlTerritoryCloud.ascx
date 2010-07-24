@@ -12,7 +12,7 @@
 	var tagDivClass = Model.InitialTagNumber > 0 && Model.TagCountSeed > 0 ? "cw-more-tags cw-optional" : "";
 	
 	%>
-<div class="<%= tagDivClass %>">
+<div class="<%: tagDivClass %>">
 <%
 	var i = 1;
 	var rowIsComplete = true;
@@ -32,10 +32,10 @@
 	<%} %>
 	<%rowIsComplete = false;%>
 	 <%if (isEditing) { %>
-	 <label for="<%= tagId %>" class="<%: tagClass %>"><%: tagDisplay%></label>
+	 <label for="<%: tagId %>" class="<%: tagClass %>"><%: tagDisplay%></label>
 	 <%: Html.CheckBox(tagName, isSelected, new { id = tagId, value = tag.TerritoryId, @class = "cw-tagbox-checkbox" })%>
 	 <%} else { %>
-	 <a id="<%= tagId%>" class="<%=tagClass %>" rev="<%: Model.TagNameTemplate %>" rel="<%: tag.TerritoryId %>"> <%: tagDisplay%></a>
+	 <a id="<%: tagId%>" class="<%:tagClass %>" rev="<%: Model.TagNameTemplate %>" rel="<%: tag.TerritoryId %>"> <%: tagDisplay%></a>
 	 <%} %>
 	 <%if (i % rowSize == 0) { %>
 		<% rowIsComplete = true; %>

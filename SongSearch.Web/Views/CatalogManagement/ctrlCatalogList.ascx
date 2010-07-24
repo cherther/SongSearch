@@ -12,7 +12,7 @@
 	   //var childClass = user.ParentUserId.HasValue ? String.Concat("children-", user.UserId.ToString()) : "";
 	   %>
 
-    <tr id="<%= rowId%>" class="cw-user-listing <%= rowClass%>">
+    <tr id="<%: rowId%>" class="cw-user-listing <%: rowClass%>">
 		<td>-</td>
 		<td>
 		    <%: Html.ActionLink(catalog.CatalogName, MVC.CatalogManagement.Detail(catalog.CatalogId), new { @class = "cw-catalog-detail-link" })%>

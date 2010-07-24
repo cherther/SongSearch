@@ -1564,23 +1564,22 @@
           <ConnectorPoint PointX="4.8534615384615378" PointY="17.749410807291667" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Catalogs_Creators" >
-          <ConnectorPoint PointX="5.375" PointY="16.797009134357292" />
-          <ConnectorPoint PointX="9.28125" PointY="16.797009134357292" />
+          <ConnectorPoint PointX="5.375" PointY="17.282544946885803" />
+          <ConnectorPoint PointX="9.28125" PointY="17.282544946885803" />
           <ConnectorPoint PointX="9.28125" PointY="10.614889322916666" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Import_SongData" Width="1.5" PointX="14.375" PointY="0.75" Height="4.4802050781250031" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Contact" Width="1.5" PointX="10.375" PointY="8" Height="4.6725065104166674" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Contact" Width="1.5" PointX="10.375" PointY="12.125" Height="4.6725065104166674" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SiteProfile" Width="1.5" PointX="12.625" PointY="8.375" Height="4.0956022135416674" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.SiteProfilesContacts" >
-          <ConnectorPoint PointX="11.875" PointY="10.422801106770834" />
-          <ConnectorPoint PointX="12.625" PointY="10.422801106770834" />
+          <ConnectorPoint PointX="11.875" PointY="12.297801106770834" />
+          <ConnectorPoint PointX="12.625" PointY="12.297801106770834" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.UsersContacts" >
-          <ConnectorPoint PointX="11.125" PointY="12.672506510416667" />
-          <ConnectorPoint PointX="11.125" PointY="15.797296012491154" />
-          <ConnectorPoint PointX="9.3645833333333339" PointY="15.797296012491154" />
-          <ConnectorPoint PointX="9.1979166666666661" PointY="15.797296012491154" />
-          <ConnectorPoint PointX="5.375" PointY="15.797296012491154" />
+          <ConnectorPoint PointX="10.375" PointY="15.828797200520835" />
+          <ConnectorPoint PointX="9.3645833333333339" PointY="15.828797200520835" />
+          <ConnectorPoint PointX="9.1979166666666661" PointY="15.828797200520835" />
+          <ConnectorPoint PointX="5.375" PointY="15.828797200520835" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.PricingPlan" Width="1.5" PointX="1.125" PointY="18.25" Height="3.5186979166666656" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_PricingPlans" >

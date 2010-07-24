@@ -30,37 +30,37 @@
         Use the form below to change your password. 
     </p>
     <p>
-        New passwords are required to be a minimum of <%= Html.Encode(ViewData["PasswordLength"]) %> characters in length.
+        New passwords are required to be a minimum of <%: ViewData["PasswordLength"] %> characters in length.
     </p>
     <%//= Html.ValidationSummary("Password change was unsuccessful. Please correct the errors and try again.")%>
 	<div>&nbsp;</div>
     <% Html.EnableClientValidation(); %>
     <% using (Html.BeginForm(MVC.Account.ChangePassword(), FormMethod.Post, new { @class = "cw-form-small" }))
-       {%><%=Html.AntiForgeryToken() %>
+       {%><%:Html.AntiForgeryToken() %>
             <fieldset>
                 <div>&nbsp;</div>
 				<div>
-                    <%= Html.LabelFor(m => m.OldPassword) %>
+                    <%: Html.LabelFor(m => m.OldPassword) %>
                 </div>
                 <div>
-                    <%= Html.PasswordFor(m => m.OldPassword, new { @class = "cw-field-large" } )%>
-                    <%= Html.ValidationMessageFor(m => m.OldPassword) %>
+                    <%: Html.PasswordFor(m => m.OldPassword, new { @class = "cw-field-large" } )%>
+                    <%: Html.ValidationMessageFor(m => m.OldPassword) %>
                 </div>
-                
-                <div class="cw-fe-vert cw-fe-req">
-                    <%= Html.LabelFor(m => m.NewPassword) %>
+                <div>&nbsp;</div>
+                <div>
+                    <%: Html.LabelFor(m => m.NewPassword) %>
                 </div>
-                <div class="cw-fe-vert">
-                    <%= Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large", title="Please enter a new secure password<br/>with at least 6 characters" })%>
-                    <%= Html.ValidationMessageFor(m => m.NewPassword) %>
+                <div>
+                    <%: Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large", title="Please enter a new secure password<br/>with at least 6 characters" })%>
+                    <%: Html.ValidationMessageFor(m => m.NewPassword) %>
                 </div>
-                
-                <div class="cw-fe-vert cw-fe-req">
-                    <%= Html.LabelFor(m => m.ConfirmPassword) %>
+                <div>&nbsp;</div>
+                <div>
+                    <%: Html.LabelFor(m => m.ConfirmPassword) %>
                 </div>
-                <div class="cw-fe-vert">
-                    <%= Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large", title="Please enter your new password again"  })%>
-                    <%= Html.ValidationMessageFor(m => m.ConfirmPassword) %>
+                <div>
+                    <%: Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large", title="Please enter your new password again"  })%>
+                    <%: Html.ValidationMessageFor(m => m.ConfirmPassword) %>
                 </div>
                  <p>&nbsp;</p>
                 <p>

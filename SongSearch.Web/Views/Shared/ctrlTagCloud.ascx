@@ -12,7 +12,7 @@
 	var tagDivClass = Model.InitialTagNumber > 0 && Model.TagCountSeed > 0 ? "cw-more-tags cw-optional" : "";
 	
 	%>
-<div class="<%= tagDivClass %>">
+<div class="<%: tagDivClass %>">
 <%
 	var i = 1;
 	var rowIsComplete = true;
@@ -33,14 +33,14 @@
 	<%rowIsComplete = false;%>
 	 <%if (isEditing) { %>
 		<%var tagLocatorClass = String.Concat("tag_", tag.TagId); %>
-		<label for="<%= tagId %>" class="<%: tagClass %> <%: tagLocatorClass %>"><%: tagDisplay%></label>
+		<label for="<%: tagId %>" class="<%: tagClass %> <%: tagLocatorClass %>"><%: tagDisplay%></label>
 		<%: Html.CheckBox(tagName, isSelected, new { id = tagId, value = tag.TagId, @class = String.Concat("cw-tagbox-checkbox ", tagLocatorClass) })%>
 		<%if (tag.CreatedByUserId == Model.ActiveUserId) { %>
 		<%var deleteUrl = Url.Action(MVC.Content.DeleteTag(tag.TagId)); %>
 		<a href="<%: deleteUrl %>" class="cw-delete-tag-link" rel="<%: tagLocatorClass %>" title="Delete this tag"><img src="../../public/images/icons/silk/delete.png" alt="Delete" /></a>
 		<%} %>
 	 <%} else { %>
-	 <a id="<%= tagId%>" class="<%=tagClass %>" rev="<%: Model.TagNameTemplate %>" rel="<%: tag.TagId %>"> <%: tagDisplay%></a>
+	 <a id="<%: tagId%>" class="<%:tagClass %>" rev="<%: Model.TagNameTemplate %>" rel="<%: tag.TagId %>"> <%: tagDisplay%></a>
 	 <%} %>
 	 <%if (i % rowSize == 0) { %>
 		<% rowIsComplete = true; %>

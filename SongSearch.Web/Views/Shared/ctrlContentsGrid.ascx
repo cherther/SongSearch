@@ -37,7 +37,7 @@
 	
 		</td>
 		<td align="right">
-			<a href="<%=printUrl%>" class="cw-button cw-simple cw-small cw-blue" target="_new">
+			<a href="<%:printUrl%>" class="cw-button cw-simple cw-small cw-blue" target="_new">
 				<span class="b-print">Print</span>
 			</a>
 		</td>
@@ -59,7 +59,7 @@
 						var ord = Model.SortPropertyId.GetValueOrDefault().Equals(sp) ? (int)Model.SortType.Flip() : (int)SortType.Ascending;
 						var colUrl = String.Format("{0}&s={1}&o={2}", sortUrl, sp, ord);
 					%>
-					<a href="<%=colUrl%>"><%: prop.ShortName%></a>
+					<a href="<%:colUrl%>"><%: prop.ShortName%></a>
 					<%} else { %>
 					<%: col%>
 					<%}%>

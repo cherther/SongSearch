@@ -28,7 +28,7 @@
 		
 	%>
 	<%if (activeCartCount  > 0) {%>
-	<p>Your song cart contains <strong><%=activeCartCount%></strong> item(s).</p>
+	<p>Your song cart contains <strong><%:activeCartCount%></strong> item(s).</p>
 	<% using (Html.BeginForm(MVC.Cart.Zip(), FormMethod.Post, new { id ="cw-cart-form" })) { %>
 	<%: Html.AntiForgeryToken()%>
 	<%: Html.Hidden("id", activeCart.CartId) %>
@@ -38,7 +38,7 @@
 			<label>Zip file name (or leave blank for default):</label>
 		</div>
 		<div>
-			<%=Html.TextBox("userArchiveName", "", new { @class = "cw-field-xlarge", title = "Enter a name for your zip file<br />or leave it blank and we'll create one" })%>
+			<%:Html.TextBox("userArchiveName", "", new { @class = "cw-field-xlarge", title = "Enter a name for your zip file or leave it blank and we'll create one" })%>
 	   
 				
 			<button type="submit" class="cw-button cw-simple cw-blue" title = "Click to zip the contents of your Song Cart">

@@ -30,7 +30,7 @@ foreach (var cart in carts)
 	cartClass = cartClass ?? (cart.CartId == cartToHighlight ? "cw-tbl-carts-processing" : "");
 	%>                         
 	<tr class="cw-tbl-carts-main <%: cartClass %>">
-		<td><div id="s-<%: cart.CartId%>" class="cw-carts-contents cw-carts-contents-show" title = "Click to show/hide<br />the contents of this song cart">&nbsp;</div></td>
+		<td><div id="s-<%: cart.CartId%>" class="cw-carts-contents cw-carts-contents-show" title = "Click to show/hide the contents of this song cart">&nbsp;</div></td>
 		<td>
 			<%: cart.LastUpdatedOn.ToShortDateString()%>
 		</td>
@@ -68,7 +68,7 @@ foreach (var cart in carts)
 	</tr>
 	<tr id="c-<%: cart.CartId%>" class="cw-tbl-carts-details">
 		<td></td>
-		<td colspan="<%= tableHeader.Count() %>">
+		<td colspan="<%: tableHeader.Count() %>">
 		<%
 			var cartContentHeaders = ViewData["CartContentHeaders"] as string[]; 
 			var cartContent = new PagedList<SongSearch.Web.Data.Content>(

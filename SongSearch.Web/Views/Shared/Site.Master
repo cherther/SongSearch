@@ -120,7 +120,7 @@
 <%--<script type="text/javascript">$(document).ready(function () { updateCartCountAjax(); });</script>
 --%><%} %>
 
-<%=Html.Feedback() %>
+<%:Html.Feedback() %>
 <asp:ContentPlaceHolder id="Javascripts" runat="server" />
 </html>
 

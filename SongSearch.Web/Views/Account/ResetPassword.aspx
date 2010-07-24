@@ -11,19 +11,19 @@
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
 	<p>
-		Please enter your e-mail address and we will send you a link to help you select a new password. Please <%= Html.ActionLink("register", "Register") %> if you don't have an account.
+		Please enter your e-mail address and we will send you a link to help you select a new password. Please <%: Html.ActionLink("register", "Register") %> if you don't have an account.
 	</p>
-	 <%= Html.ValidationSummary("Password reset request was unsuccessful. Please correct the errors and try again.") %>
+	 <%: Html.ValidationSummary("Password reset request was unsuccessful. Please correct the errors and try again.") %>
 	<% using (Html.BeginForm(MVC.Account.ResetPassword(), FormMethod.Post, new { @class = "cw-form-small" }))
 	   {%>
-	   <%=Html.AntiForgeryToken() %>
+	   <%:Html.AntiForgeryToken() %>
 		<div>&nbsp;</div>
 		<div class="editor-label">
-			<%= Html.LabelFor(model => model.Email) %>
+			<%: Html.LabelFor(model => model.Email) %>
 		</div>
 		<div class="editor-field">
-			<%= Html.TextBoxFor(model => model.Email, new { @class = "cw-field-large", placeholder="Your email address", required=true })%>
-			<%= Html.ValidationMessageFor(model => model.Email) %>
+			<%: Html.TextBoxFor(model => model.Email, new { @class = "cw-field-large", placeholder="Your email address", required=true })%>
+			<%: Html.ValidationMessageFor(model => model.Email) %>
 		</div>
 			<p>&nbsp;</p>
 		<p>

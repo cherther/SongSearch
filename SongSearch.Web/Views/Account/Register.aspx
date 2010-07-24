@@ -77,7 +77,7 @@
 						<%: Html.LabelFor(m => m.Password) %>
 					</div>
 					<div>
-						<%: Html.PasswordFor(m => m.Password, new { @class = "cw-field-large", placeholder="Password", required=true, title = "Please enter a secure password<br />with at least " + ViewData["PasswordLength"] + " characters" })%>
+						<%: Html.PasswordFor(m => m.Password, new { @class = "cw-field-large", placeholder="Password", required=true, title = "Please enter a secure password with at least " + ViewData["PasswordLength"] + " characters" })%>
 						<br /><%: Html.ValidationMessageFor(m => m.Password)%>
 					</div>                    
 				</div>                    
@@ -93,7 +93,7 @@
 			</div>           
 			</div>         
 			<div>&nbsp;</div>
-			<div class="cw-outl-orange cw-padded cw-rounded-corners" style="width: 75%;display:none">
+			<div class="cw-outl-orange cw-padded cw-rounded-corners" style="width: 75%;<%: User.UserIsSuperAdmin() ? "display:none" : ""%>">
 			<div>
 				<%: Html.LabelFor(m => m.PricingPlan) %>
 			</div>

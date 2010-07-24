@@ -33,13 +33,13 @@
 			string[] values = menuItem.Value;        
 			string menuId = String.Format("menu-{0}", menuItem.Key.ToLower());
 				%>
-			<li id="<%=menuId %>" class="cw-rounded-corners-top <%= menuItem.Key == navLocation ? "current" : ""%>">
+			<li id="<%:menuId %>" class="cw-rounded-corners-top <%: menuItem.Key == navLocation ? "current" : ""%>">
 			<%if (menuItem.Key == "Cart") { %>
 			<% Html.RenderAction(MVC.Cart.CartCount()); %>
 			<%} else if (menuItem.Key == "Help") { %>
 			<a href="#"  class="cw-rounded-corners-top" onclick="UserVoice.Popin.show(uservoiceOptions); return false;"><%: values[2]%></a>
 			<%} else { %>
-			<%= Html.ActionLink(values[2], values[0], values[1], null, new { @class = "cw-rounded-corners-top" })%>
+			<%: Html.ActionLink(values[2], values[0], values[1], null, new { @class = "cw-rounded-corners-top" })%>
 			<%} %>
 			</li>
 			<%

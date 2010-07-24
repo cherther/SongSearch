@@ -26,29 +26,29 @@
 	<h3>Hello,</h3>
 
 	<p>I'd like to invite you to register for <strong><%: Model.SiteProfile.CompanyName %></strong>.</p>
-	<p>Please <a href="<%= url %>">register</a> using your e-mail address <strong><%= recipient%></strong>.</p>
+	<p>Please <a href="<%: url %>">register</a> using your e-mail address <strong><%: recipient%></strong>.</p>
 	<p>&nbsp;</p>
 	<p>If the 'register' link above is not clickable in your email program, please copy & paste this address into your browser's location bar:</p>
-	<p><%= url %></p>
+	<p><%: url %></p>
 
 	<p>Alternatively, you can follow these steps:</p>
 		<ol>
 			<li>
-				Type <strong><%=baseUrl%></strong> into the url/location bar of your web browser
+				Type <strong><%:baseUrl%></strong> into the url/location bar of your web browser
 			</li>
 			<li>
 				Click on the <strong>Register</strong> button
 			</li>
 			<li>
-				Copy & paste this email address into the E-mail address field: <strong><%= recipient%></strong>
+				Copy & paste this email address into the E-mail address field: <strong><%: recipient%></strong>
 			</li>
 			<li>
-				Copy & paste this invitation code into the Invitation Code field: <strong><%= Model.InviteId%></strong>
+				Copy & paste this invitation code into the Invitation Code field: <strong><%: Model.InviteId%></strong>
 			</li>
 		</ol>
 	<p>Thanks, and I'm looking forward to working with you!</p>
 
-	<p><em><%=sender%></em></p>
+	<p><em><%:sender%></em></p>
 </div>
 </body>
 </html>

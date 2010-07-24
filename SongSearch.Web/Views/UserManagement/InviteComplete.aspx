@@ -32,7 +32,7 @@
 	   <ul id="invite-list">
 	   <%foreach (string recipient in Model.Recipients)
 		 { %>
-	   <li><%=Html.Encode(recipient)%></li>
+	   <li><%: recipient %></li>
 	   <%} %>
 	 </ul>
 	 </fieldset>  

@@ -76,7 +76,7 @@
 <script language="javascript" type="text/javascript">
 	$(document).ready(function () {
 		$("#progressbar").progressbar({
-			value: <%= percentComplete %>
+			value: <%: percentComplete %>
 		});		
 	});
 </script>

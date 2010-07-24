@@ -32,32 +32,32 @@
 	<%//= Html.ValidationSummary("Profile update was unsuccessful. Please correct the errors and try again.")%>
 	<div>&nbsp;</div>
 	<% using (Html.BeginForm(MVC.Account.UpdateProfile(), FormMethod.Post, new { @class = "cw-form-small" })) {%>
-	   <%=Html.AntiForgeryToken() %>
+	   <%:Html.AntiForgeryToken() %>
 			<div class="cw-outl cw-padded cw-rounded-corners">
 				<h3>Your User Profile</h3>
 				<div>&nbsp;</div>
 				<div>
-					<%= Html.LabelFor(m => m.Email) %>
+					<%: Html.LabelFor(m => m.Email) %>
 				</div>
-				<div class="cw-fe-vert cw-fe-req">
-					<%= Html.Encode(Model.Email)%>
-					<%= Html.HiddenFor(m => Model.Email)%>
+				<div>
+					<%: Model.Email%>
+					<%: Html.HiddenFor(m => Model.Email)%>
 				</div>
 				<div>&nbsp;</div>
 				<div>
-					<%= Html.LabelFor(m => m.FirstName)%>
+					<%: Html.LabelFor(m => m.FirstName)%>
 				</div>
 				<div>
-					<%= Html.TextBoxFor(m => m.FirstName, new { @class = "cw-field-large", title = "Your First Name" })%>
-					<%= Html.ValidationMessageFor(m => m.FirstName)%>
+					<%: Html.TextBoxFor(m => m.FirstName, new { @class = "cw-field-large", title = "Your First Name" })%>
+					<%: Html.ValidationMessageFor(m => m.FirstName)%>
 				</div>
 				<div>&nbsp;</div>
 				<div>
-					<%= Html.LabelFor(m => m.LastName) %>
+					<%: Html.LabelFor(m => m.LastName) %>
 				</div>
 				<div>
-					<%= Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large", title = "Your Last Name" })%>
-					<%= Html.ValidationMessageFor(m => m.LastName)%>
+					<%: Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large", title = "Your Last Name" })%>
+					<%: Html.ValidationMessageFor(m => m.LastName)%>
 				</div>
 				<div>&nbsp;</div>
 					<div>
@@ -68,18 +68,18 @@
 				<%if (Model.ShowSignatureField){%>
 					<div>&nbsp;</div>
 					<div>
-						<%= Html.LabelFor(m => m.Signature)%>
+						<%: Html.LabelFor(m => m.Signature)%>
 					</div>
 					<div>
-						<%= Html.TextBoxFor(m => m.Signature, new { @class = "cw-field-xlarge", maxlength = "80", title = "Your signature is automatically appended<br/>to the file names of songs your users download.<br/>It cannot contain special characters such as '/' and ':'." })%>
-						<%= Html.ValidationMessageFor(m => m.Signature)%>
+						<%: Html.TextBoxFor(m => m.Signature, new { @class = "cw-field-xlarge", maxlength = "80", title = "Your signature is automatically appended to the file names of songs your users download. It cannot contain special characters such as '/' and ':'." })%>
+						<%: Html.ValidationMessageFor(m => m.Signature)%>
 					</div>
 					
 					<div>&nbsp;</div>
 					<div>
-						<%= Html.CheckBoxFor(m => m.AppendSignatureToTitle, new { title = "Check to embed your signature in all download/zipped mp3 id3 tags" })%>
-						<%= Html.LabelFor(m => m.AppendSignatureToTitle)%>
-						<%= Html.ValidationMessageFor(m => m.AppendSignatureToTitle)%>
+						<%: Html.CheckBoxFor(m => m.AppendSignatureToTitle, new { title = "Check to embed your signature in all download/zipped mp3 id3 tags" })%>
+						<%: Html.LabelFor(m => m.AppendSignatureToTitle)%>
+						<%: Html.ValidationMessageFor(m => m.AppendSignatureToTitle)%>
 					</div>				
 				<%} %>
 			</div>

@@ -24,6 +24,8 @@
 		<%: Html.HiddenFor(m => m.Content.LastUpdatedByUserId)%>
 		<%: Html.HiddenFor(m => m.Content.HasMediaPreviewVersion)%>
 		<%: Html.HiddenFor(m => m.Content.HasMediaFullVersion)%>
+		<%--<%: Html.Hidden("DefaultRightsHolderName", Page.User.User().GetContactInfo().DefaultRightsHolderName)%>
+		<%: Html.Hidden("DefaultTerritoryId", Page.User.User().GetContactInfo().DefaultTerritoryId)%>--%>
 		<%: Html.AntiForgeryToken() %>
 
 	<%}%>
@@ -194,7 +196,7 @@
 	
 		<%if (tags.Count() > 0) {%>
 		<div class="<%: sectionSize%>_column section cw-spaced">
-			<div class="<%: columnOne%> column"><label><%=tagType%></label></div>
+			<div class="<%: columnOne%> column"><label><%:tagType%></label></div>
 			<div class="<%: columnTwo%> column">
 			<%--<%if (isEditing) { %>
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlTagEdit, model); %>

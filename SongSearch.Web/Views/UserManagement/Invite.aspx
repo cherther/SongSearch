@@ -29,19 +29,19 @@
 		   {
 			   //string baseUrl = Html.ActionLink("register", "Register").ToString();
 			   %>
-		   <%=Html.AntiForgeryToken() %>
+		   <%:Html.AntiForgeryToken() %>
 		 <div>&nbsp;</div>
 		 <fieldset id="invite">
 			<legend>
 			   Invite
 			</legend>           
 		   <div>&nbsp;</div>
-		   <div><%=Html.Label("From:")%>&nbsp;<%=Html.Encode(String.Format("{0} <{1}>", Html.Friendly(), User.Identity.Name))%></div>
+		   <div><%:Html.Label("From:")%>&nbsp;<%: String.Format("{0} <{1}>", Html.Friendly(), User.Identity.Name) %></div>
 		   <div>&nbsp;</div>
-		   <div><%=Html.Label("To:")%></div>
-		   <%= Html.ValidationMessageFor(m => m.Recipient)%>
+		   <div><%:Html.Label("To:")%></div>
+		   <%: Html.ValidationMessageFor(m => m.Recipient)%>
 		   <div>
-		   <%=Html.TextArea("Recipient", new { cols = "50", rows = 10 })%>     
+		   <%:Html.TextArea("Recipient", new { cols = "50", rows = 10 })%>     
 		   </div>
 		   <div>
 			<button id="invite-send" type="submit" title="Send" class="cw-button cw-simple cw-blue">

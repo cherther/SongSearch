@@ -16,14 +16,14 @@
 	<%if (hasRemoveOption){ %>
 	<tr>
 		<td colspan="<%: tableHeader.Count() + 1%>" style="text-align: left; white-space: nowrap; padding-left: 1px">
-			<input type="submit" id="cw-remove-all-from-cart" class="cw-button cw-simple cw-small cw-red" value="Remove Selected" title = "Remove selected songs<br />from your song cart"/>
+			<input type="submit" id="cw-remove-all-from-cart" class="cw-button cw-simple cw-small cw-red" value="Remove Selected" title = "Remove selected songs from your song cart"/>
 		</td>
 	</tr>
 	<%} %>
 	<tr>
 	<%if (hasRemoveOption) { %>
 	<th>
-		<input type="checkbox" class="cw-select-all-items-check" id="cw-row-checkbox-cart-remove" title = "Click to select<br />all songs in your song cart"/>
+		<input type="checkbox" class="cw-select-all-items-check" id="cw-row-checkbox-cart-remove" title = "Click to select all songs in your song cart"/>
 	</th>
 	<%} %>
 	<%foreach(var col in tableHeader.Where(t => !t.Equals("Remove"))){ %>
@@ -76,8 +76,8 @@
 			</td>
 			<%if (tableHeader.Contains("File Name")) { %>
 			<td>
-				<%= Html.Hidden("contentNames[" + cartIndex + "].ContentId", item.ContentId)%>
-				<%= Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { @class = "cw-field-large", maxlength = "120", title = "This is the file name of the song<br />when downloaded or <br>zipped. You can overwrite this here." })%>
+				<%: Html.Hidden("contentNames[" + cartIndex + "].ContentId", item.ContentId)%>
+				<%: Html.TextBox("contentNames[" + cartIndex + "].DownloadableName", item.UserDownloadableName, new { @class = "cw-field-large", maxlength = "120", title = "This is the file name of the song when downloaded or zipped. You can overwrite this here." })%>
 				<% cartIndex++;%>
 			</td>
 			<%} %>

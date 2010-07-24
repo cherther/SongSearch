@@ -42,7 +42,7 @@
 			You do not have any registered users yet.
 			<%} %>
 			<div>&nbsp;</div>
-			<h3>Open Invites</h3><%= Html.ActionLink("Invite New", "Invite", "UserManagement") %>
+			<h3>Open Invites</h3><%: Html.ActionLink("Invite New", "Invite", "UserManagement") %>
 			<div>&nbsp;</div>
 			<div class = "cw-outl cw-padded cw-rounded-corners" style="overflow: auto; height: 150px; width: 300px;">
 				<table id="invite-list" class="cw-tbl-usr">
@@ -51,7 +51,7 @@
 				{
 				%>
 					<tr>
-						<td><%= invite.InvitationEmailAddress %></td>           
+						<td><%: invite.InvitationEmailAddress %></td>           
 					</tr>
 				<%  
 				}        

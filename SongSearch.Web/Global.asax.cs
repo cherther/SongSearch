@@ -90,18 +90,7 @@ namespace SongSearch.Web {
 				"Register",
 				new { controller = "Account", action = "Register" }
 			);
-
-			routes.MapRoute(
-				"Artist",
-				"Artist/{id}",
-				new { controller = "Search", action = "Artist" }
-			);
-
-			routes.MapRoute(
-				"Catalog",
-				"Catalog/{id}",
-				new { controller = "Search", action = "Catalog" }
-			);
+			
 			//routes.MapRoute(
 			//    "Profile", // Route name
 			//    "{id}", // URL with parameters
@@ -116,7 +105,7 @@ namespace SongSearch.Web {
 		}
 
 		// ----------------------------------------------------------------------------
-		// ASP.NET DataSession
+		// ASP.NET Session
 		// ----------------------------------------------------------------------------
 		// **************************************
 		// Session_Start

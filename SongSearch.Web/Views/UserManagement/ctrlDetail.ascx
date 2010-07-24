@@ -11,29 +11,29 @@
 	
 	<div class="four column">
 	<h3>User:
-	<span><%= user.FullName() %></span>
+	<span><%: user.FullName() %></span>
 	</h3>
 	
-	<%=Html.Hidden("userid", user.UserId) %>
+	<%:Html.Hidden("userid", user.UserId) %>
 	</div>
 	<%if (Model.IsThisUser) {%>
 		<div class="two column">
-		<span>(<%=Html.ActionLink("Edit your Profile", MVC.Account.UpdateProfile())%>)</span>
+		<span>(<%:Html.ActionLink("Edit your Profile", MVC.Account.UpdateProfile())%>)</span>
 		</div>
 	<%} else {%>
 	<div class="one column">
 		<%if (Model.AllowEdit) { %>
 			<%using (Html.BeginForm(MVC.UserManagement.Delete(), FormMethod.Post, new { id = "cw-user-delete-form" })) { %>
-			<%= Html.Hidden("id", user.UserId)%>
-			<%= Html.AntiForgeryToken()%>
+			<%: Html.Hidden("id", user.UserId)%>
+			<%: Html.AntiForgeryToken()%>
 			<button type="submit" id="cw-user-delete-link" class="cw-button cw-simple cw-small cw-red" title="Delete User"><span class="b-delete">Delete</span></button>
 			<%} %>
 	</div>
 	<div class="one column">
 
 			<%using (Html.BeginForm(MVC.UserManagement.TakeOwnership(), FormMethod.Post, new { id = "cw-user-takeowner-form" })) { %>
-			<%=Html.Hidden("id", user.UserId)%>
-			<%= Html.AntiForgeryToken()%>
+			<%:Html.Hidden("id", user.UserId)%>
+			<%: Html.AntiForgeryToken()%>
 			<button type="submit" id="cw-user-takeowner-link" class="cw-button cw-simple cw-small cw-red" title="Take Ownership"><span class="b-user">Take Ownership</span></button>
 			<%} %>
 		<%} %>
@@ -45,11 +45,11 @@
 	
 	<div class="four column">
 	<label>E-mail:</label>
-	 <span><%= user.UserName%></span>
+	 <span><%: user.UserName%></span>
 	</div>
 	<div class="two column">
 	<label>Registered On:</label>
-	 <span><%= user.RegisteredOn.ToShortDateString()%></span>
+	 <span><%: user.RegisteredOn.ToShortDateString()%></span>
 	</div>
 
 </div>
@@ -104,7 +104,7 @@
 						var roleName = ((SongSearch.Web.Roles)role).ToString();
 						var roleClass = "cw-tag-box cw-usrcat-role-edit-all cw-button cw-simple cw-small"; 
 						%>
-						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateAllCatalogs(user.UserId, role), 
+						<%:Html.ActionLink(roleName, MVC.UserManagement.UpdateAllCatalogs(user.UserId, role), 
 							new { @class = roleClass, rel = userDetailUrl, 
 								title = String.Format("Make this user {0} {1} in all catalogs", roleName.IndefArticle(), roleName) })%>
 					<%} %>
@@ -135,7 +135,7 @@
 				//string catClass = roleClasses[userCatRoleId];
 				
 				%>
-				<tr id="<%= rowId%>" class="catalog-listing <%= rowClass%>">
+				<tr id="<%: rowId%>" class="catalog-listing <%: rowClass%>">
 					<td>
 						<%: cat.CatalogName%>
 							
@@ -146,7 +146,7 @@
 					<%} else { %>&nbsp;<%} %></td>
 					<td>
 					
-					<%=Html.Hidden(String.Concat("cr-", catalogId), userCatRoleId)%>
+					<%:Html.Hidden(String.Concat("cr-", catalogId), userCatRoleId)%>
 					<%
 					foreach (var role in Model.CatalogRoles)
 					{
@@ -155,7 +155,7 @@
 						var roleName = ((SongSearch.Web.Roles)role).ToString();
 						
 						%>
-						<%=Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, cat.CatalogId, roleId), 
+						<%:Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, cat.CatalogId, roleId), 
 							new { @class = roleClass, rel = userDetailUrl,
 							title = String.Format("Make this user {0} {1} in this catalog", roleName.IndefArticle(), roleName) })%>
 							

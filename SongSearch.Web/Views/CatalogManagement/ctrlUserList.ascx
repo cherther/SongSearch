@@ -21,7 +21,7 @@
 	   
 	   %>
 
-    <tr id="<%= rowId%>" class="cw-user-listing <%= rowClass%>">
+    <tr id="<%: rowId%>" class="cw-user-listing <%: rowClass%>">
 		<td>
 		<%for (var i = 0; i < Model.HierarchyLevel; i++) {%>
 		&nbsp;&nbsp;
@@ -35,7 +35,7 @@
 		</span>
 		</td>
 		 <td>
-            <%=Html.Hidden(String.Concat("ur-", userId), userCatRoleId)%>
+            <%:Html.Hidden(String.Concat("ur-", userId), userCatRoleId)%>
             <%
             foreach (var role in Model.CatalogRoles)
 			{
@@ -44,7 +44,7 @@
                 var roleName = ((SongSearch.Web.Roles)role).ToString();
                         
 				%>
-                <%=Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, catalog.CatalogId, roleId), new { @class = roleClass, rel = catalogDetailUrl, title="Click to select this role, unlick to remove this role" })%>
+                <%:Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, catalog.CatalogId, roleId), new { @class = roleClass, rel = catalogDetailUrl, title="Click to select this role, unlick to remove this role" })%>
 			<%} %>
             </td>
 	</tr>

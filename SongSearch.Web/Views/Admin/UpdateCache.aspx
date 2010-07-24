@@ -12,7 +12,7 @@
       { %>
       <p>&nbsp;</p>
       <p>
-      Cache was last updated on: <%=SongSearch.Web.Services.CacheService.LastUpdated %>. To update all cached properties now, click the button below.
+      Cache was last updated on: <%:SongSearch.Web.Services.CacheService.LastUpdated %>. To update all cached properties now, click the button below.
       </p>
       <p>&nbsp;</p>
       <button type="submit" class="sexybutton sexysimple sexyblue">
