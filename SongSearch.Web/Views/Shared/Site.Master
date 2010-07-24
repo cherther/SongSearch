@@ -11,6 +11,9 @@
 	 <!--[if lt IE 8]><link rel="stylesheet" href=""~/public/css/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
 	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
 	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="/scripts/MicrosoftAjax.debug.js"></script>
+	<script type="text/javascript" src="/scripts/MicrosoftMvcValidation.debug.js"></script>
+
 	<title><%: Model.SiteProfile.CompanyName %> - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
@@ -69,8 +72,10 @@
 	var debug = App.Environment != AppEnvironment.Production;
 	var d = debug ? "?d" : "";
 %>
-<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.3/jquery.tools.min.js"></script>
-<script type="text/javascript" src="/public/javascript/cw.plugins.js"></script>
+<%--<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.3/jquery.tools.min.js"></script>--%>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/public/javascript/cw.plugins.js?d"></script>
 <%if (debug) {%>
 <script type="text/javascript" src="/scripts/cw.app.main.chirp.js<%: d %>" ></script>
 <script type="text/javascript" src="/scripts/cw.app.events.chirp.js<%: d %>" ></script>
@@ -78,7 +83,7 @@
 <script type="text/javascript" src="/scripts/cw.app.sound.chirp.js<%: d %>" ></script>
 <script type="text/javascript" src="/scripts/cw.app.upload.chirp.js<%: d %>" ></script>
 <%} else {%>
-<script type="text/javascript" src="/public/javascript/cw.application.js"></script>
+<script type="text/javascript" src="/public/javascript/cw.application.js?d"></script>
 <%} %>
 <script type="text/javascript">
 	var uservoiceOptions = {

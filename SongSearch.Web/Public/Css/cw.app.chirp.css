@@ -69,6 +69,7 @@ fieldset legend
 {
 	font-size: 10px;
 }
+
 .tooltip {
 	background-color:#000;
 	/*border:1px solid #fff;*/
@@ -114,8 +115,12 @@ fieldset legend
 
 .cw-highlight
 {
+	border: thin solid #FFCC00;
 	background-color: #FFFF00;
 	padding: 0.1em;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
 }
 .cw-label-red 
 {
@@ -262,7 +267,7 @@ ul.cw-menu-sub li.current { font-weight: bold; }
 
 
 ul.cw-list-searchoptions
-{ 
+{ 	
 	list-style-type: none;     
 }
 ul.cw-list-searchoptions label

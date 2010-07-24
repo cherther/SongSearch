@@ -20,6 +20,7 @@
     
 </asp:Content>
 <asp:Content ID="resetPasswordContent" ContentPlaceHolderID="MainContent" runat="server">
+<% Html.EnableClientValidation(); %>
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 
     <h2>Reset Password</h2>
@@ -40,7 +41,7 @@
                 <%= Html.LabelFor(m => m.Email) %>
             </div>
             <div class="cw-fe-vert">
-                <%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder = "Your email address", required = true })%>
+                <%= Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder = "Your e-mail address", required = true })%>
                 <%= Html.ValidationMessageFor(m => m.Email)%>
             </div>
 

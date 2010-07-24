@@ -286,6 +286,7 @@
     <Content Include="Public\Css\fluid.gs.lt_ie8.css" />
     <Content Include="Public\Css\jquery-ui.css" />
     <Content Include="Public\Css\jquery.gritter.css" />
+    <Content Include="Public\Css\tipTip.css" />
     <Content Include="Public\Images\error_404.jpg" />
     <Content Include="Public\Javascript\cw.application.js">
       <DependentUpon>scriptmash.chirp.config</DependentUpon>
@@ -311,6 +312,7 @@
     <Content Include="Scripts\cw.app.upload.min.js">
       <DependentUpon>cw.app.upload.chirp.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\jquery.cookies.2.2.0.min.js" />
     <Content Include="Scripts\jquery.gritter.js" />
     <Content Include="Scripts\jquery.gritter.min.js" />
     <Content Include="Public\Css\plupload.queue.css" />
@@ -1835,6 +1837,8 @@
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.plupload.queue.js" />
     <Content Include="Scripts\jquery.plupload.queue.min.js" />
+    <Content Include="Scripts\jquery.tipTip.js" />
+    <Content Include="Scripts\jquery.tipTip.minified.js" />
     <Content Include="Scripts\jquery.tools.min.js" />
     <Content Include="Scripts\plupload.browserplus.js" />
     <Content Include="Scripts\plupload.browserplus.min.js" />
@@ -1855,6 +1859,10 @@
     <Content Include="Scripts\soundmanager2.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Views\Account\ctrlContactInfo.ascx" />
+    <Content Include="Views\Account\ctrlPricingPlans.ascx" />
+    <Content Include="Views\Account\DisplayTemplates\MultilineText.ascx" />
+    <Content Include="Views\Account\DisplayTemplates\_Object.ascx" />
     <Content Include="Views\Account\LogIn.aspx" />
     <Content Include="Views\Account\LogOut.aspx" />
     <Content Include="Views\Account\Register.aspx" />
@@ -1886,6 +1894,7 @@
     <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Content\Print.aspx" />
     <Content Include="Views\Home\Contact.aspx" />
+    <Content Include="Views\Home\PrivacyPolicy.aspx" />
     <Content Include="Views\Search\ctrlBreadcrumb.ascx" />
     <Content Include="Views\Content\ctrlContentDetail.ascx" />
     <Content Include="Views\Search\ctrlSearchResults.ascx" />
@@ -1960,7 +1969,9 @@
     <Content Include="Views\Shared\Print.Master" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Public\Javascript\scriptmash.chirp.config" />
+    <Content Include="Public\Javascript\scriptmash.chirp.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Public\Css\stylemash.chirp.config" />
     <None Include="T4MVC.settings.t4" />
     <None Include="T4MVC.tt">

@@ -20,8 +20,8 @@ namespace SongSearch.Web {
 	public class ResetPasswordModel : ViewModel {
 		[Required]
 		[DataType(DataType.EmailAddress)]
-		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
-		[DisplayName("Email address")]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter a valid e-mail address.")]
+		[DisplayName("E-mail address")]
 		public string Email { get; set; }
 
 		[Required]
@@ -51,8 +51,8 @@ namespace SongSearch.Web {
 
 		[Required]
 		[DataType(DataType.EmailAddress)]
-		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
-		[DisplayName("Email address")]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter a valid e-mail address.")]
+		[DisplayName("E-mail address")]
 		public string Email { get; set; }
 
 		[Required]
@@ -80,8 +80,8 @@ namespace SongSearch.Web {
 
 		[Required]
 		[DataType(DataType.EmailAddress)]
-		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
-		[DisplayName("Email address")]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter a valid e-mail address.")]
+		[DisplayName("E-mail address")]
 		public string Email { get; set; }
 
 		[Required]
@@ -104,6 +104,20 @@ namespace SongSearch.Web {
 		[DataType(DataType.Password)]
 		[DisplayName("Confirm password")]
 		public string ConfirmPassword { get; set; }
+
+		[Required]
+		[DisplayName("I have read the Privacy Policy")]
+		public bool HasAgreedToPrivacyPolicy { get; set; }
+
+		[Required]
+		[DisplayName("I'd like to receive news & updates from this site")]
+		public bool HasAllowedCommunication { get; set; }
+
+		[Required]
+		[DisplayName("Please select a Pricing Plan")]
+		public PricingPlans PricingPlan { get; set; }
+
+		public Contact Contact { get; set; }
 
 		public Invitation Invitation { get; set; }
 	}
@@ -150,18 +164,24 @@ namespace SongSearch.Web {
 		public string NewPassword { get; set; }
 
 		[Required]
+		[ValidatePasswordLength]
 		[DataType(DataType.Password)]
 		[DisplayName("Confirm new password")]
 		public string ConfirmPassword { get; set; }
 
 		[Required]
 		[DataType(DataType.EmailAddress)]
-		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "This is a not valid e-mail address.")]
-		[DisplayName("Email address")]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter a valid e-mail address.")]
+		[DisplayName("E-mail address")]
 		public string Email { get; set; }
 
-		[DisplayName("Embed signature in song files?")]
+		[Required]
+		[DisplayName("Embed my signature in song files")]
 		public bool AppendSignatureToTitle { get; set; }
+		
+		[Required]
+		[DisplayName("I'd like to receive news & updates from this site")]
+		public bool HasAllowedCommunication { get; set; }
 
 		public Contact Contact { get; set; }
 
@@ -181,8 +201,8 @@ namespace SongSearch.Web {
 
 		[Required]
 		[DataType(DataType.EmailAddress)]
-		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Email is is not valid.")]
-		[DisplayName("Email")]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter a valid e-mail address.")]
+		[DisplayName("E-mail address")]
 		public string Email { get; set; }
 
 		[DisplayName("Company")]
@@ -228,7 +248,7 @@ namespace SongSearch.Web {
 			// a full list of status codes.
 			switch (createStatus) {
 				case MembershipCreateStatus.DuplicateUserName:
-					return "Username already exists. Please enter a different myUser name.";
+					return "Username already exists. Please enter a different user name.";
 
 				case MembershipCreateStatus.DuplicateEmail:
 					return "A username for that e-mail address already exists. Please enter a different e-mail address.";
@@ -246,13 +266,13 @@ namespace SongSearch.Web {
 					return "The password retrieval question provided is invalid. Please check the value and try again.";
 
 				case MembershipCreateStatus.InvalidUserName:
-					return "The myUser name provided is invalid. Please check the value and try again.";
+					return "The user name provided is invalid. Please check the value and try again.";
 
 				case MembershipCreateStatus.ProviderError:
 					return "The authentication provider returned an error. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
 
 				case MembershipCreateStatus.UserRejected:
-					return "The myUser creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
+					return "The user creation request has been canceled. Please verify your entry and try again. If the problem persists, please contact your system administrator.";
 
 				default:
 					return "An unknown error occurred. Please verify your entry and try again. If the problem persists, please contact your system administrator.";

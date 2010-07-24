@@ -217,6 +217,10 @@ namespace SongSearch.Web {
 			return uploadFiles;
 		}
 
+		public static string PlanDisplayClass(this PricingPlan plan) {
+			return plan.IsEnabled ? (plan.IsFeatured ? "cell-highlight-yellow" : "") : "cell-disabled";
+		}
+
 		
 	}
 }

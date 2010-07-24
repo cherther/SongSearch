@@ -5,8 +5,8 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<% Html.EnableClientValidation(); %>
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
-
 	<h2>Reset Password</h2>
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">

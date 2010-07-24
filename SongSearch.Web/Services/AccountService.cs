@@ -45,7 +45,7 @@ namespace SongSearch.Web.Services {
 					user.Password = user.Password.PasswordHashString();
 					user.ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : 1;
 					user.RoleId = (int)Roles.Client;
-					user.PricingPlanId = (int)PricingPlans.Level1;
+					//user.PricingPlanId = (int)PricingPlans.Basic;
 					user.SiteProfileId = int.Parse(Settings.DefaultSiteProfileId.Value());
 					user.RegisteredOn = DateTime.Now;
 
@@ -99,6 +99,7 @@ namespace SongSearch.Web.Services {
 			dbuser.LastName = user.LastName;
 			dbuser.Signature = user.Signature;
 			dbuser.AppendSignatureToTitle = user.AppendSignatureToTitle;
+			dbuser.HasAllowedCommunication = user.HasAllowedCommunication;
 
 			if (contact != null && (!String.IsNullOrWhiteSpace(contact.Phone1) || !String.IsNullOrWhiteSpace(contact.Email))) {
 				var dbContact = dbuser.Contacts.SingleOrDefault(c => c.ContactId == contact.ContactId) ??

@@ -9,7 +9,7 @@
 	
 	<div class="nine_column section">
 	
-		<div class="two column">
+		<div class="two column" style="min-width:220px!important;">
 			<!--div id="cw-search-options-panel"-->
 			<% Html.RenderPartial(MVC.Search.Views.ctrlSearchOptions); %>
 			<!--/div-->

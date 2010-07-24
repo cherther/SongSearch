@@ -23,6 +23,7 @@ namespace SongSearch.Web.Services {
 		static CacheService() {
 
 			_cacheMatrix.Add(CacheKeys.SiteProfile, CacheUpdateSiteProfiles);
+			_cacheMatrix.Add(CacheKeys.PricingPlans, CacheUpdatePricingPlans);
 			_cacheMatrix.Add(CacheKeys.Catalogs, CacheUpdateCatalogs);
 			_cacheMatrix.Add(CacheKeys.Users, CacheUpdateUsers);
 			_cacheMatrix.Add(CacheKeys.SearchProperties, CacheUpdateSearchProperties);
@@ -44,6 +45,7 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		public enum CacheKeys {
 			SiteProfile,
+			PricingPlans,
 			Catalogs,
 			Users,
 			SearchProperties,
@@ -109,7 +111,18 @@ namespace SongSearch.Web.Services {
 				return GetDataSiteProfiles();
 			}
 		}
+		// **************************************
+		// PricingPlans
+		// **************************************
+		public static IList<PricingPlan> PricingPlans() {
+			if (_hasCache) {
+				if (Cache(CacheKeys.PricingPlans) == null) { CacheUpdateSiteProfiles(CacheKeys.PricingPlans); }
+				return Cache(CacheKeys.PricingPlans) as IList<PricingPlan>;
 
+			} else {
+				return GetDataPricingPlans();
+			}
+		}
 		// **************************************
 		// Catalogs
 		// **************************************
@@ -265,6 +278,9 @@ namespace SongSearch.Web.Services {
 		private static void CacheUpdateSiteProfiles(CacheKeys key, params object[] list) {
 			CacheUpdate(GetDataSiteProfiles(), key);
 		}
+		private static void CacheUpdatePricingPlans(CacheKeys key, params object[] list) {
+			CacheUpdate(GetDataPricingPlans(), key);
+		}
 		private static void CacheUpdateCatalogs(CacheKeys key, params object[] list) {
 			CacheUpdate(GetDataCatalogs(), key);
 		}
@@ -300,6 +316,9 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private static IList<SiteProfile> GetDataSiteProfiles() {
 			return SiteProfileData.SiteProfiles();
+		}
+		private static IList<PricingPlan> GetDataPricingPlans() {
+			return SearchService.GetLookupList<PricingPlan>();
 		}
 		private static IList<Catalog> GetDataCatalogs() {
 			return SearchService.GetLookupList<Catalog>();

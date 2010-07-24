@@ -48,6 +48,7 @@ namespace SongSearch.Web.Controllers {
         public class ActionNamesClass {
             public readonly string Index = "Index";
             public readonly string Contact = "Contact";
+            public readonly string PrivacyPolicy = "PrivacyPolicy";
         }
 
 
@@ -58,6 +59,7 @@ namespace SongSearch.Web.Controllers {
         public class ViewNames {
             public readonly string Contact = "~/Views/Home/Contact.aspx";
             public readonly string Index = "~/Views/Home/Index.aspx";
+            public readonly string PrivacyPolicy = "~/Views/Home/PrivacyPolicy.aspx";
         }
     }
 
@@ -78,6 +80,11 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult Contact(SongSearch.Web.ContactUsModel model) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Contact);
             callInfo.RouteValueDictionary.Add("model", model);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult PrivacyPolicy() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.PrivacyPolicy);
             return callInfo;
         }
 

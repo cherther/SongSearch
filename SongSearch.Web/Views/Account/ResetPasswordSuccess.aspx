@@ -11,7 +11,7 @@
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
     <p>
-        Please check your email inbox for an email to help you reset your password.
+        Please check your e-mail inbox for an message from us with instructions to help you reset your password.
     </p>
     </div>
     </div>

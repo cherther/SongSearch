@@ -77,6 +77,8 @@ namespace SongSearch.Web.Controllers {
         public class ViewNames {
             public readonly string ChangePassword = "~/Views/Account/ChangePassword.aspx";
             public readonly string ChangePasswordSuccess = "~/Views/Account/ChangePasswordSuccess.aspx";
+            public readonly string ctrlContactInfo = "~/Views/Account/ctrlContactInfo.ascx";
+            public readonly string ctrlPricingPlans = "~/Views/Account/ctrlPricingPlans.ascx";
             public readonly string LogIn = "~/Views/Account/LogIn.aspx";
             public readonly string LogOut = "~/Views/Account/LogOut.aspx";
             public readonly string Register = "~/Views/Account/Register.aspx";
@@ -85,6 +87,12 @@ namespace SongSearch.Web.Controllers {
             public readonly string ResetPasswordSuccess = "~/Views/Account/ResetPasswordSuccess.aspx";
             public readonly string UpdateProfile = "~/Views/Account/UpdateProfile.aspx";
             public readonly string UpdateProfileSuccess = "~/Views/Account/UpdateProfileSuccess.aspx";
+            static readonly _DisplayTemplates s_DisplayTemplates = new _DisplayTemplates();
+            public _DisplayTemplates DisplayTemplates { get { return s_DisplayTemplates; } }
+            public partial class _DisplayTemplates{
+                public readonly string _Object = "~/Views/Account/DisplayTemplates/_Object.ascx";
+                public readonly string MultilineText = "~/Views/Account/DisplayTemplates/MultilineText.ascx";
+            }
         }
     }
 

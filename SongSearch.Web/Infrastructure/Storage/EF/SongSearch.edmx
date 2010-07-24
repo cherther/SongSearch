@@ -291,8 +291,17 @@
           </Key>
           <Property Name="PricingPlanId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="PricingPlanName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="PromoMessage" Type="nvarchar" MaxLength="150" />
+          <Property Name="IsPromo" Type="bit" Nullable="false" />
+          <Property Name="IsFeatured" Type="bit" Nullable="false" />
+          <Property Name="IsEnabled" Type="bit" Nullable="false" />
           <Property Name="PlanCharge" Type="decimal" Nullable="false" Precision="28" Scale="4" />
-          <Property Name="PlanRecurrance" Type="int" Nullable="false" />
+          <Property Name="PlanRecurrance" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="NumberOfSongs" Type="int" Nullable="false" />
+          <Property Name="NumberOfInvitedUsers" Type="int" Nullable="false" />
+          <Property Name="NumberOfCatalogAdmins" Type="int" Nullable="false" />
+          <Property Name="CustomContactUs" Type="bit" Nullable="false" />
+          <Property Name="CustomSiteProfile" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -394,6 +403,8 @@
           <Property Name="Signature" Type="nvarchar" MaxLength="1000" />
           <Property Name="ShowDebugInfo" Type="bit" />
           <Property Name="AppendSignatureToTitle" Type="bit" Nullable="false" />
+          <Property Name="HasAgreedToPrivacyPolicy" Type="bit" Nullable="false" />
+          <Property Name="HasAllowedCommunication" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="UsersContacts">
           <Key>
@@ -907,6 +918,8 @@
           <NavigationProperty Name="Contacts" Relationship="SongSearch.Web.Data.Model.UsersContacts" FromRole="User" ToRole="Contact" />
           <Property Type="Int32" Name="PricingPlanId" Nullable="false" />
           <NavigationProperty Name="PricingPlan" Relationship="SongSearch.Web.Data.Model.FK_Users_PricingPlans" FromRole="User" ToRole="PricingPlan" />
+          <Property Type="Boolean" Name="HasAgreedToPrivacyPolicy" Nullable="false" />
+          <Property Type="Boolean" Name="HasAllowedCommunication" Nullable="false" />
           </EntityType>
         <Association Name="FK_Contents_Catalogs">
           <End Role="Catalogs" Type="SongSearch.Web.Data.Model.Catalog" Multiplicity="1" />
@@ -1173,9 +1186,18 @@
           </Key>
           <Property Type="Int32" Name="PricingPlanId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="PricingPlanName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsPromo" Nullable="false" />
+          <Property Type="Boolean" Name="IsFeatured" Nullable="false" />
+          <Property Type="Boolean" Name="IsEnabled" Nullable="false" />
           <Property Type="Decimal" Name="PlanCharge" Nullable="false" Precision="28" Scale="4" />
-          <Property Type="Int32" Name="PlanRecurrance" Nullable="false" />
+          <Property Type="String" Name="PlanRecurrance" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="NumberOfSongs" Nullable="false" />
+          <Property Type="Int32" Name="NumberOfInvitedUsers" Nullable="false" />
+          <Property Type="Int32" Name="NumberOfCatalogAdmins" Nullable="false" />
+          <Property Type="Boolean" Name="CustomContactUs" Nullable="false" />
+          <Property Type="Boolean" Name="CustomSiteProfile" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="SongSearch.Web.Data.Model.FK_Users_PricingPlans" FromRole="PricingPlan" ToRole="User" />
+          <Property Type="String" Name="PromoMessage" MaxLength="150" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Users_PricingPlans">
           <End Type="SongSearch.Web.Data.Model.PricingPlan" Role="PricingPlan" Multiplicity="1" />
@@ -1271,7 +1293,9 @@
             <ScalarProperty Name="TerritoryName" ColumnName="TerritoryName" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.User"><MappingFragment StoreEntitySet="Users">
-            <ScalarProperty Name="PricingPlanId" ColumnName="PricingPlanId" />
+            <ScalarProperty Name="HasAllowedCommunication" ColumnName="HasAllowedCommunication" />
+                <ScalarProperty Name="HasAgreedToPrivacyPolicy" ColumnName="HasAgreedToPrivacyPolicy" />
+                <ScalarProperty Name="PricingPlanId" ColumnName="PricingPlanId" />
                 <ScalarProperty Name="AppendSignatureToTitle" ColumnName="AppendSignatureToTitle" />
                 <ScalarProperty Name="SiteProfileId" ColumnName="SiteProfileId" />
                 <ScalarProperty Name="ShowDebugInfo" ColumnName="ShowDebugInfo" />
@@ -1438,8 +1462,17 @@
           <EntitySetMapping Name="PricingPlans">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.PricingPlan">
               <MappingFragment StoreEntitySet="PricingPlans">
+                <ScalarProperty Name="PromoMessage" ColumnName="PromoMessage" />
+                <ScalarProperty Name="CustomSiteProfile" ColumnName="CustomSiteProfile" />
+                <ScalarProperty Name="CustomContactUs" ColumnName="CustomContactUs" />
+                <ScalarProperty Name="NumberOfCatalogAdmins" ColumnName="NumberOfCatalogAdmins" />
+                <ScalarProperty Name="NumberOfInvitedUsers" ColumnName="NumberOfInvitedUsers" />
+                <ScalarProperty Name="NumberOfSongs" ColumnName="NumberOfSongs" />
                 <ScalarProperty Name="PlanRecurrance" ColumnName="PlanRecurrance" />
                 <ScalarProperty Name="PlanCharge" ColumnName="PlanCharge" />
+                <ScalarProperty Name="IsEnabled" ColumnName="IsEnabled" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="IsPromo" ColumnName="IsPromo" />
                 <ScalarProperty Name="PricingPlanName" ColumnName="PricingPlanName" />
                 <ScalarProperty Name="PricingPlanId" ColumnName="PricingPlanId" />
               </MappingFragment>
@@ -1488,9 +1521,9 @@
           <ConnectorPoint PointX="5.21875" PointY="12.5" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentRightTerritories" ManuallyRouted="false">
-          <ConnectorPoint PointX="7" PointY="4.7398893229166656" />
-          <ConnectorPoint PointX="7" PointY="5.8939925130208355" />
-          <ConnectorPoint PointX="9.25" PointY="5.8939925130208355" />
+          <ConnectorPoint PointX="7.75" PointY="4.5021463098958332" />
+          <ConnectorPoint PointX="10.34375" PointY="4.5021463098958332" />
+          <ConnectorPoint PointX="10.34375" PointY="5" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentTags" ManuallyRouted="false">
           <ConnectorPoint PointX="3" PointY="9.8362939453125" />
@@ -1531,8 +1564,8 @@
           <ConnectorPoint PointX="4.8534615384615378" PointY="17.749410807291667" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Catalogs_Creators" >
-          <ConnectorPoint PointX="5.375" PointY="16.785569412807167" />
-          <ConnectorPoint PointX="9.28125" PointY="16.785569412807167" />
+          <ConnectorPoint PointX="5.375" PointY="16.797009134357292" />
+          <ConnectorPoint PointX="9.28125" PointY="16.797009134357292" />
           <ConnectorPoint PointX="9.28125" PointY="10.614889322916666" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Import_SongData" Width="1.5" PointX="14.375" PointY="0.75" Height="4.4802050781250031" />
@@ -1544,15 +1577,16 @@
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.UsersContacts" >
           <ConnectorPoint PointX="11.125" PointY="12.672506510416667" />
-          <ConnectorPoint PointX="11.125" PointY="15.791576151716091" />
-          <ConnectorPoint PointX="9.3645833333333339" PointY="15.791576151716091" />
-          <ConnectorPoint PointX="9.1979166666666661" PointY="15.791576151716091" />
-          <ConnectorPoint PointX="5.375" PointY="15.791576151716091" />
+          <ConnectorPoint PointX="11.125" PointY="15.797296012491154" />
+          <ConnectorPoint PointX="9.3645833333333339" PointY="15.797296012491154" />
+          <ConnectorPoint PointX="9.1979166666666661" PointY="15.797296012491154" />
+          <ConnectorPoint PointX="5.375" PointY="15.797296012491154" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.PricingPlan" Width="1.5" PointX="0.875" PointY="17.375" Height="1.9802864583333391" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.PricingPlan" Width="1.5" PointX="1.125" PointY="18.25" Height="3.5186979166666656" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_PricingPlans" >
-          <ConnectorPoint PointX="2.375" PointY="17.562205403645834" />
-          <ConnectorPoint PointX="3.875" PointY="17.562205403645834" />
+          <ConnectorPoint PointX="2.625" PointY="20.009348958333334" />
+          <ConnectorPoint PointX="4.1097090384615385" PointY="20.009348958333334" />
+          <ConnectorPoint PointX="4.1097090384615385" PointY="17.749410807291667" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

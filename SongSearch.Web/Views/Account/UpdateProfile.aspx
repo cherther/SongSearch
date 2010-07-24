@@ -21,8 +21,8 @@
 	
 </asp:Content>
 <asp:Content ID="updateProfileContent" ContentPlaceHolderID="MainContent" runat="server">
+<% Html.EnableClientValidation(); %>
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
-
 	<h2>Update Profile</h2>
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
@@ -33,7 +33,6 @@
 	<div>&nbsp;</div>
 	<% using (Html.BeginForm(MVC.Account.UpdateProfile(), FormMethod.Post, new { @class = "cw-form-small" })) {%>
 	   <%=Html.AntiForgeryToken() %>
-	   <% Html.EnableClientValidation(); %>
 			<div class="cw-outl cw-padded cw-rounded-corners">
 				<h3>Your User Profile</h3>
 				<div>&nbsp;</div>
@@ -60,6 +59,12 @@
 					<%= Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large", title = "Your Last Name" })%>
 					<%= Html.ValidationMessageFor(m => m.LastName)%>
 				</div>
+				<div>&nbsp;</div>
+					<div>
+						<%: Html.CheckBoxFor(m => m.HasAllowedCommunication) %>
+						<%: Html.LabelFor(m => m.HasAllowedCommunication)%>
+						<%: Html.ValidationMessageFor(m => m.HasAllowedCommunication)%>
+					</div>
 				<%if (Model.ShowSignatureField){%>
 					<div>&nbsp;</div>
 					<div>
@@ -69,131 +74,18 @@
 						<%= Html.TextBoxFor(m => m.Signature, new { @class = "cw-field-xlarge", maxlength = "80", title = "Your signature is automatically appended<br/>to the file names of songs your users download.<br/>It cannot contain special characters such as '/' and ':'." })%>
 						<%= Html.ValidationMessageFor(m => m.Signature)%>
 					</div>
-						<div>&nbsp;</div>
-						<div>
-							<%= Html.LabelFor(m => m.AppendSignatureToTitle)%>
-							<%= Html.CheckBoxFor(m => m.AppendSignatureToTitle, new { title = "Check to embed your signature in all download/zipped mp3 id3 tags" })%>
-							<%= Html.ValidationMessageFor(m => m.AppendSignatureToTitle)%>
-						</div>				
+					
+					<div>&nbsp;</div>
+					<div>
+						<%= Html.CheckBoxFor(m => m.AppendSignatureToTitle, new { title = "Check to embed your signature in all download/zipped mp3 id3 tags" })%>
+						<%= Html.LabelFor(m => m.AppendSignatureToTitle)%>
+						<%= Html.ValidationMessageFor(m => m.AppendSignatureToTitle)%>
+					</div>				
 				<%} %>
 			</div>
 			<%if (Model.ShowContactInfo) { %>
 			<div>&nbsp;</div>
-			<div class="cw-outl cw-padded cw-rounded-corners">
-				<%= Html.HiddenFor(m => m.Contact.ContactId)%>
-				<h3>Contact Info</h3>
-				<div>This information will be displayed on the <%: Html.ActionLink("Contact Us", MVC.Home.Contact())%> page. Please enter at least option for users to contact you, such as Phone or Email.</div>
-				<div class="six_column section">
-	
-					<div class="three column">
-						<div>&nbsp;</div>
-
-						<div>
-							<label>Contact Name</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.ContactName, new { @class = "cw-field-large", placeholder = "Site Contact Name", title = "Site Contact Name" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.ContactName)%>
-						</div>
-						<div>&nbsp;</div>
-						<div>
-							<label>Company Name</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.CompanyName, new { @class = "cw-field-large", placeholder = "Site Company Name", title = "Site Company Name" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.CompanyName)%>
-						</div>
-						<div>&nbsp;</div>
-						<div>
-							<label>Address</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Address1, new { @class = "cw-field-large", placeholder = "Site Contact Address", title = "Site Contact Address" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.Address1)%>
-						</div>
-						<div>&nbsp;</div>
-						<div>
-							<label>Address (cont'd)</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Address2, new { @class = "cw-field-large", title = "Site Contact Address (cont'd)" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.Address2)%>
-						</div>
-						<div>
-							<label>City</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.City, new { @class = "cw-field-large", placeholder = "Site Contact City", title = "Site Contact City" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.City)%>
-						</div>
-						<div>&nbsp;</div>
-						<div class="six_column section">
-							<div class="two column">
-								<div><label>State/Region</label></div>
-								<div><%= Html.TextBoxFor(m => m.Contact.StateRegion, new { @class = "cw-field-small", placeholder = "State/Region", title = "Site Contact State/Region" })%>
-								<%= Html.ValidationMessageFor(m => m.Contact.StateRegion)%></div>
-							</div>
-							<div class="four column">
-								<div><label>Zip/Postal Code</label></div>
-								<div><%= Html.TextBoxFor(m => m.Contact.PostalCode, new { @class = "cw-field-small", placeholder = "Zip/PostalCode", title = "Site Contact Zip/PostalCode" })%>
-								<%= Html.ValidationMessageFor(m => m.Contact.PostalCode)%></div>
-							</div>
-						</div>
-						<div>
-							<label>Country</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Country, new { @class = "cw-field-large", placeholder = "Country", title = "Site Contact Country" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.Country)%>
-						</div>
-
-					</div>
-					<div class="three column">
-						<div>&nbsp;</div>
-						
-						<div>&nbsp;</div>
-						<div>
-							<label>Phone</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Phone1, new { @class = "cw-field-large", placeholder = "Site Contact Phone", title = "Site Contact Phone 1" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.Phone1)%>
-						</div>
-						<div>&nbsp;</div>
-						<div>
-							<label>Phone 2</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Phone2, new { @class = "cw-field-large", title = "Site Contact Phone 2" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.Phone2)%>
-						</div>
-						<div>&nbsp;</div>
-						<div>
-							<label>Fax</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Fax, new { @class = "cw-field-large", placeholder = "Site Contact Fax", title = "Site Contact Fax" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.Fax)%>
-						</div>
-						<div>&nbsp;</div>
-						<div>
-							<label>Contact Email</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.Email, new { @class = "cw-field-large", placeholder = "Site Contact Email", title = "Site Contact Email" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.Email)%>
-						</div>
-						<div>&nbsp;</div>
-						<div>
-							<label>Administrative Email</label>
-						</div>
-						<div>
-							<%= Html.TextBoxFor(m => m.Contact.AdminEmail, new { @class = "cw-field-large", placeholder = "Site Administrative Email", title = "Site Administrative Email" })%>
-							<%= Html.ValidationMessageFor(m => m.Contact.AdminEmail)%>
-						</div>
-					</div>
-				</div>
-			</div>
+			<% Html.RenderPartial("ctrlContactInfo"); %>
 
 			<%} %>
 				

@@ -53,6 +53,19 @@
 	</div>
 
 </div>
+<%if (Page.User.UserIsSuperAdmin()) { %>
+<div>&nbsp;</div>
+<div class="six_column section">
+	
+	<div class="four column">
+	<label>Current Pricing Plan:</label>
+	 <span><%: user.PricingPlan.PricingPlanName %></span></div>
+	<div class="two column">
+	
+	</div>
+
+</div>
+<%} %>
 <div>&nbsp;</div>
 <hr />
 <div>&nbsp;</div>

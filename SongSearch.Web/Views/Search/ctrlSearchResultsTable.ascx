@@ -57,13 +57,13 @@
 			mediaUrl = item.HasMediaFullVersion ? 
 				String.Concat(mediaUrl, Url.Action(MVC.Media.Stream(item.ContentId, MediaVersion.FullSong))) : "";
 
-			var titleLength = 45;
+			var titleLength = 30;
 			var title = (!String.IsNullOrWhiteSpace(item.Title) ?
 					item.Title.Length > titleLength ? String.Concat(item.Title.Substring(0, titleLength), "...")
 					: item.Title
 					: "(N/A)").ToUpper();
 
-			var artistLength = 35;
+			var artistLength = 15;
 			var artist = (!String.IsNullOrWhiteSpace(item.Artist) ?
 					item.Artist.Length > artistLength ? String.Concat(item.Artist.Substring(0, artistLength), "...")
 					: item.Artist
@@ -75,26 +75,27 @@
 		%>
 		<tr class="cw-tbl-data">
 			<%if (!isPrint) { %>
-			<td>
+			<td width="5%">
 			<input type="checkbox" id="<%: item.ContentId.ToString() %>" <%: cartState %> />
 			</td>
 			<%} %>
-			<td width="40%" style="white-space: nowrap">
+<%--			style="white-space: nowrap"--%>
+			<td width="40%">
 				<%: !isPrint ? Html.ActionLink(title, MVC.Content.Detail(item.ContentId), new { @class = "cw-content-detail-link", title = "Show/hide song details", rel = mediaUrl }) : MvcHtmlString.Create(title) %>
 			</td>
-			<td width="30%" style="white-space: nowrap">
+			<td width="30%">
 				<%: artist %>
 				<% if (!isPrint) {%>
 				&nbsp;<a href="<%: artistUrl%>" title="Show more songs by <%: artist%>"><img src="/public/images/icons/arrow.gif" alt="right-arrow"/></a>
 				<%} %>
 			</td>
-			<td class="text-right">
+			<td width="10%" class="text-right">
 				<%: item.Pop %>
 			</td>
-			<td class="text-right">
+			<td width="10%" class="text-right">
 				<%: item.Country %>
 			</td>
-			<td class="text-right">
+			<td width="5%" class="text-right">
 				<%: item.ReleaseYear %>
 			</td>
 		   

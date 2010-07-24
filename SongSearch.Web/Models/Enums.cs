@@ -17,10 +17,12 @@ namespace SongSearch.Web {
 	// Roles
 	// **************************************    
 	public enum PricingPlans {
-		Level1 = 1,
-		Level2 = 2,
-		Level3 = 3,
-		Level4 = 4
+		Basic = 1,
+		Plus = 2,
+		Business = 3,
+		Pro = 4,
+		Introductory = 5,
+
 	}
 	
 	// **************************************
@@ -176,5 +178,16 @@ namespace SongSearch.Web {
 					RightsTypes.Master
 				};
 		}
+
+		public static PricingPlans[] GetPricingPlans(){
+			return new[]
+			{ 
+				PricingPlans.Basic,
+				PricingPlans.Plus,
+				PricingPlans.Business,
+				PricingPlans.Pro
+			};
+		}
+	
 	}
 }

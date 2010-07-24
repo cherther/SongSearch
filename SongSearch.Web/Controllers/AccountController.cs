@@ -146,8 +146,8 @@ namespace SongSearch.Web.Controllers {
 
 				NavigationLocation = new string[] { "Register" },
 				InviteId = id,
-				Email = em
-
+				Email = em,
+				PricingPlan = PricingPlans.Introductory
 			});
 		}
 
@@ -161,10 +161,19 @@ namespace SongSearch.Web.Controllers {
 			if (ModelState.IsValid) {
 				if (_acctService.UserExists(model.Email)) {
 					ModelState.AddModelError("Email", Errors.UserAlreadyRegistered.Value());
+				} else if (!model.HasAgreedToPrivacyPolicy){
+					ModelState.AddModelError("HasAgreedToPrivacyPolicy", "We''re sorry, we can only register you if you accept our privacy policy.");
 				} else {
-
 					// Check invitation code
-					var inv = _usrMgmtService.GetInvitation(model.InviteId, model.Email);
+					Invitation inv = null;
+					try {
+						inv = _usrMgmtService.GetInvitation(model.InviteId, model.Email);
+					}
+					catch {
+
+						ModelState.AddModelError("InviteId", Errors.InviteCodeNoMatch.Value());
+
+					}
 
 					if (inv != null) {
 						switch (inv.InvitationStatus) {
@@ -182,7 +191,10 @@ namespace SongSearch.Web.Controllers {
 										Password = model.Password,
 										FirstName = model.FirstName,
 										LastName = model.LastName,
-										ParentUserId = model.Invitation.InvitedByUserId
+										ParentUserId = model.Invitation.InvitedByUserId,
+										PricingPlanId = (int)model.PricingPlan,
+										HasAgreedToPrivacyPolicy = model.HasAgreedToPrivacyPolicy,
+										HasAllowedCommunication = model.HasAllowedCommunication
 									};
 
 									try {
@@ -293,7 +305,8 @@ namespace SongSearch.Web.Controllers {
 					FirstName = user.FirstName,
 					LastName = user.LastName,
 					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger),
-					ShowContactInfo = user.IsAtLeastInCatalogRole(Roles.Admin)
+					ShowContactInfo = user.IsAtLeastInCatalogRole(Roles.Admin),
+					HasAllowedCommunication = user.HasAllowedCommunication
 				};
 				if (vm.ShowSignatureField){
 					vm.AppendSignatureToTitle = user.AppendSignatureToTitle;
@@ -322,7 +335,8 @@ namespace SongSearch.Web.Controllers {
 				FirstName = model.FirstName,
 				LastName = model.LastName,
 				Signature = model.Signature,
-				AppendSignatureToTitle = model.AppendSignatureToTitle
+				AppendSignatureToTitle = model.AppendSignatureToTitle,
+				HasAllowedCommunication = model.HasAllowedCommunication
 			};
 
 			var contact = model.Contact;

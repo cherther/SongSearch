@@ -352,7 +352,7 @@ namespace SongSearch.Web {
 				return siteProfileId;
 			}
 
-			if (user.IsSuperAdmin() || user.PricingPlanId >= (int)PricingPlans.Level3) {
+			if (user.IsSuperAdmin() || user.PricingPlanId >= (int)PricingPlans.Business) {
 				siteProfileId = user.SiteProfileId;
 			} else if (user.ParentUser != null) {
 				siteProfileId = user.ParentUser.GetSiteProfileId();

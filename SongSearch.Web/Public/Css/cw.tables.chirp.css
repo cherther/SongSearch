@@ -139,3 +139,27 @@
 	padding: 3px;
 }
 
+#cw-tbl-plans
+{
+	margin: 5px;
+	border-collapse: collapse;
+}
+#cw-tbl-plans td
+{	padding: 8px 10px;
+	border-bottom: 1px solid #aaaaaa;
+}
+.cell-disabled
+{
+	background-color: #E9E9E9;
+	color: Gray;
+}
+.cell-highlight-yellow
+{
+	background-color: #FFFFCC;
+	color: #000;
+}
+.cell-highlight-blue
+{
+	background-color: #E2EDF5;
+	color: #000;
+}

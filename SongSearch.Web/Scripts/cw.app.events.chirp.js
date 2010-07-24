@@ -10,6 +10,26 @@
 	//-----------------------------------------------------------------------------------
 
 	//$('.cw-form-value-button').button();
+	//-----------------------------------
+	// Twitter sign-in
+	//-----------------------------------
+	$(".signin").click(function (evt) {
+		evt.preventDefault();
+		$("fieldset#signin_menu").toggle();
+		$(".signin").toggleClass("menu-open");
+	});
+
+	$("fieldset#signin_menu").mouseup(function () {
+		return false
+	});
+
+	$(document).mouseup(function (evt) {
+		if ($(evt.target).parent("a.signin").length == 0) {
+			$(".signin").removeClass("menu-open");
+			$("fieldset#signin_menu").hide();
+		}
+	});
+
 	//***********************************************
 	//  Form Reset
 	//***********************************************

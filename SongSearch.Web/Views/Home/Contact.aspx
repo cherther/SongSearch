@@ -5,6 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+<% Html.EnableClientValidation(); %>
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 	<h2>Contact Us</h2>
 	<div>&nbsp;</div>
@@ -22,7 +23,6 @@
 				<div>&nbsp;</div>
 				<%} else { %>
 				<% using (Html.BeginForm(MVC.Home.Contact(), FormMethod.Post)) { %>
-					<% Html.EnableClientValidation(); %>
 					<%: Html.AntiForgeryToken() %>
 					<div>&nbsp;</div>
 					<div><%: Html.LabelFor(m => m.Name) %></div>
@@ -92,7 +92,7 @@
 					<div class="cw-padded">Fax: <%: Model.ContactInfo.Fax%></div>
 					<%} %>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Email)) {%>
-					<div class="cw-padded">Email: <%: Model.ContactInfo.Email%></div>
+					<div class="cw-padded">E-mail: <%: Model.ContactInfo.Email%></div>
 					<%} %>
 				</div>
 

@@ -3324,15 +3324,31 @@ namespace SongSearch.Web.Data
         /// </summary>
         /// <param name="pricingPlanId">Initial value of the PricingPlanId property.</param>
         /// <param name="pricingPlanName">Initial value of the PricingPlanName property.</param>
+        /// <param name="isPromo">Initial value of the IsPromo property.</param>
+        /// <param name="isFeatured">Initial value of the IsFeatured property.</param>
+        /// <param name="isEnabled">Initial value of the IsEnabled property.</param>
         /// <param name="planCharge">Initial value of the PlanCharge property.</param>
         /// <param name="planRecurrance">Initial value of the PlanRecurrance property.</param>
-        public static PricingPlan CreatePricingPlan(global::System.Int32 pricingPlanId, global::System.String pricingPlanName, global::System.Decimal planCharge, global::System.Int32 planRecurrance)
+        /// <param name="numberOfSongs">Initial value of the NumberOfSongs property.</param>
+        /// <param name="numberOfInvitedUsers">Initial value of the NumberOfInvitedUsers property.</param>
+        /// <param name="numberOfCatalogAdmins">Initial value of the NumberOfCatalogAdmins property.</param>
+        /// <param name="customContactUs">Initial value of the CustomContactUs property.</param>
+        /// <param name="customSiteProfile">Initial value of the CustomSiteProfile property.</param>
+        public static PricingPlan CreatePricingPlan(global::System.Int32 pricingPlanId, global::System.String pricingPlanName, global::System.Boolean isPromo, global::System.Boolean isFeatured, global::System.Boolean isEnabled, global::System.Decimal planCharge, global::System.String planRecurrance, global::System.Int32 numberOfSongs, global::System.Int32 numberOfInvitedUsers, global::System.Int32 numberOfCatalogAdmins, global::System.Boolean customContactUs, global::System.Boolean customSiteProfile)
         {
             PricingPlan pricingPlan = new PricingPlan();
             pricingPlan.PricingPlanId = pricingPlanId;
             pricingPlan.PricingPlanName = pricingPlanName;
+            pricingPlan.IsPromo = isPromo;
+            pricingPlan.IsFeatured = isFeatured;
+            pricingPlan.IsEnabled = isEnabled;
             pricingPlan.PlanCharge = planCharge;
             pricingPlan.PlanRecurrance = planRecurrance;
+            pricingPlan.NumberOfSongs = numberOfSongs;
+            pricingPlan.NumberOfInvitedUsers = numberOfInvitedUsers;
+            pricingPlan.NumberOfCatalogAdmins = numberOfCatalogAdmins;
+            pricingPlan.CustomContactUs = customContactUs;
+            pricingPlan.CustomSiteProfile = customSiteProfile;
             return pricingPlan;
         }
 
@@ -3395,6 +3411,78 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
+        public global::System.Boolean IsPromo
+        {
+            get
+            {
+                return _IsPromo;
+            }
+            set
+            {
+                OnIsPromoChanging(value);
+                ReportPropertyChanging("IsPromo");
+                _IsPromo = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsPromo");
+                OnIsPromoChanged();
+            }
+        }
+        private global::System.Boolean _IsPromo;
+        partial void OnIsPromoChanging(global::System.Boolean value);
+        partial void OnIsPromoChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsFeatured
+        {
+            get
+            {
+                return _IsFeatured;
+            }
+            set
+            {
+                OnIsFeaturedChanging(value);
+                ReportPropertyChanging("IsFeatured");
+                _IsFeatured = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsFeatured");
+                OnIsFeaturedChanged();
+            }
+        }
+        private global::System.Boolean _IsFeatured;
+        partial void OnIsFeaturedChanging(global::System.Boolean value);
+        partial void OnIsFeaturedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+            set
+            {
+                OnIsEnabledChanging(value);
+                ReportPropertyChanging("IsEnabled");
+                _IsEnabled = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsEnabled");
+                OnIsEnabledChanged();
+            }
+        }
+        private global::System.Boolean _IsEnabled;
+        partial void OnIsEnabledChanging(global::System.Boolean value);
+        partial void OnIsEnabledChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
         public global::System.Decimal PlanCharge
         {
             get
@@ -3419,7 +3507,7 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 PlanRecurrance
+        public global::System.String PlanRecurrance
         {
             get
             {
@@ -3429,14 +3517,158 @@ namespace SongSearch.Web.Data
             {
                 OnPlanRecurranceChanging(value);
                 ReportPropertyChanging("PlanRecurrance");
-                _PlanRecurrance = StructuralObject.SetValidValue(value);
+                _PlanRecurrance = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("PlanRecurrance");
                 OnPlanRecurranceChanged();
             }
         }
-        private global::System.Int32 _PlanRecurrance;
-        partial void OnPlanRecurranceChanging(global::System.Int32 value);
+        private global::System.String _PlanRecurrance;
+        partial void OnPlanRecurranceChanging(global::System.String value);
         partial void OnPlanRecurranceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NumberOfSongs
+        {
+            get
+            {
+                return _NumberOfSongs;
+            }
+            set
+            {
+                OnNumberOfSongsChanging(value);
+                ReportPropertyChanging("NumberOfSongs");
+                _NumberOfSongs = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumberOfSongs");
+                OnNumberOfSongsChanged();
+            }
+        }
+        private global::System.Int32 _NumberOfSongs;
+        partial void OnNumberOfSongsChanging(global::System.Int32 value);
+        partial void OnNumberOfSongsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NumberOfInvitedUsers
+        {
+            get
+            {
+                return _NumberOfInvitedUsers;
+            }
+            set
+            {
+                OnNumberOfInvitedUsersChanging(value);
+                ReportPropertyChanging("NumberOfInvitedUsers");
+                _NumberOfInvitedUsers = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumberOfInvitedUsers");
+                OnNumberOfInvitedUsersChanged();
+            }
+        }
+        private global::System.Int32 _NumberOfInvitedUsers;
+        partial void OnNumberOfInvitedUsersChanging(global::System.Int32 value);
+        partial void OnNumberOfInvitedUsersChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NumberOfCatalogAdmins
+        {
+            get
+            {
+                return _NumberOfCatalogAdmins;
+            }
+            set
+            {
+                OnNumberOfCatalogAdminsChanging(value);
+                ReportPropertyChanging("NumberOfCatalogAdmins");
+                _NumberOfCatalogAdmins = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumberOfCatalogAdmins");
+                OnNumberOfCatalogAdminsChanged();
+            }
+        }
+        private global::System.Int32 _NumberOfCatalogAdmins;
+        partial void OnNumberOfCatalogAdminsChanging(global::System.Int32 value);
+        partial void OnNumberOfCatalogAdminsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean CustomContactUs
+        {
+            get
+            {
+                return _CustomContactUs;
+            }
+            set
+            {
+                OnCustomContactUsChanging(value);
+                ReportPropertyChanging("CustomContactUs");
+                _CustomContactUs = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CustomContactUs");
+                OnCustomContactUsChanged();
+            }
+        }
+        private global::System.Boolean _CustomContactUs;
+        partial void OnCustomContactUsChanging(global::System.Boolean value);
+        partial void OnCustomContactUsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean CustomSiteProfile
+        {
+            get
+            {
+                return _CustomSiteProfile;
+            }
+            set
+            {
+                OnCustomSiteProfileChanging(value);
+                ReportPropertyChanging("CustomSiteProfile");
+                _CustomSiteProfile = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CustomSiteProfile");
+                OnCustomSiteProfileChanged();
+            }
+        }
+        private global::System.Boolean _CustomSiteProfile;
+        partial void OnCustomSiteProfileChanging(global::System.Boolean value);
+        partial void OnCustomSiteProfileChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PromoMessage
+        {
+            get
+            {
+                return _PromoMessage;
+            }
+            set
+            {
+                OnPromoMessageChanging(value);
+                ReportPropertyChanging("PromoMessage");
+                _PromoMessage = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PromoMessage");
+                OnPromoMessageChanged();
+            }
+        }
+        private global::System.String _PromoMessage;
+        partial void OnPromoMessageChanging(global::System.String value);
+        partial void OnPromoMessageChanged();
 
         #endregion
     
@@ -4781,7 +5013,9 @@ namespace SongSearch.Web.Data
         /// <param name="siteProfileId">Initial value of the SiteProfileId property.</param>
         /// <param name="appendSignatureToTitle">Initial value of the AppendSignatureToTitle property.</param>
         /// <param name="pricingPlanId">Initial value of the PricingPlanId property.</param>
-        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Int32 siteProfileId, global::System.Boolean appendSignatureToTitle, global::System.Int32 pricingPlanId)
+        /// <param name="hasAgreedToPrivacyPolicy">Initial value of the HasAgreedToPrivacyPolicy property.</param>
+        /// <param name="hasAllowedCommunication">Initial value of the HasAllowedCommunication property.</param>
+        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Int32 siteProfileId, global::System.Boolean appendSignatureToTitle, global::System.Int32 pricingPlanId, global::System.Boolean hasAgreedToPrivacyPolicy, global::System.Boolean hasAllowedCommunication)
         {
             User user = new User();
             user.UserId = userId;
@@ -4792,6 +5026,8 @@ namespace SongSearch.Web.Data
             user.SiteProfileId = siteProfileId;
             user.AppendSignatureToTitle = appendSignatureToTitle;
             user.PricingPlanId = pricingPlanId;
+            user.HasAgreedToPrivacyPolicy = hasAgreedToPrivacyPolicy;
+            user.HasAllowedCommunication = hasAllowedCommunication;
             return user;
         }
 
@@ -5136,6 +5372,54 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _PricingPlanId;
         partial void OnPricingPlanIdChanging(global::System.Int32 value);
         partial void OnPricingPlanIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasAgreedToPrivacyPolicy
+        {
+            get
+            {
+                return _HasAgreedToPrivacyPolicy;
+            }
+            set
+            {
+                OnHasAgreedToPrivacyPolicyChanging(value);
+                ReportPropertyChanging("HasAgreedToPrivacyPolicy");
+                _HasAgreedToPrivacyPolicy = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasAgreedToPrivacyPolicy");
+                OnHasAgreedToPrivacyPolicyChanged();
+            }
+        }
+        private global::System.Boolean _HasAgreedToPrivacyPolicy;
+        partial void OnHasAgreedToPrivacyPolicyChanging(global::System.Boolean value);
+        partial void OnHasAgreedToPrivacyPolicyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasAllowedCommunication
+        {
+            get
+            {
+                return _HasAllowedCommunication;
+            }
+            set
+            {
+                OnHasAllowedCommunicationChanging(value);
+                ReportPropertyChanging("HasAllowedCommunication");
+                _HasAllowedCommunication = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasAllowedCommunication");
+                OnHasAllowedCommunicationChanged();
+            }
+        }
+        private global::System.Boolean _HasAllowedCommunication;
+        partial void OnHasAllowedCommunicationChanging(global::System.Boolean value);
+        partial void OnHasAllowedCommunicationChanged();
 
         #endregion
     

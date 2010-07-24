@@ -104,8 +104,8 @@ function pluralize(item, numberofItems) {
 	return numberofItems == 1 ? item : item + 's';
 }
 function setupTooltips() {
-	$('[title]').tooltip({ predelay: 800, effect: 'fade', opacity: 0.7 });
-	$('.cw-tooltip').tooltip();
+	$('[title]').tipTip();//{ delay: 800 });  //tooltip({ predelay: 800, effect: 'fade', opacity: 0.7 });
+	//$('.cw-tooltip').tipTip({ delay: 800 }); //tooltip();
 }
 
 //***********************************************
@@ -150,6 +150,8 @@ var isContentSaveMode;
 
 var lastContentDetailLinkClicked;
 var lastContentEditLinkClicked;
+
+var _currentContentDetailTab;
 
 //-----------------------------------------------------------------------------------
 //
@@ -396,6 +398,7 @@ function showContentPanel(link) {
 		if (!sameContent || !isContentViewMode) {
 
 			var url = link[0].href;
+			
 			getContentDetailAjax(url, link);
 
 		} else {
@@ -491,7 +494,19 @@ function showContentPanelCallbackEdit(data, link, altLink) {
 
 function setupContentPanelUIControls() {
 	//$('.cw-content-detail-menu').button();
-	$('#cw-content-detail-tabs').tabs();
+	var $tabs = $('#cw-content-detail-tabs');
+	$tabs.tabs(
+		{
+			select: function (evt, ui) {
+				_currentContentDetailTab = ui.panel.id;
+			}
+		}
+	);
+
+	if (_currentContentDetailTab != null) {
+		$tabs.tabs('select', '#' + _currentContentDetailTab);
+	}
+
 	//$('.cw-tag-checkbox').button();
 	setupVolumeSlider();
 	setupAutoComplete();
@@ -522,6 +537,7 @@ function closeContentPanel() {
 		if (contentDetailRow.length > 0) { contentDetailRow.remove(); }
 		$('.cw-row-selected').removeClass('cw-row-selected');
 		isContentDetailShowing = false;
+		_currentContentDetailTab = null;
 		mediaStop();
 	}
 }

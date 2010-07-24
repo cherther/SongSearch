@@ -6,14 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Web.Mvc;
 
-namespace SongSearch.Web.Models {
+namespace SongSearch.Web.Data {
 	[MetadataType(typeof(ContactMetaData))]
 	public partial class Contact {
 	}
 
 	public class ContactMetaData {
 
-		[DisplayName("Contact Name")]
+		[DisplayName("Site Contact Name")]
 		public string ContactName { get; set; }
 
 		[DisplayName("Company Name")]
@@ -38,17 +38,25 @@ namespace SongSearch.Web.Models {
 		public string Country { get; set; }
 
 		[DisplayName("Phone 1")]
+		[DataType(DataType.PhoneNumber)]
 		public string Phone1 { get; set; }
 
 		[DisplayName("Phone 2")]
+		[DataType(DataType.PhoneNumber)]
 		public string Phone2 { get; set; }
 
 		[DisplayName("Fax")]
+		[DataType(DataType.PhoneNumber)]
 		public string Fax { get; set; }
+		
+		[DataType(DataType.EmailAddress)]
+		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "This is a not valid e-mail address.")]
+		[DisplayName("Site Contact e-mail address")]
+		public string Email { get; set; }
 
 		[DataType(DataType.EmailAddress)]
 		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "This is a not valid e-mail address.")]
-		[DisplayName("Administrative email address")]
+		[DisplayName("Administrative e-mail address")]
 		public string AdminEmail { get; set; }
 	}
 }
