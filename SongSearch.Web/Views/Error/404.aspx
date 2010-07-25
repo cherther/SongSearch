@@ -8,7 +8,7 @@
 		<div>&nbsp;</div>
 
 		<div>
-			<img src="../../Public/Images/error_404.jpg" alt="This is a Dead End"/>
+			<img src="../../Public/Images/error-404.jpg" alt="This is a Dead End"/>
 		</div>
 		<div>&nbsp;</div>
 	</div>

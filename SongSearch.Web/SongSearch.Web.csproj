@@ -287,7 +287,8 @@
     <Content Include="Public\Css\jquery-ui.css" />
     <Content Include="Public\Css\jquery.gritter.css" />
     <Content Include="Public\Css\tipTip.css" />
-    <Content Include="Public\Images\error_404.jpg" />
+    <Content Include="Public\Images\error-500.jpg" />
+    <Content Include="Public\Images\error-404.jpg" />
     <Content Include="Public\Javascript\cw.application.js">
       <DependentUpon>scriptmash.chirp.config</DependentUpon>
     </Content>
@@ -1891,6 +1892,7 @@
     <Content Include="Views\CatalogUpload\Upload.aspx" />
     <Content Include="Views\CatalogUpload\wfSelectCatalog.ascx" />
     <Content Include="Views\Error\404.aspx" />
+    <Content Include="Views\Error\500.aspx" />
     <Content Include="Views\Error\Index.aspx" />
     <Content Include="Views\Content\Print.aspx" />
     <Content Include="Views\Home\Contact.aspx" />

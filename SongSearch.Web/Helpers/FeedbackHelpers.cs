@@ -42,7 +42,7 @@ namespace System.Web.Mvc {
 			}
 		}
 
-		public static string Feedback(this HtmlHelper helper) {
+		public static HtmlString Feedback(this HtmlHelper helper) {
 
 			var messages = helper.ViewContext.TempData["feedback"] as Dictionary<string, string>;
 
@@ -56,7 +56,7 @@ namespace System.Web.Mvc {
 				sb.AppendLine("});");
 				sb.AppendLine("</script>");
 			}
-			return sb.ToString();
+			return new HtmlString(sb.ToString());
 		}
 
 	}

@@ -23,7 +23,7 @@ namespace SongSearch.Web.Controllers
 			Exception lastError = Server.GetLastError();
 			lastError = lastError ?? new Exception(message ?? "Unknown Error");
 			this.FeedbackError("Oops! We're sorry, something bad happened while processing your request...");
-			return View(new ErrorViewModel() { Error = new HandleErrorInfo(lastError, controllerName, actionName) } );
+			return View("500", new ErrorViewModel() { Error = new HandleErrorInfo(lastError, controllerName, actionName) } );
 		}
 		/// <summary>
 		/// This is fired when the site hits a 500
@@ -32,7 +32,8 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Problem() {
 			//no logging here - let the app do it 
 			//we don't get reliable error traps here
-			return RedirectToAction(Actions.Index());
+			_logger.Warn(string.Format("500 - {0}", Request.UrlReferrer));
+			return View("500", new ErrorViewModel());
 		}
 		/// <summary>
 		/// This is fired when the site gets a bad URL
