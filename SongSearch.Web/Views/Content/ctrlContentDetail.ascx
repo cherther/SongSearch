@@ -484,7 +484,7 @@
 	$(document).ready(function () {
 		//alert('here');
 		setupTooltips();
-		//setupMediaUploader('fullUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'FullSong', 0);
+		//setupMediaUploader('fullUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'Full', 0);
 		//setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload','previewVersionFilelist','Preview', 1);
 	});
 </script>

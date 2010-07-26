@@ -40,6 +40,11 @@ namespace SongSearch.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DownloadUrl() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DownloadUrl);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Get() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Get);
         }
@@ -47,6 +52,11 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Stream() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Stream);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult StreamUrl() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.StreamUrl);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -62,8 +72,10 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Download = "Download";
+            public readonly string DownloadUrl = "DownloadUrl";
             public readonly string Get = "Get";
             public readonly string Stream = "Stream";
+            public readonly string StreamUrl = "StreamUrl";
         }
 
 
@@ -85,6 +97,12 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
+        public override System.Web.Mvc.ActionResult DownloadUrl(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DownloadUrl);
+            callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Get(int id, SongSearch.Web.MediaVersion version) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Get);
             callInfo.RouteValueDictionary.Add("id", id);
@@ -94,6 +112,13 @@ namespace SongSearch.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Stream(int id, SongSearch.Web.MediaVersion version) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Stream);
+            callInfo.RouteValueDictionary.Add("id", id);
+            callInfo.RouteValueDictionary.Add("version", version);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult StreamUrl(int id, SongSearch.Web.MediaVersion version) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.StreamUrl);
             callInfo.RouteValueDictionary.Add("id", id);
             callInfo.RouteValueDictionary.Add("version", version);
             return callInfo;

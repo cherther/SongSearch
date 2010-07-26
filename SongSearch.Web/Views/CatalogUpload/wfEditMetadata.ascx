@@ -32,7 +32,7 @@ We have tried to automatically populate a few fields for you based on the embedd
 	<%: Html.Hidden(String.Format("state.Content[{0}].UploadFiles[{1}].FileName", i, j), file.FileName)%>
 	<%: Html.Hidden(String.Format("state.Content[{0}].UploadFiles[{1}].FilePath", i, j), file.FilePath)%>
 	<%: Html.Hidden(String.Format("state.Content[{0}].UploadFiles[{1}].FileMediaVersion", i, j), file.FileMediaVersion)%>
-	<%if (file.FileMediaVersion == MediaVersion.FullSong) { %>
+	<%if (file.FileMediaVersion == MediaVersion.Full) { %>
 		<%: file.FileName.AsNullIfWhiteSpace() ?? "(No Full Song File!)" %>
 	<%} %>
 	<%} %>

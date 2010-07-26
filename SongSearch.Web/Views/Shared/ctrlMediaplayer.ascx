@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.ContentViewModel>" %>
 <%
 	var content = Model.Content;
-	var fullSong = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.FullSong));
+	var fullSong = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Full));
 	var preview = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Preview)); 
 	var excerptStart = content.MediaExcerptStart.HasValue ? content.MediaExcerptStart : 0;
 	var excerptEnd = content.MediaExcerptEnd.HasValue ? content.MediaExcerptEnd : excerptStart + 30 * 1000;

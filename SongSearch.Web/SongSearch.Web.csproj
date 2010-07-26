@@ -52,6 +52,7 @@
     <Reference Include="AntiXSSLibrary">
       <HintPath>..\..\mvcstarter\lib\AntiXSSLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="AWSSDK, Version=1.0.11.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL" />
     <Reference Include="dotless.Core, Version=1.0.0.5, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL" />
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>

@@ -43,7 +43,7 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string MediaPath(this Content content, MediaVersion mediaVersion) {
 
-			return mediaVersion == MediaVersion.FullSong ? Settings.MediaPathFullSong.Value() : Settings.MediaPathPreview.Value();
+			return mediaVersion == MediaVersion.Full ? Settings.MediaPathFull.Value() : Settings.MediaPathPreview.Value();
 		}
 
 		// **************************************

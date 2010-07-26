@@ -226,7 +226,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Zip(int id, string userArchiveName, IList<ContentUserDownloadable> contentNames) {
 
 			try {
-				if (contentNames.Count() > 10) {
+				if (contentNames.Count() > 10 || SystemSetting.UseRemoteMedia) {
 					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
 
 					SessionService.Session().RefreshMyActiveCart(this.UserName());

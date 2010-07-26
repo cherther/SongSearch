@@ -11,7 +11,7 @@ For this step, please select full song files in MP3 format only. We will deal wi
 <div id="wizardUploader">
 	<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
 </div>
-<input id="state_MediaVersion" name="state.MediaVersion" type="hidden" value="<%: MediaVersion.FullSong %>" />
+<input id="state_MediaVersion" name="state.MediaVersion" type="hidden" value="<%: MediaVersion.Full %>" />
 <div id="fileList">
 </div>
 <div>&nbsp;</div>

@@ -30,7 +30,7 @@ namespace SongSearch.Web {
 	// **************************************    
 	public enum MediaVersion {
 		Preview = 1,
-		FullSong
+		Full
 	}
 
 	// **************************************

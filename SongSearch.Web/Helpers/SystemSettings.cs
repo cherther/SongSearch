@@ -40,7 +40,7 @@ namespace SongSearch.Web {
 		DefaultSiteProfileName,
 		DefaultSiteProfileId,
 		BaseUrl,
-		MediaPathFullSong,
+		MediaPathFull,
 		MediaPathPreview,
 		MediaDefaultExtension,
 		ZipPath,
@@ -52,7 +52,12 @@ namespace SongSearch.Web {
 		LogSearchTerms,
 		LogSearchResults,
 		LogUserActions,
-		LogUserContentActions
+		LogUserContentActions,
+		UseRemoteMedia,
+		AWSAccessKey,
+		AWSSecretKey,
+		AWSMediaBucket,
+		MediaUrlFormat
 	}
 
 	// **************************************
@@ -94,6 +99,9 @@ namespace SongSearch.Web {
 			return GetSetting(setting);
 		}
 
+		public static bool UseRemoteMedia {
+			get { return bool.Parse(Settings.UseRemoteMedia.Value()); }
+		}
 		// **************************************
 		// GetErrorMessage
 		// **************************************

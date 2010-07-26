@@ -73,7 +73,7 @@ namespace SongSearch.Web.Services {
 					if (uploadFile.FileName != null) {
 						var filePath = Account.User().UploadFile(uploadFile.FileName, uploadFile.FileMediaVersion.ToString());
 						switch (uploadFile.FileMediaVersion) {
-							case MediaVersion.FullSong:
+							case MediaVersion.Full:
 								content.HasMediaFullVersion = true;
 
 								var file = new FileInfo(filePath);
@@ -89,8 +89,14 @@ namespace SongSearch.Web.Services {
 								break;
 
 						}
+
 						var mediaPath = content.MediaFilePath(uploadFile.FileMediaVersion);
-						FileSystem.SafeMove(filePath, mediaPath, true);
+
+						if (SystemSetting.UseRemoteMedia) {
+							MediaService.SaveContentMediaRemote(filePath, content.ContentId, uploadFile.FileMediaVersion);
+						} else {
+							FileSystem.SafeMove(filePath, mediaPath, true);
+						}
 					}
 				}
 
@@ -106,18 +112,19 @@ namespace SongSearch.Web.Services {
 			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 			if (content != null) {
 
-				var filePath = content.MediaFilePath(MediaVersion.FullSong);
+				var filePath = content.MediaFilePath(MediaVersion.Full);
 				//var file = new FileInfo(filePath);
+				if (File.Exists(filePath)) { 
+					var tag = ID3v2Helper.CreateID3v2(filePath);
 
-				var tag = ID3v2Helper.CreateID3v2(filePath);
-
-				tag.Title = content.Title;
-				tag.Artist = content.Artist;
-				tag.Year = content.ReleaseYear.HasValue ? content.ReleaseYear.Value.ToString() : tag.Year;
+					tag.Title = content.Title;
+					tag.Artist = content.Artist;
+					tag.Year = content.ReleaseYear.HasValue ? content.ReleaseYear.Value.ToString() : tag.Year;
 				
-				IdSharp.Tagging.ID3v1.ID3v1Helper.RemoveTag(filePath);
-				ID3v2Helper.RemoveTag(filePath);
-				tag.Save(filePath);
+					IdSharp.Tagging.ID3v1.ID3v1Helper.RemoveTag(filePath);
+					ID3v2Helper.RemoveTag(filePath);
+					tag.Save(filePath);
+				}
 			}
 
 		}
@@ -131,7 +138,7 @@ namespace SongSearch.Web.Services {
 			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 			if (content != null) {
 				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Preview));
-				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.FullSong));
+				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Full));
 				DataSession.Delete<Content>(content);
 			}
 
@@ -145,7 +152,7 @@ namespace SongSearch.Web.Services {
 				var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 				if (content != null) {
 					FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Preview));
-					FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.FullSong));
+					FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Full));
 					DataSession.Delete<Content>(content);
 				}
 			}

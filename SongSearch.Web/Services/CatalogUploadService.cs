@@ -203,7 +203,7 @@ namespace SongSearch.Web.Services {
 
 			// try filename
 			// try title + artist
-			var taggedFullSongs = taggedContent.Where(c => c.Key.FileMediaVersion == MediaVersion.FullSong);
+			var taggedFullSongs = taggedContent.Where(c => c.Key.FileMediaVersion == MediaVersion.Full);
 			var taggedPreviews = taggedContent.Where(c => c.Key.FileMediaVersion == MediaVersion.Preview);
 			foreach (var itm in taggedFullSongs) {
 
@@ -332,7 +332,7 @@ namespace SongSearch.Web.Services {
 					itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
 					itm.Notes = itm.Notes;
 					
-					var full = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.FullSong);
+					var full = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Full);
 					if (full != null){
 						var fi = new FileInfo(full.FilePath);
 						var id3 = ID3Writer.NormalizeTag(full.FilePath, itm);
@@ -362,7 +362,11 @@ namespace SongSearch.Web.Services {
 					foreach (var file in itm.UploadFiles) {
 						if (itm.ContentId > 0) {
 							var filePath = itm.MediaFilePath(file.FileMediaVersion);
-							FileSystem.SafeCopy(file.FilePath, filePath, true);
+							if (SystemSetting.UseRemoteMedia) {
+								MediaService.SaveContentMediaRemote(file.FilePath, itm.ContentId, file.FileMediaVersion);
+							} else {
+								FileSystem.SafeCopy(file.FilePath, filePath, true);
+							}
 						}
 					}
 

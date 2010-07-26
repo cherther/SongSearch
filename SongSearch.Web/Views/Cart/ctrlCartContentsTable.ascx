@@ -37,7 +37,7 @@
 		<%
 			var mediaUrl = Url.SiteRoot();
 			mediaUrl = item.HasMediaFullVersion ?
-				String.Concat(mediaUrl, Url.Action(MVC.Media.Stream(item.ContentId, MediaVersion.FullSong))) : "";
+				String.Concat(mediaUrl, Url.Action(MVC.Media.Stream(item.ContentId, MediaVersion.Full))) : "";
 
 		   var titleLength = 35;
 			var title = (!String.IsNullOrWhiteSpace(item.Title) ?

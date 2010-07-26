@@ -104,7 +104,7 @@ function pluralize(item, numberofItems) {
 	return numberofItems == 1 ? item : item + 's';
 }
 function setupTooltips() {
-	$('[title]').tipTip({ delay: 800 });  //tooltip({ predelay: 800, effect: 'fade', opacity: 0.7 });
+	//$('[title]').tipTip({ delay: 800 });  //tooltip({ predelay: 800, effect: 'fade', opacity: 0.7 });
 	//$('.cw-tooltip').tipTip({ delay: 800 }); //tooltip();
 }
 
@@ -366,7 +366,7 @@ function setUpMediaFileDialog(link) {
 		dialog.dialog('open');
 		resetUploaders();
 		setupMediaUploader('previewVersionUploadContainer', 'previewVersionUpload', 'previewVersionFilelist', 'Preview', 0);
-		setupMediaUploader('fullVersionUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'FullSong', 1);
+		setupMediaUploader('fullVersionUploadContainer', 'fullVersionUpload', 'fullVersionFilelist', 'Full', 1);
 	}
 }
 function resetMediaFileDialog(template) {

@@ -53,7 +53,7 @@
 		<%
 			var mediaUrl = Url.SiteRoot();
 			mediaUrl = item.HasMediaFullVersion ?
-				String.Concat(mediaUrl, Url.Action(MVC.Media.Stream(item.ContentId, MediaVersion.FullSong))) : "";
+				String.Concat(mediaUrl, Url.Action(MVC.Media.Stream(item.ContentId, MediaVersion.Full))) : "";
 
 		   var titleLength = 35;
 			var title = (!String.IsNullOrWhiteSpace(item.Title) ?
@@ -116,7 +116,7 @@
 		<input type="hidden" id="contentId" name="contentId" value="" />
 		<input type="hidden" id="uploadFiles_0_FileMediaVersion" name="uploadFiles[0].FileMediaVersion" value="Preview" />
 		<input type="hidden" id="uploadFiles_0_FileName" name="uploadFiles[0].FileName" value="" />
-		<input type="hidden" id="uploadFiles_1_FileMediaVersion" name="uploadFiles[1].FileMediaVersion" value="FullSong" />
+		<input type="hidden" id="uploadFiles_1_FileMediaVersion" name="uploadFiles[1].FileMediaVersion" value="Full" />
 		<input type="hidden" id="uploadFiles_1_FileName" name="uploadFiles[1].FileName" value="" />
 		<h3 id="uploadTitle"></h3>
 		<div>&nbsp;</div>

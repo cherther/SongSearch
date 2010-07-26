@@ -385,8 +385,8 @@ namespace SongSearch.Web.Services {
 						var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
 								
 						try {
-							var asset = MediaService.GetContentMedia(content.ContentId, MediaVersion.FullSong, user);
-
+							byte[] asset = MediaService.GetContentMedia(content.ContentId, MediaVersion.Full, user);
+							
 							zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, MediaService.ContentMediaExtension),
 										asset);
 						}

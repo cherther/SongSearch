@@ -61,7 +61,7 @@ function soundPlay(url, repeat) {
 			begin_playState = _mySound.paused ? sm_ps_paused : _mySound.playState;
 
 			if (url == _lastUrlPlayed && !repeat && _mySound.playState == sm_ps_playing) { //second click on same link
-				if (begin_readyState != sm_rs_failed_error) {
+				//if (begin_readyState != sm_rs_failed_error) {
 //                    if (_mySound.playState != sm_ps_playing) {
 //                        // not yet playing
 //                        _mySound.setPosition(0);
@@ -70,12 +70,12 @@ function soundPlay(url, repeat) {
 //    
 						_mySound.togglePause();
 //                    }
-			   } else {
-					soundManager._writeDebug('Warning: sound failed to load (security restrictions, 404 or bad format)', 2);
-				}
+//			   } else {
+//					soundManager._writeDebug('Warning: sound failed to load (security restrictions, 404 or bad format)', 2);
+//				}
 			} else {
 
-				if (begin_readyState != sm_rs_failed_error) {
+				//if (begin_readyState != sm_rs_failed_error) {
 					_mySound.unload();
 
 					if (begin_playState == sm_ps_playing) {
@@ -86,9 +86,9 @@ function soundPlay(url, repeat) {
 					_mySound.play();
 					_lastUrlPlayed = url;
 
-				} else {
-					soundManager._writeDebug('Warning: sound failed to load (security restrictions, 404 or bad format)', 2);
-				}
+//				} else {
+//					soundManager._writeDebug('Warning: sound failed to load (security restrictions, 404 or bad format)', 2);
+//				}
 			}
 
 		} else { //first time
