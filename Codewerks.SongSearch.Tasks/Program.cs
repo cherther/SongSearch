@@ -50,6 +50,12 @@ namespace Codewerks.SongSearch.Tasks {
 				case "texttag":
 					Importer.ConvertTextTags();
 					break;
+				case "awspreview":
+					AmazonAWS.Upload("Previews");
+					break;
+				case "awsfull":
+					AmazonAWS.Upload("FullSong");
+					break;
 				default:
 					response = "Don't know that one";
 					break;
