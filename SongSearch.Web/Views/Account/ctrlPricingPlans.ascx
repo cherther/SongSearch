@@ -2,7 +2,7 @@
 <%
 int pricingPlan = 0;
 int.TryParse(ViewData["PricingPlan"].ToString(), out pricingPlan);
-var plans = Model.OrderByDescending(p => p.IsPromo);
+var plans = Model.Where(p => p.ShowOnSite == true).OrderByDescending(p => p.IsPromo);
 var width = (100 - 25) / plans.Count();
 %>
 <table id="cw-tbl-plans">

@@ -89,14 +89,14 @@ namespace SongSearch.Web.Controllers {
 						return RedirectToAction(MVC.Home.Index());
 					}
 				} else {
-					ModelState.AddModelError("", Errors.LoginFailed.Value());
+					ModelState.AddModelError("", SystemErrors.LoginFailed);
 					this.FeedbackError("There was an error logging you in...");
 				}
 
 			}
 
 			//something failed
-			ModelState.AddModelError("", Errors.LoginFailed.Value());
+			ModelState.AddModelError("", SystemErrors.LoginFailed);
 
 			model.NavigationLocation = new string[] { "Home", "Login" };
 
@@ -160,7 +160,7 @@ namespace SongSearch.Web.Controllers {
 
 			if (ModelState.IsValid) {
 				if (_acctService.UserExists(model.Email)) {
-					ModelState.AddModelError("Email", Errors.UserAlreadyRegistered.Value());
+					ModelState.AddModelError("Email", SystemErrors.UserAlreadyRegistered);
 				} else if (!model.HasAgreedToPrivacyPolicy){
 					ModelState.AddModelError("HasAgreedToPrivacyPolicy", "We''re sorry, we can only register you if you accept our privacy policy.");
 				} else {
@@ -171,7 +171,7 @@ namespace SongSearch.Web.Controllers {
 					}
 					catch {
 
-						ModelState.AddModelError("InviteId", Errors.InviteCodeNoMatch.Value());
+						ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
 
 					}
 
@@ -205,23 +205,23 @@ namespace SongSearch.Web.Controllers {
 										return RedirectToAction(MVC.Home.Index());
 									}
 									catch {
-										ModelState.AddModelError("Email", Errors.UserCreationFailed.Value());//AccountValidation.ErrorCodeToString(createStatus));
+										ModelState.AddModelError("Email", SystemErrors.UserCreationFailed);//AccountValidation.ErrorCodeToString(createStatus));
 									}
 
 									break;
 								}
 							case (int)InvitationStatusCodes.Registered: {
-									ModelState.AddModelError("InviteId", Errors.InviteCodeAlreadyUsed.Value());
+								ModelState.AddModelError("InviteId", SystemErrors.InviteCodeAlreadyUsed);
 									break;
 								}
 
 							case (int)InvitationStatusCodes.Expired: {
-									ModelState.AddModelError("InviteId", Errors.InviteCodeExpired.Value());
+								ModelState.AddModelError("InviteId", SystemErrors.InviteCodeExpired);
 									break;
 								}
 						}
 					} else {
-						ModelState.AddModelError("InviteId", Errors.InviteCodeNoMatch.Value());
+						ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
 					}
 				}
 
@@ -257,7 +257,7 @@ namespace SongSearch.Web.Controllers {
 					//_acctService.UpdateCurrentUserInSession();
 					return RedirectToAction(Actions.ChangePasswordSuccess());
 				} else {
-					ModelState.AddModelError("", Errors.PasswordChangeFailed.Value());
+					ModelState.AddModelError("", SystemErrors.PasswordChangeFailed);
 				}
 			}
 
@@ -278,10 +278,10 @@ namespace SongSearch.Web.Controllers {
 
 			try {
 				Mail.SendMail(
-					Settings.AdminEmailAddress.Value(),
+					SiteProfileData.SiteProfile().AdminEmail,
 					email,
-					Messages.PasswordChangeSuccessSubjectLine.Value(),
-					Messages.PasswordChangeSuccess.Value()
+					SystemMessages.PasswordChangeSuccessSubjectLine,
+					SystemMessages.PasswordChangeSuccess
 					);
 			}
 			catch { }
@@ -364,7 +364,7 @@ namespace SongSearch.Web.Controllers {
 				//model.ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger);
 
 				ModelState.AddModelError("",
-					Errors.PasswordChangeFailed.Value());
+					SystemErrors.PasswordChangeFailed);
 				this.FeedbackError("There was an error updating your profile");
 
 			}
@@ -421,16 +421,16 @@ namespace SongSearch.Web.Controllers {
 				//Send email
 
 				string link = String.Format(@"visit our <a href='{0}/Account/ResetPasswordRespond/{1}?rc={2}'>Password Reset page</a>",
-					Settings.BaseUrl.Value(),
+					SystemConfig.BaseUrl,
 					model.Email,
 					model.ResetCode);
-				string msg = String.Format(Messages.PasswordResetRequestLink.Value(), link);
+				string msg = String.Format(SystemMessages.PasswordResetRequestLink, link);
 
 				Mail.SendMail(
-					Settings.AdminEmailAddress.Value(),
+					SiteProfileData.SiteProfile().AdminEmail,
 					model.Email,
-					Messages.PasswordResetRequestSubjectLine.Value(),
-					String.Format("{0} {1}", String.Format(Messages.PasswordResetRequest.Value(), SiteProfileData.SiteProfile().CompanyName), msg)
+					SystemMessages.PasswordResetRequestSubjectLine,
+					String.Format("{0} {1}", String.Format(SystemMessages.PasswordResetRequest, SiteProfileData.SiteProfile().CompanyName), msg)
 
 					);
 				return RedirectToAction(Actions.ResetPasswordSuccess());
@@ -475,7 +475,7 @@ namespace SongSearch.Web.Controllers {
 				return RedirectToAction(Actions.LogIn());
 
 			} else {
-				ModelState.AddModelError("", Errors.PasswordResetFailed.Value());
+				ModelState.AddModelError("", SystemErrors.PasswordResetFailed);
 
 				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 				model.NavigationLocation = new string[] { "Home", "ResetPassword" };

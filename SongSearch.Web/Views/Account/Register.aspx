@@ -95,7 +95,7 @@
 			<div>&nbsp;</div>
 			<div class="cw-outl-orange cw-padded cw-rounded-corners" style="width: 75%;<%: User.UserIsSuperAdmin() ? "display:none" : ""%>">
 			<div>
-				<%: Html.LabelFor(m => m.PricingPlan) %>
+				<%//: Html.LabelFor(m => m.PricingPlan) %>
 			</div>
 			<div>&nbsp;</div>
 				<% ViewData["BaseModel"] = "RegisterModel"; %>

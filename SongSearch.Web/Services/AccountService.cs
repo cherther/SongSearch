@@ -46,7 +46,7 @@ namespace SongSearch.Web.Services {
 					user.ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : 1;
 					user.RoleId = (int)Roles.Client;
 					//user.PricingPlanId = (int)PricingPlans.Basic;
-					user.SiteProfileId = int.Parse(Settings.DefaultSiteProfileId.Value());
+					user.SiteProfileId = int.Parse(SystemConfig.DefaultSiteProfileId);
 					user.RegisteredOn = DateTime.Now;
 
 					// Get parent users catalog where parent user is at least a plugger and assign to new user in client role

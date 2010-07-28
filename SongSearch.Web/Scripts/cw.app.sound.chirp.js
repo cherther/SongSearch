@@ -67,8 +67,11 @@ function soundPlay(url, repeat) {
 //                        _mySound.setPosition(0);
 //                        _mySound.play();
 //                    } else {
-//    
-						_mySound.togglePause();
+				if (_mySound.readyState != sm_rs_loaded_success) {
+					_mySound.unload();//to avoid loading after hitting pause before load is done
+				} else {
+					_mySound.togglePause();
+				}
 //                    }
 //			   } else {
 //					soundManager._writeDebug('Warning: sound failed to load (security restrictions, 404 or bad format)', 2);

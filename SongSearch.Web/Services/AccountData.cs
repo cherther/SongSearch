@@ -277,7 +277,7 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string UploadFolder(this User user, string mediaVersion = "", bool create = true) {
 
-			string uploadPath = Settings.UploadPath.Value(); 
+			string uploadPath = SystemConfig.UploadPath; 
 			
 			string userFolder = Path.Combine(uploadPath, user.UserId.ToString(), mediaVersion);
 			if (create) { FileSystem.CreateFolder(userFolder); }  
@@ -347,7 +347,7 @@ namespace SongSearch.Web {
 		}
 
 		public static int GetSiteProfileId(this User user) {
-			int siteProfileId = int.Parse(Settings.DefaultSiteProfileId.Value());
+			int siteProfileId = int.Parse(SystemConfig.DefaultSiteProfileId);
 			if (user == null){
 				return siteProfileId;
 			}

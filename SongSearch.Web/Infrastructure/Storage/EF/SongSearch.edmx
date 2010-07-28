@@ -225,6 +225,7 @@
           <Property Name="MediaLength" Type="bigint" />
           <Property Name="MediaExcerptStart" Type="bigint" />
           <Property Name="MediaExcerptEnd" Type="bigint" />
+          <Property Name="IsMediaOnRemoteServer" Type="bit" Nullable="false" />
           <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Writers" Type="nvarchar" MaxLength="500" />
@@ -295,6 +296,7 @@
           <Property Name="IsPromo" Type="bit" Nullable="false" />
           <Property Name="IsFeatured" Type="bit" Nullable="false" />
           <Property Name="IsEnabled" Type="bit" Nullable="false" />
+          <Property Name="ShowOnSite" Type="bit" Nullable="false" />
           <Property Name="PlanCharge" Type="decimal" Nullable="false" Precision="28" Scale="4" />
           <Property Name="PlanRecurrance" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="NumberOfSongs" Type="int" Nullable="false" />
@@ -862,6 +864,7 @@
           <Property Type="DateTime" Name="MediaDate" />
           <Property Type="String" Name="SoundsLike" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Instruments" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsMediaOnRemoteServer" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1198,6 +1201,7 @@
           <Property Type="Boolean" Name="CustomSiteProfile" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="SongSearch.Web.Data.Model.FK_Users_PricingPlans" FromRole="PricingPlan" ToRole="User" />
           <Property Type="String" Name="PromoMessage" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="ShowOnSite" Nullable="false" />
         </EntityType>
         <Association Name="FK_Users_PricingPlans">
           <End Type="SongSearch.Web.Data.Model.PricingPlan" Role="PricingPlan" Multiplicity="1" />
@@ -1244,6 +1248,7 @@
             <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
+                <ScalarProperty Name="IsMediaOnRemoteServer" ColumnName="IsMediaOnRemoteServer" />
                 <ScalarProperty Name="Instruments" ColumnName="Instruments" />
                 <ScalarProperty Name="SoundsLike" ColumnName="SoundsLike" />
                 <ScalarProperty Name="MediaDate" ColumnName="MediaDate" />
@@ -1462,6 +1467,7 @@
           <EntitySetMapping Name="PricingPlans">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.PricingPlan">
               <MappingFragment StoreEntitySet="PricingPlans">
+                <ScalarProperty Name="ShowOnSite" ColumnName="ShowOnSite" />
                 <ScalarProperty Name="PromoMessage" ColumnName="PromoMessage" />
                 <ScalarProperty Name="CustomSiteProfile" ColumnName="CustomSiteProfile" />
                 <ScalarProperty Name="CustomContactUs" ColumnName="CustomContactUs" />
@@ -1503,22 +1509,22 @@
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Catalog" Width="1.5" PointX="8" PointY="8.25" Height="2.1725878906249996" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentRight" Width="1.5" PointX="6.25" PointY="2.375" Height="2.3648893229166656" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="2" PointX="3" PointY="4" Height="7.1724251302083317" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Role" Width="1.5" PointX="6.5" PointY="10.625" Height="1.7879850260416674" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Tag" Width="1.5" PointX="0.75" PointY="8.75" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Role" Width="1.5" PointX="5.875" PointY="10" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Tag" Width="1.5" PointX="0.75" PointY="7.5" Height="2.1725878906249996" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Territory" Width="1.5" PointX="9.25" PointY="5" Height="1.787985026041671" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.User" Width="1.5" PointX="3.875" PointY="12.5" Height="4.2879036458333353" IsExpanded="true" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Contents_Catalogs" ManuallyRouted="false">
-          <ConnectorPoint PointX="8" PointY="9.4324446614583337" />
-          <ConnectorPoint PointX="5" PointY="9.4324446614583337" />
+          <ConnectorPoint PointX="8" PointY="9.09375" />
+          <ConnectorPoint PointX="5" PointY="9.09375" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentRights_Contents" ManuallyRouted="false">
           <ConnectorPoint PointX="5" PointY="4.56224609375" />
           <ConnectorPoint PointX="6.25" PointY="4.56224609375" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Roles" ManuallyRouted="false">
-          <ConnectorPoint PointX="6.5" PointY="12.1124072265625" />
-          <ConnectorPoint PointX="5.21875" PointY="12.1124072265625" />
-          <ConnectorPoint PointX="5.21875" PointY="12.5" />
+          <ConnectorPoint PointX="6.625" PointY="11.787985026041667" />
+          <ConnectorPoint PointX="6.625" PointY="14.770045572916668" />
+          <ConnectorPoint PointX="5.375" PointY="14.770045572916668" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentRightTerritories" ManuallyRouted="false">
           <ConnectorPoint PointX="7.75" PointY="4.5021463098958332" />
@@ -1526,8 +1532,8 @@
           <ConnectorPoint PointX="10.34375" PointY="5" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentTags" ManuallyRouted="false">
-          <ConnectorPoint PointX="3" PointY="9.8362939453125" />
-          <ConnectorPoint PointX="2.25" PointY="9.8362939453125" />
+          <ConnectorPoint PointX="3" PointY="8.5862939453125" />
+          <ConnectorPoint PointX="2.25" PointY="8.5862939453125" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Invitation" Width="1.5" PointX="0.875" PointY="14.25" Height="2.1725878906250031" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Invitations" >
@@ -1549,11 +1555,14 @@
           <ConnectorPoint PointX="8.53125" PointY="12.625" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_UsersCatalogs_Roles" >
-          <ConnectorPoint PointX="7.75" PointY="12.412985026041667" />
-          <ConnectorPoint PointX="7.75" PointY="12.625" />
+          <ConnectorPoint PointX="7.0312525" PointY="11.787985026041667" />
+          <ConnectorPoint PointX="7.0312525" PointY="13.13689447265625" />
+          <ConnectorPoint PointX="7.5" PointY="13.13689447265625" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_UsersCatalogs_Users" >
           <ConnectorPoint PointX="5.375" PointY="13.711293945312502" />
+          <ConnectorPoint PointX="6.541666666666667" PointY="13.711293945312502" />
+          <ConnectorPoint PointX="6.708333333333333" PointY="13.711293945312502" />
           <ConnectorPoint PointX="7.5" PointY="13.711293945312502" />
         </AssociationConnector>
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="12.125" PointY="1.125" Height="3.9033007812500031" />

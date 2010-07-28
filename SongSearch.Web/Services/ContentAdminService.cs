@@ -12,8 +12,11 @@ namespace SongSearch.Web.Services {
 	public class ContentAdminService : BaseService, IContentAdminService {
 
 		private bool _disposed;
-		
-		public ContentAdminService(IDataSession session) : base(session) {}
+		IMediaService _mediaService;
+
+		public ContentAdminService(IDataSession session, IMediaService mediaService) : base(session) {
+			_mediaService = mediaService;
+		}
 		public ContentAdminService(string activeUserIdentity): base(activeUserIdentity) { }
 
 		// **************************************
@@ -90,13 +93,7 @@ namespace SongSearch.Web.Services {
 
 						}
 
-						var mediaPath = content.MediaFilePath(uploadFile.FileMediaVersion);
-
-						if (SystemSetting.UseRemoteMedia) {
-							MediaService.SaveContentMediaRemote(filePath, content.ContentId, uploadFile.FileMediaVersion);
-						} else {
-							FileSystem.SafeMove(filePath, mediaPath, true);
-						}
+						_mediaService.SaveContentMedia(filePath, content, uploadFile.FileMediaVersion);
 					}
 				}
 

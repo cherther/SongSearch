@@ -42,7 +42,7 @@ namespace SongSearch.Web {
 #endif
 			}
 		}
-
+		
 		// **************************************
 		// DataSession
 		// **************************************
@@ -198,6 +198,12 @@ namespace SongSearch.Web {
 				Bind<ICatalogManagementService>().To<CatalogManagementService>();
 				Bind<ICatalogUploadService>().To<CatalogUploadService>();
 
+				if (SystemConfig.UseRemoteMedia) {
+					Bind<IMediaService>().To<MediaServiceRemote>();
+				} else {
+					Bind<IMediaService>().To<MediaService>();
+				}
+				
 				Bind<IFormsAuthenticationService>().To<FormsAuthenticationService>();
 			}
 		}

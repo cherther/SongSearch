@@ -26,8 +26,12 @@ namespace SongSearch.Web.Services {
 
 		private const int _daysToExpire = 30;
 		private const int _daysToDelete = 7;
+		
+		IMediaService _mediaService;
 
-		public CartService(IDataSession dataSession, IDataSessionReadOnly readSession) : base(dataSession, readSession) { }
+		public CartService(IDataSession dataSession, IDataSessionReadOnly readSession, IMediaService mediaService) : base(dataSession, readSession) {
+			_mediaService = mediaService;
+		}
 
 		public CartService(string activeUserIdentity) : base(activeUserIdentity) { }
 		// **************************************
@@ -107,7 +111,7 @@ namespace SongSearch.Web.Services {
 
 			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 			if (content == null) {
-				throw new ArgumentException(Errors.ItemDoesNotExist.Value());
+				throw new ArgumentException(SystemErrors.ItemDoesNotExist);
 			}
 
 			// Check if open cart exists and if needed create new cart
@@ -151,7 +155,7 @@ namespace SongSearch.Web.Services {
 				if (!cart.Contents.Any(i => i.ContentId == contentId)){
 					var content = contents.SingleOrDefault(c => c.ContentId == contentId);
 					if (content == null) {
-						throw new ArgumentException(Errors.ItemDoesNotExist.Value());
+						throw new ArgumentException(SystemErrors.ItemDoesNotExist);
 					}
 					cart.Contents.Add(content);
 				}
@@ -382,12 +386,12 @@ namespace SongSearch.Web.Services {
 
 						var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
 													contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
-						var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
+						var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? _mediaService.GetContentMediaFileName(content.ContentId));
 								
 						try {
-							byte[] asset = MediaService.GetContentMedia(content.ContentId, MediaVersion.Full, user);
-							
-							zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, MediaService.ContentMediaExtension),
+							byte[] asset = _mediaService.GetContentMedia(content, MediaVersion.Full, user);
+
+							zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
 										asset);
 						}
 						catch {

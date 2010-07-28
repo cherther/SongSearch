@@ -47,11 +47,12 @@ namespace SongSearch.Web.Services {
 		// (Properties)
 		// ----------------------------------------------------------------------------
 		private bool _disposed;
-		
+		IMediaService _mediaService;
 				
-		public CatalogUploadService(IDataSession session) : base(session) {
+		public CatalogUploadService(IDataSession session, IMediaService mediaService) : base(session) {
 
 			CatalogUploadWorkflow = CreateCatalogUploadWorkflow();
+			_mediaService = mediaService;
 		
 		}
 		public CatalogUploadService(string activeUserIdentity) : base(activeUserIdentity) { }
@@ -361,12 +362,7 @@ namespace SongSearch.Web.Services {
 
 					foreach (var file in itm.UploadFiles) {
 						if (itm.ContentId > 0) {
-							var filePath = itm.MediaFilePath(file.FileMediaVersion);
-							if (SystemSetting.UseRemoteMedia) {
-								MediaService.SaveContentMediaRemote(file.FilePath, itm.ContentId, file.FileMediaVersion);
-							} else {
-								FileSystem.SafeCopy(file.FilePath, filePath, true);
-							}
+							_mediaService.SaveContentMedia(file.FilePath, itm, file.FileMediaVersion);
 						}
 					}
 

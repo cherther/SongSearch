@@ -184,6 +184,8 @@
     </Compile>
     <Compile Include="Services\CatalogManagementService.cs" />
     <Compile Include="Services\CatalogUploadService.cs" />
+    <Compile Include="Services\Interfaces\IMediaService.cs" />
+    <Compile Include="Services\MediaServiceRemote.cs" />
     <Compile Include="Services\SiteProfileData.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\Interfaces\ICatalogManagementService.cs" />
@@ -1863,8 +1865,6 @@
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
     <Content Include="Views\Account\ctrlContactInfo.ascx" />
     <Content Include="Views\Account\ctrlPricingPlans.ascx" />
-    <Content Include="Views\Account\DisplayTemplates\MultilineText.ascx" />
-    <Content Include="Views\Account\DisplayTemplates\_Object.ascx" />
     <Content Include="Views\Account\LogIn.aspx" />
     <Content Include="Views\Account\LogOut.aspx" />
     <Content Include="Views\Account\Register.aspx" />

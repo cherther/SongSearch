@@ -107,7 +107,9 @@
 }
 .cw-tbl-carts-processing
 {
-	background-color: #FFFF99;
+	/*background-color: #FFFF99;*/
+	background-color: #E2EDF5;
+	color: #000;
 }
 .cw-tbl-carts-archived
 {

@@ -41,7 +41,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Complete()
 		{
 			// Cleanup upload folder
-			FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
+			//FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
 			//SessionService.Session().InitializeSession(true);
 			//CacheService.InitializeApp(true);
 

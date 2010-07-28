@@ -1509,7 +1509,8 @@ namespace SongSearch.Web.Data
         /// <param name="hasMediaPreviewVersion">Initial value of the HasMediaPreviewVersion property.</param>
         /// <param name="hasMediaFullVersion">Initial value of the HasMediaFullVersion property.</param>
         /// <param name="mediaType">Initial value of the MediaType property.</param>
-        public static Content CreateContent(global::System.Int32 contentId, global::System.Int32 catalogId, global::System.Int32 createdByUserId, global::System.DateTime createdOn, global::System.Int32 lastUpdatedByUserId, global::System.DateTime lastUpdatedOn, global::System.Boolean isControlledAllIn, global::System.String title, global::System.String artist, global::System.Boolean hasMediaPreviewVersion, global::System.Boolean hasMediaFullVersion, global::System.String mediaType)
+        /// <param name="isMediaOnRemoteServer">Initial value of the IsMediaOnRemoteServer property.</param>
+        public static Content CreateContent(global::System.Int32 contentId, global::System.Int32 catalogId, global::System.Int32 createdByUserId, global::System.DateTime createdOn, global::System.Int32 lastUpdatedByUserId, global::System.DateTime lastUpdatedOn, global::System.Boolean isControlledAllIn, global::System.String title, global::System.String artist, global::System.Boolean hasMediaPreviewVersion, global::System.Boolean hasMediaFullVersion, global::System.String mediaType, global::System.Boolean isMediaOnRemoteServer)
         {
             Content content = new Content();
             content.ContentId = contentId;
@@ -1524,6 +1525,7 @@ namespace SongSearch.Web.Data
             content.HasMediaPreviewVersion = hasMediaPreviewVersion;
             content.HasMediaFullVersion = hasMediaFullVersion;
             content.MediaType = mediaType;
+            content.IsMediaOnRemoteServer = isMediaOnRemoteServer;
             return content;
         }
 
@@ -2276,6 +2278,30 @@ namespace SongSearch.Web.Data
         private global::System.String _Instruments;
         partial void OnInstrumentsChanging(global::System.String value);
         partial void OnInstrumentsChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsMediaOnRemoteServer
+        {
+            get
+            {
+                return _IsMediaOnRemoteServer;
+            }
+            set
+            {
+                OnIsMediaOnRemoteServerChanging(value);
+                ReportPropertyChanging("IsMediaOnRemoteServer");
+                _IsMediaOnRemoteServer = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsMediaOnRemoteServer");
+                OnIsMediaOnRemoteServerChanged();
+            }
+        }
+        private global::System.Boolean _IsMediaOnRemoteServer;
+        partial void OnIsMediaOnRemoteServerChanging(global::System.Boolean value);
+        partial void OnIsMediaOnRemoteServerChanged();
 
         #endregion
     
@@ -3334,7 +3360,8 @@ namespace SongSearch.Web.Data
         /// <param name="numberOfCatalogAdmins">Initial value of the NumberOfCatalogAdmins property.</param>
         /// <param name="customContactUs">Initial value of the CustomContactUs property.</param>
         /// <param name="customSiteProfile">Initial value of the CustomSiteProfile property.</param>
-        public static PricingPlan CreatePricingPlan(global::System.Int32 pricingPlanId, global::System.String pricingPlanName, global::System.Boolean isPromo, global::System.Boolean isFeatured, global::System.Boolean isEnabled, global::System.Decimal planCharge, global::System.String planRecurrance, global::System.Int32 numberOfSongs, global::System.Int32 numberOfInvitedUsers, global::System.Int32 numberOfCatalogAdmins, global::System.Boolean customContactUs, global::System.Boolean customSiteProfile)
+        /// <param name="showOnSite">Initial value of the ShowOnSite property.</param>
+        public static PricingPlan CreatePricingPlan(global::System.Int32 pricingPlanId, global::System.String pricingPlanName, global::System.Boolean isPromo, global::System.Boolean isFeatured, global::System.Boolean isEnabled, global::System.Decimal planCharge, global::System.String planRecurrance, global::System.Int32 numberOfSongs, global::System.Int32 numberOfInvitedUsers, global::System.Int32 numberOfCatalogAdmins, global::System.Boolean customContactUs, global::System.Boolean customSiteProfile, global::System.Boolean showOnSite)
         {
             PricingPlan pricingPlan = new PricingPlan();
             pricingPlan.PricingPlanId = pricingPlanId;
@@ -3349,6 +3376,7 @@ namespace SongSearch.Web.Data
             pricingPlan.NumberOfCatalogAdmins = numberOfCatalogAdmins;
             pricingPlan.CustomContactUs = customContactUs;
             pricingPlan.CustomSiteProfile = customSiteProfile;
+            pricingPlan.ShowOnSite = showOnSite;
             return pricingPlan;
         }
 
@@ -3669,6 +3697,30 @@ namespace SongSearch.Web.Data
         private global::System.String _PromoMessage;
         partial void OnPromoMessageChanging(global::System.String value);
         partial void OnPromoMessageChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean ShowOnSite
+        {
+            get
+            {
+                return _ShowOnSite;
+            }
+            set
+            {
+                OnShowOnSiteChanging(value);
+                ReportPropertyChanging("ShowOnSite");
+                _ShowOnSite = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ShowOnSite");
+                OnShowOnSiteChanged();
+            }
+        }
+        private global::System.Boolean _ShowOnSite;
+        partial void OnShowOnSiteChanging(global::System.Boolean value);
+        partial void OnShowOnSiteChanged();
 
         #endregion
     

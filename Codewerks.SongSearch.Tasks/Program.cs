@@ -50,6 +50,10 @@ namespace Codewerks.SongSearch.Tasks {
 				case "texttag":
 					Importer.ConvertTextTags();
 					break;
+				case "awsupload":
+					AmazonAWS.Upload("Music/Full");
+					AmazonAWS.Upload("Music/Preview");
+					break;
 				case "awspreview":
 					AmazonAWS.Upload("Music/Preview");
 					break;

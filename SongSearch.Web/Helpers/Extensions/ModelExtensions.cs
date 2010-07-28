@@ -43,7 +43,7 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string MediaPath(this Content content, MediaVersion mediaVersion) {
 
-			return mediaVersion == MediaVersion.Full ? Settings.MediaPathFull.Value() : Settings.MediaPathPreview.Value();
+			return mediaVersion == MediaVersion.Full ? SystemConfig.MediaPathFull : SystemConfig.MediaPathPreview;
 		}
 
 		// **************************************
@@ -51,7 +51,7 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static string MediaFilePath(this Content content, MediaVersion mediaVersion) {
 
-			var fileName = String.Concat(content.ContentId, Settings.MediaDefaultExtension.Value());
+			var fileName = String.Concat(content.ContentId, SystemConfig.MediaDefaultExtension);
 			return Path.Combine(content.MediaPath(mediaVersion), fileName);
 		}
 
@@ -138,7 +138,7 @@ namespace SongSearch.Web {
 		// GetArchivePath
 		// **************************************
 		public static string ArchivePath(this Cart cart) {
-			return Path.Combine(Settings.ZipPath.Value(), cart.ArchiveName);
+			return Path.Combine(SystemConfig.ZipPath, cart.ArchiveName);
 		}
 
 		// **************************************
@@ -149,11 +149,11 @@ namespace SongSearch.Web {
 			if (String.IsNullOrWhiteSpace(userArchiveName)) {
 				DateTime cartDate = DateTime.Now;
 
-				string zipFormat = Settings.ZipFormat.Value();
+				string zipFormat = SystemConfig.ZipFormat;
 				downloadName = String.Format(zipFormat, cartDate.Year, cartDate.Month, cartDate.Day, cart.UserId, cart.CartId);
 			} else {
 				userArchiveName = userArchiveName.MakeFilePathSafe().TrimInside("_");
-				string zipFormat = Settings.ZipUserFormat.Value();
+				string zipFormat = SystemConfig.ZipUserFormat;
 				downloadName = String.Format(zipFormat, userArchiveName, cart.UserId, cart.CartId);
 			}
 

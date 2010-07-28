@@ -365,11 +365,12 @@ namespace SongSearch.Web
 						inviteMsg.InviteId = inviteId.ToString();
 						inviteMsg.Sender = sender;
 						inviteMsg.Recipient = address;
-						inviteMsg.BaseUrl = Settings.BaseUrl.Value();
+						inviteMsg.BaseUrl = SystemConfig.BaseUrl;
 						inviteMsg.InviteUrl = String.Format("{0}/{1}", inviteMsg.BaseUrl, "Account/Register");
 
 						//string inviteLink = String.Format("{0}", baseUrl);
-						string subject = String.Format("{0} {1}", SiteProfileData.SiteProfile().CompanyName, Messages.InvitationSubjectLine.Value());
+						string subject = String.Format("{0} {1}", SiteProfileData.SiteProfile().CompanyName,
+							SystemMessages.InvitationSubjectLine);
 						string message = this.RenderViewToString("InviteMessage", inviteMsg);
 
 						Mail.SendMail(sender, address, subject, message);

@@ -11,6 +11,7 @@
 	 <!--[if lt IE 8]><link rel="stylesheet" href=""~/public/css/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
 	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
 	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="/scripts/jquery-1.4.2.min.js"></script>
 	<script type="text/javascript" src="/scripts/MicrosoftAjax.debug.js"></script>
 	<script type="text/javascript" src="/scripts/MicrosoftMvcValidation.debug.js"></script>
 
@@ -70,11 +71,10 @@
 </div>
 <%
 	var debug = App.Environment != AppEnvironment.Production;
-	var d = debug ? "?d" : "";
+	var d = debug ? "?d=1" : "";
 %>
-<%--<script type="text/javascript" src="http://cdn.jquerytools.org/1.2.3/jquery.tools.min.js"></script>--%>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+<%--<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+--%><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
 <script type="text/javascript" src="/public/javascript/cw.plugins.js?d"></script>
 <%if (debug) {%>
 <script type="text/javascript" src="/scripts/cw.app.main.chirp.js<%: d %>" ></script>
