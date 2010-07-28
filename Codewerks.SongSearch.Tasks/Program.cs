@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SongSearch.Web;
 
 namespace Codewerks.SongSearch.Tasks {
 	class Program {
@@ -51,14 +52,17 @@ namespace Codewerks.SongSearch.Tasks {
 					Importer.ConvertTextTags();
 					break;
 				case "awsupload":
-					AmazonAWS.Upload("Music/Full");
-					AmazonAWS.Upload("Music/Preview");
+					AmazonAWS.Upload(MediaVersion.Full);
+					AmazonAWS.Upload(MediaVersion.Preview);
 					break;
 				case "awspreview":
-					AmazonAWS.Upload("Music/Preview");
+					AmazonAWS.Upload(MediaVersion.Preview);
 					break;
 				case "awsfull":
-					AmazonAWS.Upload("Music/Full");
+					AmazonAWS.Upload(MediaVersion.Full);
+					break;
+				case "awsstatus":
+					AmazonAWS.UpdateMediaRemoteStatus();
 					break;
 				default:
 					response = "Don't know that one";

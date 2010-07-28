@@ -326,6 +326,7 @@ namespace SongSearch.Web.Services {
 					itm.CreatedOn = DateTime.Now.Date;
 					itm.LastUpdatedByUserId = user.UserId;
 					itm.LastUpdatedOn = DateTime.Now.Date;
+					itm.IsMediaOnRemoteServer = false;
 					
 					itm.Title = itm.Title.AsEmptyIfNull();//.CamelCase();//.ToUpper();
 					itm.Artist = itm.Artist.AsEmptyIfNull();//.CamelCase();//.ToUpper();

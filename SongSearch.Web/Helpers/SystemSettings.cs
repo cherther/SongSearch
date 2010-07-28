@@ -23,6 +23,7 @@ namespace SongSearch.Web {
 		public static string AWSSecretKey { get; set; }
 		public static string AWSMediaBucket { get; set; }
 		public static string MediaUrlFormat { get; set; }
+		public static string MediaFolderUrlFormat { get; set; }
 
 		static SystemConfig() {
 
@@ -45,7 +46,7 @@ namespace SongSearch.Web {
 			AWSSecretKey = Configuration.Get("Sys_AWSSecretKey");
 			AWSMediaBucket = Configuration.Get("Sys_AWSMediaBucket");
 			MediaUrlFormat = Configuration.Get("Sys_MediaUrlFormat");
-			
+			MediaFolderUrlFormat = Configuration.Get("Sys_MediaFolderUrlFormat");
 		}
 	}
 	public static class SystemMessages {

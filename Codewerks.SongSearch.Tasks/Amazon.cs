@@ -21,35 +21,75 @@ namespace Codewerks.SongSearch.Tasks {
 		static string _mediaPath = "";
 
 		static AmazonS3 client = null;
+		static AmazonCloudService _amazon;
 
-		public static void Upload(string mediaFolder) {
+		public static void UpdateMediaRemoteStatus()
+		{
+			using (_amazon = new AmazonCloudService()) {
 
-			NameValueCollection appConfig = ConfigurationManager.AppSettings;
+				using (var session = new SongSearchDataSession()) {
+					var contents = session.All<Content>();
+					var remoteContents = _amazon.GetContentList(MediaVersion.Full);
 
-			_accessKeyID = appConfig["AWSAccessKey"];
-			_secretAccessKeyID = appConfig["AWSSecretKey"];
-			_mediaPath= appConfig[mediaFolder];
-			var mediaBucket = _bucketName;// String.Concat(_bucketName, mediaFolder);
+					foreach (var content in contents) {
+						string key = _amazon.GetContentKey(content, MediaVersion.Full);
+						var remoteObject = remoteContents.FirstOrDefault(x => x.Key == key);
 
-			var mediaDir = new DirectoryInfo(_mediaPath);
+						Console.WriteLine(String.Format("{0} '{1}' - {2}", content.ContentId,
+							content.Title,
+							remoteObject != null ? "synced!" : "----------------------> missing"));
 
-			using (client = AWSClientFactory.CreateAmazonS3Client(_accessKeyID, _secretAccessKeyID)) {
+						if (remoteObject != null) {
+							content.IsMediaOnRemoteServer = true;
+						} else {
+							content.IsMediaOnRemoteServer = false;
 
-				var remoteObjects = GetBucketList(mediaFolder, mediaBucket);
+						}
+					}
 
-				foreach (var file in mediaDir.GetFiles()) {
-
-					var remoteFile = remoteObjects.SingleOrDefault(x => x.Key == GetAwsKey(file, mediaFolder) && x.Size == file.Length);
-					
-					if (remoteFile == null) {
-						Console.WriteLine("Uploading " + file.Name + " to " + mediaFolder);
-						UploadFile(mediaBucket, file, mediaFolder);
-					}			
+					session.CommitChanges();
 				}
-
-				Console.WriteLine("Done uploading");
 			}
+		}
 
+		public static void Upload(MediaVersion version) {
+
+		
+			using (_amazon = new AmazonCloudService()) {
+
+				using (var session = new SongSearchDataSession()) {
+					
+					var remoteObjects = _amazon.GetContentList(version);
+					var contents = session.All<Content>();
+					var remoteContents = _amazon.GetContentList(MediaVersion.Full);
+
+					foreach (var content in contents) {
+
+						var remoteFolder = _amazon.GetContentPrefix(version);
+						var key = _amazon.GetContentKey(content, version);
+						var filePath = Path.Combine(version == MediaVersion.Full ?
+							SystemConfig.MediaPathFull :
+							SystemConfig.MediaPathPreview,
+							String.Concat(content.ContentId,SystemConfig.MediaDefaultExtension)
+							);
+
+						var file = new FileInfo(filePath);
+						if (file.Exists) {
+							var remoteFile = remoteObjects.SingleOrDefault(x => x.Key == key && x.Size == file.Length);
+
+							if (remoteFile == null) {
+
+								Console.WriteLine("Uploading " + file.Name + " to " + remoteFolder);
+
+								//_amazon.SaveContentMedia(file.FullName, content, version);
+							}
+						}
+					}
+
+					Console.WriteLine("Done uploading");
+				
+				}
+			}	
 		}
 
 		private static List<S3Object> GetBucketList(string mediaFolder, string mediaBucket, string marker= null) {

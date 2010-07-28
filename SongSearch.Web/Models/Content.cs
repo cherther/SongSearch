@@ -28,6 +28,7 @@ namespace SongSearch.Web.Data {
 		public bool IsInMyActiveCart { get; set; }
 		public string UserDownloadableName { get; set; }
 		public List<UploadFile> UploadFiles { get; set; }
+		
 	}
 
 	public class ContentMetaData {

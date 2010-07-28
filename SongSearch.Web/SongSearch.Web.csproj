@@ -50,10 +50,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AntiXSSLibrary">
-      <HintPath>..\..\mvcstarter\lib\AntiXSSLibrary.dll</HintPath>
+      <HintPath>..\Ext Libraries\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK, Version=1.0.11.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL" />
-    <Reference Include="dotless.Core, Version=1.0.0.5, Culture=neutral, PublicKeyToken=96b446c9e63eae34, processorArchitecture=MSIL" />
+    <Reference Include="dotless.Core">
+      <HintPath>..\Ext Libraries\SquishIt\dotless.Core.dll</HintPath>
+    </Reference>
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
     </Reference>
@@ -73,7 +75,7 @@
       <HintPath>..\Ext Libraries\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>..\..\mvcstarter\lib\NLog.dll</HintPath>
+      <HintPath>..\Ext Libraries\NLog.dll</HintPath>
     </Reference>
     <Reference Include="SquishIt.Framework, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -184,6 +186,8 @@
     </Compile>
     <Compile Include="Services\CatalogManagementService.cs" />
     <Compile Include="Services\CatalogUploadService.cs" />
+    <Compile Include="Services\AmazonCloudService.cs" />
+    <Compile Include="Services\Interfaces\IMediaCloudService.cs" />
     <Compile Include="Services\Interfaces\IMediaService.cs" />
     <Compile Include="Services\MediaServiceRemote.cs" />
     <Compile Include="Services\SiteProfileData.cs" />

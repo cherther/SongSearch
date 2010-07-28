@@ -41,18 +41,22 @@ namespace SongSearch.Web {
 		// **************************************
 		// MediaPath
 		// **************************************    
-		public static string MediaPath(this Content content, MediaVersion mediaVersion) {
+		//public static string MediaPath(this Content content, MediaVersion mediaVersion) {
+		//    using (var mediaService = App.Container.Get<IMediaService>()) { 
 
-			return mediaVersion == MediaVersion.Full ? SystemConfig.MediaPathFull : SystemConfig.MediaPathPreview;
-		}
+		//        return mediaService.GetContentMediaPath(content, mediaVersion);
+		//    }
+		//}
 
 		// **************************************
 		// MediaFilePath
 		// **************************************    
-		public static string MediaFilePath(this Content content, MediaVersion mediaVersion) {
 
-			var fileName = String.Concat(content.ContentId, SystemConfig.MediaDefaultExtension);
-			return Path.Combine(content.MediaPath(mediaVersion), fileName);
+		public static string MediaFilePath(this Content content, MediaVersion mediaVersion) {
+			using (var mediaService = App.Container.Get<IMediaService>())
+			{
+				return mediaService.GetContentMediaPath(content, mediaVersion);
+			}
 		}
 
 		// **************************************

@@ -14,50 +14,26 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	// MediaService
 	// **************************************
-	public struct RemoteMediaConfiguration {
+	
+	public class MediaService : BaseService, IMediaService {
 
-		public static string AccessKeyID {
-			get {
-				return SystemConfig.AWSAccessKey;
-			}
+		IMediaCloudService _mediaCloudService;
+
+		public MediaService(IDataSession dataSession, IDataSessionReadOnly readSession, IMediaCloudService mediaCloudService)
+			: base(dataSession, readSession) {
+				_mediaCloudService = mediaCloudService;
 		}
-		public static string SecretAccessKeyID {
-			get {
-				return SystemConfig.AWSSecretKey;
-			}
-		}
-		public static string BucketName {
-			get {
-				return SystemConfig.AWSMediaBucket;
-			}
-		}
-		public static string MediaUrlFormat {
-			get {
-				return SystemConfig.MediaUrlFormat;
-			}
-		}
-	}
 
-
-
-	public class MediaService : IMediaService {
-
-		
 		// **************************************
 		// GetContentMedia
 		// **************************************
-		public byte[] GetContentMedia(Content content, MediaVersion version) {
-
-			var assetFile = new FileInfo(GetContentMediaPath(content, version));
-
-			if (assetFile.Exists) {
-				var assetBytes = File.ReadAllBytes(assetFile.FullName);
-
-				return assetBytes;
-			} else {
-				throw new ArgumentOutOfRangeException("Content media file is missing");
-			}
+		public byte[] GetContentMedia(Content content, MediaVersion version)
+		{
+			return SystemConfig.UseRemoteMedia && content.IsMediaOnRemoteServer ?
+				_mediaCloudService.GetContentMedia(content, version)
+				: GetContentMediaLocal(content, version);
 		}
+
 		public byte[] GetContentMedia(Content content, MediaVersion version, User user) {
 
 			var bytes = GetContentMedia(content, version);
@@ -79,6 +55,22 @@ namespace SongSearch.Web.Services {
 			}
 			//}
 		}
+		private byte[] GetContentMediaLocal(Content content, MediaVersion version)
+		{
+
+			var assetFile = new FileInfo(GetContentMediaPath(content, version));
+
+			if (assetFile.Exists)
+			{
+				var assetBytes = File.ReadAllBytes(assetFile.FullName);
+
+				return assetBytes;
+			}
+			else
+			{
+				throw new ArgumentOutOfRangeException("Content media file is missing");
+			}
+		}
 
 		// **************************************
 		// GetContentMediaFileName
@@ -94,6 +86,15 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public string GetContentMediaPath(Content content, MediaVersion version) {
 
+			return SystemConfig.UseRemoteMedia && content.IsMediaOnRemoteServer ?
+					_mediaCloudService.GetContentMediaUrl(content, version)
+					: GetContentMediaPathLocal(content, version);
+
+		}
+
+		private string GetContentMediaPathLocal(Content content, MediaVersion version)
+		{
+
 			var assetPath = version == MediaVersion.Full ? SystemConfig.MediaPathFull : SystemConfig.MediaPathPreview;
 			return Path.Combine(assetPath, GetContentMediaFileName(content.ContentId));
 
@@ -104,6 +105,7 @@ namespace SongSearch.Web.Services {
 			var mediaPath = content.MediaFilePath(version);
 			FileSystem.SafeMove(filePath, mediaPath, true);
 		}
+
 
 		// ----------------------------------------------------------------------------
 		// (Dispose)
