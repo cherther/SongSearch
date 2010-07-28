@@ -3,6 +3,3 @@ cd SqlScripts
 tar -pvczf SongSearch2.tar.gz SongSearch2.sql
 rm SongSearch2.sql
 cd ..
-git commit -am"Adding latest db script"
-git push origin dev
-git push github dev
