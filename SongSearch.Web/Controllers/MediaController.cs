@@ -122,7 +122,6 @@ namespace SongSearch.Web.Controllers
 
 				var content = SearchService.GetContent(id, Account.User());
 				if (content != null) {
-					var mediaPath = _mediaService.GetContentMediaPath(content, (MediaVersion)version);
 
 					if (SystemConfig.UseRemoteMedia && content.IsMediaOnRemoteServer) {
 
@@ -130,6 +129,7 @@ namespace SongSearch.Web.Controllers
 
 					} else {
 
+						var mediaPath = _mediaService.GetContentMediaPath(content, (MediaVersion)version);
 						var contentType = "application/mp3";
 						Response.ContentType = contentType;
 		

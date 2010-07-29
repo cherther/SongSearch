@@ -188,7 +188,7 @@ namespace SongSearch.Web {
 	}
 
 	// **************************************
-	// ContactModel
+	// ContactUsModel
 	// **************************************
 	public class ContactUsModel : ViewModel {
 		//[Required]
@@ -219,6 +219,15 @@ namespace SongSearch.Web {
 
 		public Contact ContactInfo { get; set; }
 
+	}
+
+	// **************************************
+	// ContactUsModel
+	// **************************************
+	public class PricingPlanModel : ViewModel {
+
+		public PricingPlan MyPricingPlan { get; set; }
+		public UserQuotas MyUserQuotas { get; set; }
 	}
 
 	#endregion

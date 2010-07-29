@@ -68,7 +68,7 @@ namespace SongSearch.Web {
 			PasswordResetRequestSubjectLine = Configuration.Get("Msg_PasswordResetRequestSubjectLine");
 			PasswordResetRequestLink = Configuration.Get("Msg_PasswordResetRequestLink");
 			PasswordResetSuccess = Configuration.Get("Msg_PasswordResetSuccess");
-			PasswordResetSuccessSubjectLine = Configuration.Get("Msg_PasswordResetSuccessSubjectLine");
+			PasswordResetSuccessSubjectLine = Configuration.Get("Msg_PasswordResetRequestSubjectLine");
 			InvitationSubjectLine = Configuration.Get("Msg_InvitationSubjectLine");
 			
 		}

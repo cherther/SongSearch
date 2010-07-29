@@ -1,11 +1,13 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogUploadViewModel>" %>
+<%var maxFiles = Model.MyUserQuotas.NumberOfSongs.Remaining > 25 ? 25 : Model.MyUserQuotas.NumberOfSongs.Remaining; %>
 <%: Html.Hidden("minimumFiles", 1) %>
-<%: Html.Hidden("maxFiles", 25) %>
-<%: Html.Hidden("maxBytes", 25*10*1024*1024) %>
+<%: Html.Hidden("maxFiles", maxFiles)%>
+<%: Html.Hidden("maxBytes", maxFiles * 10 * 1024 * 1024)%>
 
 <div>
 For this step, please select full song files in MP3 format only. We will deal with short previews in the next step.
 </div>
+
 <div id="uploadMessage" class="feedback-box feedback-box-error" style="display:none"></div>
 <div>&nbsp;</div>
 <div id="wizardUploader">

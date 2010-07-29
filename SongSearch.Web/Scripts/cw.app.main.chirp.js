@@ -27,18 +27,19 @@ var waiting = false;
 //***********************************************
 function wait(elem, message) {
 
-	try {
+	//try {
 		if (!waiting){
 			//$("body").css("cursor", "wait");
-			elem = elem == null ? $("body") : elem;
-			message = message == null ? "Loading" : message;
-			elem.css("cursor", "wait");
+//			elem = elem == null ? $("body") : elem;
+//			message = message == null ? "Loading" : message;
+//			elem.css("cursor", "wait");
 			//elem.block({ message: '<h3><img src="/public/images/loading.gif" />' + message + '...</h3>' });
+			//$.prettyLoader.show();
 			waiting = true;
 		}
-	}
-	catch (ex) {
-	}
+//	}
+//	catch (ex) {
+//		}
 }
 
 //***********************************************
@@ -46,10 +47,11 @@ function wait(elem, message) {
 //***********************************************
 function unwait(elem) {
 	if (waiting) {
-		elem = elem == null ? $("body") : elem;
-		//elem.unblock();
-		elem.css("cursor", "default");
-		//elem.css("cursor", "pointer");
+//		elem = elem == null ? $("body") : elem;
+//		//elem.unblock();
+//		elem.css("cursor", "default");
+//		//elem.css("cursor", "pointer");
+		//$.prettyLoader.hide();
 	}
 	waiting = false;
 }
@@ -104,7 +106,7 @@ function pluralize(item, numberofItems) {
 	return numberofItems == 1 ? item : item + 's';
 }
 function setupTooltips() {
-	//$('[title]').tipTip({ delay: 800 });  //tooltip({ predelay: 800, effect: 'fade', opacity: 0.7 });
+	$('[title]').tipTip({ delay: 800 });  //tooltip({ predelay: 800, effect: 'fade', opacity: 0.7 });
 	//$('.cw-tooltip').tipTip({ delay: 800 }); //tooltip();
 }
 

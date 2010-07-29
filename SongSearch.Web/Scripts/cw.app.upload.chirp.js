@@ -74,18 +74,18 @@
 //							
 //						});
 						formUp.bind('FileUploaded', function (up, file, response) {
-							debug('FileUploaded event fired');
+							//debug('FileUploaded event fired');
 							submitUploadFormWhenFilesDone(up);
 						});
 						formUp.bind('Error', function (up, error) {
 
 							handleError(up, error);
-
+							$.prettyLoader.hide();
 							turnStepActionButtonOn(true);
 						});
 
 						evt.preventDefault();
-
+						$.prettyLoader.show();
 						formUp.start();
 						turnStepActionButtonOn(false);
 					}

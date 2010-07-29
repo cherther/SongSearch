@@ -220,7 +220,18 @@ namespace SongSearch.Web {
 		public static string ToYesNo(this bool yes) {
 			return yes ? "Yes" : "No";
 		}
-
+		public static string ToDescription(this int number) {
+			return number.ToString("N0");
+		}
+		public static string ToQuotaDescription(this int number) {
+			return number > 0 ? number.ToString("N0") : "Unlimited";
+		}
+		public static string ToPriceDescription(this decimal price) {
+			return price > 0 ? price.ToString("C") : "Free!";
+		}
+		public static string ToPercentDescription(this decimal number) {
+			return number.ToString("P0").TrimInside();
+		}
 		public static int ToBitRate(this long lengthMilliseconds, long mediaSizeBytes){
 
 			var kb = ((decimal)(mediaSizeBytes * (decimal)8.00) / (decimal)1024.00); //kilobits = 3MB = (3*1024*1024)*8/1024 = 24576

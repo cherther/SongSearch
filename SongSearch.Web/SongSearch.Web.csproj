@@ -181,6 +181,7 @@
     </Compile>
     <Compile Include="Models\ContactInfo.cs" />
     <Compile Include="Models\Content.cs" />
+    <Compile Include="Models\UserQuota.cs" />
     <Compile Include="SearchController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -208,6 +209,7 @@
     </Compile>
     <Compile Include="ViewModels\CatalogViewModel.cs" />
     <Compile Include="ViewModels\CatalogUploadViewModel.cs" />
+    <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\SearchField.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -293,9 +295,14 @@
     <Content Include="Public\Css\fluid.gs.lt_ie8.css" />
     <Content Include="Public\Css\jquery-ui.css" />
     <Content Include="Public\Css\jquery.gritter.css" />
+    <Content Include="Public\Css\prettyLoader.css" />
     <Content Include="Public\Css\tipTip.css" />
+    <Content Include="Public\Images\prettyLoader\ajax-loader.gif" />
     <Content Include="Public\Images\error-500.jpg" />
     <Content Include="Public\Images\error-404.jpg" />
+    <Content Include="Public\Images\prettyLoader\prettyLoader.gif" />
+    <Content Include="Public\Images\prettyLoader\prettyLoader.png" />
+    <Content Include="Public\Images\usage_bars.gif" />
     <Content Include="Public\Javascript\cw.application.js">
       <DependentUpon>scriptmash.chirp.config</DependentUpon>
     </Content>
@@ -1845,6 +1852,7 @@
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.plupload.queue.js" />
     <Content Include="Scripts\jquery.plupload.queue.min.js" />
+    <Content Include="Scripts\jquery.prettyLoader.js" />
     <Content Include="Scripts\jquery.tipTip.js" />
     <Content Include="Scripts\jquery.tipTip.minified.js" />
     <Content Include="Scripts\jquery.tools.min.js" />
@@ -1867,8 +1875,13 @@
     <Content Include="Scripts\soundmanager2.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Views\Shared\ctrlAdminMenu.ascx" />
+    <Content Include="Views\Shared\ctrlAccountMenu.ascx" />
     <Content Include="Views\Account\ctrlContactInfo.ascx" />
-    <Content Include="Views\Account\ctrlPricingPlans.ascx" />
+    <Content Include="Views\Account\Plan.aspx" />
+    <Content Include="Views\Account\ctrlUserQuotasWide.ascx" />
+    <Content Include="Views\Shared\ctrlPricingPlans.ascx" />
+    <Content Include="Views\Shared\ctrlUserQuotas.ascx" />
     <Content Include="Views\Account\LogIn.aspx" />
     <Content Include="Views\Account\LogOut.aspx" />
     <Content Include="Views\Account\Register.aspx" />
@@ -1876,7 +1889,6 @@
     <Content Include="Views\Account\ResetPasswordRespond.aspx" />
     <Content Include="Views\Account\ResetPasswordSuccess.aspx" />
     <Content Include="Views\Account\UpdateProfile.aspx" />
-    <Content Include="Views\Account\UpdateProfileSuccess.aspx" />
     <Content Include="Views\Admin\MySession.aspx" />
     <Content Include="Views\Admin\UpdateCache.aspx" />
     <Content Include="Views\Cart\ctrlCartCount.ascx" />

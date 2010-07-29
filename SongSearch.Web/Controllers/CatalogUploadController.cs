@@ -151,6 +151,9 @@ namespace SongSearch.Web.Controllers
 			vm.StepView = nextStep.StepView;
 			vm.StepActionName = nextStep.StepButton;// "Next Step";
 			vm.MyCatalogs = Account.User(false).MyAdminCatalogs().OrderBy(c => c.CatalogName).ToList();
+			vm.MyPricingPlan = Account.User().PricingPlan;
+			vm.MyUserQuotas = Account.Quota();
+
 			return vm;
 		}
 

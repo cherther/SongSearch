@@ -26,7 +26,7 @@ var width = (100 - 25) / plans.Count();
 	<label>Monthly Charge</label>
 	</td>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.PlanCharge > 0 ? plan.PlanCharge.ToString("C") : "FREE!" %></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.PlanCharge.ToPriceDescription() %></td>
 	<%} %>
 </tr>
 <tr>
@@ -34,7 +34,7 @@ var width = (100 - 25) / plans.Count();
 	<label>Songs</label>
 	</td>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfSongs > 0 ? plan.NumberOfSongs.ToString("N0") : "Unlimited" %></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfSongs.ToQuotaDescription() %></td>
 	<%} %>
 </tr>
 <tr>
@@ -42,7 +42,7 @@ var width = (100 - 25) / plans.Count();
 	<label>Invited Users</label>
 	</td>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfInvitedUsers > 0 ? plan.NumberOfInvitedUsers.ToString("N0") : "Unlimited"%></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfInvitedUsers.ToQuotaDescription() %></td>
 	<%} %>
 </tr>
 <tr>
@@ -50,7 +50,7 @@ var width = (100 - 25) / plans.Count();
 	<label>Catalog Administrators</label>
 	</td>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfCatalogAdmins > 0 ? plan.NumberOfCatalogAdmins.ToString("N0") : "Unlimited"%></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfCatalogAdmins.ToQuotaDescription() %></td>
 	<%} %>
 </tr>
 <tr>

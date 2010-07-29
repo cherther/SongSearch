@@ -5,16 +5,9 @@
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
 <%
-	IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
-	menu.Add("Register", new string[4] { "Register", "Account", "", "current" });
-
-//    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
-//    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
-
-	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
-		
-	%>
-	
+ViewData["SubMenuLocation"] = "Register";
+Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
+%>
 </asp:Content>
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>

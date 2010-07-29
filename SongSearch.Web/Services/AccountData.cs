@@ -43,7 +43,37 @@ namespace SongSearch.Web {
 		}
 
 		
+		public static UserQuotas Quota(){
 
+			var quota = new UserQuotas();
+			var plan = User().PricingPlan;
+			quota.NumberOfSongs = new Quota() { Allowed = plan.NumberOfSongs, Used = GetNumberOfSongs() };
+			quota.NumberOfInvitedUsers = new Quota() { Allowed = plan.NumberOfInvitedUsers, Used = GetNumberOfUsers() };
+			quota.NumberOfCatalogAdmins = new Quota() { Allowed = plan.NumberOfCatalogAdmins, Used = GetNumberOfCatalogAdmins() };
+
+
+			return quota;
+
+		}
+
+		private static int GetNumberOfSongs() {
+
+			using (var session = App.DataSessionReadOnly) {
+				var adminCats = User().MyAdminCatalogs().Select(c => c.CatalogId);
+				var songCount = session.All<Content>().Where(x => adminCats.Contains(x.CatalogId)).Count();
+
+				return songCount;
+			}
+		}
+		private static int GetNumberOfUsers() {
+			return User().MyUserHierarchy().CountWithChildren();
+		}
+		private static int GetNumberOfCatalogAdmins() {
+			//var myUsers = User().MyUserHierarchy();
+			var myAdmins = User().MyAdminUserHierarchy();// Where(x => x.UserCatalogRoles.Any(r => r.RoleId >= (int)Roles.Admin)).ToList();
+			var adminCount = myAdmins.CountWithChildren();
+			return adminCount;
+		}
 		// **************************************
 		// Cart
 		// **************************************
@@ -314,6 +344,26 @@ namespace SongSearch.Web {
 			}
 		}
 
+		// **************************************
+		// MyUserHierarchy
+		// **************************************    
+		public static IList<User> MyAdminUserHierarchy(this User user, bool withCatalogRoles = false) {
+
+			using (var session = App.DataSessionReadOnly) {
+
+				var set = session.GetObjectQuery<User>();
+				var users = (withCatalogRoles ? set.Include("UserCatalogRoles") : set).Where(u => u.RoleId <= (int)Roles.Admin).ToList();
+
+				var topLevelUsers = (
+						user.IsSuperAdmin() ?
+						users.Where(u => !u.ParentUserId.HasValue) :
+						users.Where(u => u.ParentUserId == user.UserId)
+						).ToList();
+
+				return topLevelUsers.AttachChildren(users);
+
+			}
+		}
 		// **************************************
 		// MyAdminCatalogs
 		// **************************************    

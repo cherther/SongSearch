@@ -13,7 +13,7 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	// MediaServiceRemote
 	// **************************************
-	public class MediaServiceRemote : IMediaService {
+	public class zMediaServiceRemote : IMediaService {
 
 		// **************************************
 		// GetContentMedia

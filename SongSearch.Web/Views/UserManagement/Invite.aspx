@@ -3,17 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Invite
 </asp:Content>
-<asp:Content ID="Content4" ContentPlaceHolderID="SuvNavContent" runat="server">
+<asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
 <%
-	IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
-
-	menu.Add("Manage Users", new string[4] { "Index", "UserManagement", "Admin", "" });
-	menu.Add("Manage Catalogs", new string[4] { "Index", "Catalog", "Admin", "" });
-	menu.Add("Catalog Upload", new string[4] { "Upload", "CatalogUpload", "Admin", "" });
-	menu.Add("Invite", new string[4] { "Invite", "UserManagement", "Admin", "current" });
-	
-	Html.RenderPartial("ctrlSubMenu", menu);
-		
+ViewData["SubMenuLocation"] = "Invite";
+Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">

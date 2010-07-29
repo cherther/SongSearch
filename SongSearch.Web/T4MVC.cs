@@ -312,6 +312,8 @@ namespace Links {
         public static readonly string jquery_plupload_queue_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.plupload.queue.min.js") ? Url("jquery.plupload.queue.min.js") : Url("jquery.plupload.queue.js");
                       
         public static readonly string jquery_plupload_queue_min_js = Url("jquery.plupload.queue.min.js");
+        public static readonly string jquery_prettyLoader_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.prettyLoader.min.js") ? Url("jquery.prettyLoader.min.js") : Url("jquery.prettyLoader.js");
+                      
         public static readonly string jquery_tipTip_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.tipTip.min.js") ? Url("jquery.tipTip.min.js") : Url("jquery.tipTip.js");
                       
         public static readonly string jquery_tipTip_minified_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.tipTip.minified.min.js") ? Url("jquery.tipTip.minified.min.js") : Url("jquery.tipTip.minified.js");

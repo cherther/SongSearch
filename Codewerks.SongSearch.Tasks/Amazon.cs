@@ -59,13 +59,12 @@ namespace Codewerks.SongSearch.Tasks {
 
 				using (var session = new SongSearchDataSession()) {
 					
-					var remoteObjects = _amazon.GetContentList(version);
-					var contents = session.All<Content>();
-					var remoteContents = _amazon.GetContentList(MediaVersion.Full);
-
+					var contents = session.All<Content>().ToList();
+					var remoteContents = _amazon.GetContentList(version);
+					var remoteFolder = _amazon.GetContentPrefix(version);
+						
 					foreach (var content in contents) {
-
-						var remoteFolder = _amazon.GetContentPrefix(version);
+						var dbContent = session.Single<Content>(c => c.ContentId == content.ContentId);
 						var key = _amazon.GetContentKey(content, version);
 						var filePath = Path.Combine(version == MediaVersion.Full ?
 							SystemConfig.MediaPathFull :
@@ -75,16 +74,31 @@ namespace Codewerks.SongSearch.Tasks {
 
 						var file = new FileInfo(filePath);
 						if (file.Exists) {
-							var remoteFile = remoteObjects.SingleOrDefault(x => x.Key == key && x.Size == file.Length);
+							var remoteFile = remoteContents.SingleOrDefault(x => x.Key == key && x.Size == file.Length);
 
 							if (remoteFile == null) {
 
-								Console.WriteLine("Uploading " + file.Name + " to " + remoteFolder);
+								
 
-								//_amazon.SaveContentMedia(file.FullName, content, version);
+								try {
+									Console.WriteLine("Uploading " + file.Name + " to " + remoteFolder);
+									_amazon.SaveContentMedia(file.FullName, content, version);
+									dbContent.IsMediaOnRemoteServer = true;
+								}
+								catch {
+									Console.WriteLine("FAILED: " + file.Name + "-------------------");
+									dbContent.IsMediaOnRemoteServer = false;
+								}
+							} else {
+								dbContent.IsMediaOnRemoteServer = true;
 							}
+						} else {
+							dbContent.IsMediaOnRemoteServer = false;
 						}
+						session.CommitChanges();
 					}
+
+					
 
 					Console.WriteLine("Done uploading");
 				

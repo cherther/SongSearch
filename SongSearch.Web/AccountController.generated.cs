@@ -67,6 +67,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string ResetPassword = "ResetPassword";
             public readonly string ResetPasswordSuccess = "ResetPasswordSuccess";
             public readonly string ResetPasswordRespond = "ResetPasswordRespond";
+            public readonly string Plan = "Plan";
         }
 
 
@@ -77,10 +78,12 @@ namespace SongSearch.Web.Controllers {
         public class ViewNames {
             public readonly string ChangePassword = "~/Views/Account/ChangePassword.aspx";
             public readonly string ChangePasswordSuccess = "~/Views/Account/ChangePasswordSuccess.aspx";
+            public readonly string ctrlAccountMenu = "~/Views/Account/ctrlAccountMenu.ascx";
             public readonly string ctrlContactInfo = "~/Views/Account/ctrlContactInfo.ascx";
-            public readonly string ctrlPricingPlans = "~/Views/Account/ctrlPricingPlans.ascx";
+            public readonly string ctrlUserQuotasWide = "~/Views/Account/ctrlUserQuotasWide.ascx";
             public readonly string LogIn = "~/Views/Account/LogIn.aspx";
             public readonly string LogOut = "~/Views/Account/LogOut.aspx";
+            public readonly string Plan = "~/Views/Account/Plan.aspx";
             public readonly string Register = "~/Views/Account/Register.aspx";
             public readonly string ResetPassword = "~/Views/Account/ResetPassword.aspx";
             public readonly string ResetPasswordRespond = "~/Views/Account/ResetPasswordRespond.aspx";
@@ -178,6 +181,11 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult ResetPasswordRespond(SongSearch.Web.ResetPasswordModel model) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ResetPasswordRespond);
             callInfo.RouteValueDictionary.Add("model", model);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Plan() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Plan);
             return callInfo;
         }
 

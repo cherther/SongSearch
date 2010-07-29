@@ -309,6 +309,54 @@ ul.cw-list-searchoptions li
 	margin: 0.8em 0 0.8em 0;
 	
 }
+.cw-usage-box 
+{
+	width: 180px; 
+	height:16px; 
+	border: 2px solid #ddd;
+	margin:3px 0;
+	padding:0px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+}
+.cw-usage-none
+{
+	/*	background: url(/public/images/usage_bars.gif) repeat-x;*/
+	background-color: #ddd;
+}
+.cw-usage-bar
+{
+/*	background: url(/public/images/usage_bars.gif) repeat-x;*/
+	text-indent: -9999px;
+	display: block;
+}
+.cw-usage-good
+{
+	/*	background: url(/public/images/usage_bars.gif) repeat-x;*/
+	background-color: #33CC33;
+}
+.cw-usage-danger
+{
+	/*	background: url(/public/images/usage_bars.gif) repeat-x;*/
+	background-color: #FF3300;
+}
+.cw-usage-numbers
+{
+	font-family: "Helvetica Neue", "Helvetica", "Arial", non-serif;
+	font-weight: bold;
+	font-size: 20px;
+}
+.cw-usage-item
+{
+	font-family: "Helvetica Neue", "Helvetica", "Arial", non-serif;
+	font-weight: normal;
+	font-size: 12px;
+	color: #999;
+}
 
 /* Media Player */
 #cw-media-statusbar

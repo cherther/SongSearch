@@ -1,26 +1,20 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IDictionary<string, string[]>>" %>
-<%
-
-    IDictionary<string, string[]> menu = Model as IDictionary<string, string[]>;
-           
-    %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.MenuViewModel>" %>
 <ul id="sub-menu" class="cw-menu cw-menu-sub">                        
 <%
-foreach(var menuItem in menu)
+foreach (var menuItem in Model.MenuItems)
 {
-    string[] values = menuItem.Value;        
-                                
-    if ((values[2] != "Admin") || ((values[2] == "Admin") && Page.User.UserIsAnyAdmin()))
+
+	if ((!menuItem.IsAdmin) || ((menuItem.IsAdmin) && Page.User.UserIsAnyAdmin()))
     {                    
     %>
-        <li class="<%: values[3] == "current" ? "current" : ""%>">
-        <%if (values[1] != null)
+        <li class="<%: menuItem.IsCurrent ? "current" : ""%>">
+        <%if (menuItem.LinkControllerName != null)
         {%>
-            <%: Html.ActionLink(menuItem.Key, values[0], values[1])%>
+            <%: Html.ActionLink(menuItem.LinkDisplayName, menuItem.LinkActionName, menuItem.LinkControllerName)%>
         <%}
         else
         { %>
-            <a href="#"><%:menuItem.Key %></a>
+            <a href="#"><%:menuItem.LinkDisplayName%></a>
         <%} %>
         </li>
         <%

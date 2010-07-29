@@ -27,6 +27,8 @@ namespace T4MVC {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string ctrlAccountMenu = "~/Views/Shared/ctrlAccountMenu.ascx";
+            public readonly string ctrlAdminMenu = "~/Views/Shared/ctrlAdminMenu.ascx";
             public readonly string ctrlBuildInfo = "~/Views/Shared/ctrlBuildInfo.ascx";
             public readonly string ctrlContentsGrid = "~/Views/Shared/ctrlContentsGrid.ascx";
             public readonly string ctrlFooter = "~/Views/Shared/ctrlFooter.ascx";
@@ -34,9 +36,11 @@ namespace T4MVC {
             public readonly string ctrlLogIn = "~/Views/Shared/ctrlLogIn.ascx";
             public readonly string ctrlMainMenu = "~/Views/Shared/ctrlMainMenu.ascx";
             public readonly string ctrlMediaplayer = "~/Views/Shared/ctrlMediaplayer.ascx";
+            public readonly string ctrlPricingPlans = "~/Views/Shared/ctrlPricingPlans.ascx";
             public readonly string ctrlSubMenu = "~/Views/Shared/ctrlSubMenu.ascx";
             public readonly string ctrlTagCloud = "~/Views/Shared/ctrlTagCloud.ascx";
             public readonly string ctrlTerritoryCloud = "~/Views/Shared/ctrlTerritoryCloud.ascx";
+            public readonly string ctrlUserQuotas = "~/Views/Shared/ctrlUserQuotas.ascx";
             public readonly string Error = "~/Views/Shared/Error.aspx";
             static readonly _DisplayTemplates s_DisplayTemplates = new _DisplayTemplates();
             public _DisplayTemplates DisplayTemplates { get { return s_DisplayTemplates; } }

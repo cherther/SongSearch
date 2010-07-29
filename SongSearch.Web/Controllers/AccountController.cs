@@ -486,5 +486,20 @@ namespace SongSearch.Web.Controllers {
 
 		}
 
+		// **************************************
+		// URL: /Account/UpdateProfile
+		// **************************************
+		[RequireAuthorization]
+		public virtual ActionResult Plan() {
+
+			return View(new PricingPlanModel() {
+				NavigationLocation = new string[] { "Home", "Plan" },
+				PageTitle = "My Plan",
+				MyPricingPlan = Account.User().PricingPlan,
+				MyUserQuotas = Account.Quota()
+				
+			});
+		}
+
 	}
 }

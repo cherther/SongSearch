@@ -3,7 +3,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Reset Password
 </asp:Content>
-
+<asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
+<%
+ViewData["SubMenuLocation"] = "ResetPassword";
+Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
+%>
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">

@@ -4,16 +4,9 @@ Log In
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
 <%
-	IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
-
-	menu.Add("Log In", new string[4] { "LogIn", "Account", "", "current" });
-	//    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
-//    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
-
-	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
-		
-	%>
-	
+ViewData["SubMenuLocation"] = "LogIn";
+Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
+%>
 </asp:Content>
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">

@@ -5,6 +5,8 @@
 	//-----------------------------------------------------------------------------------
 	setupAutoComplete();
 	setupTooltips();
+
+	$.prettyLoader({loader: '/public/images/prettyLoader/ajax-loader.gif'});
 	//-----------------------------------------------------------------------------------
 	// Search option panel
 	//-----------------------------------------------------------------------------------
@@ -243,42 +245,42 @@
 	);
 
 	//Content_IsControlledAllIn
-//	var _rightsTypes = { Master: 1, Comp: 2 };
+	//	var _rightsTypes = { Master: 1, Comp: 2 };
 
-//	$('#Content_IsControlledAllIn').live('click',
-//		function (evt) {
-//			var allin = $(this).is(':checked');
-//			var defaultRightsHolder = $('#DefaultRightsHolderName').val();
-//			var defaultTerritoryId = $('#DefaultTerritoryId').val();
+	//	$('#Content_IsControlledAllIn').live('click',
+	//		function (evt) {
+	//			var allin = $(this).is(':checked');
+	//			var defaultRightsHolder = $('#DefaultRightsHolderName').val();
+	//			var defaultTerritoryId = $('#DefaultTerritoryId').val();
 
-//			if (defaultRightsHolder != null && defaultTerritoryId != null) {
-//				var comp = $('#rights_0__RightsHolderName');
-//				if (comp.val().length == 0) {
-//					comp.val(defaultRightsHolder);
-//					//RightsTypeId
-//					$('#rights_0__RightsTypeId').val(_rightsTypes.Comp);
-//					//RightsHolderShare
-//					$('#rights_0__RightsHolderShare').val('100%');
-//				}
-//				var master = $('#rights_1__RightsHolderName');
-//				if (master.length == 0 || master.val().length == 0) {
-//					master.val(defaultRightsHolder);
-//					//RightsTypeId
-//					$('#rights_1__RightsTypeId').val(_rightsTypes.Master);
-//					$('#rights_1__RightsHolderShare').val('100%');
+	//			if (defaultRightsHolder != null && defaultTerritoryId != null) {
+	//				var comp = $('#rights_0__RightsHolderName');
+	//				if (comp.val().length == 0) {
+	//					comp.val(defaultRightsHolder);
+	//					//RightsTypeId
+	//					$('#rights_0__RightsTypeId').val(_rightsTypes.Comp);
+	//					//RightsHolderShare
+	//					$('#rights_0__RightsHolderShare').val('100%');
+	//				}
+	//				var master = $('#rights_1__RightsHolderName');
+	//				if (master.length == 0 || master.val().length == 0) {
+	//					master.val(defaultRightsHolder);
+	//					//RightsTypeId
+	//					$('#rights_1__RightsTypeId').val(_rightsTypes.Master);
+	//					$('#rights_1__RightsHolderShare').val('100%');
 
-//				}
+	//				}
 
-//			}
-//		}
-//	);
+	//			}
+	//		}
+	//	);
 
-//	//cw-add-right-link
-//	$('.cw-add-right-link').live('click',
-//		function (evt) {
+	//	//cw-add-right-link
+	//	$('.cw-add-right-link').live('click',
+	//		function (evt) {
 
-//		}
-//	);
+	//		}
+	//	);
 	//***********************************************
 	//  Content save link
 	//***********************************************

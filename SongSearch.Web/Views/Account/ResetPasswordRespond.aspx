@@ -5,19 +5,9 @@
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
 <%
-	IDictionary<string, string[]> menu = new Dictionary<string, string[]>();
-
-	menu.Add("Your Profile", new string[4] { "UpdateProfile", "Account", "", "current" });
-	
-	menu.Add("Log Out", new string[4] { "LogOut", "Account", "", "" });
-
-//    menu.Add("My Playlists", new string[4] { "Index", "List", "", "" });
-//    menu.Add("Add New", new string[4] { "Create", "Song", "", "" });
-
-	Html.RenderPartial(MVC.Shared.Views.ctrlSubMenu, menu);
-		
-	%>
-	
+ViewData["SubMenuLocation"] = "ResetPassword";
+Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
+%>
 </asp:Content>
 <asp:Content ID="resetPasswordContent" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>
