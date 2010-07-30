@@ -92,9 +92,14 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 			</div>
 			<div>&nbsp;</div>
 				<% ViewData["BaseModel"] = "RegisterModel"; %>
-				<% ViewData["PricingPlan"] = (int)Model.PricingPlan; %>
-				<% Html.RenderPartial("ctrlPricingPlans", Model.PricingPlans); %>
-				<br /><%: Html.ValidationMessageFor(m => m.PricingPlan)%>
+				<% ViewData["SelectPricingPlan"] = (int)Model.SelectedPricingPlan; %>
+				<% 
+					var vm = new PricingPlansViewModel();
+					vm.PricingPlans = vm.PricingPlans.Where(p => p.ShowOnSite == true).OrderByDescending(p => p.IsPromo).ToList();
+					vm.SelectedPricingPlan = Model.SelectedPricingPlan; 
+					%>
+				<% Html.RenderPartial("ctrlPricingPlans", vm); %>
+				<br /><%: Html.ValidationMessageFor(m => m.SelectedPricingPlan)%>
 			</div>          
 			<div>&nbsp;</div>
 			<div>

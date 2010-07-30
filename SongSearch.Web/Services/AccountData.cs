@@ -72,6 +72,9 @@ namespace SongSearch.Web {
 			//var myUsers = User().MyUserHierarchy();
 			var myAdmins = User().MyAdminUserHierarchy();// Where(x => x.UserCatalogRoles.Any(r => r.RoleId >= (int)Roles.Admin)).ToList();
 			var adminCount = myAdmins.CountWithChildren();
+			if (!User().IsSuperAdmin() && User().IsAtLeastInCatalogRole(Roles.Admin)) {
+				adminCount++;
+			}
 			return adminCount;
 		}
 		// **************************************

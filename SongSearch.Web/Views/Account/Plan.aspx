@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.PricingPlanModel>" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.PricingPlansViewModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	<%: Model.PageTitle %>
@@ -18,9 +18,6 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 	<div>&nbsp;</div>
 	<%: Html.Partial("ctrlUserQuotasWide", Model.MyUserQuotas) %>
 	<div>&nbsp;</div>
-	<%
-		ViewData["PricingPlan"] = Model.MyPricingPlan;	
-	%>
-	<%: Html.Partial("ctrlPricingPlans", Model.PricingPlans) %>
+	<%: Html.Partial("ctrlPricingPlans", Model) %>
 </div>
 </asp:Content>

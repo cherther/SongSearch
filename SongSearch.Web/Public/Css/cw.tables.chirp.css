@@ -165,3 +165,33 @@
 	background-color: #E2EDF5;
 	color: #000;
 }
+th.cell-border-blue
+{
+	border-style: solid solid none solid;
+	border-width: 2px;
+	border-color: #7CADD1;
+	
+}
+td.cell-border-blue
+{
+	border-style: none solid none solid;
+	border-width: 2px;
+	border-color: #7CADD1;
+}
+td.cell-border-blue-closer
+{
+	border-style: none solid solid solid !important;
+	border-width: 2px !important;
+	border-color: #7CADD1 !important;
+	padding-bottom: 18px !important;
+/*	padding: 0 !important;*/
+}
+td.cell-border-closer
+{
+	border-style: none !important;
+	padding-bottom: 18px !important;
+}
+td.cell-border-none
+{
+	border-style: none !important;
+}

@@ -209,6 +209,7 @@
     </Compile>
     <Compile Include="ViewModels\CatalogViewModel.cs" />
     <Compile Include="ViewModels\CatalogUploadViewModel.cs" />
+    <Compile Include="ViewModels\PricingPlansViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\SearchField.cs" />
     <Compile Include="Models\User.cs" />

@@ -20,7 +20,6 @@ namespace SongSearch.Web {
 		public int MyActiveCartCount { get; set; }
 		public ModelAction ModelAction { get; set; }
 		public int ActiveUserId { get; set; }
-
 		public ViewModel() {
 			SiteProfile = SiteProfileData.SiteProfile();
 			ViewMode = ViewModes.Normal;
@@ -28,14 +27,21 @@ namespace SongSearch.Web {
 			PageTitle = "";
 			PageMessage = "";
 			NavigationLocation = new string [] {""};
+
 		}
 
 		//public class Lookups {
-			public IList<PricingPlan> PricingPlans {
-				get {
-					return CacheService.PricingPlans();
-				}
+		private IList<PricingPlan> _pricingPlans;
+
+		public IList<PricingPlan> PricingPlans {
+			get {
+				return _pricingPlans ?? CacheService.PricingPlans();
 			}
+			set {
+				_pricingPlans = value;
+			}
+				
+		}
 		//}
 	}
 

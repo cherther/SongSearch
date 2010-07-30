@@ -4,7 +4,7 @@
 <div id="topnav" class="topnav">
 <%if (Request.IsAuthenticated) 
   {%>
-Hello, <strong><%:Html.Friendly() %></strong>. <%: Html.ActionLink("Your Profile", MVC.Account.UpdateProfile(), new { title = "Update your user profile" })%> | <%: Html.ActionLink("Log Out", MVC.Account.LogOut(), new { title = "Log out and end your session" })%>
+Hello, <strong><%:Html.Friendly() %></strong>. <%: Html.ActionLink("My Profile", MVC.Account.UpdateProfile(), new { title = "Update your user profile" })%> | <%: Html.ActionLink("Log Out", MVC.Account.LogOut(), new { title = "Log out and end your session" })%>
 <%
   }
   else 

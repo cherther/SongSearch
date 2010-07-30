@@ -115,7 +115,7 @@ namespace SongSearch.Web {
 
 		[Required]
 		[DisplayName("Please select a Pricing Plan")]
-		public PricingPlans PricingPlan { get; set; }
+		public PricingPlans SelectedPricingPlan { get; set; }
 
 		public Contact Contact { get; set; }
 
@@ -221,14 +221,7 @@ namespace SongSearch.Web {
 
 	}
 
-	// **************************************
-	// ContactUsModel
-	// **************************************
-	public class PricingPlanModel : ViewModel {
 
-		public PricingPlan MyPricingPlan { get; set; }
-		public UserQuotas MyUserQuotas { get; set; }
-	}
 
 	#endregion
 

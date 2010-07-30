@@ -11,8 +11,8 @@
 		<div class="two column">
 			<div class="cw-usage-numbers"><%: Model.NumberOfSongs.Used.ToDescription()%>/<%: Model.NumberOfSongs.Allowed.ToQuotaDescription()%></div>
 			<div class="cw-usage-item">Songs</div>
-			<div title="<%: title %>" class="cw-usage-box<%: usageClass %>">
-				<span class="cw-usage-bar<%: usageBarClass %>" style="width:<%: perc %>"><%: perc %></span> 
+			<div title="<%: title %>" class="cw-usage-box cw-bar-round<%: usageClass %>">
+				<span class="cw-usage-bar cw-bar-round<%: usageBarClass %>" style="width:<%: perc %>"><%: perc %></span> 
 			</div>
 		</div>
 		<%
@@ -24,8 +24,8 @@
 		<div class="two column">
 			<div class="cw-usage-numbers"><%: Model.NumberOfInvitedUsers.Used.ToDescription()%>/<%: Model.NumberOfInvitedUsers.Allowed.ToQuotaDescription()%></div>
 			<div class="cw-usage-item">Users</div>
-			<div title="<%: title %>" class="cw-usage-box<%: usageClass %>">
-				<span class="cw-usage-bar<%: usageBarClass %>" style="width:<%: perc %>"><%: perc %></span> 
+			<div title="<%: title %>" class="cw-usage-box cw-bar-round<%: usageClass %>">
+				<span class="cw-usage-bar cw-bar-round<%: usageBarClass %>" style="width:<%: perc %>"><%: perc %></span> 
 			</div>
 		</div>
 		<%
@@ -37,8 +37,8 @@
 		<div class="two column">
 			<div class="cw-usage-numbers"><%: Model.NumberOfCatalogAdmins.Used.ToDescription()%>/<%: Model.NumberOfCatalogAdmins.Allowed.ToQuotaDescription()%></div>
 			<div class="cw-usage-item">Catalog Administrators</div>
-			<div title="<%: title %>" class="cw-usage-box<%: usageClass %>">
-				<span class="cw-usage-bar<%: usageBarClass %>" style="width:<%: perc %>"><%: perc %></span> 
+			<div title="<%: title %>" class="cw-usage-box cw-bar-round<%: usageClass %>">
+				<span class="cw-usage-bar cw-bar-round<%: usageBarClass %>" style="width:<%: perc %>"><%: perc %></span> 
 			</div>
 		</div>
 	</div>

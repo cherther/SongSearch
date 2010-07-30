@@ -7,14 +7,14 @@
 
 		menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
 			Name = "UpdateProfile",
-			LinkDisplayName = "Your Profile",
+			LinkDisplayName = "My Profile",
 			LinkActionName = "UpdateProfile",
 			LinkControllerName = "Account",
 			CurrentLocation = current.ToString()
 		});
 		menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
 			Name = "Plan",
-			LinkDisplayName = "Your Plan",
+			LinkDisplayName = "My Plan",
 			LinkActionName = "Plan",
 			LinkControllerName = "Account",
 			CurrentLocation = current.ToString()

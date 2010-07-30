@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.UpdateProfileModel>" %>
 
 <asp:Content ID="updateProfileTitle" ContentPlaceHolderID="TitleContent" runat="server">
-	Update Profile
+	<%: Model.PageTitle %>
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
 <%
@@ -12,7 +12,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 <asp:Content ID="updateProfileContent" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
-	<h2>Update Profile</h2>
+	<h2><%: Model.PageTitle %></h2>
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
 	<p>
@@ -23,7 +23,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 	<% using (Html.BeginForm(MVC.Account.UpdateProfile(), FormMethod.Post, new { @class = "cw-form-small" })) {%>
 	   <%:Html.AntiForgeryToken() %>
 			<div class="cw-outl cw-padded cw-rounded-corners">
-				<h3>Your User Profile</h3>
+				<h3><%: Model.PageMessage %></h3>
 				<div>&nbsp;</div>
 				<div>
 					<%: Html.LabelFor(m => m.Email) %>

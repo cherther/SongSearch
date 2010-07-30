@@ -15,7 +15,7 @@
 	<script type="text/javascript" src="/scripts/MicrosoftAjax.debug.js"></script>
 	<script type="text/javascript" src="/scripts/MicrosoftMvcValidation.debug.js"></script>
 
-	<title><%: Model.SiteProfile.CompanyName %> - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<title><%: Model.SiteProfile.CompanyName %> (Beta) - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>

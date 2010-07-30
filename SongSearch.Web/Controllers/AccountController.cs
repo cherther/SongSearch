@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
 using SongSearch.Web.Services;
@@ -147,7 +149,7 @@ namespace SongSearch.Web.Controllers {
 				NavigationLocation = new string[] { "Register" },
 				InviteId = id,
 				Email = em,
-				PricingPlan = PricingPlans.Introductory
+				SelectedPricingPlan = PricingPlans.Introductory
 			});
 		}
 
@@ -192,7 +194,7 @@ namespace SongSearch.Web.Controllers {
 										FirstName = model.FirstName,
 										LastName = model.LastName,
 										ParentUserId = model.Invitation.InvitedByUserId,
-										PricingPlanId = (int)model.PricingPlan,
+										PricingPlanId = (int)model.SelectedPricingPlan,
 										HasAgreedToPrivacyPolicy = model.HasAgreedToPrivacyPolicy,
 										HasAllowedCommunication = model.HasAllowedCommunication
 									};
@@ -306,7 +308,10 @@ namespace SongSearch.Web.Controllers {
 					LastName = user.LastName,
 					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger),
 					ShowContactInfo = user.IsAtLeastInCatalogRole(Roles.Admin),
-					HasAllowedCommunication = user.HasAllowedCommunication
+					HasAllowedCommunication = user.HasAllowedCommunication,
+					PageTitle = "Update Profile",
+					PageMessage= "My User Profile"
+
 				};
 				if (vm.ShowSignatureField){
 					vm.AppendSignatureToTitle = user.AppendSignatureToTitle;
@@ -373,7 +378,8 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] =
 				AccountService.MinPasswordLength;
 			model.NavigationLocation = new string[] { "Home", "Profile" };
-			
+			model.PageTitle = "Update Profile";
+			model.PageMessage = "My User Profile";
 			return View(model);
 		}
 
@@ -491,14 +497,19 @@ namespace SongSearch.Web.Controllers {
 		// **************************************
 		[RequireAuthorization]
 		public virtual ActionResult Plan() {
-
-			return View(new PricingPlanModel() {
+			var vm = new PricingPlansViewModel() {
 				NavigationLocation = new string[] { "Home", "Plan" },
 				PageTitle = "My Plan",
-				MyPricingPlan = Account.User().PricingPlan,
+				MyPricingPlan = Account.User().PricingPlan,				
 				MyUserQuotas = Account.Quota()
-				
-			});
+
+			};
+			vm.PricingPlans = User.UserIsSuperAdmin() ? vm.PricingPlans :
+				vm.PricingPlans.Where(p => p.IsEnabled == true && p.PlanCharge >= vm.MyPricingPlan.PlanCharge).OrderByDescending(p => p.IsPromo).ToList();
+
+			vm.SelectedPricingPlan = (PricingPlans)vm.MyPricingPlan.PricingPlanId;
+
+			return View(vm);
 		}
 
 	}
