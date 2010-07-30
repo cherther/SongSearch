@@ -302,15 +302,35 @@ namespace SongSearch.Web.Services {
 				if (catalog.CatalogId == 0) {
 
 					DataSession.Add<Catalog>(catalog);
-					
+
+					//Make current user an admin
 					var userCatalog = new UserCatalogRole() {
 						UserId = user.UserId,
 						CatalogId = catalog.CatalogId,
 						RoleId = (int)Roles.Admin
 					};
-					
-					//Make current user an admin
 					DataSession.Add<UserCatalogRole>(userCatalog);
+
+					//Make parent user an admin
+					if (user.ParentUserId.HasValue) {
+						var parentUserCatalog = new UserCatalogRole() {
+							UserId = user.ParentUserId.Value,
+							CatalogId = catalog.CatalogId,
+							RoleId = (int)Roles.Admin
+						};
+						DataSession.Add<UserCatalogRole>(parentUserCatalog);
+					}
+
+					//Make parent user an admin
+					if (user.PlanUserId != user.ParentUserId.GetValueOrDefault()) {
+						var planUserCatalog = new UserCatalogRole() {
+							UserId = user.PlanUserId,
+							CatalogId = catalog.CatalogId,
+							RoleId = (int)Roles.Admin
+						};
+						DataSession.Add<UserCatalogRole>(planUserCatalog);
+					}
+
 					// defer?
 					DataSession.CommitChanges();
 				}

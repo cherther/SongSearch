@@ -144,12 +144,26 @@ namespace SongSearch.Web.Controllers {
 
 			Session.Abandon();
 
+			Invitation inv = null;
+			if (!String.IsNullOrWhiteSpace(id) && !String.IsNullOrWhiteSpace(em)) {
+				try {
+					inv = _usrMgmtService.GetInvitation(id, em);
+					if (inv == null) {
+						ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
+					}
+				}
+				catch {
+
+					ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
+				}
+			}
 			return View(new RegisterModel() {
 
 				NavigationLocation = new string[] { "Register" },
 				InviteId = id,
 				Email = em,
-				SelectedPricingPlan = PricingPlans.Introductory
+				SelectedPricingPlan = PricingPlans.Introductory,
+				Invitation = inv
 			});
 		}
 
@@ -188,13 +202,15 @@ namespace SongSearch.Web.Controllers {
 									if (String.IsNullOrEmpty(model.Password)) throw new ArgumentException("Value cannot be null or empty.", "Password");
 									if (String.IsNullOrEmpty(model.InviteId)) throw new ArgumentException("Value cannot be null or empty.", "InviteId");
 
-									User user = new User() {
+									var selectedPricingPlanId = (int)model.SelectedPricingPlan;
+
+								User user = new User() {
 										UserName = model.Email,
 										Password = model.Password,
 										FirstName = model.FirstName,
 										LastName = model.LastName,
 										ParentUserId = model.Invitation.InvitedByUserId,
-										PricingPlanId = (int)model.SelectedPricingPlan,
+										PricingPlanId = selectedPricingPlanId > 0 ? selectedPricingPlanId : (int)PricingPlans.Member,
 										HasAgreedToPrivacyPolicy = model.HasAgreedToPrivacyPolicy,
 										HasAllowedCommunication = model.HasAllowedCommunication
 									};
@@ -202,11 +218,13 @@ namespace SongSearch.Web.Controllers {
 									try {
 										user = _acctService.RegisterUser(user, inv.InvitationId);
 
+										SetFriendlyNameCookie(user.FullName());
 										_authService.SignIn(user.UserName, true /* createPersistentCookie */);
 
 										return RedirectToAction(MVC.Home.Index());
 									}
-									catch {
+									catch (Exception ex){
+										App.Logger.Error(ex);
 										ModelState.AddModelError("Email", SystemErrors.UserCreationFailed);//AccountValidation.ErrorCodeToString(createStatus));
 									}
 

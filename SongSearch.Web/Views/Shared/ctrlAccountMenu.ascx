@@ -12,13 +12,16 @@
 			LinkControllerName = "Account",
 			CurrentLocation = current.ToString()
 		});
-		menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
-			Name = "Plan",
-			LinkDisplayName = "My Plan",
-			LinkActionName = "Plan",
-			LinkControllerName = "Account",
-			CurrentLocation = current.ToString()
-		});
+		if (Page.User.User().IsPlanUser) {
+			menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
+				Name = "Plan",
+				LinkDisplayName = "My Plan",
+				LinkActionName = "Plan",
+				LinkControllerName = "Account",
+				CurrentLocation = current.ToString()
+			});
+		}
+		
 		menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
 			Name = "ChangePassword",
 			LinkDisplayName = "Change Password",

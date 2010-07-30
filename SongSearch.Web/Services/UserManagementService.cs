@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SongSearch.Web.Data;
-
+using Ninject;
+using Ninject.Modules;
+using Ninject.Web.Mvc;
 namespace SongSearch.Web.Services {
 
 	public class UserManagementService : BaseService, IUserManagementService {
@@ -100,7 +102,17 @@ namespace SongSearch.Web.Services {
 					if (takeOwnerShip) {
 						TakeOwnerShip(user);
 					}
+					
+					if (user.CreatedCatalogs.Count() > 0) {
 
+						var userCats = user.CreatedCatalogs.ToList();
+						var catSvc = App.Container.Get<ICatalogManagementService>();
+		
+						foreach (var cat in userCats) {
+							catSvc.DeleteCatalog(cat.CatalogId);						
+						}
+					}
+					
 					if (user.Invitation != null) {
 						DataSession.Delete<Invitation>(user.Invitation);
 					}
@@ -164,7 +176,8 @@ namespace SongSearch.Web.Services {
 					InvitationEmailAddress = inviteEmailAddress,
 					ExpirationDate = DateTime.Now.AddDays(30).Date,
 					InvitedByUserId = userId,
-					InvitationStatus = (int)InvitationStatusCodes.Open
+					InvitationStatus = (int)InvitationStatusCodes.Open,
+					IsPlanInvitation = !Account.User().IsSuperAdmin() //if it's a member admin, count against their user quota
 				};
 
 				DataSession.Add<Invitation>(inv);

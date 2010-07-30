@@ -17,6 +17,7 @@ namespace SongSearch.Web.Services {
 		// ----------------------------------------------------------------------------
 		private bool _disposed;
 		private const int _minPasswordLength = 5;
+		private const int _defaultUserId = 1;
 
 		// ----------------------------------------------------------------------------
 		// (Constructor)
@@ -38,30 +39,59 @@ namespace SongSearch.Web.Services {
 		public User RegisterUser(User user, Guid invitationCode) {
 
 			if (!UserExists(user.UserName)) {
+
 				var inv = DataSession.Single<Invitation>(i => i.InvitationId.Equals(invitationCode) && i.InvitationEmailAddress.Equals(user.UserName));
+				var invUser = DataSession.Single<User>(u => u.UserId == inv.InvitedByUserId);
+				var pricingPlan = DataSession.Single<PricingPlan>(x => x.PricingPlanId == user.PricingPlanId);
 
 				if (inv != null) {
 
 					user.Password = user.Password.PasswordHashString();
-					user.ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : 1;
-					user.RoleId = (int)Roles.Client;
+					user.ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : _defaultUserId;
+					user.PlanUserId = _defaultUserId; //default placeholder;
+					user.PricingPlanId = pricingPlan.PricingPlanId;
+
+					// Members are Clients until promoted, new plans are admins from the start:
+					user.RoleId = inv.IsPlanInvitation ? (int)Roles.Client : (int)Roles.Admin;
+
 					//user.PricingPlanId = (int)PricingPlans.Basic;
 					user.SiteProfileId = int.Parse(SystemConfig.DefaultSiteProfileId);
 					user.RegisteredOn = DateTime.Now;
+					user.InvitationId = inv.InvitationId;
 
 					// Get parent users catalog where parent user is at least a plugger and assign to new user in client role
-					var catalogs = DataSession.All<UserCatalogRole>().Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Plugger);
+					var catalogs = DataSession.All<UserCatalogRole>()
+						.Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Admin);
 					catalogs.ForEach(c =>
 						user.UserCatalogRoles.Add(new UserCatalogRole() { CatalogId = c.CatalogId, RoleId = (int)Roles.Client })
 					);
 
+					if (!inv.IsPlanInvitation) {
+						//Start a new Subscription
+						var subscription = new Subscription() {
+							SubscriptionStartDate = DateTime.Now,
+							SubscriptionEndDate = null,
+							PricingPlanId = pricingPlan.PricingPlanId,
+							PlanCharge = pricingPlan.PlanCharge
+						};
+
+						user.Subscriptions.Add(subscription);
+					}
 
 					inv.InvitationStatus = (int)InvitationStatusCodes.Registered;
 
 					DataSession.Add<User>(user);
-
-
 					DataSession.CommitChanges();
+
+					//move under inviter's plan, or under user's own new plan
+					user.PlanUserId = inv.IsPlanInvitation ? invUser.PlanUserId : user.UserId;
+					
+					DataSession.CommitChanges();
+
+					//user.PlanUserId = inv.IsPlanInvitation ? invUser.PlanUserId : user.UserId;
+					//DataSession.CommitChanges();
+
+		
 					inv = null;
 				}
 			} else {

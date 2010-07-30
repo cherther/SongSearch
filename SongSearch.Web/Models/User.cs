@@ -7,5 +7,12 @@ namespace SongSearch.Web.Data {
 	public partial class User {
 		//public User ParentUser { get; set; }
 		public IList<User> ChildUsers { get; set; }
+
+		public bool IsPlanUser {
+			get {
+
+				return (UserId == PlanUserId);
+			}
+		}
 	}
 }

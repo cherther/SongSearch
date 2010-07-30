@@ -135,10 +135,10 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 		<%foreach (var plan in plans) { %>
 		<td class="text-center cell-border-closer <%: plan.PlanDisplayClass() %>">
 			<%if (plan.IsEnabled) { %>
-			<%: Html.RadioButton("PricingPlan", plan.PricingPlanId, (int)Model.SelectedPricingPlan == plan.PricingPlanId)%>
+			<%: Html.RadioButton("SelectedPricingPlan", plan.PricingPlanId, (int)Model.SelectedPricingPlan == plan.PricingPlanId)%>
 			<%: (int)Model.SelectedPricingPlan == plan.PricingPlanId ? "Yes!" : ""%>
 			<%} else { %>
-			<%: Html.RadioButton("PricingPlan", plan.PricingPlanId, false, new { disabled = "true" })%>
+			<%: Html.RadioButton("SelectedPricingPlan", plan.PricingPlanId, false, new { disabled = "true" })%>
 			<%} %>
 		</td>
 		<%} %>

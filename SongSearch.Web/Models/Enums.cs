@@ -17,12 +17,13 @@ namespace SongSearch.Web {
 	// Roles
 	// **************************************    
 	public enum PricingPlans {
+		Member = 0,
 		Basic = 1,
 		Plus = 2,
 		Business = 3,
 		Pro = 4,
 		Introductory = 5,
-
+		SuperAdmin = 6
 	}
 	
 	// **************************************

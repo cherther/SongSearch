@@ -67,7 +67,8 @@ namespace SongSearch.Web
 			return View(
 				new InviteViewModel() {
 					NavigationLocation = new string[] { "Admin" },
-					InviteId = Guid.Empty.ToString()
+					InviteId = Guid.Empty.ToString(),
+					IsPlanInvitation = !User.UserIsSuperAdmin()
 				});
 		}
 

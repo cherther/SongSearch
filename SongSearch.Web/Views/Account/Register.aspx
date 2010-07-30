@@ -84,9 +84,10 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 					</div>          
 				</div>                    
 			</div>           
-			</div>         
+			</div>
 			<div>&nbsp;</div>
-			<div class="cw-outl-orange cw-padded cw-rounded-corners" style="width: 75%;<%: User.UserIsSuperAdmin() ? "display:none" : ""%>">
+			<%if (Model.Invitation != null && !Model.Invitation.IsPlanInvitation) { %>
+			<div class="cw-outl-orange cw-padded cw-rounded-corners" style="width: 75%;">
 			<div>
 				<%//: Html.LabelFor(m => m.PricingPlan) %>
 			</div>
@@ -102,6 +103,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 				<br /><%: Html.ValidationMessageFor(m => m.SelectedPricingPlan)%>
 			</div>          
 			<div>&nbsp;</div>
+			<%} %>
 			<div>
 				<%: Html.CheckBoxFor(m => m.HasAgreedToPrivacyPolicy) %>
 				<%: Html.LabelFor(m => m.HasAgreedToPrivacyPolicy) %>
