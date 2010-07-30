@@ -2,9 +2,10 @@
 <%
 //int selectPricingPlan = 0;
 //int.TryParse(ViewData["SelectPricingPlan"].ToString(), out selectPricingPlan);
-var plans = Model.MyPricingPlan != null ?
-	Model.PricingPlans.Where(p => p.PricingPlanId != Model.MyPricingPlan.PricingPlanId) :
-	Model.PricingPlans;//.Where(p => p.ShowOnSite == true).OrderByDescending(p => p.IsPromo);
+var plans = (Model.MyPricingPlan != null ?
+				Model.PricingPlans.Where(p => p.PricingPlanId != Model.MyPricingPlan.PricingPlanId) :
+				Model.PricingPlans)
+	.OrderBy(p => p.PlanCharge).ThenBy(p => p.PricingPlanId);//.Where(p => p.ShowOnSite == true).OrderByDescending(p => p.IsPromo);
 	
 var width = (100 - 25) / plans.Count();
 var myPlanClass = "cell-highlight-blue cell-border-blue";

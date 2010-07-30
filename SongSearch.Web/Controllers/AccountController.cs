@@ -522,7 +522,7 @@ namespace SongSearch.Web.Controllers {
 				MyUserQuotas = Account.Quota()
 
 			};
-			vm.PricingPlans = User.UserIsSuperAdmin() ? vm.PricingPlans :
+			vm.PricingPlans = User.UserIsSuperAdmin() ? vm.PricingPlans.Where(p => p.PricingPlanId > (int)PricingPlans.Member).ToList() :
 				vm.PricingPlans.Where(p => p.IsEnabled == true && p.PlanCharge >= vm.MyPricingPlan.PlanCharge).OrderByDescending(p => p.IsPromo).ToList();
 
 			vm.SelectedPricingPlan = (PricingPlans)vm.MyPricingPlan.PricingPlanId;

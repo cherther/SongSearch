@@ -224,7 +224,7 @@ namespace SongSearch.Web {
 			return number.ToString("N0");
 		}
 		public static string ToQuotaDescription(this int number) {
-			return number > 0 ? number.ToString("N0") : "Unlimited";
+			return number == 0 ? "None" : (number < 0 ? "Unlimited" : number.ToString("N0"));
 		}
 		public static string ToPriceDescription(this decimal price) {
 			return price > 0 ? price.ToString("C") : "Free!";
