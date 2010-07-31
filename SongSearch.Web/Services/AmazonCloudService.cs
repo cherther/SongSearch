@@ -81,7 +81,7 @@ namespace SongSearch.Web.Services {
 				}
 				var response = awsclient.ListObjects(listRequest);
 				var list = response.S3Objects;
-				if (list.Count == 1000) {
+				if (response.IsTruncated) {
 
 					list = list.Union(GetBucketList(mediaFolder, mediaBucket, response.NextMarker)).ToList();
 				}
@@ -185,8 +185,13 @@ namespace SongSearch.Web.Services {
 						App.Logger.Error(String.Format("An error occurred with the message '{0}' when writing an object",
 							amazonS3Exception.Message));
 					}
+					throw amazonS3Exception;
 				}
-
+				catch (Exception ex) {
+					App.Logger.Error(String.Format("An error occurred with the message '{0}' when writing an object",
+						ex.Message));
+					throw ex;
+				}
 
 			}
 		}

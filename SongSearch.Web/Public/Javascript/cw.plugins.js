@@ -1,6 +1,80 @@
-(function(){if(window.google&&google.gears){return}var a=null;if(typeof GearsFactory!="undefined"){a=new GearsFactory()}else{try{a=new ActiveXObject("Gears.Factory");if(a.getBuildInfo().indexOf("ie_mobile")!=-1){a.privateSetGlobalObject(this)}}catch(b){if((typeof navigator.mimeTypes!="undefined")&&navigator.mimeTypes["application/x-googlegears"]){a=document.createElement("object");a.style.display="none";a.width=0;a.height=0;a.type="application/x-googlegears";document.documentElement.appendChild(a)}}}if(!a){return}if(!window.google){google={}}if(!google.gears){google.gears={factory:a}}})();
-(function(a){function c(){a.fn.ajaxSubmit.debug&&window.console&&window.console.log&&window.console.log("[jquery.form] "+Array.prototype.join.call(arguments,""))}a.fn.ajaxSubmit=function(i){function n(){function C(){if(!f++){g.detachEvent?g.detachEvent("onload",C):g.removeEventListener("load",C,false);var x=true;try{if(F){throw"timeout"}var v,u;u=g.contentWindow?g.contentWindow.document:g.contentDocument?g.contentDocument:g.document;var z=t.dataType=="xml"||u.XMLDocument||a.isXMLDoc(u);c("isXml="+z);if(!z&&(u.body==null||u.body.innerHTML=="")){if(--H){f=0;setTimeout(C,100);return}c("Could not access iframe DOM after 50 tries.");return}w.responseText=u.body?u.body.innerHTML:null;w.responseXML=u.XMLDocument?u.XMLDocument:u;w.getResponseHeader=function(D){return{"content-type":t.dataType}[D]};if(t.dataType=="json"||t.dataType=="script"){var y=u.getElementsByTagName("textarea")[0];if(y){w.responseText=y.value}else{var A=u.getElementsByTagName("pre")[0];if(A){w.responseText=A.innerHTML}}}else{if(t.dataType=="xml"&&!w.responseXML&&w.responseText!=null){w.responseXML=d(w.responseText)}}v=a.httpData(w,t.dataType)}catch(r){x=false;a.handleError(t,w,"error",r)}if(x){t.success(v,"success");l&&a.event.trigger("ajaxSuccess",[w,t])}l&&a.event.trigger("ajaxComplete",[w,t]);l&&!--a.active&&a.event.trigger("ajaxStop");if(t.complete){t.complete(w,x?"success":"error")}setTimeout(function(){s.remove();w.responseXML=null},100)}}function d(u,r){if(window.ActiveXObject){r=new ActiveXObject("Microsoft.XMLDOM");r.async="false";r.loadXML(u)}else{r=(new DOMParser).parseFromString(u,"text/xml")}return r&&r.documentElement&&r.documentElement.tagName!="parsererror"?r:null}var B=p[0];if(a(":input[name=submit]",B).length){alert('Error: Form elements must not be named "submit".')}else{var t=a.extend({},a.ajaxSettings,i),k=a.extend(true,{},a.extend(true,{},a.ajaxSettings),t),e="jqFormIO"+(new Date).getTime(),s=a('<iframe id="'+e+'" name="'+e+'" src="'+t.iframeSrc+'" />'),g=s[0];s.css({position:"absolute",top:"-1000px",left:"-1000px"});var w={aborted:0,responseText:null,responseXML:null,status:0,statusText:"n/a",getAllResponseHeaders:function(){},getResponseHeader:function(){},setRequestHeader:function(){},abort:function(){this.aborted=1;s.attr("src",t.iframeSrc)}},l=t.global;l&&!a.active++&&a.event.trigger("ajaxStart");l&&a.event.trigger("ajaxSend",[w,t]);if(k.beforeSend&&k.beforeSend(w,k)===false){k.global&&a.active--}else{if(!w.aborted){var f=0,F=0;if(k=B.clk){var G=k.name;if(G&&!k.disabled){i.extraData=i.extraData||{};i.extraData[G]=k.value;if(k.type=="image"){i.extraData[name+".x"]=B.clk_x;i.extraData[name+".y"]=B.clk_y}}}setTimeout(function(){var r=p.attr("target"),x=p.attr("action");B.setAttribute("target",e);B.getAttribute("method")!="POST"&&B.setAttribute("method","POST");B.getAttribute("action")!=t.url&&B.setAttribute("action",t.url);i.skipEncodingOverride||p.attr({encoding:"multipart/form-data",enctype:"multipart/form-data"});t.timeout&&setTimeout(function(){F=true;C()},t.timeout);var v=[];try{if(i.extraData){for(var u in i.extraData){v.push(a('<input type="hidden" name="'+u+'" value="'+i.extraData[u]+'" />').appendTo(B)[0])}}s.appendTo("body");g.attachEvent?g.attachEvent("onload",C):g.addEventListener("load",C,false);B.submit()}finally{B.setAttribute("action",x);r?B.setAttribute("target",r):p.removeAttr("target");a(v).remove()}},10);var H=50}}}}if(!this.length){c("ajaxSubmit: skipping submit process - no element selected");return this}if(typeof i=="function"){i={success:i}}var m=a.trim(this.attr("action"));if(m){m=(m.match(/^([^#]+)/)||[])[1]}m=m||window.location.href||"";i=a.extend({url:m,type:this.attr("method")||"GET",iframeSrc:/^https/i.test(window.location.href||"")?"javascript:false":"about:blank"},i||{});m={};this.trigger("form-pre-serialize",[this,i,m]);if(m.veto){c("ajaxSubmit: submit vetoed via form-pre-serialize trigger");return this}if(i.beforeSerialize&&i.beforeSerialize(this,i)===false){c("ajaxSubmit: submit aborted via beforeSerialize callback");return this}var o=this.formToArray(i.semantic);if(i.data){i.extraData=i.data;for(var j in i.data){if(i.data[j] instanceof Array){for(var h in i.data[j]){o.push({name:j,value:i.data[j][h]})}}else{o.push({name:j,value:i.data[j]})}}}if(i.beforeSubmit&&i.beforeSubmit(o,this,i)===false){c("ajaxSubmit: submit aborted via beforeSubmit callback");return this}this.trigger("form-submit-validate",[o,this,i,m]);if(m.veto){c("ajaxSubmit: submit vetoed via form-submit-validate trigger");return this}j=a.param(o);if(i.type.toUpperCase()=="GET"){i.url+=(i.url.indexOf("?")>=0?"&":"?")+j;i.data=null}else{i.data=j}var p=this,b=[];i.resetForm&&b.push(function(){p.resetForm()});i.clearForm&&b.push(function(){p.clearForm()});if(!i.dataType&&i.target){var q=i.success||function(){};b.push(function(d){a(i.target).html(d).each(q,arguments)})}else{i.success&&b.push(i.success)}i.success=function(d,g){for(var e=0,f=b.length;e<f;e++){b[e].apply(i,[d,g,p])}};j=a("input:file",this).fieldValue();h=false;for(m=0;m<j.length;m++){if(j[m]){h=true}}if(j.length&&i.iframe!==false||i.iframe||h||0){i.closeKeepAlive?a.get(i.closeKeepAlive,n):n()}else{a.ajax(i)}this.trigger("form-submit-notify",[this,i]);return this};a.fn.ajaxForm=function(b){return this.ajaxFormUnbind().bind("submit.form-plugin",function(){a(this).ajaxSubmit(b);return false}).bind("click.form-plugin",function(j){var i=j.target,g=a(i);if(!g.is(":submit,input:image")){i=g.closest(":submit");if(i.length==0){return}i=i[0]}var h=this;h.clk=i;if(i.type=="image"){if(j.offsetX!=undefined){h.clk_x=j.offsetX;h.clk_y=j.offsetY}else{if(typeof a.fn.offset=="function"){g=g.offset();h.clk_x=j.pageX-g.left;h.clk_y=j.pageY-g.top}else{h.clk_x=j.pageX-i.offsetLeft;h.clk_y=j.pageY-i.offsetTop}}}setTimeout(function(){h.clk=h.clk_x=h.clk_y=null},100)})};a.fn.ajaxFormUnbind=function(){return this.unbind("submit.form-plugin click.form-plugin")};a.fn.formToArray=function(j){var p=[];if(this.length==0){return p}var n=this[0],q=j?n.getElementsByTagName("*"):n.elements;if(!q){return p}for(var m=0,h=q.length;m<h;m++){var r=q[m],b=r.name;if(b){if(j&&n.clk&&r.type=="image"){if(!r.disabled&&n.clk==r){p.push({name:b,value:a(r).val()});p.push({name:b+".x",value:n.clk_x},{name:b+".y",value:n.clk_y})}}else{if((r=a.fieldValue(r,true))&&r.constructor==Array){for(var s=0,i=r.length;s<i;s++){p.push({name:b,value:r[s]})}}else{r!==null&&typeof r!="undefined"&&p.push({name:b,value:r})}}}}if(!j&&n.clk){j=a(n.clk);q=j[0];if((b=q.name)&&!q.disabled&&q.type=="image"){p.push({name:b,value:j.val()});p.push({name:b+".x",value:n.clk_x},{name:b+".y",value:n.clk_y})}}return p};a.fn.formSerialize=function(b){return a.param(this.formToArray(b))};a.fn.fieldSerialize=function(b){var d=[];this.each(function(){var i=this.name;if(i){var e=a.fieldValue(this,b);if(e&&e.constructor==Array){for(var h=0,g=e.length;h<g;h++){d.push({name:i,value:e[h]})}}else{e!==null&&typeof e!="undefined"&&d.push({name:this.name,value:e})}}});return a.param(d)};a.fn.fieldValue=function(g){for(var j=[],i=0,b=this.length;i<b;i++){var h=a.fieldValue(this[i],g);h===null||typeof h=="undefined"||h.constructor==Array&&!h.length||(h.constructor==Array?a.merge(j,h):j.push(h))}return j};a.fieldValue=function(h,k){var j=h.name,m=h.type,i=h.tagName.toLowerCase();if(typeof k=="undefined"){k=true}if(k&&(!j||h.disabled||m=="reset"||m=="button"||(m=="checkbox"||m=="radio")&&!h.checked||(m=="submit"||m=="image")&&h.form&&h.form.clk!=h||i=="select"&&h.selectedIndex==-1)){return null}if(i=="select"){i=h.selectedIndex;if(i<0){return null}k=[];h=h.options;j=(m=m=="select-one")?i+1:h.length;for(i=m?i:0;i<j;i++){var b=h[i];if(b.selected){var n=b.value;n||(n=b.attributes&&b.attributes.value&&!b.attributes.value.specified?b.text:b.value);if(m){return n}k.push(n)}}return k}return h.value};a.fn.clearForm=function(){return this.each(function(){a("input,select,textarea",this).clearFields()})};a.fn.clearFields=a.fn.clearInputs=function(){return this.each(function(){var b=this.type,d=this.tagName.toLowerCase();if(b=="text"||b=="password"||d=="textarea"){this.value=""}else{if(b=="checkbox"||b=="radio"){this.checked=false}else{if(d=="select"){this.selectedIndex=-1}}}})};a.fn.resetForm=function(){return this.each(function(){if(typeof this.reset=="function"||typeof this.reset=="object"&&!this.reset.nodeType){this.reset()}})};a.fn.enable=function(b){if(b==undefined){b=true}return this.each(function(){this.disabled=!b})};a.fn.selected=function(b){if(b==undefined){b=true}return this.each(function(){var d=this.type;if(d=="checkbox"||d=="radio"){this.checked=b}else{if(this.tagName.toLowerCase()=="option"){d=a(this).parent("select");b&&d[0]&&d[0].type=="select-one"&&d.find("option").selected(false);this.selected=b}}})}})(jQuery);
-/*
+(function (b) {
+    function s() { b.fn.ajaxSubmit.debug && window.console && window.console.log && window.console.log("[jquery.form] " + Array.prototype.join.call(arguments, "")) } b.fn.ajaxSubmit = function (a) {
+        function e() {
+            function o() {
+                if (!z++) {
+                    p.detachEvent ? p.detachEvent("onload", o) : p.removeEventListener("load", o, false); var q = true; try {
+                        if (A) throw "timeout"; var n, m; m = p.contentWindow ? p.contentWindow.document : p.contentDocument ? p.contentDocument : p.document; var t = h.dataType == "xml" || m.XMLDocument || b.isXMLDoc(m); s("isXml=" +
+t); if (!t && (m.body == null || m.body.innerHTML == "")) { if (--E) { z = 0; setTimeout(o, 100); return } s("Could not access iframe DOM after 50 tries."); return } i.responseText = m.body ? m.body.innerHTML : null; i.responseXML = m.XMLDocument ? m.XMLDocument : m; i.getResponseHeader = function (F) { return { "content-type": h.dataType}[F] }; if (h.dataType == "json" || h.dataType == "script") { var B = m.getElementsByTagName("textarea")[0]; if (B) i.responseText = B.value; else { var C = m.getElementsByTagName("pre")[0]; if (C) i.responseText = C.innerHTML } } else if (h.dataType ==
+"xml" && !i.responseXML && i.responseText != null) i.responseXML = x(i.responseText); n = b.httpData(i, h.dataType)
+                    } catch (G) { q = false; b.handleError(h, i, "error", G) } if (q) { h.success(n, "success"); u && b.event.trigger("ajaxSuccess", [i, h]) } u && b.event.trigger("ajaxComplete", [i, h]); u && ! --b.active && b.event.trigger("ajaxStop"); if (h.complete) h.complete(i, q ? "success" : "error"); setTimeout(function () { v.remove(); i.responseXML = null }, 100)
+                } 
+            } function x(q, n) {
+                if (window.ActiveXObject) {
+                    n = new ActiveXObject("Microsoft.XMLDOM"); n.async = "false";
+                    n.loadXML(q)
+                } else n = (new DOMParser).parseFromString(q, "text/xml"); return n && n.documentElement && n.documentElement.tagName != "parsererror" ? n : null
+            } var j = g[0]; if (b(":input[name=submit]", j).length) alert('Error: Form elements must not be named "submit".'); else {
+                var h = b.extend({}, b.ajaxSettings, a), r = b.extend(true, {}, b.extend(true, {}, b.ajaxSettings), h), y = "jqFormIO" + (new Date).getTime(), v = b('<iframe id="' + y + '" name="' + y + '" src="' + h.iframeSrc + '" />'), p = v[0]; v.css({ position: "absolute", top: "-1000px", left: "-1000px" });
+                var i = { aborted: 0, responseText: null, responseXML: null, status: 0, statusText: "n/a", getAllResponseHeaders: function () { }, getResponseHeader: function () { }, setRequestHeader: function () { }, abort: function () { this.aborted = 1; v.attr("src", h.iframeSrc) } }, u = h.global; u && !b.active++ && b.event.trigger("ajaxStart"); u && b.event.trigger("ajaxSend", [i, h]); if (r.beforeSend && r.beforeSend(i, r) === false) r.global && b.active--; else if (!i.aborted) {
+                    var z = 0, A = 0; if (r = j.clk) {
+                        var D = r.name; if (D && !r.disabled) {
+                            a.extraData = a.extraData || {}; a.extraData[D] =
+r.value; if (r.type == "image") { a.extraData[name + ".x"] = j.clk_x; a.extraData[name + ".y"] = j.clk_y } 
+                        } 
+                    } setTimeout(function () {
+                        var q = g.attr("target"), n = g.attr("action"); j.setAttribute("target", y); j.getAttribute("method") != "POST" && j.setAttribute("method", "POST"); j.getAttribute("action") != h.url && j.setAttribute("action", h.url); a.skipEncodingOverride || g.attr({ encoding: "multipart/form-data", enctype: "multipart/form-data" }); h.timeout && setTimeout(function () { A = true; o() }, h.timeout); var m = []; try {
+                            if (a.extraData) for (var t in a.extraData) m.push(b('<input type="hidden" name="' +
+t + '" value="' + a.extraData[t] + '" />').appendTo(j)[0]); v.appendTo("body"); p.attachEvent ? p.attachEvent("onload", o) : p.addEventListener("load", o, false); j.submit()
+                        } finally { j.setAttribute("action", n); q ? j.setAttribute("target", q) : g.removeAttr("target"); b(m).remove() } 
+                    }, 10); var E = 50
+                } 
+            } 
+        } if (!this.length) { s("ajaxSubmit: skipping submit process - no element selected"); return this } if (typeof a == "function") a = { success: a }; var d = b.trim(this.attr("action")); if (d) d = (d.match(/^([^#]+)/) || [])[1]; d = d || window.location.href ||
+""; a = b.extend({ url: d, type: this.attr("method") || "GET", iframeSrc: /^https/i.test(window.location.href || "") ? "javascript:false" : "about:blank" }, a || {}); d = {}; this.trigger("form-pre-serialize", [this, a, d]); if (d.veto) { s("ajaxSubmit: submit vetoed via form-pre-serialize trigger"); return this } if (a.beforeSerialize && a.beforeSerialize(this, a) === false) { s("ajaxSubmit: submit aborted via beforeSerialize callback"); return this } var f = this.formToArray(a.semantic); if (a.data) {
+            a.extraData = a.data; for (var c in a.data) if (a.data[c] instanceof
+Array) for (var l in a.data[c]) f.push({ name: c, value: a.data[c][l] }); else f.push({ name: c, value: a.data[c] })
+        } if (a.beforeSubmit && a.beforeSubmit(f, this, a) === false) { s("ajaxSubmit: submit aborted via beforeSubmit callback"); return this } this.trigger("form-submit-validate", [f, this, a, d]); if (d.veto) { s("ajaxSubmit: submit vetoed via form-submit-validate trigger"); return this } c = b.param(f); if (a.type.toUpperCase() == "GET") { a.url += (a.url.indexOf("?") >= 0 ? "&" : "?") + c; a.data = null } else a.data = c; var g = this, k = []; a.resetForm &&
+k.push(function () { g.resetForm() }); a.clearForm && k.push(function () { g.clearForm() }); if (!a.dataType && a.target) { var w = a.success || function () { }; k.push(function (o) { b(a.target).html(o).each(w, arguments) }) } else a.success && k.push(a.success); a.success = function (o, x) { for (var j = 0, h = k.length; j < h; j++) k[j].apply(a, [o, x, g]) }; c = b("input:file", this).fieldValue(); l = false; for (d = 0; d < c.length; d++) if (c[d]) l = true; if (c.length && a.iframe !== false || a.iframe || l || 0) a.closeKeepAlive ? b.get(a.closeKeepAlive, e) : e(); else b.ajax(a); this.trigger("form-submit-notify",
+[this, a]); return this
+    }; b.fn.ajaxForm = function (a) {
+        return this.ajaxFormUnbind().bind("submit.form-plugin", function () { b(this).ajaxSubmit(a); return false }).bind("click.form-plugin", function (e) {
+            var d = e.target, f = b(d); if (!f.is(":submit,input:image")) { d = f.closest(":submit"); if (d.length == 0) return; d = d[0] } var c = this; c.clk = d; if (d.type == "image") if (e.offsetX != undefined) { c.clk_x = e.offsetX; c.clk_y = e.offsetY } else if (typeof b.fn.offset == "function") { f = f.offset(); c.clk_x = e.pageX - f.left; c.clk_y = e.pageY - f.top } else {
+                c.clk_x =
+e.pageX - d.offsetLeft; c.clk_y = e.pageY - d.offsetTop
+            } setTimeout(function () { c.clk = c.clk_x = c.clk_y = null }, 100)
+        })
+    }; b.fn.ajaxFormUnbind = function () { return this.unbind("submit.form-plugin click.form-plugin") }; b.fn.formToArray = function (a) {
+        var e = []; if (this.length == 0) return e; var d = this[0], f = a ? d.getElementsByTagName("*") : d.elements; if (!f) return e; for (var c = 0, l = f.length; c < l; c++) {
+            var g = f[c], k = g.name; if (k) if (a && d.clk && g.type == "image") {
+                if (!g.disabled && d.clk == g) {
+                    e.push({ name: k, value: b(g).val() }); e.push({ name: k + ".x",
+                        value: d.clk_x
+                    }, { name: k + ".y", value: d.clk_y })
+                } 
+            } else if ((g = b.fieldValue(g, true)) && g.constructor == Array) for (var w = 0, o = g.length; w < o; w++) e.push({ name: k, value: g[w] }); else g !== null && typeof g != "undefined" && e.push({ name: k, value: g })
+        } if (!a && d.clk) { a = b(d.clk); f = a[0]; if ((k = f.name) && !f.disabled && f.type == "image") { e.push({ name: k, value: a.val() }); e.push({ name: k + ".x", value: d.clk_x }, { name: k + ".y", value: d.clk_y }) } } return e
+    }; b.fn.formSerialize = function (a) { return b.param(this.formToArray(a)) }; b.fn.fieldSerialize = function (a) {
+        var e =
+[]; this.each(function () { var d = this.name; if (d) { var f = b.fieldValue(this, a); if (f && f.constructor == Array) for (var c = 0, l = f.length; c < l; c++) e.push({ name: d, value: f[c] }); else f !== null && typeof f != "undefined" && e.push({ name: this.name, value: f }) } }); return b.param(e)
+    }; b.fn.fieldValue = function (a) { for (var e = [], d = 0, f = this.length; d < f; d++) { var c = b.fieldValue(this[d], a); c === null || typeof c == "undefined" || c.constructor == Array && !c.length || (c.constructor == Array ? b.merge(e, c) : e.push(c)) } return e }; b.fieldValue = function (a, e) {
+        var d =
+a.name, f = a.type, c = a.tagName.toLowerCase(); if (typeof e == "undefined") e = true; if (e && (!d || a.disabled || f == "reset" || f == "button" || (f == "checkbox" || f == "radio") && !a.checked || (f == "submit" || f == "image") && a.form && a.form.clk != a || c == "select" && a.selectedIndex == -1)) return null; if (c == "select") {
+            c = a.selectedIndex; if (c < 0) return null; e = []; a = a.options; d = (f = f == "select-one") ? c + 1 : a.length; for (c = f ? c : 0; c < d; c++) {
+                var l = a[c]; if (l.selected) {
+                    var g = l.value; g || (g = l.attributes && l.attributes.value && !l.attributes.value.specified ? l.text :
+l.value); if (f) return g; e.push(g)
+                } 
+            } return e
+        } return a.value
+    }; b.fn.clearForm = function () { return this.each(function () { b("input,select,textarea", this).clearFields() }) }; b.fn.clearFields = b.fn.clearInputs = function () { return this.each(function () { var a = this.type, e = this.tagName.toLowerCase(); if (a == "text" || a == "password" || e == "textarea") this.value = ""; else if (a == "checkbox" || a == "radio") this.checked = false; else if (e == "select") this.selectedIndex = -1 }) }; b.fn.resetForm = function () {
+        return this.each(function () {
+            if (typeof this.reset ==
+"function" || typeof this.reset == "object" && !this.reset.nodeType) this.reset()
+        })
+    }; b.fn.enable = function (a) { if (a == undefined) a = true; return this.each(function () { this.disabled = !a }) }; b.fn.selected = function (a) { if (a == undefined) a = true; return this.each(function () { var e = this.type; if (e == "checkbox" || e == "radio") this.checked = a; else if (this.tagName.toLowerCase() == "option") { e = b(this).parent("select"); a && e[0] && e[0].type == "select-one" && e.find("option").selected(false); this.selected = a } }) } 
+})(jQuery);
+/*!
  * jQuery blockUI plugin
  * Version 2.28 (02-DEC-2009)
  * @requires jQuery v1.2.3 or later
@@ -13,7 +87,457 @@
  *
  * Thanks to Amir-Hossein Sobhi for some excellent contributions!
  */
-(function(k){if(/1\.(0|1|2)\.(0|1|2)/.test(k.fn.jquery)||/^1.1/.test(k.fn.jquery)){alert("blockUI requires jQuery v1.2.3 or later!  You are using v"+k.fn.jquery);return}k.fn._fadeIn=k.fn.fadeIn;var a=document.documentMode||0;var j=k.browser.msie&&((k.browser.version<8&&!a)||a<8);var i=k.browser.msie&&/MSIE 6.0/.test(navigator.userAgent)&&!a;k.blockUI=function(o){g(window,o)};k.unblockUI=function(o){b(window,o)};k.growlUI=function(s,r,p,o){var q=k('<div class="growlUI"></div>');if(s){q.append("<h1>"+s+"</h1>")}if(r){q.append("<h2>"+r+"</h2>")}if(p==undefined){p=3000}k.blockUI({message:q,fadeIn:700,fadeOut:1000,centerY:false,timeout:p,showOverlay:false,onUnblock:o,css:k.blockUI.defaults.growlCSS})};k.fn.block=function(o){return this.unblock({fadeOut:0}).each(function(){if(k.css(this,"position")=="static"){this.style.position="relative"}if(k.browser.msie){this.style.zoom=1}g(this,o)})};k.fn.unblock=function(o){return this.each(function(){b(this,o)})};k.blockUI.version=2.28;k.blockUI.defaults={message:"<h1>Please wait...</h1>",title:null,draggable:true,theme:false,css:{padding:0,margin:0,width:"30%",top:"40%",left:"35%",textAlign:"center",color:"#000",border:"3px solid #aaa",backgroundColor:"#fff",cursor:"wait"},themedCSS:{width:"30%",top:"40%",left:"35%"},overlayCSS:{backgroundColor:"#000",opacity:0.6,cursor:"wait"},growlCSS:{width:"350px",top:"10px",left:"",right:"10px",border:"none",padding:"5px",opacity:0.6,cursor:"default",color:"#fff",backgroundColor:"#000","-webkit-border-radius":"10px","-moz-border-radius":"10px"},iframeSrc:/^https/i.test(window.location.href||"")?"javascript:false":"about:blank",forceIframe:false,baseZ:1000,centerX:true,centerY:true,allowBodyStretch:true,bindEvents:true,constrainTabKey:true,fadeIn:200,fadeOut:400,timeout:0,showOverlay:true,focusInput:true,applyPlatformOpacityRules:true,onUnblock:null,quirksmodeOffsetHack:4};var c=null;var l=[];function g(p,o){var u=(p==window);var x=o&&o.message!==undefined?o.message:undefined;o=k.extend({},k.blockUI.defaults,o||{});o.overlayCSS=k.extend({},k.blockUI.defaults.overlayCSS,o.overlayCSS||{});var G=k.extend({},k.blockUI.defaults.css,o.css||{});var A=k.extend({},k.blockUI.defaults.themedCSS,o.themedCSS||{});x=x===undefined?o.message:x;if(u&&c){b(window,{fadeOut:0})}if(x&&typeof x!="string"&&(x.parentNode||x.jquery)){var q=x.jquery?x[0]:x;var E={};k(p).data("blockUI.history",E);E.el=q;E.parent=q.parentNode;E.display=q.style.display;E.position=q.style.position;if(E.parent){E.parent.removeChild(q)}}var H=o.baseZ;var y=(k.browser.msie||o.forceIframe)?k('<iframe class="blockUI" style="z-index:'+(H++)+';display:none;border:none;margin:0;padding:0;position:absolute;width:100%;height:100%;top:0;left:0" src="'+o.iframeSrc+'"></iframe>'):k('<div class="blockUI" style="display:none"></div>');var J=k('<div class="blockUI blockOverlay" style="z-index:'+(H++)+';display:none;border:none;margin:0;padding:0;width:100%;height:100%;top:0;left:0"></div>');var I;if(o.theme&&u){var w='<div class="blockUI blockMsg blockPage ui-dialog ui-widget ui-corner-all" style="z-index:'+H+';display:none;position:fixed"><div class="ui-widget-header ui-dialog-titlebar blockTitle">'+(o.title||"&nbsp;")+'</div><div class="ui-widget-content ui-dialog-content"></div></div>';I=k(w)}else{I=u?k('<div class="blockUI blockMsg blockPage" style="z-index:'+H+';display:none;position:fixed"></div>'):k('<div class="blockUI blockMsg blockElement" style="z-index:'+H+';display:none;position:absolute"></div>')}if(x){if(o.theme){I.css(A);I.addClass("ui-widget-content")}else{I.css(G)}}if(!o.applyPlatformOpacityRules||!(k.browser.mozilla&&/Linux/.test(navigator.platform))){J.css(o.overlayCSS)}J.css("position",u?"fixed":"absolute");if(k.browser.msie||o.forceIframe){y.css("opacity",0)}k([y[0],J[0],I[0]]).appendTo(u?"body":p);if(o.theme&&o.draggable&&k.fn.draggable){I.draggable({handle:".ui-dialog-titlebar",cancel:"li"})}var C=j&&(!k.boxModel||k("object,embed",u?null:p).length>0);if(i||C){if(u&&o.allowBodyStretch&&k.boxModel){k("html,body").css("height","100%")}if((i||!k.boxModel)&&!u){var r=d(p,"borderTopWidth"),D=d(p,"borderLeftWidth");var v=r?"(0 - "+r+")":0;var B=D?"(0 - "+D+")":0}k.each([y,J,I],function(z,t){var K=t[0].style;K.position="absolute";if(z<2){u?K.setExpression("height","Math.max(document.body.scrollHeight, document.body.offsetHeight) - (jQuery.boxModel?0:"+o.quirksmodeOffsetHack+') + "px"'):K.setExpression("height",'this.parentNode.offsetHeight + "px"');u?K.setExpression("width",'jQuery.boxModel && document.documentElement.clientWidth || document.body.clientWidth + "px"'):K.setExpression("width",'this.parentNode.offsetWidth + "px"');if(B){K.setExpression("left",B)}if(v){K.setExpression("top",v)}}else{if(o.centerY){if(u){K.setExpression("top",'(document.documentElement.clientHeight || document.body.clientHeight) / 2 - (this.offsetHeight / 2) + (blah = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) + "px"')}K.marginTop=0}else{if(!o.centerY&&u){var L=(o.css&&o.css.top)?parseInt(o.css.top):0;var M="((document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) + "+L+') + "px"';K.setExpression("top",M)}}}})}if(x){if(o.theme){I.find(".ui-widget-content").append(x)}else{I.append(x)}if(x.jquery||x.nodeType){k(x).show()}}if((k.browser.msie||o.forceIframe)&&o.showOverlay){y.show()}if(o.fadeIn){if(o.showOverlay){J._fadeIn(o.fadeIn)}if(x){I.fadeIn(o.fadeIn)}}else{if(o.showOverlay){J.show()}if(x){I.show()}}m(1,p,o);if(u){c=I[0];l=k(":input:enabled:visible",c);if(o.focusInput){setTimeout(h,20)}}else{f(I[0],o.centerX,o.centerY)}if(o.timeout){var F=setTimeout(function(){u?k.unblockUI(o):k(p).unblock(o)},o.timeout);k(p).data("blockUI.timeout",F)}}function b(t,s){var o=(t==window);var q=k(t);var p=q.data("blockUI.history");var u=q.data("blockUI.timeout");if(u){clearTimeout(u);q.removeData("blockUI.timeout")}s=k.extend({},k.blockUI.defaults,s||{});m(0,t,s);var r;if(o){r=k("body").children().filter(".blockUI").add("body > .blockUI")}else{r=k(".blockUI",t)}if(o){c=l=null}if(s.fadeOut){r.fadeOut(s.fadeOut);setTimeout(function(){n(r,p,s,t)},s.fadeOut)}else{n(r,p,s,t)}}function n(p,o,r,q){p.each(function(s,t){if(this.parentNode){this.parentNode.removeChild(this)}});if(o&&o.el){o.el.style.display=o.display;o.el.style.position=o.position;if(o.parent){o.parent.appendChild(o.el)}k(q).removeData("blockUI.history")}if(typeof r.onUnblock=="function"){r.onUnblock(q,r)}}function m(r,s,q){var o=s==window,p=k(s);if(!r&&(o&&!c||!o&&!p.data("blockUI.isBlocked"))){return}if(!o){p.data("blockUI.isBlocked",r)}if(!q.bindEvents||(r&&!q.showOverlay)){return}var t="mousedown mouseup keydown keypress";r?k(document).bind(t,q,e):k(document).unbind(t,e)}function e(r){if(r.keyCode&&r.keyCode==9){if(c&&r.data.constrainTabKey){var o=l;var p=!r.shiftKey&&r.target==o[o.length-1];var q=r.shiftKey&&r.target==o[0];if(p||q){setTimeout(function(){h(q)},10);return false}}}if(k(r.target).parents("div.blockMsg").length>0){return true}return k(r.target).parents().children().filter("div.blockUI").length==0}function h(p){if(!l){return}var o=l[p===true?l.length-1:0];if(o){o.focus()}}function f(v,o,q){var u=v.parentNode,w=v.style;var r=((u.offsetWidth-v.offsetWidth)/2)-d(u,"borderLeftWidth");var z=((u.offsetHeight-v.offsetHeight)/2)-d(u,"borderTopWidth");if(o){w.left=r>0?(r+"px"):"0"}if(q){w.top=z>0?(z+"px"):"0"}}function d(o,q){return parseInt(k.css(o,q))||0}})(jQuery);
+
+;(function($) {
+
+if (/1\.(0|1|2)\.(0|1|2)/.test($.fn.jquery) || /^1.1/.test($.fn.jquery)) {
+	alert('blockUI requires jQuery v1.2.3 or later!  You are using v' + $.fn.jquery);
+	return;
+}
+
+$.fn._fadeIn = $.fn.fadeIn;
+
+// this bit is to ensure we don't call setExpression when we shouldn't (with extra muscle to handle
+// retarded userAgent strings on Vista)
+var mode = document.documentMode || 0;
+var setExpr = $.browser.msie && (($.browser.version < 8 && !mode) || mode < 8);
+var ie6 = $.browser.msie && /MSIE 6.0/.test(navigator.userAgent) && !mode;
+
+// global $ methods for blocking/unblocking the entire page
+$.blockUI   = function(opts) { install(window, opts); };
+$.unblockUI = function(opts) { remove(window, opts); };
+
+// convenience method for quick growl-like notifications  (http://www.google.com/search?q=growl)
+$.growlUI = function(title, message, timeout, onClose) {
+	var $m = $('<div class="growlUI"></div>');
+	if (title) $m.append('<h1>'+title+'</h1>');
+	if (message) $m.append('<h2>'+message+'</h2>');
+	if (timeout == undefined) timeout = 3000;
+	$.blockUI({
+		message: $m, fadeIn: 700, fadeOut: 1000, centerY: false,
+		timeout: timeout, showOverlay: false,
+		onUnblock: onClose, 
+		css: $.blockUI.defaults.growlCSS
+	});
+};
+
+// plugin method for blocking element content
+$.fn.block = function(opts) {
+	return this.unblock({ fadeOut: 0 }).each(function() {
+		if ($.css(this,'position') == 'static')
+			this.style.position = 'relative';
+		if ($.browser.msie)
+			this.style.zoom = 1; // force 'hasLayout'
+		install(this, opts);
+	});
+};
+
+// plugin method for unblocking element content
+$.fn.unblock = function(opts) {
+	return this.each(function() {
+		remove(this, opts);
+	});
+};
+
+$.blockUI.version = 2.28; // 2nd generation blocking at no extra cost!
+
+// override these in your code to change the default behavior and style
+$.blockUI.defaults = {
+	// message displayed when blocking (use null for no message)
+	message:  '<h1>Please wait...</h1>',
+
+	title: null,	  // title string; only used when theme == true
+	draggable: true,  // only used when theme == true (requires jquery-ui.js to be loaded)
+	
+	theme: false, // set to true to use with jQuery UI themes
+	
+	// styles for the message when blocking; if you wish to disable
+	// these and use an external stylesheet then do this in your code:
+	// $.blockUI.defaults.css = {};
+	css: {
+		padding:	0,
+		margin:		0,
+		width:		'30%',
+		top:		'40%',
+		left:		'35%',
+		textAlign:	'center',
+		color:		'#000',
+		border:		'3px solid #aaa',
+		backgroundColor:'#fff',
+		cursor:		'wait'
+	},
+	
+	// minimal style set used when themes are used
+	themedCSS: {
+		width:	'30%',
+		top:	'40%',
+		left:	'35%'
+	},
+
+	// styles for the overlay
+	overlayCSS:  {
+		backgroundColor: '#000',
+		opacity:	  	 0.6,
+		cursor:		  	 'wait'
+	},
+
+	// styles applied when using $.growlUI
+	growlCSS: {
+		width:  	'350px',
+		top:		'10px',
+		left:   	'',
+		right:  	'10px',
+		border: 	'none',
+		padding:	'5px',
+		opacity:	0.6,
+		cursor: 	'default',
+		color:		'#fff',
+		backgroundColor: '#000',
+		'-webkit-border-radius': '10px',
+		'-moz-border-radius':	 '10px'
+	},
+	
+	// IE issues: 'about:blank' fails on HTTPS and javascript:false is s-l-o-w
+	// (hat tip to Jorge H. N. de Vasconcelos)
+	iframeSrc: /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank',
+
+	// force usage of iframe in non-IE browsers (handy for blocking applets)
+	forceIframe: false,
+
+	// z-index for the blocking overlay
+	baseZ: 1000,
+
+	// set these to true to have the message automatically centered
+	centerX: true, // <-- only effects element blocking (page block controlled via css above)
+	centerY: true,
+
+	// allow body element to be stetched in ie6; this makes blocking look better
+	// on "short" pages.  disable if you wish to prevent changes to the body height
+	allowBodyStretch: true,
+
+	// enable if you want key and mouse events to be disabled for content that is blocked
+	bindEvents: true,
+
+	// be default blockUI will supress tab navigation from leaving blocking content
+	// (if bindEvents is true)
+	constrainTabKey: true,
+
+	// fadeIn time in millis; set to 0 to disable fadeIn on block
+	fadeIn:  200,
+
+	// fadeOut time in millis; set to 0 to disable fadeOut on unblock
+	fadeOut:  400,
+
+	// time in millis to wait before auto-unblocking; set to 0 to disable auto-unblock
+	timeout: 0,
+
+	// disable if you don't want to show the overlay
+	showOverlay: true,
+
+	// if true, focus will be placed in the first available input field when
+	// page blocking
+	focusInput: true,
+
+	// suppresses the use of overlay styles on FF/Linux (due to performance issues with opacity)
+	applyPlatformOpacityRules: true,
+
+	// callback method invoked when unblocking has completed; the callback is
+	// passed the element that has been unblocked (which is the window object for page
+	// blocks) and the options that were passed to the unblock call:
+	//	 onUnblock(element, options)
+	onUnblock: null,
+
+	// don't ask; if you really must know: http://groups.google.com/group/jquery-en/browse_thread/thread/36640a8730503595/2f6a79a77a78e493#2f6a79a77a78e493
+	quirksmodeOffsetHack: 4
+};
+
+// private data and functions follow...
+
+var pageBlock = null;
+var pageBlockEls = [];
+
+function install(el, opts) {
+	var full = (el == window);
+	var msg = opts && opts.message !== undefined ? opts.message : undefined;
+	opts = $.extend({}, $.blockUI.defaults, opts || {});
+	opts.overlayCSS = $.extend({}, $.blockUI.defaults.overlayCSS, opts.overlayCSS || {});
+	var css = $.extend({}, $.blockUI.defaults.css, opts.css || {});
+	var themedCSS = $.extend({}, $.blockUI.defaults.themedCSS, opts.themedCSS || {});
+	msg = msg === undefined ? opts.message : msg;
+
+	// remove the current block (if there is one)
+	if (full && pageBlock)
+		remove(window, {fadeOut:0});
+
+	// if an existing element is being used as the blocking content then we capture
+	// its current place in the DOM (and current display style) so we can restore
+	// it when we unblock
+	if (msg && typeof msg != 'string' && (msg.parentNode || msg.jquery)) {
+		var node = msg.jquery ? msg[0] : msg;
+		var data = {};
+		$(el).data('blockUI.history', data);
+		data.el = node;
+		data.parent = node.parentNode;
+		data.display = node.style.display;
+		data.position = node.style.position;
+		if (data.parent)
+			data.parent.removeChild(node);
+	}
+
+	var z = opts.baseZ;
+
+	// blockUI uses 3 layers for blocking, for simplicity they are all used on every platform;
+	// layer1 is the iframe layer which is used to supress bleed through of underlying content
+	// layer2 is the overlay layer which has opacity and a wait cursor (by default)
+	// layer3 is the message content that is displayed while blocking
+
+	var lyr1 = ($.browser.msie || opts.forceIframe) 
+		? $('<iframe class="blockUI" style="z-index:'+ (z++) +';display:none;border:none;margin:0;padding:0;position:absolute;width:100%;height:100%;top:0;left:0" src="'+opts.iframeSrc+'"></iframe>')
+		: $('<div class="blockUI" style="display:none"></div>');
+	var lyr2 = $('<div class="blockUI blockOverlay" style="z-index:'+ (z++) +';display:none;border:none;margin:0;padding:0;width:100%;height:100%;top:0;left:0"></div>');
+	
+	var lyr3;
+	if (opts.theme && full) {
+		var s = '<div class="blockUI blockMsg blockPage ui-dialog ui-widget ui-corner-all" style="z-index:'+z+';display:none;position:fixed">' +
+					'<div class="ui-widget-header ui-dialog-titlebar blockTitle">'+(opts.title || '&nbsp;')+'</div>' +
+					'<div class="ui-widget-content ui-dialog-content"></div>' +
+				'</div>';
+		lyr3 = $(s);
+	}
+	else {
+		lyr3 = full ? $('<div class="blockUI blockMsg blockPage" style="z-index:'+z+';display:none;position:fixed"></div>')
+					: $('<div class="blockUI blockMsg blockElement" style="z-index:'+z+';display:none;position:absolute"></div>');
+	}						   
+
+	// if we have a message, style it
+	if (msg) {
+		if (opts.theme) {
+			lyr3.css(themedCSS);
+			lyr3.addClass('ui-widget-content');
+		}
+		else 
+			lyr3.css(css);
+	}
+
+	// style the overlay
+	if (!opts.applyPlatformOpacityRules || !($.browser.mozilla && /Linux/.test(navigator.platform)))
+		lyr2.css(opts.overlayCSS);
+	lyr2.css('position', full ? 'fixed' : 'absolute');
+
+	// make iframe layer transparent in IE
+	if ($.browser.msie || opts.forceIframe)
+		lyr1.css('opacity',0.0);
+
+	$([lyr1[0],lyr2[0],lyr3[0]]).appendTo(full ? 'body' : el);
+	
+	if (opts.theme && opts.draggable && $.fn.draggable) {
+		lyr3.draggable({
+			handle: '.ui-dialog-titlebar',
+			cancel: 'li'
+		});
+	}
+
+	// ie7 must use absolute positioning in quirks mode and to account for activex issues (when scrolling)
+	var expr = setExpr && (!$.boxModel || $('object,embed', full ? null : el).length > 0);
+	if (ie6 || expr) {
+		// give body 100% height
+		if (full && opts.allowBodyStretch && $.boxModel)
+			$('html,body').css('height','100%');
+
+		// fix ie6 issue when blocked element has a border width
+		if ((ie6 || !$.boxModel) && !full) {
+			var t = sz(el,'borderTopWidth'), l = sz(el,'borderLeftWidth');
+			var fixT = t ? '(0 - '+t+')' : 0;
+			var fixL = l ? '(0 - '+l+')' : 0;
+		}
+
+		// simulate fixed position
+		$.each([lyr1,lyr2,lyr3], function(i,o) {
+			var s = o[0].style;
+			s.position = 'absolute';
+			if (i < 2) {
+				full ? s.setExpression('height','Math.max(document.body.scrollHeight, document.body.offsetHeight) - (jQuery.boxModel?0:'+opts.quirksmodeOffsetHack+') + "px"')
+					 : s.setExpression('height','this.parentNode.offsetHeight + "px"');
+				full ? s.setExpression('width','jQuery.boxModel && document.documentElement.clientWidth || document.body.clientWidth + "px"')
+					 : s.setExpression('width','this.parentNode.offsetWidth + "px"');
+				if (fixL) s.setExpression('left', fixL);
+				if (fixT) s.setExpression('top', fixT);
+			}
+			else if (opts.centerY) {
+				if (full) s.setExpression('top','(document.documentElement.clientHeight || document.body.clientHeight) / 2 - (this.offsetHeight / 2) + (blah = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) + "px"');
+				s.marginTop = 0;
+			}
+			else if (!opts.centerY && full) {
+				var top = (opts.css && opts.css.top) ? parseInt(opts.css.top) : 0;
+				var expression = '((document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop) + '+top+') + "px"';
+				s.setExpression('top',expression);
+			}
+		});
+	}
+
+	// show the message
+	if (msg) {
+		if (opts.theme)
+			lyr3.find('.ui-widget-content').append(msg);
+		else
+			lyr3.append(msg);
+		if (msg.jquery || msg.nodeType)
+			$(msg).show();
+	}
+
+	if (($.browser.msie || opts.forceIframe) && opts.showOverlay)
+		lyr1.show(); // opacity is zero
+	if (opts.fadeIn) {
+		if (opts.showOverlay)
+			lyr2._fadeIn(opts.fadeIn);
+		if (msg)
+			lyr3.fadeIn(opts.fadeIn);
+	}
+	else {
+		if (opts.showOverlay)
+			lyr2.show();
+		if (msg)
+			lyr3.show();
+	}
+
+	// bind key and mouse events
+	bind(1, el, opts);
+
+	if (full) {
+		pageBlock = lyr3[0];
+		pageBlockEls = $(':input:enabled:visible',pageBlock);
+		if (opts.focusInput)
+			setTimeout(focus, 20);
+	}
+	else
+		center(lyr3[0], opts.centerX, opts.centerY);
+
+	if (opts.timeout) {
+		// auto-unblock
+		var to = setTimeout(function() {
+			full ? $.unblockUI(opts) : $(el).unblock(opts);
+		}, opts.timeout);
+		$(el).data('blockUI.timeout', to);
+	}
+};
+
+// remove the block
+function remove(el, opts) {
+	var full = (el == window);
+	var $el = $(el);
+	var data = $el.data('blockUI.history');
+	var to = $el.data('blockUI.timeout');
+	if (to) {
+		clearTimeout(to);
+		$el.removeData('blockUI.timeout');
+	}
+	opts = $.extend({}, $.blockUI.defaults, opts || {});
+	bind(0, el, opts); // unbind events
+	
+	var els;
+	if (full) // crazy selector to handle odd field errors in ie6/7
+		els = $('body').children().filter('.blockUI').add('body > .blockUI');
+	else
+		els = $('.blockUI', el);
+
+	if (full)
+		pageBlock = pageBlockEls = null;
+
+	if (opts.fadeOut) {
+		els.fadeOut(opts.fadeOut);
+		setTimeout(function() { reset(els,data,opts,el); }, opts.fadeOut);
+	}
+	else
+		reset(els, data, opts, el);
+};
+
+// move blocking element back into the DOM where it started
+function reset(els,data,opts,el) {
+	els.each(function(i,o) {
+		// remove via DOM calls so we don't lose event handlers
+		if (this.parentNode)
+			this.parentNode.removeChild(this);
+	});
+
+	if (data && data.el) {
+		data.el.style.display = data.display;
+		data.el.style.position = data.position;
+		if (data.parent)
+			data.parent.appendChild(data.el);
+		$(el).removeData('blockUI.history');
+	}
+
+	if (typeof opts.onUnblock == 'function')
+		opts.onUnblock(el,opts);
+};
+
+// bind/unbind the handler
+function bind(b, el, opts) {
+	var full = el == window, $el = $(el);
+
+	// don't bother unbinding if there is nothing to unbind
+	if (!b && (full && !pageBlock || !full && !$el.data('blockUI.isBlocked')))
+		return;
+	if (!full)
+		$el.data('blockUI.isBlocked', b);
+
+	// don't bind events when overlay is not in use or if bindEvents is false
+	if (!opts.bindEvents || (b && !opts.showOverlay)) 
+		return;
+
+	// bind anchors and inputs for mouse and key events
+	var events = 'mousedown mouseup keydown keypress';
+	b ? $(document).bind(events, opts, handler) : $(document).unbind(events, handler);
+
+// former impl...
+//	   var $e = $('a,:input');
+//	   b ? $e.bind(events, opts, handler) : $e.unbind(events, handler);
+};
+
+// event handler to suppress keyboard/mouse events when blocking
+function handler(e) {
+	// allow tab navigation (conditionally)
+	if (e.keyCode && e.keyCode == 9) {
+		if (pageBlock && e.data.constrainTabKey) {
+			var els = pageBlockEls;
+			var fwd = !e.shiftKey && e.target == els[els.length-1];
+			var back = e.shiftKey && e.target == els[0];
+			if (fwd || back) {
+				setTimeout(function(){focus(back)},10);
+				return false;
+			}
+		}
+	}
+	// allow events within the message content
+	if ($(e.target).parents('div.blockMsg').length > 0)
+		return true;
+
+	// allow events for content that is not being blocked
+	return $(e.target).parents().children().filter('div.blockUI').length == 0;
+};
+
+function focus(back) {
+	if (!pageBlockEls)
+		return;
+	var e = pageBlockEls[back===true ? pageBlockEls.length-1 : 0];
+	if (e)
+		e.focus();
+};
+
+function center(el, x, y) {
+	var p = el.parentNode, s = el.style;
+	var l = ((p.offsetWidth - el.offsetWidth)/2) - sz(p,'borderLeftWidth');
+	var t = ((p.offsetHeight - el.offsetHeight)/2) - sz(p,'borderTopWidth');
+	if (x) s.left = l > 0 ? (l+'px') : '0';
+	if (y) s.top  = t > 0 ? (t+'px') : '0';
+};
+
+function sz(el, p) {
+	return parseInt($.css(el,p))||0;
+};
+
+})(jQuery);
+
 (function($){$.gritter={};$.gritter.options={fade_in_speed:'medium',fade_out_speed:1000,time:6000}
 $.gritter.add=function(params){try{return Gritter.add(params||{});}catch(e){var err='Gritter Error: '+e;(typeof(console)!='undefined'&&console.error)?console.error(err,params):alert(err);}}
 $.gritter.remove=function(id,params){Gritter.removeSpecific(id,params||{});}

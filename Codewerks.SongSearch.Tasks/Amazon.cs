@@ -28,26 +28,38 @@ namespace Codewerks.SongSearch.Tasks {
 			using (_amazon = new AmazonCloudService()) {
 
 				using (var session = new SongSearchDataSession()) {
-					var contents = session.All<Content>();
+					
+					var contents = session.All<Content>().Where(c => c.HasMediaFullVersion).ToList();
+
 					var remoteContents = _amazon.GetContentList(MediaVersion.Full);
 
 					foreach (var content in contents) {
 						string key = _amazon.GetContentKey(content, MediaVersion.Full);
 						var remoteObject = remoteContents.FirstOrDefault(x => x.Key == key);
 
-						Console.WriteLine(String.Format("{0} '{1}' - {2}", content.ContentId,
-							content.Title,
-							remoteObject != null ? "synced!" : "----------------------> missing"));
+						if (remoteObject == null) {
+							content.IsMediaOnRemoteServer = false;
+							Console.WriteLine(String.Format("{0} '{1}' - {2}", content.ContentId,
+								content.Title,
+								"----------------------> missing"));
+
+						} else {
+							content.IsMediaOnRemoteServer = true;
+
+						}
+						//Console.WriteLine(String.Format("{0} '{1}' - {2}", content.ContentId,
+						//    content.Title,
+						//    remoteObject != null ? "synced!" : "----------------------> missing"));
 
 						if (remoteObject != null) {
-							content.IsMediaOnRemoteServer = true;
 						} else {
-							content.IsMediaOnRemoteServer = false;
 
 						}
 					}
 
 					session.CommitChanges();
+
+					Console.WriteLine("Done sync'ing");
 				}
 			}
 		}
@@ -78,15 +90,14 @@ namespace Codewerks.SongSearch.Tasks {
 
 							if (remoteFile == null) {
 
-								
-
 								try {
 									Console.WriteLine("Uploading " + file.Name + " to " + remoteFolder);
 									_amazon.SaveContentMedia(file.FullName, content, version);
 									dbContent.IsMediaOnRemoteServer = true;
 								}
-								catch {
+								catch (Exception ex){
 									Console.WriteLine("FAILED: " + file.Name + "-------------------");
+									Console.WriteLine("ERROR: " + ex.Message);
 									dbContent.IsMediaOnRemoteServer = false;
 								}
 							} else {
@@ -132,10 +143,12 @@ namespace Codewerks.SongSearch.Tasks {
 					.WithFilePath(file.FullName)
 					.WithKey(GetAwsKey(file, mediaFolder))					
 					.WithStorageClass(S3StorageClass.ReducedRedundancy);
+//					.WithGenerateChecksum(true);
 
-				S3Response response = client.PutObject(request);
-
-				response.Dispose();
+				using (var response = client.PutObject(request)) {
+					// request.MD5Digest == response.
+					
+				}
 
 			}
 			catch (AmazonS3Exception amazonS3Exception) {
