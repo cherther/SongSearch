@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="Helpers\Configuration.cs" />
     <Compile Include="Helpers\Connections.cs" />
+    <Compile Include="Helpers\Filters\VersionAttribute.cs" />
     <Compile Include="Helpers\Rpx.cs" />
     <Compile Include="Helpers\SessionHelpers.cs" />
     <Compile Include="Helpers\DynamicLinq.cs" />
@@ -214,7 +215,7 @@
     <Compile Include="ViewModels\SearchField.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Infrastructure\Authentication\AuthorizeAttribute.cs" />
+    <Compile Include="Helpers\Filters\AuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Infrastructure\Authentication\IFormsAuthenticationService.cs" />
     <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />

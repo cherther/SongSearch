@@ -41,7 +41,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Complete()
 		{
 			// Cleanup upload folder
-			//FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
+			FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
 			//SessionService.Session().InitializeSession(true);
 			//CacheService.InitializeApp(true);
 
@@ -54,7 +54,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Upload(int? id) {
 
 			// Cleanup upload folder
-			//FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
+			FileSystem.SafeDeleteFolder(User.User().UploadFolder(create: false));
 
 			var state = new CatalogUploadState(_catUploadService.CatalogUploadWorkflow.WorkflowSteps.Count);
 			if (id.GetValueOrDefault() > 0) {
@@ -152,8 +152,10 @@ namespace SongSearch.Web.Controllers
 			vm.StepActionName = nextStep.StepButton;// "Next Step";
 			vm.MyCatalogs = Account.User(false).MyAdminCatalogs().OrderBy(c => c.CatalogName).ToList();
 			vm.MyPricingPlan = Account.User().PricingPlan;
-			vm.MyUserQuotas = Account.Quota();
-			vm.DefaultSongQuota = vm.PricingPlans.Where(p => p.IsEnabled == true).Min(p => p.NumberOfSongs);
+			vm.MyUserQuotas = Account.User().MyQuotas();
+//			vm.DefaultSongQuota = vm.PricingPlans.Where(p => p.IsEnabled == true).Min(p => p.NumberOfSongs);
+			vm.MinUploadFiles = 1;
+			
 			return vm;
 		}
 

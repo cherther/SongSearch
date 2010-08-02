@@ -17,7 +17,7 @@ namespace SongSearch.Web {
 
 		public static string BuildTime() {
 
-			return System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToString();
+			return System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToShortDateString();
 		}
 	}
 }

@@ -72,7 +72,7 @@ namespace SongSearch.Web.Services {
 							SubscriptionStartDate = DateTime.Now,
 							SubscriptionEndDate = null,
 							PricingPlanId = pricingPlan.PricingPlanId,
-							PlanCharge = pricingPlan.PlanCharge
+							PlanCharge = pricingPlan.PlanCharge.GetValueOrDefault()
 						};
 
 						user.Subscriptions.Add(subscription);

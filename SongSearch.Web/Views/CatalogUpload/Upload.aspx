@@ -19,7 +19,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 	<h2>Catalog Upload Wizard</h2>
 	<div>&nbsp;</div>
 	
-	<%if (percentComplete < 100 && Model.MyUserQuotas.NumberOfSongs.Remaining == 0) {%>
+	<%if (App.IsLicensedVersion && percentComplete < 100 && Model.MyUserQuotas.NumberOfSongs.IsAtTheLimit) {%>
 	<div>
 	You've uploaded a total of <%: Model.MyUserQuotas.NumberOfSongs.Allowed.ToQuotaDescription() %> songs. Based on your Plan, you cannot upload any more songs.
 	</div>

@@ -290,7 +290,7 @@ namespace SongSearch.Web.Services {
 
 			var user = Account.User();
 			// Save/create Catalog
-			if (user.IsAtLeastInRole(Roles.Admin)) {
+			if (user.IsAtLeastInRole(Roles.Admin) && !user.MyQuotas().NumberOfSongs.IsAtTheLimit) {
 
 				var catalog = DataSession.Single<Catalog>(c => c.CatalogName.ToUpper() == state.CatalogName) ??
 					new Catalog() { 
@@ -302,6 +302,7 @@ namespace SongSearch.Web.Services {
 				if (catalog.CatalogId == 0) {
 
 					DataSession.Add<Catalog>(catalog);
+					//DataSession.CommitChanges();
 
 					//Make current user an admin
 					var userCatalog = new UserCatalogRole() {
@@ -313,17 +314,29 @@ namespace SongSearch.Web.Services {
 
 					//Make parent user an admin
 					if (user.ParentUserId.HasValue) {
-						var parentUserCatalog = new UserCatalogRole() {
-							UserId = user.ParentUserId.Value,
-							CatalogId = catalog.CatalogId,
-							RoleId = (int)Roles.Admin
-						};
+						var parentUserCatalog = 
+							//DataSession.Single<UserCatalogRole>(
+							//    x => x.UserId == user.ParentUserId.Value &&
+							//        x.CatalogId == catalog.CatalogId &&
+							//        x.RoleId == (int)Roles.Admin
+							//        ) ?? 
+							new UserCatalogRole() {
+								UserId = user.ParentUserId.Value,
+								CatalogId = catalog.CatalogId,
+								RoleId = (int)Roles.Admin
+							};
 						DataSession.Add<UserCatalogRole>(parentUserCatalog);
 					}
 
-					//Make parent user an admin
-					if (user.PlanUserId != user.ParentUserId.GetValueOrDefault()) {
-						var planUserCatalog = new UserCatalogRole() {
+					//Make plan user an admin
+					if (!user.IsPlanUser && user.PlanUserId != user.ParentUserId.GetValueOrDefault()) {
+						var planUserCatalog = 
+							//DataSession.Single<UserCatalogRole>(
+							//    x => x.UserId == user.PlanUserId && 
+							//        x.CatalogId == catalog.CatalogId && 
+							//        x.RoleId == (int)Roles.Admin
+							//        ) ??
+							new UserCatalogRole() {
 							UserId = user.PlanUserId,
 							CatalogId = catalog.CatalogId,
 							RoleId = (int)Roles.Admin
@@ -339,7 +352,11 @@ namespace SongSearch.Web.Services {
 				state.CatalogName = catalog.CatalogName.ToUpper();
 
 				// Save Content
-				foreach (var itm in state.Content) {
+				var content = App.IsLicensedVersion ?
+					state.Content.Take(user.MyQuotas().NumberOfSongs.IsGoodFor(state.Content.Count())).ToList() :
+					state.Content;
+
+				foreach (var itm in content) {
 
 					itm.CatalogId = state.CatalogId;
 					itm.CreatedByUserId = user.UserId;

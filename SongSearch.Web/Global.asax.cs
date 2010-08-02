@@ -17,8 +17,13 @@ namespace SongSearch.Web {
 	// **************************************
 	public enum AppEnvironment {
 		Development,
-		Test,
+		Staging,
 		Production
+	}
+
+	public enum AppVersion {
+		SongSearch_2_0,
+		SongSearch_2_1
 	}
 
 	// **************************************
@@ -38,11 +43,38 @@ namespace SongSearch.Web {
 				return AppEnvironment.Development;
 #else
 
-				return AppEnvironment.Production;
+				return AppEnvironment.Staging;
 #endif
 			}
 		}
-		
+
+		public static AppVersion Version {
+			get {
+				return AppVersion.SongSearch_2_1;				
+			}
+		}
+
+		public static AppVersion BaseVersion {
+			get {
+				return AppVersion.SongSearch_2_0;
+			}
+		}
+		public static AppVersion LicensedVersion {
+			get {
+				return AppVersion.SongSearch_2_1;
+			}
+		}
+		public static bool IsBaseVersion {
+			get {
+				return Version <= BaseVersion;
+			}
+		}
+
+		public static bool IsLicensedVersion {
+			get {
+				return Version >= LicensedVersion;
+			}
+		}
 		// **************************************
 		// DataSession
 		// **************************************

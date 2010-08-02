@@ -12,7 +12,7 @@
 			LinkControllerName = "Account",
 			CurrentLocation = current.ToString()
 		});
-		if (Page.User.User().IsPlanUser) {
+		if (App.IsLicensedVersion && Page.User.User().IsPlanUser) {
 			menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
 				Name = "Plan",
 				LinkDisplayName = "My Plan",

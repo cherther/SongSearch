@@ -43,19 +43,6 @@ namespace SongSearch.Web {
 		}
 
 		
-		public static UserQuotas Quota(){
-
-			var quota = new UserQuotas();
-			var plan = User().PricingPlan;
-			quota.NumberOfSongs = new Quota() { Allowed = plan.NumberOfSongs, Used = GetNumberOfSongs() };
-			quota.NumberOfInvitedUsers = new Quota() { Allowed = plan.NumberOfInvitedUsers, Used = GetNumberOfUsers() };
-			quota.NumberOfCatalogAdmins = new Quota() { Allowed = plan.NumberOfCatalogAdmins, Used = GetNumberOfCatalogAdmins() };
-
-
-			return quota;
-
-		}
-
 		private static int GetNumberOfSongs() {
 
 			using (var session = App.DataSessionReadOnly) {
@@ -76,6 +63,10 @@ namespace SongSearch.Web {
 				adminCount++;
 			}
 			return adminCount;
+		}
+
+		private static int GetDefaultNumberOfSongs() {
+			return CacheService.PricingPlans().Where(p => p.IsEnabled == true && p.NumberOfSongs.HasValue).Min(p => p.NumberOfSongs.Value);
 		}
 		// **************************************
 		// Cart
@@ -139,7 +130,8 @@ namespace SongSearch.Web {
 					.Include("UserCatalogRoles")
 					.Include("Contacts")
 					.Include("ParentUser.Contacts")
-					.Include("PricingPlan");
+					.Include("PricingPlan")
+					.Include("ParentUser.PricingPlan");
 		}
 		// ----------------------------------------------------------------------------
 		// Extensions
@@ -375,6 +367,20 @@ namespace SongSearch.Web {
 			return CacheService.Catalogs().LimitToAdministeredBy(user);
 		}
 
+		public static UserQuotas MyQuotas(this User user) {
+
+			var quota = new UserQuotas();
+			var plan = user.PricingPlan;
+			quota.NumberOfSongs = new Quota() { 
+				Default = GetDefaultNumberOfSongs(),
+				Allowed = plan.NumberOfSongs, 
+				Used = GetNumberOfSongs() 
+			};
+			quota.NumberOfInvitedUsers = new Quota() { Allowed = plan.NumberOfInvitedUsers, Used = GetNumberOfUsers() };
+			quota.NumberOfCatalogAdmins = new Quota() { Allowed = plan.NumberOfCatalogAdmins, Used = GetNumberOfCatalogAdmins() };
+
+			return quota;
+		}
 		// **************************************
 		// GetContactInfo
 		// **************************************
@@ -390,8 +396,13 @@ namespace SongSearch.Web {
 
 			Contact contact = null;
 			// Pluggers and above can set up their own contact info, everyone else inherits down
-			if (user.IsAtLeastInCatalogRole(Roles.Admin)) {
+			if (user.IsPlanUser && 
+				user.PricingPlan != null && 
+				user.PricingPlan.CustomContactUs && 
+				user.IsAtLeastInCatalogRole(Roles.Admin)) {
+				
 				contact = user.Contacts.FirstOrDefault(c => c.IsDefault);
+			
 			}
 			return contact ??
 				(checkParent && user.ParentUser != null ?

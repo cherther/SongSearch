@@ -33,10 +33,10 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Catalogs_Creators", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Catalog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Catalog), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "SiteProfilesContacts", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Contact), "SiteProfile", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.SiteProfile))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "UsersContacts", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Contact), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User))]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Subscription), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Subscription), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanUsers", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "User1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Subscription), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 
 #endregion
 
@@ -315,22 +315,6 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PricingPlan> PricingPlans
-        {
-            get
-            {
-                if ((_PricingPlans == null))
-                {
-                    _PricingPlans = base.CreateObjectSet<PricingPlan>("PricingPlans");
-                }
-                return _PricingPlans;
-            }
-        }
-        private ObjectSet<PricingPlan> _PricingPlans;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Subscription> Subscriptions
         {
             get
@@ -343,6 +327,22 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<Subscription> _Subscriptions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PricingPlan> PricingPlans
+        {
+            get
+            {
+                if ((_PricingPlans == null))
+                {
+                    _PricingPlans = base.CreateObjectSet<PricingPlan>("PricingPlans");
+                }
+                return _PricingPlans;
+            }
+        }
+        private ObjectSet<PricingPlan> _PricingPlans;
 
         #endregion
         #region AddTo Methods
@@ -460,19 +460,19 @@ namespace SongSearch.Web.Data
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the PricingPlans EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPricingPlans(PricingPlan pricingPlan)
-        {
-            base.AddObject("PricingPlans", pricingPlan);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Subscriptions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToSubscriptions(Subscription subscription)
         {
             base.AddObject("Subscriptions", subscription);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PricingPlans EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPricingPlans(PricingPlan pricingPlan)
+        {
+            base.AddObject("PricingPlans", pricingPlan);
         }
 
         #endregion
@@ -3406,15 +3406,10 @@ namespace SongSearch.Web.Data
         /// <param name="isPromo">Initial value of the IsPromo property.</param>
         /// <param name="isFeatured">Initial value of the IsFeatured property.</param>
         /// <param name="isEnabled">Initial value of the IsEnabled property.</param>
-        /// <param name="planCharge">Initial value of the PlanCharge property.</param>
-        /// <param name="planRecurrance">Initial value of the PlanRecurrance property.</param>
-        /// <param name="numberOfSongs">Initial value of the NumberOfSongs property.</param>
-        /// <param name="numberOfInvitedUsers">Initial value of the NumberOfInvitedUsers property.</param>
-        /// <param name="numberOfCatalogAdmins">Initial value of the NumberOfCatalogAdmins property.</param>
+        /// <param name="showOnSite">Initial value of the ShowOnSite property.</param>
         /// <param name="customContactUs">Initial value of the CustomContactUs property.</param>
         /// <param name="customSiteProfile">Initial value of the CustomSiteProfile property.</param>
-        /// <param name="showOnSite">Initial value of the ShowOnSite property.</param>
-        public static PricingPlan CreatePricingPlan(global::System.Int32 pricingPlanId, global::System.String pricingPlanName, global::System.Boolean isPromo, global::System.Boolean isFeatured, global::System.Boolean isEnabled, global::System.Decimal planCharge, global::System.String planRecurrance, global::System.Int32 numberOfSongs, global::System.Int32 numberOfInvitedUsers, global::System.Int32 numberOfCatalogAdmins, global::System.Boolean customContactUs, global::System.Boolean customSiteProfile, global::System.Boolean showOnSite)
+        public static PricingPlan CreatePricingPlan(global::System.Int32 pricingPlanId, global::System.String pricingPlanName, global::System.Boolean isPromo, global::System.Boolean isFeatured, global::System.Boolean isEnabled, global::System.Boolean showOnSite, global::System.Boolean customContactUs, global::System.Boolean customSiteProfile)
         {
             PricingPlan pricingPlan = new PricingPlan();
             pricingPlan.PricingPlanId = pricingPlanId;
@@ -3422,14 +3417,9 @@ namespace SongSearch.Web.Data
             pricingPlan.IsPromo = isPromo;
             pricingPlan.IsFeatured = isFeatured;
             pricingPlan.IsEnabled = isEnabled;
-            pricingPlan.PlanCharge = planCharge;
-            pricingPlan.PlanRecurrance = planRecurrance;
-            pricingPlan.NumberOfSongs = numberOfSongs;
-            pricingPlan.NumberOfInvitedUsers = numberOfInvitedUsers;
-            pricingPlan.NumberOfCatalogAdmins = numberOfCatalogAdmins;
+            pricingPlan.ShowOnSite = showOnSite;
             pricingPlan.CustomContactUs = customContactUs;
             pricingPlan.CustomSiteProfile = customSiteProfile;
-            pricingPlan.ShowOnSite = showOnSite;
             return pricingPlan;
         }
 
@@ -3486,6 +3476,30 @@ namespace SongSearch.Web.Data
         private global::System.String _PricingPlanName;
         partial void OnPricingPlanNameChanging(global::System.String value);
         partial void OnPricingPlanNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PromoMessage
+        {
+            get
+            {
+                return _PromoMessage;
+            }
+            set
+            {
+                OnPromoMessageChanging(value);
+                ReportPropertyChanging("PromoMessage");
+                _PromoMessage = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PromoMessage");
+                OnPromoMessageChanged();
+            }
+        }
+        private global::System.String _PromoMessage;
+        partial void OnPromoMessageChanging(global::System.String value);
+        partial void OnPromoMessageChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3564,7 +3578,31 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal PlanCharge
+        public global::System.Boolean ShowOnSite
+        {
+            get
+            {
+                return _ShowOnSite;
+            }
+            set
+            {
+                OnShowOnSiteChanging(value);
+                ReportPropertyChanging("ShowOnSite");
+                _ShowOnSite = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ShowOnSite");
+                OnShowOnSiteChanged();
+            }
+        }
+        private global::System.Boolean _ShowOnSite;
+        partial void OnShowOnSiteChanging(global::System.Boolean value);
+        partial void OnShowOnSiteChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> PlanCharge
         {
             get
             {
@@ -3579,14 +3617,14 @@ namespace SongSearch.Web.Data
                 OnPlanChargeChanged();
             }
         }
-        private global::System.Decimal _PlanCharge;
-        partial void OnPlanChargeChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _PlanCharge;
+        partial void OnPlanChargeChanging(Nullable<global::System.Decimal> value);
         partial void OnPlanChargeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String PlanRecurrance
         {
@@ -3598,7 +3636,7 @@ namespace SongSearch.Web.Data
             {
                 OnPlanRecurranceChanging(value);
                 ReportPropertyChanging("PlanRecurrance");
-                _PlanRecurrance = StructuralObject.SetValidValue(value, false);
+                _PlanRecurrance = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("PlanRecurrance");
                 OnPlanRecurranceChanged();
             }
@@ -3610,9 +3648,9 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 NumberOfSongs
+        public Nullable<global::System.Int32> NumberOfSongs
         {
             get
             {
@@ -3627,16 +3665,16 @@ namespace SongSearch.Web.Data
                 OnNumberOfSongsChanged();
             }
         }
-        private global::System.Int32 _NumberOfSongs;
-        partial void OnNumberOfSongsChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _NumberOfSongs;
+        partial void OnNumberOfSongsChanging(Nullable<global::System.Int32> value);
         partial void OnNumberOfSongsChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 NumberOfInvitedUsers
+        public Nullable<global::System.Int32> NumberOfInvitedUsers
         {
             get
             {
@@ -3651,16 +3689,16 @@ namespace SongSearch.Web.Data
                 OnNumberOfInvitedUsersChanged();
             }
         }
-        private global::System.Int32 _NumberOfInvitedUsers;
-        partial void OnNumberOfInvitedUsersChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _NumberOfInvitedUsers;
+        partial void OnNumberOfInvitedUsersChanging(Nullable<global::System.Int32> value);
         partial void OnNumberOfInvitedUsersChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 NumberOfCatalogAdmins
+        public Nullable<global::System.Int32> NumberOfCatalogAdmins
         {
             get
             {
@@ -3675,8 +3713,8 @@ namespace SongSearch.Web.Data
                 OnNumberOfCatalogAdminsChanged();
             }
         }
-        private global::System.Int32 _NumberOfCatalogAdmins;
-        partial void OnNumberOfCatalogAdminsChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _NumberOfCatalogAdmins;
+        partial void OnNumberOfCatalogAdminsChanging(Nullable<global::System.Int32> value);
         partial void OnNumberOfCatalogAdminsChanged();
     
         /// <summary>
@@ -3726,80 +3764,10 @@ namespace SongSearch.Web.Data
         private global::System.Boolean _CustomSiteProfile;
         partial void OnCustomSiteProfileChanging(global::System.Boolean value);
         partial void OnCustomSiteProfileChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String PromoMessage
-        {
-            get
-            {
-                return _PromoMessage;
-            }
-            set
-            {
-                OnPromoMessageChanging(value);
-                ReportPropertyChanging("PromoMessage");
-                _PromoMessage = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("PromoMessage");
-                OnPromoMessageChanged();
-            }
-        }
-        private global::System.String _PromoMessage;
-        partial void OnPromoMessageChanging(global::System.String value);
-        partial void OnPromoMessageChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean ShowOnSite
-        {
-            get
-            {
-                return _ShowOnSite;
-            }
-            set
-            {
-                OnShowOnSiteChanging(value);
-                ReportPropertyChanging("ShowOnSite");
-                _ShowOnSite = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ShowOnSite");
-                OnShowOnSiteChanged();
-            }
-        }
-        private global::System.Boolean _ShowOnSite;
-        partial void OnShowOnSiteChanging(global::System.Boolean value);
-        partial void OnShowOnSiteChanged();
 
         #endregion
     
         #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PricingPlans", "User")]
-        public EntityCollection<User> Users
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "User");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "User", value);
-                }
-            }
-        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3819,6 +3787,28 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Subscription>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "Subscription", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PricingPlans", "User")]
+        public EntityCollection<User> Users
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "User", value);
                 }
             }
         }
@@ -4992,44 +4982,6 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_PricingPlans", "PricingPlan")]
-        public PricingPlan PricingPlan
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "PricingPlan").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "PricingPlan").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PricingPlan> PricingPlanReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "PricingPlan");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "PricingPlan", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_Users", "User")]
         public User User
         {
@@ -5058,6 +5010,44 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Subscriptions_Users", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_PricingPlans", "PricingPlan")]
+        public PricingPlan PricingPlan
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "PricingPlan").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "PricingPlan").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PricingPlan> PricingPlanReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "PricingPlan");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Subscriptions_PricingPlans", "PricingPlan", value);
                 }
             }
         }
@@ -6048,44 +6038,6 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PricingPlans", "PricingPlan")]
-        public PricingPlan PricingPlan
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PricingPlan> PricingPlanReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_Users", "Subscription")]
         public EntityCollection<Subscription> Subscriptions
         {
@@ -6158,6 +6110,44 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Users_PlanUsers", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PricingPlans", "PricingPlan")]
+        public PricingPlan PricingPlan
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PricingPlan> PricingPlanReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan", value);
                 }
             }
         }

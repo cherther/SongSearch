@@ -514,12 +514,13 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/UpdateProfile
 		// **************************************
 		[RequireAuthorization]
+		[RequiresVersion(MinAppVersion=AppVersion.SongSearch_2_1)]
 		public virtual ActionResult Plan() {
 			var vm = new PricingPlansViewModel() {
 				NavigationLocation = new string[] { "Home", "Plan" },
 				PageTitle = "My Plan",
 				MyPricingPlan = Account.User().PricingPlan,				
-				MyUserQuotas = Account.Quota()
+				MyUserQuotas = Account.User().MyQuotas()
 
 			};
 			vm.PricingPlans = User.UserIsSuperAdmin() ? vm.PricingPlans.Where(p => p.PricingPlanId > (int)PricingPlans.Member).ToList() :

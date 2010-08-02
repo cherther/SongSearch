@@ -223,11 +223,11 @@ namespace SongSearch.Web {
 		public static string ToDescription(this int number) {
 			return number.ToString("N0");
 		}
-		public static string ToQuotaDescription(this int number) {
-			return number == 0 ? "None" : (number < 0 ? "Unlimited" : number.ToString("N0"));
+		public static string ToQuotaDescription(this int? number) {
+			return !number.HasValue ? "Unlimited" : (number.Value == 0 ? "None" : number.Value.ToString("N0"));
 		}
-		public static string ToPriceDescription(this decimal price) {
-			return price > 0 ? price.ToString("C") : "Free!";
+		public static string ToPriceDescription(this decimal? price) {
+			return !price.HasValue ? " -- " : (price.Value == 0 ? "Free!" : price.Value.ToString("C"));
 		}
 		public static string ToPercentDescription(this decimal number) {
 			return number.ToString("P0").TrimInside();

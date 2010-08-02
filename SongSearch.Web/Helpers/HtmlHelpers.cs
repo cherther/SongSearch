@@ -81,6 +81,16 @@ namespace System.Web.Mvc {
 
 			return value;
 		}
+
+		public static string Pluralize(this HtmlHelper helper, string item, int numberofItems) {
+			switch (item) {
+				case "is":
+					return numberofItems == 1 ? item : item.Replace(item, "are");
+				default:
+					return numberofItems == 1 ? item : String.Format("{0}s", item);
+
+			}
+		}
 	}
 }
 
