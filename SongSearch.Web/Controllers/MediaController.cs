@@ -46,9 +46,9 @@ namespace SongSearch.Web.Controllers
 					//    var mediaUrl = _mediaService.GetContentMediaPath(id, MediaVersion.Full);
 					//    return base.File(mediaUrl, contentType, downloadName);
 					//} else {
-					var media = _mediaService.GetContentMedia(content, MediaVersion.Full, user);
+					byte[] media = _mediaService.GetContentMedia(content, MediaVersion.Full, user);
 
-						return base.File(media, contentType, downloadName);
+					return base.File(media, contentType, downloadName);
 					//}
 				} else {
 					var msg = "You do not have access to this file";

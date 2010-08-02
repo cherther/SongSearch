@@ -72,8 +72,18 @@ function feedback(type, msg) {
 	var duration = 3000;
 
 	switch (type) {
+		case "info":
+			title = 'Message';
+			img = '/public/images/icons/silk/information.png';
+			duration = 8000;
+			break;
 		case "error":
 			title = 'Error';
+			img = '/public/images/icons/silk/error.png';
+			duration = 8000;
+			break;
+		case "warning":
+			title = 'Warning';
 			img = '/public/images/icons/silk/error.png';
 			duration = 8000;
 			break;

@@ -93,7 +93,10 @@ namespace SongSearch.Web.Controllers {
 		}
 
 		public virtual ActionResult PrivacyPolicy() {
-			return View(new ViewModel() { NavigationLocation = new string[] { "Home" } });
+			return View(new ViewModel() { PageTitle = "Privacy Policy", NavigationLocation = new string[] { "Home" } });
+		}
+		public virtual ActionResult TermsOfUse() {
+			return View(new ViewModel() { PageTitle = "Terms of Use", NavigationLocation = new string[] { "Home" } });
 		}
 	}
 }

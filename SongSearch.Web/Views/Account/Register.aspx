@@ -107,7 +107,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 			<div>
 				<%: Html.CheckBoxFor(m => m.HasAgreedToPrivacyPolicy) %>
 				<%: Html.LabelFor(m => m.HasAgreedToPrivacyPolicy) %>
-				<%: Html.ActionLink("(Please Review)", MVC.Home.PrivacyPolicy(), new { target ="_new"})%>
+				<%: Html.ActionLink("(Please Review)", MVC.Home.TermsOfUse(), new { target ="_new"})%>
 				<%: Html.ValidationMessageFor(m => m.HasAgreedToPrivacyPolicy)%>
 			</div>
 			<div>&nbsp;</div>

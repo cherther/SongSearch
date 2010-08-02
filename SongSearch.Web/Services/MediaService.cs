@@ -102,7 +102,8 @@ namespace SongSearch.Web.Services {
 
 
 		public void SaveContentMedia(string filePath, Content content, MediaVersion version) {
-			var mediaPath = content.MediaFilePath(version);
+			ID3Writer.NormalizeTag(filePath, content);
+			var mediaPath = GetContentMediaPath(content, version);
 			FileSystem.SafeMove(filePath, mediaPath, true);
 		}
 

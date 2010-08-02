@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.ViewModel>" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="TitleContent" runat="server">
 	Home Page
@@ -11,10 +11,34 @@
 		<div>&nbsp;</div>
 		<h4>What's New</h4>
 		<div>&nbsp;</div>
+		<div class="cw-outl cw-padded cw-rounded-corners">
+			<div ><strong>8/1/2010</strong></div>
+			<div>&nbsp;</div>
+			<div>Welcome to <%: Model.SiteProfile.CompanyName %>.</div>
+			<div>&nbsp;</div>
+			<div>
+			We have recently launched a private beta test of the site. If you'd like to participate, please <%: Html.ActionLink("contact us", MVC.Home.Contact()) %> for an invitation code.
+			</div>
+			<div>&nbsp;</div>
+		</div>
+		<%--<div class="nine_column section">
+			<div class="two column text-top">
+			<h3>Features</h3>
+			</div>
+			<div class="seven column">
+				<div class="cw-outl cw-fill cw-padded cw-rounded-corners">
+				</div>
+			</div>
+		</div>--%>
+		<div>&nbsp;</div>
+		<div>&nbsp;</div>
+		<div>&nbsp;</div>
+		<div>&nbsp;</div>
 		<div class="cw-outl cw-fill cw-padded cw-rounded-corners">
 		Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%> - <% = SongSearch.Web.VersionInfo.BuildTime()%>
 		</div>
-		<div class="cw-outl cw-fill  cw-padded cw-rounded-corners">
+		
+<%--		<div class="cw-outl cw-fill  cw-padded cw-rounded-corners">
 			<div ><strong>7/22/2010</strong></div>
 			<ul class="cw-bullet">
 				<li>Embed Signature in MP3 title information
@@ -23,6 +47,7 @@
 				<li>Catalog admins can now update the Contact Us information for their users</li>
 			</ul>
 		</div>
+
 		<div class="cw-outl cw-padded cw-rounded-corners">
 		<div>7/13/2010</div>
 		<ul class="cw-bullet">
@@ -185,7 +210,7 @@
 			<li>Account management implemented (Change Password etc)</li>
 		</ul>
 		<div>&nbsp;</div>
-		</div>
+		</div>--%>
 	</div>
 </div>
 </asp:Content>

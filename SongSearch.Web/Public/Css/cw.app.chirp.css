@@ -413,3 +413,36 @@ ul.cw-list-searchoptions li
 	 -moz-border-radius:3px;
 	 -webkit-border-radius:3px;
 }
+
+.cw-legal 
+{
+	line-height: 1.8em;
+}
+.cw-legal h2
+{
+	font-variant: small-caps;
+	font-weight: bold;
+	margin: 10px 0;
+}
+.cw-legal h3
+{
+	font-variant: small-caps;
+	font-weight: bold;
+	margin: 10px 0;
+}
+.cw-legal p
+{
+	margin: 10px 0;
+
+}
+.cw-legal ol li
+{
+	text-indent: 10px;
+	list-style-type: lower-alpha;
+}
+
+.cw-legal ul li
+{
+	text-indent: 10px;
+	list-style-type: square;
+}

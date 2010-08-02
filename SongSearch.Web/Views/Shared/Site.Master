@@ -60,10 +60,13 @@
 		</div> 
 	 </div>
 	 <div class="six_column section">
-		<div class="three column">
+		<div class="two column">
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlFooter); %>
 		</div> 
-		<div class="three column text-right">
+		<div class="two column text-center">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlLinks); %>
+		</div> 
+		<div class="two column text-right">
 		<% Html.RenderPartial(MVC.Shared.Views.ctrlBuildInfo); %>
 		</div> 
 	 </div>

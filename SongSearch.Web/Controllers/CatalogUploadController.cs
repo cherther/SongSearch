@@ -102,7 +102,7 @@ namespace SongSearch.Web.Controllers
 					Session["CatalogUploadState.UploadFiles"] = state.UploadFiles != null ? state.UploadFiles.Distinct().ToList() : state.UploadFiles;
 					var vm = GetCatalogViewModel(nextStep, state);
 					vm.StepActionName = nextStep.StepButton;
-
+					
 					return View(vm);
 				} else {
 					return RedirectToAction("Complete");
@@ -153,7 +153,7 @@ namespace SongSearch.Web.Controllers
 			vm.MyCatalogs = Account.User(false).MyAdminCatalogs().OrderBy(c => c.CatalogName).ToList();
 			vm.MyPricingPlan = Account.User().PricingPlan;
 			vm.MyUserQuotas = Account.Quota();
-
+			vm.DefaultSongQuota = vm.PricingPlans.Where(p => p.IsEnabled == true).Min(p => p.NumberOfSongs);
 			return vm;
 		}
 

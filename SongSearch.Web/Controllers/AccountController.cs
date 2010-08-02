@@ -178,7 +178,7 @@ namespace SongSearch.Web.Controllers {
 				if (_acctService.UserExists(model.Email)) {
 					ModelState.AddModelError("Email", SystemErrors.UserAlreadyRegistered);
 				} else if (!model.HasAgreedToPrivacyPolicy){
-					ModelState.AddModelError("HasAgreedToPrivacyPolicy", "We''re sorry, we can only register you if you accept our privacy policy.");
+					ModelState.AddModelError("HasAgreedToPrivacyPolicy", "We''re sorry, we can only register you if you accept our Terms of Use.");
 				} else {
 					// Check invitation code
 					Invitation inv = null;

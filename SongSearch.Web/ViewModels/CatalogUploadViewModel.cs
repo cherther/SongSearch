@@ -17,5 +17,6 @@ namespace SongSearch.Web {
 		public string StepActionName { get; set; }
 		public PricingPlan MyPricingPlan { get; set; }
 		public UserQuotas MyUserQuotas { get; set; }
+		public int DefaultSongQuota { get; set; }
 	}
 }

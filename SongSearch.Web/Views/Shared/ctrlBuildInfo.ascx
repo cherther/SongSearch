@@ -2,7 +2,7 @@
 <div class="text-small">
 	<div>developed by <a href="http://www.codewerks.de/" title="They're awesome!">codewerks.de</a>
 	</div>
-	<div>[<%: App.Environment %>]&nbsp;Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%> - 
+	<div>[<%: App.Environment %>] - 
 	Build Date: <% = SongSearch.Web.VersionInfo.BuildTime()%></div> 
 
 </div>

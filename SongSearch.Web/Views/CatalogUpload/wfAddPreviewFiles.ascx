@@ -8,7 +8,7 @@
 <div>&nbsp;</div>
 <div id="uploadMessage" class="feedback-box feedback-box-error" style="display:none">&nbsp;</div>
 <div id="wizardUploader">
-	<p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+	<p>Unfortunately, you browser doesn't seem to support our Upload Widget, which requires either Flash, Silverlight or HTML5 support.</p>
 </div>
 <input id="state_MediaVersion" name="state.MediaVersion" type="hidden" value="<%: MediaVersion.Preview %>" />
 <div id="fileList">

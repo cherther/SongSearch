@@ -25,12 +25,15 @@
 
 		uploader.bind('QueueChanged', function (up, files) {
 			debug('QueueChanged event fired');
-			checkTotalUploadSize(up);
-			var fileList = $('#fileList');
-			fileList.html('');
-			$.each(up.files, function (i, file) {
-				fileList.append('<input type="hidden" name="state.TempFiles[' + i + ']" value="' + file.name + '" />');
-			});
+			if (checkTotalUploadSize(up)) {
+				var fileList = $('#fileList');
+				fileList.html('');
+				$.each(up.files, function (i, file) {
+					fileList.append('<input type="hidden" name="state.TempFiles[' + i + ']" value="' + file.name + '" />');
+				});
+			} else {
+				return false;
+			}
 		});
 		//		uploader.bind('UploadProgress', function () {
 		//			notifyFilesDone(uploader);
@@ -38,9 +41,9 @@
 		//uploader.bind('UploadProgress', function (up, file) { notifyFilesDone(up); });
 
 		uploader.bind('Error', function (up, error) {
-	
+
 			handleError(up, error);
-	
+
 			turnStepActionButtonOn(true);
 		});
 
@@ -55,8 +58,8 @@
 		catalogUploadForm.submit(function (evt) {
 			var formUp = $(wizardUploadWidgetId).pluploadQueue();
 
-//			uploader.unbind('UploadProgress');//, function (up, file) { notifyFilesDone(up); });
-//			formUp.unbind('UploadProgress');//, function (up, file) { notifyFilesDone(up); });
+			//			uploader.unbind('UploadProgress');//, function (up, file) { notifyFilesDone(up); });
+			//			formUp.unbind('UploadProgress');//, function (up, file) { notifyFilesDone(up); });
 
 			// Validate number of uploaded files
 			if (formUp.total.uploaded == 0) {
@@ -66,13 +69,18 @@
 
 				if (formUp.files.length >= min) {
 
-					if (formUp.files.length > 0) {// When all files are uploaded submit form
+					if (formUp.files.length > 0) {
+
+						if (!checkTotalUploadSize(formUp)) {
+							evt.preventDefault();
+							return;
+						} // When all files are uploaded submit form
 
 
-//						formUp.bind('UploadProgress', function (up, file) {
-//							debug('UploadProgress event fired');
-//							
-//						});
+						//						formUp.bind('UploadProgress', function (up, file) {
+						//							debug('UploadProgress event fired');
+						//							
+						//						});
 						formUp.bind('FileUploaded', function (up, file, response) {
 							//debug('FileUploaded event fired');
 							submitUploadFormWhenFilesDone(up);
@@ -89,9 +97,6 @@
 						formUp.start();
 						turnStepActionButtonOn(false);
 					}
-					//                    } else {
-
-					//                    }
 				} else {
 					evt.preventDefault();
 					feedback('info', 'Please select at least ' + min + pluralize(' file', min) + ' to upload.');
@@ -181,16 +186,15 @@ function checkTotalUploadSize(up) {
 		totalSize += file.size;
 	});
 	if (files.length > maxNumber) {
-		var msg = 'Total number of files is more than ' + maxNumber + ' (' + files.length + ')';
+		var msg = 'You may only upload a total number of ' + maxNumber + ' files (you added ' + files.length + ' files)';
+		feedback('warning', msg);
+		return false;
 	} else if (totalSize > maxSize) {
-		var msg = 'Total file size is more than ' + toFileSizeDescription(maxSize) + ' (' + toFileSizeDescription(totalSize) + ')';
-	}
-	if (msg) {
-		//$('#uploadMessage').text(msg).fadeIn();
+		var msg = 'Total file size is more than ' + toFileSizeDescription(maxSize) + ' (' + toFileSizeDescription(totalSize) + '). If you have a slow upload link, this may take a long time and may time out.';
 		feedback('info', msg);
-		//		} else {
-		//			$('#uploadMessage').fadeOut();
+		return true;
 	}
+	return true;
 }
 function handleError(up, error) {
 

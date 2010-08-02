@@ -33,6 +33,7 @@ namespace T4MVC {
             public readonly string ctrlContentsGrid = "~/Views/Shared/ctrlContentsGrid.ascx";
             public readonly string ctrlFooter = "~/Views/Shared/ctrlFooter.ascx";
             public readonly string ctrlHeader = "~/Views/Shared/ctrlHeader.ascx";
+            public readonly string ctrlLinks = "~/Views/Shared/ctrlLinks.ascx";
             public readonly string ctrlLogIn = "~/Views/Shared/ctrlLogIn.ascx";
             public readonly string ctrlMainMenu = "~/Views/Shared/ctrlMainMenu.ascx";
             public readonly string ctrlMediaplayer = "~/Views/Shared/ctrlMediaplayer.ascx";

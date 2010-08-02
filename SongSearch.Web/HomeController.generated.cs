@@ -49,6 +49,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string Index = "Index";
             public readonly string Contact = "Contact";
             public readonly string PrivacyPolicy = "PrivacyPolicy";
+            public readonly string TermsOfUse = "TermsOfUse";
         }
 
 
@@ -60,6 +61,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string Contact = "~/Views/Home/Contact.aspx";
             public readonly string Index = "~/Views/Home/Index.aspx";
             public readonly string PrivacyPolicy = "~/Views/Home/PrivacyPolicy.aspx";
+            public readonly string TermsOfUse = "~/Views/Home/TermsOfUse.aspx";
         }
     }
 
@@ -85,6 +87,11 @@ namespace SongSearch.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult PrivacyPolicy() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.PrivacyPolicy);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult TermsOfUse() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.TermsOfUse);
             return callInfo;
         }
 

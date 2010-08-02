@@ -75,6 +75,9 @@ namespace SongSearch.Web.Services {
 				foreach (var uploadFile in uploadFiles) {
 					if (uploadFile.FileName != null) {
 						var filePath = Account.User().UploadFile(uploadFile.FileName, uploadFile.FileMediaVersion.ToString());
+						
+						content.IsMediaOnRemoteServer = false;
+
 						switch (uploadFile.FileMediaVersion) {
 							case MediaVersion.Full:
 								content.HasMediaFullVersion = true;

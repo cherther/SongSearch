@@ -106,7 +106,7 @@ namespace SongSearch.Web {
 		public string ConfirmPassword { get; set; }
 
 		[Required]
-		[DisplayName("I have read the Privacy Policy")]
+		[DisplayName("I have read & agree to the Terms of Use")]
 		public bool HasAgreedToPrivacyPolicy { get; set; }
 
 		[Required]

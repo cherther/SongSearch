@@ -1876,6 +1876,8 @@
     <Content Include="Scripts\soundmanager2.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Views\Home\TermsOfUse.aspx" />
+    <Content Include="Views\Shared\ctrlLinks.ascx" />
     <Content Include="Views\Shared\ctrlAdminMenu.ascx" />
     <Content Include="Views\Shared\ctrlAccountMenu.ascx" />
     <Content Include="Views\Account\ctrlContactInfo.ascx" />
