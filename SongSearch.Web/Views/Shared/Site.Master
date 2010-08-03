@@ -11,14 +11,13 @@
 	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
 	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
 	<script type="text/javascript" src="/scripts/jquery-1.4.2.min.js"></script>
-	<script type="text/javascript" src="/scripts/MicrosoftAjax.debug.js"></script>
-	<script type="text/javascript" src="/scripts/MicrosoftMvcValidation.debug.js"></script>
+
 
 	<title><%: Model.SiteProfile.CompanyName %> (Beta) - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>
-	<%if (App.Environment == AppEnvironment.Production) { %>
+	<%if (App.Environment != AppEnvironment.Development) { %>
 	<script type="text/javascript">
 
 		var _gaq = _gaq || [];
@@ -72,7 +71,7 @@
 	 </div>
 </div>
 <%
-	var debug = App.Environment != AppEnvironment.Production;
+	var debug = App.Environment == AppEnvironment.Development;
 	var d = debug ? "?d=1" : "";
 %>
 <%--<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>

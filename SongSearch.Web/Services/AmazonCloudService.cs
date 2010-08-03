@@ -8,6 +8,7 @@ using IdSharp.Tagging.ID3v2;
 using System.Configuration;
 using Amazon.S3.Model;
 using Amazon.S3;
+using Amazon.CloudFront.Model;
 
 namespace SongSearch.Web.Services {
 
@@ -149,13 +150,12 @@ namespace SongSearch.Web.Services {
 
 				var key = String.Format(RemoteMediaConfiguration.MediaUrlFormat, version, content.ContentId);
 
-
 				var request = new GetPreSignedUrlRequest()
-					.WithProtocol(Protocol.HTTP)
+					.WithProtocol(Amazon.S3.Model.Protocol.HTTP)
 					.WithBucketName(RemoteMediaConfiguration.BucketName)
 					.WithKey(key)
 					.WithExpires(DateTime.Now.Date.AddDays(365));
-
+				
 				return awsclient.GetPreSignedURL(request);
 			}
 		}
