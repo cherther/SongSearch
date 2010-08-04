@@ -314,12 +314,30 @@ ul.cw-list-searchoptions li
 	margin: 0.8em 0 0.8em 0;
 	
 }
+.cw-usage-heading-small 
+{
+	font-size:0.9em;
+/*	font-variant: small-caps;*/
+	
+	font-weight: bold;
+	padding: 3px;
+}
 .cw-usage-box 
 {
 	width: 180px; 
 	height:16px; 
 	border: 2px solid #ddd;
 	margin:3px 0;
+	padding: 0;
+	vertical-align: middle;
+	
+}
+.cw-usage-box-small 
+{
+	width: 90px; 
+	height:16px; 
+	border: 1px solid #ddd;
+	margin:2px 0;
 	padding: 0;
 	vertical-align: middle;
 	
@@ -373,12 +391,29 @@ ul.cw-list-searchoptions li
 	font-weight: bold;
 	font-size: 20px;
 }
+.cw-usage-numbers-small
+{
+	font-family: "Helvetica Neue", "Helvetica", "Arial", non-serif;
+	font-weight: bold;
+	font-size: 0.9em;
+	margin:2px 0;
+	padding: 0;
+}
 .cw-usage-item
 {
 	font-family: "Helvetica Neue", "Helvetica", "Arial", non-serif;
 	font-weight: normal;
 	font-size: 12px;
 	color: #999;
+	margin:2px 0;
+	padding: 0;
+}
+.cw-usage-item-small
+{
+	font-family: "Helvetica Neue", "Helvetica", "Arial", non-serif;
+	font-weight: normal;
+	font-size: 0.9em;
+	color: #000;
 }
 
 /* Media Player */
@@ -445,4 +480,18 @@ ul.cw-list-searchoptions li
 {
 	text-indent: 10px;
 	list-style-type: square;
+}
+
+.cw-bullets 
+{
+	margin-left: 10px;
+	padding-left: 10px;
+}
+.cw-bullets li
+{
+
+	text-indent: -10px;
+	list-style-type: disc;
+	list-style-position: outside;
+	
 }

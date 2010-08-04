@@ -15,10 +15,6 @@ using Amazon;
 namespace Codewerks.SongSearch.Tasks {
 	public class AmazonAWS {
 
-		static string _accessKeyID = "";
-		static string _secretAccessKeyID = "";
-		static string _bucketName = "songsearchassets";
-		static string _mediaPath = "";
 
 		static AmazonS3 client = null;
 		static AmazonCloudService _amazon;

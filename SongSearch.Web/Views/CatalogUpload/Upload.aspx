@@ -33,12 +33,20 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 		<div>&nbsp;</div>
 		<div class="cw-outl cw-padded cw-rounded-corners">
 			<div>&nbsp;</div>
-				<div id="progressbarWrapper" style="height:16px;width:480px" class="ui-widget-default" title="You're on <%: stepStatusMessage%>">
-				<div id="progressbar" style="height:100%;"></div> 
+			<div class="six_column section">
+				<div class="three column text-top">
+					<div id="progressbarWrapper" style="height:16px;width:480px" class="ui-widget-default" title="You're on <%: stepStatusMessage%>">
+						<div id="progressbar" style="height:100%;"></div> 
+					</div>
+					<div>&nbsp;</div>
+					<h3><%: stepStatusMessage %>: <%: Model.PageTitle %></h3>
+				</div>
+				<div class="three column text-top">
+					<%if (App.IsLicensedVersion) {%>
+						<%: Html.Partial("ctrlUserQuotasWidget", Account.User().MyQuotas()) %>
+					<%} %>
+				</div>
 			</div>
-			<div>&nbsp;</div>
-
-			<h3><%: stepStatusMessage %>: <%: Model.PageTitle %></h3>
 			<div>&nbsp;</div>
 			<div>
 				<%using (Html.BeginForm("Upload", "CatalogUpload", FormMethod.Post, new { id = "catalogUploadForm" } )) { %>

@@ -10,9 +10,9 @@ namespace SongSearch.Web.Data {
 		public Quota NumberOfCatalogAdmins { get; set; }
 
 		public UserQuotas() {
-			NumberOfSongs = new Quota() { Default = 50 };
-			NumberOfInvitedUsers = new Quota() { Default = -1 };
-			NumberOfCatalogAdmins = new Quota() { Default = -1 };
+			NumberOfSongs = new Quota() { Default = 50, QuotaName = "Songs" };
+			NumberOfInvitedUsers = new Quota() { Default = -1, QuotaName = "Users" };
+			NumberOfCatalogAdmins = new Quota() { Default = -1, QuotaName = "Catalog Admins" };
 		}
 	}
 
@@ -49,13 +49,17 @@ namespace SongSearch.Web.Data {
 			}
 		}
 
-		public string UsageDescription(string itemName) {
+		public string QuotaName { get; set; }
+		
+		public string UsageDescription {
+			get {
 
-			return String.Format("{0} of {1} {2} ({3})",
-							  Used.ToString("N0"),
-							  Allowed.ToQuotaDescription(),
-							  itemName,
-							  Usage.ToPercentDescription());
+				return String.Format("{0} of {1} {2} ({3})",
+								  Used.ToString("N0"),
+								  Allowed.ToQuotaDescription(),
+								  QuotaName,
+								  Usage.ToPercentDescription());
+			}
 		}
 
 		public bool IsAtTheLimit {

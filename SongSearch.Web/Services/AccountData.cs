@@ -369,17 +369,19 @@ namespace SongSearch.Web {
 
 		public static UserQuotas MyQuotas(this User user) {
 
-			var quota = new UserQuotas();
+			var quotas = new UserQuotas();
 			var plan = user.PricingPlan;
-			quota.NumberOfSongs = new Quota() { 
-				Default = GetDefaultNumberOfSongs(),
-				Allowed = plan.NumberOfSongs, 
-				Used = GetNumberOfSongs() 
-			};
-			quota.NumberOfInvitedUsers = new Quota() { Allowed = plan.NumberOfInvitedUsers, Used = GetNumberOfUsers() };
-			quota.NumberOfCatalogAdmins = new Quota() { Allowed = plan.NumberOfCatalogAdmins, Used = GetNumberOfCatalogAdmins() };
+			quotas.NumberOfSongs.Default = GetDefaultNumberOfSongs();
+			quotas.NumberOfSongs.Allowed = plan.NumberOfSongs; 
+			quotas.NumberOfSongs.Used = GetNumberOfSongs();
 
-			return quota;
+			quotas.NumberOfInvitedUsers.Allowed = plan.NumberOfInvitedUsers;
+			quotas.NumberOfInvitedUsers.Used = GetNumberOfUsers();
+
+			quotas.NumberOfCatalogAdmins.Allowed = plan.NumberOfCatalogAdmins;
+			quotas.NumberOfCatalogAdmins.Used = GetNumberOfCatalogAdmins();
+
+			return quotas;
 		}
 		// **************************************
 		// GetContactInfo

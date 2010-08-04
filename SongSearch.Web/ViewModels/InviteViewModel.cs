@@ -18,6 +18,8 @@ namespace SongSearch.Web {
 
 		[Required]
 		public bool IsPlanInvitation { get; set; }
+		public bool ShowInviteForm { get; set; }
+		public bool ShowPlanMessage { get; set; }
 
 		public string InviteUrl { get; set; }
 		

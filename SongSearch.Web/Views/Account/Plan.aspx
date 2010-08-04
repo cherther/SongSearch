@@ -16,8 +16,8 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 	<div>&nbsp;</div>
 	<h3>Usage</h3>
 	<div>&nbsp;</div>
-	<%: Html.Partial("ctrlUserQuotasWide", Model.MyUserQuotas) %>
+	<%: Html.Partial(MVC.Shared.Views.ctrlUserQuotas, Model.MyUserQuotas) %>
 	<div>&nbsp;</div>
-	<%: Html.Partial("ctrlPricingPlans", Model) %>
+	<%: Html.Partial(MVC.Shared.Views.ctrlPricingPlans, Model) %>
 </div>
 </asp:Content>

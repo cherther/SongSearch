@@ -11,8 +11,11 @@
 	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
 	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
 	<script type="text/javascript" src="/scripts/jquery-1.4.2.min.js"></script>
-
-
+<%--	<!-- Combo-handled YUI CSS files: --> 
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.1/build/base/base-min.css&2.8.1/build/progressbar/assets/skins/sam/progressbar.css"> 
+	<!-- Combo-handled YUI JS files: --> 
+	<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.8.1/build/yahoo-dom-event/yahoo-dom-event.js&2.8.1/build/element/element-min.js&2.8.1/build/progressbar/progressbar-min.js"></script>
+--%>
 	<title><%: Model.SiteProfile.CompanyName %> (Beta) - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>

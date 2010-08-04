@@ -325,7 +325,7 @@ namespace SongSearch.Web.Controllers {
 					FirstName = user.FirstName,
 					LastName = user.LastName,
 					ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger),
-					ShowContactInfo = user.IsAtLeastInCatalogRole(Roles.Admin),
+					ShowContactInfo = user.PricingPlan.CustomContactUs && user.IsAtLeastInCatalogRole(Roles.Admin),
 					HasAllowedCommunication = user.HasAllowedCommunication,
 					PageTitle = "Update Profile",
 					PageMessage= "My User Profile"

@@ -79,7 +79,6 @@ namespace SongSearch.Web.Controllers {
             public readonly string ChangePassword = "~/Views/Account/ChangePassword.aspx";
             public readonly string ChangePasswordSuccess = "~/Views/Account/ChangePasswordSuccess.aspx";
             public readonly string ctrlContactInfo = "~/Views/Account/ctrlContactInfo.ascx";
-            public readonly string ctrlUserQuotasWide = "~/Views/Account/ctrlUserQuotasWide.ascx";
             public readonly string LogIn = "~/Views/Account/LogIn.aspx";
             public readonly string LogOut = "~/Views/Account/LogOut.aspx";
             public readonly string Plan = "~/Views/Account/Plan.aspx";

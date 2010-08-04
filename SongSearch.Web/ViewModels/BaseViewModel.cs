@@ -20,6 +20,8 @@ namespace SongSearch.Web {
 		public int MyActiveCartCount { get; set; }
 		public ModelAction ModelAction { get; set; }
 		public int ActiveUserId { get; set; }
+		public bool ShowQuotaWidget { get; set; }
+
 		public ViewModel() {
 			SiteProfile = SiteProfileData.SiteProfile();
 			ViewMode = ViewModes.Normal;

@@ -11,16 +11,25 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
-	<h2><%: Model.PageTitle %></h2>
+	<div class="six_column section">
+		<div class="three column text-top">
+			<h2><%: Model.PageTitle %></h2>
+	<div>&nbsp;</div>
+	<h3>Registered Users</h3>
+	<div>&nbsp;</div>
+		</div>
+		<div class="three column text-top">
+			<%if (App.IsLicensedVersion) {%>
+				<%: Html.Partial("ctrlUserQuotasWidget", Account.User().MyQuotas()) %>
+			<%} %>
+		</div>
+	</div>
 
 	<%if (Model != null) {
 		var users = Model.MyUsers;
 		var invites = Model.MyInvites;
 		users = users.OrderBy(u => u.ParentUserId).ThenBy(u => u.UserName).ToList();
 	%>
-	<div>&nbsp;</div>
-	<h3>Users</h3>
-	<div>&nbsp;</div>
 	
 	<table>
 	<tr>

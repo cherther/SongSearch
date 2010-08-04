@@ -41,7 +41,10 @@ namespace T4MVC {
             public readonly string ctrlSubMenu = "~/Views/Shared/ctrlSubMenu.ascx";
             public readonly string ctrlTagCloud = "~/Views/Shared/ctrlTagCloud.ascx";
             public readonly string ctrlTerritoryCloud = "~/Views/Shared/ctrlTerritoryCloud.ascx";
+            public readonly string ctrlUserQuotaLarge = "~/Views/Shared/ctrlUserQuotaLarge.ascx";
             public readonly string ctrlUserQuotas = "~/Views/Shared/ctrlUserQuotas.ascx";
+            public readonly string ctrlUserQuotaSmall = "~/Views/Shared/ctrlUserQuotaSmall.ascx";
+            public readonly string ctrlUserQuotasWidget = "~/Views/Shared/ctrlUserQuotasWidget.ascx";
             public readonly string Error = "~/Views/Shared/Error.aspx";
             static readonly _DisplayTemplates s_DisplayTemplates = new _DisplayTemplates();
             public _DisplayTemplates DisplayTemplates { get { return s_DisplayTemplates; } }

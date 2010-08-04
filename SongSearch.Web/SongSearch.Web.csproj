@@ -53,9 +53,6 @@
       <HintPath>..\Ext Libraries\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK, Version=1.0.11.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL" />
-    <Reference Include="dotless.Core">
-      <HintPath>..\Ext Libraries\SquishIt\dotless.Core.dll</HintPath>
-    </Reference>
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
     </Reference>
@@ -1873,15 +1870,17 @@
     <Content Include="Scripts\soundmanager2.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Views\Shared\ctrlUserQuotaLarge.ascx" />
+    <Content Include="Views\Shared\ctrlUserQuotaSmall.ascx" />
+    <Content Include="Views\Shared\ctrlUserQuotasWidget.ascx" />
     <Content Include="Views\Home\TermsOfUse.aspx" />
     <Content Include="Views\Shared\ctrlLinks.ascx" />
     <Content Include="Views\Shared\ctrlAdminMenu.ascx" />
     <Content Include="Views\Shared\ctrlAccountMenu.ascx" />
     <Content Include="Views\Account\ctrlContactInfo.ascx" />
     <Content Include="Views\Account\Plan.aspx" />
-    <Content Include="Views\Account\ctrlUserQuotasWide.ascx" />
-    <Content Include="Views\Shared\ctrlPricingPlans.ascx" />
     <Content Include="Views\Shared\ctrlUserQuotas.ascx" />
+    <Content Include="Views\Shared\ctrlPricingPlans.ascx" />
     <Content Include="Views\Account\LogIn.aspx" />
     <Content Include="Views\Account\LogOut.aspx" />
     <Content Include="Views\Account\Register.aspx" />

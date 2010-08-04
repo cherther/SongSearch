@@ -64,12 +64,28 @@ namespace SongSearch.Web
 		// URL: /UserManagement/Invite
 		// **************************************
 		public virtual ActionResult Invite() {
-			return View(
-				new InviteViewModel() {
-					NavigationLocation = new string[] { "Admin" },
-					InviteId = Guid.Empty.ToString(),
-					IsPlanInvitation = !User.UserIsSuperAdmin()
-				});
+
+			var vm = GetInviteModel(new InviteViewModel());
+
+			return View(vm);
+
+		}
+
+		private static InviteViewModel GetInviteModel(InviteViewModel model) {
+			
+			var user = Account.User();
+			var quotas = user.MyQuotas();
+
+			model.NavigationLocation = new string[] { "Admin" };
+			model.InviteId = model.InviteId ?? Guid.Empty.ToString();
+			model.IsPlanInvitation = !user.IsSuperAdmin();
+			model.ShowInviteForm = !quotas.NumberOfInvitedUsers.IsAtTheLimit;
+			model.ShowPlanMessage = user.IsSuperAdmin() ||
+									(quotas.NumberOfCatalogAdmins.Allowed.HasValue && 
+									quotas.NumberOfCatalogAdmins.Remaining > 0);
+			model.ShowQuotaWidget = user.IsPlanUser;
+
+			return model;
 		}
 
 		[HttpPost]
@@ -77,6 +93,7 @@ namespace SongSearch.Web
 		[ValidateOnlyIncomingValues]
 		public virtual ActionResult Invite(InviteViewModel model) {
 
+			model = GetInviteModel(model);
 			if (ModelState.IsValid) {
 				string[] recipients = model.Recipients;
 				if (recipients.Count() == 0) {
