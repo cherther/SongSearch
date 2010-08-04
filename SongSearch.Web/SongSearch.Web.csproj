@@ -77,10 +77,6 @@
     <Reference Include="NLog">
       <HintPath>..\Ext Libraries\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="SquishIt.Framework, Version=0.5.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Ext Libraries\SquishIt\SquishIt.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
