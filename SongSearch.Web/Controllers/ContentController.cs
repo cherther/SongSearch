@@ -252,15 +252,20 @@ namespace SongSearch.Web.Controllers
 
 			model.IsEdit = false;
 			model.Content = content;
+
+			if (user.IsSuperAdmin()) {
+				model.SectionsAllowed.Add("Notes");
+			}
+
 			if (user.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
 				model.SectionsAllowed.Add("Rights");
 			}
+
 			if (user.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
-				model.SectionsAllowed.Add("Notes");
 				model.SectionsAllowed.Add("Media");
-				if (user.ShowDebugInfo.GetValueOrDefault(false)) {
-					model.SectionsAllowed.Add("MediaExtended");
-				}
+				//if (user.ShowDebugInfo.GetValueOrDefault(false)) {
+				//    model.SectionsAllowed.Add("MediaExtended");
+				//}
 				model.UserCanEdit = true;
 			} else {
 				model.UserCanEdit = false;

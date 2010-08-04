@@ -48,9 +48,16 @@ namespace SongSearch.Web.Data {
 		[Required]
 		public object CatalogId { get; set; }
 
+		[DisplayName("Created By")]
 		public object CreatedByUserId { get; set; }
+
+		[DisplayName("Created")]
 		public object CreatedOn { get; set; }
+
+		[DisplayName("Last Updated By")]
 		public object LastUpdatedByUserId { get; set; }
+
+		[DisplayName("Last Updated")]
 		public object LastUpdatedOn { get; set; }
 
 		[DisplayName("All-in")]
@@ -94,7 +101,7 @@ namespace SongSearch.Web.Data {
 		[DataType(DataType.MultilineText)]
 		public object LicensingNotes { get; set; }
 
-		[DisplayName("Date Uploaded")]
+		[DisplayName("Media File Date")]
 		public object MediaDate { get; set; }
 
 		[DisplayName("Bitrate")]
