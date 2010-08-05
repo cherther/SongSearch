@@ -217,20 +217,23 @@ namespace SongSearch.Web {
 				);
 		}
 
-		public static string ToYesNo(this bool yes) {
-			return yes ? "Yes" : "No";
+		public static HtmlString ToYesNo(this bool yes) {
+			return new HtmlString(yes ? "Yes" : "No");
 		}
-		public static string ToDescription(this int number) {
-			return number.ToString("N0");
+		public static HtmlString ToDescription(this int number) {
+			return new HtmlString(number.ToString("N0"));
 		}
-		public static string ToQuotaDescription(this int? number) {
-			return !number.HasValue ? "Unlimited" : (number.Value == 0 ? "None" : number.Value.ToString("N0"));
+		public static HtmlString ToQuotaDescription(this int? number) {
+			return new HtmlString(!number.HasValue ? "&#8734;" : number.Value.ToString("N0"));//"∞"
 		}
-		public static string ToPriceDescription(this decimal? price) {
-			return !price.HasValue ? " -- " : (price.Value == 0 ? "Free!" : price.Value.ToString("C"));
+		public static HtmlString ToQuotaLongDescription(this int? number) {
+			return new HtmlString(!number.HasValue ? "an unlimited number of" : number.Value.ToString("N0"));//"∞"
 		}
-		public static string ToPercentDescription(this decimal number) {
-			return number.ToString("P0").TrimInside();
+		public static HtmlString ToPriceDescription(this decimal? price) {
+			return new HtmlString(!price.HasValue ? " -- " : (price.Value == 0 ? "Free!" : price.Value.ToString("C")));
+		}
+		public static HtmlString ToPercentDescription(this decimal number) {
+			return new HtmlString(number.ToString("P0").TrimInside());
 		}
 		public static int ToBitRate(this long lengthMilliseconds, long mediaSizeBytes){
 
@@ -240,11 +243,11 @@ namespace SongSearch.Web {
 
 		}
 
-		public static string ToBitRateDescription(this long lengthMilliseconds, long mediaSizeBytes) {
+		public static HtmlString ToBitRateDescription(this long lengthMilliseconds, long mediaSizeBytes) {
 
 			var kb = ((decimal)(mediaSizeBytes * (decimal)8.00) / (decimal)1024.00); //kilobits = 3MB = (3*1024*1024)*8/1024 = 24576
 			var secs = ((decimal)lengthMilliseconds / (decimal)1000.00); // 3 min = 3*60*1000/1000 = 180
-			return String.Format("{0} kbps", (int)(secs > 0 ? (kb / secs) : 0)); //24576 / 180 = 136
+			return new HtmlString(String.Format("{0} kbps", (int)(secs > 0 ? (kb / secs) : 0))); //24576 / 180 = 136
 
 		}
 

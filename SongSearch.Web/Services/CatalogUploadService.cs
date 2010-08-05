@@ -360,9 +360,9 @@ namespace SongSearch.Web.Services {
 
 					itm.CatalogId = state.CatalogId;
 					itm.CreatedByUserId = user.UserId;
-					itm.CreatedOn = DateTime.Now.Date;
+					itm.CreatedOn = DateTime.Now;
 					itm.LastUpdatedByUserId = user.UserId;
-					itm.LastUpdatedOn = DateTime.Now.Date;
+					itm.LastUpdatedOn = DateTime.Now;
 					itm.IsMediaOnRemoteServer = false;
 					
 					itm.Title = itm.Title.AsEmptyIfNull();//.CamelCase();//.ToUpper();

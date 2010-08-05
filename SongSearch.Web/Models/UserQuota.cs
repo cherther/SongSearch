@@ -12,7 +12,7 @@ namespace SongSearch.Web.Data {
 		public UserQuotas() {
 			NumberOfSongs = new Quota() { Default = 50, QuotaName = "Songs" };
 			NumberOfInvitedUsers = new Quota() { Default = -1, QuotaName = "Users" };
-			NumberOfCatalogAdmins = new Quota() { Default = -1, QuotaName = "Catalog Admins" };
+			NumberOfCatalogAdmins = new Quota() { Default = -1, QuotaName = "Admins" };
 		}
 	}
 
@@ -24,7 +24,7 @@ namespace SongSearch.Web.Data {
 
 		public int? Remaining {
 			get {
-				return Allowed.HasValue ? (int?)Allowed.Value - Used : null;
+				return Allowed.HasValue ? (Allowed.Value > Used ? (int?)Allowed.Value - Used : 0) : null;
 			}
 		}
 

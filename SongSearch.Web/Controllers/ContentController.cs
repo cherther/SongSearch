@@ -116,7 +116,9 @@ namespace SongSearch.Web.Controllers
 			try {
 				//if (ModelState.IsValid) {
 					//do some saving
-				_cntAdmService.Update(content, tags, newTags, rights);
+				if (Account.User().HasAccessToContentWithRole(content, Roles.Admin)) {
+					_cntAdmService.Update(content, tags, newTags, rights);
+				}
 				//}
 				if (returnData) {
 					var vm = GetEditModel(content.ContentId);
@@ -284,6 +286,10 @@ namespace SongSearch.Web.Controllers
 			var user = Account.User();
 			var content = SearchService.GetContentDetails(id, user);
 
+			if (user.IsSuperAdmin()) {
+				model.SectionsAllowed.Add("Notes");
+			}
+
 			if (user.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
 				model.SectionsAllowed.Add("Rights");
 			}
@@ -292,7 +298,6 @@ namespace SongSearch.Web.Controllers
 
 				model.UserCanEdit = true;
 				model.Content = content;
-				model.SectionsAllowed.Add("Notes");
 				model.SectionsAllowed.Add("Media");
 				if (user.ShowDebugInfo.GetValueOrDefault(false)) {
 					model.SectionsAllowed.Add("MediaExtended");

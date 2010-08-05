@@ -11,7 +11,7 @@ For this step, please select full song files in MP3 format only. We will deal wi
 </div>
 <%if (App.IsLicensedVersion) {%>
 <div>
-	Based on your current Plan, you can upload <strong><%: Model.MyUserQuotas.NumberOfSongs.Remaining.ToQuotaDescription()%></strong> <%: Html.Pluralize("song", Model.MyUserQuotas.NumberOfSongs.Remaining.GetValueOrDefault(2))%>.
+	Based on your current Plan, you can upload <%: Model.MyUserQuotas.NumberOfSongs.Remaining.ToQuotaLongDescription()%> <%: Html.Pluralize("song", Model.MyUserQuotas.NumberOfSongs.Remaining.GetValueOrDefault(2))%>.
 	<%if (!Model.MyUserQuotas.NumberOfSongs.Remaining.HasValue || Model.MyUserQuotas.NumberOfSongs.Remaining.Value > maxFiles) { %>
 	However, to make sure everything goes smoothly, please upload only <strong><%: maxFiles %> songs at a time</strong>.
 	<%} %>

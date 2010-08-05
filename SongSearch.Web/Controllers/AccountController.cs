@@ -367,7 +367,7 @@ namespace SongSearch.Web.Controllers {
 			//var session = SessionService.Session();
 			var currentUser = Account.User();//session.User(User.Identity.Name);
 			model.ShowSignatureField = currentUser.IsAtLeastInCatalogRole(Roles.Plugger);
-			model.ShowContactInfo = currentUser.IsAtLeastInCatalogRole(Roles.Admin);
+			model.ShowContactInfo = currentUser.PricingPlan.CustomContactUs && currentUser.IsAtLeastInCatalogRole(Roles.Admin);
 	
 			//update the user's profile in the database
 			if (_acctService.UpdateProfile(userModel, contact)) {

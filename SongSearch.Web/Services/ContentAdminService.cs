@@ -53,6 +53,9 @@ namespace SongSearch.Web.Services {
 			//UpdateModelWith Rights
 			content = UpdateRights(content, rightsModel);
 
+			content.LastUpdatedByUserId = Account.User().UserId;
+			content.LastUpdatedOn = DateTime.Now;
+
 			DataSession.CommitChanges();
 
 			CacheService.InitializeApp(true);
@@ -99,6 +102,8 @@ namespace SongSearch.Web.Services {
 						_mediaService.SaveContentMedia(filePath, content, uploadFile.FileMediaVersion);
 					}
 				}
+				content.LastUpdatedByUserId = Account.User().UserId;
+				content.LastUpdatedOn = DateTime.Now;
 
 				DataSession.CommitChanges();
 			}
