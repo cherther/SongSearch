@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IList<SongSearch.Web.Data.Catalog>>" %>
 <%
-	var catalogs = Model;
+	var catalogs = Model.OrderBy(c => c.CatalogName);
 %>
 
 <% foreach (var catalog in catalogs)

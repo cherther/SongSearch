@@ -101,6 +101,7 @@ namespace SongSearch.Web {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string Copy_of_ctrlUserList = "~/Views/UserManagement/Copy of ctrlUserList.ascx";
             public readonly string ctrlDetail = "~/Views/UserManagement/ctrlDetail.ascx";
             public readonly string ctrlUserList = "~/Views/UserManagement/ctrlUserList.ascx";
             public readonly string Index = "~/Views/UserManagement/Index.aspx";

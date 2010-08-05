@@ -40,6 +40,7 @@ namespace SongSearch.Web.Controllers
 				vm.MyCatalogs = Account.User(false).MyAdminCatalogs();;
 				vm.PageTitle = "Catalog Management";
 				vm.NavigationLocation = new string[] { "Admin" };
+				vm.ActiveUserId = Account.User().UserId;
 
 				return View(vm);
 			}

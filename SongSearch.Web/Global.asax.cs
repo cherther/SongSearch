@@ -43,7 +43,7 @@ namespace SongSearch.Web {
 				return AppEnvironment.Development;
 #else
 
-				return AppEnvironment.Staging;
+				return AppEnvironment.Production;
 #endif
 			}
 		}

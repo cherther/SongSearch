@@ -14,9 +14,9 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 	<div class="six_column section">
 	<div class="three column text-top">
 			<h2><%: Model.PageTitle %></h2>
-	<div>&nbsp;</div>
-	<h3>Registered Users</h3>
-	<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<h3>Catalogs</h3>
+			<div>&nbsp;</div>
 		</div>
 		<div class="three column text-top">
 			<%if (App.IsLicensedVersion) {%>
@@ -25,19 +25,32 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 		</div>
 	</div>
 	<%if (Model != null) {
-		var catalogs = Model.MyCatalogs;
-		catalogs = catalogs.OrderBy(c => c.CatalogName).ToList();
+	   var catsOwned = Model.MyCatalogs.Where(c => c.CreatedByUserId == Model.ActiveUserId).ToList();
+	   var catsOther = Model.MyCatalogs.Where(c => c.CreatedByUserId != Model.ActiveUserId).ToList();
+	   
 	%>
-	<div>&nbsp;</div>
-	<h3>Catalogs</h3>
-	<div>&nbsp;</div>
+	
 	<table>
 	<tr>
 		<td style="vertical-align: top">
-			<%if (catalogs.Count() > 0) { %>
+			<%if (Model.MyCatalogs.Count() > 0) { %>
 			<div class = "cw-outl cw-padded cw-rounded-corners" style="overflow:auto ; height: 480px; width: 300px;">
 				<table id="catalog-list" class="cw-tbl-cat">
-					<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogList, catalogs); %>
+					<%if (catsOwned.Count() > 0) {%><tr>
+					<td colspan="2">
+					Created by you:
+					</td>
+					</tr>
+					<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogList, catsOwned); %>
+					<%} %>
+					<%if (catsOther.Count() > 0) {%>
+					<tr>
+					<td colspan="2">
+					Administered by you:
+					</td>
+					</tr>
+					<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogList, catsOther); %>
+					<%} %>
 				</table>
 			</div>
 			<%} else { %>
