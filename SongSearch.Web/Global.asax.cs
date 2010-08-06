@@ -156,35 +156,16 @@ namespace SongSearch.Web {
 
 			}
 
-			//routes.MapRoute(
-			//    "Search",
-			//    "Search/{action}/{id}",
-			//    new { controller = "Search", action = "Index", id = UrlParameter.Optional }
-			//);
+			foreach (var ctrl in controllers) {
 
-			//routes.MapRoute(
-			//    "UserManagement",
-			//    "UserManagement/{action}/{id}",
-			//    new { controller = "UserManagement", action = "Index", id = UrlParameter.Optional }
-			//);
+				routes.MapRoute(
+					string.Concat(ctrl, "-profile"),
+					String.Concat("{profileName}/", ctrl, "/{action}/{id}"),
+					new { controller = ctrl, action = "Index", id = UrlParameter.Optional }
+				);
 
-			//routes.MapRoute(
-			//    "CatalogManagement",
-			//    "CatalogManagement/{action}/{id}",
-			//    new { controller = "CatalogManagement", action = "Index", id = UrlParameter.Optional }
-			//);
+			}
 
-			//routes.MapRoute(
-			//    "CatalogUpload",
-			//    "CatalogUpload/{action}/{id}",
-			//    new { controller = "CatalogUpload", action = "Index", id = UrlParameter.Optional }
-			//);
-
-			//routes.MapRoute(
-			//    "Error",
-			//    "Error/{action}/{id}",
-			//    new { controller = "Error", action = "Index", id = UrlParameter.Optional }
-			//);
 			
 			routes.MapRoute(
 				"Profile",

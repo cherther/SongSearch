@@ -1900,6 +1900,7 @@
     <Content Include="Scripts\soundmanager2.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Views\Home\Help.aspx" />
     <Content Include="Views\Shared\ctrlUserQuotaLarge.ascx" />
     <Content Include="Views\Shared\ctrlUserQuotaSmall.ascx" />
     <Content Include="Views\Shared\ctrlUserQuotasWidget.ascx" />

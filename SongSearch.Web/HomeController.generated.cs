@@ -54,6 +54,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string Index = "Index";
             public readonly string Contact = "Contact";
             public readonly string Profile = "Profile";
+            public readonly string Help = "Help";
             public readonly string PrivacyPolicy = "PrivacyPolicy";
             public readonly string TermsOfUse = "TermsOfUse";
         }
@@ -94,6 +95,11 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult Profile(string profileName) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Profile);
             callInfo.RouteValueDictionary.Add("profileName", profileName);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Help() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Help);
             return callInfo;
         }
 

@@ -22,7 +22,7 @@
 	{
 		menu.Add("Register", new string[3] { "Register", "Account", "Register" });
 	}
-	menu.Add("Help", new string[3] { "Index", "Help", "Help" });
+	menu.Add("Help", new string[3] { "Help", "Home", "Help" });
 	menu.Add("Contact", new string[3] { "Contact", "Home", "Contact Us" });   
 	%>
 	
@@ -36,8 +36,9 @@
 			<li id="<%:menuId %>" class="cw-rounded-corners-top <%: menuItem.Key == navLocation ? "current" : ""%>">
 			<%if (menuItem.Key == "Cart") { %>
 			<% Html.RenderAction(MVC.Cart.CartCount()); %>
-			<%} else if (menuItem.Key == "Help") { %>
+			<%--<%} else if (menuItem.Key == "Help") { %>
 			<a href="#"  class="cw-rounded-corners-top" onclick="UserVoice.Popin.show(uservoiceOptions); return false;"><%: values[2]%></a>
+			--%>
 			<%} else { %>
 			<%: Html.ActionLink(values[2], values[0], values[1], null, new { @class = "cw-rounded-corners-top" })%>
 			<%} %>
