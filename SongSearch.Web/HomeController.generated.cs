@@ -33,6 +33,11 @@ namespace SongSearch.Web.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Profile() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Profile);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public HomeController Actions { get { return MVC.Home; } }
@@ -48,6 +53,7 @@ namespace SongSearch.Web.Controllers {
         public class ActionNamesClass {
             public readonly string Index = "Index";
             public readonly string Contact = "Contact";
+            public readonly string Profile = "Profile";
             public readonly string PrivacyPolicy = "PrivacyPolicy";
             public readonly string TermsOfUse = "TermsOfUse";
         }
@@ -82,6 +88,12 @@ namespace SongSearch.Web.Controllers {
         public override System.Web.Mvc.ActionResult Contact(SongSearch.Web.ContactUsModel model) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Contact);
             callInfo.RouteValueDictionary.Add("model", model);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Profile(string profileName) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Profile);
+            callInfo.RouteValueDictionary.Add("profileName", profileName);
             return callInfo;
         }
 

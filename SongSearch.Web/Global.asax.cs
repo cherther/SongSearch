@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -101,10 +102,31 @@ namespace SongSearch.Web {
 		public static void RegisterRoutes(RouteCollection routes) {
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+			var controllers = new List<string>();
+			controllers.Add("Cart");
+			controllers.Add("CatalogManagement");
+			controllers.Add("CatalogUpload");
+			controllers.Add("UserManagement");
+			controllers.Add("Error");
+			controllers.Add("Home");
+			controllers.Add("Search");
+
+
 			routes.MapRoute(
 				"Contact",
 				"Contact",
 				new { controller = "Home", action = "Contact" }
+				);
+			routes.MapRoute(
+				"Privacy",
+				"Privacy",
+				new { controller = "Home", action = "PrivacyPolicy" }
+				);
+
+			routes.MapRoute(
+				"Legal",
+				"Legal",
+				new { controller = "Home", action = "TermsOfUse" }
 				);
 
 			routes.MapRoute(
@@ -117,12 +139,61 @@ namespace SongSearch.Web {
 				"Logout",
 				new { controller = "Account", action = "Logout" }
 			);
+
 			routes.MapRoute(
 				"Register",
 				"Register",
 				new { controller = "Account", action = "Register" }
 			);
+
+			foreach (var ctrl in controllers) {
+
+				routes.MapRoute(
+					ctrl,
+					String.Concat(ctrl, "/{action}/{id}"),
+					new { controller = ctrl, action = "Index", id = UrlParameter.Optional }
+				);
+
+			}
+
+			//routes.MapRoute(
+			//    "Search",
+			//    "Search/{action}/{id}",
+			//    new { controller = "Search", action = "Index", id = UrlParameter.Optional }
+			//);
+
+			//routes.MapRoute(
+			//    "UserManagement",
+			//    "UserManagement/{action}/{id}",
+			//    new { controller = "UserManagement", action = "Index", id = UrlParameter.Optional }
+			//);
+
+			//routes.MapRoute(
+			//    "CatalogManagement",
+			//    "CatalogManagement/{action}/{id}",
+			//    new { controller = "CatalogManagement", action = "Index", id = UrlParameter.Optional }
+			//);
+
+			//routes.MapRoute(
+			//    "CatalogUpload",
+			//    "CatalogUpload/{action}/{id}",
+			//    new { controller = "CatalogUpload", action = "Index", id = UrlParameter.Optional }
+			//);
+
+			//routes.MapRoute(
+			//    "Error",
+			//    "Error/{action}/{id}",
+			//    new { controller = "Error", action = "Index", id = UrlParameter.Optional }
+			//);
 			
+			routes.MapRoute(
+				"Profile",
+				"{profileName}",
+				new { controller = "Home", action = "Profile" }//,
+				//new { profileName = @"\w\s"	}
+			);
+			
+
 			//routes.MapRoute(
 			//    "Profile", // Route name
 			//    "{id}", // URL with parameters

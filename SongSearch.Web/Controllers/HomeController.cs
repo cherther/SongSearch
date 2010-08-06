@@ -92,6 +92,15 @@ namespace SongSearch.Web.Controllers {
 			}
 		}
 
+		public virtual ActionResult Profile(string profileName) {
+			// Check if Profile exists
+
+			// Set up SiteProfile per the request
+			System.Diagnostics.Debug.Write(profileName);
+
+			return View("Index", new ViewModel() { NavigationLocation = new string[] { "Home" } });
+		}
+
 		public virtual ActionResult PrivacyPolicy() {
 			return View(new ViewModel() { PageTitle = "Privacy Policy", NavigationLocation = new string[] { "Home" } });
 		}

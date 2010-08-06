@@ -147,7 +147,7 @@ namespace Codewerks.SongSearch.Web.Tests.Services {
 
 		[ClassInitialize()]
 		public static void Initialize(TestContext testContext) {
-			HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
+			//HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
 
 			
 		}
