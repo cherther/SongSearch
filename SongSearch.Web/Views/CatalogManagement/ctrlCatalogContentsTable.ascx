@@ -51,9 +51,7 @@
 	<tbody>
 	<% foreach (var item in results) { %>
 		<%
-			var mediaUrl = Url.SiteRoot();
-			mediaUrl = item.HasMediaFullVersion ?
-				String.Concat(mediaUrl, Url.Action(MVC.Media.Stream(item.ContentId, MediaVersion.Full))) : "";
+			var mediaUrl = item.HasMediaFullVersion ? item.ContentMedia.FullVersion().MediaUrl() : "";
 
 		   var titleLength = 35;
 			var title = (!String.IsNullOrWhiteSpace(item.Title) ?

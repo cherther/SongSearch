@@ -58,8 +58,8 @@ namespace SongSearch.Web.Services {
 		private byte[] GetContentMediaLocal(ContentMedia contentMedia)
 		{
 
-			var assetFile = new FileInfo(GetContentMediaPath(contentMedia));
-
+			var assetFile = new FileInfo(GetContentMediaPathLocal(contentMedia));
+			
 			if (assetFile.Exists)
 			{
 				var assetBytes = File.ReadAllBytes(assetFile.FullName);
@@ -85,12 +85,20 @@ namespace SongSearch.Web.Services {
 
 		}
 
+		public string GetContentMediaUrl(ContentMedia contentMedia) {
+
+			return SystemConfig.UseRemoteMedia && contentMedia.IsRemote ?
+					_mediaCloudService.GetContentMediaUrl(contentMedia)
+					: GetContentMediaUrlLocal(contentMedia);
+
+		}
+
 		// **************************************
 		// SaveContentMedia
 		// **************************************
 		public void SaveContentMedia(string filePath, ContentMedia contentMedia) {
 			//ID3Writer.NormalizeTag(filePath, content);
-			var mediaPath = GetContentMediaPath(contentMedia);
+			var mediaPath = GetContentMediaPathLocal(contentMedia);
 			FileSystem.SafeMove(filePath, mediaPath, true);
 		}
 
@@ -112,7 +120,11 @@ namespace SongSearch.Web.Services {
 			return Path.Combine(assetPath, GetContentMediaFileName(contentMedia.ContentId));
 
 		}
+		public static string GetContentMediaUrlLocal(ContentMedia contentMedia) {
 
+			return String.Format("/Media/Stream/{0}?version={1}", contentMedia.ContentId.ToString(), (MediaVersion)contentMedia.MediaVersion);
+			
+		}
 
 
 		// ----------------------------------------------------------------------------

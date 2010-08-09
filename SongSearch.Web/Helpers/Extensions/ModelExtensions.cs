@@ -148,7 +148,7 @@ namespace SongSearch.Web {
 			if (contentMedia == null) { return String.Empty; }
 
 			using (var svc = App.Container.Get<IMediaService>()) {
-				return svc.GetContentMediaPath(contentMedia);
+				return svc.GetContentMediaUrl(contentMedia);
 			}
 		}
 		public static ContentMedia FullVersion(this IEnumerable<ContentMedia> contentMedia) {

@@ -121,7 +121,7 @@ namespace SongSearch.Web.Services {
 			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 			if (content != null) {
 
-				var filePath = content.ContentMedia.PreviewVersion().MediaFilePath();
+				var filePath = content.ContentMedia.PreviewVersion().MediaFilePath(true);
 				//var file = new FileInfo(filePath);
 				if (File.Exists(filePath)) { 
 					var tag = ID3v2Helper.CreateID3v2(filePath);
@@ -144,26 +144,29 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public void Delete(int contentId) {
 
-			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
-			if (content != null) {
-				FileSystem.SafeDelete(content.ContentMedia.PreviewVersion().MediaFilePath());
-				FileSystem.SafeDelete(content.ContentMedia.FullVersion().MediaFilePath());
-				DataSession.Delete<Content>(content);
-			}
+			DeleteContent(contentId);
 
 			DataSession.CommitChanges();
+		}
+
+		private void DeleteContent(int contentId) {
+			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
+			if (content != null) {
+				foreach (var media in content.ContentMedia) {
+
+					FileSystem.SafeDelete(media.MediaFilePath(true));
+
+				}
+
+				DataSession.Delete<Content>(content);
+			}
 		}
 
 		public void Delete(int[] contentIds) {
 
 			foreach (var contentId in contentIds) {
 
-				var content = DataSession.Single<Content>(c => c.ContentId == contentId);
-				if (content != null) {
-					FileSystem.SafeDelete(content.ContentMedia.PreviewVersion().MediaFilePath());
-					FileSystem.SafeDelete(content.ContentMedia.FullVersion().MediaFilePath());
-					DataSession.Delete<Content>(content);
-				}
+				DeleteContent(contentId);
 			}
 
 			DataSession.CommitChanges();

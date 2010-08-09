@@ -194,6 +194,7 @@ namespace SongSearch.Web.Services {
 				//var contentQuery = session.All<Content>();
 				var contentQuery = session.GetObjectQuery<Content>()
 					.Include("ContentMedia").AsQueryable();
+
 				contentQuery = contentQuery.BuildSearchDynamicLinqSql(searchFields, props);//Where("Title.Contains(@0)", "love");
 				//var preCountCommand = sbPre.Append(sbCommand.ToString()).ToString();
 
@@ -203,13 +204,15 @@ namespace SongSearch.Web.Services {
 				}
 
 				if (!user.IsSuperAdmin()) {
-					var userId = user.UserId;
-					var userCatalogs = session.All<UserCatalogRole>();
 
-					contentQuery = from c in contentQuery
-								   join u in userCatalogs on c.CatalogId equals u.CatalogId
-								   where u.UserId == userId
-								   select c;//.Where(c => c.Catalog.UserCatalogRoles.Any(rm => rm.UserId == userId));
+					var userId = user.UserId;
+					var userCatalogs = user.UserCatalogRoles.Select(c => c.CatalogId);//.ToList();//session.All<UserCatalogRole>();
+
+					contentQuery = contentQuery.Where(c => userCatalogs.Contains(c.CatalogId));
+					//contentQuery = from c in contentQuery
+					//               join u in userCatalogs on c.CatalogId equals u.CatalogId
+					//               where u.UserId == userId
+					//               select c;//.Where(c => c.Catalog.UserCatalogRoles.Any(rm => rm.UserId == userId));
 					
 				}
 

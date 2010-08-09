@@ -101,21 +101,21 @@ namespace Codewerks.SongSearch.Tasks {
 				
 
 		}
-		public static void MakeTags() {
+		//public static void MakeTags() {
 
-			//_session = new SongSearchDataSession();
-			var ctx = new SongSearchContext();
+		//    //_session = new SongSearchDataSession();
+		//    var ctx = new SongSearchContext();
 
-			var import = ctx.Import_SongData;
+		//    var import = ctx.Import_SongData;
 
-			foreach (var row in import) {
+		//    foreach (var row in import) {
 
-				MakeATag(row.SongID, row.SoundsLike, TagType.SoundsLike);
-				MakeATag(row.SongID, row.Instrumentation, TagType.Instrument);
-				//_session.CommitChanges();
-			}
+		//        MakeATag(row.SongID, row.SoundsLike, TagType.SoundsLike);
+		//        MakeATag(row.SongID, row.Instrumentation, TagType.Instrument);
+		//        //_session.CommitChanges();
+		//    }
 	
-		}
+		//}
 
 		public static void ConvertTextTags() {
 

@@ -39,9 +39,9 @@ namespace Codewerks.SongSearch.Tasks {
 					Indexer.Index();
 					break;
 
-				case "tags":
-					Importer.MakeTags();
-					break;
+				//case "tags":
+				//    Importer.MakeTags();
+				//    break;
 				case "getid3":
 					Importer.GetID3();
 					break;

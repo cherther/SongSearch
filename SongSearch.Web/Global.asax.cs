@@ -225,9 +225,9 @@ namespace SongSearch.Web {
 			catch { }
 			//Logger.Info("App is starting up");
 
-			ThreadStart amazonSync = new ThreadStart(AmazonSyncLoop);
-			Thread amazonLoop = new Thread(amazonSync);
-			amazonLoop.Start();
+			//ThreadStart amazonSync = new ThreadStart(AmazonSyncLoop);
+			//Thread amazonLoop = new Thread(amazonSync);
+			//amazonLoop.Start();
 		}
 
 		// **************************************
