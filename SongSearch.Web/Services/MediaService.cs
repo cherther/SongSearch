@@ -27,22 +27,22 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetContentMedia
 		// **************************************
-		public byte[] GetContentMedia(Content content, MediaVersion version)
+		public byte[] GetContentMedia(ContentMedia contentMedia)
 		{
-			return SystemConfig.UseRemoteMedia && content.IsMediaOnRemoteServer ?
-				_mediaCloudService.GetContentMedia(content, version)
-				: GetContentMediaLocal(content, version);
+			return SystemConfig.UseRemoteMedia && contentMedia.IsRemote ?
+				_mediaCloudService.GetContentMedia(contentMedia)
+				: GetContentMediaLocal(contentMedia);
 		}
 
-		public byte[] GetContentMedia(Content content, MediaVersion version, User user) {
+		public byte[] GetContentMedia(ContentMedia contentMedia, User user) {
 
-			var bytes = GetContentMedia(content, version);
+			var bytes = GetContentMedia(contentMedia);
 
 			var tempPath = String.Concat(SystemConfig.ZipPath, "\\", Guid.NewGuid(), ".mp3");
 
 			File.WriteAllBytes(tempPath, bytes);
 			// id3
-			ID3Writer.UpdateUserTag(tempPath, content, user);
+			//ID3Writer.UpdateUserTag(tempPath, content, user);
 				
 			var assetFile = new FileInfo(tempPath);
 
@@ -55,10 +55,10 @@ namespace SongSearch.Web.Services {
 			}
 			//}
 		}
-		private byte[] GetContentMediaLocal(Content content, MediaVersion version)
+		private byte[] GetContentMediaLocal(ContentMedia contentMedia)
 		{
 
-			var assetFile = new FileInfo(GetContentMediaPath(content, version));
+			var assetFile = new FileInfo(GetContentMediaPath(contentMedia));
 
 			if (assetFile.Exists)
 			{
@@ -72,40 +72,47 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
-		// **************************************
-		// GetContentMediaFileName
-		// **************************************
-		public string GetContentMediaFileName(int contentId) {
-
-			return String.Concat(contentId, SystemConfig.MediaDefaultExtension);
-	
-		}
+		
 
 		// **************************************
 		// GetContentMediaFilePath
 		// **************************************
-		public string GetContentMediaPath(Content content, MediaVersion version) {
+		public string GetContentMediaPath(ContentMedia contentMedia) {
 
-			return SystemConfig.UseRemoteMedia && content.IsMediaOnRemoteServer ?
-					_mediaCloudService.GetContentMediaUrl(content, version)
-					: GetContentMediaPathLocal(content, version);
-
-		}
-
-		private string GetContentMediaPathLocal(Content content, MediaVersion version)
-		{
-
-			var assetPath = version == MediaVersion.Full ? SystemConfig.MediaPathFull : SystemConfig.MediaPathPreview;
-			return Path.Combine(assetPath, GetContentMediaFileName(content.ContentId));
+			return SystemConfig.UseRemoteMedia && contentMedia.IsRemote ?
+					_mediaCloudService.GetContentMediaUrl(contentMedia)
+					: GetContentMediaPathLocal(contentMedia);
 
 		}
 
-
-		public void SaveContentMedia(string filePath, Content content, MediaVersion version) {
-			ID3Writer.NormalizeTag(filePath, content);
-			var mediaPath = GetContentMediaPath(content, version);
+		// **************************************
+		// SaveContentMedia
+		// **************************************
+		public void SaveContentMedia(string filePath, ContentMedia contentMedia) {
+			//ID3Writer.NormalizeTag(filePath, content);
+			var mediaPath = GetContentMediaPath(contentMedia);
 			FileSystem.SafeMove(filePath, mediaPath, true);
 		}
+
+
+		// **************************************
+		// GetContentMediaFileName
+		// **************************************
+		public static string GetContentMediaFileName(int contentId) {
+
+			return String.Concat(contentId, SystemConfig.MediaDefaultExtension);
+
+		}
+		public static string GetContentMediaPathLocal(ContentMedia contentMedia)
+		{
+
+			var assetPath = (MediaVersion)contentMedia.MediaVersion == MediaVersion.Full ? 
+				SystemConfig.MediaPathFull : 
+				SystemConfig.MediaPathPreview;
+			return Path.Combine(assetPath, GetContentMediaFileName(contentMedia.ContentId));
+
+		}
+
 
 
 		// ----------------------------------------------------------------------------
@@ -136,6 +143,7 @@ namespace SongSearch.Web.Services {
 				_disposed = true;
 			}
 		}
+
 	}
 
 }

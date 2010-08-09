@@ -7,11 +7,13 @@ using SongSearch.Web.Data;
 namespace SongSearch.Web.Services {
 	public interface IMediaCloudService : IDisposable {
 
-		string GetContentKey(Content content, MediaVersion version);
+		string GetContentKey(ContentMedia contentMedia);
 		string GetContentPrefix(MediaVersion version);
 		IList<RemoteContent> GetContentList(MediaVersion version, string filter = null);
-		byte[] GetContentMedia(Content content, MediaVersion version);
-		string GetContentMediaUrl(Content content, MediaVersion version);
-		void SaveContentMedia(string fromFilePath, Content content, MediaVersion version);
+		byte[] GetContentMedia(ContentMedia contentMedia);
+		void GetContentMedia(string target, ContentMedia contentMedia);
+		string GetContentMediaUrl(ContentMedia contentMedia);
+		void PutContentMedia(string source, ContentMedia contentMedia);
+		
 	}
 }

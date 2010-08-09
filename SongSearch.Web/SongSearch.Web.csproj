@@ -197,6 +197,7 @@
     </Compile>
     <Compile Include="Infrastructure\Mailer\Mail.cs" />
     <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
+    <Compile Include="Infrastructure\Scheduled Tasks\AmazonRemoteMedia.cs" />
     <Compile Include="Infrastructure\Storage\EF\DataSessionReadOnlyEF.cs" />
     <Compile Include="Infrastructure\Storage\EF\SongSearchDataSession.cs" />
     <Compile Include="Infrastructure\Storage\Files.cs" />
@@ -214,7 +215,6 @@
     <Compile Include="Services\AmazonCloudService.cs" />
     <Compile Include="Services\Interfaces\IMediaCloudService.cs" />
     <Compile Include="Services\Interfaces\IMediaService.cs" />
-    <Compile Include="Services\MediaServiceRemote.cs" />
     <Compile Include="Services\SiteProfileData.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="Services\Interfaces\ICatalogManagementService.cs" />

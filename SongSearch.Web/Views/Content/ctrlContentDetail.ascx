@@ -155,7 +155,7 @@
 						<%: Html.LabelFor(m => m.Content.MediaDate)%> 
 						</div>
 						<div class="<%: columnTwo%> column text-small">
-						<%: content.MediaDate.GetValueOrDefault()%>
+						<%: content.MediaDate%>
 						</div>
 				</div>
 				

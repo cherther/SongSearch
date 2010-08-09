@@ -8,6 +8,7 @@ using Ninject.Modules;
 using Ninject.Web.Mvc;
 using SongSearch.Web.Logging;
 using SongSearch.Web.Services;
+using System.Threading;
 
 namespace SongSearch.Web {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -223,6 +224,10 @@ namespace SongSearch.Web {
 			}
 			catch { }
 			//Logger.Info("App is starting up");
+
+			ThreadStart amazonSync = new ThreadStart(AmazonSyncLoop);
+			Thread amazonLoop = new Thread(amazonSync);
+			amazonLoop.Start();
 		}
 
 		// **************************************
@@ -238,6 +243,28 @@ namespace SongSearch.Web {
 		protected void Application_Error() {
 			Exception lastException = Server.GetLastError();
 			Logger.Fatal(lastException);
+		}
+
+		static void AmazonSyncLoop() {
+			// In this example, task will repeat in infinite loop
+			// You can additional parameter if you want to have an option 
+			// to stop the task from some page
+			while (true) {
+				// Execute scheduled task
+				//ScheduledTask();
+				using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
+
+					amz.UploadToRemote();
+					
+				}
+				// Wait for certain time interval
+				System.Threading.Thread.Sleep(TimeSpan.FromHours(1));
+			}
+		}
+
+		static void ScheduledTask() {
+			// Task code which is executed periodically
+
 		}
 
 		// ----------------------------------------------------------------------------

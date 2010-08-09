@@ -64,6 +64,16 @@ namespace Codewerks.SongSearch.Tasks {
 				case "awsstatus":
 					AmazonAWS.UpdateMediaRemoteStatus();
 					break;
+				case "uploadnew":
+					AmazonAWS.UploadNewFiles();
+					break;
+				case "updatemedia":
+					AmazonAWS.UpdateContentMedia();
+					break;
+				
+				case "getmissing":
+					AmazonAWS.DownloadMissingFiles();
+					break;
 				default:
 					response = "Don't know that one";
 					break;

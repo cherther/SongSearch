@@ -363,7 +363,7 @@ namespace SongSearch.Web.Services {
 					itm.CreatedOn = DateTime.Now;
 					itm.LastUpdatedByUserId = user.UserId;
 					itm.LastUpdatedOn = DateTime.Now;
-					itm.IsMediaOnRemoteServer = false;
+					//itm.IsMediaOnRemoteServer = false;
 					
 					itm.Title = itm.Title.AsEmptyIfNull();//.CamelCase();//.ToUpper();
 					itm.Artist = itm.Artist.AsEmptyIfNull();//.CamelCase();//.ToUpper();
@@ -372,35 +372,38 @@ namespace SongSearch.Web.Services {
 					itm.Notes = itm.Notes;
 					
 					var full = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Full);
-					if (full != null){
-						var fi = new FileInfo(full.FilePath);
-						var id3 = ID3Writer.NormalizeTag(full.FilePath, itm);
+					foreach(var version in ModelEnums.MediaVersions()){
+						
+						var upl = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == version);
+						if (upl != null) {
+							
+							var file = new FileInfo(upl.FilePath);
+							var id3 = ID3Writer.NormalizeTag(upl.FilePath, itm);
 
-						itm.MediaType = "mp3";
-						itm.MediaSize = id3.MediaSize;
-						itm.MediaLength = id3.MediaLength;
-						itm.HasMediaFullVersion = true;
+							var media = new ContentMedia() {
 
-						itm.MediaDate = fi.GetMediaDate();
+								MediaVersion = (int)version,
+								MediaType = "mp3",
+								MediaSize = file.Length,
+								MediaLength = id3.MediaLength,
+								MediaDate = file.GetMediaDate(),
+								MediaBitRate = id3.GetBitRate(file.Length)
+							};
+							
+							media.IsRemote = false;
 
-						itm.MediaBitRate = id3.MediaLength.HasValue ?
-							((long)id3.MediaLength).ToBitRate(itm.MediaSize.GetValueOrDefault()) : 0;
+							itm.ContentMedia.Add(media);
+						}
 
 
 					}
-					var preview = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Preview);
-					if (preview != null) {
-
-						itm.HasMediaPreviewVersion = true;
-						ID3Writer.NormalizeTag(preview.FilePath, itm);
-
-					}
+		
 					DataSession.Add<Content>(itm);
 					DataSession.CommitChanges();
 
-					foreach (var file in itm.UploadFiles) {
-						if (itm.ContentId > 0) {
-							_mediaService.SaveContentMedia(file.FilePath, itm, file.FileMediaVersion);
+					if (itm.ContentId > 0) {
+						foreach (var file in itm.UploadFiles) {
+							_mediaService.SaveContentMedia(file.FilePath, itm.Media(file.FileMediaVersion));
 						}
 					}
 

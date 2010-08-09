@@ -120,9 +120,14 @@ namespace SongSearch.Web.Services {
 		public static Content GetContent(int contentId, User user) {
 
 			using (var session = App.DataSessionReadOnly) {
+
 				Content content;
 
-				var query = session.All<Content>().Where(c => c.ContentId == contentId);
+//				var query = session.All<Content>().Where(c => c.ContentId == contentId);
+				var query = session.GetObjectQuery<Content>()
+					.Include("ContentMedia")
+					.Where(c => c.ContentId == contentId);
+
 				if (!user.IsSuperAdmin() && user.UserCatalogRoles == null) {
 					query = query.Where(c => c.Catalog.UserCatalogRoles.Any(u => u.UserId == user.UserId));				
 				}
@@ -151,6 +156,7 @@ namespace SongSearch.Web.Services {
 				var content = session.GetObjectQuery<Content>()
 					.Include("Tags")
 					.Include("Catalog")
+					.Include("ContentMedia")
 					.Include("ContentRights")
 					.Include("ContentRights.Territories")
 				.Where(c => c.ContentId == contentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
@@ -185,7 +191,9 @@ namespace SongSearch.Web.Services {
 
 				// Get all Search Properties
 				var props = CacheService.SearchProperties((Roles)user.RoleId);//.dataSession.All<SearchProperty>().ToList();
-				var contentQuery = session.All<Content>();
+				//var contentQuery = session.All<Content>();
+				var contentQuery = session.GetObjectQuery<Content>()
+					.Include("ContentMedia").AsQueryable();
 				contentQuery = contentQuery.BuildSearchDynamicLinqSql(searchFields, props);//Where("Title.Contains(@0)", "love");
 				//var preCountCommand = sbPre.Append(sbCommand.ToString()).ToString();
 

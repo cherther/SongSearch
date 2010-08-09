@@ -37,6 +37,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanUsers", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "User1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Subscription), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentMedia_Contents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Content), "ContentMedia", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentMedia), true)]
 
 #endregion
 
@@ -343,6 +344,22 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<PricingPlan> _PricingPlans;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ContentMedia> ContentMedia
+        {
+            get
+            {
+                if ((_ContentMedia == null))
+                {
+                    _ContentMedia = base.CreateObjectSet<ContentMedia>("ContentMedia");
+                }
+                return _ContentMedia;
+            }
+        }
+        private ObjectSet<ContentMedia> _ContentMedia;
 
         #endregion
         #region AddTo Methods
@@ -473,6 +490,14 @@ namespace SongSearch.Web.Data
         public void AddToPricingPlans(PricingPlan pricingPlan)
         {
             base.AddObject("PricingPlans", pricingPlan);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ContentMedia EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToContentMedia(ContentMedia contentMedia)
+        {
+            base.AddObject("ContentMedia", contentMedia);
         }
 
         #endregion
@@ -1533,11 +1558,7 @@ namespace SongSearch.Web.Data
         /// <param name="isControlledAllIn">Initial value of the IsControlledAllIn property.</param>
         /// <param name="title">Initial value of the Title property.</param>
         /// <param name="artist">Initial value of the Artist property.</param>
-        /// <param name="hasMediaPreviewVersion">Initial value of the HasMediaPreviewVersion property.</param>
-        /// <param name="hasMediaFullVersion">Initial value of the HasMediaFullVersion property.</param>
-        /// <param name="mediaType">Initial value of the MediaType property.</param>
-        /// <param name="isMediaOnRemoteServer">Initial value of the IsMediaOnRemoteServer property.</param>
-        public static Content CreateContent(global::System.Int32 contentId, global::System.Int32 catalogId, global::System.Int32 createdByUserId, global::System.DateTime createdOn, global::System.Int32 lastUpdatedByUserId, global::System.DateTime lastUpdatedOn, global::System.Boolean isControlledAllIn, global::System.String title, global::System.String artist, global::System.Boolean hasMediaPreviewVersion, global::System.Boolean hasMediaFullVersion, global::System.String mediaType, global::System.Boolean isMediaOnRemoteServer)
+        public static Content CreateContent(global::System.Int32 contentId, global::System.Int32 catalogId, global::System.Int32 createdByUserId, global::System.DateTime createdOn, global::System.Int32 lastUpdatedByUserId, global::System.DateTime lastUpdatedOn, global::System.Boolean isControlledAllIn, global::System.String title, global::System.String artist)
         {
             Content content = new Content();
             content.ContentId = contentId;
@@ -1549,10 +1570,6 @@ namespace SongSearch.Web.Data
             content.IsControlledAllIn = isControlledAllIn;
             content.Title = title;
             content.Artist = artist;
-            content.HasMediaPreviewVersion = hasMediaPreviewVersion;
-            content.HasMediaFullVersion = hasMediaFullVersion;
-            content.MediaType = mediaType;
-            content.IsMediaOnRemoteServer = isMediaOnRemoteServer;
             return content;
         }
 
@@ -1949,54 +1966,6 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean HasMediaPreviewVersion
-        {
-            get
-            {
-                return _HasMediaPreviewVersion;
-            }
-            set
-            {
-                OnHasMediaPreviewVersionChanging(value);
-                ReportPropertyChanging("HasMediaPreviewVersion");
-                _HasMediaPreviewVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("HasMediaPreviewVersion");
-                OnHasMediaPreviewVersionChanged();
-            }
-        }
-        private global::System.Boolean _HasMediaPreviewVersion;
-        partial void OnHasMediaPreviewVersionChanging(global::System.Boolean value);
-        partial void OnHasMediaPreviewVersionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean HasMediaFullVersion
-        {
-            get
-            {
-                return _HasMediaFullVersion;
-            }
-            set
-            {
-                OnHasMediaFullVersionChanging(value);
-                ReportPropertyChanging("HasMediaFullVersion");
-                _HasMediaFullVersion = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("HasMediaFullVersion");
-                OnHasMediaFullVersionChanged();
-            }
-        }
-        private global::System.Boolean _HasMediaFullVersion;
-        partial void OnHasMediaFullVersionChanging(global::System.Boolean value);
-        partial void OnHasMediaFullVersionChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String LicensingNotes
@@ -2093,174 +2062,6 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String MediaType
-        {
-            get
-            {
-                return _MediaType;
-            }
-            set
-            {
-                OnMediaTypeChanging(value);
-                ReportPropertyChanging("MediaType");
-                _MediaType = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("MediaType");
-                OnMediaTypeChanged();
-            }
-        }
-        private global::System.String _MediaType;
-        partial void OnMediaTypeChanging(global::System.String value);
-        partial void OnMediaTypeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int32> MediaBitRate
-        {
-            get
-            {
-                return _MediaBitRate;
-            }
-            set
-            {
-                OnMediaBitRateChanging(value);
-                ReportPropertyChanging("MediaBitRate");
-                _MediaBitRate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MediaBitRate");
-                OnMediaBitRateChanged();
-            }
-        }
-        private Nullable<global::System.Int32> _MediaBitRate;
-        partial void OnMediaBitRateChanging(Nullable<global::System.Int32> value);
-        partial void OnMediaBitRateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int64> MediaSize
-        {
-            get
-            {
-                return _MediaSize;
-            }
-            set
-            {
-                OnMediaSizeChanging(value);
-                ReportPropertyChanging("MediaSize");
-                _MediaSize = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MediaSize");
-                OnMediaSizeChanged();
-            }
-        }
-        private Nullable<global::System.Int64> _MediaSize;
-        partial void OnMediaSizeChanging(Nullable<global::System.Int64> value);
-        partial void OnMediaSizeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int64> MediaLength
-        {
-            get
-            {
-                return _MediaLength;
-            }
-            set
-            {
-                OnMediaLengthChanging(value);
-                ReportPropertyChanging("MediaLength");
-                _MediaLength = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MediaLength");
-                OnMediaLengthChanged();
-            }
-        }
-        private Nullable<global::System.Int64> _MediaLength;
-        partial void OnMediaLengthChanging(Nullable<global::System.Int64> value);
-        partial void OnMediaLengthChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int64> MediaExcerptStart
-        {
-            get
-            {
-                return _MediaExcerptStart;
-            }
-            set
-            {
-                OnMediaExcerptStartChanging(value);
-                ReportPropertyChanging("MediaExcerptStart");
-                _MediaExcerptStart = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MediaExcerptStart");
-                OnMediaExcerptStartChanged();
-            }
-        }
-        private Nullable<global::System.Int64> _MediaExcerptStart;
-        partial void OnMediaExcerptStartChanging(Nullable<global::System.Int64> value);
-        partial void OnMediaExcerptStartChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Int64> MediaExcerptEnd
-        {
-            get
-            {
-                return _MediaExcerptEnd;
-            }
-            set
-            {
-                OnMediaExcerptEndChanging(value);
-                ReportPropertyChanging("MediaExcerptEnd");
-                _MediaExcerptEnd = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MediaExcerptEnd");
-                OnMediaExcerptEndChanged();
-            }
-        }
-        private Nullable<global::System.Int64> _MediaExcerptEnd;
-        partial void OnMediaExcerptEndChanging(Nullable<global::System.Int64> value);
-        partial void OnMediaExcerptEndChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> MediaDate
-        {
-            get
-            {
-                return _MediaDate;
-            }
-            set
-            {
-                OnMediaDateChanging(value);
-                ReportPropertyChanging("MediaDate");
-                _MediaDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("MediaDate");
-                OnMediaDateChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _MediaDate;
-        partial void OnMediaDateChanging(Nullable<global::System.DateTime> value);
-        partial void OnMediaDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String SoundsLike
@@ -2305,30 +2106,6 @@ namespace SongSearch.Web.Data
         private global::System.String _Instruments;
         partial void OnInstrumentsChanging(global::System.String value);
         partial void OnInstrumentsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Boolean IsMediaOnRemoteServer
-        {
-            get
-            {
-                return _IsMediaOnRemoteServer;
-            }
-            set
-            {
-                OnIsMediaOnRemoteServerChanging(value);
-                ReportPropertyChanging("IsMediaOnRemoteServer");
-                _IsMediaOnRemoteServer = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsMediaOnRemoteServer");
-                OnIsMediaOnRemoteServerChanged();
-            }
-        }
-        private global::System.Boolean _IsMediaOnRemoteServer;
-        partial void OnIsMediaOnRemoteServerChanging(global::System.Boolean value);
-        partial void OnIsMediaOnRemoteServerChanged();
 
         #endregion
     
@@ -2434,6 +2211,301 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Cart>("SongSearch.Web.Data.Model.CartContents", "Cart", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentMedia_Contents", "ContentMedia")]
+        public EntityCollection<ContentMedia> ContentMedia
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentMedia>("SongSearch.Web.Data.Model.FK_ContentMedia_Contents", "ContentMedia");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentMedia>("SongSearch.Web.Data.Model.FK_ContentMedia_Contents", "ContentMedia", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="ContentMedia")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ContentMedia : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ContentMedia object.
+        /// </summary>
+        /// <param name="contentId">Initial value of the ContentId property.</param>
+        /// <param name="mediaVersion">Initial value of the MediaVersion property.</param>
+        /// <param name="mediaDate">Initial value of the MediaDate property.</param>
+        /// <param name="isRemote">Initial value of the IsRemote property.</param>
+        public static ContentMedia CreateContentMedia(global::System.Int32 contentId, global::System.Int32 mediaVersion, global::System.DateTime mediaDate, global::System.Boolean isRemote)
+        {
+            ContentMedia contentMedia = new ContentMedia();
+            contentMedia.ContentId = contentId;
+            contentMedia.MediaVersion = mediaVersion;
+            contentMedia.MediaDate = mediaDate;
+            contentMedia.IsRemote = isRemote;
+            return contentMedia;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ContentId
+        {
+            get
+            {
+                return _ContentId;
+            }
+            set
+            {
+                if (_ContentId != value)
+                {
+                    OnContentIdChanging(value);
+                    ReportPropertyChanging("ContentId");
+                    _ContentId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ContentId");
+                    OnContentIdChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ContentId;
+        partial void OnContentIdChanging(global::System.Int32 value);
+        partial void OnContentIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 MediaVersion
+        {
+            get
+            {
+                return _MediaVersion;
+            }
+            set
+            {
+                if (_MediaVersion != value)
+                {
+                    OnMediaVersionChanging(value);
+                    ReportPropertyChanging("MediaVersion");
+                    _MediaVersion = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("MediaVersion");
+                    OnMediaVersionChanged();
+                }
+            }
+        }
+        private global::System.Int32 _MediaVersion;
+        partial void OnMediaVersionChanging(global::System.Int32 value);
+        partial void OnMediaVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime MediaDate
+        {
+            get
+            {
+                return _MediaDate;
+            }
+            set
+            {
+                OnMediaDateChanging(value);
+                ReportPropertyChanging("MediaDate");
+                _MediaDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MediaDate");
+                OnMediaDateChanged();
+            }
+        }
+        private global::System.DateTime _MediaDate;
+        partial void OnMediaDateChanging(global::System.DateTime value);
+        partial void OnMediaDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsRemote
+        {
+            get
+            {
+                return _IsRemote;
+            }
+            set
+            {
+                OnIsRemoteChanging(value);
+                ReportPropertyChanging("IsRemote");
+                _IsRemote = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsRemote");
+                OnIsRemoteChanged();
+            }
+        }
+        private global::System.Boolean _IsRemote;
+        partial void OnIsRemoteChanging(global::System.Boolean value);
+        partial void OnIsRemoteChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String MediaType
+        {
+            get
+            {
+                return _MediaType;
+            }
+            set
+            {
+                OnMediaTypeChanging(value);
+                ReportPropertyChanging("MediaType");
+                _MediaType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("MediaType");
+                OnMediaTypeChanged();
+            }
+        }
+        private global::System.String _MediaType;
+        partial void OnMediaTypeChanging(global::System.String value);
+        partial void OnMediaTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> MediaBitRate
+        {
+            get
+            {
+                return _MediaBitRate;
+            }
+            set
+            {
+                OnMediaBitRateChanging(value);
+                ReportPropertyChanging("MediaBitRate");
+                _MediaBitRate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MediaBitRate");
+                OnMediaBitRateChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _MediaBitRate;
+        partial void OnMediaBitRateChanging(Nullable<global::System.Int32> value);
+        partial void OnMediaBitRateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> MediaSize
+        {
+            get
+            {
+                return _MediaSize;
+            }
+            set
+            {
+                OnMediaSizeChanging(value);
+                ReportPropertyChanging("MediaSize");
+                _MediaSize = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MediaSize");
+                OnMediaSizeChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _MediaSize;
+        partial void OnMediaSizeChanging(Nullable<global::System.Int64> value);
+        partial void OnMediaSizeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> MediaLength
+        {
+            get
+            {
+                return _MediaLength;
+            }
+            set
+            {
+                OnMediaLengthChanging(value);
+                ReportPropertyChanging("MediaLength");
+                _MediaLength = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MediaLength");
+                OnMediaLengthChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _MediaLength;
+        partial void OnMediaLengthChanging(Nullable<global::System.Int64> value);
+        partial void OnMediaLengthChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentMedia_Contents", "Content")]
+        public Content Content
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentMedia_Contents", "Content").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentMedia_Contents", "Content").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Content> ContentReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentMedia_Contents", "Content");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentMedia_Contents", "Content", value);
                 }
             }
         }

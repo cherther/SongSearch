@@ -28,22 +28,22 @@ namespace Codewerks.SongSearch.Tasks {
 						var tag = ID3v2Helper.CreateID3v2(full);
 						
 
-						content.HasMediaFullVersion = true;
-						content.MediaSize = file.Length;
-						content.MediaLength = tag.LengthMilliseconds;
-						content.MediaDate = file.LastWriteTime > DateTime.MinValue ? file.LastWriteTime : DateTime.Now;
-						if (!content.MediaDate.HasValue) { content.MediaDate = DateTime.Now; }
+						//content.HasMediaFullVersion = true;
+						//content.MediaSize = file.Length;
+						//content.MediaLength = tag.LengthMilliseconds;
+						//content.MediaDate = file.LastWriteTime > DateTime.MinValue ? file.LastWriteTime : DateTime.Now;
+						//if (!content.MediaDate.HasValue) { content.MediaDate = DateTime.Now; }
 
-						content.MediaType = tag.FileType ?? content.MediaType;
-						content.MediaBitRate = tag.LengthMilliseconds != null ?
-							((long)tag.LengthMilliseconds).ToBitRate(content.MediaSize.GetValueOrDefault()) : 0;
+						//content.MediaType = tag.FileType ?? content.MediaType;
+						//content.MediaBitRate = tag.LengthMilliseconds != null ?
+						//    ((long)tag.LengthMilliseconds).ToBitRate(content.MediaSize.GetValueOrDefault()) : 0;
 
-						if (content.MediaBitRate >= 160) {
-							System.Diagnostics.Debug.WriteLine(content.MediaBitRate);
-						}
+						//if (content.MediaBitRate >= 160) {
+						//    System.Diagnostics.Debug.WriteLine(content.MediaBitRate);
+						//}
 
 					} else {
-						content.HasMediaFullVersion = false;
+						//content.HasMediaFullVersion = false;
 					}
 
 					if (File.Exists(Path.Combine(previewPath, String.Concat(content.ContentId, ".mp3")))) {
@@ -59,30 +59,43 @@ namespace Codewerks.SongSearch.Tasks {
 		}
 
 		public static void CleanID3() {
-			string fullpath = @"D:\Inetpub\wwwroot\Assets\Music\Full";
-			string previewPath = @"D:\Inetpub\wwwroot\Assets\Music\Previews";
-
+			
 			using (var session = new SongSearchDataSession()) {
 
-				var contents = session.All<Content>();
+				var contents = session.GetObjectQuery<Content>()
+					.Include("ContentMedia").ToList();
 
-				foreach (var content in contents) {
+				foreach (var content in contents.AsParallel()) {
 
-					string preview = Path.Combine(previewPath, String.Concat(content.ContentId, ".mp3"));
-					var file = new FileInfo(preview);
-					if (file.Exists) {
-						var tag = ID3v2Helper.CreateID3v2(file.FullName);
-						ID3v2Helper.RemoveTag(file.FullName);
-						var newTag = ID3v2Helper.CreateID3v2();
-						newTag.Title = content.Title;
-						newTag.Artist = content.Artist;
-						newTag.OriginalArtist = content.Artist;
-						newTag.Year = content.ReleaseYear.HasValue ? content.ReleaseYear.Value.ToString() : "";
-						newTag.OriginalReleaseYear = newTag.Year;
+					foreach (var media in content.ContentMedia.AsParallel()) {
 
-						newTag.Save(file.FullName);
-						
+
+						string mediaFile = MediaService.GetContentMediaPathLocal(media);
+						// Path.Combine(previewPath, String.Concat(content.ContentId, ".mp3"));
+
+						var file = new FileInfo(mediaFile);
+						if (file.Exists) {
+							var tag = ID3v2Helper.CreateID3v2(file.FullName);
+							ID3v2Helper.RemoveTag(file.FullName);
+							var newTag = ID3v2Helper.CreateID3v2();
+							newTag.Title = content.Title;
+							newTag.Artist = content.Artist;
+							newTag.OriginalArtist = content.Artist;
+							newTag.Year = content.ReleaseYear.HasValue ? content.ReleaseYear.Value.ToString() : "";
+							newTag.OriginalReleaseYear = newTag.Year;
+							newTag.LengthMilliseconds = tag.LengthMilliseconds ?? (int?)media.MediaLength;
+							newTag.Save(file.FullName);
+							file.Refresh();
+
+							var dbMedia = session.Single<ContentMedia>(x => x.ContentId == media.ContentId && 
+								x.MediaVersion == (int)media.MediaVersion);
+
+							dbMedia.MediaSize = file.Length;
+							dbMedia.MediaLength = newTag.LengthMilliseconds;
+							session.CommitChanges();
+						}
 					}
+
 				}
 			}
 				

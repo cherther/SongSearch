@@ -18,6 +18,16 @@ namespace SongSearch.Web {
 		public int? MediaBitRate { get; set; }
 		public string MediaType { get; set; }
 	}
+
+	public static class Id3Extensions {
+
+		public static int GetBitRate(this ID3Data id3, long fileSize){
+
+			return id3.MediaLength.HasValue ? ((long)id3.MediaLength).ToBitRate(fileSize) : 0;
+
+		}
+
+	}
 	public class ID3Reader {
 
 		public static ID3Data GetID3Metadata(string fileName) {
@@ -43,7 +53,7 @@ namespace SongSearch.Web {
 			id3.Year = tag.OriginalReleaseYear.AsNullIfWhiteSpace() ?? tag.Year;
 			id3.MediaLength = tag.LengthMilliseconds;
 			id3.MediaSize = tag.FileSizeExcludingTag;
-
+			
 			return id3;
 		}		
 	}

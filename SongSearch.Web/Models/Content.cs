@@ -5,7 +5,10 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Web.Mvc;
-
+using SongSearch.Web.Services;
+using Ninject;
+using Ninject.Modules;
+using Ninject.Web.Mvc;
 namespace SongSearch.Web.Data {
 
 	[MetadataType(typeof(CatalogMetaData))]
@@ -28,6 +31,74 @@ namespace SongSearch.Web.Data {
 		public bool IsInMyActiveCart { get; set; }
 		public string UserDownloadableName { get; set; }
 		public List<UploadFile> UploadFiles { get; set; }
+
+		private bool _hasMediaFullVersion;
+
+		public bool HasMediaFullVersion {
+
+			get {
+
+				_hasMediaFullVersion =
+					this.ContentMedia != null &&
+					this.ContentMedia.SingleOrDefault(x => x.MediaVersion == (int)MediaVersion.Full) != null;
+
+				return _hasMediaFullVersion;
+			}
+			set {
+				_hasMediaFullVersion = value;
+			}
+		}
+		private bool _hasMediaPreviewVersion;
+		public bool HasMediaPreviewVersion {
+
+			get {
+
+				_hasMediaPreviewVersion =
+					this.ContentMedia != null &&
+					this.ContentMedia.SingleOrDefault(x => x.MediaVersion == (int)MediaVersion.Preview) != null;
+
+				return _hasMediaPreviewVersion;
+			}
+			set {
+				_hasMediaPreviewVersion = value;
+			}
+		}
+
+		private bool _isMediaOnRemoteServer;
+		public bool IsMediaOnRemoteServer {
+
+			get {
+
+				_isMediaOnRemoteServer =
+					this.HasMediaFullVersion &&
+					this.ContentMedia.Single(x => x.MediaVersion == (int)MediaVersion.Full).IsRemote;
+
+
+				return _isMediaOnRemoteServer;
+			}
+			set {
+				_isMediaOnRemoteServer = value;
+			}
+		}
+
+		private DateTime _mediaDate;
+		public DateTime MediaDate {
+
+			get {
+
+				_mediaDate =
+					this.HasMediaFullVersion ?
+					this.ContentMedia.Single(x => x.MediaVersion == (int)MediaVersion.Full).MediaDate :
+					DateTime.Now;
+
+
+				return _mediaDate;
+			}
+			set {
+				_mediaDate = value;
+			}
+		}
+
 		
 	}
 
@@ -101,6 +172,21 @@ namespace SongSearch.Web.Data {
 		[DataType(DataType.MultilineText)]
 		public object LicensingNotes { get; set; }
 
+		[DisplayName("Instruments")]
+		[DataType(DataType.MultilineText)]
+		public object Instruments { get; set; }
+
+		[DisplayName("Sounds Like")]
+		[DataType(DataType.MultilineText)]
+		public object SoundsLike { get; set; }
+
+	}
+
+	[MetadataType(typeof(ContentMediaMetadata))]
+	public partial class ContentMedia {
+	}
+	public class ContentMediaMetadata {
+
 		[DisplayName("Media File Date")]
 		public object MediaDate { get; set; }
 
@@ -116,14 +202,6 @@ namespace SongSearch.Web.Data {
 		[DisplayName("Media Length")]
 		public object MediaLength { get; set; }
 
-		[DisplayName("Instruments")]
-		[DataType(DataType.MultilineText)]
-		public object Instruments { get; set; }
-
-		[DisplayName("Sounds Like")]
-		[DataType(DataType.MultilineText)]
-		public object SoundsLike { get; set; }
-
 	}
 
 	public partial class ContentUserDownloadable {
@@ -136,6 +214,5 @@ namespace SongSearch.Web.Data {
 		public string FilePath { get; set; }
 		public MediaVersion FileMediaVersion { get; set; }
 	}
-
-
+	
 }

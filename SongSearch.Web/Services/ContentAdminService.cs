@@ -73,33 +73,37 @@ namespace SongSearch.Web.Services {
 		public void UpdateContentMedia(int contentId, IList<UploadFile> uploadFiles) {
 
 			if (contentId > 0) {
+
 				var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 
 				foreach (var uploadFile in uploadFiles) {
+
 					if (uploadFile.FileName != null) {
+						
 						var filePath = Account.User().UploadFile(uploadFile.FileName, uploadFile.FileMediaVersion.ToString());
+						var file = new FileInfo(filePath); 
+						var id3 = ID3Reader.GetID3Metadata(filePath);
 						
 						content.IsMediaOnRemoteServer = false;
 
-						switch (uploadFile.FileMediaVersion) {
-							case MediaVersion.Full:
-								content.HasMediaFullVersion = true;
+						var media = content.ContentMedia.SingleOrDefault(x => x.MediaVersion == (int)uploadFile.FileMediaVersion) ??
+							new ContentMedia();
 
-								var file = new FileInfo(filePath);
-								content.MediaSize = file.Length;
-								content.MediaDate = file.GetMediaDate();
-								var id3 = ID3Reader.GetID3Metadata(filePath);
-								content.MediaLength = id3.MediaLength;
-								content.MediaBitRate = id3.MediaLength.HasValue ? ((long)id3.MediaLength).ToBitRate(
-									content.MediaSize.GetValueOrDefault()) : 0;
-								break;
-							case MediaVersion.Preview:
-								content.HasMediaPreviewVersion = true;
-								break;
+						media.MediaVersion = (int)uploadFile.FileMediaVersion;
+						media.MediaType = "mp3";
+						media.MediaSize = file.Length;
+						media.MediaLength = id3.MediaLength;
+						media.MediaDate = file.GetMediaDate();
+						media.MediaBitRate = id3.GetBitRate(file.Length);
 
+						
+						media.IsRemote = false;
+
+						if (media.ContentId == 0) {
+							content.ContentMedia.Add(media);
 						}
 
-						_mediaService.SaveContentMedia(filePath, content, uploadFile.FileMediaVersion);
+						_mediaService.SaveContentMedia(filePath, media);
 					}
 				}
 				content.LastUpdatedByUserId = Account.User().UserId;
@@ -117,7 +121,7 @@ namespace SongSearch.Web.Services {
 			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 			if (content != null) {
 
-				var filePath = content.MediaFilePath(MediaVersion.Full);
+				var filePath = content.ContentMedia.PreviewVersion().MediaFilePath();
 				//var file = new FileInfo(filePath);
 				if (File.Exists(filePath)) { 
 					var tag = ID3v2Helper.CreateID3v2(filePath);
@@ -142,8 +146,8 @@ namespace SongSearch.Web.Services {
 
 			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 			if (content != null) {
-				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Preview));
-				FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Full));
+				FileSystem.SafeDelete(content.ContentMedia.PreviewVersion().MediaFilePath());
+				FileSystem.SafeDelete(content.ContentMedia.FullVersion().MediaFilePath());
 				DataSession.Delete<Content>(content);
 			}
 
@@ -156,8 +160,8 @@ namespace SongSearch.Web.Services {
 
 				var content = DataSession.Single<Content>(c => c.ContentId == contentId);
 				if (content != null) {
-					FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Preview));
-					FileSystem.SafeDelete(content.MediaFilePath(MediaVersion.Full));
+					FileSystem.SafeDelete(content.ContentMedia.PreviewVersion().MediaFilePath());
+					FileSystem.SafeDelete(content.ContentMedia.FullVersion().MediaFilePath());
 					DataSession.Delete<Content>(content);
 				}
 			}

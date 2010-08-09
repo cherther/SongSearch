@@ -1,13 +1,13 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.ContentViewModel>" %>
 <%
 	var content = Model.Content;
-	var fullSong = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Full));
-	var preview = Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Preview)); 
-	var excerptStart = content.MediaExcerptStart.HasValue ? content.MediaExcerptStart : 0;
-	var excerptEnd = content.MediaExcerptEnd.HasValue ? content.MediaExcerptEnd : excerptStart + 30 * 1000;
+	var fullSong = content.ContentMedia.FullVersion().MediaUrl();// Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Full));
+	var preview = content.ContentMedia.PreviewVersion().MediaUrl(); //Url.Action(MVC.Media.Stream(content.ContentId, MediaVersion.Preview)); 
+	//var excerptStart = content.MediaExcerptStart.HasValue ? content.MediaExcerptStart : 0;
+	//var excerptEnd = content.MediaExcerptEnd.HasValue ? content.MediaExcerptEnd : excerptStart + 30 * 1000;
 
-	var excerptRange = String.Format("{0}:{1}", excerptStart, excerptEnd);
-	var startText = ((decimal)content.MediaExcerptStart.GetValueOrDefault()).MillSecsToTimeCode();
+	//var excerptRange = String.Format("{0}:{1}", excerptStart, excerptEnd);
+	//var startText = ((decimal)content.MediaExcerptStart.GetValueOrDefault()).MillSecsToTimeCode();
 %>
 <div id="sm2-container"></div>
 <%//id="cw-tbl-media-player" %>
@@ -31,9 +31,9 @@
 				<%if (content.HasMediaPreviewVersion) { %>
 					<a href="<%: preview %>" id = "cw-play-preview"
 					class = "cw-media-play-link cw-button cw-small cw-simple cw-gray" title="Play a short excerpt"><span class="b-play">:30</span></a>
-				<%} else if (content.MediaExcerptStart.HasValue) { %>
+				<%--<%} else if (content.MediaExcerptStart.HasValue) { %>
 					<a href="<%: fullSong %>" id = "cw-play-cue"
-					class = "cw-media-cue-link cw-button cw-small cw-simple cw-gray" rel="<%: excerptRange %>" title="Play a cue from <%: startText %>"><span class="b-reload">Cue</span></a>
+					class = "cw-media-cue-link cw-button cw-small cw-simple cw-gray" rel="<%: excerptRange %>" title="Play a cue from <%: startText %>"><span class="b-reload">Cue</span></a>--%>
 				<%} %>
 				<%if (content.HasMediaPreviewVersion || content.HasMediaFullVersion) { %>
 					<button id="cw-play-rew" class="cw-media-rew-link cw-button cw-small cw-simple cw-gray" title="Rewind" disabled="disabled"><span class="b-rewind" >Rev</span></button>

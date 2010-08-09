@@ -52,13 +52,20 @@ namespace SongSearch.Web {
 		// MediaFilePath
 		// **************************************    
 
-		public static string MediaFilePath(this Content content, MediaVersion mediaVersion) {
-			using (var mediaService = App.Container.Get<IMediaService>())
-			{
-				return mediaService.GetContentMediaPath(content, mediaVersion);
+		public static string MediaFilePath(this ContentMedia contentMedia, bool local = false) {
+			if (local) {
+				return MediaService.GetContentMediaPathLocal(contentMedia);
+			} else {
+				using (var mediaService = App.Container.Get<IMediaService>()) {
+					return mediaService.GetContentMediaPath(contentMedia);
+				}
 			}
 		}
-
+		public static ContentMedia Media(this Content content, MediaVersion version) {
+			return content.ContentMedia != null ? 
+				content.ContentMedia.SingleOrDefault(x => x.MediaVersion == (int)version)
+				: null;
+		}
 		// **************************************
 		// IsAvailableTo
 		// **************************************    
@@ -137,7 +144,21 @@ namespace SongSearch.Web {
 
 		}
 
+		public static string MediaUrl(this ContentMedia contentMedia) {
+			if (contentMedia == null) { return String.Empty; }
 
+			using (var svc = App.Container.Get<IMediaService>()) {
+				return svc.GetContentMediaPath(contentMedia);
+			}
+		}
+		public static ContentMedia FullVersion(this IEnumerable<ContentMedia> contentMedia) {
+			return contentMedia != null ? contentMedia.SingleOrDefault(x => x.MediaVersion == (int)MediaVersion.Full)
+				: null;
+		}
+		public static ContentMedia PreviewVersion(this IEnumerable<ContentMedia> contentMedia) {
+			return contentMedia != null ? contentMedia.SingleOrDefault(x => x.MediaVersion == (int)MediaVersion.Preview)
+				: null;
+		}
 		// **************************************
 		// GetArchivePath
 		// **************************************

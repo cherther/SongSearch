@@ -131,6 +131,14 @@ namespace SongSearch.Web {
 	}
 
 	public static class ModelEnums {
+
+		public static MediaVersion[] MediaVersions() {
+			return new[] 
+				{ 
+					MediaVersion.Preview,
+					MediaVersion.Full
+			};
+		}
 		public static int[] GetRoles() {
 			return new[]
 			       	{

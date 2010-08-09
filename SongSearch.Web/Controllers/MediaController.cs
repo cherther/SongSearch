@@ -46,7 +46,7 @@ namespace SongSearch.Web.Controllers
 					//    var mediaUrl = _mediaService.GetContentMediaPath(id, MediaVersion.Full);
 					//    return base.File(mediaUrl, contentType, downloadName);
 					//} else {
-					byte[] media = _mediaService.GetContentMedia(content, MediaVersion.Full, user);
+					byte[] media = _mediaService.GetContentMedia(content.ContentMedia.FullVersion(), user);
 
 					return base.File(media, contentType, downloadName);
 					//}
@@ -121,6 +121,8 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				var content = SearchService.GetContent(id, Account.User());
+				var contentMedia = content.ContentMedia.SingleOrDefault(x => x.MediaVersion == (int)version);
+
 				if (content != null) {
 
 					if (SystemConfig.UseRemoteMedia && content.IsMediaOnRemoteServer) {
@@ -129,7 +131,7 @@ namespace SongSearch.Web.Controllers
 
 					} else {
 
-						var mediaPath = _mediaService.GetContentMediaPath(content, (MediaVersion)version);
+						var mediaPath = _mediaService.GetContentMediaPath(contentMedia);
 						var contentType = "application/mp3";
 						Response.ContentType = contentType;
 		
@@ -175,8 +177,9 @@ namespace SongSearch.Web.Controllers
 		private string GetUrl(int id, MediaVersion version = MediaVersion.Preview) {
 
 			var content = SearchService.GetContent(id, Account.User());
+			var contentMedia = content.ContentMedia.SingleOrDefault(x => x.MediaVersion == (int)version);
 			if (content != null) {
-				return _mediaService.GetContentMediaPath(content, version);
+				return _mediaService.GetContentMediaPath(contentMedia);
 			} else {
 				return null;
 			}				

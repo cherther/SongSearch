@@ -386,10 +386,10 @@ namespace SongSearch.Web.Services {
 
 						var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
 													contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
-						var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? _mediaService.GetContentMediaFileName(content.ContentId));
+						var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
 								
 						try {
-							byte[] asset = _mediaService.GetContentMedia(content, MediaVersion.Full, user);
+							byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion(), user);
 
 							zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
 										asset);

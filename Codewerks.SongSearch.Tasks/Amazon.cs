@@ -12,6 +12,7 @@ using Amazon.S3;
 using System.Configuration;
 using System.Collections.Specialized;
 using Amazon;
+using SongSearch.Web.Tasks;
 namespace Codewerks.SongSearch.Tasks {
 	public class AmazonAWS {
 
@@ -19,6 +20,24 @@ namespace Codewerks.SongSearch.Tasks {
 		static AmazonS3 client = null;
 		static AmazonCloudService _amazon;
 
+		public static void DownloadMissingFiles() {
+
+			using (var amz = new AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
+				amz.DownloadMissingFiles();
+			}
+		}
+		public static void UploadNewFiles() {
+
+			using (var amz = new AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
+				amz.UploadToRemote();
+			}
+		}
+		public static void UpdateContentMedia() {
+
+			using (var amz = new AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
+				amz.UpdateContentMedia();
+			}
+		}
 		public static void UpdateMediaRemoteStatus()
 		{
 			using (_amazon = new AmazonCloudService()) {
@@ -30,7 +49,7 @@ namespace Codewerks.SongSearch.Tasks {
 					var remoteContents = _amazon.GetContentList(MediaVersion.Full);
 
 					foreach (var content in contents) {
-						string key = _amazon.GetContentKey(content, MediaVersion.Full);
+						string key = _amazon.GetContentKey(content.ContentMedia.FullVersion());
 						var remoteObject = remoteContents.FirstOrDefault(x => x.Key == key);
 
 						if (remoteObject == null) {
@@ -73,7 +92,7 @@ namespace Codewerks.SongSearch.Tasks {
 						
 					foreach (var content in contents) {
 						var dbContent = session.Single<Content>(c => c.ContentId == content.ContentId);
-						var key = _amazon.GetContentKey(content, version);
+						var key = _amazon.GetContentKey(content.Media(version));
 						var filePath = Path.Combine(version == MediaVersion.Full ?
 							SystemConfig.MediaPathFull :
 							SystemConfig.MediaPathPreview,
@@ -88,7 +107,7 @@ namespace Codewerks.SongSearch.Tasks {
 
 								try {
 									Console.WriteLine("Uploading " + file.Name + " to " + remoteFolder);
-									_amazon.SaveContentMedia(file.FullName, content, version);
+									_amazon.PutContentMedia(file.FullName, content.Media(version));
 									dbContent.IsMediaOnRemoteServer = true;
 								}
 								catch (Exception ex){

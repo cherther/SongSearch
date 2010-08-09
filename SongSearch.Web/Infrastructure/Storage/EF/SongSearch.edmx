@@ -10,6 +10,7 @@
           <EntitySet Name="Carts" EntityType="SongSearch2Model.Store.Carts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Catalogs" EntityType="SongSearch2Model.Store.Catalogs" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Contacts" EntityType="SongSearch2Model.Store.Contacts" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContentMedia" EntityType="SongSearch2Model.Store.ContentMedia" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContentRights" EntityType="SongSearch2Model.Store.ContentRights" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContentRightTerritories" EntityType="SongSearch2Model.Store.ContentRightTerritories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Contents" EntityType="SongSearch2Model.Store.Contents" store:Type="Tables" Schema="dbo" />
@@ -63,6 +64,10 @@
           <AssociationSet Name="FK_Catalogs_Creators" Association="SongSearch2Model.Store.FK_Catalogs_Creators">
             <End Role="Users" EntitySet="Users" />
             <End Role="Catalogs" EntitySet="Catalogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentMedia_Contents" Association="SongSearch2Model.Store.FK_ContentMedia_Contents">
+            <End Role="Contents" EntitySet="Contents" />
+            <End Role="ContentMedia" EntitySet="ContentMedia" />
           </AssociationSet>
           <AssociationSet Name="FK_ContentRights_Contents" Association="SongSearch2Model.Store.FK_ContentRights_Contents">
             <End Role="Contents" EntitySet="Contents" />
@@ -198,6 +203,20 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedByUserId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ContentMedia">
+          <Key>
+            <PropertyRef Name="ContentId" />
+            <PropertyRef Name="MediaVersion" />
+          </Key>
+          <Property Name="ContentId" Type="int" Nullable="false" />
+          <Property Name="MediaVersion" Type="int" Nullable="false" />
+          <Property Name="MediaDate" Type="datetime" Nullable="false" />
+          <Property Name="IsRemote" Type="bit" Nullable="false" />
+          <Property Name="MediaType" Type="varchar" MaxLength="5" />
+          <Property Name="MediaBitRate" Type="int" />
+          <Property Name="MediaSize" Type="bigint" />
+          <Property Name="MediaLength" Type="bigint" />
+        </EntityType>
         <EntityType Name="ContentRights">
           <Key>
             <PropertyRef Name="ContentRightId" />
@@ -229,16 +248,16 @@
           <Property Name="LastUpdatedByUserId" Type="int" Nullable="false" />
           <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
           <Property Name="IsControlledAllIn" Type="bit" Nullable="false" />
-          <Property Name="HasMediaPreviewVersion" Type="bit" Nullable="false" />
-          <Property Name="HasMediaFullVersion" Type="bit" Nullable="false" />
-          <Property Name="MediaType" Type="varchar" Nullable="false" MaxLength="5" />
+          <Property Name="HasMediaPreviewVersion" Type="bit" />
+          <Property Name="HasMediaFullVersion" Type="bit" />
+          <Property Name="MediaType" Type="varchar" MaxLength="5" />
           <Property Name="MediaBitRate" Type="int" />
           <Property Name="MediaSize" Type="bigint" />
           <Property Name="MediaDate" Type="datetime" />
           <Property Name="MediaLength" Type="bigint" />
           <Property Name="MediaExcerptStart" Type="bigint" />
           <Property Name="MediaExcerptEnd" Type="bigint" />
-          <Property Name="IsMediaOnRemoteServer" Type="bit" Nullable="false" />
+          <Property Name="IsMediaOnRemoteServer" Type="bit" />
           <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Artist" Type="nvarchar" Nullable="false" MaxLength="300" />
           <Property Name="Writers" Type="nvarchar" MaxLength="500" />
@@ -493,6 +512,18 @@
             </Principal>
             <Dependent Role="Catalogs">
               <PropertyRef Name="CreatedByUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentMedia_Contents">
+          <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1" />
+          <End Role="ContentMedia" Type="SongSearch2Model.Store.ContentMedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contents">
+              <PropertyRef Name="ContentId" />
+            </Principal>
+            <Dependent Role="ContentMedia">
+              <PropertyRef Name="ContentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -861,6 +892,11 @@
             <End Role="PricingPlan" EntitySet="PricingPlans" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="ContentMedia" EntityType="SongSearch.Web.Data.Model.ContentMedia" />
+          <AssociationSet Name="FK_ContentMedia_Contents" Association="SongSearch.Web.Data.Model.FK_ContentMedia_Contents">
+            <End Role="Content" EntitySet="Contents" />
+            <End Role="ContentMedia" EntitySet="ContentMedia" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Cart">
           <Key>
@@ -928,22 +964,13 @@
           <NavigationProperty Name="ContentRights" Relationship="SongSearch.Web.Data.Model.FK_ContentRights_Contents" FromRole="Contents" ToRole="ContentRights" />
           <NavigationProperty Name="Tags" Relationship="SongSearch.Web.Data.Model.ContentTags" FromRole="Contents" ToRole="Tags" />
           <NavigationProperty Name="Carts" Relationship="SongSearch.Web.Data.Model.CartContents" FromRole="Content" ToRole="Cart" />
-          <Property Type="Boolean" Name="HasMediaPreviewVersion" Nullable="false" />
-          <Property Type="Boolean" Name="HasMediaFullVersion" Nullable="false" />
           <Property Type="String" Name="LicensingNotes" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="Pop" />
           <Property Type="Int32" Name="Country" />
           <Property Type="String" Name="LyricsIndex" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="MediaType" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="MediaBitRate" />
-          <Property Type="Int64" Name="MediaSize" />
-          <Property Type="Int64" Name="MediaLength" />
-          <Property Type="Int64" Name="MediaExcerptStart" />
-          <Property Type="Int64" Name="MediaExcerptEnd" />
-          <Property Type="DateTime" Name="MediaDate" />
           <Property Type="String" Name="SoundsLike" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Instruments" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsMediaOnRemoteServer" Nullable="false" />
+          <NavigationProperty Name="ContentMedia" Relationship="SongSearch.Web.Data.Model.FK_ContentMedia_Contents" FromRole="Content" ToRole="ContentMedia" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1349,6 +1376,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ContentMedia">
+          <Key>
+            <PropertyRef Name="ContentId" />
+            <PropertyRef Name="MediaVersion" />
+          </Key>
+          <Property Type="Int32" Name="ContentId" Nullable="false" />
+          <Property Type="Int32" Name="MediaVersion" Nullable="false" />
+          <Property Type="DateTime" Name="MediaDate" Nullable="false" />
+          <Property Type="Boolean" Name="IsRemote" Nullable="false" />
+          <Property Type="String" Name="MediaType" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="MediaBitRate" />
+          <Property Type="Int64" Name="MediaSize" />
+          <Property Type="Int64" Name="MediaLength" />
+          <NavigationProperty Name="Content" Relationship="SongSearch.Web.Data.Model.FK_ContentMedia_Contents" FromRole="ContentMedia" ToRole="Content" />
+        </EntityType>
+        <Association Name="FK_ContentMedia_Contents">
+          <End Type="SongSearch.Web.Data.Model.Content" Role="Content" Multiplicity="1" />
+          <End Type="SongSearch.Web.Data.Model.ContentMedia" Role="ContentMedia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentId" />
+            </Principal>
+            <Dependent Role="ContentMedia">
+              <PropertyRef Name="ContentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1382,22 +1436,12 @@
             <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
-                <ScalarProperty Name="IsMediaOnRemoteServer" ColumnName="IsMediaOnRemoteServer" />
                 <ScalarProperty Name="Instruments" ColumnName="Instruments" />
                 <ScalarProperty Name="SoundsLike" ColumnName="SoundsLike" />
-                <ScalarProperty Name="MediaDate" ColumnName="MediaDate" />
-                <ScalarProperty Name="MediaExcerptEnd" ColumnName="MediaExcerptEnd" />
-                <ScalarProperty Name="MediaExcerptStart" ColumnName="MediaExcerptStart" />
-                <ScalarProperty Name="MediaLength" ColumnName="MediaLength" />
-                <ScalarProperty Name="MediaSize" ColumnName="MediaSize" />
-                <ScalarProperty Name="MediaBitRate" ColumnName="MediaBitRate" />
-                <ScalarProperty Name="MediaType" ColumnName="MediaType" />
                 <ScalarProperty Name="LyricsIndex" ColumnName="LyricsIndex" />
                 <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="Pop" ColumnName="Pop" />
                 <ScalarProperty Name="LicensingNotes" ColumnName="LicensingNotes" />
-                <ScalarProperty Name="HasMediaFullVersion" ColumnName="HasMediaFullVersion" />
-                <ScalarProperty Name="HasMediaPreviewVersion" ColumnName="HasMediaPreviewVersion" />
                 <ScalarProperty Name="ContentId" ColumnName="ContentId" />
             <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
             <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
@@ -1632,6 +1676,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ContentMedia">
+            <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.ContentMedia">
+              <MappingFragment StoreEntitySet="ContentMedia">
+                <ScalarProperty Name="MediaLength" ColumnName="MediaLength" />
+                <ScalarProperty Name="MediaSize" ColumnName="MediaSize" />
+                <ScalarProperty Name="MediaBitRate" ColumnName="MediaBitRate" />
+                <ScalarProperty Name="MediaType" ColumnName="MediaType" />
+                <ScalarProperty Name="IsRemote" ColumnName="IsRemote" />
+                <ScalarProperty Name="MediaDate" ColumnName="MediaDate" />
+                <ScalarProperty Name="MediaVersion" ColumnName="MediaVersion" />
+                <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1656,14 +1714,14 @@
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Cart" Width="1.5" PointX="0.75" PointY="11" Height="2.7494921874999996" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Catalog" Width="1.5" PointX="8" PointY="8.25" Height="2.1725878906249996" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentRight" Width="1.5" PointX="6.25" PointY="2.375" Height="2.3648893229166656" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="2" PointX="3" PointY="4" Height="7.1724251302083317" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="2" PointX="3" PointY="4" Height="6.2109179687499978" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Role" Width="1.5" PointX="5.875" PointY="10" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Tag" Width="1.5" PointX="0.75" PointY="7.5" Height="2.1725878906249996" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Territory" Width="1.5" PointX="9.25" PointY="5" Height="1.787985026041671" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.User" Width="1.5" PointX="3.875" PointY="12.5" Height="4.2879036458333353" IsExpanded="true" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Contents_Catalogs" ManuallyRouted="false">
-          <ConnectorPoint PointX="8" PointY="9.09375" />
-          <ConnectorPoint PointX="5" PointY="9.09375" />
+          <ConnectorPoint PointX="8" PointY="9.2497460937500016" />
+          <ConnectorPoint PointX="5" PointY="9.2497460937500016" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentRights_Contents" ManuallyRouted="false">
           <ConnectorPoint PointX="5" PointY="4.56224609375" />
@@ -1675,9 +1733,9 @@
           <ConnectorPoint PointX="5.375" PointY="14.563929379661635" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentRightTerritories" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.75" PointY="4.5021463098958332" />
-          <ConnectorPoint PointX="10.34375" PointY="4.5021463098958332" />
-          <ConnectorPoint PointX="10.34375" PointY="5" />
+          <ConnectorPoint PointX="7.75" PointY="3.6874995" />
+          <ConnectorPoint PointX="10" PointY="3.6874995" />
+          <ConnectorPoint PointX="10" PointY="5" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentTags" ManuallyRouted="false">
           <ConnectorPoint PointX="3" PointY="8.5862939453125" />
@@ -1689,9 +1747,9 @@
           <ConnectorPoint PointX="3.875" PointY="15.432444661458336" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.CartContents" >
-          <ConnectorPoint PointX="3.28125" PointY="11.172425130208332" />
-          <ConnectorPoint PointX="3.28125" PointY="13.018992513020834" />
-          <ConnectorPoint PointX="2.25" PointY="13.018992513020834" />
+          <ConnectorPoint PointX="3.40625" PointY="10.210917968749998" />
+          <ConnectorPoint PointX="3.40625" PointY="11.625" />
+          <ConnectorPoint PointX="2.25" PointY="11.625" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Carts_Users" >
           <ConnectorPoint PointX="3.875" PointY="13.317047526041666" />
@@ -1757,6 +1815,11 @@
           <ConnectorPoint PointX="2.875" PointY="20.013812604166674" />
           <ConnectorPoint PointX="4.1097090384615385" PointY="20.013812604166674" />
           <ConnectorPoint PointX="4.1097090384615385" PointY="18.903219401041667" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentMedia" Width="1.5" PointX="6" PointY="5.75" Height="2.7494921875000031" />
+        <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentMedia_Contents" >
+          <ConnectorPoint PointX="5" PointY="7.1247460937500016" />
+          <ConnectorPoint PointX="6" PointY="7.1247460937500016" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

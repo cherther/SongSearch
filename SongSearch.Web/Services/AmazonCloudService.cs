@@ -13,7 +13,7 @@ using Amazon.CloudFront.Model;
 namespace SongSearch.Web.Services {
 
 	// **************************************
-	// MediaService
+	// RemoteMediaConfiguration
 	// **************************************
 	public struct RemoteMediaConfiguration {
 
@@ -39,6 +39,9 @@ namespace SongSearch.Web.Services {
 		}
 	}
 
+	// **************************************
+	// RemoteContent
+	// **************************************
 	public class RemoteContent {
 
 		public string Key { get; set; }
@@ -47,15 +50,50 @@ namespace SongSearch.Web.Services {
 //		public string Key { get; set; }
 	}
 
-	public class AmazonCloudService : IMediaCloudService {
+	// **************************************
+	// AmazonExtensions
+	// **************************************
+	public static class AmazonExtensions {
 
-		public string GetContentKey(Content content, MediaVersion version) {
-			return String.Concat(GetContentPrefix(version), content.ContentId, SystemConfig.MediaDefaultExtension);
+		public static string AmazonExceptionMessage(this AmazonS3Exception amazonS3Exception) {
+			if (amazonS3Exception.IsAmazonSecurityException()) {
+				return @"Please check the provided AWS Credentials. If you haven't signed up for Amazon S3, please visit http://aws.amazon.com/s3";
+			} else {
+				return amazonS3Exception.Message;
+			}
 		}
 
+		public static bool IsAmazonSecurityException(this AmazonS3Exception amazonS3Exception) {
+			return amazonS3Exception.ErrorCode != null &&
+								(amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
+								amazonS3Exception.ErrorCode.Equals("InvalidSecurity"));
+		}
+	}
+
+
+	// **************************************
+	// AmazonCloudService
+	// **************************************
+	public class AmazonCloudService : IMediaCloudService {
+
+		// **************************************
+		// GetContentKey
+		// **************************************
+		public string GetContentKey(ContentMedia contentMedia) {
+			return String.Concat(GetContentPrefix((MediaVersion)contentMedia.MediaVersion),
+				contentMedia.ContentId, SystemConfig.MediaDefaultExtension);
+		}
+
+		// **************************************
+		// GetContentPrefix
+		// **************************************
 		public string GetContentPrefix(MediaVersion version) {
 			return String.Format(SystemConfig.MediaFolderUrlFormat, version.ToString());
 		}
+
+		// **************************************
+		// GetContentList
+		// **************************************
 		public IList<RemoteContent> GetContentList(MediaVersion version, string filter = null) {
 
 			var mediaFolder = GetContentPrefix(version);
@@ -68,6 +106,9 @@ namespace SongSearch.Web.Services {
 			}).ToList();
 		}
 
+		// **************************************
+		// GetBucketList
+		// **************************************
 		private IList<S3Object> GetBucketList(string mediaFolder, string mediaBucket, string marker = null) {
 
 			using (var awsclient = Amazon.AWSClientFactory.CreateAmazonS3Client(
@@ -94,15 +135,15 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetContentMedia
 		// **************************************
-		public byte[] GetContentMedia(Content content, MediaVersion version) {
+		public void GetContentMedia(string target, ContentMedia contentMedia) {
 
-			byte[] mediaBytes = null;
+			
 
 			using (var awsclient = Amazon.AWSClientFactory.CreateAmazonS3Client(
 				RemoteMediaConfiguration.AccessKeyID,
 				RemoteMediaConfiguration.SecretAccessKeyID)) {
 
-				var key = String.Format(RemoteMediaConfiguration.MediaUrlFormat, version, content.ContentId);
+				var key = GetContentMediaKey(contentMedia);
 
 				var request = new GetObjectRequest()
 					.WithBucketName(RemoteMediaConfiguration.BucketName)
@@ -111,8 +152,57 @@ namespace SongSearch.Web.Services {
 				try {
 					using (S3Response response = awsclient.GetObject(request)) {
 						using (Stream s = response.ResponseStream) {
+
+							using (var fs = File.OpenWrite(target)) {
+								byte[] data = new byte[262144];//[32768];
+								int bytesRead = 0;
+								do {
+									bytesRead = s.Read(data, 0, data.Length);
+									fs.Write(data, 0, bytesRead);
+								}
+								while (bytesRead > 0);
+
+								fs.Flush();
+								fs.Close();
+							}
+						}
+					}
+				}
+				catch (AmazonS3Exception amazonS3Exception) {
+					if (amazonS3Exception.IsAmazonSecurityException()) {
+						App.Logger.Error(amazonS3Exception.AmazonExceptionMessage());
+					} else {
+						App.Logger.Error(amazonS3Exception);
+					}
+				}
+
+
+			}
+		
+		}
+
+		// **************************************
+		// GetContentMedia
+		// **************************************
+		public byte[] GetContentMedia(ContentMedia contentMedia) {
+
+			byte[] mediaBytes = null;
+
+			using (var awsclient = Amazon.AWSClientFactory.CreateAmazonS3Client(
+				RemoteMediaConfiguration.AccessKeyID,
+				RemoteMediaConfiguration.SecretAccessKeyID)) {
+
+				var key = GetContentMediaKey(contentMedia);
+				
+				var request = new GetObjectRequest()
+					.WithBucketName(RemoteMediaConfiguration.BucketName)
+					.WithKey(key);
+
+				try {
+					using (S3Response response = awsclient.GetObject(request)) {
+						using (Stream s = response.ResponseStream) {
 							using (var fs = new MemoryStream()) {
-								byte[] data = new byte[32768];
+								byte[] data = new byte[contentMedia.MediaSize.GetValueOrDefault(262144)];
 								int bytesRead = 0;
 								do {
 									bytesRead = s.Read(data, 0, data.Length);
@@ -127,13 +217,10 @@ namespace SongSearch.Web.Services {
 					}
 				}
 				catch (AmazonS3Exception amazonS3Exception) {
-					if (amazonS3Exception.ErrorCode != null &&
-						(amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
-						amazonS3Exception.ErrorCode.Equals("InvalidSecurity"))) {
-						App.Logger.Error("Please check the provided AWS Credentials.");
+					if (amazonS3Exception.IsAmazonSecurityException()) {
+						App.Logger.Error(amazonS3Exception.AmazonExceptionMessage());
 					} else {
-						App.Logger.Error(String.Format("An error occurred with the message '{0}' when writing an object",
-							amazonS3Exception.Message));
+						App.Logger.Error(amazonS3Exception);
 					}
 					return mediaBytes;
 				}
@@ -142,14 +229,17 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
-		public string GetContentMediaUrl(Content content, MediaVersion version) {
+		// **************************************
+		// GetContentMediaUrl
+		// **************************************
+		public string GetContentMediaUrl(ContentMedia contentMedia) {
 		
 			using (var awsclient = Amazon.AWSClientFactory.CreateAmazonS3Client(
 				RemoteMediaConfiguration.AccessKeyID,
 				RemoteMediaConfiguration.SecretAccessKeyID)) {
 
-				var key = String.Format(RemoteMediaConfiguration.MediaUrlFormat, version, content.ContentId);
-
+				var key = GetContentMediaKey(contentMedia);
+				
 				var request = new GetPreSignedUrlRequest()
 					.WithProtocol(Amazon.S3.Model.Protocol.HTTP)
 					.WithBucketName(RemoteMediaConfiguration.BucketName)
@@ -160,16 +250,19 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
-		public void SaveContentMedia(string fromFilePath, Content content, MediaVersion version) {
+		// **************************************
+		// PutContentMedia
+		// **************************************
+		public void PutContentMedia(string source, ContentMedia contentMedia) {
 			using (var awsclient = Amazon.AWSClientFactory.CreateAmazonS3Client(RemoteMediaConfiguration.AccessKeyID,
 				RemoteMediaConfiguration.SecretAccessKeyID)) {
 
-				var key = String.Format(RemoteMediaConfiguration.MediaUrlFormat, version, content.ContentId);
+				var key = GetContentMediaKey(contentMedia);
 				try {
 					// simple object put
 					PutObjectRequest request = new PutObjectRequest();
 					request.WithBucketName(RemoteMediaConfiguration.BucketName)
-						.WithFilePath(fromFilePath)
+						.WithFilePath(source)
 						.WithKey(key)
 						.WithStorageClass(S3StorageClass.ReducedRedundancy);
 
@@ -177,13 +270,10 @@ namespace SongSearch.Web.Services {
 
 				}
 				catch (AmazonS3Exception amazonS3Exception) {
-					if (amazonS3Exception.ErrorCode != null &&
-						(amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId") ||
-						amazonS3Exception.ErrorCode.Equals("InvalidSecurity"))) {
-						App.Logger.Error("Please check the provided AWS Credentials.");
+					if (amazonS3Exception.IsAmazonSecurityException()) {
+						App.Logger.Error(amazonS3Exception.AmazonExceptionMessage());
 					} else {
-						App.Logger.Error(String.Format("An error occurred with the message '{0}' when writing an object",
-							amazonS3Exception.Message));
+						App.Logger.Error(amazonS3Exception);
 					}
 					throw amazonS3Exception;
 				}
@@ -194,6 +284,15 @@ namespace SongSearch.Web.Services {
 				}
 
 			}
+		}
+
+		// **************************************
+		// GetContentMediaKey
+		// **************************************
+		private static string GetContentMediaKey(ContentMedia contentMedia) {
+			var key = String.Format(RemoteMediaConfiguration.MediaUrlFormat, (MediaVersion)contentMedia.MediaVersion, contentMedia.ContentId);
+
+			return key;
 		}
 
 		// ----------------------------------------------------------------------------
