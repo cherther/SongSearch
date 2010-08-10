@@ -92,13 +92,21 @@ namespace SongSearch.Web.Tasks {
 		// **************************************
 		// UploadToRemote
 		// **************************************
-		public void UploadToRemote(bool checkSize = false) {
+		public void UploadToRemote(bool checkSize = false, bool onlyNewContent = false) {
 
-		
+
+			App.Logger.Info(String.Format("Starting Amazon upload at {0}", DateTime.Now));
+
 			using (_amazon = new AmazonCloudService()) {
+				
+				var query = DataSession.All<Content>();
+				
+				if (onlyNewContent) {
+					query = query.Where(c => c.ContentMedia.Any(m => m.IsRemote == false));
+				}
 
-				var contents = DataSession.All<Content>().ToList();
-
+				var contents = query.ToList();
+				
 				var remoteList = GetRemoteFileList();
 
 				//var remoteFolder = _amazon.GetContentPrefix(version);
@@ -128,6 +136,7 @@ namespace SongSearch.Web.Tasks {
 
 								try {
 									_amazon.PutContentMedia(file.FullName, media);
+									App.Logger.Info(String.Format("Uploaded {0}", file.FullName));
 									media.IsRemote = true;
 								}
 								catch (Exception ex) {
@@ -140,6 +149,7 @@ namespace SongSearch.Web.Tasks {
 						} else {
 //							media.IsRemote = false;
 							dbContent.ContentMedia.Remove(media);
+							App.Logger.Info(String.Format("ContentMedia for #{0} is missing and has been removed", media.ContentId));
 						}
 					}
 					DataSession.CommitChanges();
@@ -147,7 +157,7 @@ namespace SongSearch.Web.Tasks {
 					
 //				DataSession.CommitChanges();
 
-				Debug.WriteLine("Done uploading");
+				App.Logger.Info(String.Format("Completed Amazon upload at {0}", DateTime.Now));
 				
 			}	
 		}

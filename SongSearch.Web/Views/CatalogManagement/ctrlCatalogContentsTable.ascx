@@ -53,7 +53,7 @@
 		<%
 			var mediaUrl = item.HasMediaFullVersion ? item.ContentMedia.FullVersion().MediaUrl() : "";
 
-		   var titleLength = 35;
+			var titleLength = 35;
 			var title = (!String.IsNullOrWhiteSpace(item.Title) ?
 					item.Title.Length > titleLength ? String.Concat(item.Title.Substring(0, titleLength), "...")
 					: item.Title

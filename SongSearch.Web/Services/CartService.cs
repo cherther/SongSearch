@@ -24,8 +24,6 @@ namespace SongSearch.Web.Services {
 		private bool _disposed;
 		//private string _activeUserIdentity;
 
-		private const int _daysToExpire = 30;
-		private const int _daysToDelete = 7;
 		
 		IMediaService _mediaService;
 
@@ -316,39 +314,6 @@ namespace SongSearch.Web.Services {
 		}
 
 		
-
-		// **************************************
-		// ArchiveExpiredCarts
-		// **************************************
-		public void ArchiveExpiredCarts() {
-			var expiredCarts = DataSession.All<Cart>()
-									.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed &&
-										c.LastUpdatedOn < DateTime.Now.AddDays(-_daysToExpire));
-
-			foreach (var cart in expiredCarts) {
-				cart.CartStatus = (int)CartStatusCodes.Downloaded;
-				cart.LastUpdatedOn = DateTime.Now;
-			}
-			DataSession.CommitChanges();
-
-			expiredCarts = null;
-		}
-
-		// **************************************
-		// DeletedExpiredArchivedCarts
-		// **************************************
-		public void DeletedExpiredArchivedCarts() {
-			var expiredCarts = DataSession.All<Cart>()
-									.Where(c => c.CartStatus == (int)CartStatusCodes.Downloaded &&
-										 c.LastUpdatedOn < DateTime.Now.AddDays(-_daysToDelete));
-
-			foreach (Cart cart in expiredCarts) {
-				DeleteCart(cart.CartId);
-			}
-			expiredCarts = null;
-		}
-
-
 		// ----------------------------------------------------------------------------
 		// (Private(
 		// ----------------------------------------------------------------------------
@@ -431,7 +396,59 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
+		private const int DAYS_TO_EXPIRE = 3;
+		private const int DAYS_TO_DELETE = 7;
+		
+		// **************************************
+		// ArchiveExpiredCarts
+		// **************************************
+		public static void ArchiveExpiredCarts() {
 
+			using (var session = new SongSearchDataSession()) {
+
+				var cutOffDate = DateTime.Now.AddDays(-DAYS_TO_EXPIRE);
+
+				var expiredCarts = session.All<Cart>()
+										.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed &&
+											c.LastUpdatedOn < cutOffDate);
+
+				foreach (var cart in expiredCarts) {
+					cart.CartStatus = (int)CartStatusCodes.Downloaded;
+					cart.LastUpdatedOn = DateTime.Now;
+				}
+				session.CommitChanges();
+
+				expiredCarts = null;
+
+			}
+		}
+
+		// **************************************
+		// DeletedExpiredArchivedCarts
+		// **************************************
+		public static void DeletedExpiredArchivedCarts() {
+
+			using (var session = new SongSearchDataSession()) {
+
+				var cutOffDate = DateTime.Now.AddDays(-DAYS_TO_DELETE);
+				var expiredCarts = session.All<Cart>()
+										.Where(c => c.CartStatus == (int)CartStatusCodes.Downloaded &&
+											 c.LastUpdatedOn < cutOffDate)
+											 .ToList();
+
+				foreach (var cart in expiredCarts) {
+
+					string path = cart.ArchivePath();
+
+					session.Delete<Cart>(cart);
+					session.CommitChanges();
+
+					FileSystem.SafeDelete(path, false);
+
+				}
+				expiredCarts = null;
+			}
+		}
 
 	}
 }

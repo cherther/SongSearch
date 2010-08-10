@@ -84,11 +84,11 @@ namespace SongSearch.Web.Services {
 			var contents = catalog.Contents.ToList();
 			foreach (var content in contents) {
 
-				FileSystem.SafeDelete(content.ContentMedia.PreviewVersion().MediaFilePath(true), true);
-				FileSystem.SafeDelete(content.ContentMedia.FullVersion().MediaFilePath(true), true);
+				foreach (var media in content.ContentMedia) {
+					FileSystem.SafeDelete(media.MediaFilePath(true), true);
+				}
 
 				DataSession.Delete<Content>(content);
-
 			}
 
 			DataSession.Delete<Catalog>(catalog);

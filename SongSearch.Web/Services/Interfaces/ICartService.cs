@@ -30,8 +30,5 @@ namespace SongSearch.Web.Services {
 
 		void DeleteCart(int cartId);
 
-		void ArchiveExpiredCarts();
-		void DeletedExpiredArchivedCarts();
-
 	}
 }
