@@ -28,13 +28,19 @@
 		<%} %>
 		<span title="<%: user.UserName %>">
 		<%if (Model.HierarchyLevel > 0) { %>
-		- <%:userDisplayName%>
+			<%if (App.IsLicensedVersion && user.IsPlanUser) {%>
+			<%:userDisplayName%>
+			<img src="../../Public/Images/Icons/Silk/money_dollar.png" alt="Plan User" title="Plan User" />
+			<%} else {%>
+			&nbsp;-&nbsp;<%:userDisplayName%>
+			<%} %>
 		<%} else {%>
 			<strong><%:userDisplayName%></strong>
+			<img src="../../Public/Images/Icons/Silk/star_gold.png" alt="SuperAdmin" title="SuperAdmin"/>
 		<%} %>
-		</span>
+		</span>	
 		</td>
-		 <td>
+		 <td class="text-center">
             <%:Html.Hidden(String.Concat("ur-", userId), userCatRoleId)%>
             <%
             foreach (var role in Model.CatalogRoles)

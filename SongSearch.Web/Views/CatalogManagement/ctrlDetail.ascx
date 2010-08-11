@@ -63,7 +63,7 @@
 				<td>
 				Set Role for All Users:
 				</td>
-				<td>
+				<td class="text-center">
 				<%
 				foreach (var role in Model.CatalogRoles) {
 					string roleName = ((SongSearch.Web.Roles)role).ToString();

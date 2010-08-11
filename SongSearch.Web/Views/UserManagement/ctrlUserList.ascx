@@ -14,9 +14,21 @@
 	   %>
 
 	<tr id="<%: rowId%>" class="cw-user-listing <%: rowClass%>">
-		<td>-</td>
 		<td>
-			<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
+			<%if (user.IsSuperAdmin()) {%>
+				<strong>
+				<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
+				</strong>
+				<img src="../../Public/Images/Icons/Silk/star_gold.png" alt="SuperAdmin" title="SuperAdmin"/>
+			<%} else {
+				if (App.IsLicensedVersion && user.IsPlanUser) {%>
+					&nbsp;&nbsp;
+					<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
+					<img src="../../Public/Images/Icons/Silk/money_dollar.png" alt="Plan User" title="Plan User" />
+				<%} else {%>
+				&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
+				<%}%>
+			<%}%>
 		</td>
 	</tr>
 	<%
@@ -24,7 +36,6 @@
 	{
 	 %>
 	<tr class="cw-user-child-listing <%: rowClass%>">
-		<td>&nbsp;</td>
 		<td>
 			<table class="cw-children cw-tbl-usr">
 				<% Html.RenderPartial("ctrlUserList", user.ChildUsers); %>

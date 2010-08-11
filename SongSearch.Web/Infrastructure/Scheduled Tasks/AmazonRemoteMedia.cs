@@ -106,58 +106,61 @@ namespace SongSearch.Web.Tasks {
 				}
 
 				var contents = query.ToList();
-				
-				var remoteList = GetRemoteFileList();
+				if (contents.Count > 0) {
 
-				//var remoteFolder = _amazon.GetContentPrefix(version);
+					var remoteList = GetRemoteFileList();
 
-				foreach (var content in contents) {
+					//var remoteFolder = _amazon.GetContentPrefix(version);
 
-					var dbContent = DataSession.Single<Content>(c => c.ContentId == content.ContentId);
+					foreach (var content in contents.AsParallel()) {
 
-					foreach (var media in dbContent.ContentMedia) {
+						var dbContent = DataSession.Single<Content>(c => c.ContentId == content.ContentId);
 
-						var key = _amazon.GetContentKey(media);
-						var remoteMedia = remoteList[(MediaVersion)media.MediaVersion];
+						foreach (var media in dbContent.ContentMedia.AsParallel()) {
 
-						var filePath = Path.Combine((MediaVersion)media.MediaVersion == MediaVersion.Full ?
-							SystemConfig.MediaPathFull :
-							SystemConfig.MediaPathPreview,
-							String.Concat(content.ContentId, SystemConfig.MediaDefaultExtension)
-							);
+							var key = _amazon.GetContentKey(media);
+							var remoteMedia = remoteList[(MediaVersion)media.MediaVersion];
 
-						var file = new FileInfo(filePath);
+							var filePath = Path.Combine((MediaVersion)media.MediaVersion == MediaVersion.Full ?
+								SystemConfig.MediaPathFull :
+								SystemConfig.MediaPathPreview,
+								String.Concat(content.ContentId, SystemConfig.MediaDefaultExtension)
+								);
 
-						if (file.Exists) {
-							var remoteFile = checkSize ? remoteMedia.SingleOrDefault(x => x.Key == key && x.Size == file.Length)
-								: remoteMedia.SingleOrDefault(x => x.Key == key);
+							var file = new FileInfo(filePath);
 
-							if (remoteFile == null) {
+							if (file.Exists) {
+								var remoteFile = checkSize ? remoteMedia.SingleOrDefault(x => x.Key == key && x.Size == file.Length)
+									: remoteMedia.SingleOrDefault(x => x.Key == key);
 
-								try {
-									_amazon.PutContentMedia(file.FullName, media);
-									App.Logger.Info(String.Format("Uploaded {0}", file.FullName));
+								if (remoteFile == null) {
+
+									try {
+										_amazon.PutContentMedia(file.FullName, media);
+										App.Logger.Info(String.Format("Uploaded {0}", file.FullName));
+										media.IsRemote = true;
+									}
+									catch {//(Exception ex) {
+										//App.Logger.Error(ex);
+										media.IsRemote = false;
+										continue;
+									}
+								} else {
 									media.IsRemote = true;
 								}
-								catch (Exception ex) {
-									App.Logger.Error(ex);
-									media.IsRemote = false;
-								}
 							} else {
-								media.IsRemote = true;
+								//							media.IsRemote = false;
+								dbContent.ContentMedia.Remove(media);
+								App.Logger.Info(String.Format("ContentMedia for #{0} is missing and has been removed", media.ContentId));
 							}
-						} else {
-//							media.IsRemote = false;
-							dbContent.ContentMedia.Remove(media);
-							App.Logger.Info(String.Format("ContentMedia for #{0} is missing and has been removed", media.ContentId));
 						}
+						DataSession.CommitChanges();
 					}
-					DataSession.CommitChanges();
-				}
-					
-//				DataSession.CommitChanges();
 
-				App.Logger.Info(String.Format("Completed Amazon upload at {0}", DateTime.Now));
+					//				DataSession.CommitChanges();
+
+					App.Logger.Info(String.Format("Completed Amazon upload at {0}", DateTime.Now));
+				}
 				
 			}	
 		}

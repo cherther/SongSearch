@@ -29,7 +29,19 @@ namespace Codewerks.SongSearch.Tasks {
 		public static void UploadNewFiles() {
 
 			using (var amz = new AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
-				amz.UploadToRemote();
+				amz.UploadToRemote(checkSize: false, onlyNewContent: true);
+			}
+		}
+		public static void UploadAllFiles() {
+
+			using (var amz = new AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
+				amz.UploadToRemote(checkSize: false, onlyNewContent: false);
+			}
+		}
+		public static void UploadAllFilesWithSize() {
+
+			using (var amz = new AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
+				amz.UploadToRemote(checkSize: true, onlyNewContent: false);
 			}
 		}
 		public static void UpdateContentMedia() {

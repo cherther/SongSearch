@@ -172,7 +172,7 @@ namespace SongSearch.Web.Data {
 		[DataType(DataType.MultilineText)]
 		public object LicensingNotes { get; set; }
 
-		[DisplayName("Instruments")]
+		[DisplayName("Feat. Instruments")]
 		[DataType(DataType.MultilineText)]
 		public object Instruments { get; set; }
 

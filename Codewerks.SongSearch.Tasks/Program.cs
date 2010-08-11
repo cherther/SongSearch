@@ -51,21 +51,14 @@ namespace Codewerks.SongSearch.Tasks {
 				case "texttag":
 					Importer.ConvertTextTags();
 					break;
-				case "awsupload":
-					AmazonAWS.Upload(MediaVersion.Full);
-					AmazonAWS.Upload(MediaVersion.Preview);
-					break;
-				case "awspreview":
-					AmazonAWS.Upload(MediaVersion.Preview);
-					break;
-				case "awsfull":
-					AmazonAWS.Upload(MediaVersion.Full);
-					break;
-				case "awsstatus":
-					AmazonAWS.UpdateMediaRemoteStatus();
-					break;
 				case "uploadnew":
 					AmazonAWS.UploadNewFiles();
+					break;
+				case "uploadall":
+					AmazonAWS.UploadAllFiles();
+					break;
+				case "uploadallsize":
+					AmazonAWS.UploadAllFilesWithSize();
 					break;
 				case "updatemedia":
 					AmazonAWS.UpdateContentMedia();

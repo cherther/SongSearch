@@ -139,7 +139,8 @@ namespace SongSearch.Web
 				vm.MyUsers = new List<User>() { user };
 				vm.Catalogs = activeUser.IsSuperAdmin() ? CacheService.Catalogs() : activeUser.MyAdminCatalogs();
 				vm.Roles = ModelEnums.GetRoles().Where(r => r >= activeUser.RoleId).ToArray();
-				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= activeUser.RoleId).ToArray();
+
+				vm.CatalogRoles = activeUser.MyAssignableRoles();
 				vm.IsThisUser = user.UserId == activeUser.UserId;
 				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = !vm.IsThisUser && !user.IsSuperAdmin();

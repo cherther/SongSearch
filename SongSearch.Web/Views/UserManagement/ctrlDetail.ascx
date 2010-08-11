@@ -53,7 +53,7 @@
 	</div>
 
 </div>
-<%if (Page.User.UserIsSuperAdmin()) { %>
+<%if (App.IsLicensedVersion && Page.User.UserIsSuperAdmin()) { %>
 <div>&nbsp;</div>
 <div class="six_column section">
 	
@@ -66,6 +66,7 @@
 
 </div>
 <%} %>
+<%if (!App.IsLicensedVersion || Model.CatalogRoles.Contains((int)SongSearch.Web.Roles.Admin)) {%>
 <div>&nbsp;</div>
 <hr />
 <div>&nbsp;</div>
@@ -85,8 +86,8 @@
 		<label for="cw-system-access-no">No</label>
 		<%--<label for="cw-system-access" class="<%: labelClass %>"><%: roleMsg %></label>--%>
 		&nbsp;<span><%: adminMsg %></span>
+<%} %>
 <div>&nbsp;</div>
-
 <hr />
 <div>&nbsp;</div>
 <label><strong>Catalog Privileges:</strong></label>
@@ -97,7 +98,7 @@
 				Set Role for All Catalogs:
 				</td>
 				<td>&nbsp;</td>
-				<td>
+				<td class="text-center">
 				<%
 					foreach (var role in Model.CatalogRoles)
 					{

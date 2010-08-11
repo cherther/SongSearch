@@ -383,6 +383,18 @@ namespace SongSearch.Web {
 
 			return quotas;
 		}
+
+		public static int[] MyAssignableRoles(this User user) {
+
+			if (!user.IsSuperAdmin() && App.IsLicensedVersion && user.MyQuotas().NumberOfCatalogAdmins.Remaining.GetValueOrDefault() == 0) {
+				return ModelEnums.GetPublicRoles().Where(r => r > (int)Roles.Admin).ToArray();
+			} else {
+				return ModelEnums.GetPublicRoles().Where(r => r >= user.RoleId).ToArray();
+			}
+		}
+		public static bool CanAssignAdmin(this User user) {
+			return user.MyAssignableRoles().Contains((int)Roles.Admin);
+		}
 		// **************************************
 		// GetContactInfo
 		// **************************************

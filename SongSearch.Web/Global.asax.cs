@@ -225,11 +225,14 @@ namespace SongSearch.Web {
 			catch { }
 			//Logger.Info("App is starting up");
 
+#if !DEBUG
+
 			ThreadStart amazonSync = new ThreadStart(AmazonSyncLoop);
 			Thread amazonLoop = new Thread(amazonSync);
 			amazonLoop.Start();
+#endif
 
-			ThreadStart cartCleanup = new ThreadStart(CartLoop);
+			ThreadStart cartCleanup = new ThreadStart(CartCleanupLoop);
 			Thread cartLoop = new Thread(cartCleanup);
 			cartLoop.Start();
 
@@ -251,6 +254,9 @@ namespace SongSearch.Web {
 			Logger.Fatal(lastException);
 		}
 
+		// **************************************
+		// AmazonSyncLoop
+		// **************************************
 		static void AmazonSyncLoop() {
 			// In this example, task will repeat in infinite loop
 			// You can additional parameter if you want to have an option 
@@ -260,14 +266,21 @@ namespace SongSearch.Web {
 				//ScheduledTask();
 				using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
 
-					amz.UploadToRemote(checkSize: false, onlyNewContent: true);
-					
+					//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
+					try {
+						amz.UploadToRemote(checkSize: true, onlyNewContent: false);
+					}
+					catch { }
 				}
 				// Wait for certain time interval
 				System.Threading.Thread.Sleep(TimeSpan.FromHours(1));
 			}
 		}
-		static void CartLoop() {
+
+		// **************************************
+		// CartLoop
+		// **************************************
+		static void CartCleanupLoop() {
 			// In this example, task will repeat in infinite loop
 			// You can additional parameter if you want to have an option 
 			// to stop the task from some page

@@ -62,7 +62,7 @@ namespace SongSearch.Web.Controllers
 				vm.MyCatalogs = new List<Catalog>() { catalog };
 				vm.Users = user.MyUserHierarchy();
 				vm.Roles = ModelEnums.GetRoles().Where(r => r >= user.RoleId).ToArray();
-				vm.CatalogRoles = ModelEnums.GetPublicRoles().Where(r => r >= user.RoleId).ToArray();
+				vm.CatalogRoles = user.MyAssignableRoles();
 				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = user.IsSuperAdmin() || user.IsAtLeastInCatalogRole(Roles.Admin, id);
 

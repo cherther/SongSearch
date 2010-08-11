@@ -27,7 +27,7 @@
 			<%if (isCreatedByThisUser) { %>
 			<img src="/public/images/icons/silk/tick.png" alt="Ok" title="This catalog was created by <%: user.FullName() %>"/>
 			<%} else { %>&nbsp;<%} %></td>
-			<td>
+			<td class="text-center">
 					
 			<%:Html.Hidden(String.Concat("cr-", catalogId), userCatRoleId)%>
 			<%
