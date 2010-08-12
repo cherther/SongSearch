@@ -129,7 +129,7 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	</td>
 		<%foreach (var plan in plans) { %>
 		<td class="text-center cell-border-closer <%: plan.PlanDisplayClass() %>">
-			<a href="#" class="cw-button cw-simple cw-medium cw-green">Upgrade</a>
+			<a href="#" class="cw-button cw-simple cw-medium cw-green" disabled="disabled">Upgrade</a>
 		</td>
 		<%} %>
 	<%} else {%>
