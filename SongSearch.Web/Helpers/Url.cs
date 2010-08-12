@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SongSearch.Web;
+using SongSearch.Web.Data;
 
 namespace System.Web.Mvc {
 	public static class UrlHelpers {
@@ -70,6 +72,16 @@ namespace System.Web.Mvc {
 
 		public static string GetReturnUrl(this ViewUserControl pg) {
 			return GetReturnUrl(pg.Page as ViewPage);
+		}
+
+		public static string MediaUrl(this UrlHelper url, Content item) {
+			return item.HasMediaFullVersion ?
+				String.Format("{0}{1}",
+				!item.IsMediaOnRemoteServer ? url.SiteRoot() : "",
+				item.ContentMedia.FullVersion().MediaUrl()
+				)
+				: "";
+		
 		}
 
 	}

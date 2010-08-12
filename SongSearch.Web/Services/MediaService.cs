@@ -122,7 +122,10 @@ namespace SongSearch.Web.Services {
 		}
 		public static string GetContentMediaUrlLocal(ContentMedia contentMedia) {
 
-			return String.Format("/Media/Stream/{0}?version={1}", contentMedia.ContentId.ToString(), (MediaVersion)contentMedia.MediaVersion);
+			return String.Format("{0}/Media/Stream/{1}?version={2}", 
+				"", //SystemConfig.BaseUrl,
+				contentMedia.ContentId.ToString(), 
+				(MediaVersion)contentMedia.MediaVersion);
 			
 		}
 

@@ -402,7 +402,7 @@ function showContentPanel(link) {
 		isContentSaveMode = contentLink.rel == "Save";
 		isContentViewMode = !isContentEditMode && !isContentSaveMode;
 
-		if (isContentViewMode) {
+		if (isContentViewMode && isContentDetailShowing) {
 			mediaStop();
 		}
 		var sameContent = lastContentDetailLinkClicked != null ? link[0] == lastContentDetailLinkClicked[0] : false;

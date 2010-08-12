@@ -53,7 +53,14 @@
 
 	<% foreach (var item in results) { %>
 		<% 
-			var mediaUrl = item.HasMediaFullVersion ? item.ContentMedia.FullVersion().MediaUrl() : "";
+			//var mediaUrl = item.HasMediaFullVersion ? 
+			//    String.Format("{0}{1}",
+			//    !item.IsMediaOnRemoteServer ? Url.SiteRoot() : "",			
+			//    item.ContentMedia.FullVersion().MediaUrl()
+			//    )
+			//    : "";
+		
+			var mediaUrl = Url.MediaUrl(item);
 		
 			//var mediaUrl = Url.SiteRoot();
 			//mediaUrl = item.HasMediaFullVersion ? 
