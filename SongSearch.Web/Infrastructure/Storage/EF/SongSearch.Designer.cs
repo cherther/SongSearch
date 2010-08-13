@@ -3552,7 +3552,8 @@ namespace SongSearch.Web.Data
         /// <param name="isCacheable">Initial value of the IsCacheable property.</param>
         /// <param name="isIndexable">Initial value of the IsIndexable property.</param>
         /// <param name="includeInSearchMenu">Initial value of the IncludeInSearchMenu property.</param>
-        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyName, global::System.String displayName, global::System.String shortName, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu)
+        /// <param name="searchMenuOrder">Initial value of the SearchMenuOrder property.</param>
+        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyName, global::System.String displayName, global::System.String shortName, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu, global::System.Int32 searchMenuOrder)
         {
             SearchProperty searchProperty = new SearchProperty();
             searchProperty.PropertyId = propertyId;
@@ -3565,6 +3566,7 @@ namespace SongSearch.Web.Data
             searchProperty.IsCacheable = isCacheable;
             searchProperty.IsIndexable = isIndexable;
             searchProperty.IncludeInSearchMenu = includeInSearchMenu;
+            searchProperty.SearchMenuOrder = searchMenuOrder;
             return searchProperty;
         }
 
@@ -3933,6 +3935,30 @@ namespace SongSearch.Web.Data
         private global::System.Boolean _IncludeInSearchMenu;
         partial void OnIncludeInSearchMenuChanging(global::System.Boolean value);
         partial void OnIncludeInSearchMenuChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SearchMenuOrder
+        {
+            get
+            {
+                return _SearchMenuOrder;
+            }
+            set
+            {
+                OnSearchMenuOrderChanging(value);
+                ReportPropertyChanging("SearchMenuOrder");
+                _SearchMenuOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SearchMenuOrder");
+                OnSearchMenuOrderChanged();
+            }
+        }
+        private global::System.Int32 _SearchMenuOrder;
+        partial void OnSearchMenuOrderChanging(global::System.Int32 value);
+        partial void OnSearchMenuOrderChanged();
 
         #endregion
     

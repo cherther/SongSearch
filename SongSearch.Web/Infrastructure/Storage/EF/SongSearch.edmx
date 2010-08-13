@@ -306,6 +306,7 @@
           <Property Name="IsCacheable" Type="bit" Nullable="false" />
           <Property Name="IsIndexable" Type="bit" Nullable="false" />
           <Property Name="IncludeInSearchMenu" Type="bit" Nullable="false" />
+          <Property Name="SearchMenuOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SiteProfiles">
           <Key>
@@ -1134,6 +1135,7 @@
           <Property Type="Boolean" Name="IsCacheable" Nullable="false" />
           <Property Type="Boolean" Name="IsIndexable" Nullable="false" />
           <Property Type="Boolean" Name="IncludeInSearchMenu" Nullable="false" />
+          <Property Type="Int32" Name="SearchMenuOrder" Nullable="false" />
         </EntityType>
         <Association Name="FK_Users_Users">
           <End Type="SongSearch.Web.Data.Model.User" Role="User" Multiplicity="0..1" />
@@ -1460,6 +1462,7 @@
           <EntitySetMapping Name="SearchProperties">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SearchProperty">
               <MappingFragment StoreEntitySet="SearchProperties">
+                <ScalarProperty Name="SearchMenuOrder" ColumnName="SearchMenuOrder" />
                 <ScalarProperty Name="IncludeInSearchMenu" ColumnName="IncludeInSearchMenu" />
                 <ScalarProperty Name="IsIndexable" ColumnName="IsIndexable" />
                 <ScalarProperty Name="IsCacheable" ColumnName="IsCacheable" />

@@ -5,6 +5,7 @@ namespace SongSearch.Web {
 	public static class SystemConfig {
 
 		public static string BaseUrl { get; set; }
+		public static string AdminEmailAddress { get; set; }
 		public static string DefaultSiteProfileName { get; set; }
 		public static string DefaultSiteProfileId { get; set; }
 		public static string MediaPathFull { get; set; }
@@ -36,6 +37,7 @@ namespace SongSearch.Web {
 			UploadPath = Configuration.Get("Sys_UploadPath");
 			ZipPath = Configuration.Get("Sys_ZipPath");
 			ZipFormat = Configuration.Get("Sys_ZipFormat");
+			AdminEmailAddress = Configuration.Get("Sys_AdminEmailAddress");
 			ZipUserFormat = Configuration.Get("Sys_ZipUserFormat");
 			LogSearchTerms = bool.Parse(Configuration.Get("Sys_LogSearchTerms"));
 			LogSearchResults = bool.Parse(Configuration.Get("Sys_LogSearchResults"));

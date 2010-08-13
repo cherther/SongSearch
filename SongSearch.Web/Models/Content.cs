@@ -131,7 +131,7 @@ namespace SongSearch.Web.Data {
 		[DisplayName("Last Updated")]
 		public object LastUpdatedOn { get; set; }
 
-		[DisplayName("All-in")]
+		[DisplayName("100% All-in Master & Composition")]
 		public object IsControlledAllIn { get; set; }
 
 		[DisplayName("Song Excerpt")]
@@ -144,10 +144,10 @@ namespace SongSearch.Web.Data {
 		[Required]
 		public object Artist { get; set; }
 
-		[DisplayName("Pop Charts")]
+		[DisplayName("Billboard Pop Chart")]
 		public object Pop { get; set; }
 
-		[DisplayName("Country Charts")]
+		[DisplayName("Billboard Country Chart")]
 		public object Country { get; set; }
 			
 		[DisplayName("Release Year")]

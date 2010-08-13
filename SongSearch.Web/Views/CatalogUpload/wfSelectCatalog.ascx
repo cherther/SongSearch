@@ -9,7 +9,7 @@ Enter the name of the new catalog:
 <%if (Model.MyCatalogs.Count > 0){ %>
 <div>&nbsp;</div>
 <div>
-Or, select one of your existing catalogs:
+Or, add songs to one of your existing catalogs:
 	<div>
 		<%: Html.DropDownList("state.CatalogId", new SelectList(Model.MyCatalogs, "CatalogId", "CatalogName", Model.CatalogUploadState.CatalogId), "")%>
 	</div>

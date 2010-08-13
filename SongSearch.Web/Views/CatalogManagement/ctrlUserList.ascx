@@ -21,7 +21,7 @@
 	   
 	   %>
 
-    <tr id="<%: rowId%>" class="cw-user-listing <%: rowClass%>">
+	<tr id="<%: rowId%>" class="cw-user-listing <%: rowClass%>">
 		<td>
 		<%for (var i = 0; i < Model.HierarchyLevel; i++) {%>
 		&nbsp;&nbsp;
@@ -36,26 +36,28 @@
 			<%} %>
 		<%} else {%>
 			<strong><%:userDisplayName%></strong>
+			<%if (user.IsSuperAdmin()) {%>
 			<img src="../../Public/Images/Icons/Silk/star_gold.png" alt="SuperAdmin" title="SuperAdmin"/>
+			<%} %>
 		<%} %>
 		</span>	
 		</td>
 		 <td class="text-center">
-            <%:Html.Hidden(String.Concat("ur-", userId), userCatRoleId)%>
-            <%
-            foreach (var role in Model.CatalogRoles)
+			<%:Html.Hidden(String.Concat("ur-", userId), userCatRoleId)%>
+			<%
+			foreach (var role in Model.CatalogRoles)
 			{
-                var roleClass = String.Concat("cw-tag-box cw-cat-role-edit cw-button cw-simple cw-small", role == userCatRoleId ? " cw-green" : " cw-gray");
-                var roleId = !role.Equals(userCatRoleId) ? role : 0;
-                var roleName = ((SongSearch.Web.Roles)role).ToString();
-                        
+				var roleClass = String.Concat("cw-tag-box cw-cat-role-edit cw-button cw-simple cw-small", role == userCatRoleId ? " cw-green" : " cw-gray");
+				var roleId = !role.Equals(userCatRoleId) ? role : 0;
+				var roleName = ((SongSearch.Web.Roles)role).ToString();
+						
 				%>
-                <%:Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, catalog.CatalogId, roleId), new { @class = roleClass, rel = catalogDetailUrl, title="Click to select this role, unlick to remove this role" })%>
+				<%:Html.ActionLink(roleName, MVC.UserManagement.UpdateCatalog(user.UserId, catalog.CatalogId, roleId), new { @class = roleClass, rel = catalogDetailUrl, title="Click to select this role, unlick to remove this role" })%>
 			<%} %>
-            </td>
+			</td>
 	</tr>
 	<%
-        if (user.ChildUsers.Count() > 0)
+		if (user.ChildUsers.Count() > 0)
 		{
 			var childModel = new CatalogViewModel() { MyCatalogs = Model.MyCatalogs, Users = Model.Users, CatalogRoles = Model.CatalogRoles };
 			childModel.Users = user.ChildUsers;

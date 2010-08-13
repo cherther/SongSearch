@@ -18,7 +18,9 @@ namespace SongSearch.Web {
 					msg.IsBodyHtml = true;
 					msg.Body = message;
 
+#if DEBUG
 					cl.EnableSsl = true;
+#endif
 					cl.Send(msg); //from, to, subject, message);
 				}
 			}

@@ -66,6 +66,7 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
             public readonly string Contact = "~/Views/Home/Contact.aspx";
+            public readonly string Help = "~/Views/Home/Help.aspx";
             public readonly string Index = "~/Views/Home/Index.aspx";
             public readonly string PrivacyPolicy = "~/Views/Home/PrivacyPolicy.aspx";
             public readonly string TermsOfUse = "~/Views/Home/TermsOfUse.aspx";

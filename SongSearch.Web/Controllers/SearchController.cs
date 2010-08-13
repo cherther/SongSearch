@@ -218,7 +218,7 @@ namespace SongSearch.Web.Controllers
 
 			return new SearchViewModel() {
 				NavigationLocation = new string[] { "Search" },
-				SearchMenuProperties = CacheService.SearchProperties((Roles)user.RoleId),
+				SearchMenuProperties = CacheService.SearchProperties((Roles)user.RoleId).OrderBy(x => x.SearchMenuOrder).ToList(),
 				SearchTags = CacheService.TopTags()
 			};
 

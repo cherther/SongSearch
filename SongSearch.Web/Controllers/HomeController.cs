@@ -59,7 +59,7 @@ namespace SongSearch.Web.Controllers {
 				vm.PageMessage = "Your e-mail has been successfully sent to our team, and we will review your message and respond as quickly as possible.";
 				vm.ContactInfo = vm.SiteProfile.GetContactInfo(Account.User());
 
-				string sender = String.Format("{0} <{1}>", model.Name, model.Email);
+				string sender = String.Format("{0} <{1}>", SiteProfileData.SiteProfile().CompanyName, SystemConfig.AdminEmailAddress);//
 				string subject = String.Format("[{0} Contact Us] {1}", vm.SiteProfile.CompanyName, model.Subject);
 				StringBuilder sb = new StringBuilder();
 				sb.AppendFormat("<p>Name: {0}</p>", model.Name);
@@ -71,14 +71,17 @@ namespace SongSearch.Web.Controllers {
 				string msg = sb.ToString();
 				sb = null;
 
-
-				Mail.SendMail(
-					sender,
-					String.Concat(vm.ContactInfo.Email,",",vm.ContactInfo.AdminEmail),//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
-					subject,
-					msg
-					);
-
+				try {
+					Mail.SendMail(
+						sender,
+						String.Concat(vm.ContactInfo.Email, ",", vm.ContactInfo.AdminEmail),//SiteProfileData.SiteProfile().ContactEmail,//Settings.ContactEmailAddress.Text(),
+						subject,
+						msg
+						);
+				}
+				catch (Exception ex) {
+					App.Logger.Error(ex);
+				}
 				return View(vm);
 
 			} else {

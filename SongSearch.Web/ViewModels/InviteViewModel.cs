@@ -24,6 +24,7 @@ namespace SongSearch.Web {
 		public string InviteUrl { get; set; }
 		
 		public string BaseUrl { get; set; }
+		public User InvitingUser { get; set; }
 
 		[Required]
 		[DataType(DataType.EmailAddress)]

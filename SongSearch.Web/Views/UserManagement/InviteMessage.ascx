@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.InviteViewModel>" %>
 <%
 	var baseUrl = Model.BaseUrl;
-	var sender = Model.Sender;
+	var sender = Model.InvitingUser;
 	var recipient = Model.Recipient;
 	var url = String.Format(@"{0}/{1}?em={2}", Model.InviteUrl, Model.InviteId, Model.Recipient);
    
@@ -48,7 +48,7 @@
 		</ol>
 	<p>Thanks, and I'm looking forward to working with you!</p>
 
-	<p><em><%:sender%></em></p>
+	<p><em><%: String.Format("{0} <{1}", sender.FullName(), sender.UserName) %></em></p>
 </div>
 </body>
 </html>

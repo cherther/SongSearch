@@ -39,6 +39,7 @@ namespace SongSearch.Web.Services {
 			var userId = Account.User().UserId;
 			var carts = ReadSession.GetObjectQuery<Cart>()
 				.Include("Contents")
+				.Include("Contents.ContentMedia")
 				.Where(c => c.UserId == userId).ToList();
 
 			return AddUserDownloadableNames(carts);
@@ -75,7 +76,7 @@ namespace SongSearch.Web.Services {
 		public Cart MyActiveCartContents() {
 			var userId = Account.User().UserId;
 			return ReadSession.GetObjectQuery<Cart>()
-				.Include("Contents")
+				.Include("Contents").Include("Contents.ContentMedia")
 				.Where(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();			
 		}
 		

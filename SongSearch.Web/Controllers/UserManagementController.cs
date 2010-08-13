@@ -102,7 +102,7 @@ namespace SongSearch.Web
 					return View(model);
 				
 				}
-				string sender = String.Format("{0} <{1}>", this.Friendly(), this.UserName()); // Configuration.Get("AdminAddress");
+				string sender = String.Format("{0} <{1}>", this.Friendly(), SystemConfig.AdminEmailAddress);//this.UserName()); // Configuration.Get("AdminAddress");
 
 				foreach (string recipient in recipients) {
 					string address = recipient.ToLower().Trim();
@@ -386,6 +386,7 @@ namespace SongSearch.Web
 						inviteMsg.Recipient = address;
 						inviteMsg.BaseUrl = SystemConfig.BaseUrl;
 						inviteMsg.InviteUrl = String.Format("{0}/{1}", inviteMsg.BaseUrl, "Account/Register");
+						inviteMsg.InvitingUser = User.User();
 
 						//string inviteLink = String.Format("{0}", baseUrl);
 						string subject = String.Format("{0} {1}", SiteProfileData.SiteProfile().CompanyName,

@@ -86,7 +86,7 @@
 					<div class="cw-padded">Phone: <%: Model.ContactInfo.Phone1%></div>
 					<%} %>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Phone2)) {%>
-					<div class="cw-padded">Phone: <%: Model.ContactInfo.Phone1%></div>
+					<div class="cw-padded">Phone: <%: Model.ContactInfo.Phone2%></div>
 					<%} %>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.Fax)) {%>
 					<div class="cw-padded">Fax: <%: Model.ContactInfo.Fax%></div>

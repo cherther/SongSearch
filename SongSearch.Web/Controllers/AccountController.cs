@@ -298,13 +298,15 @@ namespace SongSearch.Web.Controllers {
 
 			try {
 				Mail.SendMail(
-					SiteProfileData.SiteProfile().AdminEmail,
+					SystemConfig.AdminEmailAddress, //SiteProfileData.SiteProfile().AdminEmail,
 					email,
 					SystemMessages.PasswordChangeSuccessSubjectLine,
-					SystemMessages.PasswordChangeSuccess
+					String.Format(SystemMessages.PasswordChangeSuccess, SiteProfileData.SiteProfile().CompanyName)
 					);
 			}
-			catch { }
+			catch (Exception ex) {
+				App.Logger.Error(ex);
+			}
 			return View(new UpdateProfileModel() { NavigationLocation = new string[] { "Home", "ChangePassword" } });
 		}
 
@@ -451,7 +453,7 @@ namespace SongSearch.Web.Controllers {
 				string msg = String.Format(SystemMessages.PasswordResetRequestLink, link);
 
 				Mail.SendMail(
-					SiteProfileData.SiteProfile().AdminEmail,
+					String.Format("{0} <{1}>", SiteProfileData.SiteProfile().CompanyName, SystemConfig.AdminEmailAddress),//
 					model.Email,
 					SystemMessages.PasswordResetRequestSubjectLine,
 					String.Format("{0} {1}", String.Format(SystemMessages.PasswordResetRequest, SiteProfileData.SiteProfile().CompanyName), msg)
