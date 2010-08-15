@@ -4,6 +4,7 @@ namespace SongSearch.Web {
 	
 	public static class SystemConfig {
 
+		public static AppEnvironment Environment { get; set; }
 		public static string BaseUrl { get; set; }
 		public static string AdminEmailAddress { get; set; }
 		public static string DefaultSiteProfileName { get; set; }
@@ -28,6 +29,7 @@ namespace SongSearch.Web {
 
 		static SystemConfig() {
 
+			Environment = (AppEnvironment)Enum.Parse(typeof(AppEnvironment), Configuration.Get("Sys_Environment"));
 			BaseUrl = Configuration.Get("Sys_BaseUrl");
 			DefaultSiteProfileName = Configuration.Get("Sys_DefaultSiteProfileName");
 			DefaultSiteProfileId = Configuration.Get("Sys_DefaultSiteProfileId");

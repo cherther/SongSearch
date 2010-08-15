@@ -12,10 +12,10 @@ namespace SongSearch.Web.Logging {
 			if(x.InnerException!=null)
 				logException=x.InnerException;
 
-			string strErrorMsg= Environment.NewLine+"Error in Path :" + System.Web.HttpContext.Current.Request.Path;
+			string strErrorMsg = Environment.NewLine + "Error in Path :" + System.Web.HttpContext.Current != null ? System.Web.HttpContext.Current.Request.Path : "(no httpContext)";
 
 			// Get the QueryString along with the Virtual Path
-			strErrorMsg += Environment.NewLine + "Raw Url :" + System.Web.HttpContext.Current.Request.RawUrl;
+			strErrorMsg += Environment.NewLine + "Raw Url :" + System.Web.HttpContext.Current != null ? System.Web.HttpContext.Current.Request.RawUrl : "(no httpContext)";
 
 			
 			// Get the error message

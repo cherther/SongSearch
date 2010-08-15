@@ -6,8 +6,8 @@ namespace SongSearch.Web.Data
 {
 	public enum ConnectionStrings
 	{
-		FordMusicConnectionString,
-		SongSearchContext
+		SongSearchContext,
+		SongSearchLogContext
 	}
 
 	// **************************************

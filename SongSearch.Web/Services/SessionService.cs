@@ -86,6 +86,8 @@ namespace SongSearch.Web.Services {
 						_sessionMatrix[key](key, userName);
 					}
 
+					
+
 					_sessionIsInitialized = true;
 				}
 			}

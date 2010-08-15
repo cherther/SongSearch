@@ -102,34 +102,7 @@ namespace SongSearch.Web {
 		Master = 1,
 		Comp
 	}
-	// **************************************
-	// UserActionCodes
-	// **************************************    
-	public enum UserActionCodes {
-		Registered = 0,
-		LoggedIn,
-		LoggedOut,
-		ChangedPassword,
-		UpdatedProfile,
-		SentInvite
-	}
-
-	// **************************************
-	// UserContentActionCodes
-	// **************************************    
-	public enum UserContentActionCodes {
-		CreatedNewContent = 0,
-		UpdatedContent,
-		DeletedContent,
-		PlayedPreview,
-		PlayedFull,
-		AddedToCart,
-		RemovedFromCart,
-		ZippedCart,
-		DownloadedCart,
-		DeletedCart
-	}
-
+	
 	public static class ModelEnums {
 
 		public static MediaVersion[] MediaVersions() {

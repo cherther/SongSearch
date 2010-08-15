@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SongSearch.Web.Data.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="SongSearchWebDataStoreContainer">
+          <EntitySet Name="ContentActionEvents" EntityType="SongSearch.Web.Data.Store.ContentActionEvents" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SearchEvents" EntityType="SongSearch.Web.Data.Store.SearchEvents" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserActionEvents" EntityType="SongSearch.Web.Data.Store.UserActionEvents" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <EntityType Name="ContentActionEvents">
+          <Key>
+            <PropertyRef Name="ContentActionEventId" />
+          </Key>
+          <Property Name="ContentActionEventId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContentActionEventDate" Type="datetime" Nullable="false" />
+          <Property Name="SessionId" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ContentActionId" Type="int" Nullable="false" />
+          <Property Name="ContentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SearchEvents">
+          <Key>
+            <PropertyRef Name="SearchEventId" />
+          </Key>
+          <Property Name="SearchEventId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SearchEventDate" Type="datetime" Nullable="false" />
+          <Property Name="SessionId" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ResultCount" Type="int" Nullable="false" />
+          <Property Name="QueryString" Type="nvarchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="UserActionEvents">
+          <Key>
+            <PropertyRef Name="UserActionEventId" />
+          </Key>
+          <Property Name="UserActionEventId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserActionEventDate" Type="datetime" Nullable="false" />
+          <Property Name="SessionId" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UserActionId" Type="int" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SongSearch.Web.Data.Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="SongSearchLogContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ContentActionEvents" EntityType="SongSearch.Web.Data.Model.ContentActionEvent" />
+          <EntitySet Name="SearchEvents" EntityType="SongSearch.Web.Data.Model.SearchEvent" />
+          <EntitySet Name="UserActionEvents" EntityType="SongSearch.Web.Data.Model.UserActionEvent" />
+        </EntityContainer>
+        <EntityType Name="ContentActionEvent">
+          <Key>
+            <PropertyRef Name="ContentActionEventId" />
+          </Key>
+          <Property Name="ContentActionEventId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContentActionEventDate" Type="DateTime" Nullable="false" />
+          <Property Name="SessionId" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ContentActionId" Type="Int32" Nullable="false" />
+          <Property Name="ContentId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SearchEvent">
+          <Key>
+            <PropertyRef Name="SearchEventId" />
+          </Key>
+          <Property Name="SearchEventId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SearchEventDate" Type="DateTime" Nullable="false" />
+          <Property Name="SessionId" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ResultCount" Type="Int32" Nullable="false" />
+          <Property Name="QueryString" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserActionEvent">
+          <Key>
+            <PropertyRef Name="UserActionEventId" />
+          </Key>
+          <Property Name="UserActionEventId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserActionEventDate" Type="DateTime" Nullable="false" />
+          <Property Name="SessionId" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UserActionId" Type="Int32" Nullable="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SongSearchWebDataStoreContainer" CdmEntityContainer="SongSearchLogContext">
+          <EntitySetMapping Name="ContentActionEvents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.ContentActionEvent"><MappingFragment StoreEntitySet="ContentActionEvents">
+            <ScalarProperty Name="ContentActionEventId" ColumnName="ContentActionEventId" />
+            <ScalarProperty Name="ContentActionEventDate" ColumnName="ContentActionEventDate" />
+            <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="ContentActionId" ColumnName="ContentActionId" />
+            <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SearchEvents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SearchEvent"><MappingFragment StoreEntitySet="SearchEvents">
+            <ScalarProperty Name="SearchEventId" ColumnName="SearchEventId" />
+            <ScalarProperty Name="SearchEventDate" ColumnName="SearchEventDate" />
+            <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
+            <ScalarProperty Name="QueryString" ColumnName="QueryString" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserActionEvents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.UserActionEvent"><MappingFragment StoreEntitySet="UserActionEvents">
+            <ScalarProperty Name="UserActionEventId" ColumnName="UserActionEventId" />
+            <ScalarProperty Name="UserActionEventDate" ColumnName="UserActionEventDate" />
+            <ScalarProperty Name="SessionId" ColumnName="SessionId" />
+            <ScalarProperty Name="UserId" ColumnName="UserId" />
+            <ScalarProperty Name="UserActionId" ColumnName="UserActionId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="SongSearchLog">
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentActionEvent" Width="1.5" PointX="0.75" PointY="0.75" Height="2.172587890625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchEvent" Width="1.5" PointX="2.75" PointY="0.75" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.UserActionEvent" Width="1.5" PointX="0.75" PointY="3.75" Height="1.9802864583333322" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

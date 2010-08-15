@@ -198,6 +198,14 @@
     <Compile Include="Infrastructure\Mailer\Mail.cs" />
     <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
     <Compile Include="Infrastructure\Scheduled Tasks\AmazonRemoteMedia.cs" />
+    <Compile Include="Infrastructure\Storage\EF\LogDataSessionEF.cs" />
+    <Compile Include="Infrastructure\Storage\ILogDataSession.cs" />
+    <Compile Include="Infrastructure\Storage\EF\SongSearchLog.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SongSearchLog.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\Storage\EF\SongSearchLogDataSession.cs" />
     <Compile Include="Infrastructure\Storage\EF\DataSessionReadOnlyEF.cs" />
     <Compile Include="Infrastructure\Storage\EF\SongSearchDataSession.cs" />
     <Compile Include="Infrastructure\Storage\Files.cs" />
@@ -206,6 +214,7 @@
     </Compile>
     <Compile Include="Models\ContactInfo.cs" />
     <Compile Include="Models\Content.cs" />
+    <Compile Include="Models\LogActionEvent.cs" />
     <Compile Include="Models\UserQuota.cs" />
     <Compile Include="SearchController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -213,6 +222,8 @@
     <Compile Include="Services\CatalogManagementService.cs" />
     <Compile Include="Services\CatalogUploadService.cs" />
     <Compile Include="Services\AmazonCloudService.cs" />
+    <Compile Include="Services\UserEventLogService.cs" />
+    <Compile Include="Services\Interfaces\IUserEventLogService.cs" />
     <Compile Include="Services\Interfaces\IMediaCloudService.cs" />
     <Compile Include="Services\Interfaces\IMediaService.cs" />
     <Compile Include="Services\SiteProfileData.cs" />
@@ -2026,6 +2037,10 @@
     <Content Include="Public\Css\stylemash.chirp.config">
       <SubType>Designer</SubType>
     </Content>
+    <EntityDeploy Include="Infrastructure\Storage\EF\SongSearchLog.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SongSearchLog.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <None Include="T4MVC.settings.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

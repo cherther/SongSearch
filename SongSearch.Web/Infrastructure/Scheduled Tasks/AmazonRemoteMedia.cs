@@ -148,10 +148,6 @@ namespace SongSearch.Web.Tasks {
 								} else {
 									media.IsRemote = true;
 								}
-							} else {
-								//							media.IsRemote = false;
-								dbContent.ContentMedia.Remove(media);
-								App.Logger.Info(String.Format("ContentMedia for #{0} is missing and has been removed", media.ContentId));
 							}
 						}
 						DataSession.CommitChanges();

@@ -14,20 +14,22 @@ namespace SongSearch.Web.Controllers
 	public partial class ContentController : Controller
 	{
 		IContentAdminService _cntAdmService;
+		IUserEventLogService _logService;
 
 		protected override void Initialize(RequestContext requestContext) {
 
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_cntAdmService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
-				
+				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 			}
 
 
 			base.Initialize(requestContext);
 		}
 
-		public ContentController(IContentAdminService cntAdmService) {
+		public ContentController(IContentAdminService cntAdmService, IUserEventLogService logService) {
 			_cntAdmService = cntAdmService;
+			_logService = logService;
 		}
 
 		// **************************************
@@ -39,14 +41,12 @@ namespace SongSearch.Web.Controllers
 				var model = GetDetailModel(id);
 				model.EditMode = EditModes.Viewing;
 
-				//if (Request.IsAjaxRequest()) {
-					model.ViewMode = ViewModes.Embedded;
-					return View(Views.ctrlContentDetail, model);
+				
+				_logService.Log(ContentActions.ViewItemDetail, id);
 
-				//} else {
-				//    model.ViewMode = ViewModes.Normal;
-				//    return View(model);
-				//}
+				model.ViewMode = ViewModes.Embedded;
+				return View(Views.ctrlContentDetail, model);
+
 			}
 			catch (Exception ex) {
 				this.FeedbackError(ex.Message);
@@ -63,6 +63,8 @@ namespace SongSearch.Web.Controllers
 				var model = GetDetailModel(id);
 				model.ViewMode = ViewModes.Print;
 				model.EditMode = EditModes.Viewing;
+				
+				_logService.Log(ContentActions.PrintItemDetail, id);
 
 				return View(model);
 			}
@@ -118,6 +120,8 @@ namespace SongSearch.Web.Controllers
 					//do some saving
 				if (Account.User().HasAccessToContentWithRole(content, Roles.Admin)) {
 					_cntAdmService.Update(content, tags, newTags, rights);
+					_logService.Log(ContentActions.UpdatedContent, content.ContentId);
+
 				}
 				//}
 				if (returnData) {
@@ -192,6 +196,8 @@ namespace SongSearch.Web.Controllers
 
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
 				_cntAdmService.Delete(contentIds);
+
+				contentIds.ForEach(c => _logService.Log(ContentActions.DeletedContent, c));
 
 				CacheService.InitializeApp(true);
 				SessionService.Session().RefreshMyActiveCart(this.UserName());

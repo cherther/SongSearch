@@ -9,6 +9,7 @@ using Ninject.Web.Mvc;
 using SongSearch.Web.Logging;
 using SongSearch.Web.Services;
 using System.Threading;
+using System.Web;
 
 namespace SongSearch.Web {
 	// Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -41,12 +42,7 @@ namespace SongSearch.Web {
 		// **************************************
 		public static AppEnvironment Environment {
 			get {
-#if DEBUG
-				return AppEnvironment.Development;
-#else
-
-				return AppEnvironment.Production;
-#endif
+				return SystemConfig.Environment;
 			}
 		}
 
@@ -86,14 +82,21 @@ namespace SongSearch.Web {
 			}
 		}
 		// **************************************
-		// DataSession
+		// DataSessionReadOnly
 		// **************************************
 		public static IDataSessionReadOnly DataSessionReadOnly {
 			get {
 				return _container.Get<IDataSessionReadOnly>();
 			}
 		}
-
+		// **************************************
+		// LogDataSession
+		// **************************************
+		public static ILogDataSession LogDataSession {
+			get {
+				return _container.Get<ILogDataSession>();
+			}
+		}
 		// ----------------------------------------------------------------------------
 		// ASP.NET MVC Routes
 		// ----------------------------------------------------------------------------
@@ -197,7 +200,12 @@ namespace SongSearch.Web {
 		// **************************************
 		protected void Session_Start() {
 			try {
+
 				SessionService.Session().InitializeSession();
+				using (var log = Container.Get<IUserEventLogService>()) {
+					log.SessionId = HttpContext.Current.Session.SessionID;
+					log.Log(UserActions.SessionStarted);
+				}
 			//DataSession["UserName"] = User.Identity.Name;
 			}
 			catch { }
@@ -236,6 +244,9 @@ namespace SongSearch.Web {
 			Thread cartLoop = new Thread(cartCleanup);
 			cartLoop.Start();
 
+			//ThreadStart ping = new ThreadStart(PingLoop);
+			//Thread pingLoop = new Thread(ping);
+			//pingLoop.Start();
 
 		}
 
@@ -268,7 +279,11 @@ namespace SongSearch.Web {
 
 					//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
 					try {
-						amz.UploadToRemote(checkSize: true, onlyNewContent: false);
+						if (App.Environment == AppEnvironment.Staging) {
+							amz.UploadToRemote(checkSize: true, onlyNewContent: false);
+						} else if (App.Environment == AppEnvironment.Production){
+							amz.UploadToRemote(checkSize: true, onlyNewContent: true);
+						}
 					}
 					catch { }
 				}
@@ -294,7 +309,23 @@ namespace SongSearch.Web {
 				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
 			}
 		}
+		// **************************************
+		// CartLoop
+		// **************************************
+		static void PingLoop() {
+			// In this example, task will repeat in infinite loop
+			// You can additional parameter if you want to have an option 
+			// to stop the task from some page
+			while (true) {
+				// Execute scheduled task
 
+				Logger.Info("Pinging " + SystemConfig.BaseUrl);
+				System.Net.WebRequest.Create(SystemConfig.BaseUrl);
+				
+				// Wait for certain time interval
+				System.Threading.Thread.Sleep(TimeSpan.FromMinutes(60));
+			}
+		}
 		// ----------------------------------------------------------------------------
 		// NLog
 		// ----------------------------------------------------------------------------
@@ -329,6 +360,7 @@ namespace SongSearch.Web {
 
 				Bind<IDataSession>().To<SongSearchDataSession>();
 				Bind<IDataSessionReadOnly>().To<SongSearchDataSessionReadOnly>();
+				Bind<ILogDataSession>().To<SongSearchLogDataSession>();
 
 				Bind<IAccountService>().To<AccountService>();
 				Bind<ICartService>().To<CartService>();
@@ -339,7 +371,9 @@ namespace SongSearch.Web {
 
 				Bind<IMediaService>().To<MediaService>();
 				Bind<IMediaCloudService>().To<AmazonCloudService>();
-				
+
+				Bind<IUserEventLogService>().To<UserEventLogService>();
+
 				Bind<IFormsAuthenticationService>().To<FormsAuthenticationService>();
 			}
 		}
