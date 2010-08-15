@@ -26,6 +26,8 @@ namespace SongSearch.Web {
 		public static string AWSMediaBucket { get; set; }
 		public static string MediaUrlFormat { get; set; }
 		public static string MediaFolderUrlFormat { get; set; }
+		public static bool RemoteMediaUploadNewOnly { get; set; }
+		public static bool RemoteMediaCheckSize { get; set; }
 
 		static SystemConfig() {
 
@@ -51,6 +53,9 @@ namespace SongSearch.Web {
 			AWSMediaBucket = Configuration.Get("Sys_AWSMediaBucket");
 			MediaUrlFormat = Configuration.Get("Sys_MediaUrlFormat");
 			MediaFolderUrlFormat = Configuration.Get("Sys_MediaFolderUrlFormat");
+			RemoteMediaUploadNewOnly = bool.Parse(Configuration.Get("Sys_RemoteMediaUploadNewOnly"));
+			RemoteMediaCheckSize = bool.Parse(Configuration.Get("Sys_RemoteMediaCheckSize"));
+
 		}
 	}
 	public static class SystemMessages {

@@ -40,7 +40,7 @@ namespace SongSearch.Web.Tasks {
 
 				var contents = DataSession.All<Content>().ToList();
 
-				var remoteList = GetRemoteFileList();
+				var remoteList = GetRemoteFileList(new MediaVersion[] { MediaVersion.Preview, MediaVersion.Full });
 
 				//var remoteFolder = _amazon.GetContentPrefix(version);
 
@@ -66,12 +66,8 @@ namespace SongSearch.Web.Tasks {
 								: remoteMedia.Any(x => x.Key == key);
 
 							media.IsRemote = hasRemoteFile;
-
-							var id3tag = ID3Reader.GetID3Metadata(file.FullName);
-							
-							media.MediaSize = file.Length;
-							media.MediaLength = id3tag.MediaLength;
-							media.MediaBitRate = id3tag.GetBitRate(file.Length);
+							UpdateContentId3Tag(content, file);
+							UpdateMediaId3info(media, file);
 
 
 						} else {
@@ -84,18 +80,31 @@ namespace SongSearch.Web.Tasks {
 
 				//				DataSession.CommitChanges();
 
-				Debug.WriteLine("Done syncing");
+				Log.Debug("Done syncing");
 
 			}	
 		}
 
+		private static void UpdateContentId3Tag(Content content, FileInfo file) {
+
+			ID3Writer.NormalizeTag(file.FullName, content);
+		}
+		private static ContentMedia UpdateMediaId3info(ContentMedia media, FileInfo file) {
+
+			var id3tag = ID3Reader.GetID3Metadata(file.FullName);
+			media.MediaSize = file.Length;
+			media.MediaLength = id3tag.MediaLength;
+			media.MediaBitRate = id3tag.GetBitRate(file.Length);
+
+			return media;
+		}
 		// **************************************
 		// UploadToRemote
 		// **************************************
-		public void UploadToRemote(bool checkSize = false, bool onlyNewContent = false) {
+		public void UploadToRemote(bool checkSize = false, bool onlyNewContent = false, MediaVersion[] mediaVersions = null) {
 
 
-			App.Logger.Info(String.Format("Starting Amazon upload at {0}", DateTime.Now));
+			Log.Debug(String.Format("Starting Amazon upload at {0}", DateTime.Now));
 
 			using (_amazon = new AmazonCloudService()) {
 				
@@ -104,20 +113,33 @@ namespace SongSearch.Web.Tasks {
 				if (onlyNewContent) {
 					query = query.Where(c => c.ContentMedia.Any(m => m.IsRemote == false));
 				}
+				
 
 				var contents = query.ToList();
 				if (contents.Count > 0) {
 
-					var remoteList = GetRemoteFileList();
+					Log.Debug("Getting remote file list");
+
+					var remoteList = GetRemoteFileList(mediaVersions ?? new MediaVersion[] { MediaVersion.Preview, MediaVersion.Full });
 
 					//var remoteFolder = _amazon.GetContentPrefix(version);
 
+					Log.Debug("Comparing " + contents.Count + " content items");
+
 					foreach (var content in contents.AsParallel()) {
 
+						Log.Debug("Checking ContentId " + content.ContentId);
+
 						var dbContent = DataSession.Single<Content>(c => c.ContentId == content.ContentId);
+						var contentMedia = dbContent.ContentMedia.ToList();
 
-						foreach (var media in dbContent.ContentMedia.AsParallel()) {
+						if (mediaVersions != null) {
+							contentMedia = contentMedia.Where(c => mediaVersions.Contains((MediaVersion)c.MediaVersion)).ToList();
+						}
 
+						foreach (var media in contentMedia) {
+
+							
 							var key = _amazon.GetContentKey(media);
 							var remoteMedia = remoteList[(MediaVersion)media.MediaVersion];
 
@@ -137,7 +159,9 @@ namespace SongSearch.Web.Tasks {
 
 									try {
 										_amazon.PutContentMedia(file.FullName, media);
-										App.Logger.Info(String.Format("Uploaded {0}", file.FullName));
+
+										Log.Debug(String.Format("Uploaded local file {0}", file.FullName));
+			
 										media.IsRemote = true;
 									}
 									catch {//(Exception ex) {
@@ -146,7 +170,19 @@ namespace SongSearch.Web.Tasks {
 										continue;
 									}
 								} else {
+									Log.Debug(String.Format("File for {0} matches", content.ContentId));
 									media.IsRemote = true;
+								}
+							} else {
+								// file is not local, let's see if it's remote
+								var remoteFile = remoteMedia.SingleOrDefault(x => x.Key == key);
+								if (remoteFile != null) {
+									if (checkSize) {
+										RepushMedia(content, media, filePath, file);
+										media.IsRemote = true;
+									}
+								} else {
+									media.IsRemote = false;
 								}
 							}
 						}
@@ -154,11 +190,31 @@ namespace SongSearch.Web.Tasks {
 					}
 
 					//				DataSession.CommitChanges();
-
-					App.Logger.Info(String.Format("Completed Amazon upload at {0}", DateTime.Now));
+					Log.Debug(String.Format("Completed Amazon upload at {0}", DateTime.Now));
 				}
 				
 			}	
+		}
+
+		// **************************************
+		// DownloadMissingFiles
+		// **************************************
+		private void RepushMedia(Content content, ContentMedia media, string filePath, FileInfo file) {
+
+			_amazon.GetContentMedia(filePath, media);
+			var tempFile = new FileInfo(filePath);
+
+			Log.Debug(String.Format("Remote file for {0} downloaded", content.ContentId));
+
+			UpdateContentId3Tag(content, tempFile);
+			UpdateMediaId3info(media, tempFile);
+
+			_amazon.PutContentMedia(tempFile.FullName, media);
+			
+			Log.Debug(String.Format("Re-uploaded remote file  {0}", file.FullName));
+
+			//File.Delete(tempFile.FullName);
+
 		}
 
 
@@ -174,7 +230,7 @@ namespace SongSearch.Web.Tasks {
 				var contents = DataSession.GetObjectQuery<Content>()
 					.Include("ContentMedia").ToList();
 
-				var remoteList = GetRemoteFileList();
+				var remoteList = GetRemoteFileList(new MediaVersion[] { MediaVersion.Preview, MediaVersion.Full });
 				//var remoteFolder = _amazon.GetContentPrefix(version);
 
 				foreach (var content in contents) {
@@ -197,15 +253,15 @@ namespace SongSearch.Web.Tasks {
 								try {
 
 									_amazon.GetContentMedia(file.FullName, media);
-									Debug.WriteLine(file.FullName + " downloaded");
+									Log.Debug(file.FullName + " downloaded");
 
 								}
 								catch (Exception ex) {
-									App.Logger.Error(ex);
+									Log.Error(ex);
 								}
 							} else {
 
-								Debug.WriteLine(file.FullName + " can't be found!");
+								Log.Debug(file.FullName + " can't be found!");
 							}
 						}
 					}
@@ -213,21 +269,23 @@ namespace SongSearch.Web.Tasks {
 
 				//DataSession.CommitChanges();
 
-				Debug.WriteLine("Done downloading");
+				Log.Debug("Done downloading");
 
 			}
 		}
 		
 		
-		private Dictionary<MediaVersion, IList<RemoteContent>> GetRemoteFileList() {
+		private Dictionary<MediaVersion, IList<RemoteContent>> GetRemoteFileList(MediaVersion[] versions) {
 
 			var remoteList = new Dictionary<MediaVersion, IList<RemoteContent>>();
-
-			remoteList.Add(MediaVersion.Preview, _amazon.GetContentList(MediaVersion.Preview));
-			remoteList.Add(MediaVersion.Full, _amazon.GetContentList(MediaVersion.Full));
+			versions.ForEach(v => 
+				remoteList.Add(v, _amazon.GetContentList(v))
+			);
 			return remoteList;
 		}
 
+		
+		
 		// ----------------------------------------------------------------------------
 		// Dispose
 		// ----------------------------------------------------------------------------

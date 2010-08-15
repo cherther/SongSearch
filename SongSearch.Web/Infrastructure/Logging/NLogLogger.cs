@@ -1,9 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using NLog;
+using SongSearch.Web.Logging;
 
+namespace SongSearch.Web {
+	public static class Log {
+
+		public static void Debug(string message) {
+#if DEBUG
+			System.Diagnostics.Debug.WriteLine(message);
+#else
+			App.Logger.Info(message);
+#endif
+		}
+		public static void Error(string message) {
+#if DEBUG
+			System.Diagnostics.Debug.WriteLine(message);
+#else
+			App.Logger.Error(message);
+#endif
+		}
+		public static void Error(Exception x) {
+#if DEBUG
+			System.Diagnostics.Debug.WriteLine(LogUtility.BuildExceptionMessage(x));
+#else
+			App.Logger.Error(x);
+#endif
+		}
+	}
+}
 namespace SongSearch.Web.Logging {
     public class NLogLogger:ILogger {
 

@@ -233,12 +233,24 @@ namespace SongSearch.Web {
 			catch { }
 			//Logger.Info("App is starting up");
 
-#if !DEBUG
+//#if !DEBUG
 
-			ThreadStart amazonSync = new ThreadStart(AmazonSyncLoop);
-			Thread amazonLoop = new Thread(amazonSync);
-			amazonLoop.Start();
-#endif
+			ThreadStart amazonSync = new ThreadStart(AmazonSyncLoopPreview);
+			Thread t1 = new Thread(amazonSync);
+			t1.Start();
+			
+			ThreadStart amazonSyncFull = new ThreadStart(AmazonSyncLoopFull);
+			Thread t2 = new Thread(amazonSyncFull);
+			t2.Start();
+
+			ThreadStart amazonRecyleFull = new ThreadStart(AmazonRecyleFull);
+			Thread t3 = new Thread(amazonRecyleFull);
+			t3.Start();
+
+			ThreadStart amazonRecylePreview = new ThreadStart(AmazonRecylePreview);
+			Thread t4 = new Thread(amazonRecylePreview);
+			t4.Start();
+//#endif
 
 			ThreadStart cartCleanup = new ThreadStart(CartCleanupLoop);
 			Thread cartLoop = new Thread(cartCleanup);
@@ -268,7 +280,7 @@ namespace SongSearch.Web {
 		// **************************************
 		// AmazonSyncLoop
 		// **************************************
-		static void AmazonSyncLoop() {
+		static void AmazonSyncLoopPreview() {
 			// In this example, task will repeat in infinite loop
 			// You can additional parameter if you want to have an option 
 			// to stop the task from some page
@@ -279,19 +291,59 @@ namespace SongSearch.Web {
 
 					//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
 					try {
-						if (App.Environment == AppEnvironment.Staging) {
-							amz.UploadToRemote(checkSize: true, onlyNewContent: false);
-						} else if (App.Environment == AppEnvironment.Production){
-							amz.UploadToRemote(checkSize: true, onlyNewContent: true);
-						}
+						amz.UploadToRemote(checkSize: SystemConfig.RemoteMediaCheckSize,
+						onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly, mediaVersions: new MediaVersion[] { MediaVersion.Preview });
 					}
 					catch { }
 				}
 				// Wait for certain time interval
-				System.Threading.Thread.Sleep(TimeSpan.FromHours(1));
+				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
 			}
 		}
+		static void AmazonSyncLoopFull() {
+			// In this example, task will repeat in infinite loop
+			// You can additional parameter if you want to have an option 
+			// to stop the task from some page
+			while (true) {
+				// Execute scheduled task
+				//ScheduledTask();
+				using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
 
+					//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
+					try {
+						amz.UploadToRemote(checkSize: SystemConfig.RemoteMediaCheckSize,
+						onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly, mediaVersions: new MediaVersion[] { MediaVersion.Full });
+					}
+					catch { }
+				}
+				// Wait for certain time interval
+				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
+			}
+		}
+		static void AmazonRecylePreview() {
+			// In this example, task will repeat in infinite loop
+			// You can additional parameter if you want to have an option 
+			// to stop the task from some page
+			using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
+
+				//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
+				try {
+					amz.UploadToRemote(checkSize: true, onlyNewContent: false, 
+					mediaVersions: new MediaVersion[] { MediaVersion.Preview });
+				}
+				catch { }
+			}
+		}
+		static void AmazonRecyleFull() {
+			using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
+
+				//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
+				try {
+					amz.UploadToRemote(checkSize: true, onlyNewContent: false, mediaVersions: new MediaVersion[] { MediaVersion.Full });
+				}
+				catch { }
+			}
+		}
 		// **************************************
 		// CartLoop
 		// **************************************
