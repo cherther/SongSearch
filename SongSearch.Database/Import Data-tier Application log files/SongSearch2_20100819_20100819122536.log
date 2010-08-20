@@ -1,0 +1,11 @@
+8/19/2010 2:25:36 PM	This log contains information about the import operation of the Data-tier Application 'SongSearch2_20100819122523.dacpac' into project 'SongSearch.Database' on computer 'WIN7DEV' by user'Claus.
+8/19/2010 2:25:36 PM	Extracting the scripts...
+8/19/2010 2:25:36 PM	Started importing file: C:\Users\Claus\AppData\Local\Temp\SongSearch.Database_20100819122536.sql 
+8/19/2010 2:25:36 PM	File name C:\Users\Claus\AppData\Local\Temp\SongSearch.Database_20100819122536.sql (size: 22436)
+8/19/2010 2:25:36 PM	Parsing import script
+8/19/2010 2:25:36 PM	Total number of batches in script: 38
+8/19/2010 2:25:36 PM	Total number of statements in script: 38
+8/19/2010 2:25:36 PM	The script was successfully imported into the project.
+8/19/2010 2:25:37 PM	Analyzing schema objects...
+8/19/2010 2:25:37 PM	A summary of the import operation has been saved to the log file C:\DevProjects\SongSearch\SongSearch.Database\Import Data-tier Application log files\SongSearch2_20100819_20100819122536.log.
+8/19/2010 2:25:37 PM	Click Finish to exit.

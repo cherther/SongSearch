@@ -1,0 +1,23 @@
+﻿CREATE TABLE [dbo].[UserCatalogRoles](
+	[UserId] [int] NOT NULL,
+	[CatalogId] [int] NOT NULL,
+	[RoleId] [int] NOT NULL,
+ CONSTRAINT [PK_UserCatalogRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[CatalogId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON),
+ CONSTRAINT [FK_UsersCatalogs_Catalogs] FOREIGN KEY([CatalogId])
+REFERENCES [dbo].[Catalogs] ([CatalogId])
+ON DELETE CASCADE
+NOT FOR REPLICATION ,
+ CONSTRAINT [FK_UsersCatalogs_Roles] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[Roles] ([RoleId])
+NOT FOR REPLICATION ,
+ CONSTRAINT [FK_UsersCatalogs_Users] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Users] ([UserId])
+ON DELETE CASCADE
+NOT FOR REPLICATION 
+)
+
+

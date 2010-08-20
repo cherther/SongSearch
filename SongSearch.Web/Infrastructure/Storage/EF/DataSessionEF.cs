@@ -98,6 +98,10 @@ namespace SongSearch.Web {
 				Add(item);
 			}
 		}
+		public void QuickAdd<T>(T item) where T : class, new() {
+			_context.AddObject(GetSetName<T>(), item);
+			_context.SaveChanges();
+		}
 		public void Update<T>(T item) where T : class, new() {
 			//nothing needed here
 		}

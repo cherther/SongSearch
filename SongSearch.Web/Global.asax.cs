@@ -89,14 +89,7 @@ namespace SongSearch.Web {
 				return _container.Get<IDataSessionReadOnly>();
 			}
 		}
-		// **************************************
-		// LogDataSession
-		// **************************************
-		public static ILogDataSession LogDataSession {
-			get {
-				return _container.Get<ILogDataSession>();
-			}
-		}
+
 		// ----------------------------------------------------------------------------
 		// ASP.NET MVC Routes
 		// ----------------------------------------------------------------------------
@@ -243,13 +236,13 @@ namespace SongSearch.Web {
 			Thread t2 = new Thread(amazonSyncFull);
 			t2.Start();
 
-			ThreadStart amazonRecyleFull = new ThreadStart(AmazonRecyleFull);
-			Thread t3 = new Thread(amazonRecyleFull);
-			t3.Start();
+			//ThreadStart amazonRecyleFull = new ThreadStart(AmazonRecyleFull);
+			//Thread t3 = new Thread(amazonRecyleFull);
+			//t3.Start();
 
-			ThreadStart amazonRecylePreview = new ThreadStart(AmazonRecylePreview);
-			Thread t4 = new Thread(amazonRecylePreview);
-			t4.Start();
+			//ThreadStart amazonRecylePreview = new ThreadStart(AmazonRecylePreview);
+			//Thread t4 = new Thread(amazonRecylePreview);
+			//t4.Start();
 //#endif
 
 			ThreadStart cartCleanup = new ThreadStart(CartCleanupLoop);
@@ -412,7 +405,6 @@ namespace SongSearch.Web {
 
 				Bind<IDataSession>().To<SongSearchDataSession>();
 				Bind<IDataSessionReadOnly>().To<SongSearchDataSessionReadOnly>();
-				Bind<ILogDataSession>().To<SongSearchLogDataSession>();
 
 				Bind<IAccountService>().To<AccountService>();
 				Bind<ICartService>().To<CartService>();

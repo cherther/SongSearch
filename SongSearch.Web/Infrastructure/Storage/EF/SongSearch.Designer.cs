@@ -38,6 +38,10 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Subscription), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentMedia_Contents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Content), "ContentMedia", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentMedia), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentActionEvents_Contents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Content), "ContentActionEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentActionEvent), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentActionEvents_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "ContentActionEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentActionEvent), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_SearchEvents_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "SearchEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.SearchEvent), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UserActionEvents_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "UserActionEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserActionEvent), true)]
 
 #endregion
 
@@ -252,22 +256,6 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<SearchProperty> SearchProperties
-        {
-            get
-            {
-                if ((_SearchProperties == null))
-                {
-                    _SearchProperties = base.CreateObjectSet<SearchProperty>("SearchProperties");
-                }
-                return _SearchProperties;
-            }
-        }
-        private ObjectSet<SearchProperty> _SearchProperties;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<Contact> Contacts
         {
             get
@@ -344,6 +332,70 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<ContentMedia> _ContentMedia;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ContentActionEvent> ContentActionEvents
+        {
+            get
+            {
+                if ((_ContentActionEvents == null))
+                {
+                    _ContentActionEvents = base.CreateObjectSet<ContentActionEvent>("ContentActionEvents");
+                }
+                return _ContentActionEvents;
+            }
+        }
+        private ObjectSet<ContentActionEvent> _ContentActionEvents;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SearchEvent> SearchEvents
+        {
+            get
+            {
+                if ((_SearchEvents == null))
+                {
+                    _SearchEvents = base.CreateObjectSet<SearchEvent>("SearchEvents");
+                }
+                return _SearchEvents;
+            }
+        }
+        private ObjectSet<SearchEvent> _SearchEvents;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<UserActionEvent> UserActionEvents
+        {
+            get
+            {
+                if ((_UserActionEvents == null))
+                {
+                    _UserActionEvents = base.CreateObjectSet<UserActionEvent>("UserActionEvents");
+                }
+                return _UserActionEvents;
+            }
+        }
+        private ObjectSet<UserActionEvent> _UserActionEvents;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SearchProperty> SearchProperties
+        {
+            get
+            {
+                if ((_SearchProperties == null))
+                {
+                    _SearchProperties = base.CreateObjectSet<SearchProperty>("SearchProperties");
+                }
+                return _SearchProperties;
+            }
+        }
+        private ObjectSet<SearchProperty> _SearchProperties;
 
         #endregion
         #region AddTo Methods
@@ -429,14 +481,6 @@ namespace SongSearch.Web.Data
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the SearchProperties EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSearchProperties(SearchProperty searchProperty)
-        {
-            base.AddObject("SearchProperties", searchProperty);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the Contacts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToContacts(Contact contact)
@@ -474,6 +518,38 @@ namespace SongSearch.Web.Data
         public void AddToContentMedia(ContentMedia contentMedia)
         {
             base.AddObject("ContentMedia", contentMedia);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ContentActionEvents EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToContentActionEvents(ContentActionEvent contentActionEvent)
+        {
+            base.AddObject("ContentActionEvents", contentActionEvent);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SearchEvents EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSearchEvents(SearchEvent searchEvent)
+        {
+            base.AddObject("SearchEvents", searchEvent);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the UserActionEvents EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToUserActionEvents(UserActionEvent userActionEvent)
+        {
+            base.AddObject("UserActionEvents", userActionEvent);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SearchProperties EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSearchProperties(SearchProperty searchProperty)
+        {
+            base.AddObject("SearchProperties", searchProperty);
         }
 
         #endregion
@@ -2212,6 +2288,292 @@ namespace SongSearch.Web.Data
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentActionEvents_Contents", "ContentActionEvent")]
+        public EntityCollection<ContentActionEvent> ContentActionEvents
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentActionEvent>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents", "ContentActionEvent");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentActionEvent>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents", "ContentActionEvent", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="ContentActionEvent")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ContentActionEvent : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ContentActionEvent object.
+        /// </summary>
+        /// <param name="contentActionEventId">Initial value of the ContentActionEventId property.</param>
+        /// <param name="contentActionEventDate">Initial value of the ContentActionEventDate property.</param>
+        /// <param name="sessionId">Initial value of the SessionId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="contentActionId">Initial value of the ContentActionId property.</param>
+        /// <param name="contentId">Initial value of the ContentId property.</param>
+        public static ContentActionEvent CreateContentActionEvent(global::System.Int64 contentActionEventId, global::System.DateTime contentActionEventDate, global::System.String sessionId, global::System.Int32 userId, global::System.Int32 contentActionId, global::System.Int32 contentId)
+        {
+            ContentActionEvent contentActionEvent = new ContentActionEvent();
+            contentActionEvent.ContentActionEventId = contentActionEventId;
+            contentActionEvent.ContentActionEventDate = contentActionEventDate;
+            contentActionEvent.SessionId = sessionId;
+            contentActionEvent.UserId = userId;
+            contentActionEvent.ContentActionId = contentActionId;
+            contentActionEvent.ContentId = contentId;
+            return contentActionEvent;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ContentActionEventId
+        {
+            get
+            {
+                return _ContentActionEventId;
+            }
+            set
+            {
+                if (_ContentActionEventId != value)
+                {
+                    OnContentActionEventIdChanging(value);
+                    ReportPropertyChanging("ContentActionEventId");
+                    _ContentActionEventId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ContentActionEventId");
+                    OnContentActionEventIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ContentActionEventId;
+        partial void OnContentActionEventIdChanging(global::System.Int64 value);
+        partial void OnContentActionEventIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime ContentActionEventDate
+        {
+            get
+            {
+                return _ContentActionEventDate;
+            }
+            set
+            {
+                OnContentActionEventDateChanging(value);
+                ReportPropertyChanging("ContentActionEventDate");
+                _ContentActionEventDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ContentActionEventDate");
+                OnContentActionEventDateChanged();
+            }
+        }
+        private global::System.DateTime _ContentActionEventDate;
+        partial void OnContentActionEventDateChanging(global::System.DateTime value);
+        partial void OnContentActionEventDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SessionId
+        {
+            get
+            {
+                return _SessionId;
+            }
+            set
+            {
+                OnSessionIdChanging(value);
+                ReportPropertyChanging("SessionId");
+                _SessionId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SessionId");
+                OnSessionIdChanged();
+            }
+        }
+        private global::System.String _SessionId;
+        partial void OnSessionIdChanging(global::System.String value);
+        partial void OnSessionIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ContentActionId
+        {
+            get
+            {
+                return _ContentActionId;
+            }
+            set
+            {
+                OnContentActionIdChanging(value);
+                ReportPropertyChanging("ContentActionId");
+                _ContentActionId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ContentActionId");
+                OnContentActionIdChanged();
+            }
+        }
+        private global::System.Int32 _ContentActionId;
+        partial void OnContentActionIdChanging(global::System.Int32 value);
+        partial void OnContentActionIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ContentId
+        {
+            get
+            {
+                return _ContentId;
+            }
+            set
+            {
+                OnContentIdChanging(value);
+                ReportPropertyChanging("ContentId");
+                _ContentId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ContentId");
+                OnContentIdChanged();
+            }
+        }
+        private global::System.Int32 _ContentId;
+        partial void OnContentIdChanging(global::System.Int32 value);
+        partial void OnContentIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentActionEvents_Contents", "Content")]
+        public Content Content
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents", "Content").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents", "Content").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Content> ContentReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents", "Content");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents", "Content", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentActionEvents_Users", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Users", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Users", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Users", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Users", "User", value);
+                }
+            }
+        }
 
         #endregion
     }
@@ -3532,6 +3894,232 @@ namespace SongSearch.Web.Data
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="SearchEvent")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SearchEvent : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SearchEvent object.
+        /// </summary>
+        /// <param name="searchEventId">Initial value of the SearchEventId property.</param>
+        /// <param name="searchEventDate">Initial value of the SearchEventDate property.</param>
+        /// <param name="sessionId">Initial value of the SessionId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="resultCount">Initial value of the ResultCount property.</param>
+        /// <param name="queryString">Initial value of the QueryString property.</param>
+        public static SearchEvent CreateSearchEvent(global::System.Int64 searchEventId, global::System.DateTime searchEventDate, global::System.String sessionId, global::System.Int32 userId, global::System.Int32 resultCount, global::System.String queryString)
+        {
+            SearchEvent searchEvent = new SearchEvent();
+            searchEvent.SearchEventId = searchEventId;
+            searchEvent.SearchEventDate = searchEventDate;
+            searchEvent.SessionId = sessionId;
+            searchEvent.UserId = userId;
+            searchEvent.ResultCount = resultCount;
+            searchEvent.QueryString = queryString;
+            return searchEvent;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 SearchEventId
+        {
+            get
+            {
+                return _SearchEventId;
+            }
+            set
+            {
+                if (_SearchEventId != value)
+                {
+                    OnSearchEventIdChanging(value);
+                    ReportPropertyChanging("SearchEventId");
+                    _SearchEventId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SearchEventId");
+                    OnSearchEventIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _SearchEventId;
+        partial void OnSearchEventIdChanging(global::System.Int64 value);
+        partial void OnSearchEventIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime SearchEventDate
+        {
+            get
+            {
+                return _SearchEventDate;
+            }
+            set
+            {
+                OnSearchEventDateChanging(value);
+                ReportPropertyChanging("SearchEventDate");
+                _SearchEventDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SearchEventDate");
+                OnSearchEventDateChanged();
+            }
+        }
+        private global::System.DateTime _SearchEventDate;
+        partial void OnSearchEventDateChanging(global::System.DateTime value);
+        partial void OnSearchEventDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SessionId
+        {
+            get
+            {
+                return _SessionId;
+            }
+            set
+            {
+                OnSessionIdChanging(value);
+                ReportPropertyChanging("SessionId");
+                _SessionId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SessionId");
+                OnSessionIdChanged();
+            }
+        }
+        private global::System.String _SessionId;
+        partial void OnSessionIdChanging(global::System.String value);
+        partial void OnSessionIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ResultCount
+        {
+            get
+            {
+                return _ResultCount;
+            }
+            set
+            {
+                OnResultCountChanging(value);
+                ReportPropertyChanging("ResultCount");
+                _ResultCount = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ResultCount");
+                OnResultCountChanged();
+            }
+        }
+        private global::System.Int32 _ResultCount;
+        partial void OnResultCountChanging(global::System.Int32 value);
+        partial void OnResultCountChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String QueryString
+        {
+            get
+            {
+                return _QueryString;
+            }
+            set
+            {
+                OnQueryStringChanging(value);
+                ReportPropertyChanging("QueryString");
+                _QueryString = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("QueryString");
+                OnQueryStringChanged();
+            }
+        }
+        private global::System.String _QueryString;
+        partial void OnQueryStringChanging(global::System.String value);
+        partial void OnQueryStringChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_SearchEvents_Users", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_SearchEvents_Users", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_SearchEvents_Users", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_SearchEvents_Users", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_SearchEvents_Users", "User", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="SearchProperty")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -3546,27 +4134,27 @@ namespace SongSearch.Web.Data
         /// <param name="propertyName">Initial value of the PropertyName property.</param>
         /// <param name="displayName">Initial value of the DisplayName property.</param>
         /// <param name="shortName">Initial value of the ShortName property.</param>
+        /// <param name="searchMenuOrder">Initial value of the SearchMenuOrder property.</param>
         /// <param name="propertyType">Initial value of the PropertyType property.</param>
         /// <param name="accessLevel">Initial value of the AccessLevel property.</param>
         /// <param name="isListable">Initial value of the IsListable property.</param>
         /// <param name="isCacheable">Initial value of the IsCacheable property.</param>
         /// <param name="isIndexable">Initial value of the IsIndexable property.</param>
         /// <param name="includeInSearchMenu">Initial value of the IncludeInSearchMenu property.</param>
-        /// <param name="searchMenuOrder">Initial value of the SearchMenuOrder property.</param>
-        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyName, global::System.String displayName, global::System.String shortName, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu, global::System.Int32 searchMenuOrder)
+        public static SearchProperty CreateSearchProperty(global::System.Int32 propertyId, global::System.String propertyName, global::System.String displayName, global::System.String shortName, global::System.Int32 searchMenuOrder, global::System.String propertyType, global::System.Int16 accessLevel, global::System.Boolean isListable, global::System.Boolean isCacheable, global::System.Boolean isIndexable, global::System.Boolean includeInSearchMenu)
         {
             SearchProperty searchProperty = new SearchProperty();
             searchProperty.PropertyId = propertyId;
             searchProperty.PropertyName = propertyName;
             searchProperty.DisplayName = displayName;
             searchProperty.ShortName = shortName;
+            searchProperty.SearchMenuOrder = searchMenuOrder;
             searchProperty.PropertyType = propertyType;
             searchProperty.AccessLevel = accessLevel;
             searchProperty.IsListable = isListable;
             searchProperty.IsCacheable = isCacheable;
             searchProperty.IsIndexable = isIndexable;
             searchProperty.IncludeInSearchMenu = includeInSearchMenu;
-            searchProperty.SearchMenuOrder = searchMenuOrder;
             return searchProperty;
         }
 
@@ -3695,6 +4283,30 @@ namespace SongSearch.Web.Data
         private global::System.String _SearchGroup;
         partial void OnSearchGroupChanging(global::System.String value);
         partial void OnSearchGroupChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SearchMenuOrder
+        {
+            get
+            {
+                return _SearchMenuOrder;
+            }
+            set
+            {
+                OnSearchMenuOrderChanging(value);
+                ReportPropertyChanging("SearchMenuOrder");
+                _SearchMenuOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SearchMenuOrder");
+                OnSearchMenuOrderChanged();
+            }
+        }
+        private global::System.Int32 _SearchMenuOrder;
+        partial void OnSearchMenuOrderChanging(global::System.Int32 value);
+        partial void OnSearchMenuOrderChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3935,30 +4547,6 @@ namespace SongSearch.Web.Data
         private global::System.Boolean _IncludeInSearchMenu;
         partial void OnIncludeInSearchMenuChanging(global::System.Boolean value);
         partial void OnIncludeInSearchMenuChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 SearchMenuOrder
-        {
-            get
-            {
-                return _SearchMenuOrder;
-            }
-            set
-            {
-                OnSearchMenuOrderChanging(value);
-                ReportPropertyChanging("SearchMenuOrder");
-                _SearchMenuOrder = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SearchMenuOrder");
-                OnSearchMenuOrderChanged();
-            }
-        }
-        private global::System.Int32 _SearchMenuOrder;
-        partial void OnSearchMenuOrderChanging(global::System.Int32 value);
-        partial void OnSearchMenuOrderChanged();
 
         #endregion
     
@@ -5759,6 +6347,272 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "PricingPlan", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentActionEvents_Users", "ContentActionEvent")]
+        public EntityCollection<ContentActionEvent> ContentActionEvents
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentActionEvent>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Users", "ContentActionEvent");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentActionEvent>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Users", "ContentActionEvent", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_SearchEvents_Users", "SearchEvent")]
+        public EntityCollection<SearchEvent> SearchEvents
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SearchEvent>("SongSearch.Web.Data.Model.FK_SearchEvents_Users", "SearchEvent");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SearchEvent>("SongSearch.Web.Data.Model.FK_SearchEvents_Users", "SearchEvent", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_UserActionEvents_Users", "UserActionEvent")]
+        public EntityCollection<UserActionEvent> UserActionEvents
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<UserActionEvent>("SongSearch.Web.Data.Model.FK_UserActionEvents_Users", "UserActionEvent");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserActionEvent>("SongSearch.Web.Data.Model.FK_UserActionEvents_Users", "UserActionEvent", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="UserActionEvent")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class UserActionEvent : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new UserActionEvent object.
+        /// </summary>
+        /// <param name="userActionEventId">Initial value of the UserActionEventId property.</param>
+        /// <param name="userActionEventDate">Initial value of the UserActionEventDate property.</param>
+        /// <param name="sessionId">Initial value of the SessionId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="userActionId">Initial value of the UserActionId property.</param>
+        public static UserActionEvent CreateUserActionEvent(global::System.Int64 userActionEventId, global::System.DateTime userActionEventDate, global::System.String sessionId, global::System.Int32 userId, global::System.Int32 userActionId)
+        {
+            UserActionEvent userActionEvent = new UserActionEvent();
+            userActionEvent.UserActionEventId = userActionEventId;
+            userActionEvent.UserActionEventDate = userActionEventDate;
+            userActionEvent.SessionId = sessionId;
+            userActionEvent.UserId = userId;
+            userActionEvent.UserActionId = userActionId;
+            return userActionEvent;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 UserActionEventId
+        {
+            get
+            {
+                return _UserActionEventId;
+            }
+            set
+            {
+                if (_UserActionEventId != value)
+                {
+                    OnUserActionEventIdChanging(value);
+                    ReportPropertyChanging("UserActionEventId");
+                    _UserActionEventId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UserActionEventId");
+                    OnUserActionEventIdChanged();
+                }
+            }
+        }
+        private global::System.Int64 _UserActionEventId;
+        partial void OnUserActionEventIdChanging(global::System.Int64 value);
+        partial void OnUserActionEventIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime UserActionEventDate
+        {
+            get
+            {
+                return _UserActionEventDate;
+            }
+            set
+            {
+                OnUserActionEventDateChanging(value);
+                ReportPropertyChanging("UserActionEventDate");
+                _UserActionEventDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserActionEventDate");
+                OnUserActionEventDateChanged();
+            }
+        }
+        private global::System.DateTime _UserActionEventDate;
+        partial void OnUserActionEventDateChanging(global::System.DateTime value);
+        partial void OnUserActionEventDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SessionId
+        {
+            get
+            {
+                return _SessionId;
+            }
+            set
+            {
+                OnSessionIdChanging(value);
+                ReportPropertyChanging("SessionId");
+                _SessionId = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SessionId");
+                OnSessionIdChanged();
+            }
+        }
+        private global::System.String _SessionId;
+        partial void OnSessionIdChanging(global::System.String value);
+        partial void OnSessionIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserActionId
+        {
+            get
+            {
+                return _UserActionId;
+            }
+            set
+            {
+                OnUserActionIdChanging(value);
+                ReportPropertyChanging("UserActionId");
+                _UserActionId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserActionId");
+                OnUserActionIdChanged();
+            }
+        }
+        private global::System.Int32 _UserActionId;
+        partial void OnUserActionIdChanging(global::System.Int32 value);
+        partial void OnUserActionIdChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_UserActionEvents_Users", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_UserActionEvents_Users", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_UserActionEvents_Users", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_UserActionEvents_Users", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_UserActionEvents_Users", "User", value);
                 }
             }
         }

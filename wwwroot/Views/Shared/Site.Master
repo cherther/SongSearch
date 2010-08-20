@@ -1,0 +1,130 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<SongSearch.Web.ViewModel>" %>
+<%@ Import Namespace="SongSearch.Web" %>
+<!DOCTYPE html><!--PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"-->
+<html> <!--xmlns="http://www.w3.org/1999/xhtml"-->
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<meta name="robots" content="noindex, nofollow" />
+	<meta name="author" content="<%: Model.SiteProfile.CompanyName %>" /> 
+	<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
+	 <!--[if lt IE 8]><link rel="stylesheet" href=""/public/css/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
+	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
+	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="/scripts/jquery-1.4.2.min.js"></script>
+<%--	<!-- Combo-handled YUI CSS files: --> 
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.8.1/build/base/base-min.css&2.8.1/build/progressbar/assets/skins/sam/progressbar.css"> 
+	<!-- Combo-handled YUI JS files: --> 
+	<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.8.1/build/yahoo-dom-event/yahoo-dom-event.js&2.8.1/build/element/element-min.js&2.8.1/build/progressbar/progressbar-min.js"></script>
+--%>
+	<title><%: Model.SiteProfile.CompanyName %> (Beta) - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
+</head>
+<body>
+	<%if (App.Environment != AppEnvironment.Development) { %>
+	<script type="text/javascript">
+
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-12019666-3']);
+		_gaq.push(['_trackPageview']);
+
+		(function () {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+
+	</script>
+	<%} %>
+	<%--<div id="fire" style="display:none"></div>--%>
+ <div class="fluid_grid_layout"> 
+
+	 <div class="six_column section">
+		<div class="three column">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlHeader); %>
+		</div> 
+		<div class="three column">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlLogIn); %>
+		</div> 
+	 </div>
+	  <div class="six_column section">
+		<div class="six column">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlMainMenu); %>
+		</div> 
+	 </div>
+	  <div class="six_column section">
+		<div class="six column">
+			<asp:ContentPlaceHolder ID="SuvNavContent" runat="server" /> 
+		</div> 
+	 </div>
+	 <div class="six_column section">
+		<div class="six column">
+			<asp:ContentPlaceHolder ID="MainContent" runat="server" />
+		</div> 
+	 </div>
+	 <div class="six_column section">
+		<div class="two column">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlFooter); %>
+		</div> 
+		<div class="two column text-center">
+			<% Html.RenderPartial(MVC.Shared.Views.ctrlLinks); %>
+		</div> 
+		<div class="two column text-right">
+		<% Html.RenderPartial(MVC.Shared.Views.ctrlBuildInfo); %>
+		</div> 
+	 </div>
+</div>
+<%
+	var debug = App.Environment == AppEnvironment.Development;
+	var d = debug ? "?d=1" : "";
+%>
+<%--<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+--%><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/public/javascript/cw.plugins.js?d"></script>
+<%if (debug) {%>
+<script type="text/javascript" src="/scripts/cw.app.main.chirp.js<%: d %>" ></script>
+<script type="text/javascript" src="/scripts/cw.app.events.chirp.js<%: d %>" ></script>
+<script type="text/javascript" src="/scripts/cw.app.ajax.chirp.js<%: d %>" ></script>
+<script type="text/javascript" src="/scripts/cw.app.sound.chirp.js<%: d %>" ></script>
+<script type="text/javascript" src="/scripts/cw.app.upload.chirp.js<%: d %>" ></script>
+<%} else {%>
+<script type="text/javascript" src="/public/javascript/cw.application.js?d"></script>
+<%} %>
+<script type="text/javascript">
+	var uservoiceOptions = {
+		/* required */
+		key: 'worldsongnet',
+		host: 'worldsongnet.uservoice.com',
+		forum: '56920',
+		showTab: true,
+		/* optional */
+		alignment: 'right',
+		background_color: '#0066cc',
+		text_color: 'white',
+		hover_color: '#ff0000',
+		lang: 'en'
+	};
+
+	function _loadUserVoice() {
+		var s = document.createElement('script');
+		s.setAttribute('type', 'text/javascript');
+		s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+		document.getElementsByTagName('head')[0].appendChild(s);
+	}
+	_loadSuper = window.onload;
+	window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function () { _loadSuper(); _loadUserVoice(); };
+</script>
+	
+
+</body>
+
+<%
+	if (Page.User.Identity.IsAuthenticated)
+	{
+%>
+<%--<script type="text/javascript">$(document).ready(function () { updateCartCountAjax(); });</script>
+--%><%} %>
+
+<%:Html.Feedback() %>
+<asp:ContentPlaceHolder id="Javascripts" runat="server" />
+</html>
+

@@ -11,7 +11,7 @@ using NLog;
 using System.Runtime.Remoting.Messaging;
 using SongSearch.Web;
 using SongSearch.Web.Services;
-using SongSearch.Web.Infrastructure.Storage.EF;
+
 
 namespace SongSearch.Web.Services {
 
@@ -143,11 +143,14 @@ namespace SongSearch.Web.Services {
 
 
 
+
+		
+
 		// **************************************
 		//LogUserActionEvent
 		// **************************************
 		private void LogEvent(UserActionEvent logEvent) {
-			using (var session = App.LogDataSession) {
+			using (var session = App.DataSession) {
 
 				try {
 					session.QuickAdd<UserActionEvent>(logEvent);					
@@ -160,7 +163,7 @@ namespace SongSearch.Web.Services {
 		//LogUserActionEvent
 		// **************************************
 		private void LogEvent(ContentActionEvent logEvent) {
-			using (var session = App.LogDataSession) {
+			using (var session = App.DataSession) {
 
 				try {
 					session.QuickAdd<ContentActionEvent>(logEvent);					
@@ -172,7 +175,7 @@ namespace SongSearch.Web.Services {
 		//LogUserActionEvent
 		// **************************************
 		private void LogEvent(SearchEvent logEvent) {
-			using (var session = App.LogDataSession) {
+			using (var session = App.DataSession) {
 				try {
 					session.QuickAdd<SearchEvent>(logEvent);					
 				}
@@ -200,6 +203,8 @@ namespace SongSearch.Web.Services {
 				_disposed = true;
 			}
 		}
+
+
 
 	}
 }

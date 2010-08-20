@@ -1,0 +1,19 @@
+﻿CREATE TABLE [dbo].[CartContents](
+	[CartId] [int] NOT NULL,
+	[ContentId] [int] NOT NULL,
+ CONSTRAINT [PK_CartItems] PRIMARY KEY CLUSTERED 
+(
+	[CartId] ASC,
+	[ContentId] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON),
+ CONSTRAINT [FK_CartContents_Contents] FOREIGN KEY([ContentId])
+REFERENCES [dbo].[Contents] ([ContentId])
+ON DELETE CASCADE
+NOT FOR REPLICATION ,
+ CONSTRAINT [FK_CartItems_Carts] FOREIGN KEY([CartId])
+REFERENCES [dbo].[Carts] ([CartId])
+ON DELETE CASCADE
+NOT FOR REPLICATION 
+)
+
+
