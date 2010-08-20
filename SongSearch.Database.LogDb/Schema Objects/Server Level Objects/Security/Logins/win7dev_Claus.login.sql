@@ -1,3 +1,0 @@
-﻿CREATE LOGIN [win7dev\Claus] FROM WINDOWS WITH DEFAULT_LANGUAGE=[us_english]
-
-
