@@ -14,6 +14,7 @@ namespace SongSearch.Web.Services {
 		void Log(ContentActions actionEvent, int contentId);
 		void Log(string searchTerms);
 
+		IList<UserActionEvent> ReportUserActions(DateTime startDate, DateTime endDate);
 
 	}
 }

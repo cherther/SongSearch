@@ -237,6 +237,7 @@
     </Compile>
     <Compile Include="ViewModels\CatalogViewModel.cs" />
     <Compile Include="ViewModels\CatalogUploadViewModel.cs" />
+    <Compile Include="ViewModels\ReportEventViewModel.cs" />
     <Compile Include="ViewModels\PricingPlansViewModel.cs" />
     <Compile Include="ViewModels\MenuViewModel.cs" />
     <Compile Include="ViewModels\SearchField.cs" />
@@ -1904,6 +1905,7 @@
     <Content Include="Scripts\soundmanager2.js" />
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
+    <Content Include="Views\Admin\ReportUserActions.aspx" />
     <Content Include="Views\Home\Help.aspx" />
     <Content Include="Views\Shared\ctrlContactInfoBox.ascx" />
     <Content Include="Views\Shared\ctrlUserQuotaLarge.ascx" />

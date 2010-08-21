@@ -142,6 +142,21 @@ namespace SongSearch.Web.Services {
 		}
 
 
+		// **************************************
+		// ReportUserActions
+		// **************************************
+		public IList<UserActionEvent> ReportUserActions(DateTime startDate, DateTime endDate) {
+
+			using (var session = App.DataSession) {
+
+				var events = session.GetObjectQuery<UserActionEvent>().Include("User")
+					.Where(e => e.UserActionEventDate >= startDate && e.UserActionEventDate <= endDate);
+
+				return new PagedList<UserActionEvent>(events,0,0);
+
+			}
+
+		}
 
 
 		
