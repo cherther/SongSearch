@@ -219,7 +219,7 @@ namespace SongSearch.Web.Controllers
 
 				_cartService.DeleteCart(id);
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
-				_logService.Log(ContentActions.DeletedCart, id);
+				//_logService.Log(ContentActions.DeletedCart, id);
 
 				this.FeedbackInfo("Cart deleted");
 			}
@@ -240,7 +240,7 @@ namespace SongSearch.Web.Controllers
 			try {
 				if (contentNames.Count() > 10 || SystemConfig.UseRemoteMedia) {
 					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
-					_logService.Log(ContentActions.CompressCart, id);
+					//_logService.Log(ContentActions.CompressCart, id);
 
 					SessionService.Session().RefreshMyActiveCart(this.UserName());
 					var msgKey = String.Concat("ShowProcessedCart_", id);
