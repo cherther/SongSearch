@@ -22,6 +22,9 @@
 	{
 		menu.Add("Register", new string[3] { "Register", "Account", "Register" });
 	}
+	if (App.IsLicensedVersion && Page.User.Identity.IsAuthenticated && Page.User.User().IsPlanUser) {
+		menu.Add("Account", new string[3] { "Plan", "Account", "My Account" });
+	}
 	menu.Add("Help", new string[3] { "Help", "Home", "Help" });
 	menu.Add("Contact", new string[3] { "Contact", "Home", "Contact Us" });   
 	%>

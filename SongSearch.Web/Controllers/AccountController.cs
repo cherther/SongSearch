@@ -274,7 +274,7 @@ namespace SongSearch.Web.Controllers {
 		public virtual ActionResult ChangePassword() {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
-			return View(new UpdateProfileModel() { NavigationLocation = new string[] { "Home", "ChangePassword" } });
+			return View(new UpdateProfileModel() { NavigationLocation = new string[] { "Account", "ChangePassword" } });
 		}
 
 		[RequireAuthorization]
@@ -300,7 +300,7 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 			this.FeedbackError("There was an error changing your password...");
 
-			model.NavigationLocation = new string[] { "Home", "ChangePassword" };
+			model.NavigationLocation = new string[] { "Account", "ChangePassword" };
 			return View(model);
 		}
 
@@ -322,7 +322,7 @@ namespace SongSearch.Web.Controllers {
 			catch (Exception ex) {
 				App.Logger.Error(ex);
 			}
-			return View(new UpdateProfileModel() { NavigationLocation = new string[] { "Home", "ChangePassword" } });
+			return View(new UpdateProfileModel() { NavigationLocation = new string[] { "Account", "ChangePassword" } });
 		}
 
 
@@ -337,7 +337,7 @@ namespace SongSearch.Web.Controllers {
 
 				var user = Account.User();// SessionService.Session().User(User.Identity.Name);
 				var vm = new UpdateProfileModel() {
-					NavigationLocation = new string[] { "Home", "Profile" },
+					NavigationLocation = new string[] { "Account", "UpdateProfile" },
 					Email = this.UserName(),
 					FirstName = user.FirstName,
 					LastName = user.LastName,
@@ -345,7 +345,7 @@ namespace SongSearch.Web.Controllers {
 					ShowContactInfo = user.PricingPlan.CustomContactUs && user.IsAtLeastInCatalogRole(Roles.Admin),
 					HasAllowedCommunication = user.HasAllowedCommunication,
 					PageTitle = "Update Profile",
-					PageMessage= "My User Profile"
+					PageMessage= "My Profile"
 
 				};
 				if (vm.ShowSignatureField){
@@ -413,9 +413,9 @@ namespace SongSearch.Web.Controllers {
 			// If we got this far, something failed, redisplay form
 			ViewData["PasswordLength"] =
 				AccountService.MinPasswordLength;
-			model.NavigationLocation = new string[] { "Home", "Profile" };
+			model.NavigationLocation = new string[] { "Account", "Profile" };
 			model.PageTitle = "Update Profile";
-			model.PageMessage = "My User Profile";
+			model.PageMessage = "My Profile";
 			return View(model);
 		}
 
@@ -448,7 +448,7 @@ namespace SongSearch.Web.Controllers {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			return View(new ResetPasswordModel() {
-				NavigationLocation = new string[] { "Home", "ResetPassword" }
+				NavigationLocation = new string[] { "Account", "ResetPassword" }
 			});
 		}
 
@@ -478,7 +478,7 @@ namespace SongSearch.Web.Controllers {
 				return RedirectToAction(Actions.ResetPasswordSuccess());
 			}
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
-			model.NavigationLocation = new string[] { "Home", "ResetPassword" };
+			model.NavigationLocation = new string[] { "Account", "ResetPassword" };
 			this.FeedbackError("There was an error processing your password reset request...");
 
 			return View(model);
@@ -488,7 +488,7 @@ namespace SongSearch.Web.Controllers {
 		// URL: /Account/ResetPasswordSuccess
 		// **************************************        
 		public virtual ActionResult ResetPasswordSuccess() {
-			return View(new ResetPasswordModel() { NavigationLocation = new string[] { "Home", "ResetPassword" } });
+			return View(new ResetPasswordModel() { NavigationLocation = new string[] { "Account", "ResetPassword" } });
 		}
 
 		// **************************************
@@ -501,7 +501,7 @@ namespace SongSearch.Web.Controllers {
 			};
 
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
-			model.NavigationLocation = new string[] { "Home", "ResetPassword" };
+			model.NavigationLocation = new string[] { "Account", "ResetPassword" };
 
 			return View(model);
 		}
@@ -537,7 +537,7 @@ namespace SongSearch.Web.Controllers {
 		[RequiresVersion(MinAppVersion=AppVersion.SongSearch_2_1)]
 		public virtual ActionResult Plan() {
 			var vm = new PricingPlansViewModel() {
-				NavigationLocation = new string[] { "Home", "Plan" },
+				NavigationLocation = new string[] { "Account", "Plan" },
 				PageTitle = "My Plan",
 				MyPricingPlan = Account.User().PricingPlan,				
 				MyUserQuotas = Account.User().MyQuotas()

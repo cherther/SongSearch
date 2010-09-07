@@ -5,13 +5,6 @@
 
 	if (Page.User.Identity.IsAuthenticated) {
 
-		menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
-			Name = "UpdateProfile",
-			LinkDisplayName = "My Profile",
-			LinkActionName = "UpdateProfile",
-			LinkControllerName = "Account",
-			CurrentLocation = current.ToString()
-		});
 		if (App.IsLicensedVersion && Page.User.User().IsPlanUser) {
 			menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
 				Name = "Plan",
@@ -21,8 +14,18 @@
 				CurrentLocation = current.ToString()
 			});
 		}
-		
-		menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
+
+		menu.MenuItems.Add(new SongSearch.Web.MenuItem()
+		{
+			Name = "UpdateProfile",
+			LinkDisplayName = "My Profile",
+			LinkActionName = "UpdateProfile",
+			LinkControllerName = "Account",
+			CurrentLocation = current.ToString()
+		});
+
+		menu.MenuItems.Add(new SongSearch.Web.MenuItem()
+		{
 			Name = "ChangePassword",
 			LinkDisplayName = "Change Password",
 			LinkActionName = "ChangePassword",
