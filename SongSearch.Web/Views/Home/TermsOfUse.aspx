@@ -9,7 +9,7 @@
 	<div class="cw-legal">
 	<h2><%: Model.PageTitle %></h2>
 		<p>
-		The following terms and conditions of use govern your use of the www.WorldSongNet.com USA Web (“Site”.) The Site is made available by (OUR BUSINESS ENTINY) herein referred to as the “Site Proprietors”, “us”, “our”, “we” & “ourselves”.) We may change the Terms and Conditions from time to time, and at any time without notice to you, by posting such changes on the Site. BY USING THE SITE, YOU ACCEPT AND AGREE TO THESE TERMS AND CONDITIONS AS APPLIED TO YOUR USE OF THE SITE. If you do not agree to these Terms and Conditions, you may not access or otherwise use the Site. By using the Site following any modifications to the Terms and Conditions, you agree to be bound by any such modifications to the Terms and Conditions. 
+		The following terms and conditions of use govern your use of the www.WorldSongNet.com USA Web (“Site”.) The Site is made available by World Song Net, LLC (herein referred to as the “Site Proprietors”, “us”, “our”, “we” & “ourselves”.) We may change the Terms and Conditions from time to time, and at any time without notice to you, by posting such changes on the Site. BY USING THE SITE, YOU ACCEPT AND AGREE TO THESE TERMS AND CONDITIONS AS APPLIED TO YOUR USE OF THE SITE. If you do not agree to these Terms and Conditions, you may not access or otherwise use the Site. By using the Site following any modifications to the Terms and Conditions, you agree to be bound by any such modifications to the Terms and Conditions. 
 		</p>
 		<h3>Age Requirement for Use of the Site</h3>
 			<p>

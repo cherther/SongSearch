@@ -8,7 +8,7 @@
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
 	<div class="cw-legal">
 	<h2><%: Model.PageTitle %></h2>
-		<p>This is the privacy policy for the www.WorldSongNet.com USA Web (“Site”.) The Site is made available by (OUR BUSINESS ENTINY) herein referred to as “us”, “our” & “we”.  This Privacy Policy sets forth our policies regarding the collection, use and disclosure of certain information relating to your use of the Site. Your use of this Site signifies your understanding and acceptance of the terms of this Privacy Policy. 
+		<p>This is the privacy policy for the www.WorldSongNet.com USA Web (“Site”.) The Site is made available by World Song Net, LLC herein referred to as “us”, “our” & “we”.  This Privacy Policy sets forth our policies regarding the collection, use and disclosure of certain information relating to your use of the Site. Your use of this Site signifies your understanding and acceptance of the terms of this Privacy Policy. 
 		</p>
 		<h3>Age Requirement for Use of Site</h3>
 		<p>
