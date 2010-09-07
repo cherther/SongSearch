@@ -86,10 +86,20 @@ namespace SongSearch.Web.Services {
 			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 
 				var tags = session.All<Tag>().Where(t => t.TagTypeId == (int)tagType);
-				tags = tags.OrderByDescending(t => t.Contents.Count);
+
+				switch (tagType) {
+					case TagType.Tempo:
+						tags = tags.OrderBy(t => t.TagId);
+						break;
+					default:
+						tags = tags.OrderByDescending(t => t.Contents.Count);
+						break;
+				}
+				
 				if (limitToTop.HasValue) {
 					tags = tags.Take(limitToTop.Value);
 				}
+				
 				return tags.ToList();
 			}
 		}
