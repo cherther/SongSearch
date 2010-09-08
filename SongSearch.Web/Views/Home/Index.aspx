@@ -24,7 +24,7 @@
 		<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Why Have Your Music on <%: Model.SiteProfile.CompanyName %>?</h3>
 			<div>&nbsp;</div>
-			<div>Your music will be previewed and considered for productions by many of the most notable companies and individuals responsible for placing songs in film & television throughout the world..
+			<div>Your music will be previewed and considered for productions by many of the most notable companies and individuals responsible for placing songs in film & television throughout the world.
 			</div>
 		</div>
 		<div>&nbsp;</div>
@@ -47,8 +47,20 @@
 		<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Which Companies Have Licensed Music from <%: Model.SiteProfile.CompanyName %>?</h3>
 			<div>&nbsp;</div>
-			<div>Your music will be previewed and considered for productions by many of the most notable companies and individuals responsible for placing songs in film & television throughout the world..
-			</div>
+			<ul class="cw-bullet">
+				<li>
+				Disney
+				</li>
+				<li>
+				The CW
+				</li>
+				<li>
+				HBO
+				</li>
+				<li>
+				ABC
+				</li>
+			</ul>			
 		</div>
 
 		<div>&nbsp;</div>

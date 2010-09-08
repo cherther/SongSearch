@@ -210,7 +210,7 @@ namespace SongSearch.Web.Services {
 			if (cart != null && cart.Contents.Count() > 0) {
 				string zipName = cart.ArchiveDownloadName(userArchiveName);
 				cart.ArchiveName = zipName;
-				CompressCart(cart, contentNames);
+				CompressCart(cart.CartId, contentNames);
 				cart.MarkAsCompressed();
 				DataSession.CommitChanges();
 				SessionService.Session().SessionUpdate(cart.CartId, "ProcessingCartId");
@@ -218,7 +218,7 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
-		private delegate void CompressCartDelegate(Cart cart, IList<ContentUserDownloadable> contentNames);
+		private delegate void CompressCartDelegate(int cartId, IList<ContentUserDownloadable> contentNames);
 		delegate void EndInvokeDelegate(IAsyncResult result);
 
 		//
@@ -226,29 +226,44 @@ namespace SongSearch.Web.Services {
 		//
 		public void CompressMyActiveCartOffline(string userArchiveName = null, IList<ContentUserDownloadable> contentNames = null) {
 			//mark as processing
-			var cart = MyActiveCart();
 
-			if (cart != null && cart.Contents.Count() > 0) {
+			try {
 
-				cart.ArchiveName = cart.ArchiveDownloadName(userArchiveName);
-	
-				//hand off compression work
-				CompressCartDelegate compressDelegate = new CompressCartDelegate(CompressCart);
-				// Define the AsyncCallback delegate.
-				AsyncCallback callBack = new AsyncCallback(this.CompressCartCallback);
+				using (var session = new SongSearchDataSession()) { 
+					var userId = Account.User().UserId;
+					
+					var cart = session
+								.GetObjectQuery<Cart>()
+								//.Include("Contents").Include("Contents.ContentMedia")
+								.SingleOrDefault(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active);
 
-				compressDelegate.BeginInvoke(cart, contentNames,
-					callBack, 
-					cart.CartId
-					);
+					if (cart != null && cart.Contents.Count() > 0) {
 
-				cart.CartStatus = (int)CartStatusCodes.Processing;
-				DataSession.CommitChanges();
+						
+						cart.ArchiveName = cart.ArchiveDownloadName(userArchiveName);
+						cart.CartStatus = (int)CartStatusCodes.Processing;
 
+						session.CommitChanges();
+
+						//hand off compression work
+						CompressCartDelegate compressDelegate = new CompressCartDelegate(CompressCart);
+						// Define the AsyncCallback delegate.
+						AsyncCallback callBack = new AsyncCallback(this.CompressCartCallback);
+
+						compressDelegate.BeginInvoke(cart.CartId, contentNames,
+							callBack,
+							cart.CartId
+							);
+
+					}
 				
-				
-				cart = null;
-				
+					cart = null;
+
+				}
+			}
+			catch (Exception ex) {
+				App.Logger.Error(ex);
+				throw ex;
 			}
 
 		}
@@ -256,26 +271,34 @@ namespace SongSearch.Web.Services {
 		public void CompressCartCallback(IAsyncResult asyncResult) {
 			// Extract the delegate from the 
 			// System.Runtime.Remoting.Messaging.AsyncResult.
+
+			using (var session = new SongSearchDataSession()) {
+
 			CompressCartDelegate compressDelegate = (CompressCartDelegate)((AsyncResult)asyncResult).AsyncDelegate;
 			int cartId = (int)asyncResult.AsyncState;
 			
 			compressDelegate.EndInvoke(asyncResult);
 
-			var cart = DataSession.Single<Cart>(c => c.CartId == cartId);
+			var cart = session
+						.GetObjectQuery<Cart>()
+						.Include("Contents")//.Include("Contents.ContentMedia")
+						.SingleOrDefault(c => c.CartId == cartId);
 
 			if (cart != null && cart.Contents.Count() > 0) {
 
 				cart.MarkAsCompressed();
-				DataSession.CommitChanges();
+				session.CommitChanges();
 				
 				cart = null;
 			}
+
 			//object[] parameters = asyncResult.AsyncState as object[];
 			//if (parameters != null && parameters.Length > 0) {
 			//    EndInvokeDelegate endInvokeDelegate = parameters[0] as EndInvokeDelegate;
 			//    if (endInvokeDelegate != null) {
 			//        endInvokeDelegate.Invoke(asyncResult);
 			//    }
+			}
 
 		}
 
@@ -334,41 +357,50 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// Zip
 		// **************************************
-		private void CompressCart(Cart cart, IList<ContentUserDownloadable> contentNames) {
+		private void CompressCart(int cartId, IList<ContentUserDownloadable> contentNames) {
 
-			var user = cart.User;// Account.User(cart.UserId);
-			string zipPath = cart.ArchivePath();
-			string signature = user.IsAnyAdmin() ? user.Signature : user.ParentSignature();
-				
-			var contents = cart.Contents.ToList();
+			using (var session = new SongSearchDataSessionReadOnly()) {
 
-			using (var zip = new ZipFile()) {
-					
-				zip.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed;
-					
-				foreach (var content in contents) {
-						
-					if (content.HasMediaFullVersion) {
+				var cart = session
+							.GetObjectQuery<Cart>()
+							.Include("User")
+							.Include("Contents")
+							.Include("Contents.ContentMedia")
+							.SingleOrDefault(c => c.CartId == cartId);
 
-						var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
-													contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
-						var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
-								
-						try {
-							byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion(), user);
+				var user = cart.User;// Account.User(cart.UserId);
+				string zipPath = cart.ArchivePath();
+				string signature = user.IsAnyAdmin() ? user.Signature : user.ParentSignature();
 
-							zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
-										asset);
-						}
-						catch {
+				var contents = cart.Contents.ToList();
 
-							App.Logger.Info(String.Concat(content.ContentId, " is missing."));
+				using (var zip = new ZipFile()) {
+
+					zip.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed;
+
+					foreach (var content in contents) {
+
+						if (content.HasMediaFullVersion) {
+
+							var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
+														contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
+							var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
+
+							try {
+								byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion(), user);
+
+								zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
+											asset);
+							}
+							catch (Exception ex){
+								App.Logger.Error(ex);
+								App.Logger.Info(String.Concat(content.ContentId, " has an error/is missing."));
+							}
 						}
 					}
+					zip.Save(zipPath);
 				}
-				zip.Save(zipPath);
 			}
-			
 			
 		}
 		

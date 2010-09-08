@@ -193,7 +193,7 @@ namespace SongSearch.Web {
 			var zipPath = cart.ArchivePath();
 			if (cart != null && File.Exists(zipPath)) {
 				var zip = new FileInfo(zipPath);
-				int? numberItems = cart.Contents.Count;
+				int? numberItems = cart.Contents.Count();
 
 				cart.CompressedSize = zip.Length;
 				cart.ArchiveName = zip.Name;

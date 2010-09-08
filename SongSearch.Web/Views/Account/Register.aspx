@@ -11,10 +11,10 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 </asp:Content>
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>
-<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+<div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<h2>Register</h2>
 	<div>&nbsp;</div>
-	<div class="cw-outl cw-padded cw-rounded-corners">
+	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
 	<p>
 		Access to <strong><%: Model.SiteProfile.CompanyName %></strong> is by invitation only. Use the form below to create a new account using the invitation code sent to you.
 	</p>
@@ -87,7 +87,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 			</div>
 			<div>&nbsp;</div>
 			<%if (Model.Invitation != null && !Model.Invitation.IsPlanInvitation) { %>
-			<div class="cw-outl-orange cw-padded cw-rounded-corners" style="width: 75%;">
+			<div class="cw-outl-orange cw-fill-white cw-padded cw-rounded-corners" style="width: 75%;">
 			<div>
 				<%//: Html.LabelFor(m => m.PricingPlan) %>
 			</div>

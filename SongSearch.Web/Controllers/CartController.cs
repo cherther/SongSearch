@@ -238,25 +238,28 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Zip(int id, string userArchiveName, IList<ContentUserDownloadable> contentNames) {
 
 			try {
-				if (contentNames.Count() > 10 || SystemConfig.UseRemoteMedia) {
+				//if (contentNames.Count() > 10 || SystemConfig.UseRemoteMedia) {
 					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
 					//_logService.Log(ContentActions.CompressCart, id);
-
-					SessionService.Session().RefreshMyActiveCart(this.UserName());
-					var msgKey = String.Concat("ShowProcessedCart_", id);
-					SessionService.Session().SessionUpdate("1", msgKey);
-					this.FeedbackInfo("Your cart is currently being zipped up and will be available for download shortly. Please check back on this page in a few minutes.");
-
-				} else {
-					_cartService.CompressMyActiveCart(userArchiveName, contentNames);
-					SessionService.Session().RefreshMyActiveCart(this.UserName());
-					this.FeedbackInfo("Your cart is ready for download");
-				}
 			}
-			catch {
+			catch (Exception ex) {
+				App.Logger.Error(ex);
 				this.FeedbackError("There was an error zipping this cart. Please try again in a bit.");
+				return RedirectToAction(MVC.Cart.Index());
 
 			}
+			
+			SessionService.Session().RefreshMyActiveCart(this.UserName());
+			var msgKey = String.Concat("ShowProcessedCart_", id);
+			SessionService.Session().SessionUpdate("1", msgKey);
+			this.FeedbackInfo("Your cart is currently being zipped up and will be available for download shortly. Please check back on this page in a few minutes.");
+
+				//} else {
+				//    _cartService.CompressMyActiveCart(userArchiveName, contentNames);
+				//    SessionService.Session().RefreshMyActiveCart(this.UserName());
+				//    this.FeedbackInfo("Your cart is ready for download");
+				//}
+			
 			return RedirectToAction(MVC.Cart.Index());
 		}
 
@@ -274,7 +277,7 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				var cart = _cartService.DownloadCompressedCart(id);
-				_logService.Log(ContentActions.DownloadCart, id);
+				//_logService.Log(ContentActions.DownloadCart, id);
 
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 

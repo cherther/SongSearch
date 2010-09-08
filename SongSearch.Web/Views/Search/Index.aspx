@@ -15,10 +15,20 @@
 			<!--/div-->
 		</div>
 		<div class="seven column">
-			<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners cw-buffered-left">
+			<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners cw-buffered-left" style="min-height:480px">
 				<h3>Search Tips</h3>
 				<div>&nbsp;</div>
-			
+				<ul class="cw-bullet">
+				<li>
+				Enter Song Search criteria
+				</li>
+				<li>
+				Preview songs, get song info & download
+				</li>
+				<li>
+				Contact us to secure licensing 
+				</li>
+				</ul>
 			</div>
 		</div>
 	
