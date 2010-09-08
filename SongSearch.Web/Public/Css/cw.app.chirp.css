@@ -152,6 +152,18 @@ fieldset legend
 {
 	background-color: #E2EDF5;
 }
+.cw-fill-lite
+{
+	background-color: #E8F0F7;
+}
+.cw-fill-dark
+{
+	background-color: #CADEEC;
+}
+.cw-fill-white
+{
+	background-color: #FFFFFF  !important;
+}
 .cw-fill-orange
 {
 	background-color: #FFECA8;

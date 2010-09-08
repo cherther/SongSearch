@@ -6,12 +6,12 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+<div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<h2><%: Model.PageTitle %></h2>
 	<div>&nbsp;</div>
 	<a href="#Feedback">Feedback</a> | <a href="#Requirements">Site Requirements</a> | <a href="#FAQ">FAQ</a>
 	<div>&nbsp;</div>
-	<div class="cw-outl cw-padded cw-rounded-corners">
+	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
 		<h3><a name="Feedback">Feedback</a></h3>
 		<div>&nbsp;</div>
 		<p>
@@ -20,7 +20,7 @@
 		<p>Or, you can <%: Html.ActionLink("contact us", MVC.Home.Contact()) %> directly with any questions and comments.</p>
 		</p>
 	</div>
-	<div class="cw-outl cw-padded cw-rounded-corners">
+	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
 		<h3><a name="Requirements">Site Requirements</a></h3>
 		<div>&nbsp;</div>
 		<div>
@@ -41,7 +41,7 @@
 		Also, our music file downloads use the <strong>MP3 file format</strong> and are delivered in compressed <strong>Zip</strong> files, so you will need an MP3 compatible music player such as <a href="http://www.apple.com/iTunes" target="_blank">Apple's iTunes</a> and software to unzip Zip files, such as <a href="http://www.winzip.com" target="_blank">WinZip</a> (if you're using Windows.)
 		</div>
 	</div>
-	<div class="cw-outl cw-padded cw-rounded-corners">
+	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
 		<h3><a name="FAQ">FAQ (Frequently Asked Questions)</a></h3>
 		<div>&nbsp;</div>
 		<ul class="cw-bullet">

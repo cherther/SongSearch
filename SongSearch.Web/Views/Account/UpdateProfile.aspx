@@ -11,7 +11,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 </asp:Content>
 <asp:Content ID="updateProfileContent" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>
-<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+<div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<h2><%: Model.PageTitle %></h2>
 	<div>&nbsp;</div>
 	<div class="cw-outl cw-padded cw-rounded-corners">
@@ -22,7 +22,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 	<div>&nbsp;</div>
 	<% using (Html.BeginForm(MVC.Account.UpdateProfile(), FormMethod.Post, new { @class = "cw-form-small" })) {%>
 	   <%:Html.AntiForgeryToken() %>
-			<div class="cw-outl cw-padded cw-rounded-corners">
+			<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
 				<h3><%: Model.PageMessage %></h3>
 				<div>&nbsp;</div>
 				<div>

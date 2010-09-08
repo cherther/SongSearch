@@ -5,7 +5,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-rounded-corners-bottom">
+<div id="content" class="cw-outl cw-fill-lite cw-rounded-corners-bottom">
 	
 	<div class="nine_column section">
 	
@@ -15,7 +15,7 @@
 			<!--/div-->
 		</div>
 		<div class="seven column">
-			<div class="cw-outl cw-padded cw-rounded-corners cw-buffered-left">
+			<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners cw-buffered-left">
 				<h3>Search Tips</h3>
 				<div>&nbsp;</div>
 			

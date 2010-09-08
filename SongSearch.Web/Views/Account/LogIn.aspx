@@ -11,11 +11,11 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>
-<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+<div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 
 	<%--<h2>Log in</h2>
 	<div>&nbsp;</div>--%>
-	<div class="cw-outl cw-padded cw-rounded-corners text-top">
+	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners text-top">
 		<h2 style="display:inline;">Log in</h2> using your e-mail address and <%: Model.SiteProfile.CompanyName %> password you've set up previously. <%: Html.ActionLink("Register", MVC.Account.Register())%> if you don't have an account.
 		<div>&nbsp;</div>
 		<% using (Html.BeginForm(MVC.Account.LogIn(), FormMethod.Post, new { @class = "cw-form-small" }))

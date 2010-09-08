@@ -10,11 +10,11 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 %>
 </asp:Content>
 <asp:Content ID="updateProfileContent" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+<div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 
     <h2>Change Password</h2>
 	<div>&nbsp;</div>
-	<div class="cw-outl cw-padded cw-rounded-corners">
+	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
 	<p>
         Use the form below to change your password. 
     </p>

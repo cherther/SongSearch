@@ -10,7 +10,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+<div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<div class="six_column section">
 		<div class="three column text-top">
 			<h2><%: Model.PageTitle %></h2>
@@ -35,7 +35,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 	<tr>
 		<td style="vertical-align: top">
 			<%if (users.Count() > 0) { %>
-			<div class = "cw-outl cw-padded cw-rounded-corners" style="overflow:auto ; height: 300px; width: 200px;">
+			<div class = "cw-outl cw-fill-white cw-padded cw-rounded-corners" style="overflow:auto ; height: 300px; width: 200px;">
 				<table id="user-list" class="cw-tbl-usr">
 					<% Html.RenderPartial(MVC.UserManagement.Views.ctrlUserList, users); %>
 				</table>
@@ -46,7 +46,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 			<div>&nbsp;</div>
 			<h3>Open Invites</h3><%: Html.ActionLink("Invite New", "Invite", "UserManagement") %>
 			<div>&nbsp;</div>
-			<div class = "cw-outl cw-padded cw-rounded-corners" style="overflow: auto; height: 150px; width: 200px;">
+			<div class = "cw-outl cw-fill-white cw-padded cw-rounded-corners" style="overflow: auto; height: 150px; width: 200px;">
 				<table id="invite-list" class="cw-tbl-usr">
 				<%
 				foreach (var invite in invites)
@@ -62,7 +62,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 			</div>			
 		</td>
 		<td style="vertical-align: top">
-			<div id="cw-user-detail" class="cw-outl cw-padded cw-rounded-corners" style="display: none">
+			<div id="cw-user-detail" class="cw-outl cw-fill-white cw-padded cw-rounded-corners" style="display: none">
 			</div>
 		</td>
 	</tr>
