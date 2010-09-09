@@ -197,11 +197,13 @@ namespace SongSearch.Web {
 				SessionService.Session().InitializeSession();
 				using (var log = Container.Get<IUserEventLogService>()) {
 					log.SessionId = HttpContext.Current.Session.SessionID;
-					log.Log(UserActions.SessionStarted);
+					log.LogUserEvent(UserActions.SessionStarted);
 				}
 			//DataSession["UserName"] = User.Identity.Name;
 			}
-			catch { }
+			catch (Exception ex) {
+				Log.Error(ex);
+			}
 		}
 
 
@@ -287,7 +289,9 @@ namespace SongSearch.Web {
 						amz.UploadToRemote(checkSize: SystemConfig.RemoteMediaCheckSize,
 						onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly, mediaVersions: new MediaVersion[] { MediaVersion.Preview });
 					}
-					catch { }
+					catch (Exception ex) {
+						Log.Error(ex);
+					}
 				}
 				// Wait for certain time interval
 				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
@@ -307,7 +311,9 @@ namespace SongSearch.Web {
 						amz.UploadToRemote(checkSize: SystemConfig.RemoteMediaCheckSize,
 						onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly, mediaVersions: new MediaVersion[] { MediaVersion.Full });
 					}
-					catch { }
+					catch (Exception ex) {
+						Log.Error(ex);
+					}
 				}
 				// Wait for certain time interval
 				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
@@ -324,7 +330,9 @@ namespace SongSearch.Web {
 					amz.UploadToRemote(checkSize: true, onlyNewContent: false, 
 					mediaVersions: new MediaVersion[] { MediaVersion.Preview });
 				}
-				catch { }
+				catch (Exception ex) {
+					Log.Error(ex);
+				}
 			}
 		}
 		static void AmazonRecyleFull() {
@@ -334,7 +342,9 @@ namespace SongSearch.Web {
 				try {
 					amz.UploadToRemote(checkSize: true, onlyNewContent: false, mediaVersions: new MediaVersion[] { MediaVersion.Full });
 				}
-				catch { }
+				catch (Exception ex) {
+					Log.Error(ex);
+				}
 			}
 		}
 		// **************************************

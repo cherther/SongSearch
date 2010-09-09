@@ -262,7 +262,7 @@ namespace SongSearch.Web.Services {
 				}
 			}
 			catch (Exception ex) {
-				App.Logger.Error(ex);
+				Log.Error(ex);
 				throw ex;
 			}
 
@@ -393,8 +393,8 @@ namespace SongSearch.Web.Services {
 											asset);
 							}
 							catch (Exception ex){
-								App.Logger.Error(ex);
-								App.Logger.Info(String.Concat(content.ContentId, " has an error/is missing."));
+								Log.Error(ex);
+								Log.Debug(String.Concat(content.ContentId, " has an error/is missing."));
 							}
 						}
 					}

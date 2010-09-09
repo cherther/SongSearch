@@ -78,7 +78,7 @@ namespace SongSearch.Web.Controllers {
 					var user = Account.User(model.Email);
 
 					_logService.SessionId = Session.SessionID;
-					_logService.Log(UserActions.Login);
+					_logService.LogUserEvent(UserActions.Login);
 
 					SetFriendlyNameCookie(user.FullName());
 
@@ -130,7 +130,7 @@ namespace SongSearch.Web.Controllers {
 		[RequireAuthorization]
 		public virtual ActionResult LogOut() {
 
-			_logService.Log(UserActions.Logout);
+			_logService.LogUserEvent(UserActions.Logout);
 
 			_authService.SignOut();
 
@@ -230,14 +230,14 @@ namespace SongSearch.Web.Controllers {
 
 										SetFriendlyNameCookie(user.FullName());
 
-										_logService.Log(UserActions.Register);
+										_logService.LogUserEvent(UserActions.Register);
 
 										_authService.SignIn(user.UserName, true /* createPersistentCookie */);
 
 										return RedirectToAction(MVC.Home.Index());
 									}
 									catch (Exception ex){
-										App.Logger.Error(ex);
+										Log.Error(ex);
 										ModelState.AddModelError("Email", SystemErrors.UserCreationFailed);//AccountValidation.ErrorCodeToString(createStatus));
 									}
 
@@ -288,7 +288,7 @@ namespace SongSearch.Web.Controllers {
 				var user = new User() { UserName = userName, Password = model.OldPassword };
 				if (_acctService.ChangePassword(user, model.NewPassword)) {
 					//_acctService.UpdateCurrentUserInSession();
-					_logService.Log(UserActions.ChangePassword);
+					_logService.LogUserEvent(UserActions.ChangePassword);
 
 					return RedirectToAction(Actions.ChangePasswordSuccess());
 				} else {
@@ -320,7 +320,7 @@ namespace SongSearch.Web.Controllers {
 					);
 			}
 			catch (Exception ex) {
-				App.Logger.Error(ex);
+				Log.Error(ex);
 			}
 			return View(new UpdateProfileModel() { NavigationLocation = new string[] { "Account", "ChangePassword" } });
 		}
@@ -358,7 +358,8 @@ namespace SongSearch.Web.Controllers {
 
 				return View(vm);
 			}
-			catch {
+			catch (Exception ex){
+				Log.Error(ex);
 				this.FeedbackError("There was an error loading the Update Profile page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
@@ -388,7 +389,7 @@ namespace SongSearch.Web.Controllers {
 	
 			//update the user's profile in the database
 			if (_acctService.UpdateProfile(userModel, contact)) {
-				_logService.Log(UserActions.UpdateProfile);
+				_logService.LogUserEvent(UserActions.UpdateProfile);
 
 				// UpdateModelWith the user dataSession cached in dataSession
 				SessionService.Session().InitializeSession(true);
@@ -514,7 +515,7 @@ namespace SongSearch.Web.Controllers {
 				_acctService.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
 				) {
 
-	//			_logService.Log(UserActions.ResetPassword);
+	//			_logService.LogUserEvent(UserActions.ResetPassword);
 
 				return RedirectToAction(Actions.LogIn());
 

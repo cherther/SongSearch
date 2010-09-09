@@ -63,7 +63,8 @@ namespace SongSearch.Web.Controllers
 
 				return View(vm);
 			}
-			catch {
+			catch (Exception ex) {
+				Log.Error(ex);
 				this.FeedbackError("There was an error loading the Song Cart page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
@@ -78,7 +79,9 @@ namespace SongSearch.Web.Controllers
 			try {
 				count = SessionService.Session().MyActiveCartCount(this.UserName());
 			}
-			catch { }
+			catch (Exception ex) {
+				Log.Error(ex);
+			}
 
 			if (Request.IsAjaxRequest()) {
 				return Json(count, JsonRequestBehavior.AllowGet);
@@ -95,7 +98,7 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				_cartService.AddToMyActiveCart(id);
-				_logService.Log(ContentActions.AddToCart, id);
+				_logService.LogContentEvent(ContentActions.AddToCart, id);
 
 				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
@@ -126,7 +129,7 @@ namespace SongSearch.Web.Controllers
 					var contentIds = items.Select(i => int.Parse(i)).ToArray();
 					_cartService.AddToMyActiveCart(contentIds);
 
-					contentIds.ForEach(c => _logService.Log(ContentActions.AddToCart, c));
+					contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.AddToCart, c));
 
 					SessionService.Session().RefreshMyActiveCart(this.UserName());
 				}
@@ -155,7 +158,7 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				_cartService.RemoveFromMyActiveCart(id);
-				_logService.Log(ContentActions.RemoveFromCart, id);
+				_logService.LogContentEvent(ContentActions.RemoveFromCart, id);
 				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
@@ -189,7 +192,7 @@ namespace SongSearch.Web.Controllers
 
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
 				_cartService.RemoveFromMyActiveCart(contentIds);
-				contentIds.ForEach(c => _logService.Log(ContentActions.RemoveFromCart, c));
+				contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.RemoveFromCart, c));
 				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
@@ -219,11 +222,12 @@ namespace SongSearch.Web.Controllers
 
 				_cartService.DeleteCart(id);
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
-				//_logService.Log(ContentActions.DeletedCart, id);
+				//_logService.LogUserEvent(ContentActions.DeletedCart, id);
 
 				this.FeedbackInfo("Cart deleted");
 			}
-			catch {
+			catch (Exception ex) {
+				Log.Error(ex);
 				this.FeedbackError("There was an error deleting this cart");				
 			}
 			return RedirectToAction(MVC.Cart.Index());
@@ -240,10 +244,10 @@ namespace SongSearch.Web.Controllers
 			try {
 				//if (contentNames.Count() > 10 || SystemConfig.UseRemoteMedia) {
 					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
-					//_logService.Log(ContentActions.CompressCart, id);
+					//_logService.LogUserEvent(ContentActions.CompressCart, id);
 			}
 			catch (Exception ex) {
-				App.Logger.Error(ex);
+				Log.Error(ex);
 				this.FeedbackError("There was an error zipping this cart. Please try again in a bit.");
 				return RedirectToAction(MVC.Cart.Index());
 
@@ -277,7 +281,7 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				var cart = _cartService.DownloadCompressedCart(id);
-				//_logService.Log(ContentActions.DownloadCart, id);
+				//_logService.LogUserEvent(ContentActions.DownloadCart, id);
 
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 
@@ -288,7 +292,8 @@ namespace SongSearch.Web.Controllers
 
 				return new FileStreamResult(new System.IO.FileStream(cart.ArchivePath(), System.IO.FileMode.Open), "application/zip");
 			}
-			catch {
+			catch (Exception ex) {
+				Log.Error(ex);
 				this.FeedbackError("There was an error downloading this cart. Please try again in a bit.");
 				return RedirectToAction(MVC.Cart.Index());
 			}

@@ -10,9 +10,9 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	public interface IUserEventLogService : IDisposable {
 		string SessionId { get; set; }
-		void Log(UserActions actionEvent);
-		void Log(ContentActions actionEvent, int contentId);
-		void Log(string searchTerms);
+		void LogUserEvent(UserActions actionEvent);
+		void LogContentEvent(ContentActions actionEvent, int contentId);
+		void LogSearchEvent(string searchTerms);
 
 		IList<UserActionEvent> ReportUserActions(DateTime startDate, DateTime endDate);
 

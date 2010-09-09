@@ -44,7 +44,9 @@ namespace SongSearch.Web.Controllers
 
 				return View(vm);
 			}
-			catch {
+			catch (Exception ex) {
+				Log.Error(ex);
+
 				this.FeedbackError("There was an error loading the Catalog Management page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}

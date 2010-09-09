@@ -44,7 +44,9 @@ namespace SongSearch.Web.Controllers
 
 				return View(vm);
 			}
-			catch {
+			catch (Exception ex) {
+				Log.Error(ex);
+
 				this.FeedbackError("There was an error loading the Search page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}
@@ -104,7 +106,9 @@ namespace SongSearch.Web.Controllers
 
 					return View("Results", model);
 				}
-				catch {
+				catch (Exception ex) {
+					Log.Error(ex);
+
 					this.FeedbackError("There was an error getting your search results. Please try again in a bit.");
 				}
 			}
@@ -129,7 +133,9 @@ namespace SongSearch.Web.Controllers
 					model.ViewMode = ViewModes.Print;
 					return View(Views.PrintResults, model);
 				}
-				catch {
+				catch (Exception ex) {
+					Log.Error(ex);
+
 					this.FeedbackError("There was an error getting your search results. Please try again in a bit.");
 				}
 			}

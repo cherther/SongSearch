@@ -164,8 +164,9 @@ namespace SongSearch.Web.Tasks {
 			
 										media.IsRemote = true;
 									}
-									catch {//(Exception ex) {
-										//App.Logger.Error(ex);
+									catch (Exception ex) {
+										Log.Error(ex);
+
 										media.IsRemote = false;
 										continue;
 									}

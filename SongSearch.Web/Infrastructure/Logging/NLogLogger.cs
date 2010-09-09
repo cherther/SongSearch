@@ -22,6 +22,10 @@ namespace SongSearch.Web {
 			Console.WriteLine(message);
 			System.Diagnostics.Debug.WriteLine(message);
 #else
+			Mail.SendMail(SystemConfig.AdminEmailAddress, SystemConfig.AdminEmailAddress, 
+				String.Format("[WorldSongNet Exception]: {0}", message), 
+				String.Format("Exception occured at {0}:\n{1}", DateTime.Now, message));
+
 			App.Logger.Error(message);
 #endif
 		}
@@ -29,6 +33,10 @@ namespace SongSearch.Web {
 #if DEBUG
 			System.Diagnostics.Debug.WriteLine(LogUtility.BuildExceptionMessage(x));
 #else
+			var message = LogUtility.BuildExceptionMessage(x);
+			Mail.SendMail(SystemConfig.AdminEmailAddress, SystemConfig.AdminEmailAddress,
+				String.Format("[WorldSongNet Exception]: {0}", message),
+				String.Format("Exception occured at {0}:\n{1}", DateTime.Now, message));
 			App.Logger.Error(x);
 #endif
 		}

@@ -85,9 +85,9 @@ namespace SongSearch.Web.Services {
 		//delegate void EndInvokeDelegate(IAsyncResult result);
 
 		// **************************************
-		// Log: UserActionEvent
+		// LogUserEvent: UserActionEvent
 		// **************************************
-		public void Log(UserActions action) {
+		public void LogUserEvent(UserActions action) {
 			
 			if (SystemConfig.LogUserActions && ActiveUser != null) {
 				var actionEvent = new UserActionEvent() {
@@ -104,9 +104,9 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
-		// Log: ContentActionEvent
+		// LogUserEvent: ContentActionEvent
 		// **************************************
-		public void Log(ContentActions action, int contentId) {
+		public void LogContentEvent(ContentActions action, int contentId) {
 			
 			if (SystemConfig.LogUserContentActions) {
 				var actionEvent = new ContentActionEvent() {
@@ -126,9 +126,9 @@ namespace SongSearch.Web.Services {
 
 		
 		// **************************************
-		// Log: ContentActionEvent
+		// LogUserEvent: ContentActionEvent
 		// **************************************
-		public void Log(string searchTerms) {
+		public void LogSearchEvent(string searchTerms) {
 			var actionEvent = new SearchEvent() {
 				UserId = ActiveUser.UserId,
 				SearchEventDate = DateTime.Now,
@@ -170,7 +170,7 @@ namespace SongSearch.Web.Services {
 				try {
 					session.QuickAdd<UserActionEvent>(logEvent);					
 				}
-				catch (Exception ex) { App.Logger.Error(ex); }
+				catch (Exception ex) { Log.Error(ex); }
 
 			}
 		}
@@ -183,7 +183,7 @@ namespace SongSearch.Web.Services {
 				try {
 					session.QuickAdd<ContentActionEvent>(logEvent);					
 				}
-				catch (Exception ex) { App.Logger.Error(ex); }
+				catch (Exception ex) { Log.Error(ex); }
 			}
 		}
 		// **************************************
@@ -194,7 +194,7 @@ namespace SongSearch.Web.Services {
 				try {
 					session.QuickAdd<SearchEvent>(logEvent);					
 				}
-				catch (Exception ex) { App.Logger.Error(ex); }
+				catch (Exception ex) { Log.Error(ex); }
 			}
 		}
 

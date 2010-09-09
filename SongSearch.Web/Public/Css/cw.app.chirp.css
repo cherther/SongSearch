@@ -143,6 +143,17 @@ fieldset legend
 	padding:0.4em;
 	
 }
+.cw-outl-thick
+{
+	border: 1px solid;
+	border-color:rgba(255,255,255,0.4)
+				 rgba(0,0,0,0.4)
+				 rgba(0,0,0,0.4)
+				 rgba(255,255,255,0.4);
+
+	padding:0.4em;
+	
+}
 .cw-outl-orange
 {
 	border: 1px solid #FF8000;
@@ -158,7 +169,12 @@ fieldset legend
 }
 .cw-fill-dark
 {
-	background-color: #CADEEC;
+	background-color: #97C0DF;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#97C0DF', endColorstr='#E8F0F7'); /* for IE */
+	background: -webkit-gradient(    
+	linear, left top, right bottom, from(#D5E3F0), to(#97C0DF)
+	); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #D5E3F0, #97C0DF); /* for firefox 3.6+ */
 }
 .cw-fill-white
 {
@@ -175,7 +191,6 @@ fieldset legend
 .cw-padded
 {
 	padding: 0.8em;
-	
 }
 
 .cw-spaced
@@ -185,28 +200,28 @@ fieldset legend
 }
 .cw-rounded-corners
 {
-	border-radius: 5px; 
-	-moz-border-radius: 5px; 
-	-webkit-border-radius: 5px; 
+	border-radius: 10px; 
+	-moz-border-radius: 10px; 
+	-webkit-border-radius: 10px; 
 	margin-bottom: 10px;
 }
 .cw-rounded-corners-top
 {
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	-moz-border-radius-topleft: 5px;
-	-moz-border-radius-topright: 5px;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-moz-border-radius-topright: 10px;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
 }
 .cw-rounded-corners-bottom
 {
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
-	-moz-border-radius-border-bottomleft: 5px;
-	-moz-border-radius-border-bottomright: 5px;
-	-webkit-border-border-bottom-left-radius: 5px;
-	-webkit-border-border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	-moz-border-radius-border-bottomleft: 10px;
+	-moz-border-radius-border-bottomright: 10px;
+	-webkit-border-border-bottom-left-radius: 10px;
+	-webkit-border-border-bottom-right-radius: 10px;
 }
 .cw-small-cap
 {

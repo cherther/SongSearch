@@ -42,7 +42,7 @@ namespace SongSearch.Web.Controllers
 				model.EditMode = EditModes.Viewing;
 
 				
-				_logService.Log(ContentActions.ViewItemDetail, id);
+				_logService.LogContentEvent(ContentActions.ViewItemDetail, id);
 
 				model.ViewMode = ViewModes.Embedded;
 				return View(Views.ctrlContentDetail, model);
@@ -64,7 +64,7 @@ namespace SongSearch.Web.Controllers
 				model.ViewMode = ViewModes.Print;
 				model.EditMode = EditModes.Viewing;
 				
-				_logService.Log(ContentActions.PrintItemDetail, id);
+				_logService.LogContentEvent(ContentActions.PrintItemDetail, id);
 
 				return View(model);
 			}
@@ -120,7 +120,7 @@ namespace SongSearch.Web.Controllers
 					//do some saving
 				if (Account.User().HasAccessToContentWithRole(content, Roles.Admin)) {
 					_cntAdmService.Update(content, tags, newTags, rights);
-					_logService.Log(ContentActions.UpdatedContent, content.ContentId);
+					_logService.LogContentEvent(ContentActions.UpdatedContent, content.ContentId);
 
 				}
 				//}
@@ -197,7 +197,7 @@ namespace SongSearch.Web.Controllers
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
 				_cntAdmService.Delete(contentIds);
 
-				contentIds.ForEach(c => _logService.Log(ContentActions.DeletedContent, c));
+				contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.DeletedContent, c));
 
 				CacheService.InitializeApp(true);
 				SessionService.Session().RefreshMyActiveCart(this.UserName());

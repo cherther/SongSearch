@@ -80,7 +80,7 @@ namespace SongSearch.Web.Controllers {
 						);
 				}
 				catch (Exception ex) {
-					App.Logger.Error(ex);
+					Log.Error(ex);
 				}
 				return View(vm);
 

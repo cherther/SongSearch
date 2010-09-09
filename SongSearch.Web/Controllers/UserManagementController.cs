@@ -54,7 +54,9 @@ namespace SongSearch.Web
 
 				return View(vm);
 			}
-			catch {
+			catch (Exception ex) {
+				Log.Error(ex);
+
 				this.FeedbackError("There was an error loading the User Management page. Please try again in a bit.");
 				return RedirectToAction(MVC.Home.Index());
 			}

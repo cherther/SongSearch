@@ -170,9 +170,9 @@ namespace SongSearch.Web.Services {
 				}
 				catch (AmazonS3Exception amazonS3Exception) {
 					if (amazonS3Exception.IsAmazonSecurityException()) {
-						App.Logger.Error(amazonS3Exception.AmazonExceptionMessage());
+						Log.Error(amazonS3Exception.AmazonExceptionMessage());
 					} else {
-						App.Logger.Error(amazonS3Exception);
+						Log.Error(amazonS3Exception);
 					}
 				}
 
@@ -218,9 +218,9 @@ namespace SongSearch.Web.Services {
 				}
 				catch (AmazonS3Exception amazonS3Exception) {
 					if (amazonS3Exception.IsAmazonSecurityException()) {
-						App.Logger.Error(amazonS3Exception.AmazonExceptionMessage());
+						Log.Error(amazonS3Exception.AmazonExceptionMessage());
 					} else {
-						App.Logger.Error(amazonS3Exception);
+						Log.Error(amazonS3Exception);
 					}
 					return mediaBytes;
 				}
@@ -271,14 +271,14 @@ namespace SongSearch.Web.Services {
 				}
 				catch (AmazonS3Exception amazonS3Exception) {
 					if (amazonS3Exception.IsAmazonSecurityException()) {
-						App.Logger.Error(amazonS3Exception.AmazonExceptionMessage());
+						Log.Error(amazonS3Exception.AmazonExceptionMessage());
 					} else {
-						App.Logger.Error(amazonS3Exception);
+						Log.Error(amazonS3Exception);
 					}
 					throw amazonS3Exception;
 				}
 				catch (Exception ex) {
-					App.Logger.Error(String.Format("An error occurred with the message '{0}' when writing an object",
+					Log.Error(String.Format("An error occurred with the message '{0}' when writing an object",
 						ex.Message));
 					throw ex;
 				}
