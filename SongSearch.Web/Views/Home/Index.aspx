@@ -20,20 +20,21 @@
 			<div>&nbsp;</div>
 
 		</div>
-		<div>&nbsp;</div>
+		<%--<div>&nbsp;</div>
 		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Why Have Your Music on <%: Model.SiteProfile.CompanyName %>?</h3>
 			<div>&nbsp;</div>
-			<div>Your music will be previewed and considered for productions by many of the most notable companies and individuals responsible for placing songs in film & television throughout the world.
+			<div>
+			Your music will be considered for film & television use in major productions throughout the world.
 			</div>
-		</div>
+		</div>--%>
 		<div>&nbsp;</div>
 		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Who Uses <%: Model.SiteProfile.CompanyName %>?</h3>
 			<div>&nbsp;</div>
-			<ol>
+			<ul class="cw-bullet">
 				<li>
-				Music Supervisors, producers, editors, game/new media developers and the film & television studios.
+				Music Supervisors, Editors, Directors, Producers, Ad Agencies, Game developers, New Media developers, music libraries, song placement consultants, film & television studios and anyone that needs a library system for their music.
 				</li>
 				<li>
 				A large network of domestic and international film & television music placement professionals in the USA, England, Germany, Canada, Japan and France.
@@ -41,8 +42,16 @@
 				<li>
 				YOU the recording artist/songwriter/producer that needs an advanced on-line “multi-criteria” search system to serve up your music to potential licensors.
 				</li>
-			</ol>
+			</ul>
 		</div>
+		<div>&nbsp;</div>
+		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
+			<h3>Artists on <%: Model.SiteProfile.CompanyName %></h3>
+			<div>&nbsp;</div>
+			<div>Aerosmith, Frank Sinatra, Snoop Dogg, Sarah Vaughan, Lil Wayne, Jimi Hendrix, Ray Charles, Norah Jones, Charlie Parker, Donovan, Christina Aguilera, Bing Crosby, Ziggy Marley, Quincy Jones, Busta Rhyme and many others.
+			</div>			
+		</div>
+
 		<div>&nbsp;</div>
 		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Which Companies Have Licensed Music from <%: Model.SiteProfile.CompanyName %>?</h3>
@@ -62,7 +71,6 @@
 				</li>
 			</ul>			
 		</div>
-
 		<div>&nbsp;</div>
 		<div class="cw-outl-thick cw-fill cw-padded cw-rounded-corners">
 		Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%> - <% = SongSearch.Web.VersionInfo.BuildTime()%>
