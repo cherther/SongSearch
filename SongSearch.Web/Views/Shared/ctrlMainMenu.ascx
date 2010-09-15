@@ -36,7 +36,7 @@
 			string[] values = menuItem.Value;        
 			string menuId = String.Format("menu-{0}", menuItem.Key.ToLower());
 				%>
-			<li id="<%:menuId %>" class="cw-rounded-corners-top <%: menuItem.Key == navLocation ? "current" : ""%>">
+			<li id="<%:menuId %>" class="cw-rounded-corners-top cw-outl-shaded <%: menuItem.Key == navLocation ? "current" : ""%>">
 			<%if (menuItem.Key == "Cart") { %>
 			<% Html.RenderAction(MVC.Cart.CartCount()); %>
 			<%--<%} else if (menuItem.Key == "Help") { %>

@@ -274,30 +274,30 @@ namespace SongSearch.Web.Services {
 
 			using (var session = new SongSearchDataSession()) {
 
-			CompressCartDelegate compressDelegate = (CompressCartDelegate)((AsyncResult)asyncResult).AsyncDelegate;
-			int cartId = (int)asyncResult.AsyncState;
-			
-			compressDelegate.EndInvoke(asyncResult);
+				try {
 
-			var cart = session
-						.GetObjectQuery<Cart>()
-						.Include("Contents")//.Include("Contents.ContentMedia")
-						.SingleOrDefault(c => c.CartId == cartId);
+					CompressCartDelegate compressDelegate = (CompressCartDelegate)((AsyncResult)asyncResult).AsyncDelegate;
+					int cartId = (int)asyncResult.AsyncState;
 
-			if (cart != null && cart.Contents.Count() > 0) {
+					compressDelegate.EndInvoke(asyncResult);
 
-				cart.MarkAsCompressed();
-				session.CommitChanges();
-				
-				cart = null;
-			}
+					var cart = session
+								.GetObjectQuery<Cart>()
+								.Include("Contents")//.Include("Contents.ContentMedia")
+								.SingleOrDefault(c => c.CartId == cartId);
 
-			//object[] parameters = asyncResult.AsyncState as object[];
-			//if (parameters != null && parameters.Length > 0) {
-			//    EndInvokeDelegate endInvokeDelegate = parameters[0] as EndInvokeDelegate;
-			//    if (endInvokeDelegate != null) {
-			//        endInvokeDelegate.Invoke(asyncResult);
-			//    }
+					if (cart != null && cart.Contents.Count() > 0) {
+
+						cart.MarkAsCompressed();
+						session.CommitChanges();
+
+						cart = null;
+					}
+				}
+				catch (Exception ex) {
+					Log.Error(ex);
+				}
+
 			}
 
 		}
@@ -361,44 +361,54 @@ namespace SongSearch.Web.Services {
 
 			using (var session = new SongSearchDataSessionReadOnly()) {
 
-				var cart = session
-							.GetObjectQuery<Cart>()
-							.Include("User")
-							.Include("Contents")
-							.Include("Contents.ContentMedia")
-							.SingleOrDefault(c => c.CartId == cartId);
+				try {
 
-				var user = cart.User;// Account.User(cart.UserId);
-				string zipPath = cart.ArchivePath();
-				string signature = user.IsAnyAdmin() ? user.Signature : user.ParentSignature();
+					var cart = session
+								.GetObjectQuery<Cart>()
+								.Include("User")
+								.Include("Contents")
+								.Include("Contents.ContentMedia")
+								.SingleOrDefault(c => c.CartId == cartId);
 
-				var contents = cart.Contents.ToList();
+					if (cart != null) {
 
-				using (var zip = new ZipFile()) {
+						var user = cart.User;// Account.User(cart.UserId);
+						string zipPath = cart.ArchivePath();
+						string signature = user.IsAnyAdmin() ? user.Signature : user.ParentSignature();
 
-					zip.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed;
+						var contents = cart.Contents.ToList();
 
-					foreach (var content in contents) {
+						using (var zip = new ZipFile()) {
 
-						if (content.HasMediaFullVersion) {
+							zip.CompressionLevel = Ionic.Zlib.CompressionLevel.BestSpeed;
 
-							var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
-														contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
-							var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
+							foreach (var content in contents) {
 
-							try {
-								byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion(), user);
+								if (content.HasMediaFullVersion) {
 
-								zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
-											asset);
+									var nameUserOverride = contentNames != null && contentNames.Any(x => x.ContentId == content.ContentId) ?
+																contentNames.Where(x => x.ContentId == content.ContentId).Single().DownloadableName : null;
+									var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
+
+									try {
+										byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion(), user);
+
+										zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
+													asset);
+									}
+									catch (Exception ex) {
+										Log.Error(ex);
+										Log.Debug(String.Concat(content.ContentId, " has an error/is missing."));
+									}
+								}
 							}
-							catch (Exception ex){
-								Log.Error(ex);
-								Log.Debug(String.Concat(content.ContentId, " has an error/is missing."));
-							}
+							zip.Save(zipPath);
 						}
 					}
-					zip.Save(zipPath);
+				}
+				catch (Exception ex) {
+					Log.Error(ex);
+					throw ex;
 				}
 			}
 			

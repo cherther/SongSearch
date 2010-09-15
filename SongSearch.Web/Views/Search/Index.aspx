@@ -15,7 +15,7 @@
 			<!--/div-->
 		</div>
 		<div class="seven column">
-			<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners cw-buffered-left" style="min-height:480px">
+			<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners cw-buffered-left" style="min-height:480px">
 				<h3>Search Tips</h3>
 				<div>&nbsp;</div>
 				<ul class="cw-bullet">

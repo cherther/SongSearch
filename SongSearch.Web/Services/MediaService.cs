@@ -36,23 +36,32 @@ namespace SongSearch.Web.Services {
 
 		public byte[] GetContentMedia(ContentMedia contentMedia, User user) {
 
-			var bytes = GetContentMedia(contentMedia);
+			//try {
 
-			var tempPath = String.Concat(SystemConfig.ZipPath, "\\", Guid.NewGuid(), ".mp3");
+				var bytes = GetContentMedia(contentMedia);
 
-			File.WriteAllBytes(tempPath, bytes);
-			// id3
-			//ID3Writer.UpdateUserTag(tempPath, content, user);
+				var tempPath = String.Concat(SystemConfig.ZipPath, "\\", Guid.NewGuid(), ".mp3");
+
+				File.WriteAllBytes(tempPath, bytes);
+				// id3
 				
-			var assetFile = new FileInfo(tempPath);
+				//ID3Writer.UpdateUserTag(tempPath, content, user);
 
-			if (assetFile.Exists) {
-				var assetBytes = File.ReadAllBytes(tempPath);
-				File.Delete(tempPath);
-				return assetBytes;
-			} else {
-				throw new ArgumentOutOfRangeException("Content media file is missing");
-			}
+				var assetFile = new FileInfo(tempPath);
+
+				if (assetFile.Exists) {
+					var assetBytes = File.ReadAllBytes(tempPath);
+					File.Delete(tempPath);
+					return assetBytes;
+				} else {
+					var ex = new ArgumentOutOfRangeException("Content media file is missing");
+					Log.Error(ex);
+					throw ex;
+				}
+			//}
+			//catch (Exception ex) {
+			//    Log.Error(ex);
+			//    throw ex;
 			//}
 		}
 		private byte[] GetContentMediaLocal(ContentMedia contentMedia)
@@ -68,7 +77,9 @@ namespace SongSearch.Web.Services {
 			}
 			else
 			{
-				throw new ArgumentOutOfRangeException("Content media file is missing");
+				var ex = new ArgumentOutOfRangeException("Content media file is missing");
+				Log.Error(ex);
+				throw ex;
 			}
 		}
 

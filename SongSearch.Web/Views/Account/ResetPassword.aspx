@@ -14,7 +14,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 <div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<h2>Reset Password</h2>
 	<div>&nbsp;</div>
-	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+	<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 	<p>
 		Please enter your e-mail address and we will send you a link to help you select a new password. Please <%: Html.ActionLink("register", "Register") %> if you don't have an account.
 	</p>

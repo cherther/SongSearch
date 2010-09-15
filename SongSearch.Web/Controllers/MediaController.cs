@@ -34,7 +34,8 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				var user = Account.User();
-				var content = SearchService.GetContent(id, user);
+
+				var content = user != null ? SearchService.GetContent(id, user) : null;
 
 				if (content != null) {
 
@@ -53,7 +54,9 @@ namespace SongSearch.Web.Controllers
 				} else {
 					var msg = "You do not have access to this file";
 					this.FeedbackError(msg);
-					return RedirectToAction(MVC.Error.Index(new AccessViolationException(msg), msg, "Media", "Download"));
+					var ex = new AccessViolationException(msg);
+					Log.Error(ex);
+					return RedirectToAction(MVC.Error.Index(ex, msg, "Media", "Download"));
 				}
 			}
 			catch (Exception ex) {
@@ -141,7 +144,9 @@ namespace SongSearch.Web.Controllers
 				} else {
 					var msg = "You do not have access to this file";
 					this.FeedbackError(msg);
-					return RedirectToAction(MVC.Error.Index(new AccessViolationException(msg), msg, "Media", "Stream"));
+					var ex = new AccessViolationException(msg);
+					Log.Error(ex);
+					return RedirectToAction(MVC.Error.Index(ex, msg, "Media", "Stream"));
 				}
 				
 
@@ -165,7 +170,9 @@ namespace SongSearch.Web.Controllers
 				} else {
 				var msg = "You do not have access to this file";
 					this.FeedbackError(msg);
-					return RedirectToAction(MVC.Error.Index(new AccessViolationException(msg), msg, "Media", "Stream"));
+					var ex = new AccessViolationException(msg);
+					Log.Error(ex);
+					return RedirectToAction(MVC.Error.Index(ex, msg, "Media", "Stream"));
 				}
 			}
 			catch (Exception ex) {

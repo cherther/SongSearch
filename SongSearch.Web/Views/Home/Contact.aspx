@@ -6,13 +6,13 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>
-<div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
+<div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<h2>Contact Us</h2>
 	<div>&nbsp;</div>
 
 	<div class="six_column section">
 		<div class="three column">
-			<div class="cw-outl cw-padded cw-rounded-corners">
+			<div class="cw-outl cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 				<h3><%: Model.PageTitle %></h3>
 				<div>&nbsp;</div>
 				<%if (!String.IsNullOrWhiteSpace(Model.PageMessage)) {%>
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<div class="three column">
-				<div class="cw-outl cw-padded cw-buffered-left cw-rounded-corners">
+				<div class="cw-outl-thick cw-fill-white cw-padded cw-buffered-left cw-rounded-corners">
 					<h3>Contact Information:</h3>
 					<div>&nbsp;</div>
 					<%if (!String.IsNullOrWhiteSpace(Model.ContactInfo.ContactName)) {%>

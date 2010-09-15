@@ -8,29 +8,34 @@ namespace SongSearch.Web.Logging {
 
 		public static string BuildExceptionMessage(Exception x) {
 			
-			Exception logException=x;
-			if(x.InnerException!=null)
-				logException=x.InnerException;
+			Exception logException = x.InnerException ?? x;
 
-			string strErrorMsg = Environment.NewLine + "Error in Path :" + System.Web.HttpContext.Current != null ? System.Web.HttpContext.Current.Request.Path : "(no httpContext)";
+			string msg = String.Empty;
 
-			// Get the QueryString along with the Virtual Path
-			strErrorMsg += Environment.NewLine + "Raw Url :" + System.Web.HttpContext.Current != null ? System.Web.HttpContext.Current.Request.RawUrl : "(no httpContext)";
+			if (logException != null) {
 
 			
-			// Get the error message
-			strErrorMsg += Environment.NewLine + "Message :" + logException.Message;
+				//msg += Environment.NewLine + "Error in Path :" + System.Web.HttpContext.Current != null ? System.Web.HttpContext.Current.Request.Path : "(no httpContext)";
 
-			// Source of the message
-			strErrorMsg += Environment.NewLine + "Source :" + logException.Source;
+				//// Get the QueryString along with the Virtual Path
+				//msg += Environment.NewLine + "Raw Url :" + System.Web.HttpContext.Current != null ? System.Web.HttpContext.Current.Request.RawUrl : "(no httpContext)";
 
-			// Stack Trace of the error
+			
+				// Get the error message
+				msg += Environment.NewLine + "Message :" + logException.Message;
 
-			strErrorMsg += Environment.NewLine + "Stack Trace :" + logException.StackTrace;
+				// Source of the message
+				msg += Environment.NewLine + "Source :" + logException.Source;
 
-			// Method where the error occurred
-			strErrorMsg += Environment.NewLine + "TargetSite :" + logException.TargetSite;
-			return strErrorMsg;
+				// Stack Trace of the error
+
+				msg += Environment.NewLine + "Stack Trace :" + logException.StackTrace;
+
+				// Method where the error occurred
+				msg += Environment.NewLine + "TargetSite :" + logException.TargetSite;
+			}
+
+			return msg;
 		}
 	}
 }

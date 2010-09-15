@@ -15,7 +15,7 @@
 			<!--/div-->
 		</div>
 		<div class="seven column">
-			<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners cw-buffered-left">
+			<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners cw-buffered-left">
 				<% Html.RenderPartial(MVC.Search.Views.ctrlSearchResults); %>
 			</div>
 		</div>

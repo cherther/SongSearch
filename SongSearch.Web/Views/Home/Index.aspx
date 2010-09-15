@@ -9,7 +9,7 @@
 	<h2>Welcome</h2>
 	<div>
 		<div>&nbsp;</div>
-		<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>What's New?</h3>
 			<div>&nbsp;</div>
 			<div>Welcome to <%: Model.SiteProfile.CompanyName %>.</div>
@@ -21,14 +21,14 @@
 
 		</div>
 		<div>&nbsp;</div>
-		<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Why Have Your Music on <%: Model.SiteProfile.CompanyName %>?</h3>
 			<div>&nbsp;</div>
 			<div>Your music will be previewed and considered for productions by many of the most notable companies and individuals responsible for placing songs in film & television throughout the world.
 			</div>
 		</div>
 		<div>&nbsp;</div>
-		<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Who Uses <%: Model.SiteProfile.CompanyName %>?</h3>
 			<div>&nbsp;</div>
 			<ol>
@@ -44,7 +44,7 @@
 			</ol>
 		</div>
 		<div>&nbsp;</div>
-		<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Which Companies Have Licensed Music from <%: Model.SiteProfile.CompanyName %>?</h3>
 			<div>&nbsp;</div>
 			<ul class="cw-bullet">
@@ -64,7 +64,7 @@
 		</div>
 
 		<div>&nbsp;</div>
-		<div class="cw-outl cw-fill cw-padded cw-rounded-corners">
+		<div class="cw-outl-thick cw-fill cw-padded cw-rounded-corners">
 		Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%> - <% = SongSearch.Web.VersionInfo.BuildTime()%>
 		</div>
 

@@ -14,7 +14,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 <div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<h2>Register</h2>
 	<div>&nbsp;</div>
-	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+	<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 	<p>
 		Access to <strong><%: Model.SiteProfile.CompanyName %></strong> is by invitation only. Use the form below to create a new account using the invitation code sent to you.
 	</p>

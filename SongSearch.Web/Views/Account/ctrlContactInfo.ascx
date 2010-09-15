@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.UpdateProfileModel>" %>
 
-<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 	<%: Html.HiddenFor(m => m.Contact.ContactId)%>
 	<h3>Contact Info</h3>
 	<div>This information will be displayed on the <%: Html.ActionLink("Contact Us", MVC.Home.Contact())%> page. Please enter at least option for users to contact you, such as Phone or Email.</div>

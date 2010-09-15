@@ -158,6 +158,15 @@ fieldset legend
 {
 	border: 1px solid #FF8000;
 	padding: 0.4em;
+	
+}
+.cw-outl-orange-shaded
+{
+	border-style: solid;
+	border-width: 0 1px 1px 1px;
+	border-color: rgba(255,255,255,0.4) #FF8000 #FF8000 rgba(255,255,255,0.4);
+	padding: 0.4em;
+}
 }
 .cw-fill
 {
@@ -169,16 +178,19 @@ fieldset legend
 }
 .cw-fill-dark
 {
-	background-color: #97C0DF;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#97C0DF', endColorstr='#E8F0F7'); /* for IE */
+	background-color: #B5D2E8; /*filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#97C0DF', endColorstr='#E8F0F7'); /* for IE */
 	background: -webkit-gradient(    
-	linear, left top, right bottom, from(#D5E3F0), to(#97C0DF)
+	linear, left top, right bottom, from(#D5E3F0), to(#B5D2E8)
 	); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #D5E3F0, #97C0DF); /* for firefox 3.6+ */
+	background: -moz-linear-gradient(top,  #D5E3F0, #B5D2E8); /* for firefox 3.6+ */
 }
 .cw-fill-white
 {
 	background-color: #FFFFFF  !important;
+	background: -webkit-gradient(    
+	linear, left top, right bottom, from(#fcfcfc), to(#fff)
+	); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fcfcfc, #fff); /* for firefox 3.6+ */
 }
 .cw-fill-orange
 {
@@ -213,6 +225,12 @@ fieldset legend
 	-moz-border-radius-topright: 10px;
 	-webkit-border-top-left-radius: 10px;
 	-webkit-border-top-right-radius: 10px;
+}
+.cw-outl-shaded
+{
+	border-style: solid;
+	border-width: 0 0.08em 0 0.08em;
+	border-color: rgba(255,255,255,0.4) rgba(0,0,0,0.4) rgba(0,0,0,0.4) rgba(255,255,255,0.4);
 }
 .cw-rounded-corners-bottom
 {

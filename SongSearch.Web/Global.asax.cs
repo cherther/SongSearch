@@ -229,14 +229,18 @@ namespace SongSearch.Web {
 			//Logger.Info("App is starting up");
 
 //#if !DEBUG
+			if (App.Environment == AppEnvironment.Production) {
 
-			ThreadStart amazonSync = new ThreadStart(AmazonSyncLoopPreview);
-			Thread t1 = new Thread(amazonSync);
-			t1.Start();
+
+				ThreadStart amazonSync = new ThreadStart(AmazonSyncLoopPreview);
+				Thread t1 = new Thread(amazonSync);
+				t1.Start();
 			
-			ThreadStart amazonSyncFull = new ThreadStart(AmazonSyncLoopFull);
-			Thread t2 = new Thread(amazonSyncFull);
-			t2.Start();
+				ThreadStart amazonSyncFull = new ThreadStart(AmazonSyncLoopFull);
+				Thread t2 = new Thread(amazonSyncFull);
+				t2.Start();
+
+			}
 
 			//ThreadStart amazonRecyleFull = new ThreadStart(AmazonRecyleFull);
 			//Thread t3 = new Thread(amazonRecyleFull);

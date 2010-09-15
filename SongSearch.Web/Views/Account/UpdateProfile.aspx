@@ -22,7 +22,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 	<div>&nbsp;</div>
 	<% using (Html.BeginForm(MVC.Account.UpdateProfile(), FormMethod.Post, new { @class = "cw-form-small" })) {%>
 	   <%:Html.AntiForgeryToken() %>
-			<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+			<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 				<h3><%: Model.PageMessage %></h3>
 				<div>&nbsp;</div>
 				<div>

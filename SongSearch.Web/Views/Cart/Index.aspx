@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class = "cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<h2><%: Model.PageTitle %></h2>
-	<div class="cw-outl cw-fill-white cw-carts cw-rounded-corners">
+	<div class="cw-outl-thick cw-fill-white cw-carts cw-rounded-corners">
 			  <h3>(1) Ready to Download</h3>
 	<%
 		
@@ -71,7 +71,7 @@
 	</div>
 	<%} %>
 	<div>&nbsp;</div>
-	<div class="cw-outl cw-fill-white cw-carts cw-rounded-corners">
+	<div class="cw-outl-thick cw-fill-white cw-carts cw-rounded-corners">
 		  <h3>(2) Zipped Song Carts</h3>
 		  <%if (compressedCarts != null && compressedCarts.Count() > 0) { %>
 		  <p>Your zipped up song carts are listed below. To save them to your computer, click the 'Download' button next to each file.</p>

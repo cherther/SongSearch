@@ -14,7 +14,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 
     <h2>Change Password</h2>
 	<div>&nbsp;</div>
-	<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+	<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 	<p>
         Use the form below to change your password. 
     </p>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace SongSearch.Web {
 	
@@ -55,6 +56,20 @@ namespace SongSearch.Web {
 			MediaFolderUrlFormat = Configuration.Get("Sys_MediaFolderUrlFormat");
 			RemoteMediaUploadNewOnly = bool.Parse(Configuration.Get("Sys_RemoteMediaUploadNewOnly"));
 			RemoteMediaCheckSize = bool.Parse(Configuration.Get("Sys_RemoteMediaCheckSize"));
+
+
+			if (!Directory.Exists(MediaPathFull)) {
+				Directory.CreateDirectory(MediaPathFull);
+			}
+			if (!Directory.Exists(MediaPathPreview)) {
+				Directory.CreateDirectory(MediaPathPreview);
+			}
+			if (!Directory.Exists(UploadPath)) {
+				Directory.CreateDirectory(UploadPath);
+			}
+			if (!Directory.Exists(ZipPath)) {
+				Directory.CreateDirectory(ZipPath);
+			}
 
 		}
 	}

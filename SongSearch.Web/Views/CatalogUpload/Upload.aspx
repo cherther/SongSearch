@@ -31,7 +31,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 
 		<%: Html.ActionLink("(Start Over)", MVC.CatalogUpload.Upload(Model.CatalogUploadState.CatalogId)) %>
 		<div>&nbsp;</div>
-		<div class="cw-outl cw-fill-white cw-padded cw-rounded-corners">
+		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<div>&nbsp;</div>
 			<div class="six_column section">
 				<div class="three column text-top">
