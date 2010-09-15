@@ -5,7 +5,7 @@
 
 	menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
 		Name = "UserManagement",
-		LinkDisplayName = "Manage Users",
+		LinkDisplayName = "User Management",
 		LinkActionName = "Index",
 		LinkControllerName = "UserManagement",
 		CurrentLocation = current.ToString(),
@@ -13,7 +13,7 @@
 	});
 	menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
 		Name = "CatalogManagement",
-		LinkDisplayName = "Manage Catalogs",
+		LinkDisplayName = "Catalog Management",
 		LinkActionName = "Index",
 		LinkControllerName = "CatalogManagement",
 		CurrentLocation = current.ToString(),

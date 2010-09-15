@@ -21,23 +21,24 @@
 		<span>(<%:Html.ActionLink("Edit your Profile", MVC.Account.UpdateProfile())%>)</span>
 		</div>
 	<%} else {%>
-	<div class="one column">
-		<%if (Model.AllowEdit) { %>
-			<%using (Html.BeginForm(MVC.UserManagement.Delete(), FormMethod.Post, new { id = "cw-user-delete-form" })) { %>
-			<%: Html.Hidden("id", user.UserId)%>
-			<%: Html.AntiForgeryToken()%>
-			<button type="submit" id="cw-user-delete-link" class="cw-button cw-simple cw-small cw-red" title="Delete User"><span class="b-delete">Delete</span></button>
+		<div class="one column">
+			<%if (Model.AllowEdit) { %>
+				<%using (Html.BeginForm(MVC.UserManagement.Delete(), FormMethod.Post, new { id = "cw-user-delete-form" })) { %>
+				<%: Html.Hidden("id", user.UserId)%>
+				<%: Html.AntiForgeryToken()%>
+				<button type="submit" id="cw-user-delete-link" class="cw-button cw-simple cw-small cw-red" title="Delete User"><span class="b-delete">Delete</span></button>
+				<%} %>
 			<%} %>
-	</div>
-	<div class="one column">
-
+		</div>
+		<div class="one column">
+		<%if (Model.AllowEdit && Page.User.UserIsSuperAdmin()) {  %>
 			<%using (Html.BeginForm(MVC.UserManagement.TakeOwnership(), FormMethod.Post, new { id = "cw-user-takeowner-form" })) { %>
 			<%:Html.Hidden("id", user.UserId)%>
 			<%: Html.AntiForgeryToken()%>
 			<button type="submit" id="cw-user-takeowner-link" class="cw-button cw-simple cw-small cw-red" title="Take Ownership"><span class="b-user">Take Ownership</span></button>
 			<%} %>
 		<%} %>
-	</div>
+		</div>
 	<%} %>
 </div>
 <div>&nbsp;</div>

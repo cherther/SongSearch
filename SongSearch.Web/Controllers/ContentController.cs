@@ -268,6 +268,9 @@ namespace SongSearch.Web.Controllers
 			if (user.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
 				model.SectionsAllowed.Add("Rights");
 			}
+			if (user.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
+				model.SectionsAllowed.Add("Catalog");
+			}
 
 			if (user.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
 				model.SectionsAllowed.Add("Media");

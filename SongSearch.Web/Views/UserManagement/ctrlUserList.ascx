@@ -19,12 +19,12 @@
 				<strong>
 				<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
 				</strong>
-				<img src="../../Public/Images/Icons/Silk/star_gold.png" alt="SuperAdmin" title="SuperAdmin"/>
-			<%} else {
+<%--				<img src="../../Public/Images/Icons/Silk/star_gold.png" alt="SuperAdmin" title="SuperAdmin"/>
+--%>			<%} else {
 				if (App.IsLicensedVersion && user.IsPlanUser) {%>
 					&nbsp;&nbsp;
 					<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
-					<img src="../../Public/Images/Icons/Silk/money_dollar.png" alt="Plan User" title="Plan User" />
+<%--					<img src="../../Public/Images/Icons/Silk/money_dollar.png" alt="Plan User" title="Plan User" />--%>
 				<%} else {%>
 				&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
 				<%}%>

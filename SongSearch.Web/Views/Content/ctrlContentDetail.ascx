@@ -274,10 +274,12 @@
 						<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.ContentId)%></div>
 						<div class="<%: columnTwo%> column"><%: content.ContentId%></div>
 					</div>
+					<%if (Model.SectionsAllowed.Contains("Catalog")) { %>
 					<div class="<%: sectionSize%>_column section cw-spaced">    
 						<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Catalog.CatalogName)%></div>
 						<div class="<%: columnTwo%> column"><%: content.Catalog.CatalogName%></div>
 					</div>
+					<%} %>
 					<div class="<%: sectionSize%>_column section cw-spaced">    
 						<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.IsControlledAllIn)%></div>
 						<div class="<%: columnTwo%> column">
