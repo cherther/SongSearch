@@ -104,7 +104,7 @@ namespace SongSearch.Web.Controllers {
 			return View("Index", new ViewModel() { NavigationLocation = new string[] { "Home" } });
 		}
 		public virtual ActionResult Help() {
-			return View(new ViewModel() { PageTitle = "Help", NavigationLocation = new string[] { "Home" } });
+			return View(new ViewModel() { PageTitle = "Help", NavigationLocation = new string[] { "Help" } });
 		}
 		public virtual ActionResult PrivacyPolicy() {
 			return View(new ViewModel() { PageTitle = "Privacy Policy", NavigationLocation = new string[] { "Home" } });
