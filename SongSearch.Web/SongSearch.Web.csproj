@@ -363,6 +363,30 @@
     <Content Include="Public\Javascript\cw.application.js">
       <DependentUpon>scriptmash.chirp.config</DependentUpon>
     </Content>
+    <Content Include="Public\Images\logos\abc-family.jpg" />
+    <Content Include="Public\Images\logos\abc.jpg" />
+    <Content Include="Public\Images\logos\bet.jpg" />
+    <Content Include="Public\Images\logos\cbs.jpg" />
+    <Content Include="Public\Images\logos\cinemax.jpg" />
+    <Content Include="Public\Images\logos\cw.jpg" />
+    <Content Include="Public\Images\logos\discovery-channel.jpg" />
+    <Content Include="Public\Images\logos\disney.jpg" />
+    <Content Include="Public\Images\logos\fox-searchlight.jpg" />
+    <Content Include="Public\Images\logos\fox.jpg" />
+    <Content Include="Public\Images\logos\hbo.jpg" />
+    <Content Include="Public\Images\logos\lifetime-network.jpg" />
+    <Content Include="Public\Images\logos\lions-gate-films.jpg" />
+    <Content Include="Public\Images\logos\mgm.jpg" />
+    <Content Include="Public\Images\logos\nbc.jpg" />
+    <Content Include="Public\Images\logos\paramount.jpg" />
+    <Content Include="Public\Images\logos\screen-gems.jpg" />
+    <Content Include="Public\Images\logos\showtime.jpg" />
+    <Content Include="Public\Images\logos\sony-pictures.jpg" />
+    <Content Include="Public\Images\logos\wfb.gif" />
+    <Content Include="Public\Images\logos\touchstone-pictures.jpg" />
+    <Content Include="Public\Images\logos\universal.jpg" />
+    <Content Include="Public\Images\logos\usa.jpg" />
+    <Content Include="Public\Images\logos\wb-in-bw.jpg" />
     <Content Include="Public\Javascript\cw.plugins.js">
       <DependentUpon>scriptmash.chirp.config</DependentUpon>
     </Content>
@@ -384,6 +408,7 @@
     <Content Include="Scripts\cw.app.upload.min.js">
       <DependentUpon>cw.app.upload.chirp.js</DependentUpon>
     </Content>
+    <Content Include="Scripts\jquery.carousel.min.js" />
     <Content Include="Scripts\jquery.cookies.2.2.0.min.js" />
     <Content Include="Scripts\jquery.gritter.js" />
     <Content Include="Scripts\jquery.gritter.min.js" />

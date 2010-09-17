@@ -46,6 +46,31 @@
 		</div>
 		<div>&nbsp;</div>
 		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
+			<h3>Which Companies Have Licensed Music from <%: Model.SiteProfile.CompanyName %>?</h3>
+			<div>&nbsp;</div>
+			<div class="cw-outl-thick cw-fill-lite cw-padded cw-rounded-corners">
+			<%
+				var imgFolder = new System.IO.DirectoryInfo(Server.MapPath("~/public/images/logos/"));
+				var images = imgFolder.GetFiles();
+			%>
+			<%
+			for(int i=0; i < images.Length; i++) {					
+				var imgUrl = String.Concat("/public/images/logos/", images[i].Name);					
+			%>
+				<%if (i == 0 || i % 6 == 0){ %>
+				<div class="six_column section">
+				<%} %>
+					<div class="one column cw-outl-thick cw-fill-white cw-rounded-corners" style="margin:1px;text-align: center; vertical-align: middle">
+						<img src="<%: imgUrl %>" width="70" alt="logo" />
+					</div>
+				<%if ((i+1) % 6 == 0){ %>
+				</div>			
+				<%} %>
+			<%} %>
+			</div>			
+		</div>
+		<div>&nbsp;</div>
+		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>Artists on <%: Model.SiteProfile.CompanyName %></h3>
 			<div>&nbsp;</div>
 			<div>Aerosmith, Frank Sinatra, Snoop Dogg, Sarah Vaughan, Lil Wayne, Jimi Hendrix, Ray Charles, Norah Jones, Charlie Parker, Donovan, Christina Aguilera, Bing Crosby, Ziggy Marley, Quincy Jones, Busta Rhyme and many others.
@@ -53,29 +78,15 @@
 		</div>
 
 		<div>&nbsp;</div>
-		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
-			<h3>Which Companies Have Licensed Music from <%: Model.SiteProfile.CompanyName %>?</h3>
-			<div>&nbsp;</div>
-			<ul class="cw-bullet">
-				<li>
-				Disney
-				</li>
-				<li>
-				The CW
-				</li>
-				<li>
-				HBO
-				</li>
-				<li>
-				ABC
-				</li>
-			</ul>			
-		</div>
-		<div>&nbsp;</div>
 		<div class="cw-outl-thick cw-fill cw-padded cw-rounded-corners">
 		Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%> - <% = SongSearch.Web.VersionInfo.BuildTime()%>
 		</div>
 
 	</div>		
 </div>
+<script type="text/javascript">
+	$(function () {
+		//$("#logocarousel").carousel({ dispItems: 3 });
+	});
+</script>
 </asp:Content>
