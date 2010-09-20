@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SongSearch.Web.Logging;
+using System.Security.Cryptography;
+using System.Threading;
 
 namespace SongSearch.Web.Controllers
 {
@@ -23,6 +25,16 @@ namespace SongSearch.Web.Controllers
 			Exception lastError = Server.GetLastError();
 			lastError = lastError ?? new Exception(message ?? "Unknown Error");
 			this.FeedbackError("Oops! Sorry, something bad happened while processing your request...");
+
+            byte[] delay = new byte[1];
+            RandomNumberGenerator prng = new RNGCryptoServiceProvider();
+
+            prng.GetBytes(delay);
+            Thread.Sleep((int)delay[0]);
+
+            IDisposable disposable = prng as IDisposable;
+            if (disposable != null) { disposable.Dispose(); }
+
 			return View("500", new ErrorViewModel() { Error = new HandleErrorInfo(lastError, controllerName, actionName) } );
 		}
 		/// <summary>
@@ -33,7 +45,18 @@ namespace SongSearch.Web.Controllers
 			//no logging here - let the app do it 
 			//we don't get reliable error traps here
 			Response.StatusCode = 500;
-			_logger.Warn(string.Format("500 - {0}", Request.UrlReferrer));
+			
+            _logger.Warn(string.Format("500 - {0}", Request.UrlReferrer));
+            
+            byte[] delay = new byte[1];
+            RandomNumberGenerator prng = new RNGCryptoServiceProvider();
+
+            prng.GetBytes(delay);
+            Thread.Sleep((int)delay[0]);
+
+            IDisposable disposable = prng as IDisposable;
+            if (disposable != null) { disposable.Dispose(); }
+
 			return View("500", new ErrorViewModel());
 		}
 		/// <summary>
