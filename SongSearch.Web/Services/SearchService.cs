@@ -251,9 +251,7 @@ namespace SongSearch.Web.Services {
 			var currentlyFieldIndexed = new string[] { "Lyrics" }; //Columns that have dedicated index fields
 			
 			foreach (var field in searchFields) {
-
-				var searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
-
+				
 				var prop = properties.Where(p => p.PropertyId == field.P).SingleOrDefault();
 				if (prop != null) {
 					// build search 
@@ -263,6 +261,7 @@ namespace SongSearch.Web.Services {
 
 						case SearchTypes.Contains:
 
+                            var searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
 							columnName = !prop.IsIndexable ? 
 								(
 									currentlyFieldIndexed.Contains(columnName) ? 
@@ -307,6 +306,8 @@ namespace SongSearch.Web.Services {
 						//    break;
 
 						case SearchTypes.HasValue:
+                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+							
 							if (searchableValues.First() != null) {
 
 								var predicate = String.Format("{0} != null", columnName);
@@ -315,6 +316,8 @@ namespace SongSearch.Web.Services {
 							break;
 
 						case SearchTypes.IsTrue:
+                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+							
 							if (searchableValues.First() != null) {
 
 								var predicate = String.Format("{0} == true", columnName);
@@ -324,7 +327,8 @@ namespace SongSearch.Web.Services {
 
 						case SearchTypes.Range:
 							int i;
-
+                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+							
 							var range = searchableValues.Select(
 								x => (String.IsNullOrWhiteSpace(x) || int.TryParse(x, out i) == false)
 									? null
@@ -355,7 +359,9 @@ namespace SongSearch.Web.Services {
 							}
 							break;
 						case SearchTypes.Tag:
-
+                            
+                            searchableValues = field.V;//.Select(v => v.MakeSearchableValue()).ToArray();
+							
 							var tagValues = searchableValues.SplitTags(';').Distinct().ToArray(); //could also just replace, but this way it throws for non-numeric values
 							
 							foreach (var itm in tagValues) {
