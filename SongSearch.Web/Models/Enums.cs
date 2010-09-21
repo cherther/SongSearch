@@ -18,11 +18,11 @@ namespace SongSearch.Web {
 	// **************************************    
 	public enum PricingPlans {
 		Member = 0,
-		Basic = 1,
-		Plus = 2,
-		Business = 3,
-		Pro = 4,
-		Introductory = 5,
+        Introductory = 1,
+        Basic = 2,
+		Plus = 3,
+		Business = 4,
+		Pro = 5,
 		SuperAdmin = 6
 	}
 	
