@@ -3,7 +3,7 @@
 //int selectPricingPlan = 0;
 //int.TryParse(ViewData["SelectPricingPlan"].ToString(), out selectPricingPlan);
 var plans = (Model.MyPricingPlan != null ?
-				Model.PricingPlans.Where(p => p.PricingPlanId != Model.MyPricingPlan.PricingPlanId) :
+    Model.PricingPlans.Where(p => p.PricingPlanId != Model.MyPricingPlan.PricingPlanId) :
 				Model.PricingPlans)
 	.OrderBy(p => p.PlanCharge).ThenBy(p => p.PricingPlanId);//.Where(p => p.ShowOnSite == true).OrderByDescending(p => p.IsPromo);
 	
@@ -129,7 +129,7 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	</td>
 		<%foreach (var plan in plans) { %>
 		<td class="text-center cell-border-closer <%: plan.PlanDisplayClass() %>">
-			<a href="#" class="cw-button cw-simple cw-medium cw-green" disabled="disabled">Upgrade</a>
+			<a href="#" class="cw-button cw-simple cw-medium cw-green" disabled="disabled">Change Plan</a>
 		</td>
 		<%} %>
 	<%} else {%>

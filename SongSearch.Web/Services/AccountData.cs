@@ -131,7 +131,8 @@ namespace SongSearch.Web {
 					.Include("Contacts")
 					.Include("ParentUser.Contacts")
 					.Include("PricingPlan")
-					.Include("ParentUser.PricingPlan");
+					.Include("ParentUser.PricingPlan")
+					.Include("ParentUser.ParentUser");
 		}
 		// ----------------------------------------------------------------------------
 		// Extensions
