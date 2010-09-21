@@ -30,14 +30,12 @@
 		<%if (Model.HierarchyLevel > 0) { %>
 			<%if (App.IsLicensedVersion && user.IsPlanUser) {%>
 			<%:userDisplayName%>
-			<img src="../../Public/Images/Icons/Silk/money_dollar.png" alt="Plan User" title="Plan User" />
 			<%} else {%>
 			&nbsp;-&nbsp;<%:userDisplayName%>
 			<%} %>
 		<%} else {%>
 			<strong><%:userDisplayName%></strong>
 			<%if (user.IsSuperAdmin()) {%>
-			<img src="../../Public/Images/Icons/Silk/star_gold.png" alt="SuperAdmin" title="SuperAdmin"/>
 			<%} %>
 		<%} %>
 		</span>	
