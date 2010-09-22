@@ -81,6 +81,7 @@ namespace SongSearch.Web.Controllers {
 					_logService.LogUserEvent(UserActions.Login);
 
 					SetFriendlyNameCookie(user.FullName());
+                    SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
 
 					var msg = user.LoginMessage();// string.Concat("Welcome ", user.FullName());
 
@@ -118,10 +119,16 @@ namespace SongSearch.Web.Controllers {
 		
 		private void SetFriendlyNameCookie(string friendly) {
 			Response.Cookies["friendly"].Value = friendly;
-			Response.Cookies["friendly"].Expires = DateTime.Now.AddDays(30);
+			Response.Cookies["friendly"].Expires = DateTime.Now.AddDays(360);
 			Response.Cookies["friendly"].HttpOnly = true;
 		}
 
+        private void SetSiteProfileCookie(int siteProfileId)
+        {
+            Response.Cookies["siteProfile"].Value = siteProfileId.ToString();
+            Response.Cookies["siteProfile"].Expires = DateTime.Now.AddDays(360);
+            Response.Cookies["siteProfile"].HttpOnly = true;
+        }
 
 
 		// **************************************
@@ -167,14 +174,21 @@ namespace SongSearch.Web.Controllers {
 					ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
 				}
 			}
-			return View(new RegisterModel() {
 
-				NavigationLocation = new string[] { "Register" },
-				InviteId = id,
-				Email = em,
-				SelectedPricingPlan = PricingPlans.Introductory,
-				Invitation = inv
-			});
+            var model = new RegisterModel()
+            {
+
+                NavigationLocation = new string[] { "Register" },
+                InviteId = id,
+                Email = em,
+                SelectedPricingPlan = PricingPlans.Introductory,
+                Invitation = inv
+            };
+            if (inv != null){
+                SetSiteProfileCookie(inv.InvitedByUser.SiteProfileId);
+			}
+    
+            return View(model); 
 		}
 
 		[HttpPost]
@@ -202,6 +216,9 @@ namespace SongSearch.Web.Controllers {
 					}
 
 					if (inv != null) {
+
+//                        model.SiteProfile = SiteProfileData.SiteProfile(inv.InvitedByUser.SiteProfileId, true);
+
 						switch (inv.InvitationStatus) {
 							case (int)InvitationStatusCodes.Open: {
 									model.Invitation = inv;
@@ -222,13 +239,15 @@ namespace SongSearch.Web.Controllers {
 										ParentUserId = model.Invitation.InvitedByUserId,
 										PricingPlanId = selectedPricingPlanId > 0 ? selectedPricingPlanId : (int)PricingPlans.Member,
 										HasAgreedToPrivacyPolicy = model.HasAgreedToPrivacyPolicy,
-										HasAllowedCommunication = model.HasAllowedCommunication
+										HasAllowedCommunication = model.HasAllowedCommunication,
+                                        SiteProfileId = model.Invitation.InvitedByUser.SiteProfileId
 									};
 
 									try {
 										user = _acctService.RegisterUser(user, inv.InvitationId);
 
 										SetFriendlyNameCookie(user.FullName());
+                                        SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
 
 										_logService.LogUserEvent(UserActions.Register);
 
@@ -264,6 +283,7 @@ namespace SongSearch.Web.Controllers {
 			model.NavigationLocation = new string[] { "Register" };
 			this.FeedbackError("There was an error registering you...");
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
+
 
 			return View(model);
 		}

@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.ViewModel>" %>
 <%
-	var contact = Model.SiteProfile.GetContactInfo(Account.User());
+	var contact = Html.SiteProfile().GetContactInfo(Account.User());
 	
 	%>
 <div> <%--class="cw-outl cw-fill cw-rounded-corners">--%>
@@ -9,7 +9,7 @@
 	<div><strong><%: contact.ContactName%></strong></div>
 	<%} %>
 	<div class="text-small">
-		<%if (!String.IsNullOrWhiteSpace(Model.SiteProfile.CompanyName)) {%>
+		<%if (!String.IsNullOrWhiteSpace(Html.SiteProfile().CompanyName)) {%>
 		<div><%: contact.CompanyName%></div>
 		<%} %>
 		<div>

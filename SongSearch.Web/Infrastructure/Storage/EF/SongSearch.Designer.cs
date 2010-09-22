@@ -23,7 +23,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Roles", "Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Role), "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentRightTerritories", "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRight), "Territories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Territory))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentTags", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), "Tags", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Tag))]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.Invitation), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "CartContents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), "Cart", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Cart))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Carts_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Cart", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Cart), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Catalogs", "Catalog", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Catalog), "UserCatalogRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserCatalogRole), true)]
@@ -42,6 +41,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentActionEvents_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "ContentActionEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentActionEvent), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_SearchEvents_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "SearchEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.SearchEvent), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UserActionEvents_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "UserActionEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserActionEvent), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Invitations_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Invitation), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.Invitation), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 
 #endregion
 
@@ -224,22 +225,6 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Invitation> Invitations
-        {
-            get
-            {
-                if ((_Invitations == null))
-                {
-                    _Invitations = base.CreateObjectSet<Invitation>("Invitations");
-                }
-                return _Invitations;
-            }
-        }
-        private ObjectSet<Invitation> _Invitations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<UserCatalogRole> UserCatalogRoles
         {
             get
@@ -396,6 +381,22 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<SearchProperty> _SearchProperties;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Invitation> Invitations
+        {
+            get
+            {
+                if ((_Invitations == null))
+                {
+                    _Invitations = base.CreateObjectSet<Invitation>("Invitations");
+                }
+                return _Invitations;
+            }
+        }
+        private ObjectSet<Invitation> _Invitations;
 
         #endregion
         #region AddTo Methods
@@ -462,14 +463,6 @@ namespace SongSearch.Web.Data
         public void AddToUsers(User user)
         {
             base.AddObject("Users", user);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Invitations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToInvitations(Invitation invitation)
-        {
-            base.AddObject("Invitations", invitation);
         }
     
         /// <summary>
@@ -550,6 +543,14 @@ namespace SongSearch.Web.Data
         public void AddToSearchProperties(SearchProperty searchProperty)
         {
             base.AddObject("SearchProperties", searchProperty);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Invitations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToInvitations(Invitation invitation)
+        {
+            base.AddObject("Invitations", invitation);
         }
 
         #endregion
@@ -3316,8 +3317,46 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Invitations_Users", "User")]
+        public User InvitedByUser
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Invitations_Users", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Invitations_Users", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> InvitedByUserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Invitations_Users", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Invitations_Users", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "User")]
-        public EntityCollection<User> Users
+        public EntityCollection<User> InvitedUser
         {
             get
             {
@@ -6073,44 +6112,6 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation")]
-        public Invitation Invitation
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Invitation> InvitationReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Carts_Users", "Cart")]
         public EntityCollection<Cart> Carts
         {
@@ -6413,6 +6414,66 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<UserActionEvent>("SongSearch.Web.Data.Model.FK_UserActionEvents_Users", "UserActionEvent", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Invitations_Users", "Invitation")]
+        public EntityCollection<Invitation> SentInvitations
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Invitation>("SongSearch.Web.Data.Model.FK_Invitations_Users", "Invitation");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Invitation>("SongSearch.Web.Data.Model.FK_Invitations_Users", "Invitation", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation")]
+        public Invitation Invitation
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Invitation> InvitationReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation", value);
                 }
             }
         }

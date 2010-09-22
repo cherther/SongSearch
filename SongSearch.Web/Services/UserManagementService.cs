@@ -199,7 +199,8 @@ namespace SongSearch.Web.Services {
 		public Invitation GetInvitation(string inviteId, string inviteEmailAddress) {
 			var inviteGuid = new Guid(inviteId);
 
-			return DataSession.Single<Invitation>(i => i.InvitationId == inviteGuid && i.InvitationEmailAddress.ToLower() == inviteEmailAddress);
+			return DataSession.GetObjectQuery<Invitation>()
+                    .Include("InvitedByUser").SingleOrDefault(i => i.InvitationId == inviteGuid && i.InvitationEmailAddress.ToLower() == inviteEmailAddress);
 		}
 
 		// **************************************

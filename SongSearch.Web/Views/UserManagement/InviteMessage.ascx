@@ -8,7 +8,7 @@
  %>
 <html>
 <head>
-<title><%: Model.SiteProfile.CompanyName %> - Registration Invitation</title>
+<title><%: Html.SiteProfile().CompanyName %> - Registration Invitation</title>
 </head>
 <body>
 <div id="content" style="
@@ -25,7 +25,7 @@
 		-webkit-border-border-bottom-right-radius: 5px;">
 	<h3>Hello,</h3>
 
-	<p>I'd like to invite you to register at <strong><%: Model.SiteProfile.CompanyName %></strong>.</p>
+	<p>I'd like to invite you to register at <strong><%: Html.SiteProfile().CompanyName %></strong>.</p>
 	<p>Please <a href="<%: url %>">register</a> using your e-mail address <strong><%: recipient%></strong>.</p>
 	<p>&nbsp;</p>
 	<p>If the 'register' link above is not clickable in your email program, please copy & paste this address into your browser's location bar:</p>

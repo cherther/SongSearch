@@ -16,7 +16,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 	<%--<h2>Log in</h2>
 	<div>&nbsp;</div>--%>
 	<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners text-top">
-		<h2 style="display:inline;">Log in</h2> using your e-mail address and <%: Model.SiteProfile.CompanyName %> password you've set up previously. <%: Html.ActionLink("Register", MVC.Account.Register())%> if you don't have an account.
+		<h2 style="display:inline;">Log in</h2> using your e-mail address and <%: Html.SiteProfile().CompanyName %> password you've set up previously. <%: Html.ActionLink("Register", MVC.Account.Register())%> if you don't have an account.
 		<div>&nbsp;</div>
 		<% using (Html.BeginForm(MVC.Account.LogIn(), FormMethod.Post, new { @class = "cw-form-small" }))
 			{ %><%:Html.AntiForgeryToken() %>

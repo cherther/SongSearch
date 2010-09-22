@@ -11,7 +11,7 @@ namespace SongSearch.Web {
 	// ViewModel
 	// **************************************
 	public class ViewModel {
-		public SiteProfile SiteProfile { get; set; }
+		//public SiteProfile SiteProfile { get; set; }
 		public ViewModes ViewMode { get; set; }
 		public EditModes EditMode { get; set; }
 		public string PageTitle { get; set; }
@@ -22,14 +22,13 @@ namespace SongSearch.Web {
 		public int ActiveUserId { get; set; }
 		public bool ShowQuotaWidget { get; set; }
 
-		public ViewModel() {
-			SiteProfile = SiteProfileData.SiteProfile();
+		public ViewModel(int? siteProfileId = null) {
+            //SiteProfile = siteProfileId.HasValue ? SiteProfileData.SiteProfile(siteProfileId.Value, true) : SiteProfileData.SiteProfile();
 			ViewMode = ViewModes.Normal;
 			EditMode = EditModes.Viewing;
 			PageTitle = "";
 			PageMessage = "";
 			NavigationLocation = new string [] {""};
-
 		}
 
 		//public class Lookups {
