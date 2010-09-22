@@ -45,20 +45,23 @@ namespace System.Web.Mvc {
         }
         public static SiteProfile SiteProfile(this Controller controller)
         {
+            var profileId = controller.SiteProfileId();
             return controller.SiteProfileId().HasValue ?
-                SiteProfileData.SiteProfile(controller.SiteProfileId().Value, true) :
+                SiteProfileData.SiteProfile(profileId.Value, true) :
                 SiteProfileData.SiteProfile();
         }
 
         public static SiteProfile SiteProfile(this HtmlHelper helper)
         {
-            return helper.SiteProfileId().HasValue ?
-                SiteProfileData.SiteProfile(helper.SiteProfileId().Value, true) :
+            var profileId = helper.SiteProfileId();
+            return profileId.HasValue ?
+                SiteProfileData.SiteProfile(profileId.Value, true) :
                 SiteProfileData.SiteProfile();            
         }
         public static string SiteProfileTagLine(this HtmlHelper helper)
         {
-            return helper.SiteProfileId().GetValueOrDefault() != int.Parse(SystemConfig.DefaultSiteProfileId) ?
+            var profileId = helper.SiteProfileId();
+            return profileId.HasValue && profileId.Value != int.Parse(SystemConfig.DefaultSiteProfileId) ?
                 " powered by WorldSongNet.com" : "";
         }
         
