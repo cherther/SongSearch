@@ -5300,3 +5300,97 @@ Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWi
 TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
 09/22/2010 11:16:11: App is shutting down
 09/22/2010 11:20:16: App is shutting down
+09/23/2010 12:55:26: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 12:57:10: App is shutting down
+09/23/2010 14:36:31: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:37:03: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:37:48: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:40:31: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:47:35: App is shutting down
+09/23/2010 14:47:50: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:48:03: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:48:16: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:49:59: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:51:02: App is shutting down
+09/23/2010 14:58:45: 
+Message :File does not exist.
+Source :System.Web
+Stack Trace :   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)
+   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)
+   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)
+   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+TargetSite :System.IO.FileInfo GetFileInfo(System.String, System.String, System.Web.HttpResponse)
+09/23/2010 14:59:33: App is shutting down

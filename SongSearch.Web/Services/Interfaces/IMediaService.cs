@@ -9,7 +9,8 @@ namespace SongSearch.Web.Services {
 
 		byte[] GetContentMedia(ContentMedia contentMedia);
 		byte[] GetContentMedia(ContentMedia contentMedia, User user);
-		//string GetContentMediaFileName(int contentId);
+        byte[] WriteMediaSignature(byte[] mediaFile, Content content, User user);
+        //string GetContentMediaFileName(int contentId);
 		string GetContentMediaPath(ContentMedia contentMedia);
 		string GetContentMediaUrl(ContentMedia contentMedia);
 		void SaveContentMedia(string fromFilePath, ContentMedia contentMedia);

@@ -391,7 +391,9 @@ namespace SongSearch.Web.Services {
 									var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
 
 									try {
-										byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion(), user);
+										byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion());
+
+                                        asset = _mediaService.WriteMediaSignature(asset, content, user);
 
 										zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
 													asset);

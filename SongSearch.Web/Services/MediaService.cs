@@ -38,14 +38,23 @@ namespace SongSearch.Web.Services {
 
 			//try {
 
-				var bytes = GetContentMedia(contentMedia);
+				return GetContentMedia(contentMedia);
 
-				var tempPath = String.Concat(SystemConfig.ZipPath, "\\", Guid.NewGuid(), ".mp3");
+            //}
+			//catch (Exception ex) {
+			//    Log.Error(ex);
+			//    throw ex;
+			//}
+		}
 
-				File.WriteAllBytes(tempPath, bytes);
+        public byte[] WriteMediaSignature(byte[] mediaFile, Content content, User user){
+        
+        		var tempPath = String.Concat(SystemConfig.ZipPath, "\\", Guid.NewGuid(), ".mp3");
+
+				File.WriteAllBytes(tempPath, mediaFile);
 				// id3
 				
-				//ID3Writer.UpdateUserTag(tempPath, content, user);
+				ID3Writer.UpdateUserTag(tempPath, content, user);
 
 				var assetFile = new FileInfo(tempPath);
 
@@ -58,12 +67,9 @@ namespace SongSearch.Web.Services {
 					Log.Error(ex);
 					throw ex;
 				}
-			//}
-			//catch (Exception ex) {
-			//    Log.Error(ex);
-			//    throw ex;
-			//}
-		}
+		
+        }
+
 		private byte[] GetContentMediaLocal(ContentMedia contentMedia)
 		{
 
