@@ -59,9 +59,15 @@ namespace SongSearch.Web {
 		public static void Archive(string file) {
 			if (File.Exists(file)) {
 
-				var archive = Path.Combine(
-							Path.GetDirectoryName(file),
-							"Archive",
+				var archiveFolder = Path.Combine(Path.GetDirectoryName(file), "Archive");
+
+                if (!Directory.Exists(archiveFolder))
+                {
+                    Directory.CreateDirectory(archiveFolder);
+                }
+
+                var archiveFile = Path.Combine(
+                            archiveFolder,
 							String.Concat(
 								Path.GetFileNameWithoutExtension(file),
 								"_",
@@ -75,7 +81,7 @@ namespace SongSearch.Web {
 								)
 							);
 
-				File.Move(file, archive);
+                File.Move(file, archiveFile);
 			}
 		}
 	}

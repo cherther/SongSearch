@@ -83,7 +83,7 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 </tr>
 <tr>
 	<td class="label">
-	<label>Custom Contact Information</label>
+	<label>Personalized Contact Information</label>
 	</td>
 	<%if (Model.MyPricingPlan != null) {%>
 	<td class="text-center <%: myPlanClass %>">
@@ -102,7 +102,7 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 </tr>
 <tr>
 	<td>
-	<label>Custom Website Theme</label>
+	<label>Your Branded Website</label>
 	</td>
 	<%if (Model.MyPricingPlan != null) {%>
 	<td class="text-center <%: myPlanClass %>">
