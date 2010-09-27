@@ -5,5 +5,5 @@ rm SongSearch2.sql
 cd ..
 git add .
 git commit -am"Adding latest db script"
-git push origin
+#git push origin
 git push github
