@@ -79,5 +79,13 @@ namespace SongSearch.Web {
 
 			}
 		}
+
+        public static string SiteProfileLogoUrl(this SiteProfile profile) {
+
+            return profile.HasProfileLogo ?
+                String.Concat(@"/public/images/profiles/", profile.ProfileName.ToLower(), ".jpg") :
+                String.Empty;
+                
+        }
 	}
 }

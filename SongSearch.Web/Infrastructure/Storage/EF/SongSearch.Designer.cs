@@ -4617,7 +4617,8 @@ namespace SongSearch.Web.Data
         /// <param name="adminEmail">Initial value of the AdminEmail property.</param>
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
         /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
-        public static SiteProfile CreateSiteProfile(global::System.Int32 profileId, global::System.String profileName, global::System.String companyName, global::System.String contactAddress, global::System.String contactCity, global::System.String contactStateRegion, global::System.String contactPostalCode, global::System.String contactCountry, global::System.String contactPhone, global::System.String contactEmail, global::System.String adminEmail, global::System.DateTime createdOn, global::System.Int32 createdByUserId)
+        /// <param name="hasProfileLogo">Initial value of the HasProfileLogo property.</param>
+        public static SiteProfile CreateSiteProfile(global::System.Int32 profileId, global::System.String profileName, global::System.String companyName, global::System.String contactAddress, global::System.String contactCity, global::System.String contactStateRegion, global::System.String contactPostalCode, global::System.String contactCountry, global::System.String contactPhone, global::System.String contactEmail, global::System.String adminEmail, global::System.DateTime createdOn, global::System.Int32 createdByUserId, global::System.Boolean hasProfileLogo)
         {
             SiteProfile siteProfile = new SiteProfile();
             siteProfile.ProfileId = profileId;
@@ -4633,6 +4634,7 @@ namespace SongSearch.Web.Data
             siteProfile.AdminEmail = adminEmail;
             siteProfile.CreatedOn = createdOn;
             siteProfile.CreatedByUserId = createdByUserId;
+            siteProfile.HasProfileLogo = hasProfileLogo;
             return siteProfile;
         }
 
@@ -5001,6 +5003,30 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _CreatedByUserId;
         partial void OnCreatedByUserIdChanging(global::System.Int32 value);
         partial void OnCreatedByUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean HasProfileLogo
+        {
+            get
+            {
+                return _HasProfileLogo;
+            }
+            set
+            {
+                OnHasProfileLogoChanging(value);
+                ReportPropertyChanging("HasProfileLogo");
+                _HasProfileLogo = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HasProfileLogo");
+                OnHasProfileLogoChanged();
+            }
+        }
+        private global::System.Boolean _HasProfileLogo;
+        partial void OnHasProfileLogoChanging(global::System.Boolean value);
+        partial void OnHasProfileLogoChanged();
 
         #endregion
     

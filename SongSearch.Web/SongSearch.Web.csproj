@@ -367,6 +367,7 @@
     <Content Include="Public\Images\error-404.jpg" />
     <Content Include="Public\Images\prettyLoader\prettyLoader.gif" />
     <Content Include="Public\Images\prettyLoader\prettyLoader.png" />
+    <Content Include="Public\Images\profiles\mmi.jpg" />
     <Content Include="Public\Images\usage_bars.gif" />
     <Content Include="Public\Javascript\cw.application.js">
       <DependentUpon>scriptmash.chirp.config</DependentUpon>

@@ -35,21 +35,21 @@
 			<h4>Music Supervisors</h4>
 			<ul class="cw-bullet">
 				<li>
-                You will find thousands of hand-picked classic and contemporary songs in all styles, years and moods available for easy preview, download and licensing utilizing this state-of-the-art online song repository.
-                </li>
-            </ul>
+				You will find thousands of hand-picked classic and contemporary songs in all styles, years and moods available for easy preview, download and licensing utilizing this state-of-the-art online song repository.
+				</li>
+			</ul>
 			<div>&nbsp;</div>
 			<h4>Artists & Songwriters</h4>
 			<ul class="cw-bullet">                
-	            <li>
-    			If invited into the network you can securely upload, self-manage and give permissions to whomever you want to preview, download and license your music. Your songs will gain exposure to many of the leading executives responsible for placing songs in film, television, advertising, games and new media. <%: Html.SiteProfile().CompanyName %> will not ask for or retain any of your rights.
-                </li>
-            </ul>
+				<li>
+				If invited into the network you can securely upload, self-manage and give permissions to whomever you want to preview, download and license your music. Your songs will gain exposure to many of the leading executives responsible for placing songs in film, television, advertising, games and new media. <%: Html.SiteProfile().CompanyName %> will not ask for or retain any of your rights.
+				</li>
+			</ul>
 			<div>&nbsp;</div>
 			<h4>Record Labels & Publishers</h4>
 			<ul class="cw-bullet">
 				<li>
-                <%: Html.SiteProfile().CompanyName %> provides music catalogs with an affordable, self-branded solution for creating an instant Web presence.  You can upload, self-manage and give permissions to clients around the world with this intuitive, secure and completely scalable system.  Benefit from the latest features in search functionality by subscribing to <%: Html.SiteProfile().CompanyName %> now (<%: Html.ActionLink("Contact us for an invitation code", MVC.Home.Contact()) %>)
+				<%: Html.SiteProfile().CompanyName %> provides music catalogs with an affordable, self-branded solution for creating an instant Web presence.  You can upload, self-manage and give permissions to clients around the world with this intuitive, secure and completely scalable system.  Benefit from the latest features in search functionality by subscribing to <%: Html.SiteProfile().CompanyName %> now (<%: Html.ActionLink("Contact us for an invitation code", MVC.Home.Contact()) %>)
 				</li>
 			</ul>
 		</div>

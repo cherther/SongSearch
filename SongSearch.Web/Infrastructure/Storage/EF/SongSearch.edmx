@@ -359,6 +359,7 @@
           </Key>
           <Property Name="ProfileId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ProfileName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="HasProfileLogo" Type="bit" Nullable="false" />
           <Property Name="CompanyName" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="ContactAddress" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="ContactAddress2" Type="varchar" MaxLength="100" />
@@ -1311,6 +1312,7 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
           <NavigationProperty Name="Contacts" Relationship="SongSearch.Web.Data.Model.SiteProfilesContacts" FromRole="SiteProfile" ToRole="Contact" />
+          <Property Type="Boolean" Name="HasProfileLogo" Nullable="false" />
         </EntityType>
         <Association Name="SiteProfilesContacts">
           <End Type="SongSearch.Web.Data.Model.Contact" Role="Contact" Multiplicity="*" />
@@ -1721,6 +1723,7 @@
           <EntitySetMapping Name="SiteProfiles">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SiteProfile">
               <MappingFragment StoreEntitySet="SiteProfiles">
+                <ScalarProperty Name="HasProfileLogo" ColumnName="HasProfileLogo" />
                 <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="AdminEmail" ColumnName="AdminEmail" />
