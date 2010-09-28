@@ -5,7 +5,7 @@
 	//-----------------------------------------------------------------------------------
 	setupAutoComplete();
 	setupTooltips();
-
+	
 	$.prettyLoader({loader: '/public/images/prettyLoader/ajax-loader.gif'});
 	//-----------------------------------------------------------------------------------
 	// Search option panel
