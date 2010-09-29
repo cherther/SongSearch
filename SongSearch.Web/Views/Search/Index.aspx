@@ -16,18 +16,50 @@
 		</div>
 		<div class="seven column">
 			<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners cw-buffered-left" style="min-height:480px">
-				<h3>Search Tips</h3>
+				<h2>Search Tips</h2>
 				<div>&nbsp;</div>
-				<ul class="cw-bullet">
-				<li>
-				Enter Song Search criteria
-				</li>
-				<li>
+				<h3>Enter Song Search criteria</h3>
+					<ul class="cw-bullet">
+						<li>
+						To get a broader set of song search results, enter fewer (or no) search criteria and click <strong>Search</strong>.
+						</li>
+						<li>
+						To narrow down the search (and get fewer, yet more refined results) simply enter the additional search criteria in the appropriate search fields and click <strong>Search</strong> again.   
+						</li>
+						<li>
+						To clear all of the search criteria and start a new search, click on <strong>Clear</strong> next to the <strong>Search</strong> button.
+						</li>
+					</ul>
+				<div>&nbsp;</div>
+				<h3>
 				Preview songs, get song info & download
-				</li>
-				<li>
+				</h3>
+				<ul class="cw-bullet">
+					<li>
+						To preview a full length song, click on the song <strong>title</strong> in the list of songs search results. 
+					</li>
+					<li>
+						Click on one of the song tabs (e.g., Lyrics, Tags, etc.) to view additional song information, 
+					</li>
+					<li>Click the <strong>Download</strong> button to download the song as an mp3 file.
+					</li>
+					<li> 
+						To add multiple songs to a Zip file for later use (e.g. to post on an FTP site), 
+						click the <strong>Add To Cart</strong> button to add any song to your <strong>Song Cart</strong>.  
+					</li>
+					<li>
+						In the <%: Html.ActionLink("Song Cart", MVC.Cart.Index()) %> section, you can zip up the contents of your Song Cart, with options to title the Zip file and rename individual songs.
+						You can download the Zip file to your computer rigth away, we keep it for you for up to seven days.
+					</li>
+				</ul>
+				<div>&nbsp;</div>
+				<h3>
 				Contact us to secure licensing 
-				</li>
+				</h3>
+				<ul class="cw-bullet">
+					<li>
+					The <%: Html.ActionLink("Contact Us", MVC.Home.Contact()) %> section of the site shows the licensing contact information for your account.  Call or email the contact entity for licensing information directly.
+					</li>
 				</ul>
 			</div>
 		</div>
