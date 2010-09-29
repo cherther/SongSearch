@@ -261,7 +261,7 @@ namespace SongSearch.Web.Services {
 
 						case SearchTypes.Contains:
 
-                            var searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+							var searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
 							columnName = !prop.IsIndexable ? 
 								(
 									currentlyFieldIndexed.Contains(columnName) ? 
@@ -306,7 +306,7 @@ namespace SongSearch.Web.Services {
 						//    break;
 
 						case SearchTypes.HasValue:
-                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+							searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
 							
 							if (searchableValues.First() != null) {
 
@@ -316,7 +316,7 @@ namespace SongSearch.Web.Services {
 							break;
 
 						case SearchTypes.IsTrue:
-                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+							searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
 							
 							if (searchableValues.First() != null) {
 
@@ -327,7 +327,7 @@ namespace SongSearch.Web.Services {
 
 						case SearchTypes.Range:
 							int i;
-                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+							searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
 							
 							var range = searchableValues.Select(
 								x => (String.IsNullOrWhiteSpace(x) || int.TryParse(x, out i) == false)
@@ -359,8 +359,8 @@ namespace SongSearch.Web.Services {
 							}
 							break;
 						case SearchTypes.Tag:
-                            
-                            searchableValues = field.V;//.Select(v => v.MakeSearchableValue()).ToArray();
+							
+							searchableValues = field.V;//.Select(v => v.MakeSearchableValue()).ToArray();
 							
 							var tagValues = searchableValues.SplitTags(';').Distinct().ToArray(); //could also just replace, but this way it throws for non-numeric values
 							

@@ -18,7 +18,7 @@
 	   
 		var searchFields = Model.SearchFields;
 		  //var lastGroup = "";
-		  //var i = 0;
+		 var i = 0;
 		%>
 		<%foreach (var grp in searchGroups) { %>
 		<%
@@ -33,7 +33,6 @@
 		
 			foreach(var prop in props){
 				
-				var i = searchMenuProperties.IndexOf(prop);
 		
 				var item = prop;
 						  
@@ -134,7 +133,7 @@
 				<%}%>
 				</div>
 			</li>
-			<% //i++; %>
+			<% i++; %>
 			<%} %>
 		<%} %>
 	   
