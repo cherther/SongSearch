@@ -254,12 +254,12 @@ namespace SongSearch.Web.Services {
 			var searchGroups = from p in properties
 							   group p by p.SearchGroup into g
 							   select new { SearchGroup = g.Key, SearchProperties = g };
-			int prmIndx = 0;
+			
 
 			foreach (var field in searchFields) {
 
 				var sb = new StringBuilder();
-
+				int prmIndx = 0;
 				// get group for each field
 				var grp = searchGroups.Where(
 					g => g.SearchProperties.Any(

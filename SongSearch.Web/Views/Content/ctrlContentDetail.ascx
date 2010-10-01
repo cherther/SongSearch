@@ -169,7 +169,7 @@
 			<%
 				columnOne = "two";
 				columnTwo = "seven";
-				const int lyricsProp = 7;
+				const int lyricsProp = 1;
 
 				var lyricsSearch = searchFields.Where(s => s.P == lyricsProp).SingleOrDefault();
 
