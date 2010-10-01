@@ -89,7 +89,7 @@ namespace SongSearch.Web.Controllers
 		// ****************************************************************************
 		public virtual ActionResult Results(IList<SearchField> f, int? p, int? s, int? o) {
 
-			var isValid = f.Any(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v)));
+			var isValid = true; f.Any(x => x.V.Any(v => !String.IsNullOrWhiteSpace(v)));
 
 			if (isValid) {
 

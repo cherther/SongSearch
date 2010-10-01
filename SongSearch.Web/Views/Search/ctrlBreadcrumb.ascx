@@ -17,7 +17,7 @@
 
 		<%switch (searchType) {%>
 			<%case SearchTypes.Contains: {%>
-			<%: prop.DisplayName%>:
+			<%: prop.SearchGroup%>:
 			<%foreach (var v in vals) {%>
 				'<%:v%>'<%: Array.IndexOf(vals, v) < vals.Count()-1 ? " + " : "" %>
 			<%} %>

@@ -249,154 +249,265 @@ namespace SongSearch.Web.Services {
 																		IList<SearchProperty> properties) {
 
 			var currentlyFieldIndexed = new string[] { "Lyrics" }; //Columns that have dedicated index fields
+
+	
+			var searchGroups = from p in properties
+							   group p by p.SearchGroup into g
+							   select new { SearchGroup = g.Key, SearchProperties = g };
 			
+
 			foreach (var field in searchFields) {
-				
-				var prop = properties.Where(p => p.PropertyId == field.P).SingleOrDefault();
-				if (prop != null) {
-					// build search 
-					string columnName = prop.PropertyName.Trim();
-					
-					switch ((SearchTypes)prop.SearchTypeId) {
 
-						case SearchTypes.Contains:
+				var sb = new StringBuilder();
+				int prmIndx = 0;
+				// get group for each field
+				var grp = searchGroups.Where(
+					g => g.SearchProperties.Any(
+						p => p.PropertyId == field.P
+						)
+					).SingleOrDefault();
 
-                            var searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
-							columnName = !prop.IsIndexable ? 
-								(
-									currentlyFieldIndexed.Contains(columnName) ? 
-									String.Concat(columnName, "Index") : columnName
-									) :
-								columnName.MakeSearchableColumnName();
-							
-							if (searchableValues.First() != null) {
+				var props = grp.SearchProperties.ToArray();
+				var searchType = (SearchTypes)props.First().SearchTypeId;
+				var searchValues = new string[] {};
+				var searchParams = new List<string>();
 
-								var startsWithSearch = field.V.First().IsStartsWithSearch();
-								var preciseSearch = field.V.First().IsPreciseSearch();
-								var search = searchableValues.First().Split(' ');
+				//var prop = properties.Where(p => p.PropertyId == field.P).SingleOrDefault();
+				foreach (var prop in props) {
 
-								if (!startsWithSearch && !preciseSearch && search.IsMultiSearch()) {
-									foreach (var val in search) {
-										var predicate = String.Format("{0}.Contains(@0)", columnName);
-										query = query.Where(predicate, val);
+					if (prop != null) {
+						// build search 
 
-									}
-								} else {
-									var val = searchableValues.First();
+						string columnName = prop.PropertyName.Trim();
+						string predicate = String.Empty;
 
-									var predicate = String.Format(
-										startsWithSearch ? "{0}.StartsWith(@0)" : "{0}.Contains(@0)"
-										, columnName);//.MakeSearchableColumn(),
-									val = val.TrimPreciseSearch().TrimStartsWithSearch();
-									query = query.Where(predicate, val);
-								}
-							}
-							break;
+						switch (searchType){//(SearchTypes)prop.SearchTypeId) {
 
-						//case SearchTypes.Join:
-						//    if (searchableValues.First() != null) {
-						//        var joinTable = prop.LookupName;
-						//        var predicate = String.Format("{0}.{1}.Contains(@0)", joinTable, columnName);
-						//        var val = searchableValues.First(); 
-						//        query = query.Where(predicate, val);
-						//        //sbJoin.AppendLine(String.Format(@"inner join dbo.{0} r_{1} on c.{1} = r_{1}.{1}", joinTable, joinField));
-						//        //sbWhere.AppendLine(String.Format(@"r_{0}.{1} {2}", joinField, searchField,
-						//        //    String.Format(prop.SearchPredicate, searchableValues.First())));
-						//    }
-						//    break;
+							case SearchTypes.Contains:
 
-						case SearchTypes.HasValue:
-                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
-							
-							if (searchableValues.First() != null) {
+								searchValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+								columnName = !prop.IsIndexable ?
+									(
+										currentlyFieldIndexed.Contains(columnName) ?
+										String.Concat(columnName, "Index") : columnName
+										) :
+									columnName.MakeSearchableColumnName();
 
-								var predicate = String.Format("{0} != null", columnName);
-								query = query.Where(predicate);
-							}
-							break;
+								if (searchValues.First() != null) {
 
-						case SearchTypes.IsTrue:
-                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
-							
-							if (searchableValues.First() != null) {
+									var startsWithSearch = field.V.First().IsStartsWithSearch();
+									var preciseSearch = field.V.First().IsPreciseSearch();
+									var searchValuesParsed = searchValues.First().Split(' ');
 
-								var predicate = String.Format("{0} == true", columnName);
-								query = query.Where(predicate);
-							}
-							break;
+									if (!startsWithSearch && !preciseSearch && searchValuesParsed.IsMultiSearch()) {
 
-						case SearchTypes.Range:
-							int i;
-                            searchableValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
-							
-							var range = searchableValues.Select(
-								x => (String.IsNullOrWhiteSpace(x) || int.TryParse(x, out i) == false)
-									? null
-									: (int?)int.Parse(x)
-								);
-							if (range.Any(v => v != null)) {
+										foreach (var val in searchValuesParsed) {
 
-								if (range.All(v => v.HasValue)) {
-									// two valid values
-									var predicate = String.Format("{0} >= @0 && {0} <= @1", columnName);
+											predicate = String.Format("{0}.Contains(@{1})", columnName, prmIndx);
+											searchParams.Add(val);
+											prmIndx++;
+											
+											sb.Append(predicate);
+											
+											if (Array.IndexOf(searchValuesParsed, val) < searchValuesParsed.Length - 1) {
+												sb.Append(" and ");
+											}
 
-									query = query.Where(predicate, range.First(), range.Last());
-								} else {
-									//one valid value
-									if (range.First().HasValue) {
-										// first value only
-										var predicate = String.Format("{0} == @0", columnName);
-
-										query = query.Where(predicate, range.First());
+										}
+			
+										sb.Append(predicate);
 
 									} else {
-										// second value only
-										var predicate = String.Format("{0} <= @0", columnName);
+										var val = searchValues.First();
 
-										query = query.Where(predicate, range.Last());
+										predicate = String.Format(
+											startsWithSearch ? "{0}.StartsWith(@{1})" : "{0}.Contains(@{1})"
+											, columnName
+											, prmIndx);//.MakeSearchableColumn(),
+										val = val.TrimPreciseSearch().TrimStartsWithSearch();
+										searchParams.Add(val);
+											
+										prmIndx++;
+										sb.Append(predicate);
+
 									}
 								}
-							}
-							break;
-						case SearchTypes.Tag:
-                            
-                            searchableValues = field.V;//.Select(v => v.MakeSearchableValue()).ToArray();
-							
-							var tagValues = searchableValues.SplitTags(';').Distinct().ToArray(); //could also just replace, but this way it throws for non-numeric values
-							
-							foreach (var itm in tagValues) {
-								var tagId = itm;
-								query = query.Where(c => c.Tags.Any(t => t.TagId == tagId));
+								break;
 
-							}
-							break;
+							case SearchTypes.HasValue:
+								searchValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
 
-						case SearchTypes.TagText:
-							var tagTypeId = prop.PropertyId;
-							var tagNames = field.V.SplitTagNames(',');//searchableValues.SplitTagNames(';').Distinct().ToArray(); //could also just replace, but this way it throws for non-numeric values
-							//columnName = columnName.MakeSearchableColumnName();
-							//foreach (var itm in tagTextValues) {
-							//    var tagNames = itm.SplitTagNames(',');
-								foreach (var tagName in tagNames) {
+								if (searchValues.First() != null) {
 
-									var val = tagName.MakeSearchableValue().Replace(" ", String.Empty);
-									//var predicate = String.Format("{0}.StartsWith(@0)", columnName);//.MakeSearchableColumn(),
-									//query = query.Where(predicate, val);
-									query = query.Where(c => c.Tags.Any(t => t.TagName.Replace(" ", String.Empty).Contains(val) && t.TagTypeId == tagTypeId));
+									predicate = String.Format("{0} != null", columnName);
+									sb.Append(predicate);
 								}
-							//}
-							break;
-						default:
-							goto case (SearchTypes.Contains);
+								break;
+
+							case SearchTypes.IsTrue:
+								searchValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+
+								if (searchValues.First() != null) {
+
+									predicate = String.Format("{0} == true", columnName);
+									sb.Append(predicate);
+								}
+								break;
+
+							case SearchTypes.Range:
+								int i;
+								searchValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+
+								var range = searchValues.Select(
+									x => (String.IsNullOrWhiteSpace(x) || int.TryParse(x, out i) == false)
+										? null
+										: (int?)int.Parse(x)
+									);
+								if (range.Any(v => v != null)) {
+
+									if (range.All(v => v.HasValue)) {
+										// two valid values
+										predicate = String.Format("{0} >= {1} && {0} <= {2}", columnName, range.First(), range.Last());
+										sb.Append(predicate);
+
+									} else {
+										//one valid value
+										if (range.First().HasValue) {
+											// first value only
+											predicate = String.Format("{0} == {1}", columnName, range.First());
+											sb.Append(predicate);
+
+										} else {
+											// second value only
+											predicate = String.Format("{0} <= {1}", columnName, range.Last());
+											sb.Append(predicate);
+										}
+									}
+								}
+								break;
+							case SearchTypes.Tag:
+
+								searchValues = field.V;//.Select(v => v.MakeSearchableValue()).ToArray();
+
+								var tagValues = searchValues.SplitTags(';').Distinct().ToArray(); //could also just replace, but this way it throws for non-numeric values
+
+								foreach (var itm in tagValues) {
+									var tagId = itm;
+									predicate = String.Format("Tags.Any(TagId == {0})", tagId);
+									sb.Append(predicate);
+									if (Array.IndexOf(tagValues, itm) < tagValues.Length - 1) {
+										sb.Append(" and ");
+									}
+
+								}
+								break;
+							
+							default:
+								goto case (SearchTypes.Contains);
+
+						}
+
 
 					}
 
-
+					if (Array.IndexOf(props, prop) < props.Length - 1) {
+						sb.Append(" or ");
+					}
 				}
+
+				//attach predicate to the query;
+				query = query.Where(sb.ToString(), searchParams.ToArray());
+				searchParams.Clear();
+				sb.Clear();
 			}
 
 			return query;
 		}
+
+		// **************************************
+		// GetQueryFilter
+		// **************************************
+		private delegate IQueryable<Content> GetQueryFilterDelegate(IQueryable<Content> query, SearchField field, string dbColumnName);
+		private static IDictionary<SearchTypes, GetQueryFilterDelegate> _filterMatrix = new Dictionary<SearchTypes, GetQueryFilterDelegate>();
+
+		private static void SetUpFilterMatrix() {
+
+			_filterMatrix.Add(SearchTypes.Contains, GetQueryFilterContains);
+			_filterMatrix.Add(SearchTypes.HasValue, GetQueryFilterHasValue);
+			_filterMatrix.Add(SearchTypes.IsTrue, GetQueryFilterIsTrue);
+			_filterMatrix.Add(SearchTypes.Range, GetQueryFilterRange);
+			//_filterMatrix.Add(SearchTypes.Tag, GetQueryFilterTag);
+			_filterMatrix.Add(SearchTypes.TagText, GetQueryFilterTagText);
+
+
+		}
+		private static IQueryable<Content> GetQueryFilterContains(IQueryable<Content> query, SearchField field, string dbColumnName) {
+			// for each value in searchfield, build dynamic ling predicate
+			return query;// String.Empty;
+		}
+		private static IQueryable<Content> GetQueryFilterHasValue(IQueryable<Content> query, SearchField field, string dbColumnName) {
+			var searchValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+			return searchValues.First() != null ?
+				query.Where(String.Format("{0} != null", dbColumnName)) :
+				query;
+		}
+		private static IQueryable<Content> GetQueryFilterRange(IQueryable<Content> query, SearchField field, string dbColumnName) {
+			return query;
+		}
+		private static IQueryable<Content> GetQueryFilterIsTrue(IQueryable<Content> query, SearchField field, string dbColumnName) {
+			var searchValues = field.V.Select(v => v.MakeSearchableValue()).ToArray();
+			return searchValues.First() != null ?
+				query.Where(String.Format("{0} == true", dbColumnName)) :
+				query;
+		}
+
+		private static IQueryable<Content> GetQueryFilterTagText(IQueryable<Content> query, SearchField field, string dbColumnName) {
+			return query;
+		}
+
+		// **************************************
+		// AddSearchPropertyCriteria
+		// **************************************
+
+		private static IQueryable<Content> AddSearchPropertyCriteria(this IQueryable<Content> query,
+																		IList<SearchField> searchFields,
+																		IList<SearchProperty> properties) {
+
+			// loop through searchFields
+			var currentlyFieldIndexed = new string[] { "Lyrics" }; //Columns that have dedicated index fields
+			var searchGroups = from p in properties
+							   group p by p.SearchGroup into g
+							   select new { SearchGroup = g.Key, SearchProperties = g };
+
+			foreach (var field in searchFields) {
+
+				// get group for each field
+				var grp = searchGroups.Where(
+					g => g.SearchProperties.Any(
+						p => p.PropertyId == field.P
+						)
+					).SingleOrDefault();
+			
+				var props = grp.SearchProperties;
+				var searchType = (SearchTypes)props.First().SearchTypeId;
+				
+				// loop through props for each group
+				foreach (var prop in props) {
+
+					var columnName = prop.PropertyName.Trim();
+
+					// process according to SearchType
+					query = _filterMatrix[searchType](query, field, columnName);
+				}
+
+			
+			}
+
+
+
+			return query;
+		}
+
 
 		// ----------------------------------------------------------------------------
 		// (Private Extensions)
