@@ -49,7 +49,7 @@
 					</li>
 					<li>
 						In the <%: Html.ActionLink("Song Cart", MVC.Cart.Index()) %> section, you can zip up the contents of your Song Cart, with options to title the Zip file and rename individual songs.
-						You can download the Zip file to your computer rigth away, we keep it for you for up to seven days.
+						You can download the Zip file to your computer right away, or we'll hold on to it for you to download for 7 days.
 					</li>
 				</ul>
 				<div>&nbsp;</div>
