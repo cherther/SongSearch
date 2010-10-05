@@ -18,8 +18,8 @@ namespace SongSearch.Web {
 	// **************************************    
 	public enum PricingPlans {
 		Member = 0,
-        Introductory = 1,
-        Basic = 2,
+		Introductory = 1,
+		Basic = 2,
 		Plus = 3,
 		Business = 4,
 		Pro = 5,
@@ -114,23 +114,23 @@ namespace SongSearch.Web {
 		}
 		public static int[] GetRoles() {
 			return new[]
-			       	{
-			       		(int) Roles.None,
-			       		(int) Roles.SuperAdmin,
-			       		(int) Roles.Admin,
-			       		(int) Roles.Plugger,
-			       		(int) Roles.Client
-			       	};
+					{
+						(int) Roles.None,
+						(int) Roles.SuperAdmin,
+						(int) Roles.Admin,
+						(int) Roles.Plugger,
+						(int) Roles.Client
+					};
 		}
 		
 		public static int[] GetPublicRoles() {
 			return new[]
-			       	{
-			       		(int) Roles.None,
-			       		(int) Roles.Admin,
-			       		(int) Roles.Plugger,
-			       		(int) Roles.Client
-			       	};
+					{
+						(int) Roles.None,
+						(int) Roles.Admin,
+						(int) Roles.Plugger,
+						(int) Roles.Client
+					};
 		}
 		public static int GetBestMatchForRole(this int[] roles, int roleId) {
 

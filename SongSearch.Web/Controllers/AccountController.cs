@@ -81,7 +81,7 @@ namespace SongSearch.Web.Controllers {
 					_logService.LogUserEvent(UserActions.Login);
 
 					SetFriendlyNameCookie(user.FullName());
-                    SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
+					SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
 
 					var msg = user.LoginMessage();// string.Concat("Welcome ", user.FullName());
 
@@ -123,12 +123,12 @@ namespace SongSearch.Web.Controllers {
 			Response.Cookies["friendly"].HttpOnly = true;
 		}
 
-        private void SetSiteProfileCookie(int siteProfileId)
-        {
-            Response.Cookies["siteProfile"].Value = siteProfileId.ToString();
-            Response.Cookies["siteProfile"].Expires = DateTime.Now.AddDays(360);
-            Response.Cookies["siteProfile"].HttpOnly = true;
-        }
+		private void SetSiteProfileCookie(int siteProfileId)
+		{
+			Response.Cookies["siteProfile"].Value = siteProfileId.ToString();
+			Response.Cookies["siteProfile"].Expires = DateTime.Now.AddDays(360);
+			Response.Cookies["siteProfile"].HttpOnly = true;
+		}
 
 
 		// **************************************
@@ -175,20 +175,20 @@ namespace SongSearch.Web.Controllers {
 				}
 			}
 
-            var model = new RegisterModel()
-            {
+			var model = new RegisterModel()
+			{
 
-                NavigationLocation = new string[] { "Register" },
-                InviteId = id,
-                Email = em,
-                SelectedPricingPlan = PricingPlans.Introductory,
-                Invitation = inv
-            };
-            if (inv != null){
-                SetSiteProfileCookie(inv.InvitedByUser.SiteProfileId);
+				NavigationLocation = new string[] { "Register" },
+				InviteId = id,
+				Email = em,
+				SelectedPricingPlan = PricingPlans.Introductory,
+				Invitation = inv
+			};
+			if (inv != null){
+				SetSiteProfileCookie(inv.InvitedByUser.SiteProfileId);
 			}
-    
-            return View(model); 
+	
+			return View(model); 
 		}
 
 		[HttpPost]
@@ -240,14 +240,14 @@ namespace SongSearch.Web.Controllers {
 										PricingPlanId = selectedPricingPlanId > 0 ? selectedPricingPlanId : (int)PricingPlans.Member,
 										HasAgreedToPrivacyPolicy = model.HasAgreedToPrivacyPolicy,
 										HasAllowedCommunication = model.HasAllowedCommunication,
-                                        SiteProfileId = model.Invitation.InvitedByUser.SiteProfileId
+										SiteProfileId = model.Invitation.InvitedByUser.SiteProfileId
 									};
 
 									try {
 										user = _acctService.RegisterUser(user, inv.InvitationId);
 
 										SetFriendlyNameCookie(user.FullName());
-                                        SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
+										SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
 
 										_logService.LogUserEvent(UserActions.Register);
 
@@ -566,8 +566,8 @@ namespace SongSearch.Web.Controllers {
 			};
 			vm.PricingPlans = User.UserIsSuperAdmin() ? vm.PricingPlans.Where(p => p.PricingPlanId > (int)PricingPlans.Member).ToList() :
 				vm.PricingPlans.Where(p => p.IsEnabled == true 
-                    //&& p.PlanCharge >= vm.MyPricingPlan.PlanCharge
-                    ).OrderByDescending(p => p.IsPromo).ToList();
+					//&& p.PlanCharge >= vm.MyPricingPlan.PlanCharge
+					).OrderByDescending(p => p.IsPromo).ToList();
 
 			vm.SelectedPricingPlan = (PricingPlans)vm.MyPricingPlan.PricingPlanId;
 
