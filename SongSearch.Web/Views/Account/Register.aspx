@@ -111,12 +111,12 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 				<%: Html.ValidationMessageFor(m => m.HasAgreedToPrivacyPolicy)%>
 			</div>
 			<div>&nbsp;</div>
-			<div>
+			<%--<div>
 				<%: Html.CheckBoxFor(m => m.HasAllowedCommunication) %>
 				<%: Html.LabelFor(m => m.HasAllowedCommunication)%>
 				<%: Html.ValidationMessageFor(m => m.HasAllowedCommunication)%>
 			</div>
-			<div>&nbsp;</div>
+			<div>&nbsp;</div>--%>
 			<p>
 				<button type="submit" class="cw-button cw-simple cw-blue" title="Click to Register">
 				<span class="b-ok">Register</span>

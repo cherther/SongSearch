@@ -28,24 +28,11 @@
 	<p>I'd like to invite you to register at <strong><%: Html.SiteProfile().CompanyName %></strong>.</p>
 	<p>Please <a href="<%: url %>">register</a> using your e-mail address <strong><%: recipient%></strong>.</p>
 	<p>&nbsp;</p>
+	<p>&nbsp;</p>
 	<p>If the 'register' link above is not clickable in your email program, please copy & paste this address into your browser's location bar:</p>
 	<p><%: url %></p>
-
-	<p>Alternatively, you can follow these steps:</p>
-		<ol>
-			<li>
-				Type <strong><%:baseUrl%></strong> into the url/location bar of your web browser
-			</li>
-			<li>
-				Click on the <strong>Register</strong> button
-			</li>
-			<li>
-				Copy & paste this email address into the E-mail address field: <strong><%: recipient%></strong>
-			</li>
-			<li>
-				Copy & paste this invitation code into the Invitation Code field: <strong><%: Model.InviteId%></strong>
-			</li>
-		</ol>
+	<p>&nbsp;</p>
+	
 	<p>Thanks, and I'm looking forward to working with you!</p>
 
 	<p><em><%: String.Format("{0} <{1}>", sender.FullName(), sender.UserName) %></em></p>

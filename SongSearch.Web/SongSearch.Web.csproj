@@ -2102,6 +2102,7 @@
     </None>
     <Content Include="Web.LocalRelease.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>

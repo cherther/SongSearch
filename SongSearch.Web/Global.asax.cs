@@ -232,13 +232,13 @@ namespace SongSearch.Web {
 			if (App.Environment == AppEnvironment.Production) {
 
 
-				ThreadStart amazonSync = new ThreadStart(AmazonSyncLoopPreview);
-				Thread t1 = new Thread(amazonSync);
-				t1.Start();
+				//ThreadStart amazonSync = new ThreadStart(AmazonSyncLoopPreview);
+				//Thread t1 = new Thread(amazonSync);
+				//t1.Start();
 			
 				ThreadStart amazonSyncFull = new ThreadStart(AmazonSyncLoopFull);
-				Thread t2 = new Thread(amazonSyncFull);
-				t2.Start();
+				Thread amz = new Thread(amazonSyncFull);
+				amz.Start();
 
 			}
 
@@ -312,8 +312,11 @@ namespace SongSearch.Web {
 
 					//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
 					try {
-						amz.UploadToRemote(checkSize: SystemConfig.RemoteMediaCheckSize,
-						onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly, mediaVersions: new MediaVersion[] { MediaVersion.Full });
+						amz.UploadToRemote(
+							checkSize: SystemConfig.RemoteMediaCheckSize
+							, onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly
+							, mediaVersions: new MediaVersion[] { MediaVersion.Full }
+							);
 					}
 					catch (Exception ex) {
 						Log.Error(ex);
@@ -331,8 +334,10 @@ namespace SongSearch.Web {
 
 				//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
 				try {
-					amz.UploadToRemote(checkSize: true, onlyNewContent: false, 
-					mediaVersions: new MediaVersion[] { MediaVersion.Preview });
+					amz.UploadToRemote(
+							checkSize: SystemConfig.RemoteMediaCheckSize
+							, onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly
+							, mediaVersions: new MediaVersion[] { MediaVersion.Preview });
 				}
 				catch (Exception ex) {
 					Log.Error(ex);

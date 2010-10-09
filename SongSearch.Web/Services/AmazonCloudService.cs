@@ -244,7 +244,7 @@ namespace SongSearch.Web.Services {
 					.WithProtocol(Amazon.S3.Model.Protocol.HTTP)
 					.WithBucketName(RemoteMediaConfiguration.BucketName)
 					.WithKey(key)
-					.WithExpires(DateTime.Now.Date.AddDays(365));
+					.WithExpires(DateTime.Now.Date.AddDays(1));
 				
 				return awsclient.GetPreSignedURL(request);
 			}

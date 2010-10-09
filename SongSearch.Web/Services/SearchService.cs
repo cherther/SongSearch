@@ -315,7 +315,7 @@ namespace SongSearch.Web.Services {
 
 										}
 			
-										sb.Append(predicate);
+										//sb.Append(predicate);
 
 									} else {
 										var val = searchValues.First();
