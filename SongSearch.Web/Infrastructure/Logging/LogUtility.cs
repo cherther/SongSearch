@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SongSearch.Web.Logging {
+namespace SongSearch.Web {
 	public class LogUtility {
 
 		public static string BuildExceptionMessage(Exception x) {

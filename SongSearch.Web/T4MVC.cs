@@ -300,6 +300,7 @@ namespace Links {
         public static readonly string jquery_ui_min_js = Url("jquery-ui.min.js");
         public static readonly string jquery_blockUI_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.blockUI.min.js") ? Url("jquery.blockUI.min.js") : Url("jquery.blockUI.js");
                       
+        public static readonly string jquery_carousel_min_js = Url("jquery.carousel.min.js");
         public static readonly string jquery_cookies_2_2_0_min_js = Url("jquery.cookies.2.2.0.min.js");
         public static readonly string jquery_feedbackbar_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.feedbackbar.min.js") ? Url("jquery.feedbackbar.min.js") : Url("jquery.feedbackbar.js");
                       

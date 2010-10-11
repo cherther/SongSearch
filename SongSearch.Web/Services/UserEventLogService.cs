@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using Ionic.Zip;
 using Ninject;
-using NLog;
 using System.Runtime.Remoting.Messaging;
 using SongSearch.Web;
 using SongSearch.Web.Services;

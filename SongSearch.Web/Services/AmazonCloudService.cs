@@ -169,11 +169,7 @@ namespace SongSearch.Web.Services {
 					}
 				}
 				catch (AmazonS3Exception amazonS3Exception) {
-					if (amazonS3Exception.IsAmazonSecurityException()) {
-						Log.Error(amazonS3Exception.AmazonExceptionMessage());
-					} else {
-						Log.Error(amazonS3Exception);
-					}
+					Log.Error(amazonS3Exception);
 				}
 
 
@@ -217,11 +213,7 @@ namespace SongSearch.Web.Services {
 					}
 				}
 				catch (AmazonS3Exception amazonS3Exception) {
-					if (amazonS3Exception.IsAmazonSecurityException()) {
-						Log.Error(amazonS3Exception.AmazonExceptionMessage());
-					} else {
-						Log.Error(amazonS3Exception);
-					}
+					Log.Error(amazonS3Exception);
 					return mediaBytes;
 				}
 
@@ -258,30 +250,15 @@ namespace SongSearch.Web.Services {
 				RemoteMediaConfiguration.SecretAccessKeyID)) {
 
 				var key = GetContentMediaKey(contentMedia);
-				try {
-					// simple object put
-					PutObjectRequest request = new PutObjectRequest();
-					request.WithBucketName(RemoteMediaConfiguration.BucketName)
-						.WithFilePath(source)
-						.WithKey(key)
-						.WithStorageClass(S3StorageClass.ReducedRedundancy);
 
-					awsclient.PutObject(request);
+				// simple object put
+				PutObjectRequest request = new PutObjectRequest();
+				request.WithBucketName(RemoteMediaConfiguration.BucketName)
+					.WithFilePath(source)
+					.WithKey(key)
+					.WithStorageClass(S3StorageClass.ReducedRedundancy);
 
-				}
-				catch (AmazonS3Exception amazonS3Exception) {
-					if (amazonS3Exception.IsAmazonSecurityException()) {
-						Log.Error(amazonS3Exception.AmazonExceptionMessage());
-					} else {
-						Log.Error(amazonS3Exception);
-					}
-					throw amazonS3Exception;
-				}
-				catch (Exception ex) {
-					Log.Error(String.Format("An error occurred with the message '{0}' when writing an object",
-						ex.Message));
-					throw ex;
-				}
+				awsclient.PutObject(request);
 
 			}
 		}

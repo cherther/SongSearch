@@ -6,7 +6,6 @@ using System.Web.Routing;
 using Ninject;
 using Ninject.Modules;
 using Ninject.Web.Mvc;
-using SongSearch.Web.Logging;
 using SongSearch.Web.Services;
 using System.Threading;
 using System.Web;
@@ -261,20 +260,20 @@ namespace SongSearch.Web {
 
 		}
 
-		// **************************************
-		// Application_End
-		// **************************************
-		protected void Application_End() {
-			Logger.Info("App is shutting down");
-		}
+		//// **************************************
+		//// Application_End
+		//// **************************************
+		//protected void Application_End() {
+		//    Logger.Info("App is shutting down");
+		//}
 
-		// **************************************
-		// Application_Error
-		// **************************************
-		protected void Application_Error() {
-			Exception lastException = Server.GetLastError();
-			Logger.Fatal(lastException);
-		}
+		//// **************************************
+		//// Application_Error
+		//// **************************************
+		//protected void Application_Error() {
+		//    Exception lastException = Server.GetLastError();
+		//    Logger.Fatal(lastException);
+		//}
 
 		// **************************************
 		// AmazonSyncLoop
@@ -295,6 +294,8 @@ namespace SongSearch.Web {
 					}
 					catch (Exception ex) {
 						Log.Error(ex);
+						
+
 					}
 				}
 				// Wait for certain time interval
@@ -373,34 +374,7 @@ namespace SongSearch.Web {
 				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
 			}
 		}
-		// **************************************
-		// CartLoop
-		// **************************************
-		static void PingLoop() {
-			// In this example, task will repeat in infinite loop
-			// You can additional parameter if you want to have an option 
-			// to stop the task from some page
-			while (true) {
-				// Execute scheduled task
-
-				Logger.Info("Pinging " + SystemConfig.BaseUrl);
-				System.Net.WebRequest.Create(SystemConfig.BaseUrl);
-				
-				// Wait for certain time interval
-				System.Threading.Thread.Sleep(TimeSpan.FromMinutes(60));
-			}
-		}
-		// ----------------------------------------------------------------------------
-		// NLog
-		// ----------------------------------------------------------------------------
-		// **************************************
-		// Logger
-		// **************************************
-		public static ILogger Logger {
-			get {
-				return Container.Get<ILogger>();
-			}
-		}
+		
 
 		// ----------------------------------------------------------------------------
 		// NInject
@@ -419,8 +393,6 @@ namespace SongSearch.Web {
 		// **************************************
 		internal class SiteModule : NinjectModule {
 			public override void Load() {
-
-				Bind<ILogger>().To<NLogLogger>();
 
 				Bind<IDataSession>().To<SongSearchDataSession>();
 				Bind<IDataSessionReadOnly>().To<SongSearchDataSessionReadOnly>();

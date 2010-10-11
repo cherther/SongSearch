@@ -25,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
     <PublishDatabases>false</PublishDatabases>
     <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -110,6 +111,9 @@
       <HintPath>..\Ext Libraries\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK, Version=1.0.11.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL" />
+    <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>D:\DevProjects\SongSearch\Ext Libraries\ELMAH\Elmah.dll</HintPath>
+    </Reference>
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
     </Reference>
@@ -127,9 +131,6 @@
     <Reference Include="Ninject.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Ext Libraries\Ninject.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\Ext Libraries\NLog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -194,13 +195,6 @@
     <Compile Include="Controllers\MediaController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
-    <Compile Include="Error.aspx.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Error.aspx.designer.cs">
-      <DependentUpon>Error.aspx</DependentUpon>
-    </Compile>
     <Compile Include="ErrorController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -229,6 +223,7 @@
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Errors\HandleErrorAttribute.cs" />
     <Compile Include="Infrastructure\Mailer\Mail.cs" />
     <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
     <Compile Include="Infrastructure\Scheduled Tasks\AmazonRemoteMedia.cs" />
@@ -280,10 +275,8 @@
     <Compile Include="Helpers\Filters\AuthorizeAttribute.cs" />
     <Compile Include="Infrastructure\Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Infrastructure\Authentication\IFormsAuthenticationService.cs" />
-    <Compile Include="Infrastructure\Logging\EventLogLogger.cs" />
-    <Compile Include="Infrastructure\Logging\ILogger.cs" />
     <Compile Include="Infrastructure\Logging\LogUtility.cs" />
-    <Compile Include="Infrastructure\Logging\NLogLogger.cs" />
+    <Compile Include="Infrastructure\Logging\Log.cs" />
     <Compile Include="Infrastructure\Storage\EF\DataSessionEF.cs" />
     <Compile Include="Infrastructure\Storage\EF\SongSearch.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -318,7 +311,6 @@
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Error.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Public\Css\cw.app.chirp.css" />

@@ -22,9 +22,6 @@ using T4MVC;
 namespace SongSearch.Web.Controllers {
     public partial class AdminController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public AdminController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected AdminController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -33,6 +30,11 @@ namespace SongSearch.Web.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ReportUserActions() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ReportUserActions);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public AdminController Actions { get { return MVC.Admin; } }
@@ -48,6 +50,7 @@ namespace SongSearch.Web.Controllers {
         public class ActionNamesClass {
             public readonly string UpdateCache = "UpdateCache";
             public readonly string MySession = "MySession";
+            public readonly string ReportUserActions = "ReportUserActions";
         }
 
 
@@ -57,6 +60,7 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
             public readonly string MySession = "~/Views/Admin/MySession.aspx";
+            public readonly string ReportUserActions = "~/Views/Admin/ReportUserActions.aspx";
             public readonly string UpdateCache = "~/Views/Admin/UpdateCache.aspx";
         }
     }
@@ -78,6 +82,13 @@ namespace SongSearch.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult MySession() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.MySession);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ReportUserActions(string start, string end) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ReportUserActions);
+            callInfo.RouteValueDictionary.Add("start", start);
+            callInfo.RouteValueDictionary.Add("end", end);
             return callInfo;
         }
 

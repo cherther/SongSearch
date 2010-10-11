@@ -45,7 +45,7 @@ namespace SongSearch.Web.Controllers
 
 		}
 
-		public ActionResult ReportUserActions(string start, string end) {
+		public virtual ActionResult ReportUserActions(string start, string end) {
 
 			var startDate = start != null ? DateTime.Parse(start) : DateTime.Now.AddDays(-7);
 			var endDate = end != null ? DateTime.Parse(end): DateTime.Now;

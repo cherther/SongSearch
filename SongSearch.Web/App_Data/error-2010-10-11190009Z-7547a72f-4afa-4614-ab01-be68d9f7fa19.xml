@@ -1,0 +1,174 @@
+﻿<error errorId="7547a72f-4afa-4614-ab01-be68d9f7fa19" host="AUGUSTSRV1" type="System.Web.HttpException" message="File does not exist." source="System.Web" detail="System.Web.HttpException (0x80004005): File does not exist.&#xD;&#xA;   at System.Web.StaticFileHandler.GetFileInfo(String virtualPathWithPathInfo, String physicalPath, HttpResponse response)&#xD;&#xA;   at System.Web.StaticFileHandler.ProcessRequestInternal(HttpContext context, String overrideVirtualPath)&#xD;&#xA;   at System.Web.DefaultHttpHandler.BeginProcessRequest(HttpContext context, AsyncCallback callback, Object state)&#xD;&#xA;   at System.Web.HttpApplication.CallHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()&#xD;&#xA;   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean&amp; completedSynchronously)" user="claus@codewerks.de" time="2010-10-11T19:00:09.0111919Z" statusCode="404">
+  <serverVariables>
+    <item name="ALL_HTTP">
+      <value string="HTTP_CONNECTION:Keep-Alive&#xD;&#xA;HTTP_ACCEPT:*/*&#xD;&#xA;HTTP_ACCEPT_ENCODING:gzip, deflate&#xD;&#xA;HTTP_ACCEPT_LANGUAGE:en-US&#xD;&#xA;HTTP_COOKIE:friendly=Claus Herther; siteProfile=1; .ASPXAUTH=1805F69E27983CE868BA97B447DBAEDAB08E0F81A8EF0F9CE573B153DC8E8675E730CF31D1A1CF39667D5ABA4325FB3B1BE704FA434F5850F98CE396BDE46EF9EC90CE88A8C369CC6E50590C84D51232448CC60E0E3AE213261508D33441B1D5793F5442C4BD3ECD95EBD22B6D697C1AD2768F38A8C146EE86B9B9037920E9C05DF8033363AA0DC3112C1989144438150BE1EF47FBFE64BCB2B1B56652B92987; ASP.NET_SessionId=ttauluwq2whpne0ijhvinnjo; __RequestVerificationToken_Lw__=oV7gqiazj5P7VPsdinazhGLzLun1hyNd6o4ret1F3vEmcMUmqmlSkCib72z9geVMMON1GPcV6wP5qrQr5zFEbAIiX7mcL+aZoRdisdeHYLNm+Fr3klQdZwJ4/dZPnpYZb3xJQRtPZado//AyCLI/Zw==&#xD;&#xA;HTTP_HOST:localhost:9001&#xD;&#xA;HTTP_REFERER:http://localhost:9001/&#xD;&#xA;HTTP_USER_AGENT:Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C; .NET4.0E)&#xD;&#xA;" />
+    </item>
+    <item name="ALL_RAW">
+      <value string="Connection: Keep-Alive&#xD;&#xA;Accept: */*&#xD;&#xA;Accept-Encoding: gzip, deflate&#xD;&#xA;Accept-Language: en-US&#xD;&#xA;Cookie: friendly=Claus Herther; siteProfile=1; .ASPXAUTH=1805F69E27983CE868BA97B447DBAEDAB08E0F81A8EF0F9CE573B153DC8E8675E730CF31D1A1CF39667D5ABA4325FB3B1BE704FA434F5850F98CE396BDE46EF9EC90CE88A8C369CC6E50590C84D51232448CC60E0E3AE213261508D33441B1D5793F5442C4BD3ECD95EBD22B6D697C1AD2768F38A8C146EE86B9B9037920E9C05DF8033363AA0DC3112C1989144438150BE1EF47FBFE64BCB2B1B56652B92987; ASP.NET_SessionId=ttauluwq2whpne0ijhvinnjo; __RequestVerificationToken_Lw__=oV7gqiazj5P7VPsdinazhGLzLun1hyNd6o4ret1F3vEmcMUmqmlSkCib72z9geVMMON1GPcV6wP5qrQr5zFEbAIiX7mcL+aZoRdisdeHYLNm+Fr3klQdZwJ4/dZPnpYZb3xJQRtPZado//AyCLI/Zw==&#xD;&#xA;Host: localhost:9001&#xD;&#xA;Referer: http://localhost:9001/&#xD;&#xA;User-Agent: Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C; .NET4.0E)&#xD;&#xA;" />
+    </item>
+    <item name="APPL_MD_PATH">
+      <value string="" />
+    </item>
+    <item name="APPL_PHYSICAL_PATH">
+      <value string="D:\DevProjects\SongSearch\SongSearch.Web\" />
+    </item>
+    <item name="AUTH_TYPE">
+      <value string="Forms" />
+    </item>
+    <item name="AUTH_USER">
+      <value string="claus@codewerks.de" />
+    </item>
+    <item name="AUTH_PASSWORD">
+      <value string="" />
+    </item>
+    <item name="LOGON_USER">
+      <value string="AUGUSTSRV1\claus" />
+    </item>
+    <item name="REMOTE_USER">
+      <value string="claus@codewerks.de" />
+    </item>
+    <item name="CERT_COOKIE">
+      <value string="" />
+    </item>
+    <item name="CERT_FLAGS">
+      <value string="" />
+    </item>
+    <item name="CERT_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="CERT_SERIALNUMBER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="CERT_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CERT_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="CONTENT_LENGTH">
+      <value string="0" />
+    </item>
+    <item name="CONTENT_TYPE">
+      <value string="" />
+    </item>
+    <item name="GATEWAY_INTERFACE">
+      <value string="" />
+    </item>
+    <item name="HTTPS">
+      <value string="" />
+    </item>
+    <item name="HTTPS_KEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SECRETKEYSIZE">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_ISSUER">
+      <value string="" />
+    </item>
+    <item name="HTTPS_SERVER_SUBJECT">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_ID">
+      <value string="" />
+    </item>
+    <item name="INSTANCE_META_PATH">
+      <value string="" />
+    </item>
+    <item name="LOCAL_ADDR">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="PATH_INFO">
+      <value string="/public/css/" />
+    </item>
+    <item name="PATH_TRANSLATED">
+      <value string="D:\DevProjects\SongSearch\SongSearch.Web\public\css" />
+    </item>
+    <item name="QUERY_STRING">
+      <value string="" />
+    </item>
+    <item name="REMOTE_ADDR">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="REMOTE_HOST">
+      <value string="127.0.0.1" />
+    </item>
+    <item name="REMOTE_PORT">
+      <value string="" />
+    </item>
+    <item name="REQUEST_METHOD">
+      <value string="GET" />
+    </item>
+    <item name="SCRIPT_NAME">
+      <value string="/public/css/" />
+    </item>
+    <item name="SERVER_NAME">
+      <value string="localhost" />
+    </item>
+    <item name="SERVER_PORT">
+      <value string="9001" />
+    </item>
+    <item name="SERVER_PORT_SECURE">
+      <value string="0" />
+    </item>
+    <item name="SERVER_PROTOCOL">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="SERVER_SOFTWARE">
+      <value string="" />
+    </item>
+    <item name="URL">
+      <value string="/public/css/" />
+    </item>
+    <item name="HTTP_CONNECTION">
+      <value string="Keep-Alive" />
+    </item>
+    <item name="HTTP_ACCEPT">
+      <value string="*/*" />
+    </item>
+    <item name="HTTP_ACCEPT_ENCODING">
+      <value string="gzip, deflate" />
+    </item>
+    <item name="HTTP_ACCEPT_LANGUAGE">
+      <value string="en-US" />
+    </item>
+    <item name="HTTP_COOKIE">
+      <value string="friendly=Claus Herther; siteProfile=1; .ASPXAUTH=1805F69E27983CE868BA97B447DBAEDAB08E0F81A8EF0F9CE573B153DC8E8675E730CF31D1A1CF39667D5ABA4325FB3B1BE704FA434F5850F98CE396BDE46EF9EC90CE88A8C369CC6E50590C84D51232448CC60E0E3AE213261508D33441B1D5793F5442C4BD3ECD95EBD22B6D697C1AD2768F38A8C146EE86B9B9037920E9C05DF8033363AA0DC3112C1989144438150BE1EF47FBFE64BCB2B1B56652B92987; ASP.NET_SessionId=ttauluwq2whpne0ijhvinnjo; __RequestVerificationToken_Lw__=oV7gqiazj5P7VPsdinazhGLzLun1hyNd6o4ret1F3vEmcMUmqmlSkCib72z9geVMMON1GPcV6wP5qrQr5zFEbAIiX7mcL+aZoRdisdeHYLNm+Fr3klQdZwJ4/dZPnpYZb3xJQRtPZado//AyCLI/Zw==" />
+    </item>
+    <item name="HTTP_HOST">
+      <value string="localhost:9001" />
+    </item>
+    <item name="HTTP_REFERER">
+      <value string="http://localhost:9001/" />
+    </item>
+    <item name="HTTP_USER_AGENT">
+      <value string="Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C; .NET4.0E)" />
+    </item>
+  </serverVariables>
+  <cookies>
+    <item name="friendly">
+      <value string="Claus Herther" />
+    </item>
+    <item name="siteProfile">
+      <value string="1" />
+    </item>
+    <item name=".ASPXAUTH">
+      <value string="1805F69E27983CE868BA97B447DBAEDAB08E0F81A8EF0F9CE573B153DC8E8675E730CF31D1A1CF39667D5ABA4325FB3B1BE704FA434F5850F98CE396BDE46EF9EC90CE88A8C369CC6E50590C84D51232448CC60E0E3AE213261508D33441B1D5793F5442C4BD3ECD95EBD22B6D697C1AD2768F38A8C146EE86B9B9037920E9C05DF8033363AA0DC3112C1989144438150BE1EF47FBFE64BCB2B1B56652B92987" />
+    </item>
+    <item name="ASP.NET_SessionId">
+      <value string="ttauluwq2whpne0ijhvinnjo" />
+    </item>
+    <item name="__RequestVerificationToken_Lw__">
+      <value string="oV7gqiazj5P7VPsdinazhGLzLun1hyNd6o4ret1F3vEmcMUmqmlSkCib72z9geVMMON1GPcV6wP5qrQr5zFEbAIiX7mcL+aZoRdisdeHYLNm+Fr3klQdZwJ4/dZPnpYZb3xJQRtPZado//AyCLI/Zw==" />
+    </item>
+  </cookies>
+</error>

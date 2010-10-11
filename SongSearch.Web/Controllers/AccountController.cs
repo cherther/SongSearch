@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using SongSearch.Web.Services;
 using SongSearch.Web.Data;
+using System.Web;
+//using Elmah;
 
 // see if this shows up, yup it does!
 namespace SongSearch.Web.Controllers {
@@ -36,6 +38,8 @@ namespace SongSearch.Web.Controllers {
 			base.OnActionExecuting(filterContext);
 		}
 
+		
+
 		public AccountController(
 			IFormsAuthenticationService authService,
 			IUserManagementService usrMgmtService,
@@ -58,6 +62,8 @@ namespace SongSearch.Web.Controllers {
 			
 			return View(model);
 		}
+
+		
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
