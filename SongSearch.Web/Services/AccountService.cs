@@ -175,8 +175,14 @@ namespace SongSearch.Web.Services {
 				return false;
 			}
 
-			if (!String.IsNullOrEmpty(newPassword) && PasswordHashMatches(dbuser.Password, user.Password)) {
-				dbuser.Password = newPassword.PasswordHashString();
+			if (!String.IsNullOrEmpty(newPassword)) {
+				if (PasswordHashMatches(dbuser.Password, user.Password)) {
+					dbuser.Password = newPassword.PasswordHashString();
+				} else {
+					throw new ArgumentException("Passwords do not match");
+				}
+			} else {
+				throw new ArgumentNullException("New password cannot be blank");
 			}
 
 			DataSession.CommitChanges();

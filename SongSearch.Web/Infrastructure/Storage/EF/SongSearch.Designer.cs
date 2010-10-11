@@ -3949,7 +3949,8 @@ namespace SongSearch.Web.Data
         /// <param name="userId">Initial value of the UserId property.</param>
         /// <param name="resultCount">Initial value of the ResultCount property.</param>
         /// <param name="queryString">Initial value of the QueryString property.</param>
-        public static SearchEvent CreateSearchEvent(global::System.Int64 searchEventId, global::System.DateTime searchEventDate, global::System.String sessionId, global::System.Int32 userId, global::System.Int32 resultCount, global::System.String queryString)
+        /// <param name="searchActionId">Initial value of the SearchActionId property.</param>
+        public static SearchEvent CreateSearchEvent(global::System.Int64 searchEventId, global::System.DateTime searchEventDate, global::System.String sessionId, global::System.Int32 userId, global::System.Int32 resultCount, global::System.String queryString, global::System.Int32 searchActionId)
         {
             SearchEvent searchEvent = new SearchEvent();
             searchEvent.SearchEventId = searchEventId;
@@ -3958,6 +3959,7 @@ namespace SongSearch.Web.Data
             searchEvent.UserId = userId;
             searchEvent.ResultCount = resultCount;
             searchEvent.QueryString = queryString;
+            searchEvent.SearchActionId = searchActionId;
             return searchEvent;
         }
 
@@ -4110,6 +4112,30 @@ namespace SongSearch.Web.Data
         private global::System.String _QueryString;
         partial void OnQueryStringChanging(global::System.String value);
         partial void OnQueryStringChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SearchActionId
+        {
+            get
+            {
+                return _SearchActionId;
+            }
+            set
+            {
+                OnSearchActionIdChanging(value);
+                ReportPropertyChanging("SearchActionId");
+                _SearchActionId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SearchActionId");
+                OnSearchActionIdChanged();
+            }
+        }
+        private global::System.Int32 _SearchActionId;
+        partial void OnSearchActionIdChanging(global::System.Int32 value);
+        partial void OnSearchActionIdChanged();
 
         #endregion
     

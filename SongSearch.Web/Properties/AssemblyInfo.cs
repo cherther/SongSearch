@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SongSearch.Web")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ford Music Services")]
+[assembly: AssemblyCompany("WorldSongNet, LLC")]
 [assembly: AssemblyProduct("SongSearch.Web")]
-[assembly: AssemblyCopyright("Copyright © Ford Music Services 2010")]
+[assembly: AssemblyCopyright("Copyright © WorldSongNet, LLC 2010")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 [assembly: AssemblyVersion("2.1.0.*")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]

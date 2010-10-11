@@ -27,7 +27,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 			<%: Html.LabelFor(model => model.Email) %>
 		</div>
 		<div class="editor-field">
-			<%: Html.TextBoxFor(model => model.Email, new { @class = "cw-field-large", placeholder="Your email address", required=true })%>
+			<%: Html.TextBoxFor(model => model.Email, new { @class = "cw-field-large", placeholder="Your email address" })%>
 			<%: Html.ValidationMessageFor(model => model.Email) %>
 		</div>
 			<p>&nbsp;</p>

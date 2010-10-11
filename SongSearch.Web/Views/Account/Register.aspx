@@ -33,7 +33,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 						<%: Html.LabelFor(m => m.Email) %>
 					</div>
 					<div>
-						<%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder="Your email address", required=true, title = "This should be the e-mail address<br/>where you received your registration invitation" })%>
+						<%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder="Your email address", title = "This should be the e-mail address<br/>where you received your registration invitation" })%>
 						<div><%: Html.ValidationMessageFor(m => m.Email)%></div>
 					</div>
 				</div>
@@ -42,7 +42,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 						<%: Html.LabelFor(m => m.InviteId)%>
 					</div>
 					<div>
-						<%: Html.TextBoxFor(m => m.InviteId, new { @class = "cw-field-xlarge", placeholder = "Your invitation code", required = true, title = "The invitation code we e-mailed you" })%>
+						<%: Html.TextBoxFor(m => m.InviteId, new { @class = "cw-field-xlarge", placeholder = "Your invitation code", title = "The invitation code we e-mailed you" })%>
 						<div><%: Html.ValidationMessageFor(m => m.InviteId)%></div>
 					</div>                    
 				</div>
@@ -70,7 +70,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 						<%: Html.LabelFor(m => m.Password) %>
 					</div>
 					<div>
-						<%: Html.PasswordFor(m => m.Password, new { @class = "cw-field-large", placeholder="Password", required=true, title = "Please enter a secure password with at least " + ViewData["PasswordLength"] + " characters" })%>
+						<%: Html.PasswordFor(m => m.Password, new { @class = "cw-field-large", placeholder="Password", title = "Please enter a secure password with at least " + ViewData["PasswordLength"] + " characters" })%>
 						<br /><%: Html.ValidationMessageFor(m => m.Password)%>
 					</div>                    
 				</div>                    
@@ -79,7 +79,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 						<%: Html.LabelFor(m => m.ConfirmPassword) %>
 					</div>
 					<div>
-						<%: Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large", required=true, title="Please enter your password again" })%>
+						<%: Html.PasswordFor(m => m.ConfirmPassword, new { @class = "cw-field-large", title="Please enter your password again" })%>
 						<br /><%: Html.ValidationMessageFor(m => m.ConfirmPassword)%>
 					</div>          
 				</div>                    

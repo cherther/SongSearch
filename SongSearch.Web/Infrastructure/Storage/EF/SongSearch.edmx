@@ -329,6 +329,7 @@
           <Property Name="SearchEventDate" Type="datetime" Nullable="false" />
           <Property Name="SessionId" Type="nvarchar" Nullable="false" MaxLength="255" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="SearchActionId" Type="int" Nullable="false" />
           <Property Name="ResultCount" Type="int" Nullable="false" />
           <Property Name="QueryString" Type="nvarchar" Nullable="false" MaxLength="255" />
         </EntityType>
@@ -359,7 +360,6 @@
           </Key>
           <Property Name="ProfileId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ProfileName" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="HasProfileLogo" Type="bit" Nullable="false" />
           <Property Name="CompanyName" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="ContactAddress" Type="varchar" Nullable="false" MaxLength="100" />
           <Property Name="ContactAddress2" Type="varchar" MaxLength="100" />
@@ -373,6 +373,7 @@
           <Property Name="AdminEmail" Type="varchar" Nullable="false" MaxLength="250" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+          <Property Name="HasProfileLogo" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SiteProfilesContacts">
           <Key>
@@ -1455,6 +1456,7 @@
           <Property Type="Int32" Name="ResultCount" Nullable="false" />
           <Property Type="String" Name="QueryString" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="User" Relationship="SongSearch.Web.Data.Model.FK_SearchEvents_Users" FromRole="SearchEvent" ToRole="User" />
+          <Property Type="Int32" Name="SearchActionId" Nullable="false" />
         </EntityType>
         <EntityType Name="UserActionEvent">
           <Key>
@@ -1819,6 +1821,7 @@
           <EntitySetMapping Name="SearchEvents">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.SearchEvent">
               <MappingFragment StoreEntitySet="SearchEvents">
+                <ScalarProperty Name="SearchActionId" ColumnName="SearchActionId" />
                 <ScalarProperty Name="QueryString" ColumnName="QueryString" />
                 <ScalarProperty Name="ResultCount" ColumnName="ResultCount" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />

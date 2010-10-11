@@ -12,7 +12,7 @@ namespace SongSearch.Web.Services {
 		string SessionId { get; set; }
 		void LogUserEvent(UserActions actionEvent);
 		void LogContentEvent(ContentActions actionEvent, int contentId);
-		void LogSearchEvent(string searchTerms);
+		void LogSearchEvent(SearchActions action, string searchTerms, int resultsCount);
 
 		IList<UserActionEvent> ReportUserActions(DateTime startDate, DateTime endDate);
 

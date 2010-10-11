@@ -22,7 +22,24 @@ namespace SongSearch.Web.Services {
 		UpdateProfile,
 		ChangePassword,
 		ResetPassword,
-		SentInvite
+			
+		SentInvite = 30,
+		ViewUserDetail,
+		UpdateUserRole,
+		ToggleSystemAdminAccess,
+		UpdateUserCatalogRole,
+		UpdateAllCatalogs,
+		UpdateAllUsers,
+		DeleteUser,
+		TakeOwnership,
+		ViewCatalogDetail,
+		DeleteCatalog,
+		UploadCatalog,
+
+		ViewCart = 50, 
+		CompressCart,
+		DownloadCart,
+		DeleteCart,	
 	}
 
 	public enum ContentActions {
@@ -32,15 +49,16 @@ namespace SongSearch.Web.Services {
 		PrintItemList,
 		AddToCart,
 		RemoveFromCart,
-		CompressCart,
-		DownloadCart,
-		DeletedCart,	
-		CreatedNewContent = 20,
-		UpdatedContent,
-		DeletedContent
+		
+		CreateNewContent = 20,
+		UpdateContent,
+		DeleteContent
 	}
+	public enum SearchActions {
 
-
+		Search = 100,
+		PrintList
+	}
 	// **************************************
 	// UserEventLogService
 	// **************************************
@@ -127,12 +145,14 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// LogUserEvent: ContentActionEvent
 		// **************************************
-		public void LogSearchEvent(string searchTerms) {
+		public void LogSearchEvent(SearchActions action, string searchTerms, int resultsCount) {
 			var actionEvent = new SearchEvent() {
+				SearchActionId = (int)action,
 				UserId = ActiveUser.UserId,
 				SearchEventDate = DateTime.Now,
 				SessionId = SessionId ?? String.Empty,
-				QueryString = searchTerms
+				QueryString = searchTerms,
+				ResultCount = resultsCount
 			};
 
 			LogActionEventDelegate<SearchEvent> logActionEventDelegate = new LogActionEventDelegate<SearchEvent>(LogEvent);

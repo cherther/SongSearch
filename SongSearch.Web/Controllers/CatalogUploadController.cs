@@ -14,19 +14,22 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 	public partial class CatalogUploadController : Controller
 	{
-		private ICatalogUploadService _catUploadService;
+		ICatalogUploadService _catUploadService;
+		IUserEventLogService _logService;
 		
 		protected override void Initialize(RequestContext requestContext) {
 
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_catUploadService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 			}
 			base.Initialize(requestContext);
 
 		}
 
-		public CatalogUploadController(ICatalogUploadService catUploadService) {
+		public CatalogUploadController(ICatalogUploadService catUploadService, IUserEventLogService logService) {
 			_catUploadService = catUploadService;
+			_logService = logService;
 		}
 
 
@@ -105,6 +108,8 @@ namespace SongSearch.Web.Controllers
 					
 					return View(vm);
 				} else {
+					_logService.LogUserEvent(UserActions.UploadCatalog);
+
 					return RedirectToAction("Complete");
 				}
 			}

@@ -99,6 +99,7 @@ namespace SongSearch.Web {
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
 			var controllers = new List<string>();
+			controllers.Add("Admin");
 			controllers.Add("Cart");
 			controllers.Add("CatalogManagement");
 			controllers.Add("CatalogUpload");

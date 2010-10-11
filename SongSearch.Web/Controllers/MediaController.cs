@@ -49,7 +49,7 @@ namespace SongSearch.Web.Controllers
 					//} else {
 					byte[] media = _mediaService.GetContentMedia(content.ContentMedia.FullVersion(), user);
 
-                    media = _mediaService.WriteMediaSignature(media, content, user);
+					media = _mediaService.WriteMediaSignature(media, content, user);
 
 					return base.File(media, contentType, downloadName);
 					//}

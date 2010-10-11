@@ -49,6 +49,7 @@ namespace SongSearch.Web.Controllers
 
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				this.FeedbackError(ex.Message);
 				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 				
@@ -69,6 +70,7 @@ namespace SongSearch.Web.Controllers
 				return View(model);
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				this.FeedbackError(ex.Message);
 				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 				
@@ -98,6 +100,7 @@ namespace SongSearch.Web.Controllers
 				//}
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				this.FeedbackError(ex.Message);
 				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 			}
@@ -120,7 +123,7 @@ namespace SongSearch.Web.Controllers
 					//do some saving
 				if (Account.User().HasAccessToContentWithRole(content, Roles.Admin)) {
 					_cntAdmService.Update(content, tags, newTags, rights);
-					_logService.LogContentEvent(ContentActions.UpdatedContent, content.ContentId);
+					_logService.LogContentEvent(ContentActions.UpdateContent, content.ContentId);
 
 				}
 				//}
@@ -143,6 +146,7 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				this.FeedbackError(ex.Message);
 				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 				
@@ -197,7 +201,7 @@ namespace SongSearch.Web.Controllers
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
 				_cntAdmService.Delete(contentIds);
 
-				contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.DeletedContent, c));
+				contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.DeleteContent, c));
 
 				CacheService.InitializeApp(true);
 				SessionService.Session().RefreshMyActiveCart(this.UserName());
@@ -213,6 +217,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
+					Log.Error(ex);
 					this.FeedbackError("There was an error removing the item(s)");
 					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
 

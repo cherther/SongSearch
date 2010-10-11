@@ -61,6 +61,8 @@ namespace SongSearch.Web.Controllers
 					this.FeedbackInfo(msg);
 				}
 
+				_logService.LogUserEvent(UserActions.ViewCart);
+
 				return View(vm);
 			}
 			catch (Exception ex) {
@@ -223,7 +225,7 @@ namespace SongSearch.Web.Controllers
 				_cartService.DeleteCart(id);
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 				//_logService.LogUserEvent(ContentActions.DeletedCart, id);
-
+				_logService.LogUserEvent(UserActions.DeleteCart);
 				this.FeedbackInfo("Cart deleted");
 			}
 			catch (Exception ex) {
@@ -244,7 +246,8 @@ namespace SongSearch.Web.Controllers
 			try {
 				//if (contentNames.Count() > 10 || SystemConfig.UseRemoteMedia) {
 					_cartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
-					//_logService.LogUserEvent(ContentActions.CompressCart, id);
+					_logService.LogUserEvent(UserActions.CompressCart);
+
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -281,7 +284,7 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				var cart = _cartService.DownloadCompressedCart(id);
-				//_logService.LogUserEvent(ContentActions.DownloadCart, id);
+				_logService.LogUserEvent(UserActions.DownloadCart);
 
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 

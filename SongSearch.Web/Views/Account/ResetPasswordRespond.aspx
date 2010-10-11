@@ -31,7 +31,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 				<%: Html.LabelFor(m => m.Email) %>
 			</div>
 			<div>
-				<%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder = "Your e-mail address", required = true })%>
+				<%: Html.TextBoxFor(m => m.Email, new { @class = "cw-field-large", placeholder = "Your e-mail address" })%>
 				<%: Html.ValidationMessageFor(m => m.Email)%>
 			</div>
 
@@ -39,7 +39,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 				<%: Html.LabelFor(m => m.NewPassword) %>
 			</div>
 			<div>
-				<%: Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large", placeholder = "New password", required = true })%>
+				<%: Html.PasswordFor(m => m.NewPassword, new { @class = "cw-field-large", placeholder = "New password" })%>
 				<%: Html.ValidationMessageFor(m => m.NewPassword) %>
 			</div>
 				

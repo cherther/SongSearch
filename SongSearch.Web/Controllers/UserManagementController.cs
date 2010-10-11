@@ -15,12 +15,14 @@ namespace SongSearch.Web
 	[RequireAuthorization(MinAccessLevel=Roles.Admin)]
 	public partial class UserManagementController : Controller
 	{
-		private IUserManagementService _usrMgmtService;
-		
+		IUserManagementService _usrMgmtService;
+		IUserEventLogService _logService;
+
 		protected override void Initialize(RequestContext requestContext) {
 			
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
 				_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
+				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 			}
 			base.Initialize(requestContext);
 
@@ -32,8 +34,9 @@ namespace SongSearch.Web
 			base.OnActionExecuting(filterContext);
 		}
 
-		public UserManagementController(IUserManagementService usrMgmtService) {
+		public UserManagementController(IUserManagementService usrMgmtService, IUserEventLogService logService) {
 			_usrMgmtService = usrMgmtService;
+			_logService = logService;
 		}
 
 
@@ -117,6 +120,7 @@ namespace SongSearch.Web
 				}
 
 				SendInvites(recipients, sender);
+				_logService.LogUserEvent(UserActions.SentInvite);
 
 				return View(Views.InviteComplete, model);
 			} else {
@@ -147,6 +151,8 @@ namespace SongSearch.Web
 				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = !vm.IsThisUser && !user.IsSuperAdmin();
 
+				_logService.LogUserEvent(UserActions.ViewUserDetail);
+
 				if (Request.IsAjaxRequest()) {
 					return View(Views.ctrlDetail, vm);
 				} else {
@@ -171,7 +177,7 @@ namespace SongSearch.Web
 			try {
 
 				_usrMgmtService.UpdateUsersRole(userId, roleId);
-
+				_logService.LogUserEvent(UserActions.UpdateUserRole);
 			}
 			catch (Exception ex) {
 				if (Request.IsAjaxRequest()) {
@@ -197,7 +203,7 @@ namespace SongSearch.Web
 			try {
 
 				_usrMgmtService.ToggleSystemAdminAccess(userId);
-
+				_logService.LogUserEvent(UserActions.ToggleSystemAdminAccess);
 			}
 			catch (Exception ex) {
 				if (Request.IsAjaxRequest()) {
@@ -223,7 +229,7 @@ namespace SongSearch.Web
 			try {
 
 				_usrMgmtService.UpdateUserCatalogRole(userId, catalogId, roleId);
-
+				_logService.LogUserEvent(UserActions.UpdateUserCatalogRole);
 			}
 			catch (Exception ex) {
 				if (Request.IsAjaxRequest()) {
@@ -249,7 +255,7 @@ namespace SongSearch.Web
 			try {
 
 				_usrMgmtService.UpdateAllCatalogs(userId, roleId);
-
+				_logService.LogUserEvent(UserActions.UpdateAllCatalogs);
 			}
 			catch (Exception ex) {
 				if (Request.IsAjaxRequest()) {
@@ -275,7 +281,7 @@ namespace SongSearch.Web
 			try {
 
 				_usrMgmtService.UpdateAllUsers(catalogId, roleId);
-
+				_logService.LogUserEvent(UserActions.UpdateAllUsers);
 			}
 			catch (Exception ex) {
 				if (Request.IsAjaxRequest()) {
@@ -301,6 +307,7 @@ namespace SongSearch.Web
 
 			try {
 				_usrMgmtService.DeleteUser(id, true);
+				_logService.LogUserEvent(UserActions.DeleteUser);
 
 			}
 			catch (Exception ex) {
@@ -327,6 +334,8 @@ namespace SongSearch.Web
 		public virtual ActionResult TakeOwnership(int id) {
 			try {
 				_usrMgmtService.TakeOwnerShip(id);
+				_logService.LogUserEvent(UserActions.TakeOwnership);
+
 			}
 			catch (Exception ex) {
 				if (Request.IsAjaxRequest()) {
