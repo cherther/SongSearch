@@ -28,7 +28,6 @@
 	<p>I'd like to invite you to register at <strong><%: Html.SiteProfile().CompanyName %></strong>.</p>
 	<p>Please <a href="<%: url %>">register</a> using your e-mail address <strong><%: recipient%></strong>.</p>
 	<p>&nbsp;</p>
-	<p>&nbsp;</p>
 	<p>If the 'register' link above is not clickable in your email program, please copy & paste this address into your browser's location bar:</p>
 	<p><%: url %></p>
 	<p>&nbsp;</p>

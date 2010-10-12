@@ -115,6 +115,7 @@
     <Reference Include="AWSSDK, Version=1.0.11.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL" />
     <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>D:\DevProjects\SongSearch\Ext Libraries\ELMAH\Elmah.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
@@ -362,6 +363,7 @@
     <Content Include="Public\Images\prettyLoader\prettyLoader.gif" />
     <Content Include="Public\Images\prettyLoader\prettyLoader.png" />
     <Content Include="Public\Images\profiles\mmi.jpg" />
+    <Content Include="Public\Images\under_construction.jpg" />
     <Content Include="Public\Images\usage_bars.gif" />
     <Content Include="Public\Javascript\cw.application.js">
       <DependentUpon>scriptmash.chirp.config</DependentUpon>
@@ -1961,6 +1963,7 @@
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
     <Content Include="Views\Admin\ReportUserActions.aspx" />
+    <Content Include="Updating.html" />
     <Content Include="Views\Home\Help.aspx" />
     <Content Include="Views\Shared\ctrlContactInfoBox.ascx" />
     <Content Include="Views\Shared\ctrlUserQuotaLarge.ascx" />

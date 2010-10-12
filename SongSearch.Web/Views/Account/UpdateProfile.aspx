@@ -48,12 +48,12 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 					<%: Html.TextBoxFor(m => m.LastName, new { @class = "cw-field-large", title = "Your Last Name" })%>
 					<%: Html.ValidationMessageFor(m => m.LastName)%>
 				</div>
-				<div>&nbsp;</div>
+				<%--<div>&nbsp;</div>
 					<div>
 						<%: Html.CheckBoxFor(m => m.HasAllowedCommunication) %>
 						<%: Html.LabelFor(m => m.HasAllowedCommunication)%>
 						<%: Html.ValidationMessageFor(m => m.HasAllowedCommunication)%>
-					</div>
+					</div>--%>
 				<%if (Model.ShowSignatureField){%>
 					<div>&nbsp;</div>
 					<div>
@@ -66,7 +66,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 					
 					<div>&nbsp;</div>
 					<div>
-						<%: Html.CheckBoxFor(m => m.AppendSignatureToTitle, new { title = "Check to embed your signature in all download/zipped mp3 id3 tags" })%>
+						<%: Html.CheckBoxFor(m => m.AppendSignatureToTitle, new { title = "Check to embed your signature in the ID3 Title tag of any downloaded/zipped mp3" })%>
 						<%: Html.LabelFor(m => m.AppendSignatureToTitle)%>
 						<%: Html.ValidationMessageFor(m => m.AppendSignatureToTitle)%>
 					</div>				
