@@ -27,7 +27,7 @@ namespace SongSearch.Web.Controllers
 			IDisposable disposable = prng as IDisposable;
 			if (disposable != null) { disposable.Dispose(); }
 
-			return View("500", new ErrorViewModel() { Error = new HandleErrorInfo(lastError, controllerName, actionName) } );
+			return View("Index", new HandleErrorInfo(lastError, controllerName, actionName));
 		}
 		/// <summary>
 		/// This is fired when the site hits a 500

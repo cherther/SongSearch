@@ -225,7 +225,9 @@ namespace SongSearch.Web {
 			try {
 				CacheService.Initialize();
 			}
-			catch { }
+			catch (Exception ex) {
+				Log.Error(ex);
+			}
 			//Logger.Info("App is starting up");
 
 //#if !DEBUG

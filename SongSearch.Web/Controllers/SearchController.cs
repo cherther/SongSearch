@@ -180,8 +180,9 @@ namespace SongSearch.Web.Controllers
 
 				return Json(values, JsonRequestBehavior.AllowGet);
 			}
-			catch { //(Exception ex) {
-					
+			catch (Exception ex) {
+				Log.Error(ex);
+
 				return Json("", JsonRequestBehavior.AllowGet);
 
 			}

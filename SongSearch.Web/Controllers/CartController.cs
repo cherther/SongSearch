@@ -112,11 +112,12 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
 					this.FeedbackError("There was an error adding this item");
-					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+					return RedirectToAction(MVC.Error.Problem());
 				
 				}
 			}
@@ -143,11 +144,12 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
 					this.FeedbackError("There was an error adding the items");
-					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+					return RedirectToAction(MVC.Error.Problem());
 
 				}
 			}
@@ -171,11 +173,12 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
 					this.FeedbackError("There was an error removing this item");
-					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+					return RedirectToAction(MVC.Error.Problem());
 				
 				}
 			}
@@ -205,12 +208,12 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
 					this.FeedbackError("There was an error removing the item(s)");
-					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
-
+					return RedirectToAction(MVC.Error.Problem());
 				}
 			}
 		}

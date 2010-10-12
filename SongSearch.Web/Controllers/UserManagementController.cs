@@ -160,6 +160,8 @@ namespace SongSearch.Web
 				}
 			}
 			catch (Exception ex){
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
@@ -180,6 +182,8 @@ namespace SongSearch.Web
 				_logService.LogUserEvent(UserActions.UpdateUserRole);
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
@@ -206,6 +210,8 @@ namespace SongSearch.Web
 				_logService.LogUserEvent(UserActions.ToggleSystemAdminAccess);
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
@@ -232,6 +238,8 @@ namespace SongSearch.Web
 				_logService.LogUserEvent(UserActions.UpdateUserCatalogRole);
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
@@ -258,6 +266,8 @@ namespace SongSearch.Web
 				_logService.LogUserEvent(UserActions.UpdateAllCatalogs);
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
@@ -284,6 +294,8 @@ namespace SongSearch.Web
 				_logService.LogUserEvent(UserActions.UpdateAllUsers);
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
@@ -311,6 +323,8 @@ namespace SongSearch.Web
 
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
@@ -338,6 +352,8 @@ namespace SongSearch.Web
 
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {

@@ -58,7 +58,7 @@ namespace SongSearch.Web.Controllers
 					this.FeedbackError(msg);
 					var ex = new AccessViolationException(msg);
 					Log.Error(ex);
-					return RedirectToAction(MVC.Error.Index(ex, msg, "Media", "Download"));
+					return RedirectToAction(MVC.Error.Problem());
 				}
 			}
 			catch (Exception ex) {
@@ -148,7 +148,7 @@ namespace SongSearch.Web.Controllers
 					this.FeedbackError(msg);
 					var ex = new AccessViolationException(msg);
 					Log.Error(ex);
-					return RedirectToAction(MVC.Error.Index(ex, msg, "Media", "Stream"));
+					return RedirectToAction(MVC.Error.Problem());
 				}
 				
 
@@ -174,7 +174,7 @@ namespace SongSearch.Web.Controllers
 					this.FeedbackError(msg);
 					var ex = new AccessViolationException(msg);
 					Log.Error(ex);
-					return RedirectToAction(MVC.Error.Index(ex, msg, "Media", "Stream"));
+					return RedirectToAction(MVC.Error.Problem());
 				}
 			}
 			catch (Exception ex) {

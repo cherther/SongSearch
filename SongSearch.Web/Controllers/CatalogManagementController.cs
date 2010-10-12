@@ -83,6 +83,8 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
@@ -108,6 +110,8 @@ namespace SongSearch.Web.Controllers
 
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
+
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {

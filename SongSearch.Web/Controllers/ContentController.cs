@@ -51,8 +51,7 @@ namespace SongSearch.Web.Controllers
 			catch (Exception ex) {
 				Log.Error(ex);
 				this.FeedbackError(ex.Message);
-				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
-				
+				return RedirectToAction(MVC.Error.Problem());				
 			}
 		}
 
@@ -72,8 +71,7 @@ namespace SongSearch.Web.Controllers
 			catch (Exception ex) {
 				Log.Error(ex);
 				this.FeedbackError(ex.Message);
-				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
-				
+				return RedirectToAction(MVC.Error.Problem());				
 			}
 		}
 
@@ -102,7 +100,7 @@ namespace SongSearch.Web.Controllers
 			catch (Exception ex) {
 				Log.Error(ex);
 				this.FeedbackError(ex.Message);
-				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
+				return RedirectToAction(MVC.Error.Problem());
 			}
 		}
 
@@ -148,8 +146,7 @@ namespace SongSearch.Web.Controllers
 			catch (Exception ex) {
 				Log.Error(ex);
 				this.FeedbackError(ex.Message);
-				return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
-				
+				return RedirectToAction(MVC.Error.Problem());	
 			}
 		}
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
@@ -214,13 +211,12 @@ namespace SongSearch.Web.Controllers
 				}
 			}
 			catch (Exception ex) {
+				Log.Error(ex);
 				if (Request.IsAjaxRequest()) {
 					throw ex;
 				} else {
-					Log.Error(ex);
 					this.FeedbackError("There was an error removing the item(s)");
-					return RedirectToAction(MVC.Error.Index(ex, ex.Message, this.ToString()));
-
+					return RedirectToAction(MVC.Error.Problem());
 				}
 			}
 		}

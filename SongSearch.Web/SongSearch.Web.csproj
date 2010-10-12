@@ -113,9 +113,8 @@
       <HintPath>..\Ext Libraries\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK, Version=1.0.11.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL" />
-    <Reference Include="Elmah, Version=1.1.11517.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>D:\DevProjects\SongSearch\Ext Libraries\ELMAH\Elmah.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Elmah">
+      <HintPath>..\Ext Libraries\ELMAH\Elmah.dll</HintPath>
     </Reference>
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
@@ -2034,6 +2033,7 @@
     <Content Include="Views\Shared\DisplayTemplates\_Object.ascx" />
     <Content Include="Views\Shared\EditorTemplates\MultilineText.ascx" />
     <Content Include="Views\Shared\EditorTemplates\StringAutoComplete.ascx" />
+    <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\UserManagement\ctrlUserCatalogList.ascx" />
     <Content Include="Views\UserManagement\ctrlDetail.ascx" />
     <Content Include="Views\UserManagement\ctrlUserList.ascx" />
@@ -2062,7 +2062,6 @@
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
     <Content Include="Views\Home\Index.aspx" />
-    <Content Include="Views\Shared\Error.aspx" />
     <Content Include="Views\Shared\Site.Master" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
@@ -2104,6 +2103,7 @@
     <Content Include="Web.Staging.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\Shared\Error.Master" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

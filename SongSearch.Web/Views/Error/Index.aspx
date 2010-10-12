@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Views/Shared/Site.Master" Inherits="System.Web.Mvc.ViewPage<SongSearch.Web.ErrorViewModel>" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Views/Shared/Error.Master" Inherits="System.Web.Mvc.ViewPage<System.Web.Mvc.HandleErrorInfo>" %>
 <asp:Content ID="errorTitle" ContentPlaceHolderID="TitleContent" runat="server">
 	Error
 </asp:Content>
@@ -12,19 +12,12 @@
 		 We're sorry, something bad happened. We're looking into it.
 	</div>
 	<div>&nbsp;</div>
+		<div>Let's <a href="/">start over</a>...!</div>
+	<div>&nbsp;</div>
 
-	<%if (User.User().ShowDebugInfo.GetValueOrDefault()){ %>
-	<hr />
-	<div>
-	
-		<h3>Some technical error detail:</h3>
-		<p>
-		We got a <strong><%: Model.Error.Exception != null ? Model.Error.Exception.GetType().Name : ""%></strong> in <strong><%:Model.Error.ControllerName%></strong>.<strong><%:Model.Error.ActionName%></strong> with a message:
-		</p>
-		<p>
-		<%:Model.Error.Exception != null ? Model.Error.Exception.Message : ""%>
-		</p>
-	</div>
-	<%} %>
+		<div>
+			<img src="../../Public/Images/error-500.jpg" alt="Ooops!"/>
+		</div>
+		<div>&nbsp;</div>
 	</div>
 </asp:Content>

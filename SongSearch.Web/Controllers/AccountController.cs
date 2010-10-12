@@ -27,7 +27,9 @@ namespace SongSearch.Web.Controllers {
 					_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 				}
 			}
-			catch { }
+			catch (Exception ex) {
+				Log.Error(ex);
+			}
 			base.Initialize(requestContext);
 
 		}
@@ -175,7 +177,8 @@ namespace SongSearch.Web.Controllers {
 						ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
 					}
 				}
-				catch {
+				catch (Exception ex){
+					Log.Error(ex);
 
 					ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
 				}
@@ -215,8 +218,8 @@ namespace SongSearch.Web.Controllers {
 					try {
 						inv = _usrMgmtService.GetInvitation(model.InviteId, model.Email);
 					}
-					catch {
-
+					catch (Exception ex){
+						Log.Error(ex);
 						ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
 
 					}
