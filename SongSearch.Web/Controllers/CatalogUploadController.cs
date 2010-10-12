@@ -115,7 +115,7 @@ namespace SongSearch.Web.Controllers
 			}
 			catch (Exception ex){
 			    Log.Error(ex);
-			    this.FeedbackError("There was an error uploading your song files. Please try again.");
+			    this.FeedbackError(ex.Message ?? "There was an error uploading your song files. Please try again.");
 			    return RedirectToAction(Actions.Upload());
 			}
 

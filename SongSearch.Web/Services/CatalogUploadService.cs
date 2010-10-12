@@ -141,19 +141,26 @@ namespace SongSearch.Web.Services {
 			// lookup catalog id
 			if (state.CatalogId > 0) {
 			    if (!Account.User().IsAtLeastInCatalogRole(Roles.Admin, state.CatalogId)) {
-			        throw new AccessViolationException("You do not have admin rights to this catalog");
+					throw new AccessViolationException("You do not have admin rights to this catalog.", innerException: null);
 			    }
 
 				var catalog = DataSession.Single<Catalog>(c => c.CatalogId == state.CatalogId);
 				if (catalog == null) {
-					throw new ArgumentOutOfRangeException("Catalog does not exist");
+					throw new ArgumentOutOfRangeException("Catalog does not exist.", innerException: null);
 				}
 				state.CatalogName = catalog.CatalogName;
+				return state;
 
-			} else {
+			} 
+			
+			if (!String.IsNullOrWhiteSpace(state.CatalogName)) {
 				state.CatalogName = state.CatalogName.ToUpper();
+				return state;
+			} else {
+				throw new ArgumentNullException("Catalog name cannot be blank. Please enter a catalog name or select an existing catalog.", innerException: null);
 			}
-			return state;
+			
+			
 		}
 
 		// **************************************	
@@ -161,7 +168,13 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private CatalogUploadState AddSongFiles(CatalogUploadState state) {
 
-			var uploadFiles = MoveToMediaVersionFolder(state.TempFiles.Distinct().ToList(), state.MediaVersion);
+			if (state.TempFiles == null){
+				throw new ArgumentNullException("There was an error uploading your song files", innerException: null);
+			}
+
+			var filesList = state.TempFiles.Distinct().ToList();
+			var uploadFiles = MoveToMediaVersionFolder(filesList, state.MediaVersion);
+
 			uploadFiles = state.UploadFiles != null ?
 				(uploadFiles != null ?
 					uploadFiles.Union(state.UploadFiles).ToList()
@@ -433,10 +446,15 @@ namespace SongSearch.Web.Services {
 
 			foreach (var file in files) {
 				var filePath = user.UploadFile(fileName: file);
-				var newFilePath = user.UploadFile(file, mediaVersion.ToString());
-				if (File.Exists(newFilePath)) { File.Delete(newFilePath);}
-				File.Move(filePath, newFilePath);
-				newFiles.Add(newFilePath);
+
+				if (File.Exists(filePath)) {
+
+					var newFilePath = user.UploadFile(file, mediaVersion.ToString());
+					if (File.Exists(newFilePath)) { File.Delete(newFilePath); }
+
+					File.Move(filePath, newFilePath);
+					newFiles.Add(newFilePath);
+				}
 			}
 			return newFiles.GetUploadFiles(mediaVersion);
 		}
