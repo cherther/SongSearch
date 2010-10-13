@@ -14,7 +14,7 @@ namespace SongSearch.Web {
 	}
 
 	// **************************************
-	// Roles
+	// PricingPlans
 	// **************************************    
 	public enum PricingPlans {
 		Member = 0,
@@ -25,7 +25,14 @@ namespace SongSearch.Web {
 		Pro = 5,
 		SuperAdmin = 6
 	}
-	
+	// **************************************
+	// PricingPlans
+	// **************************************    
+	public enum ContactTypes {
+		Main = 1,
+		Billing = 2,
+		Admin = 3
+	}
 	// **************************************
 	// MediaVersion
 	// **************************************    

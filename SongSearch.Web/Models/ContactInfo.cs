@@ -13,7 +13,7 @@ namespace SongSearch.Web.Data {
 
 	public class ContactMetaData {
 
-		[DisplayName("Site Contact Name")]
+		[DisplayName("Contact Name")]
 		public string ContactName { get; set; }
 
 		[DisplayName("Company Name")]
@@ -51,7 +51,7 @@ namespace SongSearch.Web.Data {
 		
 		[DataType(DataType.EmailAddress)]
 		[RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "This is a not valid e-mail address.")]
-		[DisplayName("Site Contact e-mail address")]
+		[DisplayName("Contact e-mail address")]
 		public string Email { get; set; }
 
 		[DataType(DataType.EmailAddress)]

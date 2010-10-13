@@ -187,6 +187,7 @@
             <PropertyRef Name="ContactId" />
           </Key>
           <Property Name="ContactId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContactTypeId" Type="int" Nullable="false" />
           <Property Name="ContactName" Type="nvarchar" MaxLength="100" />
           <Property Name="CompanyName" Type="nvarchar" MaxLength="100" />
           <Property Name="Address1" Type="nvarchar" MaxLength="100" />
@@ -1292,6 +1293,7 @@
           <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
           <NavigationProperty Name="SiteProfiles" Relationship="SongSearch.Web.Data.Model.SiteProfilesContacts" FromRole="Contact" ToRole="SiteProfile" />
           <NavigationProperty Name="Users" Relationship="SongSearch.Web.Data.Model.UsersContacts" FromRole="Contact" ToRole="User" />
+          <Property Type="Int32" Name="ContactTypeId" Nullable="false" />
         </EntityType>
         <EntityType Name="SiteProfile">
           <Key>
@@ -1702,6 +1704,7 @@
           <EntitySetMapping Name="Contacts">
             <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Contact">
               <MappingFragment StoreEntitySet="Contacts">
+                <ScalarProperty Name="ContactTypeId" ColumnName="ContactTypeId" />
                 <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />

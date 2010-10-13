@@ -417,7 +417,7 @@ namespace SongSearch.Web.Controllers {
 			model.ShowContactInfo = currentUser.PricingPlan.CustomContactUs && currentUser.IsAtLeastInCatalogRole(Roles.Admin);
 	
 			//update the user's profile in the database
-			if (_acctService.UpdateProfile(userModel, contact)) {
+			if (_acctService.UpdateProfile(userModel, new List<Contact>() { contact })) {
 				_logService.LogUserEvent(UserActions.UpdateProfile);
 
 				// UpdateModelWith the user dataSession cached in dataSession

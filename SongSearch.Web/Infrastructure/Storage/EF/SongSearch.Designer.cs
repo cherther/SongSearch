@@ -1114,13 +1114,15 @@ namespace SongSearch.Web.Data
         /// <param name="isDefault">Initial value of the IsDefault property.</param>
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
         /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
-        public static Contact CreateContact(global::System.Int32 contactId, global::System.Boolean isDefault, global::System.DateTime createdOn, global::System.Int32 createdByUserId)
+        /// <param name="contactTypeId">Initial value of the ContactTypeId property.</param>
+        public static Contact CreateContact(global::System.Int32 contactId, global::System.Boolean isDefault, global::System.DateTime createdOn, global::System.Int32 createdByUserId, global::System.Int32 contactTypeId)
         {
             Contact contact = new Contact();
             contact.ContactId = contactId;
             contact.IsDefault = isDefault;
             contact.CreatedOn = createdOn;
             contact.CreatedByUserId = createdByUserId;
+            contact.ContactTypeId = contactTypeId;
             return contact;
         }
 
@@ -1537,6 +1539,30 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _CreatedByUserId;
         partial void OnCreatedByUserIdChanging(global::System.Int32 value);
         partial void OnCreatedByUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ContactTypeId
+        {
+            get
+            {
+                return _ContactTypeId;
+            }
+            set
+            {
+                OnContactTypeIdChanging(value);
+                ReportPropertyChanging("ContactTypeId");
+                _ContactTypeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ContactTypeId");
+                OnContactTypeIdChanged();
+            }
+        }
+        private global::System.Int32 _ContactTypeId;
+        partial void OnContactTypeIdChanging(global::System.Int32 value);
+        partial void OnContactTypeIdChanged();
 
         #endregion
     
