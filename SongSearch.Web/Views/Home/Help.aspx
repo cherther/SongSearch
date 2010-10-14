@@ -24,7 +24,7 @@
 		<h3><a name="Requirements">Site Requirements</a></h3>
 		<div>&nbsp;</div>
 		<div>
-		<%: Html.SiteProfile().CompanyName %> is an interactive web application that takes advantage of a variety of standard and advanced plug-ins & browser features, such as:
+		WorldSongNet.com is an interactive web application that takes advantage of a variety of standard and advanced plug-ins & browser features, such as:
 		</div>
 		<div>&nbsp;</div>
 		<ul class="cw-bullet">
@@ -50,7 +50,7 @@
 		</ul>
 		<div>&nbsp;</div>
 		<h5><a name="WhoUsesThisSite">Who uses this site?</a></h5>
-		<p><%: Html.SiteProfile().CompanyName %> is used by a variety of professionals from the entertainment and advertising industries, such as song writers, music editors, music supervisors, record label executives, film and/or television producers and advertising executives.
+		<p>WorldSongNet.com is used by a variety of professionals from the entertainment and advertising industries, such as song writers, music editors, music supervisors, record label executives, film and/or television producers and advertising executives.
 		</p>
 		<div>&nbsp;</div>
 		<h5><a name="HowDoIGetAnInvitationCode">How do you get an invitation code?</a></h5>

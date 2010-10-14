@@ -28,7 +28,7 @@ namespace SongSearch.Web {
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
-				throw new AccessViolationException("This user does not exist. Please make sure to clear your cookies and restart your browser session.");
+				throw ex;// new AccessViolationException("This user does not exist. Please make sure to clear your cookies and restart your browser session.");
 			}
 		}
 

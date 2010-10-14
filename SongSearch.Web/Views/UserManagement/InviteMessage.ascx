@@ -8,7 +8,7 @@
  %>
 <html>
 <head>
-<title><%: Html.SiteProfile().CompanyName %> - Registration Invitation</title>
+<title>WorldSongNet.com - Registration Invitation</title>
 </head>
 <body>
 <div id="content" style="
@@ -25,7 +25,7 @@
 		-webkit-border-border-bottom-right-radius: 5px;">
 	<h3>Hello,</h3>
 
-	<p>I'd like to invite you to register at <a href="<%: url %>"><%: Html.SiteProfile().CompanyName %></a>.</p>
+	<p>I'd like to invite you to register at <a href="<%: url %>">WorldSongNet.com</a>.</p>
 	<p>Please <a href="<%: url %>"><strong style="font-size: 1.6em; font-variant: small-caps">register</strong></a> using your e-mail address <a href="<%: url %>"><%: recipient%></a>.</p>
 	<p>&nbsp;</p>	
 	<p>Thanks, and I'm looking forward to working with you!</p>

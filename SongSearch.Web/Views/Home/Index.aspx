@@ -8,25 +8,21 @@
 <div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
 	<h2>Welcome</h2>
 	<div>&nbsp;</div>
-<%--	<div class="nine_column section">
-		<div class="six column">
---%>
 		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<h3>What's New?</h3>
 			<div>&nbsp;</div>
-			<div>Welcome to <%: Html.SiteProfile().CompanyName %>. 
+			<div>Welcome to WorldSongNet.com. 
 			We have recently launched a private beta version of the site. If you'd like to participate, please <%: Html.ActionLink("contact us", MVC.Home.Contact()) %> for an invitation.
 			</div>
 			
 		</div>
-<%--		<div>&nbsp;</div>--%>
 			<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
-				<h3>Artists on <%: Html.SiteProfile().CompanyName %></h3>
+				<h3>Artists on WorldSongNet.com</h3>
 				<div style="line-height: 1em">Aerosmith, Frank Sinatra, Snoop Dogg, Sarah Vaughan, Lil Wayne, Jimi Hendrix, Ray Charles, Norah Jones, Charlie Parker, Donovan, Christina Aguilera, Bing Crosby, Ziggy Marley, Quincy Jones, Busta Rhyme and many others.
 				</div>			
 			</div>
 		<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
-			<h3>Who Uses <%: Html.SiteProfile().CompanyName %>?</h3>
+			<h3>Who Uses WorldSongNet.com?</h3>
 				<div>&nbsp;</div>
 				<div id="who-uses-tabs">
 					<ul>
@@ -38,26 +34,16 @@
 						You will find thousands of hand-picked classic and contemporary songs in all styles, years and moods available for easy preview, download and licensing utilizing this state-of-the-art online song repository.
 					</div>
 					<div id="tab-2">
-					If invited into the network you can securely upload, self-manage and give permissions to whomever you want to preview, download and license your music. Your songs will gain exposure to many of the leading executives responsible for placing songs in film, television, advertising, games and new media. <%: Html.SiteProfile().CompanyName %> will not ask for or retain any of your rights.
+					If invited into the network you can securely upload, self-manage and give permissions to whomever you want to preview, download and license your music. Your songs will gain exposure to many of the leading executives responsible for placing songs in film, television, advertising, games and new media. WorldSongNet.com will not ask for or retain any of your rights.
 					</div>
 					<div id="tab-3">
-					<%: Html.SiteProfile().CompanyName %> provides music catalogs with an affordable, self-branded solution for creating an instant Web presence.  You can upload, self-manage and give permissions to clients around the world with this intuitive, secure and completely scalable system.  Benefit from the latest features in search functionality by subscribing to <%: Html.SiteProfile().CompanyName %> now (<%: Html.ActionLink("Contact us for an invitation code", MVC.Home.Contact()) %>)
+					WorldSongNet.com provides music catalogs with an affordable, self-branded solution for creating an instant Web presence.  You can upload, self-manage and give permissions to clients around the world with this intuitive, secure and completely scalable system.  Benefit from the latest features in search functionality by subscribing to WorldSongNet.com now (<%: Html.ActionLink("Contact us for an invitation code", MVC.Home.Contact()) %>)
 					</div>
 				</div>
 			</div>
 
-		<%--</div>
-
-		<div class="one column">&nbsp;</div>
-		--%>
-<%--		<div class="two column" style="text-align: left">
---%>
-<%--		</div>
-	</div>--%>
-<%--	<div>&nbsp;</div>
---%>
 	<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
-		<h3>Companies that have licensed songs on <%: Html.SiteProfile().CompanyName %>:</h3>
+		<h3>Companies that have licensed songs on WorldSongNet.com:</h3>
 		<div>&nbsp;</div>
 		<div class="cw-outl-thick cw-fill-lite cw-padded cw-rounded-corners">
 		<%
