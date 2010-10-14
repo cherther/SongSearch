@@ -143,8 +143,6 @@ namespace SongSearch.Web {
 					.Include("Contacts")
 					.Include("ParentUser.Contacts")
 					.Include("PricingPlan")
-					.Include("PlanQuota")
-					.Include("PlanQuota.PricingPlan")
 					.Include("ParentUser.PricingPlan")
 					//.Include("ParentUser.ParentUser")
 					;
@@ -386,21 +384,20 @@ namespace SongSearch.Web {
 		public static UserQuotas MyQuotas(this User user) {
 
 			var quotas = new UserQuotas();
-			//var planUser = user.IsPlanUser ? user :
-			//    ( user.ParentUser.IsPlanUser ? user.ParentUser : User(user.ParentUser.ParentUserId.Value));
+			var planUser = user.IsPlanUser ? user :
+			    ( user.ParentUser.IsPlanUser ? user.ParentUser : User(user.ParentUser.ParentUserId.Value));
 
-			var planQuota = user.PlanQuota;
-			var plan = planQuota.PricingPlan;
+			var plan = planUser.PricingPlan;
 			
 			quotas.NumberOfSongs.Default = GetDefaultNumberOfSongs();
 			quotas.NumberOfSongs.Allowed = plan.NumberOfSongs;
-			quotas.NumberOfSongs.Used = planQuota.NumberOfSongs;// GetNumberOfSongs();
+			quotas.NumberOfSongs.Used = GetNumberOfSongs();
 
 			quotas.NumberOfInvitedUsers.Allowed = plan.NumberOfInvitedUsers;
-			quotas.NumberOfInvitedUsers.Used = planQuota.NumberOfInvitedUsers; // GetNumberOfUsers();
+			quotas.NumberOfInvitedUsers.Used = GetNumberOfUsers();
 
 			quotas.NumberOfCatalogAdmins.Allowed = plan.NumberOfCatalogAdmins;
-			quotas.NumberOfCatalogAdmins.Used = planQuota.NumberOfCatalogAdmins; // GetNumberOfCatalogAdmins();
+			quotas.NumberOfCatalogAdmins.Used = GetNumberOfCatalogAdmins();
 
 			return quotas;
 		}

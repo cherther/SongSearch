@@ -78,7 +78,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 			<h3>Main Contact</h3>
 			<div>This information will be displayed on the <%: Html.ActionLink("Contact Us", MVC.Home.Contact())%> page. Please enter at least option for users to contact you, such as Phone or Email.</div>
 			<div>&nbsp;</div>
-			<% Html.RenderPartial("ctrlContactInfo", Model.Contact); %>
+			<% Html.RenderPartial("ctrlContactInfo", Model); %>
 			</div>
 			<%} %>
 				

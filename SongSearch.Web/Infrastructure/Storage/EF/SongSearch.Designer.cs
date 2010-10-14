@@ -43,8 +43,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UserActionEvents_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "UserActionEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserActionEvent), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Invitations_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Invitation), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.Invitation), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_PlanQuotas_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "PlanQuota", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.PlanQuota), true)]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanQuotas", "PlanQuota", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PlanQuota), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 
 #endregion
 
@@ -399,22 +397,6 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<Invitation> _Invitations;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<PlanQuota> PlanQuotas
-        {
-            get
-            {
-                if ((_PlanQuotas == null))
-                {
-                    _PlanQuotas = base.CreateObjectSet<PlanQuota>("PlanQuotas");
-                }
-                return _PlanQuotas;
-            }
-        }
-        private ObjectSet<PlanQuota> _PlanQuotas;
 
         #endregion
         #region AddTo Methods
@@ -569,14 +551,6 @@ namespace SongSearch.Web.Data
         public void AddToInvitations(Invitation invitation)
         {
             base.AddObject("Invitations", invitation);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PlanQuotas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPlanQuotas(PlanQuota planQuota)
-        {
-            base.AddObject("PlanQuotas", planQuota);
         }
 
         #endregion
@@ -1140,15 +1114,13 @@ namespace SongSearch.Web.Data
         /// <param name="isDefault">Initial value of the IsDefault property.</param>
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
         /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
-        /// <param name="contactTypeId">Initial value of the ContactTypeId property.</param>
-        public static Contact CreateContact(global::System.Int32 contactId, global::System.Boolean isDefault, global::System.DateTime createdOn, global::System.Int32 createdByUserId, global::System.Int32 contactTypeId)
+        public static Contact CreateContact(global::System.Int32 contactId, global::System.Boolean isDefault, global::System.DateTime createdOn, global::System.Int32 createdByUserId)
         {
             Contact contact = new Contact();
             contact.ContactId = contactId;
             contact.IsDefault = isDefault;
             contact.CreatedOn = createdOn;
             contact.CreatedByUserId = createdByUserId;
-            contact.ContactTypeId = contactTypeId;
             return contact;
         }
 
@@ -1565,30 +1537,6 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _CreatedByUserId;
         partial void OnCreatedByUserIdChanging(global::System.Int32 value);
         partial void OnCreatedByUserIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ContactTypeId
-        {
-            get
-            {
-                return _ContactTypeId;
-            }
-            set
-            {
-                OnContactTypeIdChanging(value);
-                ReportPropertyChanging("ContactTypeId");
-                _ContactTypeId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ContactTypeId");
-                OnContactTypeIdChanged();
-            }
-        }
-        private global::System.Int32 _ContactTypeId;
-        partial void OnContactTypeIdChanging(global::System.Int32 value);
-        partial void OnContactTypeIdChanged();
 
         #endregion
     
@@ -3429,280 +3377,6 @@ namespace SongSearch.Web.Data
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="PlanQuota")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class PlanQuota : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new PlanQuota object.
-        /// </summary>
-        /// <param name="planQuotaId">Initial value of the PlanQuotaId property.</param>
-        /// <param name="pricingPlanId">Initial value of the PricingPlanId property.</param>
-        /// <param name="lastUpdatedOn">Initial value of the LastUpdatedOn property.</param>
-        /// <param name="lastUpdatedByUserId">Initial value of the LastUpdatedByUserId property.</param>
-        /// <param name="numberOfSongs">Initial value of the NumberOfSongs property.</param>
-        /// <param name="numberOfInvitedUsers">Initial value of the NumberOfInvitedUsers property.</param>
-        /// <param name="numberOfCatalogAdmins">Initial value of the NumberOfCatalogAdmins property.</param>
-        public static PlanQuota CreatePlanQuota(global::System.Int32 planQuotaId, global::System.Int32 pricingPlanId, global::System.DateTime lastUpdatedOn, global::System.Int32 lastUpdatedByUserId, global::System.Int32 numberOfSongs, global::System.Int32 numberOfInvitedUsers, global::System.Int32 numberOfCatalogAdmins)
-        {
-            PlanQuota planQuota = new PlanQuota();
-            planQuota.PlanQuotaId = planQuotaId;
-            planQuota.PricingPlanId = pricingPlanId;
-            planQuota.LastUpdatedOn = lastUpdatedOn;
-            planQuota.LastUpdatedByUserId = lastUpdatedByUserId;
-            planQuota.NumberOfSongs = numberOfSongs;
-            planQuota.NumberOfInvitedUsers = numberOfInvitedUsers;
-            planQuota.NumberOfCatalogAdmins = numberOfCatalogAdmins;
-            return planQuota;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 PlanQuotaId
-        {
-            get
-            {
-                return _PlanQuotaId;
-            }
-            set
-            {
-                if (_PlanQuotaId != value)
-                {
-                    OnPlanQuotaIdChanging(value);
-                    ReportPropertyChanging("PlanQuotaId");
-                    _PlanQuotaId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("PlanQuotaId");
-                    OnPlanQuotaIdChanged();
-                }
-            }
-        }
-        private global::System.Int32 _PlanQuotaId;
-        partial void OnPlanQuotaIdChanging(global::System.Int32 value);
-        partial void OnPlanQuotaIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 PricingPlanId
-        {
-            get
-            {
-                return _PricingPlanId;
-            }
-            set
-            {
-                OnPricingPlanIdChanging(value);
-                ReportPropertyChanging("PricingPlanId");
-                _PricingPlanId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PricingPlanId");
-                OnPricingPlanIdChanged();
-            }
-        }
-        private global::System.Int32 _PricingPlanId;
-        partial void OnPricingPlanIdChanging(global::System.Int32 value);
-        partial void OnPricingPlanIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime LastUpdatedOn
-        {
-            get
-            {
-                return _LastUpdatedOn;
-            }
-            set
-            {
-                OnLastUpdatedOnChanging(value);
-                ReportPropertyChanging("LastUpdatedOn");
-                _LastUpdatedOn = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdatedOn");
-                OnLastUpdatedOnChanged();
-            }
-        }
-        private global::System.DateTime _LastUpdatedOn;
-        partial void OnLastUpdatedOnChanging(global::System.DateTime value);
-        partial void OnLastUpdatedOnChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 LastUpdatedByUserId
-        {
-            get
-            {
-                return _LastUpdatedByUserId;
-            }
-            set
-            {
-                OnLastUpdatedByUserIdChanging(value);
-                ReportPropertyChanging("LastUpdatedByUserId");
-                _LastUpdatedByUserId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("LastUpdatedByUserId");
-                OnLastUpdatedByUserIdChanged();
-            }
-        }
-        private global::System.Int32 _LastUpdatedByUserId;
-        partial void OnLastUpdatedByUserIdChanging(global::System.Int32 value);
-        partial void OnLastUpdatedByUserIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 NumberOfSongs
-        {
-            get
-            {
-                return _NumberOfSongs;
-            }
-            set
-            {
-                OnNumberOfSongsChanging(value);
-                ReportPropertyChanging("NumberOfSongs");
-                _NumberOfSongs = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NumberOfSongs");
-                OnNumberOfSongsChanged();
-            }
-        }
-        private global::System.Int32 _NumberOfSongs;
-        partial void OnNumberOfSongsChanging(global::System.Int32 value);
-        partial void OnNumberOfSongsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 NumberOfInvitedUsers
-        {
-            get
-            {
-                return _NumberOfInvitedUsers;
-            }
-            set
-            {
-                OnNumberOfInvitedUsersChanging(value);
-                ReportPropertyChanging("NumberOfInvitedUsers");
-                _NumberOfInvitedUsers = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NumberOfInvitedUsers");
-                OnNumberOfInvitedUsersChanged();
-            }
-        }
-        private global::System.Int32 _NumberOfInvitedUsers;
-        partial void OnNumberOfInvitedUsersChanging(global::System.Int32 value);
-        partial void OnNumberOfInvitedUsersChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 NumberOfCatalogAdmins
-        {
-            get
-            {
-                return _NumberOfCatalogAdmins;
-            }
-            set
-            {
-                OnNumberOfCatalogAdminsChanging(value);
-                ReportPropertyChanging("NumberOfCatalogAdmins");
-                _NumberOfCatalogAdmins = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("NumberOfCatalogAdmins");
-                OnNumberOfCatalogAdminsChanged();
-            }
-        }
-        private global::System.Int32 _NumberOfCatalogAdmins;
-        partial void OnNumberOfCatalogAdminsChanging(global::System.Int32 value);
-        partial void OnNumberOfCatalogAdminsChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_PlanQuotas_PricingPlans", "PricingPlan")]
-        public PricingPlan PricingPlan
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PricingPlan").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PricingPlan").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PricingPlan> PricingPlanReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PricingPlan");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PricingPlan", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanQuotas", "User")]
-        public EntityCollection<User> Users
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "User");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "User", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="PricingPlan")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -4121,28 +3795,6 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PricingPlans", "User", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_PlanQuotas_PricingPlans", "PlanQuota")]
-        public EntityCollection<PlanQuota> PlanQuotas
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlanQuota>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PlanQuota");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlanQuota>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PlanQuota", value);
                 }
             }
         }
@@ -6033,8 +5685,7 @@ namespace SongSearch.Web.Data
         /// <param name="hasAgreedToPrivacyPolicy">Initial value of the HasAgreedToPrivacyPolicy property.</param>
         /// <param name="hasAllowedCommunication">Initial value of the HasAllowedCommunication property.</param>
         /// <param name="planUserId">Initial value of the PlanUserId property.</param>
-        /// <param name="planQuotaId">Initial value of the PlanQuotaId property.</param>
-        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Int32 siteProfileId, global::System.Boolean appendSignatureToTitle, global::System.Int32 pricingPlanId, global::System.Boolean hasAgreedToPrivacyPolicy, global::System.Boolean hasAllowedCommunication, global::System.Int32 planUserId, global::System.Int32 planQuotaId)
+        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Int32 siteProfileId, global::System.Boolean appendSignatureToTitle, global::System.Int32 pricingPlanId, global::System.Boolean hasAgreedToPrivacyPolicy, global::System.Boolean hasAllowedCommunication, global::System.Int32 planUserId)
         {
             User user = new User();
             user.UserId = userId;
@@ -6048,7 +5699,6 @@ namespace SongSearch.Web.Data
             user.HasAgreedToPrivacyPolicy = hasAgreedToPrivacyPolicy;
             user.HasAllowedCommunication = hasAllowedCommunication;
             user.PlanUserId = planUserId;
-            user.PlanQuotaId = planQuotaId;
             return user;
         }
 
@@ -6465,30 +6115,6 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _PlanUserId;
         partial void OnPlanUserIdChanging(global::System.Int32 value);
         partial void OnPlanUserIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 PlanQuotaId
-        {
-            get
-            {
-                return _PlanQuotaId;
-            }
-            set
-            {
-                OnPlanQuotaIdChanging(value);
-                ReportPropertyChanging("PlanQuotaId");
-                _PlanQuotaId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PlanQuotaId");
-                OnPlanQuotaIdChanged();
-            }
-        }
-        private global::System.Int32 _PlanQuotaId;
-        partial void OnPlanQuotaIdChanging(global::System.Int32 value);
-        partial void OnPlanQuotaIdChanged();
 
         #endregion
     
@@ -6900,44 +6526,6 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Invitation>("SongSearch.Web.Data.Model.FK_Users_Invitations", "Invitation", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanQuotas", "PlanQuota")]
-        public PlanQuota PlanQuota
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanQuota>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "PlanQuota").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanQuota>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "PlanQuota").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PlanQuota> PlanQuotaReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanQuota>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "PlanQuota");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlanQuota>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "PlanQuota", value);
                 }
             }
         }

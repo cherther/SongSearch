@@ -78,22 +78,12 @@ namespace SongSearch.Web.Services {
 
 						user.Subscriptions.Add(subscription);
 
-						var quota = new PlanQuota() {
-
-							PricingPlanId = pricingPlan.PricingPlanId,
-							NumberOfCatalogAdmins = 1,
-							NumberOfInvitedUsers = 1,
-							NumberOfSongs = 0,
-							LastUpdatedByUserId = 1
-						};
-
-						quota.Users.Add(user);
-						user.PlanQuotaId = 1;
+						
 
 					} else {
 
 						user.PlanUserId = invUser.PlanUserId;
-						user.PlanQuotaId = invUser.PlanQuotaId;
+						
 					}
 
 					//create user to get a userid
@@ -104,7 +94,7 @@ namespace SongSearch.Web.Services {
 					inv.InvitationStatus = (int)InvitationStatusCodes.Registered;
 				
 					user.PlanUserId = inv.IsPlanInvitation ? invUser.PlanUserId : user.UserId;
-					user.PlanQuota.LastUpdatedByUserId = user.UserId;
+					
 
 					DataSession.CommitChanges();
 
@@ -152,8 +142,8 @@ namespace SongSearch.Web.Services {
 				if (contact != null && (!String.IsNullOrWhiteSpace(contact.Phone1) || !String.IsNullOrWhiteSpace(contact.Email))) {
 					var dbContact = dbuser.Contacts.SingleOrDefault(c => c.ContactId == contact.ContactId) ??
 						new Contact() {
-							ContactTypeId = contact.ContactTypeId > 0 ? contact.ContactTypeId : (int)ContactTypes.Main,
-							//IsDefault = true,
+
+							IsDefault = true,
 							CreatedByUserId = dbuser.UserId,
 							CreatedOn = DateTime.Now
 						};
