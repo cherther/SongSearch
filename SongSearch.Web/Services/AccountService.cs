@@ -77,20 +77,36 @@ namespace SongSearch.Web.Services {
 						};
 
 						user.Subscriptions.Add(subscription);
+
+						var quota = new PlanQuota() {
+
+							PricingPlanId = pricingPlan.PricingPlanId,
+							NumberOfCatalogAdmins = 1,
+							NumberOfInvitedUsers = 1,
+							NumberOfSongs = 0,
+							LastUpdatedByUserId = 1
+						};
+
+						quota.Users.Add(user);
+						user.PlanQuotaId = 1;
+
+					} else {
+
+						user.PlanUserId = invUser.PlanUserId;
+						user.PlanQuotaId = invUser.PlanQuotaId;
 					}
 
-					inv.InvitationStatus = (int)InvitationStatusCodes.Registered;
-
+					//create user to get a userid
 					DataSession.Add<User>(user);
 					DataSession.CommitChanges();
 
-					//move under inviter's plan, or under user's own new plan
-					user.PlanUserId = inv.IsPlanInvitation ? invUser.PlanUserId : user.UserId;
-					
-					DataSession.CommitChanges();
 
-					//user.PlanUserId = inv.IsPlanInvitation ? invUser.PlanUserId : user.UserId;
-					//DataSession.CommitChanges();
+					inv.InvitationStatus = (int)InvitationStatusCodes.Registered;
+				
+					user.PlanUserId = inv.IsPlanInvitation ? invUser.PlanUserId : user.UserId;
+					user.PlanQuota.LastUpdatedByUserId = user.UserId;
+
+					DataSession.CommitChanges();
 
 		
 					inv = null;

@@ -22,7 +22,11 @@
 	{
 		menu.Add("Register", new string[3] { "Register", "Account", "Register" });
 	}
-	if (App.IsLicensedVersion && Page.User.Identity.IsAuthenticated && Page.User.User().IsPlanUser) {
+
+	var user = Page.User.User();
+	var isPlanUser = user != null ? user.IsPlanUser : false;
+
+	if (App.IsLicensedVersion && Page.User.Identity.IsAuthenticated && isPlanUser) {
 		menu.Add("Account", new string[3] { "Plan", "Account", "My Account" });
 	}
 	menu.Add("Help", new string[3] { "Help", "Home", "Help" });

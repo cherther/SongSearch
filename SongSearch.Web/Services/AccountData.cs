@@ -17,7 +17,19 @@ namespace SongSearch.Web {
 		// User
 		// **************************************
 		public static User User(bool cached = true) {
-			return User(HttpContext.Current.User.Identity.Name, cached);
+			try {
+
+				var user = User(HttpContext.Current.User.Identity.Name, cached);
+				if (user == null) {
+					throw new AccessViolationException("This user does not exist. Please make sure to clear your cookies and restart your browser session.");
+				}
+
+				return user;
+			}
+			catch (Exception ex) {
+				Log.Error(ex);
+				throw new AccessViolationException("This user does not exist. Please make sure to clear your cookies and restart your browser session.");
+			}
 		}
 
 		public static User User(int userId) {
@@ -131,8 +143,11 @@ namespace SongSearch.Web {
 					.Include("Contacts")
 					.Include("ParentUser.Contacts")
 					.Include("PricingPlan")
+					.Include("PlanQuota")
+					.Include("PlanQuota.PricingPlan")
 					.Include("ParentUser.PricingPlan")
-					.Include("ParentUser.ParentUser");
+					//.Include("ParentUser.ParentUser")
+					;
 		}
 		// ----------------------------------------------------------------------------
 		// Extensions
@@ -371,16 +386,21 @@ namespace SongSearch.Web {
 		public static UserQuotas MyQuotas(this User user) {
 
 			var quotas = new UserQuotas();
-			var plan = user.PricingPlan;
+			//var planUser = user.IsPlanUser ? user :
+			//    ( user.ParentUser.IsPlanUser ? user.ParentUser : User(user.ParentUser.ParentUserId.Value));
+
+			var planQuota = user.PlanQuota;
+			var plan = planQuota.PricingPlan;
+			
 			quotas.NumberOfSongs.Default = GetDefaultNumberOfSongs();
-			quotas.NumberOfSongs.Allowed = plan.NumberOfSongs; 
-			quotas.NumberOfSongs.Used = GetNumberOfSongs();
+			quotas.NumberOfSongs.Allowed = plan.NumberOfSongs;
+			quotas.NumberOfSongs.Used = planQuota.NumberOfSongs;// GetNumberOfSongs();
 
 			quotas.NumberOfInvitedUsers.Allowed = plan.NumberOfInvitedUsers;
-			quotas.NumberOfInvitedUsers.Used = GetNumberOfUsers();
+			quotas.NumberOfInvitedUsers.Used = planQuota.NumberOfInvitedUsers; // GetNumberOfUsers();
 
 			quotas.NumberOfCatalogAdmins.Allowed = plan.NumberOfCatalogAdmins;
-			quotas.NumberOfCatalogAdmins.Used = GetNumberOfCatalogAdmins();
+			quotas.NumberOfCatalogAdmins.Used = planQuota.NumberOfCatalogAdmins; // GetNumberOfCatalogAdmins();
 
 			return quotas;
 		}
