@@ -25,16 +25,16 @@
 		-webkit-border-border-bottom-right-radius: 5px;">
 	<h3>Hello,</h3>
 
-	<p>I'd like to invite you to register at <strong><%: Html.SiteProfile().CompanyName %></strong>.</p>
-	<p>Please <a href="<%: url %>">register</a> using your e-mail address <strong><%: recipient%></strong>.</p>
-	<p>&nbsp;</p>
-	<p>If the 'register' link above is not clickable in your email program, please copy & paste this address into your browser's location bar:</p>
-	<p><%: url %></p>
-	<p>&nbsp;</p>
-	
+	<p>I'd like to invite you to register at <a href="<%: url %>"><%: Html.SiteProfile().CompanyName %></a>.</p>
+	<p>Please <a href="<%: url %>"><strong style="font-size: 1.6em; font-variant: small-caps">register</strong></a> using your e-mail address <a href="<%: url %>"><%: recipient%></a>.</p>
+	<p>&nbsp;</p>	
 	<p>Thanks, and I'm looking forward to working with you!</p>
-
-	<p><em><%: String.Format("{0} <{1}>", sender.FullName(), sender.UserName) %></em></p>
+	<p>&nbsp;</p>	
+	<p><strong><em><%: String.Format("{0} <{1}>", sender.FullName(), sender.UserName) %></em></strong></p>
+	<p>&nbsp;</p>
+	<hr />
+	<p>If the 'register' link above is not clickable in your email program, please copy & paste this address into your browser's location bar:</p>
+	<p><a href="<%: url %>"><%: url %></a></p>
 </div>
 </body>
 </html>

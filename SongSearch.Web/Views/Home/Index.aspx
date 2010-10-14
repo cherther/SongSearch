@@ -57,7 +57,7 @@
 <%--	<div>&nbsp;</div>
 --%>
 	<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
-		<h3>Which Companies Have Licensed Music from <%: Html.SiteProfile().CompanyName %>?</h3>
+		<h3>Companies that have licensed songs on <%: Html.SiteProfile().CompanyName %>:</h3>
 		<div>&nbsp;</div>
 		<div class="cw-outl-thick cw-fill-lite cw-padded cw-rounded-corners">
 		<%
