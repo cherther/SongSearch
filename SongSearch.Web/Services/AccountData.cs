@@ -19,12 +19,8 @@ namespace SongSearch.Web {
 		public static User User(bool cached = true) {
 			try {
 
-				var user = User(HttpContext.Current.User.Identity.Name, cached);
-				if (user == null) {
-					throw new AccessViolationException("This user does not exist. Please make sure to clear your cookies and restart your browser session.");
-				}
+				return User(HttpContext.Current.User.Identity.Name, cached);
 
-				return user;
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
