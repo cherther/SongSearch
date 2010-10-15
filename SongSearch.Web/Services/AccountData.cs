@@ -20,11 +20,13 @@ namespace SongSearch.Web {
 			try {
 
 				var user = User(HttpContext.Current.User.Identity.Name, cached);
-				if (user == null) {
+				if (HttpContext.Current.User.Identity.IsAuthenticated && user == null) {
 					throw new AccessViolationException("This user does not exist. Please make sure to clear your cookies and restart your browser session.");
 				}
-
 				return user;
+			}
+			catch (AccessViolationException ex) {
+				throw ex;// new AccessViolationException("This user does not exist. Please make sure to clear your cookies and restart your browser session.");
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
