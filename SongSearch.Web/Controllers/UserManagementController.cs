@@ -416,7 +416,7 @@ namespace SongSearch.Web
 						inviteMsg.InvitingUser = User.User();
 
 						//string inviteLink = String.Format("{0}", baseUrl);
-						string subject = String.Format("{0} {1}", SiteProfileData.SiteProfile().CompanyName,
+						string subject = String.Format("{0} {1}", "WorldSongNet.com", //SiteProfileData.SiteProfile().CompanyName,
 							SystemMessages.InvitationSubjectLine);
 						string message = this.RenderViewToString("InviteMessage", inviteMsg);
 

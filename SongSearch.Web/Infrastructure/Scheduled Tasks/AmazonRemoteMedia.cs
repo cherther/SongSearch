@@ -178,10 +178,10 @@ namespace SongSearch.Web.Tasks {
 								// file is not local, let's see if it's remote
 								var remoteFile = remoteMedia.SingleOrDefault(x => x.Key == key);
 								if (remoteFile != null) {
-									if (checkSize) {
-										RepushMedia(content, media, filePath, file);
+									//if (checkSize) {
+										//RepushMedia(content, media, filePath, file);
 										media.IsRemote = true;
-									}
+									//}
 								} else {
 									media.IsRemote = false;
 								}

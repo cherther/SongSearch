@@ -16,7 +16,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 	<div>&nbsp;</div>
 	<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 	<p>
-		Access to <strong><%: Html.SiteProfile().CompanyName %></strong> is by invitation only. Use the form below to create a new account using the invitation code sent to you.
+		Access to <strong>WorldSongNet.com</strong> is by invitation only. Use the form below to create a new account using the invitation code sent to you.
 	</p>
 	<p>
 	If you'd like to receive an invitation code, please <%: Html.ActionLink("contact us", MVC.Home.Contact()) %>.  Or, <%: Html.ActionLink("log in", "LogIn") %> if you already have an account.

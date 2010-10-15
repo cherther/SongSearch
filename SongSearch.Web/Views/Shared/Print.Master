@@ -5,13 +5,13 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 	<meta name="robots" content="noindex, nofollow" />
-	<meta name="author" content="<%: Html.SiteProfile().CompanyName %>" /> 
+	<meta name="author" content="WorldSongNet.com" /> 
 	<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
 	 <!--[if lt IE 8]><link rel="stylesheet" href=""/public/css/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
 	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
 	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
 	<script type="text/javascript" src="/scripts/jquery-1.4.2.min.js"></script>
-	<title><%: Html.SiteProfile().CompanyName %> - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
+	<title>WorldSongNet.com - <asp:ContentPlaceHolder ID="TitleContent" runat="server" /></title>
 	<asp:ContentPlaceHolder ID="HeadContent" runat="server" />
 </head>
 <body>
