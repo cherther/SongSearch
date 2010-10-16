@@ -15,7 +15,7 @@ namespace SongSearch.Web {
 	public class PricingPlansViewModel : ViewModel {
 
 		public PricingPlan MyPricingPlan { get; set; }
-		public UserQuotas MyUserQuotas { get; set; }
+		public UserBalances MyUserBalances { get; set; }
 		public PricingPlans SelectedPricingPlan { get; set; }
 	}
 

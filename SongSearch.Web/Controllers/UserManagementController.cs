@@ -15,13 +15,11 @@ namespace SongSearch.Web
 	[RequireAuthorization(MinAccessLevel=Roles.Admin)]
 	public partial class UserManagementController : Controller
 	{
-		IUserManagementService _usrMgmtService;
 		IUserEventLogService _logService;
 
 		protected override void Initialize(RequestContext requestContext) {
 			
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
 				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 			}
 			base.Initialize(requestContext);
@@ -34,8 +32,7 @@ namespace SongSearch.Web
 			base.OnActionExecuting(filterContext);
 		}
 
-		public UserManagementController(IUserManagementService usrMgmtService, IUserEventLogService logService) {
-			_usrMgmtService = usrMgmtService;
+		public UserManagementController(IUserEventLogService logService) {
 			_logService = logService;
 		}
 
@@ -46,8 +43,8 @@ namespace SongSearch.Web
 		public virtual ActionResult Index() {
 
 			try {
-				var users = _usrMgmtService.GetMyUserHierarchy();
-				var invites = _usrMgmtService.GetMyInvites(InvitationStatusCodes.Open);
+				var users = Account.User().MyUserHierarchy();
+				var invites = UserManagementService.GetMyInvites(InvitationStatusCodes.Open);
 				var vm = new UserViewModel();
 
 				vm.MyUsers = users;
@@ -79,7 +76,7 @@ namespace SongSearch.Web
 		private static InviteViewModel GetInviteModel(InviteViewModel model) {
 			
 			var user = Account.User();
-			var quotas = user.MyQuotas();
+			var quotas = user.MyBalances();
 
 			model.NavigationLocation = new string[] { "Admin" };
 			model.InviteId = model.InviteId ?? Guid.Empty.ToString();
@@ -88,7 +85,7 @@ namespace SongSearch.Web
 			model.ShowPlanMessage = user.IsSuperAdmin() ||
 									(quotas.NumberOfCatalogAdmins.Allowed.HasValue && 
 									quotas.NumberOfCatalogAdmins.Remaining > 0);
-			model.ShowQuotaWidget = user.IsPlanUser;
+			model.ShowBalanceWidget = user.IsPlanOwner;
 
 			return model;
 		}
@@ -138,7 +135,7 @@ namespace SongSearch.Web
 		public virtual ActionResult Detail(int id) {
 
 			try {
-				var user = _usrMgmtService.GetUserDetail(id);
+				var user = UserManagementService.GetUserDetail(id);
 				var vm = new UserViewModel();
 				var activeUser = Account.User();
 
@@ -178,7 +175,7 @@ namespace SongSearch.Web
 		public virtual ActionResult UpdateRole(int userId, int roleId) {
 			try {
 
-				_usrMgmtService.UpdateUsersRole(userId, roleId);
+				UserManagementService.UpdateUsersRole(userId, roleId);
 				_logService.LogUserEvent(UserActions.UpdateUserRole);
 			}
 			catch (Exception ex) {
@@ -206,7 +203,7 @@ namespace SongSearch.Web
 		public virtual ActionResult ToggleSystemAdminAccess(int userId) {
 			try {
 
-				_usrMgmtService.ToggleSystemAdminAccess(userId);
+				UserManagementService.ToggleSystemAdminAccess(userId);
 				_logService.LogUserEvent(UserActions.ToggleSystemAdminAccess);
 			}
 			catch (Exception ex) {
@@ -234,7 +231,7 @@ namespace SongSearch.Web
 		public virtual ActionResult UpdateCatalog(int userId, int catalogId, int roleId) {
 			try {
 
-				_usrMgmtService.UpdateUserCatalogRole(userId, catalogId, roleId);
+				UserManagementService.UpdateUserCatalogRole(userId, catalogId, roleId);
 				_logService.LogUserEvent(UserActions.UpdateUserCatalogRole);
 			}
 			catch (Exception ex) {
@@ -262,7 +259,7 @@ namespace SongSearch.Web
 		public virtual ActionResult UpdateAllCatalogs(int userId, int roleId) {
 			try {
 
-				_usrMgmtService.UpdateAllCatalogs(userId, roleId);
+				UserManagementService.UpdateAllCatalogs(userId, roleId);
 				_logService.LogUserEvent(UserActions.UpdateAllCatalogs);
 			}
 			catch (Exception ex) {
@@ -290,7 +287,7 @@ namespace SongSearch.Web
 		public virtual ActionResult UpdateAllUsers(int catalogId, int roleId) {
 			try {
 
-				_usrMgmtService.UpdateAllUsers(catalogId, roleId);
+				UserManagementService.UpdateAllUsers(catalogId, roleId);
 				_logService.LogUserEvent(UserActions.UpdateAllUsers);
 			}
 			catch (Exception ex) {
@@ -318,7 +315,7 @@ namespace SongSearch.Web
 		public virtual ActionResult Delete(int id) {
 
 			try {
-				_usrMgmtService.DeleteUser(id, true);
+				UserManagementService.DeleteUser(id, true);
 				_logService.LogUserEvent(UserActions.DeleteUser);
 
 			}
@@ -347,7 +344,7 @@ namespace SongSearch.Web
 		[ValidateAntiForgeryToken]
 		public virtual ActionResult TakeOwnership(int id) {
 			try {
-				_usrMgmtService.TakeOwnerShip(id);
+				UserManagementService.TakeOwnerShip(id);
 				_logService.LogUserEvent(UserActions.TakeOwnership);
 
 			}
@@ -402,7 +399,7 @@ namespace SongSearch.Web
 
 				if (address != "sample@sample.com") {
 
-					var inviteId = _usrMgmtService.CreateNewInvitation(address);
+					var inviteId = UserManagementService.CreateNewInvitation(address);
 
 
 					if ((inviteId != null) && (!inviteId.Equals(Guid.Empty))) {

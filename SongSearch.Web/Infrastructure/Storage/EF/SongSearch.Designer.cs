@@ -43,8 +43,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UserActionEvents_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "UserActionEvent", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserActionEvent), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Invitations_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Invitation), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.Invitation), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_PlanQuotas_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "PlanQuota", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.PlanQuota), true)]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanQuotas", "PlanQuota", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PlanQuota), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_PlanBalances_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "PlanBalance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.PlanBalance), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanBalances", "PlanBalance", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PlanBalance), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 
 #endregion
 
@@ -403,18 +403,18 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PlanQuota> PlanQuotas
+        public ObjectSet<PlanBalance> PlanBalances
         {
             get
             {
-                if ((_PlanQuotas == null))
+                if ((_PlanBalances == null))
                 {
-                    _PlanQuotas = base.CreateObjectSet<PlanQuota>("PlanQuotas");
+                    _PlanBalances = base.CreateObjectSet<PlanBalance>("PlanBalances");
                 }
-                return _PlanQuotas;
+                return _PlanBalances;
             }
         }
-        private ObjectSet<PlanQuota> _PlanQuotas;
+        private ObjectSet<PlanBalance> _PlanBalances;
 
         #endregion
         #region AddTo Methods
@@ -572,11 +572,11 @@ namespace SongSearch.Web.Data
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the PlanQuotas EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// Deprecated Method for adding a new object to the PlanBalances EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
-        public void AddToPlanQuotas(PlanQuota planQuota)
+        public void AddToPlanBalances(PlanBalance planBalance)
         {
-            base.AddObject("PlanQuotas", planQuota);
+            base.AddObject("PlanBalances", planBalance);
         }
 
         #endregion
@@ -3429,34 +3429,34 @@ namespace SongSearch.Web.Data
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="PlanQuota")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="PlanBalance")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class PlanQuota : EntityObject
+    public partial class PlanBalance : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new PlanQuota object.
+        /// Create a new PlanBalance object.
         /// </summary>
-        /// <param name="planQuotaId">Initial value of the PlanQuotaId property.</param>
+        /// <param name="planBalanceId">Initial value of the PlanBalanceId property.</param>
         /// <param name="pricingPlanId">Initial value of the PricingPlanId property.</param>
         /// <param name="lastUpdatedOn">Initial value of the LastUpdatedOn property.</param>
         /// <param name="lastUpdatedByUserId">Initial value of the LastUpdatedByUserId property.</param>
         /// <param name="numberOfSongs">Initial value of the NumberOfSongs property.</param>
         /// <param name="numberOfInvitedUsers">Initial value of the NumberOfInvitedUsers property.</param>
         /// <param name="numberOfCatalogAdmins">Initial value of the NumberOfCatalogAdmins property.</param>
-        public static PlanQuota CreatePlanQuota(global::System.Int32 planQuotaId, global::System.Int32 pricingPlanId, global::System.DateTime lastUpdatedOn, global::System.Int32 lastUpdatedByUserId, global::System.Int32 numberOfSongs, global::System.Int32 numberOfInvitedUsers, global::System.Int32 numberOfCatalogAdmins)
+        public static PlanBalance CreatePlanBalance(global::System.Int32 planBalanceId, global::System.Int32 pricingPlanId, global::System.DateTime lastUpdatedOn, global::System.Int32 lastUpdatedByUserId, global::System.Int32 numberOfSongs, global::System.Int32 numberOfInvitedUsers, global::System.Int32 numberOfCatalogAdmins)
         {
-            PlanQuota planQuota = new PlanQuota();
-            planQuota.PlanQuotaId = planQuotaId;
-            planQuota.PricingPlanId = pricingPlanId;
-            planQuota.LastUpdatedOn = lastUpdatedOn;
-            planQuota.LastUpdatedByUserId = lastUpdatedByUserId;
-            planQuota.NumberOfSongs = numberOfSongs;
-            planQuota.NumberOfInvitedUsers = numberOfInvitedUsers;
-            planQuota.NumberOfCatalogAdmins = numberOfCatalogAdmins;
-            return planQuota;
+            PlanBalance planBalance = new PlanBalance();
+            planBalance.PlanBalanceId = planBalanceId;
+            planBalance.PricingPlanId = pricingPlanId;
+            planBalance.LastUpdatedOn = lastUpdatedOn;
+            planBalance.LastUpdatedByUserId = lastUpdatedByUserId;
+            planBalance.NumberOfSongs = numberOfSongs;
+            planBalance.NumberOfInvitedUsers = numberOfInvitedUsers;
+            planBalance.NumberOfCatalogAdmins = numberOfCatalogAdmins;
+            return planBalance;
         }
 
         #endregion
@@ -3467,27 +3467,27 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 PlanQuotaId
+        public global::System.Int32 PlanBalanceId
         {
             get
             {
-                return _PlanQuotaId;
+                return _PlanBalanceId;
             }
             set
             {
-                if (_PlanQuotaId != value)
+                if (_PlanBalanceId != value)
                 {
-                    OnPlanQuotaIdChanging(value);
-                    ReportPropertyChanging("PlanQuotaId");
-                    _PlanQuotaId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("PlanQuotaId");
-                    OnPlanQuotaIdChanged();
+                    OnPlanBalanceIdChanging(value);
+                    ReportPropertyChanging("PlanBalanceId");
+                    _PlanBalanceId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PlanBalanceId");
+                    OnPlanBalanceIdChanged();
                 }
             }
         }
-        private global::System.Int32 _PlanQuotaId;
-        partial void OnPlanQuotaIdChanging(global::System.Int32 value);
-        partial void OnPlanQuotaIdChanged();
+        private global::System.Int32 _PlanBalanceId;
+        partial void OnPlanBalanceIdChanging(global::System.Int32 value);
+        partial void OnPlanBalanceIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3643,16 +3643,16 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_PlanQuotas_PricingPlans", "PricingPlan")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_PlanBalances_PricingPlans", "PricingPlan")]
         public PricingPlan PricingPlan
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PricingPlan").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanBalances_PricingPlans", "PricingPlan").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PricingPlan").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanBalances_PricingPlans", "PricingPlan").Value = value;
             }
         }
         /// <summary>
@@ -3664,13 +3664,13 @@ namespace SongSearch.Web.Data
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PricingPlan");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanBalances_PricingPlans", "PricingPlan");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PricingPlan", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PricingPlan>("SongSearch.Web.Data.Model.FK_PlanBalances_PricingPlans", "PricingPlan", value);
                 }
             }
         }
@@ -3681,18 +3681,18 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanQuotas", "User")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanBalances", "User")]
         public EntityCollection<User> Users
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "User");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PlanBalances", "User");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "User", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.FK_Users_PlanBalances", "User", value);
                 }
             }
         }
@@ -4131,18 +4131,18 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_PlanQuotas_PricingPlans", "PlanQuota")]
-        public EntityCollection<PlanQuota> PlanQuotas
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_PlanBalances_PricingPlans", "PlanBalance")]
+        public EntityCollection<PlanBalance> PlanBalances
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlanQuota>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PlanQuota");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PlanBalance>("SongSearch.Web.Data.Model.FK_PlanBalances_PricingPlans", "PlanBalance");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlanQuota>("SongSearch.Web.Data.Model.FK_PlanQuotas_PricingPlans", "PlanQuota", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PlanBalance>("SongSearch.Web.Data.Model.FK_PlanBalances_PricingPlans", "PlanBalance", value);
                 }
             }
         }
@@ -6033,8 +6033,8 @@ namespace SongSearch.Web.Data
         /// <param name="hasAgreedToPrivacyPolicy">Initial value of the HasAgreedToPrivacyPolicy property.</param>
         /// <param name="hasAllowedCommunication">Initial value of the HasAllowedCommunication property.</param>
         /// <param name="planUserId">Initial value of the PlanUserId property.</param>
-        /// <param name="planQuotaId">Initial value of the PlanQuotaId property.</param>
-        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Int32 siteProfileId, global::System.Boolean appendSignatureToTitle, global::System.Int32 pricingPlanId, global::System.Boolean hasAgreedToPrivacyPolicy, global::System.Boolean hasAllowedCommunication, global::System.Int32 planUserId, global::System.Int32 planQuotaId)
+        /// <param name="planBalanceId">Initial value of the PlanBalanceId property.</param>
+        public static User CreateUser(global::System.Int32 userId, global::System.String userName, global::System.String password, global::System.Int32 roleId, global::System.DateTime registeredOn, global::System.Int32 siteProfileId, global::System.Boolean appendSignatureToTitle, global::System.Int32 pricingPlanId, global::System.Boolean hasAgreedToPrivacyPolicy, global::System.Boolean hasAllowedCommunication, global::System.Int32 planUserId, global::System.Int32 planBalanceId)
         {
             User user = new User();
             user.UserId = userId;
@@ -6048,7 +6048,7 @@ namespace SongSearch.Web.Data
             user.HasAgreedToPrivacyPolicy = hasAgreedToPrivacyPolicy;
             user.HasAllowedCommunication = hasAllowedCommunication;
             user.PlanUserId = planUserId;
-            user.PlanQuotaId = planQuotaId;
+            user.PlanBalanceId = planBalanceId;
             return user;
         }
 
@@ -6471,24 +6471,24 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 PlanQuotaId
+        public global::System.Int32 PlanBalanceId
         {
             get
             {
-                return _PlanQuotaId;
+                return _PlanBalanceId;
             }
             set
             {
-                OnPlanQuotaIdChanging(value);
-                ReportPropertyChanging("PlanQuotaId");
-                _PlanQuotaId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("PlanQuotaId");
-                OnPlanQuotaIdChanged();
+                OnPlanBalanceIdChanging(value);
+                ReportPropertyChanging("PlanBalanceId");
+                _PlanBalanceId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PlanBalanceId");
+                OnPlanBalanceIdChanged();
             }
         }
-        private global::System.Int32 _PlanQuotaId;
-        partial void OnPlanQuotaIdChanging(global::System.Int32 value);
-        partial void OnPlanQuotaIdChanged();
+        private global::System.Int32 _PlanBalanceId;
+        partial void OnPlanBalanceIdChanging(global::System.Int32 value);
+        partial void OnPlanBalanceIdChanged();
 
         #endregion
     
@@ -6910,16 +6910,16 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanQuotas", "PlanQuota")]
-        public PlanQuota PlanQuota
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanBalances", "PlanBalance")]
+        public PlanBalance PlanBalance
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanQuota>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "PlanQuota").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanBalance>("SongSearch.Web.Data.Model.FK_Users_PlanBalances", "PlanBalance").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanQuota>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "PlanQuota").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanBalance>("SongSearch.Web.Data.Model.FK_Users_PlanBalances", "PlanBalance").Value = value;
             }
         }
         /// <summary>
@@ -6927,17 +6927,17 @@ namespace SongSearch.Web.Data
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<PlanQuota> PlanQuotaReference
+        public EntityReference<PlanBalance> PlanBalanceReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanQuota>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "PlanQuota");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PlanBalance>("SongSearch.Web.Data.Model.FK_Users_PlanBalances", "PlanBalance");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlanQuota>("SongSearch.Web.Data.Model.FK_Users_PlanQuotas", "PlanQuota", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlanBalance>("SongSearch.Web.Data.Model.FK_Users_PlanBalances", "PlanBalance", value);
                 }
             }
         }

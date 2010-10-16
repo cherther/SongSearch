@@ -16,7 +16,7 @@ namespace SongSearch.Web {
 		public string StepView { get; set; }
 		public string StepActionName { get; set; }
 		public PricingPlan MyPricingPlan { get; set; }
-		public UserQuotas MyUserQuotas { get; set; }
+		public UserBalances MyUserBalances { get; set; }
 		public int MinUploadFiles { get; set; }
 		
 	}

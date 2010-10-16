@@ -4,10 +4,8 @@
 	Register
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
-<%
-ViewData["SubMenuLocation"] = "Register";
-Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
-%>
+<%ViewData["SubMenuLocation"] = "Register";%>
+<%: Html.Partial(MVC.Shared.Views.ctrlAccountMenu) %>
 </asp:Content>
 <asp:Content ID="registerContent" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>

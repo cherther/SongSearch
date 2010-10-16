@@ -239,7 +239,7 @@
     <Compile Include="Models\ContactInfo.cs" />
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\LogActionEvent.cs" />
-    <Compile Include="Models\UserQuota.cs" />
+    <Compile Include="Models\UserBalance.cs" />
     <Compile Include="SearchController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -1965,16 +1965,16 @@
     <Content Include="Updating.html" />
     <Content Include="Views\Home\Help.aspx" />
     <Content Include="Views\Shared\ctrlContactInfoBox.ascx" />
-    <Content Include="Views\Shared\ctrlUserQuotaLarge.ascx" />
-    <Content Include="Views\Shared\ctrlUserQuotaSmall.ascx" />
-    <Content Include="Views\Shared\ctrlUserQuotasWidget.ascx" />
+    <Content Include="Views\Shared\ctrlUserBalanceLarge.ascx" />
+    <Content Include="Views\Shared\ctrlUserBalanceSmall.ascx" />
+    <Content Include="Views\Shared\ctrlUserBalancesWidget.ascx" />
     <Content Include="Views\Home\TermsOfUse.aspx" />
     <Content Include="Views\Shared\ctrlLinks.ascx" />
     <Content Include="Views\Shared\ctrlAdminMenu.ascx" />
     <Content Include="Views\Shared\ctrlAccountMenu.ascx" />
     <Content Include="Views\Account\ctrlContactInfo.ascx" />
     <Content Include="Views\Account\Plan.aspx" />
-    <Content Include="Views\Shared\ctrlUserQuotas.ascx" />
+    <Content Include="Views\Shared\ctrlUserBalances.ascx" />
     <Content Include="Views\Shared\ctrlPricingPlans.ascx" />
     <Content Include="Views\Account\LogIn.aspx" />
     <Content Include="Views\Account\LogOut.aspx" />
@@ -2029,6 +2029,7 @@
     <Content Include="Views\Shared\ctrlLogIn.ascx" />
     <Content Include="Views\Shared\ctrlMainMenu.ascx" />
     <Content Include="Views\Shared\ctrlSubMenu.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\HtmlFormattedText.ascx" />
     <Content Include="Views\Shared\DisplayTemplates\MultilineText.ascx" />
     <Content Include="Views\Shared\DisplayTemplates\_Object.ascx" />
     <Content Include="Views\Shared\EditorTemplates\MultilineText.ascx" />

@@ -21,7 +21,7 @@
 				</strong>
 <%--				<img src="../../Public/Images/Icons/Silk/star_gold.png" alt="SuperAdmin" title="SuperAdmin"/>
 --%>			<%} else {
-				if (App.IsLicensedVersion && user.IsPlanUser) {%>
+				 if (App.IsLicensedVersion && user.IsPlanOwner) {%>
 					&nbsp;&nbsp;
 					<%: Html.ActionLink(userDisplayName, MVC.UserManagement.Detail(user.UserId), new { @class = "cw-user-detail-link", title = user.UserName })%>
 <%--					<img src="../../Public/Images/Icons/Silk/money_dollar.png" alt="Plan User" title="Plan User" />--%>

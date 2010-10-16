@@ -4,10 +4,8 @@
 	<%: Model.PageTitle %>
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
-<%
-ViewData["SubMenuLocation"] = "UserManagement";
-Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
-%>
+<%ViewData["SubMenuLocation"] = "UserManagement";%>
+<%: Html.Partial(MVC.Shared.Views.ctrlAdminMenu) %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
@@ -20,7 +18,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 		</div>
 		<div class="three column text-top">
 			<%if (App.IsLicensedVersion) {%>
-				<%: Html.Partial("ctrlUserQuotasWidget", Account.User().MyQuotas()) %>
+				<%: Html.Partial(MVC.Shared.Views.ctrlUserBalancesWidget, Account.User().MyBalances())%>
 			<%} %>
 		</div>
 	</div>
@@ -37,14 +35,14 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 			<%if (users.Count() > 0) { %>
 			<div class = "cw-outl-thick cw-fill-white cw-padded cw-rounded-corners" style="overflow:auto ; height: 300px; width: 200px;">
 				<table id="user-list" class="cw-tbl-usr">
-					<% Html.RenderPartial(MVC.UserManagement.Views.ctrlUserList, users); %>
+					<%: Html.Partial(MVC.UserManagement.Views.ctrlUserList, users) %>
 				</table>
 			</div>
 			<%} else { %>
 			You do not have any registered users yet.
 			<%} %>
 			<div>&nbsp;</div>
-			<h3>Open Invites</h3><%: Html.ActionLink("Invite New", "Invite", "UserManagement") %>
+			<h3>Open Invites</h3><%: Html.ActionLink("Invite New", MVC.UserManagement.Invite()) %>
 			<div>&nbsp;</div>
 			<div class = "cw-outl-thick cw-fill-white cw-padded cw-rounded-corners" style="overflow: auto; height: 150px; width: 200px;">
 				<table id="invite-list" class="cw-tbl-usr">

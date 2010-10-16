@@ -4,10 +4,8 @@
 	<%: Model.PageTitle %>
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
-<%
-ViewData["SubMenuLocation"] = "UpdateProfile";
-Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
-%>
+<% ViewData["SubMenuLocation"] = "UpdateProfile";%>
+<%: Html.Partial(MVC.Shared.Views.ctrlAccountMenu) %>
 </asp:Content>
 <asp:Content ID="updateProfileContent" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>
@@ -78,7 +76,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
 			<h3>Main Contact</h3>
 			<div>This information will be displayed on the <%: Html.ActionLink("Contact Us", MVC.Home.Contact())%> page. Please enter at least option for users to contact you, such as Phone or Email.</div>
 			<div>&nbsp;</div>
-			<% Html.RenderPartial("ctrlContactInfo", Model.Contact); %>
+			<%: Html.Partial(MVC.Account.Views.ctrlContactInfo, Model.Contact) %>
 			</div>
 			<%} %>
 				

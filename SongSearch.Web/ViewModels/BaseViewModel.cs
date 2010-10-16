@@ -20,7 +20,7 @@ namespace SongSearch.Web {
 		public int MyActiveCartCount { get; set; }
 		public ModelAction ModelAction { get; set; }
 		public int ActiveUserId { get; set; }
-		public bool ShowQuotaWidget { get; set; }
+		public bool ShowBalanceWidget { get; set; }
 
 		public ViewModel(int? siteProfileId = null) {
             //SiteProfile = siteProfileId.HasValue ? SiteProfileData.SiteProfile(siteProfileId.Value, true) : SiteProfileData.SiteProfile();

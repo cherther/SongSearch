@@ -43,10 +43,10 @@ namespace SongSearch.Web {
 					.SiteProfiles()
 					.SingleOrDefault(s => s.ProfileId == profileId);
 			} else {
-				using (var session = App.DataSessionReadOnly) {
-					var profile = session.GetObjectQuery<SiteProfile>()
+				using (var ctx = new SongSearchContext()) {
+					var profile = ctx.SiteProfiles
 						.Include("Contacts")
-						.Where(s => s.ProfileId == profileId).SingleOrDefault();
+						.SingleOrDefault(s => s.ProfileId == profileId);
 					return profile;
 				
 				}
@@ -59,10 +59,10 @@ namespace SongSearch.Web {
 					.SiteProfiles()
 					.SingleOrDefault(s => s.ProfileName.Equals(profileName, StringComparison.InvariantCultureIgnoreCase));
 			} else {
-				using (var session = App.DataSessionReadOnly) {
-					var profile = session.GetObjectQuery<SiteProfile>()
+				using (var ctx = new SongSearchContext()) {
+					var profile = ctx.SiteProfiles
 						.Include("Contacts")
-						.Where(s => s.ProfileName.Equals(profileName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
+						.SingleOrDefault(s => s.ProfileName.Equals(profileName, StringComparison.InvariantCultureIgnoreCase));
 					return profile;
 
 				}
@@ -70,8 +70,9 @@ namespace SongSearch.Web {
 		}
 		
 		public static IList<SiteProfile> SiteProfiles() {
-			using (var session = App.DataSessionReadOnly) {
-				var profiles = session.GetObjectQuery<SiteProfile>()
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
+				var profiles = ctx.SiteProfiles
 					.Include("Contacts")
 					.ToList();
 

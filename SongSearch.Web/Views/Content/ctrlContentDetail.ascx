@@ -5,6 +5,9 @@
 	var searchFields = Model.SearchFields;
 	var menuButtonClass = "cw-button cw-simple cw-small cw-gray"; //'.cw-content-detail-menu
 	var isEditing = Model.EditMode == EditModes.Editing;
+
+	const int keywordProp = 1;
+
 %>
 	<%--<div style="float: right">
 	<button id="detail-close" type="submit" title="Close" class="cw-button cw-small cw-simple cw-blue">
@@ -86,9 +89,13 @@
 		var columnTwo = "seven";
 	%>
 			<div id="tabs-1">
+			<%
+				var ttlSearch = searchFields.Where(s => s.P == keywordProp).SingleOrDefault();
+				Model.Content.Title = isEditing ? content.Title : Html.HighlightSearchTerm(Model.Content.Title, ttlSearch); 
+				%> 
 				<div class="<%: sectionSize%>_column section cw-spaced">
 					<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Title)%></div>
-					<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Title) : Html.DisplayFor(m => m.Content.Title)%></div>
+					<div class="<%: columnTwo%> column"><%= isEditing ? Html.EditorFor(m => m.Content.Title) : Html.DisplayFor(m => m.Content.Title, "HtmlFormattedText")%></div>
 				</div>
 				<div class="<%: sectionSize%>_column section cw-spaced">
 					<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Artist)%></div>
@@ -115,8 +122,12 @@
 					<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Writers, "StringAutoComplete") : Html.DisplayFor(m => m.Content.Writers)%></div>
 				</div>
 				<div class="<%: sectionSize%>_column section cw-spaced">
+				<%
+					var kwSearch = searchFields.Where(s => s.P == keywordProp).SingleOrDefault();
+					Model.Content.Keywords = isEditing ? content.Keywords : Html.HighlightSearchTerm(Model.Content.Keywords, kwSearch); 
+				%> 
 					<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.Keywords)%></div>
-					<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Keywords) : Html.DisplayFor(m => m.Content.Keywords)%></div>
+					<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.Keywords) : Html.DisplayFor(m => m.Content.Keywords, "HtmlFormattedText")%></div>
 				</div>
 				<div class="<%: sectionSize%>_column section cw-spaced">
 					<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.SimilarSongs)%></div>
@@ -169,9 +180,8 @@
 			<%
 				columnOne = "two";
 				columnTwo = "seven";
-				const int lyricsProp = 1;
 
-				var lyricsSearch = searchFields.Where(s => s.P == lyricsProp).SingleOrDefault();
+				var lyricsSearch = searchFields.Where(s => s.P == keywordProp).SingleOrDefault();
 
 				Model.Content.Lyrics = isEditing ? content.Lyrics : Html.HighlightSearchTerm(Model.Content.Lyrics, lyricsSearch); 
 			%>

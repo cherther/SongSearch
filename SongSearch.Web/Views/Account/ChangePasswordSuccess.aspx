@@ -4,10 +4,9 @@
 	Update Profile
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
-<%
-ViewData["SubMenuLocation"] = "ChangePassword";
-Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
-%> 
+<%ViewData["SubMenuLocation"] = "ChangePassword";%>
+<%: Html.Partial(MVC.Shared.Views.ctrlAccountMenu)%>
+ 
 </asp:Content>
 <asp:Content ID="updateProfileSuccessContent" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">

@@ -42,15 +42,16 @@ namespace T4MVC {
             public readonly string ctrlSubMenu = "~/Views/Shared/ctrlSubMenu.ascx";
             public readonly string ctrlTagCloud = "~/Views/Shared/ctrlTagCloud.ascx";
             public readonly string ctrlTerritoryCloud = "~/Views/Shared/ctrlTerritoryCloud.ascx";
-            public readonly string ctrlUserQuotaLarge = "~/Views/Shared/ctrlUserQuotaLarge.ascx";
-            public readonly string ctrlUserQuotas = "~/Views/Shared/ctrlUserQuotas.ascx";
-            public readonly string ctrlUserQuotaSmall = "~/Views/Shared/ctrlUserQuotaSmall.ascx";
-            public readonly string ctrlUserQuotasWidget = "~/Views/Shared/ctrlUserQuotasWidget.ascx";
+            public readonly string ctrlUserBalanceLarge = "~/Views/Shared/ctrlUserBalanceLarge.ascx";
+            public readonly string ctrlUserBalances = "~/Views/Shared/ctrlUserBalances.ascx";
+            public readonly string ctrlUserBalanceSmall = "~/Views/Shared/ctrlUserBalanceSmall.ascx";
+            public readonly string ctrlUserBalancesWidget = "~/Views/Shared/ctrlUserBalancesWidget.ascx";
             public readonly string Error = "~/Views/Shared/Error.aspx";
             static readonly _DisplayTemplates s_DisplayTemplates = new _DisplayTemplates();
             public _DisplayTemplates DisplayTemplates { get { return s_DisplayTemplates; } }
             public partial class _DisplayTemplates{
                 public readonly string _Object = "~/Views/Shared/DisplayTemplates/_Object.ascx";
+                public readonly string HtmlFormattedText = "~/Views/Shared/DisplayTemplates/HtmlFormattedText.ascx";
                 public readonly string MultilineText = "~/Views/Shared/DisplayTemplates/MultilineText.ascx";
             }
             static readonly _EditorTemplates s_EditorTemplates = new _EditorTemplates();

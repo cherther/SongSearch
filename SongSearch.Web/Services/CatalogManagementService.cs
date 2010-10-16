@@ -52,9 +52,9 @@ namespace SongSearch.Web.Services {
 				DataSession.Add<Catalog>(cat);
 
 				DataSession.CommitChanges();
-				using (var um = new UserManagementService(DataSession)) {
-					um.UpdateUserCatalogRole(user.UserId, cat.CatalogId, (int)Roles.Admin);
-				}
+	
+				UserManagementService.UpdateUserCatalogRole(user.UserId, cat.CatalogId, (int)Roles.Admin);
+
 			} else if (!user.IsAtLeastInCatalogRole(Roles.Admin, cat.CatalogId)) {
 					throw new AccessViolationException("You do not have admin rights to this catalog");				
 			}

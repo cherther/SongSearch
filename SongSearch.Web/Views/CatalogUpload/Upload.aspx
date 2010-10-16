@@ -4,10 +4,8 @@
 	Upload
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
-<%
-ViewData["SubMenuLocation"] = "CatalogUpload";
-Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
-%>
+<%ViewData["SubMenuLocation"] = "CatalogUpload";%>
+<%: Html.Partial(MVC.Shared.Views.ctrlAdminMenu) %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
@@ -19,9 +17,9 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 	<h2>Catalog Upload Wizard</h2>
 	<div>&nbsp;</div>
 	
-	<%if (App.IsLicensedVersion && percentComplete < 100 && Model.MyUserQuotas.NumberOfSongs.IsAtTheLimit) {%>
+	<%if (App.IsLicensedVersion && percentComplete < 100 && Model.MyUserBalances.NumberOfSongs.IsAtTheLimit) {%>
 	<div>
-	You've uploaded a total of <%: Model.MyUserQuotas.NumberOfSongs.Allowed.ToQuotaDescription() %> songs. Based on your Plan, you cannot upload any more songs.
+	You've uploaded a total of <%: Model.MyUserBalances.NumberOfSongs.Allowed.ToBalanceDescription() %> songs. Based on your Plan, you cannot upload any more songs.
 	</div>
 	<div>&nbsp;</div>
 	<div>
@@ -43,7 +41,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 				</div>
 				<div class="three column text-top">
 					<%if (App.IsLicensedVersion) {%>
-						<%: Html.Partial("ctrlUserQuotasWidget", Account.User().MyQuotas()) %>
+						<%: Html.Partial(MVC.Shared.Views.ctrlUserBalancesWidget, Account.User().MyBalances())%>
 					<%} %>
 				</div>
 			</div>
@@ -52,13 +50,13 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 				<%using (Html.BeginForm("Upload", "CatalogUpload", FormMethod.Post, new { id = "catalogUploadForm" } )) { %>
 				<% var stepIndex = Model.CatalogUploadState.CurrentStepIndex; %>
 				<%//: Html.Hidden("state.CurrentStepIndex", stepIndex.ToString()) %>
-				<% Html.RenderPartial("ctrlHiddenFormInputs"); %>
+				<%: Html.Partial(MVC.CatalogUpload.Views.ctrlHiddenFormInputs) %>
 
 				<% if (!String.IsNullOrWhiteSpace(Model.CatalogUploadState.CatalogName)) {%>
 					<label>Catalog:</label> <%: Model.CatalogUploadState.CatalogName%>
 					<div>&nbsp;</div>
 				<%} %>
-				<% Html.RenderPartial(Model.StepView); %>
+				<%: Html.Partial(Model.StepView) %>
 			<%--	<% var i = 0; %>
 				<% foreach (var stepStatus in Model.CatalogUploadState.WorkflowStepsStatus) { %>
 				<%: Html.Hidden(String.Format("state.WorkflowStepsStatus.", i), stepStatus.Value)%>

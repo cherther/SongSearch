@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogUploadViewModel>" %>
-<%var maxFiles = Model.MyUserQuotas.NumberOfSongs.Max;%>
+<%var maxFiles = Model.MyUserBalances.NumberOfSongs.Max;%>
 <%: Html.Hidden("minimumFiles", Model.MinUploadFiles) %>
 <%: Html.Hidden("maxFiles", maxFiles)%>
-<%: Html.Hidden("maxBytes", Model.MyUserQuotas.NumberOfSongs.Default * 10 * 1024 * 1024)%>
+<%: Html.Hidden("maxBytes", Model.MyUserBalances.NumberOfSongs.Default * 10 * 1024 * 1024)%>
 
 
 <div>&nbsp;</div>
@@ -11,8 +11,8 @@ For this step, please select full song files in MP3 format only. We will deal wi
 </div>
 <%if (App.IsLicensedVersion) {%>
 <div>
-	Based on your current Plan, you can upload <%: Model.MyUserQuotas.NumberOfSongs.Remaining.ToQuotaLongDescription()%> <%: Html.Pluralize("song", Model.MyUserQuotas.NumberOfSongs.Remaining.GetValueOrDefault(2))%>.
-	<%if (!Model.MyUserQuotas.NumberOfSongs.Remaining.HasValue || Model.MyUserQuotas.NumberOfSongs.Remaining.Value > maxFiles) { %>
+	Based on your current Plan, you can upload <%: Model.MyUserBalances.NumberOfSongs.Remaining.ToBalanceLongDescription()%> <%: Html.Pluralize("song", Model.MyUserBalances.NumberOfSongs.Remaining.GetValueOrDefault(2))%>.
+	<%if (!Model.MyUserBalances.NumberOfSongs.Remaining.HasValue || Model.MyUserBalances.NumberOfSongs.Remaining.Value > maxFiles) { %>
 	However, to make sure everything goes smoothly, please upload only <strong><%: maxFiles %> songs at a time</strong>.
 	<%} %>
 </div>

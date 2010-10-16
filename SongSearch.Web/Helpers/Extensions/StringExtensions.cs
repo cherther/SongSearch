@@ -223,10 +223,10 @@ namespace SongSearch.Web {
 		public static HtmlString ToDescription(this int number) {
 			return new HtmlString(number.ToString("N0"));
 		}
-		public static HtmlString ToQuotaDescription(this int? number) {
+		public static HtmlString ToBalanceDescription(this int? number) {
 			return new HtmlString(!number.HasValue ? "&#8734;" : number.Value.ToString("N0"));//"∞"
 		}
-		public static HtmlString ToQuotaLongDescription(this int? number) {
+		public static HtmlString ToBalanceLongDescription(this int? number) {
 			return new HtmlString(!number.HasValue ? "an unlimited number of" : number.Value.ToString("N0"));//"∞"
 		}
 		public static HtmlString ToPriceDescription(this decimal? price) {

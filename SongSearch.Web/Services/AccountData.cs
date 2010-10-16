@@ -35,22 +35,19 @@ namespace SongSearch.Web {
 		}
 
 		public static User User(int userId) {
-			
-			using (var session = App.DataSessionReadOnly) {
-				var user = session.GetUserQuery()
-					.Where(u => u.UserId == userId).SingleOrDefault();
 
+			using (var ctx = new SongSearchContext()) {
+				var user = ctx.GetUserQuery().SingleOrDefault(u => u.UserId == userId);
 				return user;	
 			}
 		}
+
 		public static User User(string userName, bool cached = true) {
 			if (cached) {
 				return SessionService.Session().User(userName);
 			} else {
-				using (var session = App.DataSessionReadOnly) {
-					var user = session.GetUserQuery()
-						.Where(u => u.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();
-
+				using (var ctx = new SongSearchContext()) {
+					var user = ctx.GetUserQuery().SingleOrDefault(u => u.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
 					return user;
 				}
 			}
@@ -59,11 +56,10 @@ namespace SongSearch.Web {
 		
 		private static int GetNumberOfSongs() {
 
-			using (var session = App.DataSessionReadOnly) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 				var adminCats = User().MyAdminCatalogs().Select(c => c.CatalogId);
-				var songCount = session.All<Content>().Where(x => adminCats.Contains(x.CatalogId)).Count();
-
-				return songCount;
+				return ctx.Contents.Count(x => adminCats.Contains(x.CatalogId));
 			}
 		}
 		private static int GetNumberOfUsers() {
@@ -122,22 +118,20 @@ namespace SongSearch.Web {
 		// **************************************
 		public static bool UserHasAccessToContent(int userId, int contentId) {
 
-			using (var session = App.DataSessionReadOnly) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 
-				var content = session.All<Content>().Where(c => c.ContentId == contentId
-						&& c.Catalog.UserCatalogRoles.Any(u => u.UserId == userId));
-				
-				return content.Count() > 0;
-
+				return ctx.Contents.Count(c => c.ContentId == contentId
+						&& c.Catalog.UserCatalogRoles.Any(u => u.UserId == userId)) > 0;
 			}
 
 		}
 		// **************************************
 		// GetUserQuery
 		// **************************************
-		private static ObjectQuery<User> GetUserQuery(this IDataSessionReadOnly session) {
+		internal static ObjectQuery<User> GetUserQuery(this SongSearchContext ctx) {
 
-			return session.GetObjectQuery<User>()
+			return ctx.Users
 					.Include("ParentUser")
 					.Include("Carts")
 					.Include("Carts.Contents")
@@ -145,8 +139,8 @@ namespace SongSearch.Web {
 					.Include("Contacts")
 					.Include("ParentUser.Contacts")
 					.Include("PricingPlan")
-					.Include("PlanQuota")
-					.Include("PlanQuota.PricingPlan")
+					.Include("PlanBalance")
+					.Include("PlanBalance.PricingPlan")
 					.Include("ParentUser.PricingPlan")
 					//.Include("ParentUser.ParentUser")
 					;
@@ -341,10 +335,11 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static IList<User> MyUserHierarchy(this User user, bool withCatalogRoles = false) {
 
-			using (var session = App.DataSessionReadOnly) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 
-				var set = session.GetObjectQuery<User>();
-				var users = (withCatalogRoles ? set.Include("UserCatalogRoles") : set).Where(u => u.RoleId >= (int)user.RoleId).ToList();
+				var users = (withCatalogRoles ? ctx.Users.Include("UserCatalogRoles") : ctx.Users)
+							.Where(u => u.RoleId >= (int)user.RoleId).ToList();
 
 				var topLevelUsers = (
 						user.IsSuperAdmin() ?
@@ -362,10 +357,12 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static IList<User> MyAdminUserHierarchy(this User user, bool withCatalogRoles = false) {
 
-			using (var session = App.DataSessionReadOnly) {
+			using (var ctx = new SongSearchContext()) {
 
-				var set = session.GetObjectQuery<User>();
-				var users = (withCatalogRoles ? set.Include("UserCatalogRoles") : set).Where(u => u.RoleId <= (int)Roles.Admin).ToList();
+				ctx.ContextOptions.LazyLoadingEnabled = false;
+
+				var users = (withCatalogRoles ? ctx.Users.Include("UserCatalogRoles") : ctx.Users)
+							.Where(u => u.RoleId <= (int)Roles.Admin).ToList();
 
 				var topLevelUsers = (
 						user.IsSuperAdmin() ?
@@ -386,33 +383,33 @@ namespace SongSearch.Web {
 		}
 
 		// **************************************
-		// MyQuotas
+		// MyBalances
 		// **************************************    
-		public static UserQuotas MyQuotas(this User user) {
+		public static UserBalances MyBalances(this User user) {
 
-			var quotas = new UserQuotas();
+			var quotas = new UserBalances();
 			//var planUser = user.IsPlanUser ? user :
 			//    ( user.ParentUser.IsPlanUser ? user.ParentUser : User(user.ParentUser.ParentUserId.Value));
 
-			var planQuota = user.PlanQuota;
-			var plan = planQuota.PricingPlan;
+			var planBalance = user.PlanBalance;
+			var plan = planBalance.PricingPlan;
 			
 			quotas.NumberOfSongs.Default = GetDefaultNumberOfSongs();
 			quotas.NumberOfSongs.Allowed = plan.NumberOfSongs;
-			quotas.NumberOfSongs.Used = planQuota.NumberOfSongs;// GetNumberOfSongs();
+			quotas.NumberOfSongs.Used = planBalance.NumberOfSongs;// GetNumberOfSongs();
 
 			quotas.NumberOfInvitedUsers.Allowed = plan.NumberOfInvitedUsers;
-			quotas.NumberOfInvitedUsers.Used = planQuota.NumberOfInvitedUsers; // GetNumberOfUsers();
+			quotas.NumberOfInvitedUsers.Used = planBalance.NumberOfInvitedUsers; // GetNumberOfUsers();
 
 			quotas.NumberOfCatalogAdmins.Allowed = plan.NumberOfCatalogAdmins;
-			quotas.NumberOfCatalogAdmins.Used = planQuota.NumberOfCatalogAdmins; // GetNumberOfCatalogAdmins();
+			quotas.NumberOfCatalogAdmins.Used = planBalance.NumberOfCatalogAdmins; // GetNumberOfCatalogAdmins();
 
 			return quotas;
 		}
 
 		public static int[] MyAssignableRoles(this User user) {
 
-			if (!user.IsSuperAdmin() && App.IsLicensedVersion && user.MyQuotas().NumberOfCatalogAdmins.Remaining.GetValueOrDefault() == 0) {
+			if (!user.IsSuperAdmin() && App.IsLicensedVersion && user.MyBalances().NumberOfCatalogAdmins.Remaining.GetValueOrDefault() == 0) {
 				return ModelEnums.GetPublicRoles().Where(r => r > (int)Roles.Admin).ToArray();
 			} else {
 				return ModelEnums.GetPublicRoles().Where(r => r >= user.RoleId).ToArray();
@@ -436,7 +433,7 @@ namespace SongSearch.Web {
 
 			Contact contact = null;
 			// Pluggers and above can set up their own contact info, everyone else inherits down
-			if (user.IsPlanUser && 
+			if (user.IsPlanOwner && 
 				user.PricingPlan != null && 
 				user.PricingPlan.CustomContactUs && 
 				user.IsAtLeastInCatalogRole(Roles.Admin)) {
@@ -451,19 +448,17 @@ namespace SongSearch.Web {
 		}
 
 		public static int GetSiteProfileId(this User user) {
-			int siteProfileId = int.Parse(SystemConfig.DefaultSiteProfileId);
+			
 			if (user == null){
-				return siteProfileId;
+				return int.Parse(SystemConfig.DefaultSiteProfileId);
 			}
 
 			if (user.IsSuperAdmin() || user.PricingPlanId >= (int)PricingPlans.Business) {
-				siteProfileId = user.SiteProfileId;
-			} else if (user.ParentUser != null) {
-				siteProfileId = user.ParentUser.GetSiteProfileId();
+				return user.SiteProfileId;
+			} else {
+				return user.ParentUser.GetSiteProfileId();
 			}
-
-			return siteProfileId;
-		
+					
 		}
 		// **************************************
 		// AttachChildren

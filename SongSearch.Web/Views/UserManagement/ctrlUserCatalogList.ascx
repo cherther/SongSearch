@@ -7,7 +7,7 @@
 	foreach (var cat in cats)
 	{
 		var catalogId = cat.CatalogId;
-		var userCatalog = user.UserCatalogRoles.Where(c => c.Catalog.CatalogId == cat.CatalogId).SingleOrDefault();
+		var userCatalog = user.UserCatalogRoles.Where(c => c.CatalogId == cat.CatalogId).SingleOrDefault();
 		var rowId = String.Concat("catalog-", catalogId);
   
 		var rowClass = String.Concat("c-", catalogId);

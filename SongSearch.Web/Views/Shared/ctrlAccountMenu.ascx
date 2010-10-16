@@ -6,9 +6,9 @@
 	if (Page.User.Identity.IsAuthenticated) {
 
 		var user = Page.User.User();
-		var isPlanUser = user != null ? user.IsPlanUser : false;
+		var isPlanOwner = user != null ? user.IsPlanOwner : false;
 
-		if (App.IsLicensedVersion && isPlanUser) {
+		if (App.IsLicensedVersion && isPlanOwner) {
 			menu.MenuItems.Add(new SongSearch.Web.MenuItem() {
 				Name = "Plan",
 				LinkDisplayName = "My Plan",

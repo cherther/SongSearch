@@ -4,10 +4,8 @@
 	Reset Password
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
-<%
-ViewData["SubMenuLocation"] = "ResetPassword";
-Html.RenderPartial(MVC.Shared.Views.ctrlAccountMenu);
-%>
+<% ViewData["SubMenuLocation"] = "ResetPassword";%>
+<%: Html.Partial(MVC.Shared.Views.ctrlAccountMenu) %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <% Html.EnableClientValidation(); %>

@@ -24,9 +24,9 @@
 	}
 
 	var user = Page.User.User();
-	var isPlanUser = user != null ? user.IsPlanUser : false;
+	var isPlanOwner = user != null ? user.IsPlanOwner : false;
 
-	if (App.IsLicensedVersion && Page.User.Identity.IsAuthenticated && isPlanUser) {
+	if (App.IsLicensedVersion && Page.User.Identity.IsAuthenticated && isPlanOwner) {
 		menu.Add("Account", new string[3] { "Plan", "Account", "My Account" });
 	}
 	menu.Add("Help", new string[3] { "Help", "Home", "Help" });

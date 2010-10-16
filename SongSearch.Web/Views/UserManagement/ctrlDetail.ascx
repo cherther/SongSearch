@@ -59,8 +59,14 @@
 <div class="six_column section">
 	
 	<div class="four column">
-	<label>Current Pricing Plan:</label>
-	 <span><%: user.PricingPlan.PricingPlanName %></span></div>
+		<label>Current Pricing Plan:</label>
+		<span><%: user.PricingPlan.PricingPlanName %></span>
+		(
+		<span><%: user.PlanBalance.NumberOfSongs %> song(s), </span>
+		<span><%: user.PlanBalance.NumberOfInvitedUsers %> user(s), </span>
+		<span><%: user.PlanBalance.NumberOfCatalogAdmins %> admin(s)</span>
+		)
+	 </div>
 	<div class="two column">
 	
 	</div>
@@ -127,7 +133,7 @@
 				};	 
 				%>
 			<%if (catsOwned.Catalogs.Count > 0) {%>
-			<%: Html.Partial("ctrlUserCataloglist", catsOwned)%>
+			<%: Html.Partial(MVC.UserManagement.Views.ctrlUserCatalogList, catsOwned)%>
 			<tr>
 				<td>&nbsp;</td>
 				<td>&nbsp;</td>
@@ -143,7 +149,7 @@
 					Catalogs = Model.Catalogs.Where(c => c.CreatedByUserId != user.UserId).ToList()
 				};	 
 				%>
-			<%: Html.Partial("ctrlUserCataloglist", catsOther)%>
+			<%: Html.Partial(MVC.UserManagement.Views.ctrlUserCatalogList, catsOther)%>
 		</table>
 </div>
 

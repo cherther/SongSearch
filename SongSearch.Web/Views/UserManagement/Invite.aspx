@@ -4,10 +4,8 @@
 	Invite
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
-<%
-ViewData["SubMenuLocation"] = "Invite";
-Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
-%>
+<% ViewData["SubMenuLocation"] = "Invite";%>
+<%: Html.Partial(MVC.Shared.Views.ctrlAdminMenu) %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class="cw-outl cw-padded cw-rounded-corners-bottom">
@@ -34,8 +32,8 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 					<div><%:Html.Label("From:")%>&nbsp;<%: String.Format("{0} <{1}>", Html.Friendly(), User.Identity.Name)%></div>
 				</div>
 				<div class="three column">
-				<%if (App.IsLicensedVersion && Model.ShowQuotaWidget) {%>
-					<%: Html.Partial("ctrlUserQuotasWidget", Account.User().MyQuotas()) %>
+				<%if (App.IsLicensedVersion && Model.ShowBalanceWidget) {%>
+					<%: Html.Partial(MVC.Shared.Views.ctrlUserBalancesWidget, Account.User().MyBalances())%>
 				<%} %>
 				</div>
 			</div>

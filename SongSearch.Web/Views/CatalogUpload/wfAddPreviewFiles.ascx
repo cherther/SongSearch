@@ -1,8 +1,8 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogUploadViewModel>" %>
-<%var maxFiles = Model.MyUserQuotas.NumberOfSongs.Max;%>
+<%var maxFiles = Model.MyUserBalances.NumberOfSongs.Max;%>
 <%: Html.Hidden("minimumFiles", 0) %>
 <%: Html.Hidden("maxFiles", maxFiles)%>
-<%: Html.Hidden("maxBytes", Model.MyUserQuotas.NumberOfSongs.Default * 10 * 1024 * 1024)%>
+<%: Html.Hidden("maxBytes", Model.MyUserBalances.NumberOfSongs.Default * 10 * 1024 * 1024)%>
 <div>
  <p>For this step, please select short Song Preview files in MP3 format only.</p>
  <p>We will match preview files to full songs based on their embedded ID3 tags, or their file names if we can't find any tags.</p>

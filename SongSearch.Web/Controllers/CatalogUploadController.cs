@@ -157,8 +157,8 @@ namespace SongSearch.Web.Controllers
 			vm.StepActionName = nextStep.StepButton;// "Next Step";
 			vm.MyCatalogs = Account.User(false).MyAdminCatalogs().OrderBy(c => c.CatalogName).ToList();
 			vm.MyPricingPlan = Account.User().PricingPlan;
-			vm.MyUserQuotas = Account.User().MyQuotas();
-//			vm.DefaultSongQuota = vm.PricingPlans.Where(p => p.IsEnabled == true).Min(p => p.NumberOfSongs);
+			vm.MyUserBalances = Account.User().MyBalances();
+//			vm.DefaultSongBalance = vm.PricingPlans.Where(p => p.IsEnabled == true).Min(p => p.NumberOfSongs);
 			vm.MinUploadFiles = 1;
 			
 			return vm;

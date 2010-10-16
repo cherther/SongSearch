@@ -4,10 +4,8 @@
 	<%: Model.PageTitle %>
 </asp:Content>
 <asp:Content id="subNav" ContentPlaceHolderID="SuvNavContent" runat="server">
-<%
-ViewData["SubMenuLocation"] = "CatalogManagement";
-Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
-%>
+<%ViewData["SubMenuLocation"] = "CatalogManagement";%>
+<%: Html.Partial(MVC.Shared.Views.ctrlAdminMenu) %>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 <div id="content" class="cw-outl cw-fill-lite cw-padded cw-rounded-corners-bottom">
@@ -20,7 +18,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 		</div>
 		<div class="three column text-top">
 			<%if (App.IsLicensedVersion) {%>
-				<%: Html.Partial("ctrlUserQuotasWidget", Account.User().MyQuotas()) %>
+				<%: Html.Partial(MVC.Shared.Views.ctrlUserBalancesWidget, Account.User().MyBalances()) %>
 			<%} %>
 		</div>
 	</div>
@@ -41,7 +39,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 					Created by you:
 					</td>
 					</tr>
-					<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogList, catsOwned); %>
+					<%: Html.Partial(MVC.CatalogManagement.Views.ctrlCatalogList, catsOwned) %>
 					<%} %>
 					<%if (catsOther.Count() > 0) {%>
 					<tr>
@@ -49,7 +47,7 @@ Html.RenderPartial(MVC.Shared.Views.ctrlAdminMenu);
 					Administered by you:
 					</td>
 					</tr>
-					<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogList, catsOther); %>
+					<%: Html.Partial(MVC.CatalogManagement.Views.ctrlCatalogList, catsOther)  %>
 					<%} %>
 				</table>
 			</div>

@@ -392,7 +392,7 @@ namespace SongSearch.Web.Services {
 									try {
 										byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion());
 
-                                        asset = _mediaService.WriteMediaSignature(asset, content, user);
+										asset = _mediaService.WriteMediaSignature(asset, content, user);
 
 										zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
 													asset);

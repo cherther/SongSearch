@@ -303,7 +303,7 @@ namespace SongSearch.Web.Services {
 
 			var user = Account.User();
 			// Save/create Catalog
-			if (user.IsAtLeastInRole(Roles.Admin) && !user.MyQuotas().NumberOfSongs.IsAtTheLimit) {
+			if (user.IsAtLeastInRole(Roles.Admin) && !user.MyBalances().NumberOfSongs.IsAtTheLimit) {
 
 				var catalog = DataSession.Single<Catalog>(c => c.CatalogName.ToUpper() == state.CatalogName) ??
 					new Catalog() { 
@@ -342,7 +342,7 @@ namespace SongSearch.Web.Services {
 					}
 
 					//Make plan user an admin
-					if (!user.IsPlanUser && user.PlanUserId != user.ParentUserId.GetValueOrDefault()) {
+					if (!user.IsPlanOwner && user.PlanUserId != user.ParentUserId.GetValueOrDefault()) {
 						var planUserCatalog = 
 							//DataSession.Single<UserCatalogRole>(
 							//    x => x.UserId == user.PlanUserId && 
@@ -366,7 +366,7 @@ namespace SongSearch.Web.Services {
 
 				// Save Content
 				var content = App.IsLicensedVersion ?
-					state.Content.Take(user.MyQuotas().NumberOfSongs.IsGoodFor(state.Content.Count())).ToList() :
+					state.Content.Take(user.MyBalances().NumberOfSongs.IsGoodFor(state.Content.Count())).ToList() :
 					state.Content;
 
 				foreach (var itm in content) {

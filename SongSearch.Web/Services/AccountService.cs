@@ -7,25 +7,24 @@ using Ninject;
 using System.Collections.Generic;
 
 namespace SongSearch.Web.Services {
-	
+
 	// **************************************
 	// AccountService
 	// **************************************
-	public class AccountService : BaseService, IAccountService {
+	public static class AccountService {// : BaseService, IAccountService {
 
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
-		private bool _disposed;
 		private const int _minPasswordLength = 5;
 		private const int _defaultUserId = 1;
 
 		// ----------------------------------------------------------------------------
 		// (Constructor)
 		// ----------------------------------------------------------------------------
-		public AccountService(IDataSession dataSession, IDataSessionReadOnly readSession) : base(dataSession, readSession) { }
-		public AccountService(string activeUserIdentity) : base(activeUserIdentity) { }
-		
+		//public AccountService(IDataSession dataSession, IDataSessionReadOnly readSession) : base(dataSession, readSession) { }
+		//public AccountService(string activeUserIdentity) : base(activeUserIdentity) { }
+
 		// ----------------------------------------------------------------------------
 		// (Public)
 		// ----------------------------------------------------------------------------
@@ -34,236 +33,352 @@ namespace SongSearch.Web.Services {
 				return _minPasswordLength; // _provider.MinRequiredPasswordLength;
 			}
 		}
+
 		// **************************************
 		// RegisterUser
-		// **************************************    
-		public User RegisterUser(User user, Guid invitationCode) {
+		// **************************************  
+		public static User RegisterUser(User user, Guid invitationCode) {
 
-			if (!UserExists(user.UserName)) {
 
-				var inv = DataSession.Single<Invitation>(i => i.InvitationId.Equals(invitationCode) && i.InvitationEmailAddress.Equals(user.UserName));
-				var invUser = DataSession.Single<User>(u => u.UserId == inv.InvitedByUserId);
-				var pricingPlan = DataSession.Single<PricingPlan>(x => x.PricingPlanId == user.PricingPlanId);
+			using (var ctx = new SongSearchContext()) {
+				var existing = ctx.GetUser(user);
+				if (existing != null) {
+					return existing;
+				} else {
+					var inv = ctx.Invitations.SingleOrDefault(i => i.InvitationId.Equals(invitationCode) && i.InvitationEmailAddress.Equals(user.UserName));
+					var pricingPlan = ctx.PricingPlans.SingleOrDefault(x => x.PricingPlanId == user.PricingPlanId);
 
-				if (inv != null) {
-
-					user.Password = user.Password.PasswordHashString();
-					user.ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : _defaultUserId;
-					user.PlanUserId = _defaultUserId; //default placeholder;
-					user.PricingPlanId = pricingPlan.PricingPlanId;
-
-					// Members are Clients until promoted, new plans are admins from the start:
-					user.RoleId = inv.IsPlanInvitation ? (int)Roles.Client : (int)Roles.Admin;
-
-					//user.PricingPlanId = (int)PricingPlans.Basic;
-					user.SiteProfileId = int.Parse(SystemConfig.DefaultSiteProfileId);
-					user.RegisteredOn = DateTime.Now;
-					user.InvitationId = inv.InvitationId;
-
-					// Get parent users catalog where parent user is at least a plugger and assign to new user in client role
-					var catalogs = DataSession.All<UserCatalogRole>()
-						.Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Admin);
-					catalogs.ForEach(c =>
-						user.UserCatalogRoles.Add(new UserCatalogRole() { CatalogId = c.CatalogId, RoleId = (int)Roles.Client })
-					);
-
-					if (!inv.IsPlanInvitation) {
-						//Start a new Subscription
-						var subscription = new Subscription() {
-							SubscriptionStartDate = DateTime.Now,
-							SubscriptionEndDate = null,
-							PricingPlanId = pricingPlan.PricingPlanId,
-							PlanCharge = pricingPlan.PlanCharge.GetValueOrDefault()
-						};
-
-						user.Subscriptions.Add(subscription);
-
-						var quota = new PlanQuota() {
-
-							PricingPlanId = pricingPlan.PricingPlanId,
-							NumberOfCatalogAdmins = 1,
-							NumberOfInvitedUsers = 1,
-							NumberOfSongs = 0,
-							LastUpdatedByUserId = 1
-						};
-
-						quota.Users.Add(user);
-						user.PlanQuotaId = 1;
-
+					if (inv == null) {
+						throw new ArgumentOutOfRangeException(String.Format("Invalid invitation {0}", inv.InvitationId), innerException: null);
 					} else {
+						// ----------------------------------
+						// CREATE USER
+						// ----------------------------------
+						var newUser = user.Create(inv, pricingPlan);
 
-						user.PlanUserId = invUser.PlanUserId;
-						user.PlanQuotaId = invUser.PlanQuotaId;
+						// ----------------------------------
+						// GET / CREATE PLAN SUBSCRIPTION
+						// ----------------------------------
+						if (!inv.IsPlanInvitation) {
+
+							// ----------------------------------
+							// GET / CREATE PLAN BALANCE
+							// ----------------------------------
+							var balance = newUser.SubscribeTo(pricingPlan);
+
+
+						} else {
+
+							newUser.PlanBalanceId = inv.InvitedByUser.PlanBalance.PlanBalanceId;
+							newUser.PlanUserId = inv.InvitedByUser.UserId;
+
+						}
+
+						// ----------------------------------
+						// CATALOG ACCESS
+						// ----------------------------------
+
+						// Get parent users catalog where parent user is at least a plugger and assign to new user in client role
+						var catalogs = ctx.UserCatalogRoles.Where(x => x.UserId == inv.InvitedByUserId && x.RoleId <= (int)Roles.Admin);
+
+						catalogs.ForEach(c =>
+							newUser.UserCatalogRoles.Add(new UserCatalogRole() { CatalogId = c.CatalogId, RoleId = (int)Roles.Client })
+						);
+
+						inv.InvitationStatus = (int)InvitationStatusCodes.Registered;
+
+						ctx.SaveChanges();
+						inv = null;
+
+						return newUser;
 					}
-
-					//create user to get a userid
-					DataSession.Add<User>(user);
-					DataSession.CommitChanges();
-
-
-					inv.InvitationStatus = (int)InvitationStatusCodes.Registered;
-				
-					user.PlanUserId = inv.IsPlanInvitation ? invUser.PlanUserId : user.UserId;
-					user.PlanQuota.LastUpdatedByUserId = user.UserId;
-
-					DataSession.CommitChanges();
-
-		
-					inv = null;
 				}
-			} else {
-				user = GetUser(user);
+
+
 			}
 
-			return user;
+
 		}
+
+		// **************************************
+		// CreateUser
+		// **************************************  
+		public static User Create(this User user, Invitation inv, PricingPlan pricingPlan) {
+
+			using (var ctx = new SongSearchContext()) {
+
+				var newUser = new User() {
+					UserName = user.UserName,
+					FirstName = user.FirstName,
+					LastName = user.LastName,
+					HasAgreedToPrivacyPolicy = user.HasAgreedToPrivacyPolicy,
+					HasAllowedCommunication = user.HasAllowedCommunication,
+					Password = user.Password.PasswordHashString(),
+					ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : _defaultUserId,
+					PlanUserId = inv.InvitedByUser != null ? inv.InvitedByUser.UserId : _defaultUserId, //default placeholder;_defaultUserId; //default placeholder;
+					PricingPlanId = pricingPlan.PricingPlanId,
+					PlanBalanceId = inv.InvitedByUser != null ? inv.InvitedByUser.PlanBalanceId : _defaultUserId, //default placeholder;
+
+					// Members are Clients until promoted, new plans are admins from the start:
+					RoleId = inv.IsPlanInvitation ? (int)Roles.Client : (int)Roles.Admin,
+
+					//user.PricingPlanId = (int)PricingPlans.Basic;
+					SiteProfileId = inv.InvitedByUser.SiteProfileId,// int.Parse(SystemConfig.DefaultSiteProfileId);
+					RegisteredOn = DateTime.Now,
+					InvitationId = inv.InvitationId
+				};
+				//create user to get a userid
+				ctx.Users.AddObject(newUser);
+				ctx.SaveChanges();
+
+				return newUser;
+			}
+		}
+
+		// **************************************
+		// Subscribe
+		// **************************************  
+		public static PlanBalance SubscribeTo(this User user, PricingPlan pricingPlan) {
+
+			using (var ctx = new SongSearchContext()) {
+
+				if (user.EntityState != System.Data.EntityState.Detached) {
+
+					//ctx.Detach(user);  
+					ctx.Attach(user);
+				}
+
+				var oldSubs = user.Subscriptions;
+				foreach (var sub in oldSubs) {
+					if (sub.SubscriptionEndDate == null) {
+						sub.SubscriptionEndDate = DateTime.Now;
+					}
+				}
+
+				//Start a new Subscription
+				var subscription = new Subscription() {
+					SubscriptionStartDate = DateTime.Now,
+					SubscriptionEndDate = null,
+					PricingPlanId = pricingPlan.PricingPlanId,
+					PlanCharge = pricingPlan.PlanCharge.GetValueOrDefault()
+				};
+
+				user.Subscriptions.Add(subscription);
+				ctx.Subscriptions.AddObject(subscription);
+
+				// Adjust current plan
+				user.PricingPlanId = pricingPlan.PricingPlanId;
+
+				// if user was already on a plan, switch the balance over; if not, open a new balance
+				PlanBalance balance;
+
+				if (user.IsPlanOwner) {
+
+					balance = user.PlanBalance;
+					balance.PricingPlanId = pricingPlan.PricingPlanId;
+					balance.LastUpdatedByUserId = user.UserId;
+					balance.LastUpdatedOn = DateTime.Now;
+
+				} else {
+
+					balance = new PlanBalance() {
+						PricingPlanId = pricingPlan.PricingPlanId,
+						NumberOfCatalogAdmins = 1,
+						NumberOfInvitedUsers = 1,
+						NumberOfSongs = 0,
+						LastUpdatedByUserId = user.UserId,
+						LastUpdatedOn = DateTime.Now
+					};
+
+					user.PlanUserId = user.UserId;
+
+					balance.Users.Add(user);
+					ctx.PlanBalances.AddObject(balance);
+				}
+				ctx.SaveChanges();
+
+				return balance;
+			}
+		}
+
 
 		// **************************************
 		// UserIsValid
 		// **************************************    
-		public bool UserIsValid(string userName, string password) {
-			var user = ReadSession.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
-			return user != null && PasswordHashMatches(user.Password, password);
+		public static bool UserIsValid(string userName, string password) {
+			using (var ctx = new SongSearchContext()) {
+				var user = ctx.Users.SingleOrDefault(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+				return user != null && PasswordHashMatches(user.Password, password);
+			}
 		}
 
 		// **************************************
 		// UserExists
 		// **************************************    
-		public bool UserExists(string userName) {
-			return GetUser(userName) != null ? true : false;
+		public static bool UserExists(string userName) {
+			using (var ctx = new SongSearchContext()) {
+				return ctx.GetUser(userName) != null ? true : false;
+			}
 		}
 
 		// **************************************
 		// UpdateProfile
 		// **************************************    
-		public bool UpdateProfile(User user, IList<Contact> contacts) {
+		public static bool UpdateProfile(User user, IList<Contact> contacts) {
 
-			var dbuser = GetUser(user);
-			if (dbuser == null) {
-				return false;
-			}
-			dbuser.FirstName = user.FirstName;
-			dbuser.LastName = user.LastName;
-			dbuser.Signature = user.Signature;
-			dbuser.AppendSignatureToTitle = user.AppendSignatureToTitle;
-			dbuser.HasAllowedCommunication = user.HasAllowedCommunication;
+			
+			using (var ctx = new SongSearchContext()) {
 
-			foreach (var contact in contacts) {
-				if (contact != null && (!String.IsNullOrWhiteSpace(contact.Phone1) || !String.IsNullOrWhiteSpace(contact.Email))) {
-					var dbContact = dbuser.Contacts.SingleOrDefault(c => c.ContactId == contact.ContactId) ??
-						new Contact() {
-							ContactTypeId = contact.ContactTypeId > 0 ? contact.ContactTypeId : (int)ContactTypes.Main,
-							//IsDefault = true,
-							CreatedByUserId = dbuser.UserId,
-							CreatedOn = DateTime.Now
-						};
+				var dbuser = ctx.GetUser(user);
+				if (dbuser == null) {
+					return false;
+				}
 
-					dbContact.ContactName = contact.ContactName;
-					dbContact.CompanyName = contact.CompanyName;
-					dbContact.Address1 = contact.Address1;
-					dbContact.Address2 = contact.Address2;
-					dbContact.City = contact.City;
-					dbContact.StateRegion = contact.StateRegion;
-					dbContact.PostalCode = contact.PostalCode;
-					dbContact.Country = contact.Country;
-					dbContact.Phone1 = contact.Phone1;
-					dbContact.Phone2 = contact.Phone2;
-					dbContact.Fax = contact.Fax;
-					dbContact.Email = contact.Email;
-					dbContact.AdminEmail = contact.AdminEmail;
+				dbuser.FirstName = user.FirstName;
+				dbuser.LastName = user.LastName;
+				dbuser.Signature = user.Signature;
+				dbuser.AppendSignatureToTitle = user.AppendSignatureToTitle;
+				dbuser.HasAllowedCommunication = user.HasAllowedCommunication;
 
-					if (dbContact.ContactId == 0) {
-						DataSession.Add<Contact>(dbContact);
-						dbuser.Contacts.Add(dbContact);
+				foreach (var contact in contacts) {
+					if (contact != null && (!String.IsNullOrWhiteSpace(contact.Phone1) || !String.IsNullOrWhiteSpace(contact.Email))) {
+						var dbContact = dbuser.Contacts.SingleOrDefault(c => c.ContactId == contact.ContactId) ??
+							new Contact() {
+								ContactTypeId = contact.ContactTypeId > 0 ? contact.ContactTypeId : (int)ContactTypes.Main,
+								//IsDefault = true,
+								CreatedByUserId = dbuser.UserId,
+								CreatedOn = DateTime.Now
+							};
+
+						dbContact.ContactName = contact.ContactName;
+						dbContact.CompanyName = contact.CompanyName;
+						dbContact.Address1 = contact.Address1;
+						dbContact.Address2 = contact.Address2;
+						dbContact.City = contact.City;
+						dbContact.StateRegion = contact.StateRegion;
+						dbContact.PostalCode = contact.PostalCode;
+						dbContact.Country = contact.Country;
+						dbContact.Phone1 = contact.Phone1;
+						dbContact.Phone2 = contact.Phone2;
+						dbContact.Fax = contact.Fax;
+						dbContact.Email = contact.Email;
+						dbContact.AdminEmail = contact.AdminEmail;
+
+						if (dbContact.ContactId == 0) {
+							ctx.Contacts.AddObject(dbContact);
+							dbuser.Contacts.Add(dbContact);
+						}
 					}
 				}
+
+				ctx.SaveChanges();
+
+				dbuser = null;
+				return true;
+
 			}
-			DataSession.CommitChanges();
-			dbuser = null;
-			return true;
-			
+
 		}
 
 		// **************************************
 		// UpdateProfile
 		// **************************************    
-		public bool ChangePassword(User user, string newPassword) {
+		public static bool ChangePassword(User user, string newPassword) {
 
-			var dbuser = GetUser(user);
-			if (dbuser == null) {
-				return false;
-			}
 
-			if (!String.IsNullOrEmpty(newPassword)) {
-				if (PasswordHashMatches(dbuser.Password, user.Password)) {
-					dbuser.Password = newPassword.PasswordHashString();
-				} else {
-					throw new ArgumentException("Passwords do not match");
+			using (var ctx = new SongSearchContext()) {
+
+				var dbuser = ctx.GetUser(user);
+				if (dbuser == null) {
+					return false;
 				}
-			} else {
-				throw new ArgumentNullException("New password cannot be blank");
-			}
 
-			DataSession.CommitChanges();
-			dbuser = null;
-			return true;
+				if (!String.IsNullOrEmpty(newPassword)) {
+					if (PasswordHashMatches(dbuser.Password, user.Password)) {
+						dbuser.Password = newPassword.PasswordHashString();
+					} else {
+						throw new ArgumentException("Passwords do not match");
+					}
+				} else {
+					throw new ArgumentNullException("New password cannot be blank");
+				}
+
+				ctx.SaveChanges();
+				dbuser = null;
+				return true;
+			}
 
 		}
 		// **************************************
 		// ResetPassword
 		// **************************************    
-		public bool ResetPassword(string userName, string resetCode, string newPassword) {
+		public static bool ResetPassword(string userName, string resetCode, string newPassword) {
 
-			var user = GetUser(userName);
 
-			if (user == null) { return false; }
+			using (var ctx = new SongSearchContext()) {
 
-			if (user.UserName.PasswordHashString().Equals(resetCode)) {
-				user.Password = newPassword.PasswordHashString();
-				DataSession.Update<User>(user);
-				DataSession.CommitChanges();
-				user = null;
-				return true;
-			}
-			else {
-				user = null;
-				return false;
+				var user = ctx.GetUser(userName);
+				if (user == null) {
+					return false;
+				}
+
+				if (user.UserName.PasswordHashString().Equals(resetCode)) {
+					user.Password = newPassword.PasswordHashString();
+					ctx.SaveChanges();
+					user = null;
+					return true;
+				} else {
+					user = null;
+					return false;
+				}
 			}
 		}
 
-			
-		
+		// ----------------------------------------------------------------------------
+		// (Internal)
+		// ----------------------------------------------------------------------------
+		// **************************************
+		// GetUser
+		// **************************************    
+		internal static User GetUser(this SongSearchContext ctx, User user) {
+			return ctx.GetUser(user.UserName);
+		}
+		internal static User GetUser(this SongSearchContext ctx, string userName) {
+			return ctx.Users.SingleOrDefault(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+		}
+		internal static User GetUserGraph(this SongSearchContext ctx, string userName) {
+			return ctx.Users
+					.Include("ParentUser")
+					.Include("Carts")
+					.Include("Carts.Contents")
+					.Include("UserCatalogRoles")
+					.Include("Contacts")
+					.Include("ParentUser.Contacts")
+					.Include("PricingPlan")
+					.Include("PlanBalance")
+					.Include("PlanBalance.PricingPlan")
+					.Include("ParentUser.PricingPlan")
+					.SingleOrDefault(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
+		}
 
+		internal static User GetUserGraph(this SongSearchContext ctx, int userId) {
+			return ctx.Users
+					.Include("ParentUser")
+					.Include("Carts")
+					.Include("Carts.Contents")
+					.Include("UserCatalogRoles")
+					.Include("Contacts")
+					.Include("ParentUser.Contacts")
+					.Include("PricingPlan")
+					.Include("PlanBalance")
+					.Include("PlanBalance.PricingPlan")
+					.Include("ParentUser.PricingPlan")
+					.SingleOrDefault(u => u.UserId == userId);
+		}
 		// ----------------------------------------------------------------------------
 		// (Private)
 		// ----------------------------------------------------------------------------
 
-		// **************************************
-		// GetUser
-		// **************************************    
-		private User GetUser(User user) {
-			return GetUser(user.UserName);
-		}
-		private User GetUser(string userName) {
-			return DataSession.Single<User>(x => x.UserName.Equals(userName, StringComparison.InvariantCultureIgnoreCase));
-		}
-
-		// **************************************
-		// CreateUser
-		// **************************************
-		//private void CreateUser(User user) {
-
-		//    user.Password = user.Password.PasswordHashString();
-		//    user.ParentUserId = user.ParentUserId.HasValue ? user.ParentUserId.Value : 1;
-		//    user.RoleId = (int) Roles.Client;
-		//    user.SiteProfileId = int.Parse(Settings.DefaultSiteProfileId.Value());
-		//    user.ShowDebugInfo = false;
-		//    user.AppendSignatureToTitle = false;
-
-		//    DataSession.Add<User>(user);
-
-		//    user = null;
-		//}
 
 		// **************************************
 		// PasswordHashMatches
@@ -272,32 +387,7 @@ namespace SongSearch.Web.Services {
 			return hashed.Equals(unhashed.PasswordHashString());
 		}
 
-		// ----------------------------------------------------------------------------
-		// Dispose
-		// ----------------------------------------------------------------------------
-
-		public void Dispose() {
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-
-		private void Dispose(bool disposing) {
-			if (!_disposed) {
-				{
-					if (DataSession != null) {
-						DataSession.Dispose();
-						DataSession = null;
-					}
-					if (ReadSession != null) {
-						ReadSession.Dispose();
-						ReadSession = null;
-					}
-				}
-
-				_disposed = true;
-			}
-		}
+		
 
 	}
 }

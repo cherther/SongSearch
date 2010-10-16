@@ -15,15 +15,12 @@ namespace SongSearch.Web.Controllers {
 	public partial class AccountController : Controller {
 
 		IFormsAuthenticationService _authService;
-		IUserManagementService _usrMgmtService;
-		IAccountService _acctService;
 		IUserEventLogService _logService;
 
 		
 		protected override void Initialize(RequestContext requestContext) {
 			try {
 				if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-					_usrMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;		
 					_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 				}
 			}
@@ -44,13 +41,9 @@ namespace SongSearch.Web.Controllers {
 
 		public AccountController(
 			IFormsAuthenticationService authService,
-			IUserManagementService usrMgmtService,
-			IAccountService acctService,
 			IUserEventLogService logService
 			) {
 			_authService = authService;
-			_usrMgmtService = usrMgmtService;
-			_acctService = acctService;
 			_logService = logService;
 		}
 
@@ -74,12 +67,10 @@ namespace SongSearch.Web.Controllers {
 			model.Email = model.Email.Trim();
 
 			if (ModelState.IsValid) {
-				if (_acctService.UserIsValid(model.Email, model.Password))
+				if (AccountService.UserIsValid(model.Email, model.Password))
 				//if (_ms.UserIsValid(contentModel.Email, contentModel.Password))
 		{
-
 					_authService.SignIn(model.Email, model.RememberMe);
-					//_usrMgmtService.ActiveUserName = contentModel.Email;
 					
 					SessionService.Session().InitializeSession(model.Email, true);
 
@@ -172,7 +163,7 @@ namespace SongSearch.Web.Controllers {
 			Invitation inv = null;
 			if (!String.IsNullOrWhiteSpace(id) && !String.IsNullOrWhiteSpace(em)) {
 				try {
-					inv = _usrMgmtService.GetInvitation(id, em);
+					inv = UserManagementService.GetInvitation(id, em);
 					if (inv == null) {
 						ModelState.AddModelError("InviteId", SystemErrors.InviteCodeNoMatch);
 					}
@@ -208,7 +199,7 @@ namespace SongSearch.Web.Controllers {
 			//contentModel.UserName = contentModel.Email;
 
 			if (ModelState.IsValid) {
-				if (_acctService.UserExists(model.Email)) {
+				if (AccountService.UserExists(model.Email)) {
 					ModelState.AddModelError("Email", SystemErrors.UserAlreadyRegistered);
 				} else if (!model.HasAgreedToPrivacyPolicy){
 					ModelState.AddModelError("HasAgreedToPrivacyPolicy", "We''re sorry, we can only register you if you accept our Terms of Use.");
@@ -216,7 +207,7 @@ namespace SongSearch.Web.Controllers {
 					// Check invitation code
 					Invitation inv = null;
 					try {
-						inv = _usrMgmtService.GetInvitation(model.InviteId, model.Email);
+						inv = UserManagementService.GetInvitation(model.InviteId, model.Email);
 					}
 					catch (Exception ex){
 						Log.Error(ex);
@@ -253,7 +244,7 @@ namespace SongSearch.Web.Controllers {
 									};
 
 									try {
-										user = _acctService.RegisterUser(user, inv.InvitationId);
+										user = AccountService.RegisterUser(user, inv.InvitationId);
 
 										SetFriendlyNameCookie(user.FullName());
 										SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
@@ -315,7 +306,7 @@ namespace SongSearch.Web.Controllers {
 			if (ModelState.IsValid) {
 				var userName = this.UserName();
 				var user = new User() { UserName = userName, Password = model.OldPassword };
-				if (_acctService.ChangePassword(user, model.NewPassword)) {
+				if (AccountService.ChangePassword(user, model.NewPassword)) {
 					//_acctService.UpdateCurrentUserInSession();
 					_logService.LogUserEvent(UserActions.ChangePassword);
 
@@ -417,7 +408,7 @@ namespace SongSearch.Web.Controllers {
 			model.ShowContactInfo = currentUser.PricingPlan.CustomContactUs && currentUser.IsAtLeastInCatalogRole(Roles.Admin);
 	
 			//update the user's profile in the database
-			if (_acctService.UpdateProfile(userModel, new List<Contact>() { contact })) {
+			if (AccountService.UpdateProfile(userModel, new List<Contact>() { contact })) {
 				_logService.LogUserEvent(UserActions.UpdateProfile);
 
 				// UpdateModelWith the user dataSession cached in dataSession
@@ -541,7 +532,7 @@ namespace SongSearch.Web.Controllers {
 		public virtual ActionResult ResetPasswordRespond(ResetPasswordModel model) {
 			if (
 				ModelState.IsValid &&
-				_acctService.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
+				AccountService.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
 				) {
 
 	//			_logService.LogUserEvent(UserActions.ResetPassword);
@@ -570,7 +561,7 @@ namespace SongSearch.Web.Controllers {
 				NavigationLocation = new string[] { "Account", "Plan" },
 				PageTitle = "My Plan",
 				MyPricingPlan = Account.User().PricingPlan,				
-				MyUserQuotas = Account.User().MyQuotas()
+				MyUserBalances = Account.User().MyBalances()
 
 			};
 			vm.PricingPlans = User.UserIsSuperAdmin() ? vm.PricingPlans.Where(p => p.PricingPlanId > (int)PricingPlans.Member).ToList() :

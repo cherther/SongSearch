@@ -53,10 +53,10 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	<label>Songs</label>
 	</td>
 	<%if (Model.MyPricingPlan != null) {%>
-	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfSongs.ToQuotaDescription()%></td>
+	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfSongs.ToBalanceDescription()%></td>
 	<%} %>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfSongs.ToQuotaDescription() %></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfSongs.ToBalanceDescription() %></td>
 	<%} %>
 </tr>
 <tr>
@@ -64,10 +64,10 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	<label>Invited Users</label>
 	</td>
 	<%if (Model.MyPricingPlan != null) {%>
-	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfInvitedUsers.ToQuotaDescription()%></td>
+	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfInvitedUsers.ToBalanceDescription()%></td>
 	<%} %>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfInvitedUsers.ToQuotaDescription() %></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfInvitedUsers.ToBalanceDescription() %></td>
 	<%} %>
 </tr>
 <tr>
@@ -75,10 +75,10 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	<label>Catalog Administrators</label>
 	</td>
 	<%if (Model.MyPricingPlan != null) {%>
-	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfCatalogAdmins.ToQuotaDescription()%></td>
+	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfCatalogAdmins.ToBalanceDescription()%></td>
 	<%} %>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfCatalogAdmins.ToQuotaDescription() %></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfCatalogAdmins.ToBalanceDescription() %></td>
 	<%} %>
 </tr>
 <tr>

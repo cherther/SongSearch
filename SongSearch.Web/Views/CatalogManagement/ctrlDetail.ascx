@@ -82,7 +82,7 @@
 					<hr />
 				</td>
 			</tr>
-			 <% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlUserList, Model); %>   
+			 <%: Html.Partial(MVC.CatalogManagement.Views.ctrlUserList, Model)%>   
 		</table>
 </div>
 

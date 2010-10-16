@@ -28,7 +28,7 @@
 		<%} %>
 		<span title="<%: user.UserName %>">
 		<%if (Model.HierarchyLevel > 0) { %>
-			<%if (App.IsLicensedVersion && user.IsPlanUser) {%>
+			<%if (App.IsLicensedVersion && user.IsPlanOwner) {%>
 			<%:userDisplayName%>
 			<%} else {%>
 			&nbsp;-&nbsp;<%:userDisplayName%>

@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SongSearch.Web.Data {
-	public class UserQuotas {
-		public Quota NumberOfSongs { get; set; }
-		public Quota NumberOfInvitedUsers { get; set; }
-		public Quota NumberOfCatalogAdmins { get; set; }
+namespace SongSearch.Web {
+	public class UserBalances {
+		public Balance NumberOfSongs { get; set; }
+		public Balance NumberOfInvitedUsers { get; set; }
+		public Balance NumberOfCatalogAdmins { get; set; }
 
-		public UserQuotas() {
-			NumberOfSongs = new Quota() { Default = 50, QuotaName = "Songs" };
-			NumberOfInvitedUsers = new Quota() { Default = -1, QuotaName = "Users" };
-			NumberOfCatalogAdmins = new Quota() { Default = -1, QuotaName = "Admins" };
+		public UserBalances() {
+			NumberOfSongs = new Balance() { Default = 50, BalanceName = "Songs" };
+			NumberOfInvitedUsers = new Balance() { Default = -1, BalanceName = "Users" };
+			NumberOfCatalogAdmins = new Balance() { Default = -1, BalanceName = "Admins" };
 		}
 	}
 
-	public class Quota {
+	public class Balance {
 
 		public int Default { get; set; }
 		public int? Allowed { get; set; }
@@ -49,15 +49,15 @@ namespace SongSearch.Web.Data {
 			}
 		}
 
-		public string QuotaName { get; set; }
+		public string BalanceName { get; set; }
 		
 		public string UsageDescription {
 			get {
 
 				return String.Format("{0} of {1} {2} ({3})",
 								  Used.ToString("N0"),
-								  Allowed.ToQuotaDescription(),
-								  QuotaName,
+								  Allowed.ToBalanceDescription(),
+								  BalanceName,
 								  Usage.ToPercentDescription());
 			}
 		}
