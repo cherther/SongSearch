@@ -347,6 +347,12 @@ namespace SongSearch.Web
 				UserManagementService.TakeOwnerShip(id);
 				_logService.LogUserEvent(UserActions.TakeOwnership);
 
+				if (Request.IsAjaxRequest()) {
+					return Json(id);
+				} else {
+					this.FeedbackInfo("Sucessfully transferred user ownership");
+					return RedirectToAction(Actions.Index());
+				}
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -355,15 +361,11 @@ namespace SongSearch.Web
 					throw ex;
 				} else {
 					this.FeedbackError("There was an error processing your request...");
+					return RedirectToAction(Actions.Index());
 				}
 			}
 
-			if (Request.IsAjaxRequest()) {
-				return Json(id);
-			} else {
-				this.FeedbackInfo("Sucessfully transferred user ownership");
-				return RedirectToAction(Actions.Index());
-			}
+			
 		}
 
 

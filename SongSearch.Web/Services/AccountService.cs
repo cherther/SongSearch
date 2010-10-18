@@ -141,64 +141,73 @@ namespace SongSearch.Web.Services {
 		public static PlanBalance SubscribeTo(this User user, PricingPlan pricingPlan) {
 
 			using (var ctx = new SongSearchContext()) {
-
-				if (user.EntityState != System.Data.EntityState.Detached) {
-
-					//ctx.Detach(user);  
-					ctx.Attach(user);
-				}
-
-				var oldSubs = user.Subscriptions;
-				foreach (var sub in oldSubs) {
-					if (sub.SubscriptionEndDate == null) {
-						sub.SubscriptionEndDate = DateTime.Now;
-					}
-				}
-
-				//Start a new Subscription
-				var subscription = new Subscription() {
-					SubscriptionStartDate = DateTime.Now,
-					SubscriptionEndDate = null,
-					PricingPlanId = pricingPlan.PricingPlanId,
-					PlanCharge = pricingPlan.PlanCharge.GetValueOrDefault()
-				};
-
-				user.Subscriptions.Add(subscription);
-				ctx.Subscriptions.AddObject(subscription);
-
-				// Adjust current plan
-				user.PricingPlanId = pricingPlan.PricingPlanId;
-
-				// if user was already on a plan, switch the balance over; if not, open a new balance
-				PlanBalance balance;
-
-				if (user.IsPlanOwner) {
-
-					balance = user.PlanBalance;
-					balance.PricingPlanId = pricingPlan.PricingPlanId;
-					balance.LastUpdatedByUserId = user.UserId;
-					balance.LastUpdatedOn = DateTime.Now;
-
-				} else {
-
-					balance = new PlanBalance() {
-						PricingPlanId = pricingPlan.PricingPlanId,
-						NumberOfCatalogAdmins = 1,
-						NumberOfInvitedUsers = 1,
-						NumberOfSongs = 0,
-						LastUpdatedByUserId = user.UserId,
-						LastUpdatedOn = DateTime.Now
-					};
-
-					user.PlanUserId = user.UserId;
-
-					balance.Users.Add(user);
-					ctx.PlanBalances.AddObject(balance);
-				}
+				
+				var balance = ctx.SubscribeUserTo(user, pricingPlan);
 				ctx.SaveChanges();
 
 				return balance;
+
 			}
+		}
+
+		internal static PlanBalance SubscribeUserTo(this SongSearchContext ctx, User user, PricingPlan pricingPlan){
+			
+			if (user.EntityState == System.Data.EntityState.Detached) {
+
+				//ctx.Detach(user);  
+				ctx.Attach(user);
+			}
+
+			var oldSubs = user.Subscriptions;
+			foreach (var sub in oldSubs) {
+				if (sub.SubscriptionEndDate == null) {
+					sub.SubscriptionEndDate = DateTime.Now;
+				}
+			}
+
+			//Start a new Subscription
+			var subscription = new Subscription() {
+				SubscriptionStartDate = DateTime.Now,
+				SubscriptionEndDate = null,
+				PricingPlanId = pricingPlan.PricingPlanId,
+				PlanCharge = pricingPlan.PlanCharge.GetValueOrDefault()
+			};
+
+			user.Subscriptions.Add(subscription);
+			ctx.Subscriptions.AddObject(subscription);
+
+			// Adjust current plan
+			user.PricingPlanId = pricingPlan.PricingPlanId;
+
+			// if user was already on a plan, switch the balance over; if not, open a new balance
+			PlanBalance balance;
+
+			if (user.IsPlanOwner) {
+
+				balance = user.PlanBalance;
+				balance.PricingPlanId = pricingPlan.PricingPlanId;
+				balance.LastUpdatedByUserId = user.UserId;
+				balance.LastUpdatedOn = DateTime.Now;
+
+			} else {
+
+				balance = new PlanBalance() {
+					PricingPlanId = pricingPlan.PricingPlanId,
+					NumberOfCatalogAdmins = 1,
+					NumberOfInvitedUsers = 1,
+					NumberOfSongs = 0,
+					LastUpdatedByUserId = user.UserId,
+					LastUpdatedOn = DateTime.Now
+				};
+
+				user.PlanUserId = user.UserId;
+
+				balance.Users.Add(user);
+				ctx.PlanBalances.AddObject(balance);
+			}
+
+			return balance;
+			
 		}
 
 

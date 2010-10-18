@@ -104,10 +104,9 @@ namespace SongSearch.Web.Services {
 						if (user.CreatedCatalogs.Count() > 0) {
 
 							var userCats = user.CreatedCatalogs.ToList();
-							var catSvc = App.Container.Get<ICatalogManagementService>();
-
+							
 							foreach (var cat in userCats) {
-								catSvc.DeleteCatalog(cat.CatalogId);
+								CatalogManagementService.DeleteCatalog(cat.CatalogId);
 							}
 						}
 
@@ -144,12 +143,12 @@ namespace SongSearch.Web.Services {
 			user.ParentUserId = userId;
 
 			//put user on a plan
-			//if (!user.IsPlanUser) {
+			if (!user.IsPlanOwner) {
 
-			//    user.PricingPlanId = (int)PricingPlans.Introductory;
-			//    user.PlanUserId = user.UserId;
-
-			//}
+				user.PricingPlanId = (int)PricingPlans.Introductory;
+				
+				ctx.SubscribeUserTo(user, new PricingPlan() { PricingPlanId = (int)PricingPlans.Introductory });
+			}
 			// take over the child users
 			var childUsers = ctx.Users.Where(u => u.ParentUserId == user.UserId);
 			foreach (var child in childUsers) {

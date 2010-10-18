@@ -24,7 +24,7 @@ namespace SongSearch.Web.Controllers
 			base.Initialize(requestContext);
 		}
 
-		public AdminController(IContentAdminService cntAdmService, IUserEventLogService logService) {
+		public AdminController(IUserEventLogService logService) {
 			_logService = logService;
 		}
 		public virtual ActionResult UpdateCache() {

@@ -248,11 +248,8 @@
     <Compile Include="Services\AmazonCloudService.cs" />
     <Compile Include="Services\UserEventLogService.cs" />
     <Compile Include="Services\Interfaces\IUserEventLogService.cs" />
-    <Compile Include="Services\Interfaces\IMediaCloudService.cs" />
-    <Compile Include="Services\Interfaces\IMediaService.cs" />
     <Compile Include="Services\SiteProfileData.cs" />
     <Compile Include="Services\SessionService.cs" />
-    <Compile Include="Services\Interfaces\ICatalogManagementService.cs" />
     <Compile Include="Services\Interfaces\ICatalogUploadService.cs" />
     <Compile Include="Services\WorkflowEngine.cs" />
     <Compile Include="SharedController.generated.cs">
@@ -293,8 +290,6 @@
     <Compile Include="Services\CacheService.cs" />
     <Compile Include="Services\ContentAdminService.cs" />
     <Compile Include="Services\CartService.cs" />
-    <Compile Include="Services\Interfaces\ICartService.cs" />
-    <Compile Include="Services\Interfaces\IContentAdminService.cs" />
     <Compile Include="ViewModels\ContentViewModel.cs" />
     <Compile Include="ViewModels\CartViewModel.cs" />
     <Compile Include="ViewModels\ContentListViewModel.cs" />
@@ -306,8 +301,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountData.cs" />
     <Compile Include="Services\MediaService.cs" />
-    <Compile Include="Services\Interfaces\IAccountService.cs" />
-    <Compile Include="Services\Interfaces\IUserManagementService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\UserManagementService.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
