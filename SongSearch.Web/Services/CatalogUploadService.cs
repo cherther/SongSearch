@@ -40,22 +40,19 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	// CatalogUploadService
 	// **************************************
-	public class CatalogUploadService : BaseService,  ICatalogUploadService {
+	public class CatalogUploadService : ICatalogUploadService {
 
 
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
 		private bool _disposed;
-		IMediaService _mediaService;
 				
-		public CatalogUploadService(IDataSession session, IMediaService mediaService) : base(session) {
+		public CatalogUploadService(){
 
 			CatalogUploadWorkflow = CreateCatalogUploadWorkflow();
-			_mediaService = mediaService;
 		
 		}
-		public CatalogUploadService(string activeUserIdentity) : base(activeUserIdentity) { }
 
 
 		// ----------------------------------------------------------------------------
@@ -144,12 +141,14 @@ namespace SongSearch.Web.Services {
 					throw new AccessViolationException("You do not have admin rights to this catalog.", innerException: null);
 			    }
 
-				var catalog = DataSession.Single<Catalog>(c => c.CatalogId == state.CatalogId);
-				if (catalog == null) {
-					throw new ArgumentOutOfRangeException("Catalog does not exist.", innerException: null);
+				using(var ctx = new SongSearchContext()){
+					var catalog = ctx.Catalogs.SingleOrDefault(c => c.CatalogId == state.CatalogId);
+					if (catalog == null) {
+						throw new ArgumentOutOfRangeException("Catalog does not exist.", innerException: null);
+					}
+					state.CatalogName = catalog.CatalogName;
+					return state;
 				}
-				state.CatalogName = catalog.CatalogName;
-				return state;
 
 			} 
 			
@@ -305,125 +304,126 @@ namespace SongSearch.Web.Services {
 			// Save/create Catalog
 			if (user.IsAtLeastInRole(Roles.Admin) && !user.MyBalances().NumberOfSongs.IsAtTheLimit) {
 
-				var catalog = DataSession.Single<Catalog>(c => c.CatalogName.ToUpper() == state.CatalogName) ??
-					new Catalog() { 
-						CatalogName = state.CatalogName,
-						CreatedByUserId = user.UserId,
-						CreatedOn = DateTime.Now					
-					};
+				using (var ctx = new SongSearchContext()) {
 
-				if (catalog.CatalogId == 0) {
+					var catalog = ctx.Catalogs.SingleOrDefault(c => c.CatalogName.ToUpper() == state.CatalogName) ??
+						new Catalog() {
+							CatalogName = state.CatalogName,
+							CreatedByUserId = user.UserId,
+							CreatedOn = DateTime.Now
+						};
 
-					DataSession.Add<Catalog>(catalog);
-					//DataSession.CommitChanges();
+					if (catalog.CatalogId == 0) {
 
-					//Make current user an admin
-					var userCatalog = new UserCatalogRole() {
-						UserId = user.UserId,
-						CatalogId = catalog.CatalogId,
-						RoleId = (int)Roles.Admin
-					};
-					DataSession.Add<UserCatalogRole>(userCatalog);
+						ctx.Catalogs.AddObject(catalog);
+						//DataSession.CommitChanges();
 
-					//Make parent user an admin
-					if (user.ParentUserId.HasValue) {
-						var parentUserCatalog = 
-							//DataSession.Single<UserCatalogRole>(
-							//    x => x.UserId == user.ParentUserId.Value &&
-							//        x.CatalogId == catalog.CatalogId &&
-							//        x.RoleId == (int)Roles.Admin
-							//        ) ?? 
-							new UserCatalogRole() {
-								UserId = user.ParentUserId.Value,
-								CatalogId = catalog.CatalogId,
-								RoleId = (int)Roles.Admin
-							};
-						DataSession.Add<UserCatalogRole>(parentUserCatalog);
-					}
-
-					//Make plan user an admin
-					if (!user.IsPlanOwner && user.PlanUserId != user.ParentUserId.GetValueOrDefault()) {
-						var planUserCatalog = 
-							//DataSession.Single<UserCatalogRole>(
-							//    x => x.UserId == user.PlanUserId && 
-							//        x.CatalogId == catalog.CatalogId && 
-							//        x.RoleId == (int)Roles.Admin
-							//        ) ??
-							new UserCatalogRole() {
-							UserId = user.PlanUserId,
+						//Make current user an admin
+						var userCatalog = new UserCatalogRole() {
+							UserId = user.UserId,
 							CatalogId = catalog.CatalogId,
 							RoleId = (int)Roles.Admin
 						};
-						DataSession.Add<UserCatalogRole>(planUserCatalog);
+						ctx.UserCatalogRoles.AddObject(userCatalog);
+
+						//Make parent user an admin
+						if (user.ParentUserId.HasValue) {
+							var parentUserCatalog =
+								//DataSession.Single<UserCatalogRole>(
+								//    x => x.UserId == user.ParentUserId.Value &&
+								//        x.CatalogId == catalog.CatalogId &&
+								//        x.RoleId == (int)Roles.Admin
+								//        ) ?? 
+								new UserCatalogRole() {
+									UserId = user.ParentUserId.Value,
+									CatalogId = catalog.CatalogId,
+									RoleId = (int)Roles.Admin
+								};
+							ctx.UserCatalogRoles.AddObject(parentUserCatalog);
+						}
+
+						//Make plan user an admin
+						if (!user.IsPlanOwner && user.PlanUserId != user.ParentUserId.GetValueOrDefault()) {
+							var planUserCatalog =
+								//DataSession.Single<UserCatalogRole>(
+								//    x => x.UserId == user.PlanUserId && 
+								//        x.CatalogId == catalog.CatalogId && 
+								//        x.RoleId == (int)Roles.Admin
+								//        ) ??
+								new UserCatalogRole() {
+									UserId = user.PlanUserId,
+									CatalogId = catalog.CatalogId,
+									RoleId = (int)Roles.Admin
+								};
+							ctx.UserCatalogRoles.AddObject(planUserCatalog);
+						}
+
+						// defer?
+						ctx.SaveChanges();
 					}
 
-					// defer?
-					DataSession.CommitChanges();
-				}
+					state.CatalogId = catalog.CatalogId;
+					state.CatalogName = catalog.CatalogName.ToUpper();
 
-				state.CatalogId = catalog.CatalogId;
-				state.CatalogName = catalog.CatalogName.ToUpper();
+					// Save Content
+					var content = App.IsLicensedVersion ?
+						state.Content.Take(user.MyBalances().NumberOfSongs.IsGoodFor(state.Content.Count())).ToList() :
+						state.Content;
 
-				// Save Content
-				var content = App.IsLicensedVersion ?
-					state.Content.Take(user.MyBalances().NumberOfSongs.IsGoodFor(state.Content.Count())).ToList() :
-					state.Content;
+					foreach (var itm in content) {
 
-				foreach (var itm in content) {
+						itm.CatalogId = state.CatalogId;
+						itm.CreatedByUserId = user.UserId;
+						itm.CreatedOn = DateTime.Now;
+						itm.LastUpdatedByUserId = user.UserId;
+						itm.LastUpdatedOn = DateTime.Now;
+						//itm.IsMediaOnRemoteServer = false;
 
-					itm.CatalogId = state.CatalogId;
-					itm.CreatedByUserId = user.UserId;
-					itm.CreatedOn = DateTime.Now;
-					itm.LastUpdatedByUserId = user.UserId;
-					itm.LastUpdatedOn = DateTime.Now;
-					//itm.IsMediaOnRemoteServer = false;
-					
-					itm.Title = itm.Title.AsEmptyIfNull();//.CamelCase();//.ToUpper();
-					itm.Artist = itm.Artist.AsEmptyIfNull();//.CamelCase();//.ToUpper();
-					itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull();//.CamelCase();//.ToUpper();
-					itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
-					itm.Notes = itm.Notes;
-					
-					var full = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Full);
-					foreach(var version in ModelEnums.MediaVersions()){
-						
-						var upl = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == version);
-						if (upl != null) {
-							
-							var file = new FileInfo(upl.FilePath);
-							var id3 = ID3Writer.NormalizeTag(upl.FilePath, itm);
+						itm.Title = itm.Title.AsEmptyIfNull();//.CamelCase();//.ToUpper();
+						itm.Artist = itm.Artist.AsEmptyIfNull();//.CamelCase();//.ToUpper();
+						itm.RecordLabel = itm.RecordLabel.AsEmptyIfNull();//.CamelCase();//.ToUpper();
+						itm.ReleaseYear = itm.ReleaseYear.GetValueOrDefault().AsNullIfZero();
+						itm.Notes = itm.Notes;
 
-							var media = new ContentMedia() {
+						var full = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == MediaVersion.Full);
+						foreach (var version in ModelEnums.MediaVersions()) {
 
-								MediaVersion = (int)version,
-								MediaType = "mp3",
-								MediaSize = file.Length,
-								MediaLength = id3.MediaLength,
-								MediaDate = file.GetMediaDate(),
-								MediaBitRate = id3.GetBitRate(file.Length)
-							};
-							
-							media.IsRemote = false;
+							var upl = itm.UploadFiles.SingleOrDefault(f => f.FileMediaVersion == version);
+							if (upl != null) {
 
-							itm.ContentMedia.Add(media);
+								var file = new FileInfo(upl.FilePath);
+								var id3 = ID3Writer.NormalizeTag(upl.FilePath, itm);
+
+								var media = new ContentMedia() {
+
+									MediaVersion = (int)version,
+									MediaType = "mp3",
+									MediaSize = file.Length,
+									MediaLength = id3.MediaLength,
+									MediaDate = file.GetMediaDate(),
+									MediaBitRate = id3.GetBitRate(file.Length)
+								};
+
+								media.IsRemote = false;
+
+								itm.ContentMedia.Add(media);
+							}
+
+
+						}
+						ctx.Contents.AddObject(itm);
+						ctx.SaveChanges();
+
+						if (itm.ContentId > 0) {
+							foreach (var file in itm.UploadFiles) {
+								MediaService.SaveContentMedia(file.FilePath, itm.Media(file.FileMediaVersion));
+							}
 						}
 
 
 					}
-		
-					DataSession.Add<Content>(itm);
-					DataSession.CommitChanges();
 
-					if (itm.ContentId > 0) {
-						foreach (var file in itm.UploadFiles) {
-							_mediaService.SaveContentMedia(file.FilePath, itm.Media(file.FileMediaVersion));
-						}
-					}
-
-					
 				}
-				
-			
 			}
 
 			SessionService.Session().InitializeSession(true);
@@ -471,14 +471,7 @@ namespace SongSearch.Web.Services {
 		private void Dispose(bool disposing) {
 			if (!_disposed) {
 				{
-					if (DataSession != null) {
-						DataSession.Dispose();
-						DataSession = null;
-					}
-					if (ReadSession != null) {
-						ReadSession.Dispose();
-						ReadSession = null;
-					}
+					
 				}
 
 				_disposed = true;

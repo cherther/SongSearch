@@ -14,27 +14,20 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	// MediaService
 	// **************************************
-	
-	public class MediaService : BaseService, IMediaService {
 
-		IMediaCloudService _mediaCloudService;
+	public static class MediaService { //: BaseService, IMediaService {
 
-		public MediaService(IDataSession dataSession, IDataSessionReadOnly readSession, IMediaCloudService mediaCloudService)
-			: base(dataSession, readSession) {
-				_mediaCloudService = mediaCloudService;
-		}
-
-		// **************************************
+				// **************************************
 		// GetContentMedia
 		// **************************************
-		public byte[] GetContentMedia(ContentMedia contentMedia)
+		public static byte[] GetContentMedia(ContentMedia contentMedia)
 		{
 			return SystemConfig.UseRemoteMedia && contentMedia.IsRemote ?
-				_mediaCloudService.GetContentMedia(contentMedia)
+				AmazonCloudService.GetContentMedia(contentMedia)
 				: GetContentMediaLocal(contentMedia);
 		}
 
-		public byte[] GetContentMedia(ContentMedia contentMedia, User user) {
+		public static byte[] GetContentMedia(ContentMedia contentMedia, User user) {
 
 			//try {
 
@@ -47,7 +40,7 @@ namespace SongSearch.Web.Services {
 			//}
 		}
 
-        public byte[] WriteMediaSignature(byte[] mediaFile, Content content, User user){
+		public static byte[] WriteMediaSignature(byte[] mediaFile, Content content, User user) {
         
         		var tempPath = String.Concat(SystemConfig.ZipPath, "\\", Guid.NewGuid(), ".mp3");
 
@@ -70,7 +63,7 @@ namespace SongSearch.Web.Services {
 		
         }
 
-		private byte[] GetContentMediaLocal(ContentMedia contentMedia)
+		private static byte[] GetContentMediaLocal(ContentMedia contentMedia)
 		{
 
 			var assetFile = new FileInfo(GetContentMediaPathLocal(contentMedia));
@@ -94,18 +87,18 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetContentMediaFilePath
 		// **************************************
-		public string GetContentMediaPath(ContentMedia contentMedia) {
+		public static string GetContentMediaPath(ContentMedia contentMedia) {
 
 			return SystemConfig.UseRemoteMedia && contentMedia.IsRemote ?
-					_mediaCloudService.GetContentMediaUrl(contentMedia)
+					AmazonCloudService.GetContentMediaUrl(contentMedia)
 					: GetContentMediaPathLocal(contentMedia);
 
 		}
 
-		public string GetContentMediaUrl(ContentMedia contentMedia) {
+		public static string GetContentMediaUrl(ContentMedia contentMedia) {
 
 			return SystemConfig.UseRemoteMedia && contentMedia.IsRemote ?
-					_mediaCloudService.GetContentMediaUrl(contentMedia)
+					AmazonCloudService.GetContentMediaUrl(contentMedia)
 					: GetContentMediaUrlLocal(contentMedia);
 
 		}
@@ -113,7 +106,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// SaveContentMedia
 		// **************************************
-		public void SaveContentMedia(string filePath, ContentMedia contentMedia) {
+		public static void SaveContentMedia(string filePath, ContentMedia contentMedia) {
 			//ID3Writer.NormalizeTag(filePath, content);
 			var mediaPath = GetContentMediaPathLocal(contentMedia);
 			FileSystem.SafeMove(filePath, mediaPath, true);
@@ -144,36 +137,6 @@ namespace SongSearch.Web.Services {
 				contentMedia.ContentId.ToString(), 
 				(MediaVersion)contentMedia.MediaVersion);
 			
-		}
-
-
-		// ----------------------------------------------------------------------------
-		// (Dispose)
-		// ----------------------------------------------------------------------------
-		private bool _disposed;
-
-		public void Dispose() {
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-		private void Dispose(bool disposing) {
-			if (!_disposed) {
-				// If disposing equals true, dispose all managed
-				// and unmanaged resources.if (disposing)
-				{
-					//if (DataSession != null) {
-					//    DataSession.Dispose();
-					//    DataSession = null;
-					//}
-				}
-
-				// Call the appropriate methods to clean up
-				// unmanaged resources here.
-				//CloseHandle(handle);
-				//handle = IntPtr.Zero;
-
-				_disposed = true;
-			}
 		}
 
 	}

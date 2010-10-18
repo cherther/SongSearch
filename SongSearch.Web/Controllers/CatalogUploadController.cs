@@ -20,7 +20,6 @@ namespace SongSearch.Web.Controllers
 		protected override void Initialize(RequestContext requestContext) {
 
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_catUploadService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
 				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 			}
 			base.Initialize(requestContext);

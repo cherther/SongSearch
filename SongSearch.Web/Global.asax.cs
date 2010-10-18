@@ -400,14 +400,7 @@ namespace SongSearch.Web {
 				Bind<IDataSession>().To<SongSearchDataSession>();
 				Bind<IDataSessionReadOnly>().To<SongSearchDataSessionReadOnly>();
 
-				//Bind<IAccountService>().To<AccountService>();
-				Bind<ICartService>().To<CartService>();
-				Bind<IContentAdminService>().To<ContentAdminService>();
-				Bind<ICatalogManagementService>().To<CatalogManagementService>();
 				Bind<ICatalogUploadService>().To<CatalogUploadService>();
-
-				Bind<IMediaService>().To<MediaService>();
-				Bind<IMediaCloudService>().To<AmazonCloudService>();
 
 				Bind<IUserEventLogService>().To<UserEventLogService>();
 

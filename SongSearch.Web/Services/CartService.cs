@@ -14,37 +14,29 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	// AccountService
 	// **************************************
-	public class CartService : BaseService, ICartService {
+	public static class CartService {
 
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
-		//private IDataSession DataSession;
-		private bool _disposed;
-		//private string _activeUserIdentity;
-
-		
-		IMediaService _mediaService;
-
-		public CartService(IDataSession dataSession, IDataSessionReadOnly readSession, IMediaService mediaService) : base(dataSession, readSession) {
-			_mediaService = mediaService;
-		}
-
-		public CartService(string activeUserIdentity) : base(activeUserIdentity) { }
 		// **************************************
 		// MyCarts
 		// **************************************
-		public IList<Cart> MyCarts() {
+		public static IList<Cart> MyCarts() {
 			var userId = Account.User().UserId;
-			var carts = ReadSession.GetObjectQuery<Cart>()
-				.Include("Contents")
-				.Include("Contents.ContentMedia")
-				.Where(c => c.UserId == userId).ToList();
 
-			return AddUserDownloadableNames(carts);
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
+				var carts = ctx.Carts
+					.Include("Contents")
+					.Include("Contents.ContentMedia")
+					.Where(c => c.UserId == userId).ToList();
+
+				return AddUserDownloadableNames(carts);
+			}
 		}
 
-		private List<Cart> AddUserDownloadableNames(List<Cart> carts) {
+		private static List<Cart> AddUserDownloadableNames(List<Cart> carts) {
 
 			foreach (var cart in carts) {
 
@@ -64,30 +56,38 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// MyActiveCart
 		// **************************************
-		public Cart MyActiveCart() {
+		public static Cart MyActiveCart() {
 			var userId = Account.User().UserId;
-			return DataSession.Single<Cart>(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active);
+			using (var ctx = new SongSearchContext()) {
+				return ctx.GetActiveCart();
+			}
 		}
-
+		private static Cart GetActiveCart(this SongSearchContext ctx) {
+			var userId = Account.User().UserId;
+			return ctx.Carts.SingleOrDefault(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active);
+		}
 		// **************************************
 		// MyActiveCartContents
 		// **************************************
-		public Cart MyActiveCartContents() {
+		public static Cart MyActiveCartContents() {
 			var userId = Account.User().UserId;
-			return ReadSession.GetObjectQuery<Cart>()
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
+				return ctx.Carts
 				.Include("Contents").Include("Contents.ContentMedia")
-				.Where(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active).SingleOrDefault();			
+				.SingleOrDefault(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active);
+			}
 		}
 		
 		// **************************************
 		// MyCartContents
 		// **************************************
-		public int[] MyCartContents() {
+		public static int[] MyCartContents() {
 			var query = MyActiveCart();
 			var cartContents = new[] { 0 };
 
 			if (query != null) {
-				cartContents = query.Contents.Select(q => q.ContentId).AsParallel().ToArray();
+				cartContents = query.Contents.Select(q => q.ContentId).ToArray();
 			}
 			query = null;
 			return cartContents;
@@ -96,7 +96,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// IsInMyActiveCart
 		// **************************************
-		public bool IsInMyActiveCart(int contentId) {
+		public static bool IsInMyActiveCart(int contentId) {
 			var query = MyActiveCart();
 
 			return query != null && query.Contents != null && query.Contents.Any(i => i.ContentId == contentId);
@@ -105,115 +105,126 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// AddToMyActiveCart
 		// **************************************
-		public void AddToMyActiveCart(int contentId) {
+		public static void AddToMyActiveCart(int contentId) {
 
-			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
-			if (content == null) {
-				throw new ArgumentException(SystemErrors.ItemDoesNotExist);
-			}
-
-			// Check if open cart exists and if needed create new cart
-			var cart = MyActiveCart();
-
-			if (cart != null) {
-				if (cart.Contents.Any(i => i.ContentId == contentId)) {
-					return;
+			using (var ctx = new SongSearchContext()) {
+				var content = ctx.Contents.SingleOrDefault(c => c.ContentId == contentId);
+				if (content == null) {
+					throw new ArgumentException(SystemErrors.ItemDoesNotExist);
 				}
-			} else {
-				cart = EmptyCart();
 
-				DataSession.Add<Cart>(cart);
-			}
-			if (cart.Contents.Count() < 100) {
-				cart.Contents.Add(content);
-			} else {
-				throw new ArgumentOutOfRangeException("You cart already contains the maximum number of items (100)");
-			}
-			DataSession.CommitChanges();
+				// Check if open cart exists and if needed create new cart
+				var cart = ctx.GetActiveCart() ?? EmptyCart();
 
+				if (cart != null) {
+					if (cart.Contents.Any(i => i.ContentId == contentId)) {
+						return;
+					}
+				} else {
+					cart = EmptyCart();
+					ctx.Carts.AddObject(cart);
+				}
+				if (cart.Contents.Count() < 100) {
+					cart.Contents.Add(content);
+				} else {
+					throw new ArgumentOutOfRangeException("You cart already contains the maximum number of items (100)");
+				}
+				ctx.SaveChanges();
+			}
 		}
 
-		
 
-		public void AddToMyActiveCart(int[] contentIds) {
+
+		public static void AddToMyActiveCart(int[] contentIds) {
 
 			// Check if open cart exists and if needed create new cart
-			var cart = MyActiveCart() ?? EmptyCart();
-
-			if (cart.CartId == 0) { DataSession.Add<Cart>(cart); }
+			using (var ctx = new SongSearchContext()) {
+				var cart = ctx.GetActiveCart() ?? EmptyCart();
 			
-			if (cart.Contents.Count() + contentIds.Count() > 100){
-				throw new ArgumentOutOfRangeException("You cart already contains the maximum number of items (100)");
-			}
+				if (cart.CartId == 0) { ctx.Carts.AddObject(cart); }
 
-			var contents = DataSession.All<Content>().Where(c => contentIds.Contains(c.ContentId)).ToList();
-			
-
-			foreach (var contentId in contentIds){
-				if (!cart.Contents.Any(i => i.ContentId == contentId)){
-					var content = contents.SingleOrDefault(c => c.ContentId == contentId);
-					if (content == null) {
-						throw new ArgumentException(SystemErrors.ItemDoesNotExist);
-					}
-					cart.Contents.Add(content);
+				if (cart.Contents.Count() + contentIds.Count() > 100) {
+					throw new ArgumentOutOfRangeException("You cart already contains the maximum number of items (100)");
 				}
+
+				var contents = ctx.Contents.Where(c => contentIds.Contains(c.ContentId)).ToList();
+
+				foreach (var contentId in contentIds) {
+					if (!cart.Contents.Any(i => i.ContentId == contentId)) {
+						var content = contents.SingleOrDefault(c => c.ContentId == contentId);
+						if (content == null) {
+							throw new ArgumentException(SystemErrors.ItemDoesNotExist);
+						}
+						cart.Contents.Add(content);
+					}
+				}
+
+				ctx.SaveChanges();
 			}
-
-			DataSession.CommitChanges();
-
 		}
 		// **************************************
 		// RemoveFromMyActiveCart
 		// **************************************
-		public void RemoveFromMyActiveCart(int contentId) {
+		public static void RemoveFromMyActiveCart(int contentId) {
 
-			var cart = MyActiveCart();
+			using (var ctx = new SongSearchContext()) {
+				var cart = ctx.GetActiveCart();
 
-			if (cart != null) {
-				var content = cart.Contents.Where(c => c.ContentId == contentId).SingleOrDefault();
-				if (content != null) {
-					cart.Contents.Remove(content);
-
-					DataSession.CommitChanges();
-				}
-			}
-
-			cart = null;
-		}
-
-		public void RemoveFromMyActiveCart(int[] contentIds) {
-
-			var cart = MyActiveCart();
-
-			if (cart != null) {
-				foreach (var contentId in contentIds) {
+				if (cart != null) {
+				
 					var content = cart.Contents.Where(c => c.ContentId == contentId).SingleOrDefault();
 					if (content != null) {
 						cart.Contents.Remove(content);
+
+						ctx.SaveChanges();
 					}
 				}
 
-				DataSession.CommitChanges();
-
+				cart = null;
 			}
+		}
 
-			cart = null;
+		public static void RemoveFromMyActiveCart(int[] contentIds) {
+
+			using (var ctx = new SongSearchContext()) {
+				var cart = ctx.GetActiveCart();
+
+				if (cart != null) {
+					foreach (var contentId in contentIds) {
+						var content = cart.Contents.Where(c => c.ContentId == contentId).SingleOrDefault();
+						if (content != null) {
+							cart.Contents.Remove(content);
+						}
+					}
+
+					ctx.SaveChanges();
+
+				}
+
+				cart = null;
+			}
 		}
 
 		// **************************************
 		// CompressMyActiveCart
 		// **************************************
-		public void CompressMyActiveCart(string userArchiveName = null, IList<ContentUserDownloadable> contentNames = null) {
-			var cart = MyActiveCart();
+		public static void CompressMyActiveCart(string userArchiveName = null, IList<ContentUserDownloadable> contentNames = null) {
+			using (var ctx = new SongSearchContext()) {
+				var cart = ctx.GetActiveCart();
 
-			if (cart != null && cart.Contents.Count() > 0) {
-				string zipName = cart.ArchiveDownloadName(userArchiveName);
-				cart.ArchiveName = zipName;
-				CompressCart(cart.CartId, contentNames);
-				cart.MarkAsCompressed();
-				DataSession.CommitChanges();
-				SessionService.Session().SessionUpdate(cart.CartId, "ProcessingCartId");
-				cart = null;
+				if (cart != null && cart.Contents.Count() > 0) {
+					string zipName = cart.ArchiveDownloadName(userArchiveName);
+					cart.ArchiveName = zipName;
+					
+					CompressCart(cart.CartId, contentNames);
+					
+					cart.MarkAsCompressed();
+
+					ctx.SaveChanges();
+
+					SessionService.Session().SessionUpdate(cart.CartId, "ProcessingCartId");
+					cart = null;
+				}
 			}
 		}
 
@@ -223,16 +234,15 @@ namespace SongSearch.Web.Services {
 		//
 		// ATTENTION: This seems to require the Application Pool to run as an admin or some account with elevated privileges, have to check...
 		//
-		public void CompressMyActiveCartOffline(string userArchiveName = null, IList<ContentUserDownloadable> contentNames = null) {
+		public static void CompressMyActiveCartOffline(string userArchiveName = null, IList<ContentUserDownloadable> contentNames = null) {
 			//mark as processing
 
 			try {
 
-				using (var session = new SongSearchDataSession()) { 
+				using (var ctx = new SongSearchContext()) {
 					var userId = Account.User().UserId;
-					
-					var cart = session
-								.GetObjectQuery<Cart>()
+
+					var cart = ctx.Carts
 								//.Include("Contents").Include("Contents.ContentMedia")
 								.SingleOrDefault(c => c.UserId == userId && c.CartStatus == (int)CartStatusCodes.Active);
 
@@ -242,12 +252,12 @@ namespace SongSearch.Web.Services {
 						cart.ArchiveName = cart.ArchiveDownloadName(userArchiveName);
 						cart.CartStatus = (int)CartStatusCodes.Processing;
 
-						session.CommitChanges();
+						ctx.SaveChanges();
 
 						//hand off compression work
 						CompressCartDelegate compressDelegate = new CompressCartDelegate(CompressCart);
 						// Define the AsyncCallback delegate.
-						AsyncCallback callBack = new AsyncCallback(this.CompressCartCallback);
+						AsyncCallback callBack = new AsyncCallback(CompressCartCallback);
 
 						compressDelegate.BeginInvoke(cart.CartId, contentNames,
 							callBack,
@@ -267,11 +277,11 @@ namespace SongSearch.Web.Services {
 
 		}
 
-		public void CompressCartCallback(IAsyncResult asyncResult) {
+		public static void CompressCartCallback(IAsyncResult asyncResult) {
 			// Extract the delegate from the 
 			// System.Runtime.Remoting.Messaging.AsyncResult.
 
-			using (var session = new SongSearchDataSession()) {
+			using (var ctx = new SongSearchContext()) {
 
 				try {
 
@@ -280,15 +290,15 @@ namespace SongSearch.Web.Services {
 
 					compressDelegate.EndInvoke(asyncResult);
 
-					var cart = session
-								.GetObjectQuery<Cart>()
+					var cart = ctx
+								.Carts
 								.Include("Contents")//.Include("Contents.ContentMedia")
 								.SingleOrDefault(c => c.CartId == cartId);
 
 					if (cart != null && cart.Contents.Count() > 0) {
 
 						cart.MarkAsCompressed();
-						session.CommitChanges();
+						ctx.SaveChanges();
 
 						cart = null;
 					}
@@ -304,36 +314,43 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// DownloadPackagedCart
 		// **************************************
-		public Cart DownloadCompressedCart(int cartId) {
+		public static Cart DownloadCompressedCart(int cartId) {
 			var userId = Account.User().UserId;
-			var cart = DataSession.Single<Cart>(c => c.UserId == userId && c.CartId == cartId);
-			if (cart == null) {
-				throw new ArgumentOutOfRangeException();
+			using (var ctx = new SongSearchContext()) {
+
+				var cart = ctx.Carts.SingleOrDefault(c => c.UserId == userId && c.CartId == cartId);
+				if (cart == null) {
+					throw new ArgumentOutOfRangeException();
+				}
+				cart.MarkAsDownloaded();
+				ctx.SaveChanges();
+				return cart;
 			}
-			cart.MarkAsDownloaded();
-			DataSession.CommitChanges();
-			return cart;
 		}
 
 		// **************************************
 		// DeleteCart
 		// **************************************
-		public void DeleteCart(int cartId) {
+		public static void DeleteCart(int cartId) {
+
 			var userId = Account.User().UserId;
-			var cart = DataSession.Single<Cart>(c => c.UserId == userId && c.CartId == cartId);
-			if (cart == null) {
-				throw new ArgumentOutOfRangeException();
-			}
+
+			using (var ctx = new SongSearchContext()) { 
+
+				var cart = ctx.Carts.SingleOrDefault(c => c.UserId == userId && c.CartId == cartId);
+
+				if (cart == null) {
+					throw new ArgumentOutOfRangeException();
+				}
 			
-			string path = cart.ArchivePath();
+				string path = cart.ArchivePath();
+				ctx.Carts.DeleteObject(cart);
+				ctx.SaveChanges();
 
-			DataSession.Delete<Cart>(cart);
-			DataSession.CommitChanges();
-
-			cart = null;
-
-			FileSystem.SafeDelete(path, false);
-
+				cart = null;
+				
+				FileSystem.SafeDelete(path, false);
+			}
 		}
 
 		
@@ -343,7 +360,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// EmptyCart
 		// **************************************
-		private Cart EmptyCart() {
+		private static Cart EmptyCart() {
 			return new Cart {
 				CreatedOn = DateTime.Now,
 				LastUpdatedOn = DateTime.Now,
@@ -356,7 +373,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// Zip
 		// **************************************
-		private void CompressCart(int cartId, IList<ContentUserDownloadable> contentNames) {
+		private static void CompressCart(int cartId, IList<ContentUserDownloadable> contentNames) {
 
 			using (var session = new SongSearchDataSessionReadOnly()) {
 
@@ -390,9 +407,9 @@ namespace SongSearch.Web.Services {
 									var downloadName = nameUserOverride ?? (content.UserDownloadableName ?? MediaService.GetContentMediaFileName(content.ContentId));
 
 									try {
-										byte[] asset = _mediaService.GetContentMedia(content.ContentMedia.FullVersion());
+										byte[] asset = MediaService.GetContentMedia(content.ContentMedia.FullVersion());
 
-										asset = _mediaService.WriteMediaSignature(asset, content, user);
+										asset = MediaService.WriteMediaSignature(asset, content, user);
 
 										zip.AddEntry(String.Format("{0}\\{1}{2}", cart.ArchiveName.Replace(".zip", ""), downloadName, SystemConfig.MediaDefaultExtension),
 													asset);
@@ -415,30 +432,6 @@ namespace SongSearch.Web.Services {
 			
 		}
 		
-
-		
-		// ----------------------------------------------------------------------------
-		// Dispose
-		// ----------------------------------------------------------------------------
-
-		public void Dispose() {
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-
-		private void Dispose(bool disposing) {
-			if (!_disposed) {
-				{
-					if (DataSession != null) {
-						DataSession.Dispose();
-						DataSession = null;
-					}					
-				}
-
-				_disposed = true;
-			}
-		}
 
 		private const int DAYS_TO_EXPIRE = 3;
 		private const int DAYS_TO_DELETE = 7;

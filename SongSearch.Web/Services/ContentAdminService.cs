@@ -9,130 +9,128 @@ using IdSharp.Tagging.ID3v2;
 
 namespace SongSearch.Web.Services {
 
-	public class ContentAdminService : BaseService, IContentAdminService {
-
-		private bool _disposed;
-		IMediaService _mediaService;
-
-		public ContentAdminService(IDataSession session, IMediaService mediaService) : base(session) {
-			_mediaService = mediaService;
-		}
-		public ContentAdminService(string activeUserIdentity): base(activeUserIdentity) { }
+	public static class ContentAdminService { //: BaseService, IContentAdminService {
 
 		// **************************************
-		//  UpdateModelWith
+		//  Update
 		// **************************************
-		public void Update(Content contentModel, 
+		public static void Update(Content contentModel, 
 			IList<int> tagsModel,
 			IDictionary<TagType, string> newTagsModel,
 			IList<ContentRepresentationUpdateModel> representationModel) {
 
-			//UpdateModelWith Content
-			var content = DataSession.GetObjectQuery<Content>()
-					.Include("Tags")
-					.Include("Catalog")
-					.Include("ContentRepresentations")
-					.Include("ContentRepresentations.Territories")
-				.Where(c => c.ContentId == contentModel.ContentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
+				using (var ctx = new SongSearchContext()) {
+					//UpdateModelWith Content
+					var content = ctx.Contents
+							.Include("Tags")
+							.Include("Catalog")
+							.Include("ContentRepresentations")
+							.Include("ContentRepresentations.Territories")
+						.Where(c => c.ContentId == contentModel.ContentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
 
-			if (content == null) {
-				throw new ArgumentOutOfRangeException("Content does not exist");
-			}
+					if (content == null) {
+						throw new ArgumentOutOfRangeException("Content does not exist");
+					}
 
-			content.UpdateModelWith(contentModel);
+					content.UpdateModelWith(contentModel);
 
-			//UpdateModelWith Tags
-			tagsModel = tagsModel.Where(t => t > 0).ToList();
-			// create new tags
-			var newTags = CreateTags(newTagsModel);
-			tagsModel = tagsModel.Union(newTags).ToList();
+					//UpdateModelWith Tags
+					tagsModel = tagsModel.Where(t => t > 0).ToList();
+					// create new tags
+					var newTags = ctx.CreateTags(newTagsModel);
+					tagsModel = tagsModel.Union(newTags).ToList();
 
-			// add to tagsModel
-			content = UpdateTags(content, tagsModel);
+					// add to tagsModel
+					content = ctx.UpdateTags(content, tagsModel);
 
-			//UpdateModelWith Representation
-			content = UpdateRepresentation(content, representationModel);
+					//UpdateModelWith Representation
+					content = ctx.UpdateRepresentation(content, representationModel);
 
-			content.LastUpdatedByUserId = Account.User().UserId;
-			content.LastUpdatedOn = DateTime.Now;
+					content.LastUpdatedByUserId = Account.User().UserId;
+					content.LastUpdatedOn = DateTime.Now;
 
-			DataSession.CommitChanges();
+					ctx.SaveChanges();
 
-			CacheService.InitializeApp(true);
-			//CacheService.CacheUpdate(CacheService.CacheKeys.Content);
-			//CacheService.CacheUpdate(CacheService.CacheKeys.Rights);
-			//CacheService.CacheUpdate(CacheService.CacheKeys.TopTags);
-			//CacheService.CacheUpdate(CacheService.CacheKeys.Tags);
-			//CacheService.CacheUpdate(CacheService.CacheKeys.Territories);
-
+					CacheService.InitializeApp(true);
+					//CacheService.CacheUpdate(CacheService.CacheKeys.Content);
+					//CacheService.CacheUpdate(CacheService.CacheKeys.Rights);
+					//CacheService.CacheUpdate(CacheService.CacheKeys.TopTags);
+					//CacheService.CacheUpdate(CacheService.CacheKeys.Tags);
+					//CacheService.CacheUpdate(CacheService.CacheKeys.Territories);
+				}
 		}
 
 		// **************************************
 		//  UpdateContentMedia
 		// **************************************
-		public void UpdateContentMedia(int contentId, IList<UploadFile> uploadFiles) {
+		public static void UpdateContentMedia(int contentId, IList<UploadFile> uploadFiles) {
 
 			if (contentId > 0) {
 
-				var content = DataSession.Single<Content>(c => c.ContentId == contentId);
+				using (var ctx = new SongSearchContext()) {
+					var content = ctx.Contents.SingleOrDefault(c => c.ContentId == contentId);
 
-				foreach (var uploadFile in uploadFiles) {
+					foreach (var uploadFile in uploadFiles) {
 
-					if (uploadFile.FileName != null) {
-						
-						var filePath = Account.User().UploadFile(uploadFile.FileName, uploadFile.FileMediaVersion.ToString());
-						var file = new FileInfo(filePath); 
-						var id3 = ID3Reader.GetID3Metadata(filePath);
-						
-						content.IsMediaOnRemoteServer = false;
+						if (uploadFile.FileName != null) {
 
-						var media = content.ContentMedia.SingleOrDefault(x => x.MediaVersion == (int)uploadFile.FileMediaVersion) ??
-							new ContentMedia();
+							var filePath = Account.User().UploadFile(uploadFile.FileName, uploadFile.FileMediaVersion.ToString());
+							var file = new FileInfo(filePath);
+							var id3 = ID3Reader.GetID3Metadata(filePath);
 
-						media.MediaVersion = (int)uploadFile.FileMediaVersion;
-						media.MediaType = "mp3";
-						media.MediaSize = file.Length;
-						media.MediaLength = id3.MediaLength;
-						media.MediaDate = file.GetMediaDate();
-						media.MediaBitRate = id3.GetBitRate(file.Length);
+							content.IsMediaOnRemoteServer = false;
 
-						
-						media.IsRemote = false;
+							var media = content.ContentMedia.SingleOrDefault(x => x.MediaVersion == (int)uploadFile.FileMediaVersion) ??
+								new ContentMedia();
 
-						if (media.ContentId == 0) {
-							content.ContentMedia.Add(media);
+							media.MediaVersion = (int)uploadFile.FileMediaVersion;
+							media.MediaType = "mp3";
+							media.MediaSize = file.Length;
+							media.MediaLength = id3.MediaLength;
+							media.MediaDate = file.GetMediaDate();
+							media.MediaBitRate = id3.GetBitRate(file.Length);
+
+
+							media.IsRemote = false;
+
+							if (media.ContentId == 0) {
+								content.ContentMedia.Add(media);
+							}
+
+							MediaService.SaveContentMedia(filePath, media);
 						}
-
-						_mediaService.SaveContentMedia(filePath, media);
 					}
-				}
-				content.LastUpdatedByUserId = Account.User().UserId;
-				content.LastUpdatedOn = DateTime.Now;
+					content.LastUpdatedByUserId = Account.User().UserId;
+					content.LastUpdatedOn = DateTime.Now;
 
-				DataSession.CommitChanges();
+					ctx.SaveChanges();
+				}
 			}
 		}
 		
 		// **************************************
 		//  SaveMetaDataToFile
 		// **************************************
-		public void SaveMetaDataToFile(int contentId) {
+		public static void SaveMetaDataToFile(int contentId) {
 
-			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
-			if (content != null) {
-
-				var filePath = content.ContentMedia.PreviewVersion().MediaFilePath(true);
-				//var file = new FileInfo(filePath);
-				if (File.Exists(filePath)) { 
-					var tag = ID3v2Helper.CreateID3v2(filePath);
-
-					tag.Title = content.Title;
-					tag.Artist = content.Artist;
-					tag.Year = content.ReleaseYear.HasValue ? content.ReleaseYear.Value.ToString() : tag.Year;
+			using (var ctx = new SongSearchContext()) {
+				var content = ctx.Contents.SingleOrDefault(c => c.ContentId == contentId);
 				
-					IdSharp.Tagging.ID3v1.ID3v1Helper.RemoveTag(filePath);
-					ID3v2Helper.RemoveTag(filePath);
-					tag.Save(filePath);
+				if (content != null) {
+
+					var filePath = content.ContentMedia.PreviewVersion().MediaFilePath(true);
+					//var file = new FileInfo(filePath);
+					if (File.Exists(filePath)) {
+						var tag = ID3v2Helper.CreateID3v2(filePath);
+
+						tag.Title = content.Title;
+						tag.Artist = content.Artist;
+						tag.Year = content.ReleaseYear.HasValue ? content.ReleaseYear.Value.ToString() : tag.Year;
+
+						IdSharp.Tagging.ID3v1.ID3v1Helper.RemoveTag(filePath);
+						ID3v2Helper.RemoveTag(filePath);
+						tag.Save(filePath);
+					}
 				}
 			}
 
@@ -142,46 +140,38 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		//  Delete
 		// **************************************
-		public void Delete(int contentId) {
+		public static void Delete(int contentId) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.DeleteContent(contentId);
 
-			DeleteContent(contentId);
-
-			DataSession.CommitChanges();
+				ctx.SaveChanges();
+			}
 		}
 
-		private void DeleteContent(int contentId) {
-			var content = DataSession.Single<Content>(c => c.ContentId == contentId);
-			if (content != null) {
-				foreach (var media in content.ContentMedia) {
+		
 
-					FileSystem.SafeDelete(media.MediaFilePath(true));
+		public static void Delete(int[] contentIds) {
+			using (var ctx = new SongSearchContext()) {
+				foreach (var contentId in contentIds) {
 
+					ctx.DeleteContent(contentId);
 				}
 
-				DataSession.Delete<Content>(content);
+				ctx.SaveChanges();
 			}
-		}
-
-		public void Delete(int[] contentIds) {
-
-			foreach (var contentId in contentIds) {
-
-				DeleteContent(contentId);
-			}
-
-			DataSession.CommitChanges();
-
 		}
 
 		// **************************************
 		//  DeleteTag
 		// **************************************
-		public void DeleteTag(int tagId) {
+		public static void DeleteTag(int tagId) {
 			var userId = Account.User().UserId;
-			var tag = DataSession.Single<Tag>(t => t.TagId == tagId && t.CreatedByUserId == userId); 
-			if (tag != null) {
-				DataSession.Delete<Tag>(tag);
-				DataSession.CommitChanges();
+			using (var ctx = new SongSearchContext()) {
+				var tag = ctx.Tags.SingleOrDefault(t => t.TagId == tagId && t.CreatedByUserId == userId);
+				if (tag != null) {
+					ctx.Tags.DeleteObject(tag);
+					ctx.SaveChanges();
+				}
 			}
 		}
 
@@ -191,17 +181,17 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateTags
 		// **************************************    
-		private IList<int> CreateTags(IDictionary<TagType, string> newTagModel) {
+		private static IList<int> CreateTags(this SongSearchContext ctx, IDictionary<TagType, string> newTagModel) {
 
 			IList<int> newTagIds = new List<int> { };
-			var tags = DataSession.All<Tag>();//.ToList();
+			
 			var newTags = newTagModel.Where(t => !String.IsNullOrWhiteSpace(t.Value));
 			foreach (var newTag in newTags) {
 
 				var values = newTag.Value.Split(',').Where(v => !String.IsNullOrWhiteSpace(v)).Select(v => v.Trim());
 
 				foreach (var value in values) {
-					var tag = tags.SingleOrDefault(t =>
+					var tag = ctx.Tags.SingleOrDefault(t =>
 						t.TagTypeId == (int)newTag.Key &&
 						t.TagName.ToUpper().Equals(value.ToUpper())) ??
 						new Tag() {
@@ -213,8 +203,8 @@ namespace SongSearch.Web.Services {
 
 					if (tag.TagId == 0) {
 
-						DataSession.Add<Tag>(tag);
-						DataSession.CommitChanges();
+						ctx.Tags.AddObject(tag);
+						ctx.SaveChanges();
 						newTagIds.Add(tag.TagId);
 					}
 				}
@@ -226,11 +216,10 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateTags
 		// **************************************    
-		private Content UpdateTags(Content content, IList<int> tagsModel) {
+		private static Content UpdateTags(this SongSearchContext ctx, Content content, IList<int> tagsModel) {
 
 			if (tagsModel == null) { return content; }
 
-			var tags = DataSession.All<Tag>().ToList();
 			var contentTags = content.Tags.ToList();
 
 			var contentTagsToRemove = contentTags.Where(t => !tagsModel.Contains(t.TagId));
@@ -239,7 +228,7 @@ namespace SongSearch.Web.Services {
 			var contentTagsToAdd = tagsModel.Except(contentTags.Select(t => t.TagId).Intersect(tagsModel));
 
 			foreach (var contentTag in contentTagsToAdd) {
-				var tag = tags.SingleOrDefault(t => t.TagId == contentTag);
+				var tag = ctx.Tags.SingleOrDefault(t => t.TagId == contentTag);
 				if (tag != null) {
 					content.Tags.Add(tag);
 				}
@@ -249,15 +238,30 @@ namespace SongSearch.Web.Services {
 		}
 
 
+		// **************************************
+		// DeleteContent:
+		// **************************************    
+		private static void DeleteContent(this SongSearchContext ctx, int contentId) {
+			var content = ctx.Contents.SingleOrDefault(c => c.ContentId == contentId);
+			if (content != null) {
+				foreach (var media in content.ContentMedia) {
+
+					FileSystem.SafeDelete(media.MediaFilePath(true));
+
+				}
+
+				ctx.Contents.DeleteObject(content);
+			}
+		}
 
 		// **************************************
 		// UpdateRepresentation:
 		// **************************************    
-		private Content UpdateRepresentation(Content content, IList<ContentRepresentationUpdateModel> representationModel) {
+		private static Content UpdateRepresentation(this SongSearchContext ctx, Content content, IList<ContentRepresentationUpdateModel> representationModel) {
 
 			if (representationModel == null) { return content; }
 
-			var territories = DataSession.All<Territory>().ToList();
+			var territories = ctx.Territories.ToList();
 
 			// get rid of empty items or items to delete
 			representationModel = representationModel.Where(r => r.ModelAction != ModelAction.Delete 
@@ -279,13 +283,15 @@ namespace SongSearch.Web.Services {
 				repTerritories.ForEach(x => rep.Territories.Remove(x));
 				content.ContentRepresentations.Remove(rep);
 
-				DataSession.Delete<ContentRepresentation>(rep);
+				ctx.ContentRepresentations.DeleteObject(rep);
 			}
 
 			foreach (var rm in representationModel) {
 
 				ContentRepresentation contentRepresentation = contentRepresentations.SingleOrDefault(x => x.ContentRepresentationId == rm.ContentRepresentationId) ??
-					new ContentRepresentation() { CreatedByUserId = Account.User().UserId, CreatedOn = DateTime.Now };
+					new ContentRepresentation() { 
+						CreatedByUserId = Account.User().UserId, 
+						CreatedOn = DateTime.Now };
 
 				// RightsHolderName
 				//contentRight.RightsHolderName = rm.RightsHolderName.AsEmptyIfNull().ToUpper();
@@ -304,10 +310,10 @@ namespace SongSearch.Web.Services {
 				// Territories
 				var territoryModel = rm.Territories.Where(x => x > 0).ToList();
 
-				var rightTerritories = contentRepresentation.Territories.ToList();
-				var removeTerritories = rightTerritories.Where(x => !territoryModel.Contains(x.TerritoryId));
+				var repTerritories = contentRepresentation.Territories.ToList();
+				var removeTerritories = repTerritories.Where(x => !territoryModel.Contains(x.TerritoryId));
 				removeTerritories.ForEach(x => contentRepresentation.Territories.Remove(x));
-				var addTerritories = territoryModel.Except(rightTerritories.Select(x => x.TerritoryId).Intersect(territoryModel));
+				var addTerritories = territoryModel.Except(repTerritories.Select(x => x.TerritoryId).Intersect(territoryModel));
 
 				foreach (var tm in addTerritories) {
 					var ter = territories.Single(t => t.TerritoryId == tm);
@@ -324,31 +330,5 @@ namespace SongSearch.Web.Services {
 
 		}
 
-		// ----------------------------------------------------------------------------
-		// (Dispose)
-		// ----------------------------------------------------------------------------
-
-		public void Dispose() {
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-
-		private void Dispose(bool disposing) {
-			if (!_disposed) {
-				{
-					if (DataSession != null) {
-						DataSession.Dispose();
-						DataSession = null;
-					}
-					if (ReadSession != null) {
-						ReadSession.Dispose();
-						ReadSession = null;
-					}
-				}
-
-				_disposed = true;
-			}
-		}
 	}
 }

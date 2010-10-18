@@ -13,22 +13,19 @@ namespace SongSearch.Web.Controllers
 	[HandleError]
 	public partial class SearchController : Controller
 	{
-		ICartService _cartService;
 		IUserEventLogService _logService;
 
 		private const int _pageSize = 100;
 
 		protected override void Initialize(RequestContext requestContext) {
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_cartService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
 				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 			}
 			base.Initialize(requestContext);
 		}
 
 		
-		public SearchController(ICartService cartService, IUserEventLogService logService) {
-			_cartService = cartService;
+		public SearchController(IUserEventLogService logService) {
 			_logService = logService;
 		}
 
@@ -241,7 +238,7 @@ namespace SongSearch.Web.Controllers
 		}
 
 		private int GetLastCart() {
-			var lastCart = _cartService.MyCarts().GetLastProcessedCartId();
+			var lastCart = CartService.MyCarts().GetLastProcessedCartId();
 			return lastCart;
 		}
 	}

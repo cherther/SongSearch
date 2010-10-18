@@ -13,13 +13,11 @@ namespace SongSearch.Web.Controllers
 	[HandleError]
 	public partial class ContentController : Controller
 	{
-		IContentAdminService _cntAdmService;
 		IUserEventLogService _logService;
 
 		protected override void Initialize(RequestContext requestContext) {
 
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_cntAdmService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
 				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 			}
 
@@ -27,8 +25,7 @@ namespace SongSearch.Web.Controllers
 			base.Initialize(requestContext);
 		}
 
-		public ContentController(IContentAdminService cntAdmService, IUserEventLogService logService) {
-			_cntAdmService = cntAdmService;
+		public ContentController(IUserEventLogService logService) {
 			_logService = logService;
 		}
 
@@ -120,7 +117,7 @@ namespace SongSearch.Web.Controllers
 				//if (ModelState.IsValid) {
 					//do some saving
 				if (Account.User().HasAccessToContentWithRole(content, Roles.Admin)) {
-					_cntAdmService.Update(content, tags, newTags, representation);
+					ContentAdminService.Update(content, tags, newTags, representation);
 					_logService.LogContentEvent(ContentActions.UpdateContent, content.ContentId);
 
 				}
@@ -172,7 +169,7 @@ namespace SongSearch.Web.Controllers
 		[HttpPost]
 		public virtual ActionResult SaveMetaDataToFile(int id) {
 
-			_cntAdmService.SaveMetaDataToFile(id);
+			ContentAdminService.SaveMetaDataToFile(id);
 	
 			if (Request.IsAjaxRequest()) {
 				return Json(id);
@@ -189,7 +186,7 @@ namespace SongSearch.Web.Controllers
 		[HttpPost]
 		public virtual ActionResult SaveMediaFiles(int contentId, IList<UploadFile> uploadFiles) {
 
-			_cntAdmService.UpdateContentMedia(contentId, uploadFiles);
+			ContentAdminService.UpdateContentMedia(contentId, uploadFiles);
 			
 			if (Request.IsAjaxRequest()) {
 				return Json(contentId);
@@ -218,7 +215,7 @@ namespace SongSearch.Web.Controllers
 				var count = items != null ? items.Count() : 0;
 
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
-				_cntAdmService.Delete(contentIds);
+				ContentAdminService.Delete(contentIds);
 
 				contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.DeleteContent, c));
 
@@ -247,7 +244,7 @@ namespace SongSearch.Web.Controllers
 		[HttpPost]
 		public virtual ActionResult DeleteTag(int id) {
 
-			_cntAdmService.DeleteTag(id);
+			ContentAdminService.DeleteTag(id);
 
 			if (Request.IsAjaxRequest()) {
 				return Json(id, JsonRequestBehavior.AllowGet);

@@ -57,9 +57,9 @@ namespace SongSearch.Web.Controllers {
 				};
 				vm.PageTitle = "Thanks for e-mailing us!";
 				vm.PageMessage = "Your e-mail has been successfully sent to our team, and we will review your message and respond as quickly as possible.";
-                vm.ContactInfo = this.SiteProfile().GetContactInfo(Account.User());
+				vm.ContactInfo = this.SiteProfile().GetContactInfo(Account.User());
 
-                string sender = String.Format("{0} <{1}>", this.SiteProfile().CompanyName, SystemConfig.AdminEmailAddress);//
+				string sender = String.Format("{0} <{1}>", this.SiteProfile().CompanyName, SystemConfig.AdminEmailAddress);//
 				string subject = String.Format("[{0} Contact Us] {1}", this.SiteProfile().CompanyName, model.Subject);
 				StringBuilder sb = new StringBuilder();
 				sb.AppendFormat("<p>Name: {0}</p>", model.Name);

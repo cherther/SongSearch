@@ -74,12 +74,12 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	// AmazonCloudService
 	// **************************************
-	public class AmazonCloudService : IMediaCloudService {
+	public static class AmazonCloudService { //: IMediaCloudService {
 
 		// **************************************
 		// GetContentKey
 		// **************************************
-		public string GetContentKey(ContentMedia contentMedia) {
+		public static string GetContentKey(ContentMedia contentMedia) {
 			return String.Concat(GetContentPrefix((MediaVersion)contentMedia.MediaVersion),
 				contentMedia.ContentId, SystemConfig.MediaDefaultExtension);
 		}
@@ -87,14 +87,14 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetContentPrefix
 		// **************************************
-		public string GetContentPrefix(MediaVersion version) {
+		public static string GetContentPrefix(MediaVersion version) {
 			return String.Format(SystemConfig.MediaFolderUrlFormat, version.ToString());
 		}
 
 		// **************************************
 		// GetContentList
 		// **************************************
-		public IList<RemoteContent> GetContentList(MediaVersion version, string filter = null) {
+		public static IList<RemoteContent> GetContentList(MediaVersion version, string filter = null) {
 
 			var mediaFolder = GetContentPrefix(version);
 			var s3objects = GetBucketList(mediaFolder, RemoteMediaConfiguration.BucketName, filter);
@@ -109,7 +109,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetBucketList
 		// **************************************
-		private IList<S3Object> GetBucketList(string mediaFolder, string mediaBucket, string marker = null) {
+		private static IList<S3Object> GetBucketList(string mediaFolder, string mediaBucket, string marker = null) {
 
 			using (var awsclient = Amazon.AWSClientFactory.CreateAmazonS3Client(
 				RemoteMediaConfiguration.AccessKeyID,
@@ -135,7 +135,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetContentMedia
 		// **************************************
-		public void GetContentMedia(string target, ContentMedia contentMedia) {
+		public static void GetContentMedia(string target, ContentMedia contentMedia) {
 
 			
 
@@ -180,7 +180,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetContentMedia
 		// **************************************
-		public byte[] GetContentMedia(ContentMedia contentMedia) {
+		public static byte[] GetContentMedia(ContentMedia contentMedia) {
 
 			byte[] mediaBytes = null;
 
@@ -224,7 +224,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetContentMediaUrl
 		// **************************************
-		public string GetContentMediaUrl(ContentMedia contentMedia) {
+		public static string GetContentMediaUrl(ContentMedia contentMedia) {
 		
 			using (var awsclient = Amazon.AWSClientFactory.CreateAmazonS3Client(
 				RemoteMediaConfiguration.AccessKeyID,
@@ -245,7 +245,7 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// PutContentMedia
 		// **************************************
-		public void PutContentMedia(string source, ContentMedia contentMedia) {
+		public static void PutContentMedia(string source, ContentMedia contentMedia) {
 			using (var awsclient = Amazon.AWSClientFactory.CreateAmazonS3Client(RemoteMediaConfiguration.AccessKeyID,
 				RemoteMediaConfiguration.SecretAccessKeyID)) {
 
@@ -272,34 +272,6 @@ namespace SongSearch.Web.Services {
 			return key;
 		}
 
-		// ----------------------------------------------------------------------------
-		// (Dispose)
-		// ----------------------------------------------------------------------------
-		private bool _disposed;
-
-		public void Dispose() {
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-		private void Dispose(bool disposing) {
-			if (!_disposed) {
-				// If disposing equals true, dispose all managed
-				// and unmanaged resources.if (disposing)
-				{
-					//if (DataSession != null) {
-					//    DataSession.Dispose();
-					//    DataSession = null;
-					//}
-				}
-
-				// Call the appropriate methods to clean up
-				// unmanaged resources here.
-				//CloseHandle(handle);
-				//handle = IntPtr.Zero;
-
-				_disposed = true;
-			}
-		}
 	}
 
 }

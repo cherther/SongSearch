@@ -56,9 +56,7 @@ namespace SongSearch.Web {
 			if (local) {
 				return MediaService.GetContentMediaPathLocal(contentMedia);
 			} else {
-				using (var mediaService = App.Container.Get<IMediaService>()) {
-					return mediaService.GetContentMediaPath(contentMedia);
-				}
+				return MediaService.GetContentMediaPath(contentMedia);
 			}
 		}
 		public static ContentMedia Media(this Content content, MediaVersion version) {
@@ -112,9 +110,7 @@ namespace SongSearch.Web {
 		}
 
 		public static User Owner(this Catalog catalog) {
-			using (var svc = App.Container.Get<IUserManagementService>()) {
-				return svc.GetUserDetail(catalog.CreatedByUserId);
-			}
+			return UserManagementService.GetUserDetail(catalog.CreatedByUserId);
 		}
 		// **************************************
 		// UpdateModel:
@@ -146,10 +142,7 @@ namespace SongSearch.Web {
 
 		public static string MediaUrl(this ContentMedia contentMedia) {
 			if (contentMedia == null) { return String.Empty; }
-
-			using (var svc = App.Container.Get<IMediaService>()) {
-				return svc.GetContentMediaUrl(contentMedia);
-			}
+			return MediaService.GetContentMediaUrl(contentMedia);
 		}
 		public static ContentMedia FullVersion(this IEnumerable<ContentMedia> contentMedia) {
 			return contentMedia != null ? contentMedia.SingleOrDefault(x => x.MediaVersion == (int)MediaVersion.Full)

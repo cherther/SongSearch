@@ -226,10 +226,7 @@ namespace SongSearch.Web.Services {
 		}
 
 		private Cart GetDataUserActiveCart(string userName) {
-			using (var cartService = App.Container.Get<CartService>()) {
-				cartService.ActiveUserName = userName;
-				return cartService.MyActiveCartContents();
-			}
+			return CartService.MyActiveCartContents();
 		}
 
 	}

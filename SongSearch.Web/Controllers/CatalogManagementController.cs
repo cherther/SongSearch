@@ -13,21 +13,18 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 	public partial class CatalogManagementController : Controller {
 		
-		ICatalogManagementService _catMgmtService;
 		IUserEventLogService _logService;
 		
 		protected override void Initialize(RequestContext requestContext) {
 
 			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_catMgmtService.ActiveUserName = requestContext.HttpContext.User.Identity.Name;
 				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
 			}
 			base.Initialize(requestContext);
 
 		}
 
-		public CatalogManagementController(ICatalogManagementService catMgmtService, IUserEventLogService logService) {
-			_catMgmtService = catMgmtService;
+		public CatalogManagementController(IUserEventLogService logService) {
 			_logService = logService;
 		}
 
@@ -60,7 +57,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		public virtual ActionResult Detail(int id) {
 			try {
-				var catalog = _catMgmtService.GetCatalogDetail(id);
+				var catalog = CatalogManagementService.GetCatalogDetail(id);
 				var vm = new CatalogViewModel();
 				var user = Account.User();
 
@@ -102,7 +99,7 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Delete(int id) {
 
 			try {
-				_catMgmtService.DeleteCatalog(id);
+				CatalogManagementService.DeleteCatalog(id);
 				_logService.LogUserEvent(UserActions.DeleteCatalog);
 
 				CacheService.InitializeApp(true);

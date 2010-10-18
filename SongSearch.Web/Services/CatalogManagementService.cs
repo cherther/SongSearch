@@ -6,94 +6,86 @@ using SongSearch.Web.Data;
 
 namespace SongSearch.Web.Services {
 
-	public class CatalogManagementService : BaseService, ICatalogManagementService {
+	public static class CatalogManagementService { //: BaseService, ICatalogManagementService {
 
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
-		private bool _disposed;
-		
-				
-		public CatalogManagementService(IDataSession session) : base(session) {}
-		public CatalogManagementService(string activeUserIdentity) : base(activeUserIdentity) { }
-
-
 		// ----------------------------------------------------------------------------
 		// (Public)
 		// ----------------------------------------------------------------------------
-		public IList<Catalog> GetMyCatalogs() {
+		public static IList<Catalog> GetMyCatalogs() {
 			return Account.User().MyAdminCatalogs();//DataSession.All<Catalog>().Where(c => c.UserCatalogRoles.Any(x => x.UserId == ActiveUser.UserId && x.RoleId == (int)Roles.Admin)).ToList();
 		}
 
 		// **************************************
 		// GetCatalog
 		// **************************************
-		public Catalog GetCatalogDetail(int catalogId) {
+		public static Catalog GetCatalogDetail(int catalogId) {
 			if (!Account.User().IsAtLeastInCatalogRole(Roles.Admin, catalogId)) {
 				return null;
 			}
-			var cat = GetCatalog(catalogId);
-
-			//cat.Owner = cat.Owner();
-			return cat;
+			using (var ctx = new SongSearchContext()) {
+				return ctx.GetCatalogGraph(catalogId);
+			}
 		}
 
 		// **************************************
 		// CreateCatalog
 		// **************************************
-		public int CreateCatalog(Catalog catalog) {
+		public static int CreateCatalog(Catalog catalog) {
+			using (var ctx = new SongSearchContext()) {
+				var cat = ctx.GetCatalog(catalog.CatalogName);
+				var user = Account.User();
 
-			var cat = GetCatalog(catalog.CatalogName);
-			var user = Account.User();
+				if (cat == null) {
 
-			if (cat == null) {
+					cat = new Catalog { CatalogName = catalog.CatalogName };
+					ctx.Catalogs.AddObject(cat);
 
-				cat = new Catalog { CatalogName = catalog.CatalogName };
-				DataSession.Add<Catalog>(cat);
+					ctx.SaveChanges();
 
-				DataSession.CommitChanges();
-	
-				UserManagementService.UpdateUserCatalogRole(user.UserId, cat.CatalogId, (int)Roles.Admin);
+					UserManagementService.UpdateUserCatalogRole(user.UserId, cat.CatalogId, (int)Roles.Admin);
 
-			} else if (!user.IsAtLeastInCatalogRole(Roles.Admin, cat.CatalogId)) {
-					throw new AccessViolationException("You do not have admin rights to this catalog");				
+				} else if (!user.IsAtLeastInCatalogRole(Roles.Admin, cat.CatalogId)) {
+					throw new AccessViolationException("You do not have admin rights to this catalog");
+				}
+
+				return cat.CatalogId;
 			}
-
-			return cat.CatalogId;
-
 		}
 
 		// **************************************
 		// CreateContent
 		// **************************************
-		public int CreateContent(Content item) {
+		public static int CreateContent(Content item) {
 			throw new NotImplementedException();
 		}
 
-		public int CreateContent(IList<Content> items) {
+		public static int CreateContent(IList<Content> items) {
 			throw new NotImplementedException();
 		}
 
 		// **************************************
 		// DeleteCatalog
 		// **************************************
-		public void DeleteCatalog(int catalogId) {
+		public static void DeleteCatalog(int catalogId) {
+			using (var ctx = new SongSearchContext()) {
+				var catalog = ctx.Catalogs.SingleOrDefault(c => c.CatalogId == catalogId);
 
-			var catalog = DataSession.Single<Catalog>(c => c.CatalogId == catalogId);
+				var contents = catalog.Contents.ToList();
+				foreach (var content in contents) {
 
-			var contents = catalog.Contents.ToList();
-			foreach (var content in contents) {
+					foreach (var media in content.ContentMedia) {
+						FileSystem.SafeDelete(media.MediaFilePath(true), true);
+					}
 
-				foreach (var media in content.ContentMedia) {
-					FileSystem.SafeDelete(media.MediaFilePath(true), true);
+					ctx.Contents.DeleteObject(content);
 				}
 
-				DataSession.Delete<Content>(content);
+				ctx.Catalogs.DeleteObject(catalog);
+				ctx.SaveChanges();
 			}
-
-			DataSession.Delete<Catalog>(catalog);
-			DataSession.CommitChanges();
-
 		}
 
 		// ----------------------------------------------------------------------------
@@ -103,46 +95,20 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// GetCatalog
 		// **************************************
-		private Catalog GetCatalog(int catalogId) {
-			return DataSession.GetObjectQuery<Catalog>()
+		private static Catalog GetCatalogGraph(this SongSearchContext ctx, int catalogId) {
+			return ctx.Catalogs
 				.Include("Contents")
+				.Include("Contents.ContentMedia")
+				.Include("UserCatalogRoles")
 				.Include("Creator")
-				.Where(x => x.CatalogId == catalogId).SingleOrDefault();			
+				.SingleOrDefault(x => x.CatalogId == catalogId);			
 	//		return DataSession.Single<Catalog>(x => x.CatalogId == catalogId);
 		}
-		private Catalog GetCatalog(string catalogName) {
-			return DataSession.GetObjectQuery<Catalog>()
+		private static Catalog GetCatalog(this SongSearchContext ctx, string catalogName) {
+			return ctx.Catalogs
 //				.Include("Contents")
-				.Where(x => x.CatalogName.Equals(catalogName, StringComparison.InvariantCultureIgnoreCase)).SingleOrDefault();	
+				.SingleOrDefault(x => x.CatalogName.Equals(catalogName, StringComparison.InvariantCultureIgnoreCase));	
 //			return DataSession.Single<Catalog>(x => x.CatalogName.Equals(catalogName, StringComparison.InvariantCultureIgnoreCase));
 		}
-		// ----------------------------------------------------------------------------
-		// (Dispose)
-		// ----------------------------------------------------------------------------
-
-		public void Dispose() {
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-
-		private void Dispose(bool disposing) {
-			if (!_disposed) {
-				{
-					if (DataSession != null) {
-						DataSession.Dispose();
-						DataSession = null;
-					}
-					if (ReadSession != null) {
-						ReadSession.Dispose();
-						ReadSession = null;
-					}
-				}
-
-				_disposed = true;
-			}
-		}
-
-
 	}
 }
