@@ -12,8 +12,8 @@
           <EntitySet Name="Contacts" EntityType="SongSearch2Model.Store.Contacts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContentActionEvents" EntityType="SongSearch2Model.Store.ContentActionEvents" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContentMedia" EntityType="SongSearch2Model.Store.ContentMedia" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ContentRights" EntityType="SongSearch2Model.Store.ContentRights" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ContentRightTerritories" EntityType="SongSearch2Model.Store.ContentRightTerritories" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContentRepresentation" EntityType="SongSearch2Model.Store.ContentRepresentation" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ContentRepresentationTerritories" EntityType="SongSearch2Model.Store.ContentRepresentationTerritories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Contents" EntityType="SongSearch2Model.Store.Contents" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ContentTags" EntityType="SongSearch2Model.Store.ContentTags" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Invitations" EntityType="SongSearch2Model.Store.Invitations" store:Type="Tables" Schema="dbo" />
@@ -59,17 +59,17 @@
             <End Role="Contents" EntitySet="Contents" />
             <End Role="ContentMedia" EntitySet="ContentMedia" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContentRights_Contents" Association="SongSearch2Model.Store.FK_ContentRights_Contents">
+          <AssociationSet Name="FK_ContentRepresentation_Contents" Association="SongSearch2Model.Store.FK_ContentRepresentation_Contents">
             <End Role="Contents" EntitySet="Contents" />
-            <End Role="ContentRights" EntitySet="ContentRights" />
+            <End Role="ContentRepresentation" EntitySet="ContentRepresentation" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContentRightTerritories_ContentRights" Association="SongSearch2Model.Store.FK_ContentRightTerritories_ContentRights">
-            <End Role="ContentRights" EntitySet="ContentRights" />
-            <End Role="ContentRightTerritories" EntitySet="ContentRightTerritories" />
+          <AssociationSet Name="FK_ContentRepresentationTerritories_ContentRepresentation" Association="SongSearch2Model.Store.FK_ContentRepresentationTerritories_ContentRepresentation">
+            <End Role="ContentRepresentation" EntitySet="ContentRepresentation" />
+            <End Role="ContentRepresentationTerritories" EntitySet="ContentRepresentationTerritories" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContentRightTerritories_Territories" Association="SongSearch2Model.Store.FK_ContentRightTerritories_Territories">
+          <AssociationSet Name="FK_ContentRepresentationTerritories_Territories" Association="SongSearch2Model.Store.FK_ContentRepresentationTerritories_Territories">
             <End Role="Territories" EntitySet="Territories" />
-            <End Role="ContentRightTerritories" EntitySet="ContentRightTerritories" />
+            <End Role="ContentRepresentationTerritories" EntitySet="ContentRepresentationTerritories" />
           </AssociationSet>
           <AssociationSet Name="FK_Contents_Catalogs" Association="SongSearch2Model.Store.FK_Contents_Catalogs">
             <End Role="Catalogs" EntitySet="Catalogs" />
@@ -239,24 +239,23 @@
           <Property Name="MediaSize" Type="bigint" />
           <Property Name="MediaLength" Type="bigint" />
         </EntityType>
-        <EntityType Name="ContentRights">
+        <EntityType Name="ContentRepresentation">
           <Key>
-            <PropertyRef Name="ContentRightId" />
+            <PropertyRef Name="ContentRepresentationId" />
           </Key>
-          <Property Name="ContentRightId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContentRepresentationId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ContentId" Type="int" Nullable="false" />
           <Property Name="RightsTypeId" Type="int" Nullable="false" />
-          <Property Name="RightsHolderName" Type="nvarchar" Nullable="false" MaxLength="300" />
-          <Property Name="RightsHolderShare" Type="decimal" Nullable="false" Precision="28" Scale="4" />
+          <Property Name="RepresentationShare" Type="decimal" Nullable="false" Precision="28" Scale="4" />
           <Property Name="CreatedByUserId" Type="int" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="ContentRightTerritories">
+        <EntityType Name="ContentRepresentationTerritories">
           <Key>
-            <PropertyRef Name="ContentRightId" />
+            <PropertyRef Name="ContentRepresentationId" />
             <PropertyRef Name="TerritoryId" />
           </Key>
-          <Property Name="ContentRightId" Type="int" Nullable="false" />
+          <Property Name="ContentRepresentationId" Type="int" Nullable="false" />
           <Property Name="TerritoryId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Contents">
@@ -578,44 +577,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContentRights_Contents">
+        <Association Name="FK_ContentRepresentation_Contents">
           <End Role="Contents" Type="SongSearch2Model.Store.Contents" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ContentRights" Type="SongSearch2Model.Store.ContentRights" Multiplicity="*" />
+          <End Role="ContentRepresentation" Type="SongSearch2Model.Store.ContentRepresentation" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contents">
               <PropertyRef Name="ContentId" />
             </Principal>
-            <Dependent Role="ContentRights">
+            <Dependent Role="ContentRepresentation">
               <PropertyRef Name="ContentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContentRightTerritories_ContentRights">
-          <End Role="ContentRights" Type="SongSearch2Model.Store.ContentRights" Multiplicity="1">
+        <Association Name="FK_ContentRepresentationTerritories_ContentRepresentation">
+          <End Role="ContentRepresentation" Type="SongSearch2Model.Store.ContentRepresentation" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ContentRightTerritories" Type="SongSearch2Model.Store.ContentRightTerritories" Multiplicity="*" />
+          <End Role="ContentRepresentationTerritories" Type="SongSearch2Model.Store.ContentRepresentationTerritories" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ContentRights">
-              <PropertyRef Name="ContentRightId" />
+            <Principal Role="ContentRepresentation">
+              <PropertyRef Name="ContentRepresentationId" />
             </Principal>
-            <Dependent Role="ContentRightTerritories">
-              <PropertyRef Name="ContentRightId" />
+            <Dependent Role="ContentRepresentationTerritories">
+              <PropertyRef Name="ContentRepresentationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContentRightTerritories_Territories">
+        <Association Name="FK_ContentRepresentationTerritories_Territories">
           <End Role="Territories" Type="SongSearch2Model.Store.Territories" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
-          <End Role="ContentRightTerritories" Type="SongSearch2Model.Store.ContentRightTerritories" Multiplicity="*" />
+          <End Role="ContentRepresentationTerritories" Type="SongSearch2Model.Store.ContentRepresentationTerritories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Territories">
               <PropertyRef Name="TerritoryId" />
             </Principal>
-            <Dependent Role="ContentRightTerritories">
+            <Dependent Role="ContentRepresentationTerritories">
               <PropertyRef Name="TerritoryId" />
             </Dependent>
           </ReferentialConstraint>
@@ -919,7 +918,6 @@
         <EntityContainer Name="SongSearchContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Carts" EntityType="SongSearch.Web.Data.Model.Cart" />
           <EntitySet Name="Catalogs" EntityType="SongSearch.Web.Data.Model.Catalog" />
-          <EntitySet Name="ContentRights" EntityType="SongSearch.Web.Data.Model.ContentRight" />
           <EntitySet Name="Contents" EntityType="SongSearch.Web.Data.Model.Content" />
           <EntitySet Name="Roles" EntityType="SongSearch.Web.Data.Model.Role" />
           <EntitySet Name="Tags" EntityType="SongSearch.Web.Data.Model.Tag" />
@@ -929,17 +927,9 @@
             <End Role="Catalogs" EntitySet="Catalogs" />
             <End Role="Contents" EntitySet="Contents" />
           </AssociationSet>
-          <AssociationSet Name="FK_ContentRights_Contents" Association="SongSearch.Web.Data.Model.FK_ContentRights_Contents">
-            <End Role="Contents" EntitySet="Contents" />
-            <End Role="ContentRights" EntitySet="ContentRights" />
-          </AssociationSet>
           <AssociationSet Name="FK_Users_Roles" Association="SongSearch.Web.Data.Model.FK_Users_Roles">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="ContentRightTerritories" Association="SongSearch.Web.Data.Model.ContentRightTerritories">
-            <End Role="ContentRights" EntitySet="ContentRights" />
-            <End Role="Territories" EntitySet="Territories" />
           </AssociationSet>
           <AssociationSet Name="ContentTags" Association="SongSearch.Web.Data.Model.ContentTags">
             <End Role="Contents" EntitySet="Contents" />
@@ -1045,6 +1035,15 @@
             <End Role="PlanBalance" EntitySet="PlanBalances" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="ContentRepresentations" EntityType="SongSearch.Web.Data.Model.ContentRepresentation" />
+          <AssociationSet Name="FK_ContentRepresentation_Contents" Association="SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents">
+            <End Role="Content" EntitySet="Contents" />
+            <End Role="ContentRepresentation" EntitySet="ContentRepresentations" />
+          </AssociationSet>
+          <AssociationSet Name="ContentRepresentationTerritories" Association="SongSearch.Web.Data.Model.ContentRepresentationTerritories">
+            <End Role="ContentRepresentation" EntitySet="ContentRepresentations" />
+            <End Role="Territory" EntitySet="Territories" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Cart">
           <Key>
@@ -1074,20 +1073,6 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <NavigationProperty Name="Creator" Relationship="SongSearch.Web.Data.Model.FK_Catalogs_Creators" FromRole="Catalog" ToRole="User" />
         </EntityType>
-        <EntityType Name="ContentRight">
-          <Key>
-            <PropertyRef Name="ContentRightId" />
-          </Key>
-          <Property Name="ContentRightId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ContentId" Type="Int32" Nullable="false" />
-          <Property Name="RightsTypeId" Type="Int32" Nullable="false" />
-          <Property Name="RightsHolderShare" Type="Decimal" Nullable="false" Precision="28" Scale="4" />
-          <NavigationProperty Name="Content" Relationship="SongSearch.Web.Data.Model.FK_ContentRights_Contents" FromRole="ContentRights" ToRole="Contents" />
-          <NavigationProperty Name="Territories" Relationship="SongSearch.Web.Data.Model.ContentRightTerritories" FromRole="ContentRights" ToRole="Territories" />
-          <Property Type="String" Name="RightsHolderName" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-        </EntityType>
         <EntityType Name="Content">
           <Key>
             <PropertyRef Name="ContentId" />
@@ -1109,7 +1094,6 @@
           <Property Name="Keywords" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="SimilarSongs" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Catalog" Relationship="SongSearch.Web.Data.Model.FK_Contents_Catalogs" FromRole="Contents" ToRole="Catalogs" />
-          <NavigationProperty Name="ContentRights" Relationship="SongSearch.Web.Data.Model.FK_ContentRights_Contents" FromRole="Contents" ToRole="ContentRights" />
           <NavigationProperty Name="Tags" Relationship="SongSearch.Web.Data.Model.ContentTags" FromRole="Contents" ToRole="Tags" />
           <NavigationProperty Name="Carts" Relationship="SongSearch.Web.Data.Model.CartContents" FromRole="Content" ToRole="Cart" />
           <Property Type="String" Name="LicensingNotes" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -1120,6 +1104,7 @@
           <Property Type="String" Name="Instruments" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ContentMedia" Relationship="SongSearch.Web.Data.Model.FK_ContentMedia_Contents" FromRole="Content" ToRole="ContentMedia" />
           <NavigationProperty Name="ContentActionEvents" Relationship="SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents" FromRole="Content" ToRole="ContentActionEvent" />
+          <NavigationProperty Name="ContentRepresentations" Relationship="SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents" FromRole="Content" ToRole="ContentRepresentation" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -1148,7 +1133,7 @@
           <Property Name="TerritoryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TerritoryCode" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="TerritoryName" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="ContentRights" Relationship="SongSearch.Web.Data.Model.ContentRightTerritories" FromRole="Territories" ToRole="ContentRights" />
+          <NavigationProperty Name="ContentRepresentations" Relationship="SongSearch.Web.Data.Model.ContentRepresentationTerritories" FromRole="Territory" ToRole="ContentRepresentation" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -1201,20 +1186,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ContentRights_Contents">
-          <End Role="Contents" Type="SongSearch.Web.Data.Model.Content" Multiplicity="1" >
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="ContentRights" Type="SongSearch.Web.Data.Model.ContentRight" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Contents">
-              <PropertyRef Name="ContentId" />
-            </Principal>
-            <Dependent Role="ContentRights">
-              <PropertyRef Name="ContentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Users_Roles">
           <End Role="Roles" Type="SongSearch.Web.Data.Model.Role" Multiplicity="1" />
           <End Role="Users" Type="SongSearch.Web.Data.Model.User" Multiplicity="*" />
@@ -1226,12 +1197,6 @@
               <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
-        </Association>
-        <Association Name="ContentRightTerritories">
-          <End Role="ContentRights" Type="SongSearch.Web.Data.Model.ContentRight" Multiplicity="*" >
-          </End>
-          <End Role="Territories" Type="SongSearch.Web.Data.Model.Territory" Multiplicity="*" >
-          </End>
         </Association>
         <Association Name="ContentTags">
           <End Role="Contents" Type="SongSearch.Web.Data.Model.Content" Multiplicity="*" />
@@ -1675,6 +1640,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ContentRepresentation">
+          <Key>
+            <PropertyRef Name="ContentRepresentationId" />
+          </Key>
+          <Property Type="Int32" Name="ContentRepresentationId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ContentId" Nullable="false" />
+          <Property Type="Int32" Name="RightsTypeId" Nullable="false" />
+          <Property Type="Decimal" Name="RepresentationShare" Nullable="false" Precision="28" Scale="4" />
+          <Property Type="Int32" Name="CreatedByUserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <NavigationProperty Name="Content" Relationship="SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents" FromRole="ContentRepresentation" ToRole="Content" />
+          <NavigationProperty Name="Territories" Relationship="SongSearch.Web.Data.Model.ContentRepresentationTerritories" FromRole="ContentRepresentation" ToRole="Territory" />
+        </EntityType>
+        <Association Name="FK_ContentRepresentation_Contents">
+          <End Type="SongSearch.Web.Data.Model.Content" Role="Content" Multiplicity="1" />
+          <End Type="SongSearch.Web.Data.Model.ContentRepresentation" Role="ContentRepresentation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentId" />
+            </Principal>
+            <Dependent Role="ContentRepresentation">
+              <PropertyRef Name="ContentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ContentRepresentationTerritories">
+          <End Type="SongSearch.Web.Data.Model.ContentRepresentation" Role="ContentRepresentation" Multiplicity="*" />
+          <End Type="SongSearch.Web.Data.Model.Territory" Role="Territory" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1697,15 +1691,6 @@
                 <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
                 <ScalarProperty Name="CatalogId" ColumnName="CatalogId" />
             <ScalarProperty Name="CatalogName" ColumnName="CatalogName" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="ContentRights"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.ContentRight"><MappingFragment StoreEntitySet="ContentRights">
-            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-                <ScalarProperty Name="RightsHolderName" ColumnName="RightsHolderName" />
-                <ScalarProperty Name="ContentRightId" ColumnName="ContentRightId" />
-            <ScalarProperty Name="ContentId" ColumnName="ContentId" />
-            <ScalarProperty Name="RightsTypeId" ColumnName="RightsTypeId" />
-            <ScalarProperty Name="RightsHolderShare" ColumnName="RightsHolderShare" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Contents"><EntityTypeMapping TypeName="SongSearch.Web.Data.Model.Content"><MappingFragment StoreEntitySet="Contents">
                 <ScalarProperty Name="Instruments" ColumnName="Instruments" />
@@ -1767,14 +1752,6 @@
             <ScalarProperty Name="RegisteredOn" ColumnName="RegisteredOn" />
             <ScalarProperty Name="Signature" ColumnName="Signature" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <AssociationSetMapping Name="ContentRightTerritories" TypeName="SongSearch.Web.Data.Model.ContentRightTerritories" StoreEntitySet="ContentRightTerritories">
-            <EndProperty Name="ContentRights">
-              <ScalarProperty Name="ContentRightId" ColumnName="ContentRightId" />
-            </EndProperty>
-            <EndProperty Name="Territories">
-              <ScalarProperty Name="TerritoryId" ColumnName="TerritoryId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="ContentTags" TypeName="SongSearch.Web.Data.Model.ContentTags" StoreEntitySet="ContentTags">
             <EndProperty Name="Contents">
               <ScalarProperty Name="ContentId" ColumnName="ContentId" />
@@ -1991,6 +1968,26 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ContentRepresentations">
+            <EntityTypeMapping TypeName="SongSearch.Web.Data.Model.ContentRepresentation">
+              <MappingFragment StoreEntitySet="ContentRepresentation">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="RepresentationShare" ColumnName="RepresentationShare" />
+                <ScalarProperty Name="RightsTypeId" ColumnName="RightsTypeId" />
+                <ScalarProperty Name="ContentId" ColumnName="ContentId" />
+                <ScalarProperty Name="ContentRepresentationId" ColumnName="ContentRepresentationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="ContentRepresentationTerritories" TypeName="SongSearch.Web.Data.Model.ContentRepresentationTerritories" StoreEntitySet="ContentRepresentationTerritories">
+            <EndProperty Name="Territory">
+              <ScalarProperty Name="TerritoryId" ColumnName="TerritoryId" />
+            </EndProperty>
+            <EndProperty Name="ContentRepresentation">
+              <ScalarProperty Name="ContentRepresentationId" ColumnName="ContentRepresentationId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2014,29 +2011,19 @@
       <Diagram Name="SongSearch2" ZoomLevel="75">
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Cart" Width="1.5" PointX="1.625" PointY="11" Height="3.1340950520833335" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Catalog" Width="1.5" PointX="8" PointY="8.25" Height="2.1725878906249996" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentRight" Width="1.5" PointX="6.25" PointY="2.375" Height="2.3648893229166656" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Content" Width="2" PointX="3" PointY="4" Height="6.2109179687499978" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Role" Width="1.5" PointX="5.875" PointY="10" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Tag" Width="1.5" PointX="0.75" PointY="7.5" Height="2.1725878906249996" IsExpanded="true" />
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Territory" Width="1.5" PointX="9.25" PointY="5" Height="1.787985026041671" IsExpanded="true" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Territory" Width="1.5" PointX="10.5" PointY="6.25" Height="1.9802864583333326" IsExpanded="true" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.User" Width="1.5" PointX="3.875" PointY="12.5" Height="7.5570279947916674" IsExpanded="true" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Contents_Catalogs" ManuallyRouted="false">
-          <ConnectorPoint PointX="8" PointY="9.2497460937500016" />
-          <ConnectorPoint PointX="5" PointY="9.2497460937500016" />
-        </AssociationConnector>
-        <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentRights_Contents" ManuallyRouted="false">
-          <ConnectorPoint PointX="5" PointY="4.56224609375" />
-          <ConnectorPoint PointX="6.25" PointY="4.56224609375" />
+          <ConnectorPoint PointX="8" PointY="9.4590405273437526" />
+          <ConnectorPoint PointX="5" PointY="9.4590405273437526" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Users_Roles" ManuallyRouted="false">
           <ConnectorPoint PointX="5.96875" PointY="11.787985026041667" />
           <ConnectorPoint PointX="5.96875" PointY="14.70497671775448" />
           <ConnectorPoint PointX="5.375" PointY="14.70497671775448" />
-        </AssociationConnector>
-        <AssociationConnector Association="SongSearch.Web.Data.Model.ContentRightTerritories" ManuallyRouted="false">
-          <ConnectorPoint PointX="7.75" PointY="3.6874995" />
-          <ConnectorPoint PointX="10" PointY="3.6874995" />
-          <ConnectorPoint PointX="10" PointY="5" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.ContentTags" ManuallyRouted="false">
           <ConnectorPoint PointX="3" PointY="8.5862939453125" />
@@ -2045,8 +2032,8 @@
           <ConnectorPoint PointX="2.25" PointY="8.5862939453125" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.CartContents" >
-          <ConnectorPoint PointX="3" PointY="6.2618949726562487" />
-          <ConnectorPoint PointX="2.625" PointY="6.2618949726562487" />
+          <ConnectorPoint PointX="3" PointY="5.4152654736328127" />
+          <ConnectorPoint PointX="2.625" PointY="5.4152654736328127" />
           <ConnectorPoint PointX="2.625" PointY="10.625" />
           <ConnectorPoint PointX="2.375" PointY="10.625" />
           <ConnectorPoint PointX="2.375" PointY="11" />
@@ -2128,9 +2115,11 @@
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchEvent" Width="1.5" PointX="1.25" PointY="19.875" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.UserActionEvent" Width="1.5" PointX="3.875" PointY="23" Height="2.1725878906250031" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents" >
-          <ConnectorPoint PointX="3.31249875" PointY="9.5366422526041656" />
-          <ConnectorPoint PointX="3.31249875" PointY="18.879855608723958" />
-          <ConnectorPoint PointX="2" PointY="18.879855608723958" />
+          <ConnectorPoint PointX="3" PointY="6.4576352368164072" />
+          <ConnectorPoint PointX="2.7083333333333335" PointY="6.4576352368164063" />
+          <ConnectorPoint PointX="2.5416666666666665" PointY="6.4576352368164072" />
+          <ConnectorPoint PointX="0.53125" PointY="6.4576352368164072" />
+          <ConnectorPoint PointX="0.53125" PointY="17" />
         </AssociationConnector>
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentActionEvents_Users" >
           <ConnectorPoint PointX="3.875" PointY="18.278595377604169" />
@@ -2147,7 +2136,7 @@
           <ConnectorPoint PointX="4.0784615384615384" PointY="20.057027994791667" />
           <ConnectorPoint PointX="4.0784615384615384" PointY="23" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="11.5" PointY="0.75" Height="4.0956022135416674" />
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.SearchProperty" Width="1.5" PointX="13.875" PointY="2.125" Height="4.0956022135416674" />
         <EntityTypeShape EntityType="SongSearch.Web.Data.Model.Invitation" Width="1.5" PointX="0.625" PointY="14.375" Height="2.2496956380208388" />
         <AssociationConnector Association="SongSearch.Web.Data.Model.FK_Invitations_Users" >
           <ConnectorPoint PointX="3.875" PointY="16.124365168617974" />
@@ -2166,6 +2155,17 @@
           <ConnectorPoint PointX="9.65625" PointY="19.875" />
           <ConnectorPoint PointX="9.65625" PointY="15.694561840820306" />
           <ConnectorPoint PointX="5.375" PointY="15.694561840820306" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="SongSearch.Web.Data.Model.ContentRepresentation" Width="1.5" PointX="8.75" PointY="0.5" Height="2.5571907552083388" />
+        <AssociationConnector Association="SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents" >
+          <ConnectorPoint PointX="4" PointY="4" />
+          <ConnectorPoint PointX="4" PointY="1.40625" />
+          <ConnectorPoint PointX="8.75" PointY="1.40625" />
+        </AssociationConnector>
+        <AssociationConnector Association="SongSearch.Web.Data.Model.ContentRepresentationTerritories" >
+          <ConnectorPoint PointX="9.5" PointY="3.0571907552083388" />
+          <ConnectorPoint PointX="9.5" PointY="7.1439925130208337" />
+          <ConnectorPoint PointX="10.5" PointY="7.1439925130208337" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

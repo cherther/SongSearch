@@ -1963,6 +1963,9 @@
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
     <Content Include="Views\Admin\ReportUserActions.aspx" />
     <Content Include="Updating.html" />
+    <Content Include="Views\Content\ctrlContentRepresentationItemEditor.ascx" />
+    <Content Include="Views\Content\ctrlContentRepresentation.ascx" />
+    <Content Include="Views\Content\ctrlContentRepresentationEditor.ascx" />
     <Content Include="Views\Home\Help.aspx" />
     <Content Include="Views\Shared\ctrlContactInfoBox.ascx" />
     <Content Include="Views\Shared\ctrlUserBalanceLarge.ascx" />

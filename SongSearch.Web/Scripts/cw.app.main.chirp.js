@@ -16,6 +16,9 @@ var _maxCart = 100;
 var _cartOverMaxMsg = 'Sorry, you can only add up to ' + _maxCart + ' items to your cart.';
 var _cartAddErrorMsg = 'There was a problem adding the item(s) to your cart. Please make sure you have less than 100 items in your cart.'
 
+function Enum() { };
+Enum.ModelAction = { Update: 0, Add: 1, Delete: 2 };
+
 //***********************************************
 //  Rnd
 //***********************************************
@@ -524,11 +527,24 @@ function setupContentPanelUIControls() {
 	setupAutoComplete();
 }
 
+function addContentRepresentationEditor(html, link) {
+
+	var parentRow = link.closest('tr');
+//	var modelAction = link.prev('.cw-model-action');
+	//	modelAction.val(Enum.ModelAction.Add); // ModelAction=Delete
+	var modelids = $('#modelId').val();
+	var modelId = parseInt(modelids);
+	$('#modelId').val(modelId+1);
+
+	parentRow.before(html);
+
+}
+
 function deleteContentRight(link) {
 
 	var parentRow = link.closest('tr');
 	var modelAction = link.prev('.cw-model-action');
-	modelAction.val(2); // ModelAction=Delete
+	modelAction.val(Enum.ModelAction.Delete); // ModelAction=Delete
 	parentRow.hide().next().hide();
 
 }

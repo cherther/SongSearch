@@ -50,7 +50,7 @@
 	<%//using (Html.BeginForm(MVC.Content.DeleteMultiple(), FormMethod.Post, new { id = "cw-catalog-contents-form" })) { %>
 	<%: Html.Hidden("id", catalog.CatalogId)%>
 	<%//= Html.AntiForgeryToken()%>
-	<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlCatalogContentsTable, contentListViewModel); %>
+	<%: Html.Partial(MVC.CatalogManagement.Views.ctrlCatalogContentsTable, contentListViewModel) %>
 	<%//} %>
 <%} %>
 <hr />

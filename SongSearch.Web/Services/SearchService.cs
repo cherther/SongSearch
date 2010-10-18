@@ -56,11 +56,11 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
-		// GetLookupListContentRights
+		// GetLookupListRepresentations
 		//	returns simple listing of 
 		//	contentModel contentRight field values
 		// **************************************
-		public static IList<string> GetLookupListContentRights(string fieldName) {
+		public static IList<string> GetLookupListContentRepresentation(string fieldName) {
 
 			if (String.IsNullOrWhiteSpace(fieldName)) {
 				throw new ArgumentException("Missing fieldName argument");
@@ -68,7 +68,7 @@ namespace SongSearch.Web.Services {
 
 			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
 
-				return session.All<ContentRight>()
+				return session.All<ContentRepresentation>()
 					.Select<string>(fieldName)
 					.Distinct()
 					.Select(v => v.ToUpper())
@@ -167,8 +167,8 @@ namespace SongSearch.Web.Services {
 					.Include("Tags")
 					.Include("Catalog")
 					.Include("ContentMedia")
-					.Include("ContentRights")
-					.Include("ContentRights.Territories")
+					.Include("ContentRepresentations")
+					.Include("ContentRepresentations.Territories")
 				.Where(c => c.ContentId == contentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
 
 				// check if user has access to catalog

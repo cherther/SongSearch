@@ -14,20 +14,25 @@ namespace SongSearch.Web {
 		public IList<SearchField> SearchFields { get; set; }
 		public IList<Tag> Tags { get; set; }
 		public IList<Territory> Territories { get; set; }
+		//public IList<ContentRepresentation> ContentRepresentationShares { get; set; }
+
 	}
 
+	public class ContentRepresentationUpdateModel : ViewModel {
 
-	public class ContentRightViewModel : ViewModel {
-
-		public int ContentRightId { get; set; }
+		public int ContentRepresentationId { get; set; }
 		public int ContentId { get; set; }
 		public RightsTypes RightsTypeId { get; set; }
-		public string RightsHolderName { get; set; }
-		public string RightsHolderShare { get; set; }
+		public string RepresentationShare { get; set; }
 
 		public IList<int> Territories { get; set; }
 	}
-	
+	public class ContentRepresentationItemViewModel : ViewModel {
+
+		public int ModelId { get; set; }
+		public ContentRepresentation ContentRepresentation { get; set; }
+		public IList<Territory> Territories { get; set; }
+	}
 
 	public class ContentTagViewModel {
 		public int TagType { get; set; }

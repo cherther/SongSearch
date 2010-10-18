@@ -5,8 +5,8 @@
 	//-----------------------------------------------------------------------------------
 	setupAutoComplete();
 	setupTooltips();
-	
-	$.prettyLoader({loader: '/public/images/prettyLoader/ajax-loader.gif'});
+
+	$.prettyLoader({ loader: '/public/images/prettyLoader/ajax-loader.gif' });
 	//-----------------------------------------------------------------------------------
 	// Search option panel
 	//-----------------------------------------------------------------------------------
@@ -275,12 +275,17 @@
 	//		}
 	//	);
 
-	//	//cw-add-right-link
-	//	$('.cw-add-right-link').live('click',
-	//		function (evt) {
+	//cw-add-right-link
+	$('.cw-add-rep-link').live('click',
+		function (evt) {
+			evt.preventDefault();
+			var link = $(this);
+			var url = link[0].href;
+			var data = { modelId: $('#modelId').val(), contentId: $('#Content_ContentId').val() };
 
-	//		}
-	//	);
+			addContentRepresentationEditorAjax(url, data, link);
+		}
+	);
 	//***********************************************
 	//  Content save link
 	//***********************************************

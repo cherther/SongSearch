@@ -52,6 +52,11 @@ namespace SongSearch.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult AddNewRepresentation() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.AddNewRepresentation);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult SaveMetaDataToFile() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.SaveMetaDataToFile);
         }
@@ -87,6 +92,7 @@ namespace SongSearch.Web.Controllers {
             public readonly string Print = "Print";
             public readonly string Edit = "Edit";
             public readonly string Save = "Save";
+            public readonly string AddNewRepresentation = "AddNewRepresentation";
             public readonly string SaveMetaDataToFile = "SaveMetaDataToFile";
             public readonly string SaveMediaFiles = "SaveMediaFiles";
             public readonly string Delete = "Delete";
@@ -101,6 +107,9 @@ namespace SongSearch.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
             public readonly string ctrlContentDetail = "~/Views/Content/ctrlContentDetail.ascx";
+            public readonly string ctrlContentRepresentation = "~/Views/Content/ctrlContentRepresentation.ascx";
+            public readonly string ctrlContentRepresentationEditor = "~/Views/Content/ctrlContentRepresentationEditor.ascx";
+            public readonly string ctrlContentRepresentationItemEditor = "~/Views/Content/ctrlContentRepresentationItemEditor.ascx";
             public readonly string Detail = "~/Views/Content/Detail.aspx";
             public readonly string Print = "~/Views/Content/Print.aspx";
         }
@@ -128,13 +137,20 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Save(SongSearch.Web.Data.Content content, System.Collections.Generic.IList<int> tags, System.Collections.Generic.IDictionary<SongSearch.Web.TagType,string> newTags, System.Collections.Generic.IList<SongSearch.Web.ContentRightViewModel> rights, bool returnData) {
+        public override System.Web.Mvc.ActionResult Save(SongSearch.Web.Data.Content content, System.Collections.Generic.IList<int> tags, System.Collections.Generic.IDictionary<SongSearch.Web.TagType,string> newTags, System.Collections.Generic.IList<SongSearch.Web.ContentRepresentationUpdateModel> representation, bool returnData) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Save);
             callInfo.RouteValueDictionary.Add("content", content);
             callInfo.RouteValueDictionary.Add("tags", tags);
             callInfo.RouteValueDictionary.Add("newTags", newTags);
-            callInfo.RouteValueDictionary.Add("rights", rights);
+            callInfo.RouteValueDictionary.Add("representation", representation);
             callInfo.RouteValueDictionary.Add("returnData", returnData);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult AddNewRepresentation(int contentId, int modelId) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AddNewRepresentation);
+            callInfo.RouteValueDictionary.Add("contentId", contentId);
+            callInfo.RouteValueDictionary.Add("modelId", modelId);
             return callInfo;
         }
 

@@ -98,7 +98,32 @@ function submitContentFormAjax(formId, link, altLink) {
 	form.ajaxSubmit(options);
 
 }
+function addContentRepresentationEditorAjax(url, modelData, link) {
 
+	wait();
+
+	$.ajax({
+		url: url,
+		data: modelData,
+		type: 'GET',
+		cache: false,
+		dataType: 'html',
+		success: function (data, status, xhr) {
+			if (status == 'error') {
+				unwait();
+				feedback('error', xhr.status + ' ' + xhr.statusText);
+			}
+			else {
+				addContentRepresentationEditor(data, link);
+			}
+		},
+		error: function (xhr, status, error) {
+			unwait();
+			feedback('error', xhr.status + ' ' + xhr.statusText);
+		}
+	});
+
+}
 //-----------------------------------------------------------------------------------
 // Song Cart
 //-----------------------------------------------------------------------------------

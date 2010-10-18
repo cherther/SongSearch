@@ -13,8 +13,8 @@ namespace SongSearch.Web.Services {
 		//User ActiveUser { get; set; }
 		void Update(Content content, 
 			IList<int> tags,
-			IDictionary<TagType, string> newTagsModel, 
-			IList<ContentRightViewModel> rights);
+			IDictionary<TagType, string> newTagsModel,
+			IList<ContentRepresentationUpdateModel> rights);
 
 		void UpdateContentMedia(int contentId, IList<UploadFile> uploadFiles);
 		void SaveMetaDataToFile(int contentId);

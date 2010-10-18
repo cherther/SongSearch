@@ -33,7 +33,7 @@ namespace SongSearch.Web.Controllers
 		}
 
 		// **************************************
-		// Detail/5
+		//  /Content/Detail/5
 		// **************************************
 		public virtual ActionResult Detail(int id) {
 
@@ -56,7 +56,7 @@ namespace SongSearch.Web.Controllers
 		}
 
 		// **************************************
-		// Print/5
+		//  /Content/Print/5
 		// **************************************
 		public virtual ActionResult Print(int id) {
 			try {
@@ -77,7 +77,7 @@ namespace SongSearch.Web.Controllers
 
 		
 		// **************************************
-		// Edit/5
+		//  /Content/Edit/5
 		// **************************************
 		[RequireAuthorization(MinAccessLevel=Roles.Admin)]
 		public virtual ActionResult Edit(int id) {
@@ -105,7 +105,7 @@ namespace SongSearch.Web.Controllers
 		}
 
 		// **************************************
-		// Save/5
+		// /Content/ Save/5
 		// **************************************
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 		[HttpPost]
@@ -113,14 +113,14 @@ namespace SongSearch.Web.Controllers
 		public virtual ActionResult Save(Content content, 
 			IList<int> tags,
 			IDictionary<TagType, string> newTags,
-			IList<ContentRightViewModel> rights,
+			IList<ContentRepresentationUpdateModel> representation,
 			bool returnData = true) {
 
 			try {
 				//if (ModelState.IsValid) {
 					//do some saving
 				if (Account.User().HasAccessToContentWithRole(content, Roles.Admin)) {
-					_cntAdmService.Update(content, tags, newTags, rights);
+					_cntAdmService.Update(content, tags, newTags, representation);
 					_logService.LogContentEvent(ContentActions.UpdateContent, content.ContentId);
 
 				}
@@ -149,6 +149,25 @@ namespace SongSearch.Web.Controllers
 				return RedirectToAction(MVC.Error.Problem());	
 			}
 		}
+
+		// **************************************
+		// /Content/AddNewRepresentation/5
+		// **************************************
+		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
+		public virtual ActionResult AddNewRepresentation(int contentId, int modelId) {
+			var model = new ContentRepresentationItemViewModel() {
+				ModelId = modelId,
+				EditMode = EditModes.Editing,
+				Territories = CacheService.Territories(),
+				ContentRepresentation = new ContentRepresentation() { ContentId = contentId }
+			};			
+		
+			return View(MVC.Content.Views.ctrlContentRepresentationItemEditor, model);
+		}
+
+		// **************************************
+		// /Content/SaveMetaDataToFile/5
+		// **************************************
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 		[HttpPost]
 		public virtual ActionResult SaveMetaDataToFile(int id) {
@@ -163,6 +182,9 @@ namespace SongSearch.Web.Controllers
 			}
 		}
 
+		// **************************************
+		// /Content/SaveMediaFiles/5
+		// **************************************
 		[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 		[HttpPost]
 		public virtual ActionResult SaveMediaFiles(int contentId, IList<UploadFile> uploadFiles) {
@@ -243,6 +265,7 @@ namespace SongSearch.Web.Controllers
 			return new ContentViewModel() {
 				NavigationLocation = new string[] { "Search" },
 				Tags = CacheService.Tags(),
+				Territories = CacheService.Territories(),
 				SectionsAllowed = new List<string> { "Overview", "Lyrics", "Tags" },
 				SearchFields = SessionService.Session().Session("SearchFields") as IList<SearchField> ?? new List<SearchField>()
 			};
@@ -267,7 +290,7 @@ namespace SongSearch.Web.Controllers
 			}
 
 			if (user.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
-				model.SectionsAllowed.Add("Rights");
+				model.SectionsAllowed.Add("Representation");
 			}
 			if (user.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {
 				model.SectionsAllowed.Add("Catalog");
@@ -301,7 +324,7 @@ namespace SongSearch.Web.Controllers
 			}
 
 			if (user.IsAtLeastInCatalogRole(Roles.Plugger, content.Catalog)) {
-				model.SectionsAllowed.Add("Rights");
+				model.SectionsAllowed.Add("Representation");
 			}
 
 			if (user.IsAtLeastInCatalogRole(Roles.Admin, content.Catalog)) {

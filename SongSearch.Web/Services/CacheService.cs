@@ -30,13 +30,13 @@ namespace SongSearch.Web.Services {
 			_cacheMatrix.Add(CacheKeys.Tags, CacheUpdateTags);
 			_cacheMatrix.Add(CacheKeys.TopTags, CacheUpdateTopTags);
 			_cacheMatrix.Add(CacheKeys.Content, CacheUpdateContentFields);
-			_cacheMatrix.Add(CacheKeys.Rights, CacheUpdateContentRightsFields);
+			//_cacheMatrix.Add(CacheKeys.Rights, CacheUpdateContentRepresentationFields);
 			_cacheMatrix.Add(CacheKeys.Territories, CacheUpdateTerritories);
 			//Initialize();
 		}
 
 		public static string[] CachedContentFields = new string[] { "Artist", "RecordLabel", "Writers" };
-		public static string[] CachedContentRightsFields = new string[] { "RightsHolderName" };
+		//public static string[] CachedContentRepresentationFields = new string[] { "RightsHolderName" };
 
 		public static DateTime LastUpdated { get; private set; }
 
@@ -204,18 +204,18 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
-		// **************************************
-		// ContentRightsField
-		// **************************************
-		public static IList<string> ContentRightsField(string fieldName) {
-			if (_hasCache) {
-				if (Cache(CacheKeys.Rights) == null) { CacheUpdateContentRightsFields(CacheKeys.Content); }
-				var lookup = Cache(CacheKeys.Rights) as IDictionary<string, IList<string>>;
-				return lookup[fieldName.ToUpper()]; ;
-			} else {
-				return GetDataContentRightsField(fieldName.ToUpper());
-			}
-		}
+		//// **************************************
+		//// ContentRepresentationField
+		//// **************************************
+		//public static IList<string> ContentRepresentationField(string fieldName) {
+		//    if (_hasCache) {
+		//        if (Cache(CacheKeys.Rights) == null) { CacheUpdateContentRepresentationFields(CacheKeys.Content); }
+		//        var lookup = Cache(CacheKeys.Rights) as IDictionary<string, IList<string>>;
+		//        return lookup[fieldName.ToUpper()]; ;
+		//    } else {
+		//        return GetDataContentRepresentationField(fieldName.ToUpper());
+		//    }
+		//}
 
 		// **************************************
 		// Tags
@@ -303,9 +303,9 @@ namespace SongSearch.Web.Services {
 			CacheUpdate(GetDataContentFields(), key);			
 		}
 
-		private static void CacheUpdateContentRightsFields(CacheKeys key, params object[] list) {
-			CacheUpdate(GetDataContentRightsFields(), key);
-		}
+		//private static void CacheUpdateContentRepresentationFields(CacheKeys key, params object[] list) {
+		//    CacheUpdate(GetDataContentRepresentationFields(), key);
+		//}
 
 		private static void CacheUpdateTerritories(CacheKeys key, params object[] list) {
 			CacheUpdate(GetDataTerritories(), key);
@@ -364,20 +364,20 @@ namespace SongSearch.Web.Services {
 			return SearchService.GetLookupListContent(fieldName);
 		}
 
-		private static IDictionary<string, IList<string>> GetDataContentRightsFields() {
+		//private static IDictionary<string, IList<string>> GetDataContentRepresentationFields() {
 			
-			var lookup = new Dictionary<string, IList<string>>();
-			foreach (var field in CachedContentRightsFields) {
+		//    var lookup = new Dictionary<string, IList<string>>();
+		//    foreach (var field in CachedContentRepresentationFields) {
 
-				lookup.Add(field.ToUpper(), GetDataContentRightsField(field));
-			}
+		//        lookup.Add(field.ToUpper(), GetDataContentRepresentationField(field));
+		//    }
 
-			return lookup; 
-		}
-		private static IList<string> GetDataContentRightsField(string fieldName) {
+		//    return lookup; 
+		//}
+		//private static IList<string> GetDataContentRepresentationField(string fieldName) {
 
-			return SearchService.GetLookupListContentRights(fieldName);
-		}
+		//    return SearchService.GetLookupListContentRepresentation(fieldName);
+		//}
 
 		private static IList<Territory> GetDataTerritories() {
 			return SearchService.GetLookupList<Territory>();

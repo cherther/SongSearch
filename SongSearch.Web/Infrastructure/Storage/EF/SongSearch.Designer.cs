@@ -19,9 +19,7 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Contents_Catalogs", "Catalogs", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Catalog), "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), true)]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentRights_Contents", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Content), "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRight), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Roles", "Roles", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Role), "Users", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentRightTerritories", "ContentRights", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRight), "Territories", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Territory))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentTags", "Contents", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), "Tags", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Tag))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "CartContents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), "Cart", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Cart))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Carts_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Cart", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Cart), true)]
@@ -45,6 +43,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Invitations", "Invitation", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.Invitation), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_PlanBalances_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "PlanBalance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.PlanBalance), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanBalances", "PlanBalance", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PlanBalance), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentRepresentation_Contents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Content), "ContentRepresentation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRepresentation), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentRepresentationTerritories", "ContentRepresentation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRepresentation), "Territory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Territory))]
 
 #endregion
 
@@ -127,22 +127,6 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<Catalog> _Catalogs;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<ContentRight> ContentRights
-        {
-            get
-            {
-                if ((_ContentRights == null))
-                {
-                    _ContentRights = base.CreateObjectSet<ContentRight>("ContentRights");
-                }
-                return _ContentRights;
-            }
-        }
-        private ObjectSet<ContentRight> _ContentRights;
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -415,6 +399,22 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<PlanBalance> _PlanBalances;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ContentRepresentation> ContentRepresentations
+        {
+            get
+            {
+                if ((_ContentRepresentations == null))
+                {
+                    _ContentRepresentations = base.CreateObjectSet<ContentRepresentation>("ContentRepresentations");
+                }
+                return _ContentRepresentations;
+            }
+        }
+        private ObjectSet<ContentRepresentation> _ContentRepresentations;
 
         #endregion
         #region AddTo Methods
@@ -433,14 +433,6 @@ namespace SongSearch.Web.Data
         public void AddToCatalogs(Catalog catalog)
         {
             base.AddObject("Catalogs", catalog);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the ContentRights EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToContentRights(ContentRight contentRight)
-        {
-            base.AddObject("ContentRights", contentRight);
         }
     
         /// <summary>
@@ -577,6 +569,14 @@ namespace SongSearch.Web.Data
         public void AddToPlanBalances(PlanBalance planBalance)
         {
             base.AddObject("PlanBalances", planBalance);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ContentRepresentations EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToContentRepresentations(ContentRepresentation contentRepresentation)
+        {
+            base.AddObject("ContentRepresentations", contentRepresentation);
         }
 
         #endregion
@@ -2260,28 +2260,6 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentRights_Contents", "ContentRights")]
-        public EntityCollection<ContentRight> ContentRights
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRight>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "ContentRights");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRight>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "ContentRights", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentTags", "Tags")]
         public EntityCollection<Tag> Tags
         {
@@ -2360,6 +2338,28 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentActionEvent>("SongSearch.Web.Data.Model.FK_ContentActionEvents_Contents", "ContentActionEvent", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentRepresentation_Contents", "ContentRepresentation")]
+        public EntityCollection<ContentRepresentation> ContentRepresentations
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRepresentation>("SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents", "ContentRepresentation");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRepresentation>("SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents", "ContentRepresentation", value);
                 }
             }
         }
@@ -2907,34 +2907,32 @@ namespace SongSearch.Web.Data
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="ContentRight")]
+    [EdmEntityTypeAttribute(NamespaceName="SongSearch.Web.Data.Model", Name="ContentRepresentation")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
-    public partial class ContentRight : EntityObject
+    public partial class ContentRepresentation : EntityObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new ContentRight object.
+        /// Create a new ContentRepresentation object.
         /// </summary>
-        /// <param name="contentRightId">Initial value of the ContentRightId property.</param>
+        /// <param name="contentRepresentationId">Initial value of the ContentRepresentationId property.</param>
         /// <param name="contentId">Initial value of the ContentId property.</param>
         /// <param name="rightsTypeId">Initial value of the RightsTypeId property.</param>
-        /// <param name="rightsHolderShare">Initial value of the RightsHolderShare property.</param>
-        /// <param name="rightsHolderName">Initial value of the RightsHolderName property.</param>
+        /// <param name="representationShare">Initial value of the RepresentationShare property.</param>
         /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
-        public static ContentRight CreateContentRight(global::System.Int32 contentRightId, global::System.Int32 contentId, global::System.Int32 rightsTypeId, global::System.Decimal rightsHolderShare, global::System.String rightsHolderName, global::System.Int32 createdByUserId, global::System.DateTime createdOn)
+        public static ContentRepresentation CreateContentRepresentation(global::System.Int32 contentRepresentationId, global::System.Int32 contentId, global::System.Int32 rightsTypeId, global::System.Decimal representationShare, global::System.Int32 createdByUserId, global::System.DateTime createdOn)
         {
-            ContentRight contentRight = new ContentRight();
-            contentRight.ContentRightId = contentRightId;
-            contentRight.ContentId = contentId;
-            contentRight.RightsTypeId = rightsTypeId;
-            contentRight.RightsHolderShare = rightsHolderShare;
-            contentRight.RightsHolderName = rightsHolderName;
-            contentRight.CreatedByUserId = createdByUserId;
-            contentRight.CreatedOn = createdOn;
-            return contentRight;
+            ContentRepresentation contentRepresentation = new ContentRepresentation();
+            contentRepresentation.ContentRepresentationId = contentRepresentationId;
+            contentRepresentation.ContentId = contentId;
+            contentRepresentation.RightsTypeId = rightsTypeId;
+            contentRepresentation.RepresentationShare = representationShare;
+            contentRepresentation.CreatedByUserId = createdByUserId;
+            contentRepresentation.CreatedOn = createdOn;
+            return contentRepresentation;
         }
 
         #endregion
@@ -2945,27 +2943,27 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 ContentRightId
+        public global::System.Int32 ContentRepresentationId
         {
             get
             {
-                return _ContentRightId;
+                return _ContentRepresentationId;
             }
             set
             {
-                if (_ContentRightId != value)
+                if (_ContentRepresentationId != value)
                 {
-                    OnContentRightIdChanging(value);
-                    ReportPropertyChanging("ContentRightId");
-                    _ContentRightId = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ContentRightId");
-                    OnContentRightIdChanged();
+                    OnContentRepresentationIdChanging(value);
+                    ReportPropertyChanging("ContentRepresentationId");
+                    _ContentRepresentationId = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ContentRepresentationId");
+                    OnContentRepresentationIdChanged();
                 }
             }
         }
-        private global::System.Int32 _ContentRightId;
-        partial void OnContentRightIdChanging(global::System.Int32 value);
-        partial void OnContentRightIdChanged();
+        private global::System.Int32 _ContentRepresentationId;
+        partial void OnContentRepresentationIdChanging(global::System.Int32 value);
+        partial void OnContentRepresentationIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3020,48 +3018,24 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal RightsHolderShare
+        public global::System.Decimal RepresentationShare
         {
             get
             {
-                return _RightsHolderShare;
+                return _RepresentationShare;
             }
             set
             {
-                OnRightsHolderShareChanging(value);
-                ReportPropertyChanging("RightsHolderShare");
-                _RightsHolderShare = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RightsHolderShare");
-                OnRightsHolderShareChanged();
+                OnRepresentationShareChanging(value);
+                ReportPropertyChanging("RepresentationShare");
+                _RepresentationShare = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RepresentationShare");
+                OnRepresentationShareChanged();
             }
         }
-        private global::System.Decimal _RightsHolderShare;
-        partial void OnRightsHolderShareChanging(global::System.Decimal value);
-        partial void OnRightsHolderShareChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String RightsHolderName
-        {
-            get
-            {
-                return _RightsHolderName;
-            }
-            set
-            {
-                OnRightsHolderNameChanging(value);
-                ReportPropertyChanging("RightsHolderName");
-                _RightsHolderName = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("RightsHolderName");
-                OnRightsHolderNameChanged();
-            }
-        }
-        private global::System.String _RightsHolderName;
-        partial void OnRightsHolderNameChanging(global::System.String value);
-        partial void OnRightsHolderNameChanged();
+        private global::System.Decimal _RepresentationShare;
+        partial void OnRepresentationShareChanging(global::System.Decimal value);
+        partial void OnRepresentationShareChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3121,16 +3095,16 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentRights_Contents", "Contents")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_ContentRepresentation_Contents", "Content")]
         public Content Content
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "Contents").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents", "Content").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "Contents").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents", "Content").Value = value;
             }
         }
         /// <summary>
@@ -3142,13 +3116,13 @@ namespace SongSearch.Web.Data
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "Contents");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents", "Content");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRights_Contents", "Contents", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Content>("SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents", "Content", value);
                 }
             }
         }
@@ -3159,18 +3133,18 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentRightTerritories", "Territories")]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentRepresentationTerritories", "Territory")]
         public EntityCollection<Territory> Territories
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Territory>("SongSearch.Web.Data.Model.ContentRightTerritories", "Territories");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Territory>("SongSearch.Web.Data.Model.ContentRepresentationTerritories", "Territory");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Territory>("SongSearch.Web.Data.Model.ContentRightTerritories", "Territories", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Territory>("SongSearch.Web.Data.Model.ContentRepresentationTerritories", "Territory", value);
                 }
             }
         }
@@ -5990,18 +5964,18 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentRightTerritories", "ContentRights")]
-        public EntityCollection<ContentRight> ContentRights
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "ContentRepresentationTerritories", "ContentRepresentation")]
+        public EntityCollection<ContentRepresentation> ContentRepresentations
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRight>("SongSearch.Web.Data.Model.ContentRightTerritories", "ContentRights");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<ContentRepresentation>("SongSearch.Web.Data.Model.ContentRepresentationTerritories", "ContentRepresentation");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRight>("SongSearch.Web.Data.Model.ContentRightTerritories", "ContentRights", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRepresentation>("SongSearch.Web.Data.Model.ContentRepresentationTerritories", "ContentRepresentation", value);
                 }
             }
         }

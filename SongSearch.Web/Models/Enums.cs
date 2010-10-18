@@ -107,7 +107,7 @@ namespace SongSearch.Web {
 
 	public enum RightsTypes {
 		Master = 1,
-		Comp
+		Composition
 	}
 	
 	public static class ModelEnums {
@@ -163,7 +163,7 @@ namespace SongSearch.Web {
 		public static RightsTypes[] GetRightsTypes() {
 			return new[] 
 				{ 
-					RightsTypes.Comp, 
+					RightsTypes.Composition, 
 					RightsTypes.Master
 				};
 		}

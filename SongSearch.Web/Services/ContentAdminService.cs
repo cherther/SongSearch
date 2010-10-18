@@ -25,14 +25,14 @@ namespace SongSearch.Web.Services {
 		public void Update(Content contentModel, 
 			IList<int> tagsModel,
 			IDictionary<TagType, string> newTagsModel,
-			IList<ContentRightViewModel> rightsModel) {
+			IList<ContentRepresentationUpdateModel> representationModel) {
 
 			//UpdateModelWith Content
 			var content = DataSession.GetObjectQuery<Content>()
 					.Include("Tags")
 					.Include("Catalog")
-					.Include("ContentRights")
-					.Include("ContentRights.Territories")
+					.Include("ContentRepresentations")
+					.Include("ContentRepresentations.Territories")
 				.Where(c => c.ContentId == contentModel.ContentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
 
 			if (content == null) {
@@ -50,8 +50,8 @@ namespace SongSearch.Web.Services {
 			// add to tagsModel
 			content = UpdateTags(content, tagsModel);
 
-			//UpdateModelWith Rights
-			content = UpdateRights(content, rightsModel);
+			//UpdateModelWith Representation
+			content = UpdateRepresentation(content, representationModel);
 
 			content.LastUpdatedByUserId = Account.User().UserId;
 			content.LastUpdatedOn = DateTime.Now;
@@ -251,65 +251,72 @@ namespace SongSearch.Web.Services {
 
 
 		// **************************************
-		// UpdateRights:
+		// UpdateRepresentation:
 		// **************************************    
-		private Content UpdateRights(Content content, IList<ContentRightViewModel> rightsModel) {
+		private Content UpdateRepresentation(Content content, IList<ContentRepresentationUpdateModel> representationModel) {
 
-			if (rightsModel == null) { return content; }
+			if (representationModel == null) { return content; }
 
 			var territories = DataSession.All<Territory>().ToList();
 
 			// get rid of empty items or items to delete
-			rightsModel = rightsModel.Where(r => r.ModelAction != ModelAction.Delete && r.RightsHolderName != null && r.RightsHolderShare != null).ToList();
+			representationModel = representationModel.Where(r => r.ModelAction != ModelAction.Delete 
+				//&& r.RightsHolderName != null
+				&& r.RepresentationShare != null
+				).ToList();
 
-			var contentRights = content.ContentRights.ToList();
+			var contentRepresentations = content.ContentRepresentations.ToList();
 
-			var removeRights = contentRights.Where(x => !rightsModel.Select(r => r.ContentRightId).Contains(x.ContentRightId)).ToList();
+			var removeReps = contentRepresentations.Where(x => !representationModel
+				.Select(r => r.ContentRepresentationId)
+				.Contains(x.ContentRepresentationId)
+				)
+				.ToList();
 
-			foreach (var right in removeRights) {
+			foreach (var rep in removeReps) {
 
-				var rightTerritories = right.Territories.ToList();
-				rightTerritories.ForEach(x => right.Territories.Remove(x));
-				content.ContentRights.Remove(right);
+				var repTerritories = rep.Territories.ToList();
+				repTerritories.ForEach(x => rep.Territories.Remove(x));
+				content.ContentRepresentations.Remove(rep);
 
-				DataSession.Delete<ContentRight>(right);
+				DataSession.Delete<ContentRepresentation>(rep);
 			}
 
-			foreach (var rm in rightsModel) {
+			foreach (var rm in representationModel) {
 
-				ContentRight contentRight = contentRights.SingleOrDefault(x => x.ContentRightId == rm.ContentRightId) ??
-					new ContentRight() { CreatedByUserId = Account.User().UserId, CreatedOn = DateTime.Now };
+				ContentRepresentation contentRepresentation = contentRepresentations.SingleOrDefault(x => x.ContentRepresentationId == rm.ContentRepresentationId) ??
+					new ContentRepresentation() { CreatedByUserId = Account.User().UserId, CreatedOn = DateTime.Now };
 
 				// RightsHolderName
-				contentRight.RightsHolderName = rm.RightsHolderName.ToUpper();
+				//contentRight.RightsHolderName = rm.RightsHolderName.AsEmptyIfNull().ToUpper();
 
 				// RightsTypeId
-				contentRight.RightsTypeId = (int)rm.RightsTypeId;
+				contentRepresentation.RightsTypeId = (int)rm.RightsTypeId;
 
 				// Share %
-				var share = rm.RightsHolderShare.Replace("%", "").Trim();
+				var share = rm.RepresentationShare.Replace("%", "").Trim();
 				decimal shareWhole;
 
 				if (decimal.TryParse(share, out shareWhole)) {
-					contentRight.RightsHolderShare = decimal.Divide(Math.Abs(shareWhole), 100);
+					contentRepresentation.RepresentationShare = decimal.Divide(Math.Abs(shareWhole), 100);
 				}
 
 				// Territories
 				var territoryModel = rm.Territories.Where(x => x > 0).ToList();
 
-				var rightTerritories = contentRight.Territories.ToList();
+				var rightTerritories = contentRepresentation.Territories.ToList();
 				var removeTerritories = rightTerritories.Where(x => !territoryModel.Contains(x.TerritoryId));
-				removeTerritories.ForEach(x => contentRight.Territories.Remove(x));
+				removeTerritories.ForEach(x => contentRepresentation.Territories.Remove(x));
 				var addTerritories = territoryModel.Except(rightTerritories.Select(x => x.TerritoryId).Intersect(territoryModel));
 
 				foreach (var tm in addTerritories) {
 					var ter = territories.Single(t => t.TerritoryId == tm);
-					contentRight.Territories.Add(ter);
+					contentRepresentation.Territories.Add(ter);
 				}
 
 				// Add to collection if a new contentRight
-				if (contentRight.ContentRightId == 0) {					
-					content.ContentRights.Add(contentRight);
+				if (contentRepresentation.ContentRepresentationId == 0 && contentRepresentation.RepresentationShare > 0) {					
+					content.ContentRepresentations.Add(contentRepresentation);
 				}
 			}
 

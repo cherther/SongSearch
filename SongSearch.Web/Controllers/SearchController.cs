@@ -163,11 +163,11 @@ namespace SongSearch.Web.Controllers
 					(
 						CacheService.CachedContentFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ?
 						CacheService.ContentField(f).Where(v => v != null).ToArray() :
-						(
-						CacheService.CachedContentRightsFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ?
-							CacheService.ContentRightsField(f).Where(v => v != null).ToArray() :
+						//(
+						//CacheService.CachedContentRepresentationFields.Any(x => x.Equals(f, StringComparison.InvariantCultureIgnoreCase)) ?
+						//	CacheService.ContentRepresentationField(f).Where(v => v != null).ToArray() :
 							new string[] { "" }
-						)
+						//)
 					);
 
 				var searchValues = values.Select(v => new { Value = v, SearchValue = v.MakeSearchableValue() }).AsParallel().ToArray();
