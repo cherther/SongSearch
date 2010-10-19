@@ -71,7 +71,7 @@ namespace SongSearch.Web.Services {
 
 							newUser.PlanBalanceId = inv.InvitedByUser.PlanBalance.PlanBalanceId;
 							newUser.PlanUserId = inv.InvitedByUser.UserId;
-
+							ctx.AddToUserBalance(newUser);							
 						}
 
 						// ----------------------------------

@@ -246,6 +246,7 @@
     <Compile Include="Services\CatalogManagementService.cs" />
     <Compile Include="Services\CatalogUploadService.cs" />
     <Compile Include="Services\AmazonCloudService.cs" />
+    <Compile Include="Services\PlanBalanceService.cs" />
     <Compile Include="Services\UserEventLogService.cs" />
     <Compile Include="Services\Interfaces\IUserEventLogService.cs" />
     <Compile Include="Services\SiteProfileData.cs" />

@@ -71,22 +71,30 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static void DeleteCatalog(int catalogId) {
 			using (var ctx = new SongSearchContext()) {
-				var catalog = ctx.Catalogs.SingleOrDefault(c => c.CatalogId == catalogId);
-
-				var contents = catalog.Contents.ToList();
-				foreach (var content in contents) {
-
-					foreach (var media in content.ContentMedia) {
-						FileSystem.SafeDelete(media.MediaFilePath(true), true);
-					}
-
-					ctx.Contents.DeleteObject(content);
-				}
-
-				ctx.Catalogs.DeleteObject(catalog);
+				ctx.DeleteCatalog(catalogId);
 				ctx.SaveChanges();
 			}
 		}
+		
+		internal static void DeleteCatalog(this SongSearchContext ctx, int catalogId) {
+			var catalog = ctx.Catalogs.SingleOrDefault(c => c.CatalogId == catalogId);
+			var owner = catalog.Creator;
+
+			var contents = catalog.Contents.ToList();
+			foreach (var content in contents) {
+
+				foreach (var media in content.ContentMedia) {
+					FileSystem.SafeDelete(media.MediaFilePath(true), true);
+				}
+
+				ctx.Contents.DeleteObject(content);
+				ctx.RemoveFromSongsBalance(owner);
+			}
+
+			ctx.Catalogs.DeleteObject(catalog);
+		}
+
+		
 
 		// ----------------------------------------------------------------------------
 		// Private

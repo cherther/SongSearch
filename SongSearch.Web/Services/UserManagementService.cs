@@ -84,10 +84,10 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// DeleteUser
 		// **************************************
-		public static void DeleteUser(int userId, bool takeOwnerShip = true) {
+		public static void DeleteUser(int userId, bool takeOwnerShip = false) {
 
 			using (var ctx = new SongSearchContext()) {
-				var user = ctx.GetUser(userId);
+				var user = ctx.Users.SingleOrDefault(x => x.UserId == userId);
 
 				if (user != null) {
 					if (user.UserId == Account.User().UserId) {
@@ -106,7 +106,7 @@ namespace SongSearch.Web.Services {
 							var userCats = user.CreatedCatalogs.ToList();
 							
 							foreach (var cat in userCats) {
-								CatalogManagementService.DeleteCatalog(cat.CatalogId);
+								ctx.DeleteCatalog(cat.CatalogId);
 							}
 						}
 
@@ -116,8 +116,18 @@ namespace SongSearch.Web.Services {
 						//handled via cascade in db
 						//user.ActiveCartContents.ToList().ForEach(x => user.ActiveCartContents.Remove(x));
 						//user.UserCatalogRoles.ToList().ForEach(x => user.UserCatalogRoles.Remove(x));
+						var balance = user.PlanBalance; // ctx.PlanBalances.SingleOrDefault(x => x.PlanBalanceId == user.PlanBalanceId);
+						if (balance != null) {
+							balance.Users.Remove(user);
+							if (balance.Users.Count() == 0) {
+								ctx.Delete(balance);
+							} else {
+								ctx.RemoveFromUserBalance(user);
+							}
+						}
 						ctx.Users.DeleteObject(user);
 						ctx.SaveChanges();
+
 					}
 				}
 			}
@@ -141,6 +151,8 @@ namespace SongSearch.Web.Services {
 			//become the parent user
 			var userId = Account.User().UserId;
 			user.ParentUserId = userId;
+
+			user.RemoveFromUserBalance();
 
 			//put user on a plan
 			if (!user.IsPlanOwner) {
@@ -232,6 +244,12 @@ namespace SongSearch.Web.Services {
 
 				if (user != null && ModelEnums.GetRoles().Contains(roleId)) {
 					user.RoleId = roleId;
+					if (roleId == (int)Roles.Admin) {
+						user.AddToAdminBalance();
+					} else if (user.RoleId == (int)Roles.Admin) {
+						user.RemoveFromAdminBalance();
+					}
+					user.RoleId = roleId;
 					ctx.SaveChanges();
 				}
 			}
@@ -249,9 +267,17 @@ namespace SongSearch.Web.Services {
 
 				if (user != null && !user.IsSuperAdmin()) {
 
-					user.RoleId = user.RoleId != admin ? admin : (int)Roles.Client;
+					if (user.RoleId != admin) {
+						user.RoleId = admin;
+						ctx.AddToAdminBalance(user);
+					} else {
+						user.RoleId = (int)Roles.Client;
+						ctx.RemoveFromAdminBalance(user);
+					}
 
 					ctx.SaveChanges();
+					
+					
 				}
 			}
 		}
@@ -309,10 +335,12 @@ namespace SongSearch.Web.Services {
 					}
 
 					// check if it's an admin role; if so, elevate the system role to Admin if user is not already there
-					if (roleId == (int)Roles.Admin & user.RoleId > roleId) {
+					if (roleId == (int)Roles.Admin && user.RoleId > roleId) {
 						user.RoleId = roleId;
+						ctx.AddToAdminBalance(user);
 					}
 					ctx.SaveChanges();
+
 
 				}
 			}
@@ -365,7 +393,12 @@ namespace SongSearch.Web.Services {
 					}
 				}
 
+				if (user.RoleId >= (int)Roles.Admin && roleId == (int)Roles.Admin) {
+					// newly minted admin?
+					ctx.AddToAdminBalance(user);
+				}
 				ctx.SaveChanges();
+
 			}
 		}
 
@@ -386,6 +419,7 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
+		
 		// **************************************
 		// SetCatalogRole
 		// **************************************
@@ -406,6 +440,10 @@ namespace SongSearch.Web.Services {
 				} else {
 					if (roleId > 0) {
 						usrCatalog.RoleId = roleId;
+						if (user.RoleId >= (int)Roles.Admin && roleId == (int)Roles.Admin) {
+							// newly minted admin?
+							ctx.AddToAdminBalance(user);
+						}
 					} else {
 						ctx.UserCatalogRoles.DeleteObject(usrCatalog);
 					}

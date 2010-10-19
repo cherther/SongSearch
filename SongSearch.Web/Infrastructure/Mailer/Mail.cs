@@ -13,7 +13,7 @@ namespace SongSearch.Web {
 				using (var msg = new MailMessage()) {
 					msg.From = new MailAddress(from);
 					msg.To.Add(to);
-					msg.CC.Add(SiteProfileData.SiteProfile().AdminEmail);
+					msg.Bcc.Add(SiteProfileData.SiteProfile().AdminEmail);
 					msg.Subject = subject;
 					msg.IsBodyHtml = true;
 					msg.Body = message;

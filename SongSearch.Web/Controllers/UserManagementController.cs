@@ -73,23 +73,7 @@ namespace SongSearch.Web
 
 		}
 
-		private static InviteViewModel GetInviteModel(InviteViewModel model) {
-			
-			var user = Account.User();
-			var quotas = user.MyBalances();
-
-			model.NavigationLocation = new string[] { "Admin" };
-			model.InviteId = model.InviteId ?? Guid.Empty.ToString();
-			model.IsPlanInvitation = !user.IsSuperAdmin();
-			model.ShowInviteForm = !quotas.NumberOfInvitedUsers.IsAtTheLimit;
-			model.ShowPlanMessage = user.IsSuperAdmin() ||
-									(quotas.NumberOfCatalogAdmins.Allowed.HasValue && 
-									quotas.NumberOfCatalogAdmins.Remaining > 0);
-			model.ShowBalanceWidget = user.IsPlanOwner;
-
-			return model;
-		}
-
+		
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[ValidateOnlyIncomingValues]
@@ -117,8 +101,7 @@ namespace SongSearch.Web
 				}
 
 				SendInvites(recipients, sender);
-				_logService.LogUserEvent(UserActions.SentInvite);
-
+				
 				return View(Views.InviteComplete, model);
 			} else {
 				ModelState.AddModelError("", "There was an error processing your invites");
@@ -204,7 +187,10 @@ namespace SongSearch.Web
 			try {
 
 				UserManagementService.ToggleSystemAdminAccess(userId);
+
 				_logService.LogUserEvent(UserActions.ToggleSystemAdminAccess);
+				SessionService.Session().InitializeSession(true);
+
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -261,6 +247,8 @@ namespace SongSearch.Web
 
 				UserManagementService.UpdateAllCatalogs(userId, roleId);
 				_logService.LogUserEvent(UserActions.UpdateAllCatalogs);
+				SessionService.Session().InitializeSession(true);
+
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -289,6 +277,8 @@ namespace SongSearch.Web
 
 				UserManagementService.UpdateAllUsers(catalogId, roleId);
 				_logService.LogUserEvent(UserActions.UpdateAllUsers);
+				SessionService.Session().InitializeSession(true);
+
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -315,9 +305,9 @@ namespace SongSearch.Web
 		public virtual ActionResult Delete(int id) {
 
 			try {
-				UserManagementService.DeleteUser(id, true);
+				UserManagementService.DeleteUser(id);
 				_logService.LogUserEvent(UserActions.DeleteUser);
-
+				SessionService.Session().InitializeSession(true);
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -346,6 +336,7 @@ namespace SongSearch.Web
 			try {
 				UserManagementService.TakeOwnerShip(id);
 				_logService.LogUserEvent(UserActions.TakeOwnership);
+				SessionService.Session().InitializeSession(true);
 
 				if (Request.IsAjaxRequest()) {
 					return Json(id);
@@ -368,7 +359,29 @@ namespace SongSearch.Web
 			
 		}
 
+		// **************************************
+		// GetInviteModel
+		// **************************************
+		private static InviteViewModel GetInviteModel(InviteViewModel model) {
 
+			var user = Account.User();
+			var quotas = user.MyBalances();
+
+			model.NavigationLocation = new string[] { "Admin" };
+			model.InviteId = model.InviteId ?? Guid.Empty.ToString();
+			model.IsPlanInvitation = !user.IsSuperAdmin();
+			model.ShowInviteForm = !quotas.NumberOfInvitedUsers.IsAtTheLimit;
+			model.ShowPlanMessage = user.IsSuperAdmin() ||
+									(quotas.NumberOfCatalogAdmins.Allowed.HasValue &&
+									quotas.NumberOfCatalogAdmins.Remaining > 0);
+			model.ShowBalanceWidget = user.IsPlanOwner;
+
+			return model;
+		}
+
+		// **************************************
+		// SendInvitesAsync
+		// **************************************
 		private delegate void SendInvitesDelegate(string[] recipients, string sender);
 		delegate void EndInvokeDelegate(IAsyncResult result);
 
@@ -395,6 +408,9 @@ namespace SongSearch.Web
 			inviteDelegate.EndInvoke(asyncResult);
 		}
 
+		// **************************************
+		// SendInvites
+		// **************************************
 		private void SendInvites(string[] recipients, string sender) {
 			foreach (string recipient in recipients) {
 				string address = recipient.ToLower().Trim();
@@ -420,6 +436,7 @@ namespace SongSearch.Web
 						string message = this.RenderViewToString("InviteMessage", inviteMsg);
 
 						Mail.SendMail(sender, address, subject, message);
+						_logService.LogUserEvent(UserActions.SentInvite);
 					}
 
 				}
