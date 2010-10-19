@@ -14,21 +14,11 @@ namespace SongSearch.Web.Controllers
 	[HandleError]
 	public partial class CartController : Controller
 	{
-		IUserEventLogService _logService;
 
 		protected override void Initialize(RequestContext requestContext) {
 			
-			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
-			}
 			base.Initialize(requestContext);
 
-		}
-
-		public CartController(
-			IUserEventLogService logService
-			) {
-			_logService = logService;
 		}
 
 		// **************************************
@@ -57,7 +47,7 @@ namespace SongSearch.Web.Controllers
 					this.FeedbackInfo(msg);
 				}
 
-				_logService.LogUserEvent(UserActions.ViewCart);
+				UserEventLogService.LogUserEvent(UserActions.ViewCart);
 
 				return View(vm);
 			}
@@ -96,7 +86,7 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				CartService.AddToMyActiveCart(id);
-				_logService.LogContentEvent(ContentActions.AddToCart, id);
+				UserEventLogService.LogContentEvent(ContentActions.AddToCart, id);
 
 				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
@@ -128,7 +118,7 @@ namespace SongSearch.Web.Controllers
 					var contentIds = items.Select(i => int.Parse(i)).ToArray();
 					CartService.AddToMyActiveCart(contentIds);
 
-					contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.AddToCart, c));
+					contentIds.ForEach(c => UserEventLogService.LogContentEvent(ContentActions.AddToCart, c));
 
 					SessionService.Session().RefreshMyActiveCart(this.UserName());
 				}
@@ -158,7 +148,7 @@ namespace SongSearch.Web.Controllers
 			try {
 
 				CartService.RemoveFromMyActiveCart(id);
-				_logService.LogContentEvent(ContentActions.RemoveFromCart, id);
+				UserEventLogService.LogContentEvent(ContentActions.RemoveFromCart, id);
 				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
@@ -193,7 +183,7 @@ namespace SongSearch.Web.Controllers
 
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
 				CartService.RemoveFromMyActiveCart(contentIds);
-				contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.RemoveFromCart, c));
+				contentIds.ForEach(c => UserEventLogService.LogContentEvent(ContentActions.RemoveFromCart, c));
 				SessionService.Session().RefreshMyActiveCart(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
@@ -223,8 +213,8 @@ namespace SongSearch.Web.Controllers
 
 				CartService.DeleteCart(id);
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
-				//_logService.LogUserEvent(ContentActions.DeletedCart, id);
-				_logService.LogUserEvent(UserActions.DeleteCart);
+				//UserEventLogService.LogUserEvent(ContentActions.DeletedCart, id);
+				UserEventLogService.LogUserEvent(UserActions.DeleteCart);
 				this.FeedbackInfo("Cart deleted");
 			}
 			catch (Exception ex) {
@@ -245,7 +235,7 @@ namespace SongSearch.Web.Controllers
 			try {
 				//if (contentNames.Count() > 10 || SystemConfig.UseRemoteMedia) {
 				CartService.CompressMyActiveCartOffline(userArchiveName, contentNames);
-					_logService.LogUserEvent(UserActions.CompressCart);
+					UserEventLogService.LogUserEvent(UserActions.CompressCart);
 
 			}
 			catch (Exception ex) {
@@ -283,7 +273,7 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				var cart = CartService.DownloadCompressedCart(id);
-				_logService.LogUserEvent(UserActions.DownloadCart);
+				UserEventLogService.LogUserEvent(UserActions.DownloadCart);
 
 				//CacheService.RefreshMyActiveCart(_currentUser.UserName);
 

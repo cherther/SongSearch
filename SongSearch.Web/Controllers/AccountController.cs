@@ -14,21 +14,8 @@ namespace SongSearch.Web.Controllers {
 	[HandleError]
 	public partial class AccountController : Controller {
 
-		IFormsAuthenticationService _authService;
-		IUserEventLogService _logService;
-
-		
 		protected override void Initialize(RequestContext requestContext) {
-			try {
-				if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-					_logService.SessionId = requestContext.HttpContext.Session.SessionID;
-				}
-			}
-			catch (Exception ex) {
-				Log.Error(ex);
-			}
 			base.Initialize(requestContext);
-
 		}
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext) {
@@ -38,14 +25,6 @@ namespace SongSearch.Web.Controllers {
 		}
 
 		
-
-		public AccountController(
-			IFormsAuthenticationService authService,
-			IUserEventLogService logService
-			) {
-			_authService = authService;
-			_logService = logService;
-		}
 
 		// **************************************
 		// URL: /Account/LogIn
@@ -70,14 +49,13 @@ namespace SongSearch.Web.Controllers {
 				if (AccountService.UserIsValid(model.Email, model.Password))
 				//if (_ms.UserIsValid(contentModel.Email, contentModel.Password))
 		{
-					_authService.SignIn(model.Email, model.RememberMe);
+					FormsAuthenticationService.SignIn(model.Email, model.RememberMe);
 					
 					SessionService.Session().InitializeSession(model.Email, true);
 
 					var user = Account.User(model.Email);
 
-					_logService.SessionId = Session.SessionID;
-					_logService.LogUserEvent(UserActions.Login);
+					UserEventLogService.LogUserEvent(UserActions.Login);
 
 					SetFriendlyNameCookie(user.FullName());
 					SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
@@ -136,9 +114,9 @@ namespace SongSearch.Web.Controllers {
 		[RequireAuthorization]
 		public virtual ActionResult LogOut() {
 
-			_logService.LogUserEvent(UserActions.Logout);
+			UserEventLogService.LogUserEvent(UserActions.Logout);
 
-			_authService.SignOut();
+			FormsAuthenticationService.SignOut();
 
 			Session.Abandon();
 			this.FeedbackInfo("Goodbye!");
@@ -156,7 +134,7 @@ namespace SongSearch.Web.Controllers {
 			ViewData["email"] = em;
 
 
-			_authService.SignOut();
+			FormsAuthenticationService.SignOut();
 
 			Session.Abandon();
 
@@ -221,15 +199,15 @@ namespace SongSearch.Web.Controllers {
 
 						switch (inv.InvitationStatus) {
 							case (int)InvitationStatusCodes.Open: {
-									model.Invitation = inv;
+								model.Invitation = inv;
 
-									// Attempt to register the myUser
-									//MembershipCreateStatus createStatus = _ms.CreateUser(contentModel.Email, contentModel.Password, contentModel.Email);
-									if (String.IsNullOrEmpty(model.Email)) throw new ArgumentException("Value cannot be null or empty.", "Email");
-									if (String.IsNullOrEmpty(model.Password)) throw new ArgumentException("Value cannot be null or empty.", "Password");
-									if (String.IsNullOrEmpty(model.InviteId)) throw new ArgumentException("Value cannot be null or empty.", "InviteId");
+								// Attempt to register the myUser
+								//MembershipCreateStatus createStatus = _ms.CreateUser(contentModel.Email, contentModel.Password, contentModel.Email);
+								if (String.IsNullOrEmpty(model.Email)) throw new ArgumentException("Value cannot be null or empty.", "Email");
+								if (String.IsNullOrEmpty(model.Password)) throw new ArgumentException("Value cannot be null or empty.", "Password");
+								if (String.IsNullOrEmpty(model.InviteId)) throw new ArgumentException("Value cannot be null or empty.", "InviteId");
 
-									var selectedPricingPlanId = (int)model.SelectedPricingPlan;
+								var selectedPricingPlanId = (int)model.SelectedPricingPlan;
 
 								User user = new User() {
 										UserName = model.Email,
@@ -249,9 +227,10 @@ namespace SongSearch.Web.Controllers {
 										SetFriendlyNameCookie(user.FullName());
 										SetSiteProfileCookie(SiteProfileData.SiteProfile().ProfileId);
 
-										_logService.LogUserEvent(UserActions.Register);
+										UserEventLogService.LogUserEvent(UserActions.Register);
 
-										_authService.SignIn(user.UserName, true /* createPersistentCookie */);
+										FormsAuthenticationService.SignIn(user.UserName, true /* createPersistentCookie */);
+										SessionService.Session().RefreshUser(this.UserName());
 
 										return RedirectToAction(MVC.Home.Index());
 									}
@@ -308,7 +287,7 @@ namespace SongSearch.Web.Controllers {
 				var user = new User() { UserName = userName, Password = model.OldPassword };
 				if (AccountService.ChangePassword(user, model.NewPassword)) {
 					//_acctService.UpdateCurrentUserInSession();
-					_logService.LogUserEvent(UserActions.ChangePassword);
+					UserEventLogService.LogUserEvent(UserActions.ChangePassword);
 
 					return RedirectToAction(Actions.ChangePasswordSuccess());
 				} else {
@@ -409,7 +388,7 @@ namespace SongSearch.Web.Controllers {
 	
 			//update the user's profile in the database
 			if (AccountService.UpdateProfile(userModel, new List<Contact>() { contact })) {
-				_logService.LogUserEvent(UserActions.UpdateProfile);
+				UserEventLogService.LogUserEvent(UserActions.UpdateProfile);
 
 				// UpdateModelWith the user dataSession cached in dataSession
 				SessionService.Session().InitializeSession(true);
@@ -535,7 +514,7 @@ namespace SongSearch.Web.Controllers {
 				AccountService.ResetPassword(model.Email, model.ResetCode, model.NewPassword)
 				) {
 
-	//			_logService.LogUserEvent(UserActions.ResetPassword);
+	//			UserEventLogService.LogUserEvent(UserActions.ResetPassword);
 
 				return RedirectToAction(Actions.LogIn());
 

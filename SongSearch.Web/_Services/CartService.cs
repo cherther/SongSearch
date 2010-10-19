@@ -375,12 +375,12 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		private static void CompressCart(int cartId, IList<ContentUserDownloadable> contentNames) {
 
-			using (var session = new SongSearchDataSessionReadOnly()) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 
 				try {
 
-					var cart = session
-								.GetObjectQuery<Cart>()
+					var cart = ctx.Carts
 								.Include("User")
 								.Include("Contents")
 								.Include("Contents.ContentMedia")
@@ -441,11 +441,11 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static void ArchiveExpiredCarts() {
 
-			using (var session = new SongSearchDataSession()) {
+			using (var ctx = new SongSearchContext()) {
 
 				var cutOffDate = DateTime.Now.AddDays(-DAYS_TO_EXPIRE);
 
-				var expiredCarts = session.All<Cart>()
+				var expiredCarts = ctx.Carts
 										.Where(c => c.CartStatus == (int)CartStatusCodes.Compressed &&
 											c.LastUpdatedOn < cutOffDate);
 
@@ -453,7 +453,7 @@ namespace SongSearch.Web.Services {
 					cart.CartStatus = (int)CartStatusCodes.Downloaded;
 					cart.LastUpdatedOn = DateTime.Now;
 				}
-				session.CommitChanges();
+				ctx.SaveChanges();
 
 				expiredCarts = null;
 
@@ -465,10 +465,10 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static void DeletedExpiredArchivedCarts() {
 
-			using (var session = new SongSearchDataSession()) {
+			using (var ctx = new SongSearchContext()) {
 
 				var cutOffDate = DateTime.Now.AddDays(-DAYS_TO_DELETE);
-				var expiredCarts = session.All<Cart>()
+				var expiredCarts = ctx.Carts
 										.Where(c => c.CartStatus == (int)CartStatusCodes.Downloaded &&
 											 c.LastUpdatedOn < cutOffDate)
 											 .ToList();
@@ -477,8 +477,8 @@ namespace SongSearch.Web.Services {
 
 					string path = cart.ArchivePath();
 
-					session.Delete<Cart>(cart);
-					session.CommitChanges();
+					ctx.Carts.DeleteObject(cart);
+					ctx.SaveChanges();
 
 					FileSystem.SafeDelete(path, false);
 

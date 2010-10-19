@@ -13,20 +13,9 @@ namespace SongSearch.Web.Controllers
 	[HandleError]
 	public partial class ContentController : Controller
 	{
-		IUserEventLogService _logService;
-
+		
 		protected override void Initialize(RequestContext requestContext) {
-
-			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
-			}
-
-
 			base.Initialize(requestContext);
-		}
-
-		public ContentController(IUserEventLogService logService) {
-			_logService = logService;
 		}
 
 		// **************************************
@@ -39,7 +28,7 @@ namespace SongSearch.Web.Controllers
 				model.EditMode = EditModes.Viewing;
 
 				
-				_logService.LogContentEvent(ContentActions.ViewItemDetail, id);
+				UserEventLogService.LogContentEvent(ContentActions.ViewItemDetail, id);
 
 				model.ViewMode = ViewModes.Embedded;
 				return View(Views.ctrlContentDetail, model);
@@ -61,7 +50,7 @@ namespace SongSearch.Web.Controllers
 				model.ViewMode = ViewModes.Print;
 				model.EditMode = EditModes.Viewing;
 				
-				_logService.LogContentEvent(ContentActions.PrintItemDetail, id);
+				UserEventLogService.LogContentEvent(ContentActions.PrintItemDetail, id);
 
 				return View(model);
 			}
@@ -118,7 +107,7 @@ namespace SongSearch.Web.Controllers
 					//do some saving
 				if (Account.User().HasAccessToContentWithRole(content, Roles.Admin)) {
 					ContentAdminService.Update(content, tags, newTags, representation);
-					_logService.LogContentEvent(ContentActions.UpdateContent, content.ContentId);
+					UserEventLogService.LogContentEvent(ContentActions.UpdateContent, content.ContentId);
 
 				}
 				//}
@@ -217,10 +206,10 @@ namespace SongSearch.Web.Controllers
 				var contentIds = items.Select(i => int.Parse(i)).ToArray();
 				ContentAdminService.Delete(contentIds);
 
-				contentIds.ForEach(c => _logService.LogContentEvent(ContentActions.DeleteContent, c));
+				contentIds.ForEach(c => UserEventLogService.LogContentEvent(ContentActions.DeleteContent, c));
 
 				CacheService.InitializeApp(true);
-				SessionService.Session().RefreshMyActiveCart(this.UserName());
+				SessionService.Session().RefreshUser(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
 					return Json(count, JsonRequestBehavior.AllowGet);

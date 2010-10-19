@@ -22,6 +22,9 @@ using T4MVC;
 namespace SongSearch.Web.Controllers {
     public partial class SearchController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public SearchController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected SearchController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

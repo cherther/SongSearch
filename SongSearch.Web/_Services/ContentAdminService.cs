@@ -249,8 +249,11 @@ namespace SongSearch.Web.Services {
 					FileSystem.SafeDelete(media.MediaFilePath(true));
 
 				}
+				var user = Account.User();
 
 				ctx.Contents.DeleteObject(content);
+				ctx.RemoveFromSongsBalance(user);
+
 			}
 		}
 

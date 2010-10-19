@@ -15,25 +15,14 @@ namespace SongSearch.Web
 	[RequireAuthorization(MinAccessLevel=Roles.Admin)]
 	public partial class UserManagementController : Controller
 	{
-		IUserEventLogService _logService;
-
 		protected override void Initialize(RequestContext requestContext) {
-			
-			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
-			}
 			base.Initialize(requestContext);
-
 		}
 
 		protected override void OnActionExecuting(ActionExecutingContext filterContext) {
 			ViewData["PasswordLength"] = AccountService.MinPasswordLength;
 
 			base.OnActionExecuting(filterContext);
-		}
-
-		public UserManagementController(IUserEventLogService logService) {
-			_logService = logService;
 		}
 
 
@@ -131,7 +120,7 @@ namespace SongSearch.Web
 				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = !vm.IsThisUser && !user.IsSuperAdmin();
 
-				_logService.LogUserEvent(UserActions.ViewUserDetail);
+				UserEventLogService.LogUserEvent(UserActions.ViewUserDetail);
 
 				if (Request.IsAjaxRequest()) {
 					return View(Views.ctrlDetail, vm);
@@ -159,7 +148,7 @@ namespace SongSearch.Web
 			try {
 
 				UserManagementService.UpdateUsersRole(userId, roleId);
-				_logService.LogUserEvent(UserActions.UpdateUserRole);
+				UserEventLogService.LogUserEvent(UserActions.UpdateUserRole);
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -188,7 +177,7 @@ namespace SongSearch.Web
 
 				UserManagementService.ToggleSystemAdminAccess(userId);
 
-				_logService.LogUserEvent(UserActions.ToggleSystemAdminAccess);
+				UserEventLogService.LogUserEvent(UserActions.ToggleSystemAdminAccess);
 				SessionService.Session().InitializeSession(true);
 
 			}
@@ -218,7 +207,7 @@ namespace SongSearch.Web
 			try {
 
 				UserManagementService.UpdateUserCatalogRole(userId, catalogId, roleId);
-				_logService.LogUserEvent(UserActions.UpdateUserCatalogRole);
+				UserEventLogService.LogUserEvent(UserActions.UpdateUserCatalogRole);
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -246,7 +235,7 @@ namespace SongSearch.Web
 			try {
 
 				UserManagementService.UpdateAllCatalogs(userId, roleId);
-				_logService.LogUserEvent(UserActions.UpdateAllCatalogs);
+				UserEventLogService.LogUserEvent(UserActions.UpdateAllCatalogs);
 				SessionService.Session().InitializeSession(true);
 
 			}
@@ -276,7 +265,7 @@ namespace SongSearch.Web
 			try {
 
 				UserManagementService.UpdateAllUsers(catalogId, roleId);
-				_logService.LogUserEvent(UserActions.UpdateAllUsers);
+				UserEventLogService.LogUserEvent(UserActions.UpdateAllUsers);
 				SessionService.Session().InitializeSession(true);
 
 			}
@@ -306,8 +295,8 @@ namespace SongSearch.Web
 
 			try {
 				UserManagementService.DeleteUser(id);
-				_logService.LogUserEvent(UserActions.DeleteUser);
-				SessionService.Session().InitializeSession(true);
+				UserEventLogService.LogUserEvent(UserActions.DeleteUser);
+				SessionService.Session().RefreshUser(this.UserName());
 			}
 			catch (Exception ex) {
 				Log.Error(ex);
@@ -335,8 +324,8 @@ namespace SongSearch.Web
 		public virtual ActionResult TakeOwnership(int id) {
 			try {
 				UserManagementService.TakeOwnerShip(id);
-				_logService.LogUserEvent(UserActions.TakeOwnership);
-				SessionService.Session().InitializeSession(true);
+				UserEventLogService.LogUserEvent(UserActions.TakeOwnership);
+				SessionService.Session().RefreshUser(this.UserName());
 
 				if (Request.IsAjaxRequest()) {
 					return Json(id);
@@ -436,7 +425,7 @@ namespace SongSearch.Web
 						string message = this.RenderViewToString("InviteMessage", inviteMsg);
 
 						Mail.SendMail(sender, address, subject, message);
-						_logService.LogUserEvent(UserActions.SentInvite);
+						UserEventLogService.LogUserEvent(UserActions.SentInvite);
 					}
 
 				}

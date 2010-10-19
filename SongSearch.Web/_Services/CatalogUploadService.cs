@@ -412,6 +412,7 @@ namespace SongSearch.Web.Services {
 
 						}
 						ctx.Contents.AddObject(itm);
+						ctx.AddToSongsBalance(user);
 						ctx.SaveChanges();
 
 						if (itm.ContentId > 0) {

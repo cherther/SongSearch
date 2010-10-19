@@ -72,22 +72,6 @@ namespace SongSearch.Web {
 				return Version >= LicensedVersion;
 			}
 		}
-		// **************************************
-		// DataSession
-		// **************************************
-		public static IDataSession DataSession {
-			get {
-				return _container.Get<IDataSession>();
-			}
-		}
-		// **************************************
-		// DataSessionReadOnly
-		// **************************************
-		public static IDataSessionReadOnly DataSessionReadOnly {
-			get {
-				return _container.Get<IDataSessionReadOnly>();
-			}
-		}
 
 		// ----------------------------------------------------------------------------
 		// ASP.NET MVC Routes
@@ -195,10 +179,8 @@ namespace SongSearch.Web {
 			try {
 
 				SessionService.Session().InitializeSession();
-				using (var log = Container.Get<IUserEventLogService>()) {
-					log.SessionId = HttpContext.Current.Session.SessionID;
-					log.LogUserEvent(UserActions.SessionStarted);
-				}
+				UserEventLogService.LogUserEvent(UserActions.SessionStarted);
+				
 			//DataSession["UserName"] = User.Identity.Name;
 			}
 			catch (Exception ex) {
@@ -288,18 +270,14 @@ namespace SongSearch.Web {
 			while (true) {
 				// Execute scheduled task
 				//ScheduledTask();
-				using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
-
-					//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
-					try {
-						amz.UploadToRemote(checkSize: SystemConfig.RemoteMediaCheckSize,
-						onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly, mediaVersions: new MediaVersion[] { MediaVersion.Preview });
-					}
-					catch (Exception ex) {
-						Log.Error(ex);
+				try {
+					AmazonRemoteMediaTaskService.UploadToRemote(checkSize: SystemConfig.RemoteMediaCheckSize,
+					onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly, mediaVersions: new MediaVersion[] { MediaVersion.Preview });
+				}
+				catch (Exception ex) {
+					Log.Error(ex);
 						
 
-					}
 				}
 				// Wait for certain time interval
 				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
@@ -312,19 +290,15 @@ namespace SongSearch.Web {
 			while (true) {
 				// Execute scheduled task
 				//ScheduledTask();
-				using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
-
-					//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
-					try {
-						amz.UploadToRemote(
-							checkSize: SystemConfig.RemoteMediaCheckSize
-							, onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly
-							, mediaVersions: new MediaVersion[] { MediaVersion.Full }
-							);
-					}
-					catch (Exception ex) {
-						Log.Error(ex);
-					}
+				try {
+					AmazonRemoteMediaTaskService.UploadToRemote(
+						checkSize: SystemConfig.RemoteMediaCheckSize
+						, onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly
+						, mediaVersions: new MediaVersion[] { MediaVersion.Full }
+						);
+				}
+				catch (Exception ex) {
+					Log.Error(ex);
 				}
 				// Wait for certain time interval
 				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
@@ -334,30 +308,22 @@ namespace SongSearch.Web {
 			// In this example, task will repeat in infinite loop
 			// You can additional parameter if you want to have an option 
 			// to stop the task from some page
-			using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
-
-				//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
-				try {
-					amz.UploadToRemote(
-							checkSize: SystemConfig.RemoteMediaCheckSize
-							, onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly
-							, mediaVersions: new MediaVersion[] { MediaVersion.Preview });
-				}
-				catch (Exception ex) {
-					Log.Error(ex);
-				}
+			try {
+				AmazonRemoteMediaTaskService.UploadToRemote(
+						checkSize: SystemConfig.RemoteMediaCheckSize
+						, onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly
+						, mediaVersions: new MediaVersion[] { MediaVersion.Preview });
+			}
+			catch (Exception ex) {
+				Log.Error(ex);
 			}
 		}
 		static void AmazonRecyleFull() {
-			using (var amz = new SongSearch.Web.Tasks.AmazonRemoteMedia(new SongSearchDataSession(), new SongSearchDataSessionReadOnly())) {
-
-				//amz.UploadToRemote(checkSize: false, onlyNewContent: true);
-				try {
-					amz.UploadToRemote(checkSize: true, onlyNewContent: false, mediaVersions: new MediaVersion[] { MediaVersion.Full });
-				}
-				catch (Exception ex) {
-					Log.Error(ex);
-				}
+			try {
+				AmazonRemoteMediaTaskService.UploadToRemote(checkSize: true, onlyNewContent: false, mediaVersions: new MediaVersion[] { MediaVersion.Full });
+			}
+			catch (Exception ex) {
+				Log.Error(ex);
 			}
 		}
 		// **************************************
@@ -397,14 +363,8 @@ namespace SongSearch.Web {
 		internal class SiteModule : NinjectModule {
 			public override void Load() {
 
-				Bind<IDataSession>().To<SongSearchDataSession>();
-				Bind<IDataSessionReadOnly>().To<SongSearchDataSessionReadOnly>();
-
 				Bind<ICatalogUploadService>().To<CatalogUploadService>();
 
-				Bind<IUserEventLogService>().To<UserEventLogService>();
-
-				Bind<IFormsAuthenticationService>().To<FormsAuthenticationService>();
 			}
 		}
 

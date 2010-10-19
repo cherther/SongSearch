@@ -39,7 +39,7 @@ namespace SongSearch.Web.Services {
 		// **************************************  
 		public static User RegisterUser(User user, Guid invitationCode) {
 
-
+			// Hook this into the same ctx objects
 			using (var ctx = new SongSearchContext()) {
 				var existing = ctx.GetUser(user);
 				if (existing != null) {
@@ -54,7 +54,8 @@ namespace SongSearch.Web.Services {
 						// ----------------------------------
 						// CREATE USER
 						// ----------------------------------
-						var newUser = user.Create(inv, pricingPlan);
+						var newUser = ctx.Create(user, inv, pricingPlan);
+						ctx.SaveChanges();
 
 						// ----------------------------------
 						// GET / CREATE PLAN SUBSCRIPTION
@@ -64,7 +65,7 @@ namespace SongSearch.Web.Services {
 							// ----------------------------------
 							// GET / CREATE PLAN BALANCE
 							// ----------------------------------
-							var balance = newUser.SubscribeTo(pricingPlan);
+							var balance = ctx.SubscribeUserTo(newUser, pricingPlan);
 
 
 						} else {
@@ -103,36 +104,33 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// CreateUser
 		// **************************************  
-		public static User Create(this User user, Invitation inv, PricingPlan pricingPlan) {
+		internal static User Create(this SongSearchContext ctx, User user, Invitation inv, PricingPlan pricingPlan) {
 
-			using (var ctx = new SongSearchContext()) {
+			var newUser = new User() {
+				UserName = user.UserName,
+				FirstName = user.FirstName,
+				LastName = user.LastName,
+				HasAgreedToPrivacyPolicy = user.HasAgreedToPrivacyPolicy,
+				HasAllowedCommunication = user.HasAllowedCommunication,
+				Password = user.Password.PasswordHashString(),
+				ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : _defaultUserId,
+				PlanUserId = inv.InvitedByUser != null ? inv.InvitedByUser.UserId : _defaultUserId, //default placeholder;_defaultUserId; //default placeholder;
+				PricingPlanId = pricingPlan.PricingPlanId,
+				PlanBalanceId = inv.InvitedByUser != null ? inv.InvitedByUser.PlanBalanceId : _defaultUserId, //default placeholder;
 
-				var newUser = new User() {
-					UserName = user.UserName,
-					FirstName = user.FirstName,
-					LastName = user.LastName,
-					HasAgreedToPrivacyPolicy = user.HasAgreedToPrivacyPolicy,
-					HasAllowedCommunication = user.HasAllowedCommunication,
-					Password = user.Password.PasswordHashString(),
-					ParentUserId = inv.InvitedByUserId > 0 ? inv.InvitedByUserId : _defaultUserId,
-					PlanUserId = inv.InvitedByUser != null ? inv.InvitedByUser.UserId : _defaultUserId, //default placeholder;_defaultUserId; //default placeholder;
-					PricingPlanId = pricingPlan.PricingPlanId,
-					PlanBalanceId = inv.InvitedByUser != null ? inv.InvitedByUser.PlanBalanceId : _defaultUserId, //default placeholder;
+				// Members are Clients until promoted, new plans are admins from the start:
+				RoleId = inv.IsPlanInvitation ? (int)Roles.Client : (int)Roles.Admin,
 
-					// Members are Clients until promoted, new plans are admins from the start:
-					RoleId = inv.IsPlanInvitation ? (int)Roles.Client : (int)Roles.Admin,
-
-					//user.PricingPlanId = (int)PricingPlans.Basic;
-					SiteProfileId = inv.InvitedByUser.SiteProfileId,// int.Parse(SystemConfig.DefaultSiteProfileId);
-					RegisteredOn = DateTime.Now,
-					InvitationId = inv.InvitationId
-				};
-				//create user to get a userid
-				ctx.Users.AddObject(newUser);
-				ctx.SaveChanges();
-
-				return newUser;
-			}
+				//user.PricingPlanId = (int)PricingPlans.Basic;
+				SiteProfileId = inv.InvitedByUser.SiteProfileId,// int.Parse(SystemConfig.DefaultSiteProfileId);
+				RegisteredOn = DateTime.Now,
+				InvitationId = inv.InvitationId
+			};
+			//create user to get a userid
+			ctx.Users.AddObject(newUser);
+				
+			return newUser;
+			
 		}
 
 		// **************************************

@@ -22,6 +22,9 @@ using T4MVC;
 namespace SongSearch.Web.Controllers {
     public partial class CartController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public CartController() { }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected CartController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

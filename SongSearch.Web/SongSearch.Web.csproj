@@ -203,56 +203,52 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Configuration.cs" />
-    <Compile Include="Helpers\Connections.cs" />
-    <Compile Include="Helpers\Filters\VersionAttribute.cs" />
-    <Compile Include="Helpers\Rpx.cs" />
-    <Compile Include="Helpers\SessionHelpers.cs" />
-    <Compile Include="Helpers\DynamicLinq.cs" />
-    <Compile Include="Helpers\FeedbackHelpers.cs" />
-    <Compile Include="Helpers\HtmlHelpers.cs" />
-    <Compile Include="Helpers\ID3Reader.cs" />
-    <Compile Include="Helpers\PagedList.cs" />
-    <Compile Include="Helpers\RenderView.cs" />
-    <Compile Include="Helpers\Url.cs" />
-    <Compile Include="Helpers\VersionInfo.cs" />
-    <Compile Include="Helpers\Extensions\Extensions.cs" />
-    <Compile Include="Helpers\Extensions\LinqExtensions.cs" />
-    <Compile Include="Helpers\Extensions\StringExtensions.cs" />
-    <Compile Include="Helpers\SystemSettings.cs" />
-    <Compile Include="Helpers\Extensions\UserExtensions.cs" />
-    <Compile Include="Helpers\XssHelper.cs" />
+    <Compile Include="_Helpers\Configuration.cs" />
+    <Compile Include="_Helpers\Connections.cs" />
+    <Compile Include="_Helpers\Filters\VersionAttribute.cs" />
+    <Compile Include="_Helpers\Rpx.cs" />
+    <Compile Include="_Helpers\SessionHelpers.cs" />
+    <Compile Include="_Helpers\DynamicLinq.cs" />
+    <Compile Include="_Helpers\FeedbackHelpers.cs" />
+    <Compile Include="_Helpers\HtmlHelpers.cs" />
+    <Compile Include="_Helpers\ID3Reader.cs" />
+    <Compile Include="_Helpers\PagedList.cs" />
+    <Compile Include="_Helpers\RenderView.cs" />
+    <Compile Include="_Helpers\Url.cs" />
+    <Compile Include="_Helpers\VersionInfo.cs" />
+    <Compile Include="_Helpers\Extensions\Extensions.cs" />
+    <Compile Include="_Helpers\Extensions\LinqExtensions.cs" />
+    <Compile Include="_Helpers\Extensions\StringExtensions.cs" />
+    <Compile Include="_Helpers\SystemSettings.cs" />
+    <Compile Include="_Helpers\Extensions\UserExtensions.cs" />
+    <Compile Include="_Helpers\XssHelper.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Errors\HandleErrorAttribute.cs" />
-    <Compile Include="Infrastructure\Mailer\Mail.cs" />
-    <Compile Include="Helpers\Extensions\ModelExtensions.cs" />
-    <Compile Include="Infrastructure\Scheduled Tasks\AmazonRemoteMedia.cs" />
-    <Compile Include="Infrastructure\Storage\ILogDataSession.cs" />
-    <Compile Include="Infrastructure\Storage\EF\DataSessionReadOnlyEF.cs" />
-    <Compile Include="Infrastructure\Storage\EF\SongSearchDataSession.cs" />
-    <Compile Include="Infrastructure\Storage\Files.cs" />
+    <Compile Include="_Infrastructure\Errors\HandleErrorAttribute.cs" />
+    <Compile Include="_Infrastructure\Mailer\Mail.cs" />
+    <Compile Include="_Helpers\Extensions\ModelExtensions.cs" />
+    <Compile Include="_Infrastructure\Scheduled Tasks\AmazonRemoteMedia.cs" />
+    <Compile Include="_Infrastructure\Storage\Files.cs" />
     <Compile Include="MediaController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ContactInfo.cs" />
-    <Compile Include="Models\Content.cs" />
-    <Compile Include="Models\LogActionEvent.cs" />
-    <Compile Include="Models\UserBalance.cs" />
+    <Compile Include="_Models\ContactInfo.cs" />
+    <Compile Include="_Models\Content.cs" />
+    <Compile Include="_Models\LogActionEvent.cs" />
+    <Compile Include="_Models\UserBalance.cs" />
     <Compile Include="SearchController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Services\CatalogManagementService.cs" />
-    <Compile Include="Services\CatalogUploadService.cs" />
-    <Compile Include="Services\AmazonCloudService.cs" />
-    <Compile Include="Services\PlanBalanceService.cs" />
-    <Compile Include="Services\UserEventLogService.cs" />
-    <Compile Include="Services\Interfaces\IUserEventLogService.cs" />
-    <Compile Include="Services\SiteProfileData.cs" />
-    <Compile Include="Services\SessionService.cs" />
-    <Compile Include="Services\Interfaces\ICatalogUploadService.cs" />
-    <Compile Include="Services\WorkflowEngine.cs" />
+    <Compile Include="_Services\CatalogManagementService.cs" />
+    <Compile Include="_Services\CatalogUploadService.cs" />
+    <Compile Include="_Services\AmazonCloudService.cs" />
+    <Compile Include="_Services\PlanBalanceService.cs" />
+    <Compile Include="_Services\UserEventLogService.cs" />
+    <Compile Include="_Services\SiteProfileData.cs" />
+    <Compile Include="_Services\SessionService.cs" />
+    <Compile Include="_Services\Interfaces\ICatalogUploadService.cs" />
+    <Compile Include="_Services\WorkflowEngine.cs" />
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -264,47 +260,42 @@
     <Compile Include="UserManagementController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\CatalogViewModel.cs" />
-    <Compile Include="ViewModels\CatalogUploadViewModel.cs" />
-    <Compile Include="ViewModels\ReportEventViewModel.cs" />
-    <Compile Include="ViewModels\PricingPlansViewModel.cs" />
-    <Compile Include="ViewModels\MenuViewModel.cs" />
-    <Compile Include="ViewModels\SearchField.cs" />
-    <Compile Include="Models\User.cs" />
-    <Compile Include="Services\AccountService.cs" />
-    <Compile Include="Helpers\Filters\AuthorizeAttribute.cs" />
-    <Compile Include="Infrastructure\Authentication\FormsAuthenticationService.cs" />
-    <Compile Include="Infrastructure\Authentication\IFormsAuthenticationService.cs" />
-    <Compile Include="Infrastructure\Logging\LogUtility.cs" />
-    <Compile Include="Infrastructure\Logging\Log.cs" />
-    <Compile Include="Infrastructure\Storage\EF\DataSessionEF.cs" />
-    <Compile Include="Infrastructure\Storage\EF\SongSearch.Designer.cs">
+    <Compile Include="_ViewModels\CatalogViewModel.cs" />
+    <Compile Include="_ViewModels\CatalogUploadViewModel.cs" />
+    <Compile Include="_ViewModels\ReportEventViewModel.cs" />
+    <Compile Include="_ViewModels\PricingPlansViewModel.cs" />
+    <Compile Include="_ViewModels\MenuViewModel.cs" />
+    <Compile Include="_ViewModels\SearchField.cs" />
+    <Compile Include="_Models\User.cs" />
+    <Compile Include="_Services\AccountService.cs" />
+    <Compile Include="_Helpers\Filters\AuthorizeAttribute.cs" />
+    <Compile Include="_Infrastructure\Authentication\FormsAuthenticationService.cs" />
+    <Compile Include="_Infrastructure\Logging\LogUtility.cs" />
+    <Compile Include="_Infrastructure\Logging\Log.cs" />
+    <Compile Include="_Infrastructure\Storage\EF\SongSearch.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SongSearch.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\Storage\IDataSessionReadOnly.cs" />
-    <Compile Include="Infrastructure\Storage\IDataSession.cs" />
-    <Compile Include="Models\Enums.cs" />
-    <Compile Include="ViewModels\AccountModels.cs" />
-    <Compile Include="Services\BaseService.cs" />
-    <Compile Include="Services\CacheService.cs" />
-    <Compile Include="Services\ContentAdminService.cs" />
-    <Compile Include="Services\CartService.cs" />
-    <Compile Include="ViewModels\ContentViewModel.cs" />
-    <Compile Include="ViewModels\CartViewModel.cs" />
-    <Compile Include="ViewModels\ContentListViewModel.cs" />
-    <Compile Include="ViewModels\ErrorViewModel.cs" />
-    <Compile Include="ViewModels\TagCloudViewModel.cs" />
-    <Compile Include="ViewModels\InviteViewModel.cs" />
-    <Compile Include="ViewModels\SearchViewModel.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="_Models\Enums.cs" />
+    <Compile Include="_ViewModels\AccountModels.cs" />
+    <Compile Include="_Services\CacheService.cs" />
+    <Compile Include="_Services\ContentAdminService.cs" />
+    <Compile Include="_Services\CartService.cs" />
+    <Compile Include="_ViewModels\ContentViewModel.cs" />
+    <Compile Include="_ViewModels\CartViewModel.cs" />
+    <Compile Include="_ViewModels\ContentListViewModel.cs" />
+    <Compile Include="_ViewModels\ErrorViewModel.cs" />
+    <Compile Include="_ViewModels\TagCloudViewModel.cs" />
+    <Compile Include="_ViewModels\InviteViewModel.cs" />
+    <Compile Include="_ViewModels\SearchViewModel.cs" />
+    <Compile Include="_ViewModels\BaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\AccountData.cs" />
-    <Compile Include="Services\MediaService.cs" />
-    <Compile Include="Services\SearchService.cs" />
-    <Compile Include="Services\UserManagementService.cs" />
-    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="_Services\AccountData.cs" />
+    <Compile Include="_Services\MediaService.cs" />
+    <Compile Include="_Services\SearchService.cs" />
+    <Compile Include="_Services\UserManagementService.cs" />
+    <Compile Include="_ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -2067,14 +2058,11 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Infrastructure\Storage\EF\SongSearch.edmx">
+    <EntityDeploy Include="_Infrastructure\Storage\EF\SongSearch.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SongSearch.Designer.cs</LastGenOutput>
       <CustomToolNamespace>SongSearch.Web.Data</CustomToolNamespace>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="NLog.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Public\Flash\soundmanager2_flash_xdomain.zip" />

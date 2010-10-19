@@ -55,56 +55,26 @@ namespace SongSearch.Web.Services {
 	// **************************************
 	// UserEventLogService
 	// **************************************
-	public class UserEventLogService : IUserEventLogService {
+	public static class UserEventLogService {
 
 		// ----------------------------------------------------------------------------
 		// (Properties)
 		// ----------------------------------------------------------------------------
-		//private IDataSession DataSession;
-		private bool _disposed;
-		//private string _activeUserIdentity;
-
-		private User _user;
-
-		public User ActiveUser {
-
-			get {
-
-				if (_user == null) {
-					_user = Account.User();
-				}
-				return _user;
-			}
-			set {
-
-				_user = value;
-			}
-		}
-
-
-		public string SessionId { get; set; }
 		
-		public UserEventLogService(HttpContextBase httpContext) {
-			if (httpContext != null) {
-				SessionId = httpContext.Session.SessionID;
-			}
-		}
-
-
 		private delegate void LogActionEventDelegate<T>(T logAction);
 		//delegate void EndInvokeDelegate(IAsyncResult result);
 
 		// **************************************
 		// LogUserEvent: UserActionEvent
 		// **************************************
-		public void LogUserEvent(UserActions action) {
-			
-			if (SystemConfig.LogUserActions && ActiveUser != null) {
+		public static void LogUserEvent(UserActions action) {
+			var user = Account.User();
+			if (SystemConfig.LogUserActions && user != null) {
 				var actionEvent = new UserActionEvent() {
 					UserActionId = (int)action,
-					UserId = ActiveUser.UserId,
+					UserId = user.UserId,
 					UserActionEventDate = DateTime.Now,
-					SessionId = SessionId ?? String.Empty
+					SessionId = CurrentSessionId()
 				};
 
 				LogActionEventDelegate<UserActionEvent> logActionEventDelegate = new LogActionEventDelegate<UserActionEvent>(LogEvent);
@@ -113,18 +83,23 @@ namespace SongSearch.Web.Services {
 			}
 		}
 
+		private static string CurrentSessionId() {
+			return HttpContext.Current != null ?
+									(HttpContext.Current.Session != null ? HttpContext.Current.Session.SessionID : String.Empty) : String.Empty;
+		}
+
 		// **************************************
 		// LogUserEvent: ContentActionEvent
 		// **************************************
-		public void LogContentEvent(ContentActions action, int contentId) {
+		public static void LogContentEvent(ContentActions action, int contentId) {
 			
 			if (SystemConfig.LogUserContentActions) {
 				var actionEvent = new ContentActionEvent() {
 					ContentActionId = (int)action,
 					ContentId = contentId,
-					UserId = ActiveUser.UserId,
+					UserId = Account.User().UserId,
 					ContentActionEventDate = DateTime.Now,
-					SessionId = SessionId ?? String.Empty
+					SessionId = CurrentSessionId()
 				};
 
 
@@ -138,12 +113,12 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// LogUserEvent: ContentActionEvent
 		// **************************************
-		public void LogSearchEvent(SearchActions action, string searchTerms, int resultsCount) {
+		public static void LogSearchEvent(SearchActions action, string searchTerms, int resultsCount) {
 			var actionEvent = new SearchEvent() {
 				SearchActionId = (int)action,
-				UserId = ActiveUser.UserId,
+				UserId = Account.User().UserId,
 				SearchEventDate = DateTime.Now,
-				SessionId = SessionId ?? String.Empty,
+				SessionId = CurrentSessionId(),
 				QueryString = searchTerms,
 				ResultCount = resultsCount
 			};
@@ -157,11 +132,11 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// ReportUserActions
 		// **************************************
-		public IList<UserActionEvent> ReportUserActions(DateTime startDate, DateTime endDate) {
+		public static IList<UserActionEvent> ReportUserActions(DateTime startDate, DateTime endDate) {
 
-			using (var session = App.DataSession) {
+			using (var ctx = new SongSearchContext()) {
 
-				var events = session.GetObjectQuery<UserActionEvent>().Include("User")
+				var events = ctx.UserActionEvents.Include("User")
 					.Where(e => e.UserActionEventDate >= startDate && e.UserActionEventDate <= endDate);
 
 				return new PagedList<UserActionEvent>(events,0,0);
@@ -176,11 +151,12 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		//LogUserActionEvent
 		// **************************************
-		private void LogEvent(UserActionEvent logEvent) {
-			using (var session = App.DataSession) {
-
+		private static void LogEvent(UserActionEvent logEvent) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 				try {
-					session.QuickAdd<UserActionEvent>(logEvent);					
+					ctx.UserActionEvents.AddObject(logEvent);
+					ctx.SaveChanges();
 				}
 				catch (Exception ex) { Log.Error(ex); }
 
@@ -189,11 +165,12 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		//LogUserActionEvent
 		// **************************************
-		private void LogEvent(ContentActionEvent logEvent) {
-			using (var session = App.DataSession) {
-
+		private static void LogEvent(ContentActionEvent logEvent) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 				try {
-					session.QuickAdd<ContentActionEvent>(logEvent);					
+					ctx.ContentActionEvents.AddObject(logEvent);
+					ctx.SaveChanges();
 				}
 				catch (Exception ex) { Log.Error(ex); }
 			}
@@ -201,36 +178,19 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		//LogUserActionEvent
 		// **************************************
-		private void LogEvent(SearchEvent logEvent) {
-			using (var session = App.DataSession) {
+		private static void LogEvent(SearchEvent logEvent) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 				try {
-					session.QuickAdd<SearchEvent>(logEvent);					
+					ctx.SearchEvents.AddObject(logEvent);
+					ctx.SaveChanges();
 				}
 				catch (Exception ex) { Log.Error(ex); }
 			}
 		}
 
 
-		// ----------------------------------------------------------------------------
-		// Dispose
-		// ----------------------------------------------------------------------------
-
-		public void Dispose() {
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-
-		private void Dispose(bool disposing) {
-			if (!_disposed) {
-				{
-									
-				}
-
-				_disposed = true;
-			}
-		}
-
+		
 
 
 	}

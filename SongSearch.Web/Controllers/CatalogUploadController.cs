@@ -15,27 +15,20 @@ namespace SongSearch.Web.Controllers
 	public partial class CatalogUploadController : Controller
 	{
 		ICatalogUploadService _catUploadService;
-		IUserEventLogService _logService;
 		
 		protected override void Initialize(RequestContext requestContext) {
 
-			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
-			}
 			base.Initialize(requestContext);
 
 		}
 
-		public CatalogUploadController(ICatalogUploadService catUploadService, IUserEventLogService logService) {
+		public CatalogUploadController(ICatalogUploadService catUploadService) {
 			_catUploadService = catUploadService;
-			_logService = logService;
 		}
 
 
 		// GET: /CatalogUpload/
 		public virtual ActionResult Index() {
-
-			
 
 			return View();
 		}
@@ -107,9 +100,10 @@ namespace SongSearch.Web.Controllers
 					
 					return View(vm);
 				} else {
-					_logService.LogUserEvent(UserActions.UploadCatalog);
+					UserEventLogService.LogUserEvent(UserActions.UploadCatalog);
+					SessionService.Session().RefreshUser(this.UserName());
 
-					return RedirectToAction("Complete");
+					return RedirectToAction(Actions.Complete());
 				}
 			}
 			catch (Exception ex){

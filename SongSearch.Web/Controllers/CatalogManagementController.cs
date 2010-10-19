@@ -13,19 +13,10 @@ namespace SongSearch.Web.Controllers
 	[RequireAuthorization(MinAccessLevel = Roles.Admin)]
 	public partial class CatalogManagementController : Controller {
 		
-		IUserEventLogService _logService;
-		
 		protected override void Initialize(RequestContext requestContext) {
 
-			if (!String.IsNullOrWhiteSpace(requestContext.HttpContext.User.Identity.Name)) {
-				_logService.SessionId = requestContext.HttpContext.Session.SessionID;
-			}
 			base.Initialize(requestContext);
 
-		}
-
-		public CatalogManagementController(IUserEventLogService logService) {
-			_logService = logService;
 		}
 
 
@@ -68,7 +59,7 @@ namespace SongSearch.Web.Controllers
 				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = user.IsSuperAdmin() || user.IsAtLeastInCatalogRole(Roles.Admin, id);
 
-				_logService.LogUserEvent(UserActions.ViewCatalogDetail);
+				UserEventLogService.LogUserEvent(UserActions.ViewCatalogDetail);
 
 				if (!user.IsSuperAdmin()) {
 					//vm.LookupCatalogs = vm.LookupCatalogs.LimitToAdministeredBy(user);
@@ -100,7 +91,7 @@ namespace SongSearch.Web.Controllers
 
 			try {
 				CatalogManagementService.DeleteCatalog(id);
-				_logService.LogUserEvent(UserActions.DeleteCatalog);
+				UserEventLogService.LogUserEvent(UserActions.DeleteCatalog);
 
 				CacheService.InitializeApp(true);
 				SessionService.Session().InitializeSession(true);

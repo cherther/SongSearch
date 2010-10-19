@@ -23,9 +23,9 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static IList<T> GetLookupList<T>() where T : class, new() {
 
-			using (var session = App.DataSessionReadOnly) {//Container.Get<IDataSession>()) {
-
-				return session.All<T>().ToList();
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
+				return ctx.CreateObjectSet<T>().ToList();
 
 			}
 		
@@ -42,16 +42,15 @@ namespace SongSearch.Web.Services {
 				throw new ArgumentException("Missing fieldName argument");
 			}
 
-			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 
-				return session.All<Content>()
+				return ctx.Contents
 					.Select<string>(fieldName)
 					.Distinct()
 					.Where(v => v != null)
 					.Select(v => v.ToUpper())
 					.ToList();
-										
-			
 			}
 		}
 
@@ -66,15 +65,14 @@ namespace SongSearch.Web.Services {
 				throw new ArgumentException("Missing fieldName argument");
 			}
 
-			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 
-				return session.All<ContentRepresentation>()
+				return ctx.ContentRepresentations
 					.Select<string>(fieldName)
 					.Distinct()
 					.Select(v => v.ToUpper())
 					.ToList();
-				
-
 			}
 		}
 		// **************************************
@@ -83,9 +81,10 @@ namespace SongSearch.Web.Services {
 		public static IList<Tag> GetTopTags(TagType tagType, int? limitToTop = null) {
 
 
-			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 
-				var tags = session.All<Tag>().Where(t => t.TagTypeId == (int)tagType);
+				var tags = ctx.Tags.Where(t => t.TagTypeId == (int)tagType);
 
 				switch (tagType) {
 					case TagType.Tempo:
@@ -110,17 +109,19 @@ namespace SongSearch.Web.Services {
 		public static IList<SearchProperty> GetSearchMenuProperties() {
 
 
-			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 				// Get Search Properties
-				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu).ToList();
+				return ctx.SearchProperties.Where(x => x.IncludeInSearchMenu).ToList();
 			}
 		}
 		public static IList<SearchProperty> GetSearchMenuProperties(Roles role) {
 
 
-			using (var session = App.DataSessionReadOnly) {//App.Container.Get<IDataSession>()) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 				// Get Search Properties
-				return session.All<SearchProperty>().Where(x => x.IncludeInSearchMenu && x.AccessLevel >= (int)role).ToList();
+				return ctx.SearchProperties.Where(x => x.IncludeInSearchMenu && x.AccessLevel >= (int)role).ToList();
 			}
 		}
 
@@ -129,12 +130,13 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static Content GetContent(int contentId, User user) {
 
-			using (var session = App.DataSessionReadOnly) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 
 				Content content;
 
 //				var query = session.All<Content>().Where(c => c.ContentId == contentId);
-				var query = session.GetObjectQuery<Content>()
+				var query = ctx.Contents
 					.Include("ContentMedia")
 					.Where(c => c.ContentId == contentId);
 
@@ -161,15 +163,16 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		public static Content GetContentDetails(int contentId, User user) {
 
-			using (var session = App.DataSessionReadOnly) {
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 
-				var content = session.GetObjectQuery<Content>()
+				var content = ctx.Contents
 					.Include("Tags")
 					.Include("Catalog")
 					.Include("ContentMedia")
 					.Include("ContentRepresentations")
 					.Include("ContentRepresentations.Territories")
-				.Where(c => c.ContentId == contentId).SingleOrDefault();// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
+				.SingleOrDefault(c => c.ContentId == contentId);// && user.UserCatalogRoles.Any(x => x.CatalogId == c.CatalogId)).SingleOrDefault();
 
 				// check if user has access to catalog
 				if (!content.IsAvailableTo(user)){
@@ -197,12 +200,12 @@ namespace SongSearch.Web.Services {
 											int? pageIndex = null) {
 
 
-			using (var session = App.DataSessionReadOnly){//App.Container.Get<IDataSession>()) {
-
+			using (var ctx = new SongSearchContext()) {
+				ctx.ContextOptions.LazyLoadingEnabled = false;
 				// Get all Search Properties
 				var props = CacheService.SearchProperties((Roles)user.RoleId);//.dataSession.All<SearchProperty>().ToList();
 				//var contentQuery = session.All<Content>();
-				var contentQuery = session.GetObjectQuery<Content>()
+				var contentQuery = ctx.Contents
 					.Include("ContentMedia").AsQueryable();
 
 				contentQuery = contentQuery.BuildSearchDynamicLinqSql(searchFields, props);//Where("Title.Contains(@0)", "love");

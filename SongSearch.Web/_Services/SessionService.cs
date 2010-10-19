@@ -165,7 +165,11 @@ namespace SongSearch.Web.Services {
 				SessionUpdateUserActiveCart(CacheKeys.ActiveCartContents, userName); 
 			}
 		}
-		
+		public void RefreshUser(string userName) {
+			if (_hasSession) {
+				SessionUpdateUser(CacheKeys.User, userName);
+			}
+		}
 
 		// ----------------------------------------------------------------------------
 		// (Private)
