@@ -1,9 +1,12 @@
-truncate table dbo.PlanQuotas;
-insert into dbo.PlanQuotas
+ALTER TABLE [dbo].[Users] DROP CONSTRAINT [FK_Users_PlanBalances];
+
+truncate table dbo.PlanBalances;
+
+insert into dbo.PlanBalances
 (PricingPlanId, LastUpdatedOn, LastUpdatedByUserId, NumberOfSongs, NumberOfInvitedUsers, NumberOfCatalogAdmins)
 values (6,GETDATE(), 2, 0,0,0);
 
-insert into dbo.PlanQuotas
+insert into dbo.PlanBalances
 (PricingPlanId, LastUpdatedOn, LastUpdatedByUserId, NumberOfSongs, NumberOfInvitedUsers, NumberOfCatalogAdmins)
 select 
 u.PricingPlanId, u.RegisteredOn, u.UserId, 0, 0, 0
@@ -13,18 +16,18 @@ order by u.UserId
 ;
 
 update dbo.Users
-set PlanQuotaId = p.PlanQuotaId --select *
-from dbo.PlanQuotas p inner join dbo.Users u on p.LastUpdatedByUserId = u.UserId
+set PlanBalanceId = p.PlanBalanceId --select *
+from dbo.PlanBalances p inner join dbo.Users u on p.LastUpdatedByUserId = u.UserId
 where u.PricingPlanId <> 6
 ;
 update dbo.Users
-set PlanQuotaId = p.PlanQuotaId --select *
-from dbo.PlanQuotas p inner join dbo.Users u on p.LastUpdatedByUserId = u.ParentUserId
+set PlanBalanceId = p.PlanBalanceId --select *
+from dbo.PlanBalances p inner join dbo.Users u on p.LastUpdatedByUserId = u.ParentUserId
 where u.PricingPlanId = 0
 ;
 update dbo.Users
-set PlanQuotaId = p.PlanQuotaId --select *
-from dbo.PlanQuotas p inner join dbo.Users u on p.PricingPlanId = u.PricingPlanId
+set PlanBalanceId = p.PlanBalanceId --select *
+from dbo.PlanBalances p inner join dbo.Users u on p.PricingPlanId = u.PricingPlanId
 where u.PricingPlanId = 6
 
 ;
@@ -32,70 +35,93 @@ where u.PricingPlanId = 6
 --drop table #planusers
 ;
 select 
-u.userid, u.PlanQuotaId
+u.userid, u.PlanBalanceId
 into #planusers
 from dbo.Users u
-where u.PlanUserId = u.UserId and u.PlanQuotaId > 1
+where u.PlanUserId = u.UserId and u.PlanBalanceId > 1
 order by u.UserId;
 ;
-update dbo.PlanQuotas
+update dbo.PlanBalances
 set 
 --select 	
 	NumberOfInvitedUsers = u.NumberOfInvitedUsers
-from dbo.PlanQuotas pq, (
+from dbo.PlanBalances pq, (
 select COUNT(*) as NumberOfInvitedUsers
 From dbo.Users) u
-where pq.PlanQuotaId = 1;
+where pq.PlanBalanceId = 1;
 
-update dbo.PlanQuotas
+update dbo.PlanBalances
 set 
 --select 	
 	NumberOfInvitedUsers = pu.NumberOfInvitedUsers
-from dbo.PlanQuotas pq 
+from dbo.PlanBalances pq 
 inner join
-(select pu.PlanQuotaId, COUNT(*) as NumberOfInvitedUsers from #planusers pu inner join dbo.Users u
+(select pu.PlanBalanceId, COUNT(*) as NumberOfInvitedUsers from #planusers pu inner join dbo.Users u
 on pu.UserId = u.ParentUserId or pu.UserId = u.UserId
-group by pu.PlanQuotaId
-) pu on pu.PlanQuotaId = pq.PlanQuotaId
+group by pu.PlanBalanceId
+) pu on pu.PlanBalanceId = pq.PlanBalanceId
 ;
 drop table #planusers
 ;
-update dbo.PlanQuotas
+update dbo.PlanBalances
 set 
 --select 	
 	NumberOfCatalogAdmins = u.NumberOfCatalogAdmins
-from dbo.PlanQuotas pq, (
+from dbo.PlanBalances pq, (
 select COUNT(*) as NumberOfCatalogAdmins
 From dbo.Users where RoleId < 4) u
-where pq.PlanQuotaId = 1;
+where pq.PlanBalanceId = 1;
 
-update dbo.PlanQuotas
+update dbo.PlanBalances
 set 
 --select 	
 	NumberOfCatalogAdmins = pu.NumberOfCatalogAdmins
-from dbo.PlanQuotas pq 
+from dbo.PlanBalances pq 
 inner join
-(select pu.PlanQuotaId, COUNT(*) as NumberOfCatalogAdmins from dbo.Users pu
+(select pu.PlanBalanceId, COUNT(*) as NumberOfCatalogAdmins from dbo.Users pu
 where pu.RoleId < 4
-group by pu.PlanQuotaId
-) pu on pu.PlanQuotaId = pq.PlanQuotaId
+group by pu.PlanBalanceId
+) pu on pu.PlanBalanceId = pq.PlanBalanceId
 ;
 
-update dbo.PlanQuotas
+update dbo.PlanBalances
 set 
---select 	
+--select pq.PlanBalanceId,	
 	NumberOfSongs = pc.NumberOfSongs
-from dbo.PlanQuotas pq 
+from dbo.PlanBalances pq,
+(
+	select
+	COUNT(DISTINCT c.ContentId) as NumberOfSongs
+	from
+	dbo.Contents c 
+) pc 
+where pq.PlanBalanceId = 1;
+
+update dbo.PlanBalances
+set 
+--select pq.PlanBalanceId,	
+	NumberOfSongs = pc.NumberOfSongs
+from dbo.PlanBalances pq 
 inner join
 (
 	select
-	u.PlanQuotaId,
+	u.PlanBalanceId,
 	COUNT(DISTINCT c.ContentId) as NumberOfSongs
 	from
 	dbo.Users u 
-	inner join dbo.UserCatalogRoles uc on u.UserId = uc.UserId
-	inner join dbo.Contents c on uc.CatalogId = c.CatalogId
-	where 
-	uc.RoleId <= 2
-	group by u.PlanQuotaId
-) pc on pq.PlanQuotaId = pc.PlanQuotaId
+	inner join dbo.Catalogs cat on u.UserId = cat.CreatedByUserId
+	--inner join dbo.UserCatalogRoles uc on u.UserId = uc.UserId
+	inner join dbo.Contents c on cat.CatalogId = c.CatalogId
+	--where 
+	--uc.RoleId <= 2
+	group by u.PlanBalanceId
+) pc on pq.PlanBalanceId = pc.PlanBalanceId
+where pq.PlanBalanceId > 1;
+
+
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_PlanBalances] FOREIGN KEY([PlanBalanceId])
+REFERENCES [dbo].[PlanBalances] ([PlanBalanceId])
+ON DELETE CASCADE
+;
+ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_PlanBalances]
+;
