@@ -5,5 +5,6 @@ build/
 [Oo]bj/
 *.suo
 *.sln.cache
+*.Publish.xml
 _ReSharper.*/
 *.user
