@@ -21,61 +21,61 @@ namespace System.Web.Mvc {
 			return sb.ToString();
 		}
 
-        public static int? SiteProfileId(this Controller controller)
-        {
-            if (controller.ControllerContext.HttpContext.Request.Cookies["siteProfile"] != null)
-            {
-                return int.Parse(controller.ControllerContext.HttpContext.Request.Cookies["siteProfile"].Value);
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public static int? SiteProfileId(this HtmlHelper helper)
-        {
-            if (helper.ViewContext.HttpContext.Request.Cookies["siteProfile"] != null)
-            {
-                return int.Parse(helper.ViewContext.HttpContext.Request.Cookies["siteProfile"].Value);
-            }
-            else
-            {
-                return null;
-            }
-        }
-        public static SiteProfile SiteProfile(this Controller controller)
-        {
-            var profileId = controller.SiteProfileId();
-            return controller.SiteProfileId().HasValue ?
-                SiteProfileData.SiteProfile(profileId.Value, true) :
-                SiteProfileData.SiteProfile();
-        }
+		public static int? SiteProfileId(this Controller controller)
+		{
+			if (controller.ControllerContext.HttpContext.Request.Cookies["siteProfile"] != null)
+			{
+				return int.Parse(controller.ControllerContext.HttpContext.Request.Cookies["siteProfile"].Value);
+			}
+			else
+			{
+				return null;
+			}
+		}
+		public static int? SiteProfileId(this HtmlHelper helper)
+		{
+			if (helper.ViewContext.HttpContext.Request.Cookies["siteProfile"] != null)
+			{
+				return int.Parse(helper.ViewContext.HttpContext.Request.Cookies["siteProfile"].Value);
+			}
+			else
+			{
+				return null;
+			}
+		}
+		public static SiteProfile SiteProfile(this Controller controller)
+		{
+			var profileId = controller.SiteProfileId();
+			return controller.SiteProfileId().HasValue ?
+				SiteProfileData.SiteProfile(profileId.Value, true) :
+				SiteProfileData.SiteProfile();
+		}
 
-        public static SiteProfile SiteProfile(this HtmlHelper helper)
-        {
-            var profileId = helper.SiteProfileId();
-            return profileId.HasValue ?
-                SiteProfileData.SiteProfile(profileId.Value, true) :
-                SiteProfileData.SiteProfile();            
-        }
-        public static string SiteProfileTagLine(this HtmlHelper helper)
-        {
-            var profileId = helper.SiteProfileId();
-            return profileId.HasValue && profileId.Value != int.Parse(SystemConfig.DefaultSiteProfileId) ?
-                " powered by WorldSongNet.com" : "";
-        }
-        
-        public static string Friendly(this HtmlHelper helper)
-        {
+		public static SiteProfile SiteProfile(this HtmlHelper helper)
+		{
+			var profileId = helper.SiteProfileId();
+			return profileId.HasValue ?
+				SiteProfileData.SiteProfile(profileId.Value, true) :
+				SiteProfileData.SiteProfile();            
+		}
+		public static string SiteProfileTagLine(this HtmlHelper helper)
+		{
+			var profileId = helper.SiteProfileId();
+			return profileId.HasValue && profileId.Value != int.Parse(SystemConfig.DefaultSiteProfileId) ?
+				" powered by WorldSongNet.com" : "";
+		}
+		
+		public static string Friendly(this HtmlHelper helper)
+		{
 			if (helper.ViewContext.HttpContext.Request.Cookies["friendly"] != null) {
 				return helper.h(helper.ViewContext.HttpContext.Request.Cookies["friendly"].Value);
 			} else {
 				return "";
 			}
 		}
-        
-        public static string Friendly(this Controller controller)
-        {
+		
+		public static string Friendly(this Controller controller)
+		{
 			if (controller.ControllerContext.HttpContext.Request.Cookies["friendly"] != null) {
 				return controller.ControllerContext.HttpContext.Request.Cookies["friendly"].Value;
 			} else {
@@ -111,7 +111,7 @@ namespace System.Web.Mvc {
 
 
 		public static string HighlightSearchTerm(this HtmlHelper helper, string fieldValue, SearchField searchField) {
-			var value = fieldValue != null ? AntiXss.HtmlEncode(fieldValue.ToUpper()) : null;
+			var value = fieldValue != null ? helper.h(fieldValue.ToUpper()) : null;
 			
 			if (searchField != null && value != null) {
 				var searchVal = searchField.V.FirstOrDefault() ?? "";

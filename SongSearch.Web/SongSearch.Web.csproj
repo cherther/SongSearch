@@ -109,12 +109,16 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AntiXSSLibrary">
-      <HintPath>..\Ext Libraries\AntiXSSLibrary.dll</HintPath>
+    <Reference Include="AntiXSSLibrary, Version=4.0.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AntiXSS.4.0.1\lib\net35\AntiXSSLibrary.dll</HintPath>
     </Reference>
     <Reference Include="AWSSDK, Version=1.0.11.0, Culture=neutral, PublicKeyToken=cd2d24cd2bace800, processorArchitecture=MSIL" />
     <Reference Include="Elmah">
-      <HintPath>..\Ext Libraries\ELMAH\Elmah.dll</HintPath>
+      <HintPath>..\packages\elmah.1.1\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlSanitizationLibrary">
+      <HintPath>..\packages\AntiXSS.4.0.1\lib\net35\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="IdSharp">
       <HintPath>..\Ext Libraries\IdSharp.dll</HintPath>
@@ -126,10 +130,7 @@
     <Reference Include="MvcUserControlHtmlHelpers">
       <HintPath>..\..\FordMusic\ExternalAssemblies\MvcUserControlHtmlHelpers.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Ext Libraries\Ninject.dll</HintPath>
-    </Reference>
+    <Reference Include="Ninject, Version=2.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL" />
     <Reference Include="Ninject.Web.Mvc, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Ext Libraries\Ninject.Web.Mvc.dll</HintPath>
@@ -206,7 +207,6 @@
     <Compile Include="_Helpers\Configuration.cs" />
     <Compile Include="_Helpers\Connections.cs" />
     <Compile Include="_Helpers\Filters\VersionAttribute.cs" />
-    <Compile Include="_Helpers\Rpx.cs" />
     <Compile Include="_Helpers\SessionHelpers.cs" />
     <Compile Include="_Helpers\DynamicLinq.cs" />
     <Compile Include="_Helpers\FeedbackHelpers.cs" />
@@ -2075,6 +2075,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Public\Css\stylemash.chirp.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
     <None Include="T4MVC.settings.t4" />

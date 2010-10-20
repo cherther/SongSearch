@@ -15,9 +15,13 @@ namespace SongSearch.Web {
 			return Assembly.GetExecutingAssembly().GetName().Version.ToString();
 		}
 
-		public static string BuildTime() {
+		public static string BuildDate() {
 
 			return System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToShortDateString();
+		}
+		public static string BuildTime() {
+
+			return System.IO.File.GetLastWriteTime(System.Reflection.Assembly.GetExecutingAssembly().Location).ToShortTimeString();
 		}
 	}
 }

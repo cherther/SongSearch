@@ -12,7 +12,7 @@
 			<h3>What's New?</h3>
 			<div>&nbsp;</div>
 			<div>Welcome to WorldSongNet.com. 
-			We have recently launched a private beta version of the site. If you'd like to participate, please <%: Html.ActionLink("contact us", MVC.Home.Contact()) %> for an invitation.
+			We have recently launched a <strong>private beta version</strong> of the site. If you'd like to participate, please <%: Html.ActionLink("contact us", MVC.Home.Contact()) %> for an invitation.
 			</div>
 			
 		</div>
@@ -70,7 +70,7 @@
 
 	<div>&nbsp;</div>
 	<div class="cw-outl-thick cw-fill cw-padded cw-rounded-corners">
-	Latest Version: <% = SongSearch.Web.VersionInfo.BuildVersion()%> - <% = SongSearch.Web.VersionInfo.BuildTime()%>
+	The latest version of the site (<% = SongSearch.Web.VersionInfo.BuildVersion()%>) was freshly baked on <% = SongSearch.Web.VersionInfo.BuildDate()%> at <% = SongSearch.Web.VersionInfo.BuildTime()%>.
 	</div>
 
 </div>		

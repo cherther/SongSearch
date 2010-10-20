@@ -99,7 +99,7 @@
 					}
 				} else {
 					evt.preventDefault();
-					feedback('info', 'Please select at least ' + min + pluralize(' file', min) + ' to upload.');
+					feedback('error', 'Please select at least ' + min + pluralize(' file', min) + ' to upload.');
 				}
 			}
 		});

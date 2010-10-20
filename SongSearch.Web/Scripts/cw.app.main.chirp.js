@@ -68,30 +68,33 @@ function debug(msg) {
 	}
 }
 function feedback(type, msg) {
+	feedback(type, msg, null);
+}
+function feedback(type, msg, title) {
 	unwait();
 
-	var title = 'Message';
+	var title = title || 'Message';
 	var img = '/public/images/icons/silk/information.png';
 	var duration = 3000;
 
 	switch (type) {
 		case "info":
-			title = 'Message';
+			title = ':-)';
 			img = '/public/images/icons/silk/information.png';
 			duration = 8000;
 			break;
 		case "error":
-			title = 'Error';
+			title = ':-(';
 			img = '/public/images/icons/silk/error.png';
 			duration = 8000;
 			break;
 		case "warning":
-			title = 'Warning';
+			title = ':-|';
 			img = '/public/images/icons/silk/error.png';
 			duration = 8000;
 			break;
 		case "debug":
-			title = 'Debugging';
+			title = ':-@';
 			img = '/public/images/icons/silk/plugin.png';
 			duration = 8000;
 			break;
