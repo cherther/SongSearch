@@ -149,9 +149,10 @@ namespace SongSearch.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult UpdateProfile(SongSearch.Web.UpdateProfileModel model) {
+        public override System.Web.Mvc.ActionResult UpdateProfile(SongSearch.Web.UpdateProfileModel model, SongSearch.Web.Data.Contact contact) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateProfile);
             callInfo.RouteValueDictionary.Add("model", model);
+            callInfo.RouteValueDictionary.Add("contact", contact);
             return callInfo;
         }
 

@@ -97,9 +97,10 @@ namespace SongSearch.Web.Services {
 						throw new ArgumentException("You cannot delete the last SuperAdmin");
 					} else {
 
-						if (takeOwnerShip) {
-							ctx.TakeOwnerShip(user);
-						}
+						//if (takeOwnerShip) {
+						//    ctx.TakeOwnerShip(user);
+						//}
+						ctx.ReParentOrphans(user, user.ParentUser);
 
 						if (user.CreatedCatalogs.Count() > 0) {
 
@@ -123,6 +124,9 @@ namespace SongSearch.Web.Services {
 								ctx.Delete(balance);
 							} else {
 								ctx.RemoveFromUserBalance(user);
+								if (user.IsAnyAdmin()) {
+									ctx.RemoveFromAdminBalance(user);
+								}
 							}
 						}
 						ctx.Users.DeleteObject(user);
@@ -141,6 +145,7 @@ namespace SongSearch.Web.Services {
 				var user = ctx.GetUser(userId);
 				if (user != null) {
 					ctx.TakeOwnerShip(user);
+					ctx.SaveChanges();
 				}
 				user = null;
 			}
@@ -152,7 +157,7 @@ namespace SongSearch.Web.Services {
 			var userId = Account.User().UserId;
 			user.ParentUserId = userId;
 
-			user.RemoveFromUserBalance();
+			ctx.RemoveFromUserBalance(user);
 
 			//put user on a plan
 			if (!user.IsPlanOwner) {
@@ -174,7 +179,25 @@ namespace SongSearch.Web.Services {
 				invite.InvitedByUserId = userId;
 			}
 
-			ctx.SaveChanges();
+			
+		}
+		private static void ReParentOrphans(this SongSearchContext ctx, User user, User newParent) {
+
+			// take over the child users
+			var childUsers = ctx.Users.Where(u => u.ParentUserId == user.UserId);
+			foreach (var child in childUsers) {
+				child.ParentUserId = newParent.UserId;
+				child.PlanUserId = newParent.PlanUserId;
+				child.PlanBalanceId = newParent.PlanBalanceId;
+			}
+
+			//Re-assign invite from this user to active user
+			var invites = ctx.Invitations.Where(i => i.InvitedByUserId == user.UserId);
+			foreach (var invite in invites) {
+				invite.InvitedByUserId = newParent.UserId;
+			}
+
+
 		}
 
 		// **************************************

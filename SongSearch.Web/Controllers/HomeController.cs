@@ -112,5 +112,8 @@ namespace SongSearch.Web.Controllers {
 		public virtual ActionResult TermsOfUse() {
 			return View(new ViewModel() { PageTitle = "Terms of Use", NavigationLocation = new string[] { "Home" } });
 		}
+		public virtual ActionResult Maintenance() {
+			return View(new ViewModel() { PageTitle = "We'll be right back", NavigationLocation = new string[] { "Home" } });
+		}
 	}
 }

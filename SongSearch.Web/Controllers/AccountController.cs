@@ -352,7 +352,7 @@ namespace SongSearch.Web.Controllers {
 					vm.Signature = user.Signature;
 				}
 				if (vm.ShowContactInfo){
-					vm.Contact = user.GetContactInfo(false);
+					vm.Contact = user.GetContactInfo(false) ?? new Contact() { Email = user.UserName, IsDefault = true } ;
 				}
 
 				return View(vm);
@@ -368,7 +368,7 @@ namespace SongSearch.Web.Controllers {
 		[HttpPost]
 		[ValidateOnlyIncomingValues]
 		[ValidateAntiForgeryToken]
-		public virtual ActionResult UpdateProfile(UpdateProfileModel model) {
+		public virtual ActionResult UpdateProfile(UpdateProfileModel model, Contact contact) {
 
 			var userModel = new User() {
 				UserName = this.UserName(),
@@ -379,7 +379,7 @@ namespace SongSearch.Web.Controllers {
 				HasAllowedCommunication = model.HasAllowedCommunication
 			};
 
-			var contact = model.Contact;
+			//var contact = model.Contact;
 
 			//var session = SessionService.Session();
 			var currentUser = Account.User();//session.User(User.Identity.Name);
@@ -387,7 +387,9 @@ namespace SongSearch.Web.Controllers {
 			model.ShowContactInfo = currentUser.PricingPlan.CustomContactUs && currentUser.IsAtLeastInCatalogRole(Roles.Admin);
 	
 			//update the user's profile in the database
-			if (AccountService.UpdateProfile(userModel, new List<Contact>() { contact })) {
+			try {
+				var contactList = AccountService.UpdateProfile(userModel, new List<Contact>() { contact });
+
 				UserEventLogService.LogUserEvent(UserActions.UpdateProfile);
 
 				// UpdateModelWith the user dataSession cached in dataSession
@@ -399,24 +401,27 @@ namespace SongSearch.Web.Controllers {
 
 				
 				this.FeedbackInfo("Successfully updated your profile");
+				
+				model.Contact = contactList.FirstOrDefault();
+				
+				ViewData["PasswordLength"] = AccountService.MinPasswordLength;
+				
 
-			} else {
-
+			}
+			catch (Exception ex){
+				Log.Error(ex);
 				//model.ShowSignatureField = user.IsAtLeastInCatalogRole(Roles.Plugger);
 
 				ModelState.AddModelError("",
 					SystemErrors.PasswordChangeFailed);
 				this.FeedbackError("There was an error updating your profile");
-
 			}
-		
-			// If we got this far, something failed, redisplay form
-			ViewData["PasswordLength"] =
-				AccountService.MinPasswordLength;
+
 			model.NavigationLocation = new string[] { "Account", "Profile" };
 			model.PageTitle = "Update Profile";
 			model.PageMessage = "My Profile";
 			return View(model);
+			
 		}
 
 		//// **************************************

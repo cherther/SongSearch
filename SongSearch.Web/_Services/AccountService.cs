@@ -231,14 +231,14 @@ namespace SongSearch.Web.Services {
 		// **************************************
 		// UpdateProfile
 		// **************************************    
-		public static bool UpdateProfile(User user, IList<Contact> contacts) {
+		public static IList<Contact> UpdateProfile(User user, IList<Contact> contacts) {
 
 			
 			using (var ctx = new SongSearchContext()) {
 
 				var dbuser = ctx.GetUser(user);
 				if (dbuser == null) {
-					return false;
+					throw new ArgumentException("User does not exist.");
 				}
 
 				dbuser.FirstName = user.FirstName;
@@ -246,6 +246,9 @@ namespace SongSearch.Web.Services {
 				dbuser.Signature = user.Signature;
 				dbuser.AppendSignatureToTitle = user.AppendSignatureToTitle;
 				dbuser.HasAllowedCommunication = user.HasAllowedCommunication;
+				if (!contacts.Any(c => c.IsDefault)) {
+					contacts.First().IsDefault = true;
+				}
 
 				foreach (var contact in contacts) {
 					if (contact != null && (!String.IsNullOrWhiteSpace(contact.Phone1) || !String.IsNullOrWhiteSpace(contact.Email))) {
@@ -257,6 +260,7 @@ namespace SongSearch.Web.Services {
 								CreatedOn = DateTime.Now
 							};
 
+						dbContact.IsDefault = contact.IsDefault;
 						dbContact.ContactName = contact.ContactName;
 						dbContact.CompanyName = contact.CompanyName;
 						dbContact.Address1 = contact.Address1;
@@ -278,11 +282,11 @@ namespace SongSearch.Web.Services {
 					}
 				}
 
+				
+
 				ctx.SaveChanges();
 
-				dbuser = null;
-				return true;
-
+				return dbuser.Contacts.ToList();
 			}
 
 		}

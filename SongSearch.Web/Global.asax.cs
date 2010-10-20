@@ -25,7 +25,9 @@ namespace SongSearch.Web {
 
 	public enum AppVersion {
 		SongSearch_2_0,
-		SongSearch_2_1
+		SongSearch_2_1,
+		SongSearch_2_1_1
+
 	}
 
 	// **************************************
@@ -47,7 +49,7 @@ namespace SongSearch.Web {
 
 		public static AppVersion Version {
 			get {
-				return AppVersion.SongSearch_2_1;				
+				return AppVersion.SongSearch_2_1_1;				
 			}
 		}
 
@@ -58,7 +60,7 @@ namespace SongSearch.Web {
 		}
 		public static AppVersion LicensedVersion {
 			get {
-				return AppVersion.SongSearch_2_1;
+				return AppVersion.SongSearch_2_1_1;
 			}
 		}
 		public static bool IsBaseVersion {
@@ -176,15 +178,17 @@ namespace SongSearch.Web {
 		// Session_Start
 		// **************************************
 		protected void Session_Start() {
-			try {
+			if (SystemConfig.SiteIsInMaintenance) {
+				this.Response.Redirect("/home/maintenance");
+			} else {
+				try {
 
-				SessionService.Session().InitializeSession();
-				UserEventLogService.LogUserEvent(UserActions.SessionStarted);
-				
-			//DataSession["UserName"] = User.Identity.Name;
-			}
-			catch (Exception ex) {
-				Log.Error(ex);
+					SessionService.Session().InitializeSession();
+					UserEventLogService.LogUserEvent(UserActions.SessionStarted);
+				}
+				catch (Exception ex) {
+					Log.Error(ex);
+				}
 			}
 		}
 

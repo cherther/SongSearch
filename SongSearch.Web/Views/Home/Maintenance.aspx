@@ -5,8 +5,8 @@
 	<meta name="robots" content="noindex, nofollow" />
 	<link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
 	 <!--[if lt IE 8]><link rel="stylesheet" href=""/public/css/fluid.gs.lt_ie8.css" type="text/css" media="screen" title="no title" charset="utf-8"><![endif]-->
-	 <link rel="stylesheet" href="/public/css/cw.plugins.css" type="text/css" media="screen" />
-	 <link rel="stylesheet" href="/public/css/cw.app.css" type="text/css" media="screen" />
+	 <link rel="stylesheet" href="../../public/css/cw.plugins.css" type="text/css" media="screen" />
+	 <link rel="stylesheet" href="../../public/css/cw.app.css" type="text/css" media="screen" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 	<title>We'll be right back...!</title>
 </head>

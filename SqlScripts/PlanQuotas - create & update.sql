@@ -9,7 +9,8 @@ values (6,GETDATE(), 2, 0,0,0);
 insert into dbo.PlanBalances
 (PricingPlanId, LastUpdatedOn, LastUpdatedByUserId, NumberOfSongs, NumberOfInvitedUsers, NumberOfCatalogAdmins)
 select 
-u.PricingPlanId, u.RegisteredOn, u.UserId, 0, 0, 0
+u.PricingPlanId, --u.username, 
+GETDATE() LastUpdatedOn, u.UserId LastUpdatedByUserId, 0 NumberOfSongs, 0 NumberOfInvitedUsers, 0 NumberOfCatalogAdmins
 from dbo.Users u
 where u.PricingPlanId > 0 and u.PricingPlanId <> 6
 order by u.UserId
@@ -24,6 +25,14 @@ update dbo.Users
 set PlanBalanceId = p.PlanBalanceId --select *
 from dbo.PlanBalances p inner join dbo.Users u on p.LastUpdatedByUserId = u.ParentUserId
 where u.PricingPlanId = 0
+;
+update dbo.Users
+set PlanBalanceId = uo.PlanBalanceId --select *
+from dbo.users ui inner join (select u.UserId, pu.UserId ParentUserId
+	, pu.PlanBalanceId
+	, pu.PricingPlanId 
+	from dbo.Users u inner join dbo.Users pu on u.ParentUserId = pu.UserId
+where pu.PricingPlanId = 0) uo on ui.UserId = uo.UserId
 ;
 update dbo.Users
 set PlanBalanceId = p.PlanBalanceId --select *
@@ -52,7 +61,7 @@ where pq.PlanBalanceId = 1;
 
 update dbo.PlanBalances
 set 
---select 	
+--select pu.PlanBalanceId,
 	NumberOfInvitedUsers = pu.NumberOfInvitedUsers
 from dbo.PlanBalances pq 
 inner join

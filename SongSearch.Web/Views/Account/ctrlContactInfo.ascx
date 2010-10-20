@@ -2,6 +2,7 @@
 
 <div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 	<%: Html.HiddenFor(m => m.ContactId)%>
+	<%: Html.HiddenFor(m => m.IsDefault)%>
 	
 	<div class="six_column section">
 	

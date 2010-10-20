@@ -1947,7 +1947,7 @@
     <Content Include="Views\Account\ChangePassword.aspx" />
     <Content Include="Views\Account\ChangePasswordSuccess.aspx" />
     <Content Include="Views\Admin\ReportUserActions.aspx" />
-    <Content Include="Updating.html" />
+    <Content Include="Views\Home\Maintenance.aspx" />
     <Content Include="Views\Content\ctrlContentRepresentationItemEditor.ascx" />
     <Content Include="Views\Content\ctrlContentRepresentation.ascx" />
     <Content Include="Views\Content\ctrlContentRepresentationEditor.ascx" />
