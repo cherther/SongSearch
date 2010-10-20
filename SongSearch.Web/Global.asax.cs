@@ -308,28 +308,28 @@ namespace SongSearch.Web {
 				System.Threading.Thread.Sleep(TimeSpan.FromDays(1));
 			}
 		}
-		static void AmazonRecylePreview() {
-			// In this example, task will repeat in infinite loop
-			// You can additional parameter if you want to have an option 
-			// to stop the task from some page
-			try {
-				AmazonRemoteMediaTaskService.UploadToRemote(
-						checkSize: SystemConfig.RemoteMediaCheckSize
-						, onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly
-						, mediaVersions: new MediaVersion[] { MediaVersion.Preview });
-			}
-			catch (Exception ex) {
-				Log.Error(ex);
-			}
-		}
-		static void AmazonRecyleFull() {
-			try {
-				AmazonRemoteMediaTaskService.UploadToRemote(checkSize: true, onlyNewContent: false, mediaVersions: new MediaVersion[] { MediaVersion.Full });
-			}
-			catch (Exception ex) {
-				Log.Error(ex);
-			}
-		}
+		//static void AmazonRecylePreview() {
+		//    // In this example, task will repeat in infinite loop
+		//    // You can additional parameter if you want to have an option 
+		//    // to stop the task from some page
+		//    try {
+		//        AmazonRemoteMediaTaskService.UploadToRemote(
+		//                checkSize: SystemConfig.RemoteMediaCheckSize
+		//                , onlyNewContent: SystemConfig.RemoteMediaUploadNewOnly
+		//                , mediaVersions: new MediaVersion[] { MediaVersion.Preview });
+		//    }
+		//    catch (Exception ex) {
+		//        Log.Error(ex);
+		//    }
+		//}
+		//static void AmazonRecyleFull() {
+		//    try {
+		//        AmazonRemoteMediaTaskService.UploadToRemote(checkSize: true, onlyNewContent: false, mediaVersions: new MediaVersion[] { MediaVersion.Full });
+		//    }
+		//    catch (Exception ex) {
+		//        Log.Error(ex);
+		//    }
+		//}
 		// **************************************
 		// CartLoop
 		// **************************************

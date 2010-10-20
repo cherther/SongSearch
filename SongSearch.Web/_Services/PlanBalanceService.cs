@@ -162,9 +162,10 @@ namespace SongSearch.Web.Services {
 			balance.UpdateAmountsWithDelta(balanceDelta);
 
 			// Update balance for SuperAdmins (=1)
-			var superBalance = ctx.PlanBalances.SingleOrDefault(x => x.PlanBalanceId == SUPER_ADMIN_BALANCE);
-			superBalance.UpdateAmountsWithDelta(balanceDelta);
-
+			if (balance.PlanBalanceId != SUPER_ADMIN_BALANCE){
+				var superBalance = ctx.PlanBalances.SingleOrDefault(x => x.PlanBalanceId == SUPER_ADMIN_BALANCE);
+				superBalance.UpdateAmountsWithDelta(balanceDelta);
+			}
 		}
 
 		// **************************************
