@@ -2,10 +2,13 @@
 
 	soundManager.url = '../../Public/Plugins/Flash/';
 	//soundManager.useHTML5Audio = true;
-	soundManager.flashVersion = 8;
+	soundManager.flashVersion = 9;
+	soundManager.flashLoadTimeout = 5000;
 	//soundManager.useFlashBlock = true;
-	soundManager.debugMode = true;
-	//soundManager.useFastPolling = false;
+	soundManager.debugMode = false;
+//	soundManager.useConsole = true;
+//	soundManager.consoleOnly = true;
+//	//soundManager.useFastPolling = false;
 	//soundManager.useHighPerformance = true;
 
 	soundManager.onready(function (oStatus) {

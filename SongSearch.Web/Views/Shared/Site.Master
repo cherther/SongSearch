@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage<SongSearch.Web.ViewModel>" %>
 <%@ Import Namespace="SongSearch.Web" %>
-<!DOCTYPE html><!--PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"-->
-<html> <!--xmlns="http://www.w3.org/1999/xhtml"-->
+<!DOCTYPE html>
+<html>
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 	<meta name="robots" content="noindex, nofollow" />
@@ -83,7 +83,7 @@
 %>
 <%--<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 --%><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/public/javascript/cw.plugins.js"></script>
+<script type="text/javascript" src="/public/javascript/cw.plugins.js?v"></script>
 <%if (debug) {%>
 <script type="text/javascript" src="/scripts/cw.app.main.chirp.js<%: d %>" ></script>
 <script type="text/javascript" src="/scripts/cw.app.events.chirp.js<%: d %>" ></script>
@@ -91,7 +91,7 @@
 <script type="text/javascript" src="/scripts/cw.app.sound.chirp.js<%: d %>" ></script>
 <script type="text/javascript" src="/scripts/cw.app.upload.chirp.js<%: d %>" ></script>
 <%} else {%>
-<script type="text/javascript" src="/public/javascript/cw.application.js"></script>
+<script type="text/javascript" src="/public/javascript/cw.application.js?v"></script>
 <%} %>
 <script type="text/javascript">
 	var uservoiceOptions = {

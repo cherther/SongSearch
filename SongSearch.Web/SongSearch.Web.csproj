@@ -341,6 +341,12 @@
     <Content Include="Public\Css\jquery.gritter.css" />
     <Content Include="Public\Css\prettyLoader.css" />
     <Content Include="Public\Css\tipTip.css" />
+    <Content Include="Public\Javascript\cw.application.js">
+      <DependentUpon>scriptmash.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Public\Javascript\cw.plugins.js">
+      <DependentUpon>scriptmash.chirp.config</DependentUpon>
+    </Content>
     <Content Include="Public\Plugins\Flash\soundmanager2_debug.swf" />
     <Content Include="Public\Plugins\Flash\soundmanager2_flash9_debug.swf" />
     <Content Include="Public\Images\prettyLoader\ajax-loader.gif" />
@@ -351,9 +357,6 @@
     <Content Include="Public\Images\profiles\mmi.jpg" />
     <Content Include="Public\Images\under_construction.jpg" />
     <Content Include="Public\Images\usage_bars.gif" />
-    <Content Include="Public\Javascript\cw.application.js">
-      <DependentUpon>scriptmash.chirp.config</DependentUpon>
-    </Content>
     <Content Include="Public\Images\logos\abc-family.jpg" />
     <Content Include="Public\Images\logos\abc.jpg" />
     <Content Include="Public\Images\logos\bet.jpg" />
@@ -378,9 +381,6 @@
     <Content Include="Public\Images\logos\universal.jpg" />
     <Content Include="Public\Images\logos\usa.jpg" />
     <Content Include="Public\Images\logos\wb-in-bw.jpg" />
-    <Content Include="Public\Javascript\cw.plugins.js">
-      <DependentUpon>scriptmash.chirp.config</DependentUpon>
-    </Content>
     <Content Include="robots.txt" />
     <Content Include="Scripts\cw.app.ajax.min.js">
       <DependentUpon>cw.app.ajax.chirp.js</DependentUpon>
