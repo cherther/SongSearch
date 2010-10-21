@@ -73,7 +73,7 @@ function feedback(type, msg) {
 function feedback(type, msg, title) {
 	unwait();
 
-	var title = title || 'Message';
+	title = title || 'Message';
 	var img = '/public/images/icons/silk/information.png';
 	var duration = 3000;
 

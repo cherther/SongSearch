@@ -359,7 +359,11 @@ namespace Links {
         public static readonly string plupload_silverlight_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plupload.silverlight.min.js") ? Url("plupload.silverlight.min.js") : Url("plupload.silverlight.js");
                       
         public static readonly string plupload_silverlight_min_js = Url("plupload.silverlight.min.js");
+        public static readonly string soundmanager2_jsmin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/soundmanager2-jsmin.min.js") ? Url("soundmanager2-jsmin.min.js") : Url("soundmanager2-jsmin.js");
+                      
         public static readonly string soundmanager2_nodebug_jsmin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/soundmanager2-nodebug-jsmin.min.js") ? Url("soundmanager2-nodebug-jsmin.min.js") : Url("soundmanager2-nodebug-jsmin.js");
+                      
+        public static readonly string soundmanager2_nodebug_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/soundmanager2-nodebug.min.js") ? Url("soundmanager2-nodebug.min.js") : Url("soundmanager2-nodebug.js");
                       
         public static readonly string soundmanager2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/soundmanager2.min.js") ? Url("soundmanager2.min.js") : Url("soundmanager2.js");
                       

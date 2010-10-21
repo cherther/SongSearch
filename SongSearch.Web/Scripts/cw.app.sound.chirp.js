@@ -1,11 +1,12 @@
 ﻿$(document).ready(function () {
 
-	soundManager.url = '/public/flash/';
+	soundManager.url = '../../Public/Plugins/Flash/';
 	//soundManager.useHTML5Audio = true;
-	soundManager.flashVersion = 9;
+	soundManager.flashVersion = 8;
 	//soundManager.useFlashBlock = true;
-	soundManager.debugMode = false;
-	soundManager.useHighPerformance = true;
+	soundManager.debugMode = true;
+	//soundManager.useFastPolling = false;
+	//soundManager.useHighPerformance = true;
 
 	soundManager.onready(function (oStatus) {
 		// check if SM2 successfully loaded..
@@ -14,7 +15,7 @@
 			_isSoundManagerReady = true;
 			//mySound = soundManager.createSound();
 		} else {
-			feedback('error', 'There was an error loading our Flash sound player on your system. Please turn off any Flash blocking software while using this site.');
+			feedback('error', 'There was an error loading our sound player on your system. Please make sure you have Adobe Flash installed and to turn off any Flash blocking software while using this site.');
 		}
 	});
 
@@ -124,6 +125,7 @@ function getSound(url) {
 				   // autoLoad: true,
 					//autoPlay: false,
 					stream: true,
+					bufferTime: 3,
 					volume: _currentVolume,
 					multiShot: false,
 					onload: function () { setTotalMediaLength(this.durationEstimate); },

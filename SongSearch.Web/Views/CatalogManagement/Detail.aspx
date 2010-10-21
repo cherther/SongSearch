@@ -22,14 +22,13 @@
 			<%} %>
 		</div>
 	</div>
-	<%if (Model != null) {
-	   
-	%>
+	<%if (Model != null) {%>
 	<div class="nine_column section">
-		<div class="two column text-top" style="padding-right: 15px;">
+		<%--<div class="two column text-top" style="padding-right: 15px;">--%>
+		<div class="nine column">
 			<%if (Model.MyCatalogs.Count() > 0) { %>
 			<div class = "cw-outl-thick cw-fill cw-padded cw-rounded-corners">
-				<%: Html.Partial(MVC.CatalogManagement.Views.ctrlCatalogList, Model) %>
+				<%: Html.Partial("ctrlCatalogDropdownList", Model) %>
 			</div>
 			<%} else { %>
 			<div>You do not have any catalogs yet.</div>
@@ -38,7 +37,9 @@
 			<div>&nbsp;</div>
 			<%} %>
 		</div>
-		<div class="seven column text-top">
+	</div>
+	<div class="nine_column section">
+		<div class="nine column text-top">
 			<div id="cw-catalog-detail" class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 			<%: Html.Partial(MVC.CatalogManagement.Views.ctrlDetail, Model) %>
 			</div>

@@ -15,6 +15,25 @@ namespace System.Web.Mvc {
 		const string imageDir = "images";
 		const string scriptDir = "javascript";
 
+		public static List<SelectListItem> ToSelectList<T>(
+								this IEnumerable<T> enumerable,
+								Func<T, string> text,
+								Func<T, string> value,
+								string defaultOption) {
+			var items = enumerable.Select(f => new SelectListItem() {
+				Text = text(f),
+				Value = value(f)
+			}).ToList();
+
+			if (!String.IsNullOrEmpty(defaultOption)) {
+				items.Insert(0, new SelectListItem() {
+					Text = defaultOption,
+					Value = "-1"
+				});
+			}
+			return items;
+		}
+
 		public static string DatePickerEnable(this HtmlHelper helper) {
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("<script type='text/javascript'>$(document).ready(function() {$('.date-selector').datepicker();});</script>\n");

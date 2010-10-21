@@ -32,7 +32,6 @@
 				
 				<%: Html.Partial(MVC.CatalogManagement.Views.ctrlCatalogList, Model) %>
 				
-				</table>
 			</div>
 			<%} else { %>
 			<div>You do not have any catalogs yet.</div>

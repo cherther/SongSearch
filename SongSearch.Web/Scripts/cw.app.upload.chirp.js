@@ -234,9 +234,9 @@ function setupMediaUploader(container, browseButton, fileList, mediaVersion, ind
 		// Specify what files to browse for
 		filters: [{ title: "Audio files", extensions: "mp3" }], //[{ title: "Audio files", extensions: "mp3"}],
 		// Flash settings
-		flash_swf_url: '/Public/Flash/plupload.flash.swf',
+		flash_swf_url: '/Public/Plugins/Flash/plupload.flash.swf',
 		// Silverlight settings
-		silverlight_xap_url: '/Public/Flash/plupload.silverlight.xap'
+		silverlight_xap_url: '/Public/Plugins/Flash/plupload.silverlight.xap'
 	}
 	);
 
