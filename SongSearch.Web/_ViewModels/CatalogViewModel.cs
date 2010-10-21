@@ -13,9 +13,11 @@ namespace SongSearch.Web {
 		public bool AllowEdit { get; set; }
 		public IList<Catalog> MyCatalogs { get; set; }
 		public IList<Invitation> MyInvites { get; set; }
-		public IList<User> Users { get; set; }
+		public IList<User> MyUsers { get; set; }
 		public int[] Roles { get; set; }
 		public int[] CatalogRoles { get; set; }
 		public int HierarchyLevel { get; set; }
+		public Catalog Catalog { get; set; }
+		public IList<Content> CatalogContents { get; set; }
 	}
 }

@@ -64,7 +64,9 @@ namespace SongSearch.Web.Services {
 		// NextStep
 		// **************************************
 		public WorkflowStep<CatalogUploadState> NextStep(CatalogUploadState state) {
-
+			if (state.WorkflowStepsStatus == null) {
+				return null;
+			}
 			var incompleteSteps = state.WorkflowStepsStatus.Where(s => s.Value == WorkflowStepStatus.Incomplete);
 
 			return incompleteSteps.Count() > 0 ?
@@ -79,13 +81,14 @@ namespace SongSearch.Web.Services {
 		public CatalogUploadState RunNextStep(CatalogUploadState state) {
 
 			var step = NextStep(state);
-			step.Process(state);
-			if (state.WorkflowStepsStatus.ContainsKey(step.StepIndex)) {
-				state.WorkflowStepsStatus[step.StepIndex] = WorkflowStepStatus.Complete;
-			} else {
-				state.WorkflowStepsStatus.Add(step.StepIndex, WorkflowStepStatus.Complete);
+			if (step != null) {
+				step.Process(state);
+				if (state.WorkflowStepsStatus.ContainsKey(step.StepIndex)) {
+					state.WorkflowStepsStatus[step.StepIndex] = WorkflowStepStatus.Complete;
+				} else {
+					state.WorkflowStepsStatus.Add(step.StepIndex, WorkflowStepStatus.Complete);
+				}
 			}
-
 			return state;
 		}
 

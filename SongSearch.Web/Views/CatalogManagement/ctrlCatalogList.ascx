@@ -1,21 +1,34 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<IList<SongSearch.Web.Data.Catalog>>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogViewModel>" %>
 <%
-	var catalogs = Model.OrderBy(c => c.CatalogName);
+	
+	var catsOwned = Model.MyCatalogs.Where(c => c.CreatedByUserId == Model.ActiveUserId).ToList();
+	var catsOther = Model.MyCatalogs.Where(c => c.CreatedByUserId != Model.ActiveUserId).ToList();
+	   
 %>
-
-<% foreach (var catalog in catalogs)
-   {
-	   var rowId = String.Concat("catalog-", catalog.CatalogId.ToString());
-	   //var rowClass = user.ParentUserId.HasValue ? String.Concat("c-", user.ParentUserId.ToString()) : "";
-	   var rowClass = String.Concat("c-", catalog.CatalogId.ToString());
-
-	   //var childClass = user.ParentUserId.HasValue ? String.Concat("children-", user.UserId.ToString()) : "";
-	   %>
-
-    <tr id="<%: rowId%>" class="cw-user-listing <%: rowClass%>">
-		<td>-</td>
-		<td>
-		    <%: Html.ActionLink(catalog.CatalogName, MVC.CatalogManagement.Detail(catalog.CatalogId), new { @class = "cw-catalog-detail-link" })%>
-		</td>
+<table id="catalog-list" class="cw-tbl-cat">
+	<%if (catsOwned.Count() > 0) {%><tr>
+	<td colspan="2">
+	Created by you:
+	</td>
 	</tr>
-<% } %>
+	<% 
+	   var m = Model;
+	   m.MyCatalogs = catsOwned; 
+	%>
+	<%: Html.Partial("ctrlCatalogListItem", m) %>
+
+	<%} %>
+	<%if (catsOther.Count() > 0) {%>
+	<tr>
+	<td colspan="2">
+	Administered by you:
+	</td>
+	</tr>
+	<% 
+	   var m = Model;
+	   m.MyCatalogs = catsOther; 
+	%>
+	<%: Html.Partial("ctrlCatalogListItem", m) %>
+
+	<%} %>
+</table>

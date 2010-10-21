@@ -1,7 +1,7 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogViewModel>" %>
 <%
-	var catalog = Model.MyCatalogs.First();
-	var users = Model.Users != null ? Model.Users.OrderBy(x => x.FullName()) : null;
+	var catalog = Model.Catalog;
+	var users = Model.MyUsers != null ? Model.MyUsers.OrderBy(x => x.FullName()) : null;
 	var catalogDetailUrl = Request.Url;
 %>
 
@@ -57,11 +57,11 @@
 	<%
 		if (user.ChildUsers.Count() > 0)
 		{
-			var childModel = new CatalogViewModel() { MyCatalogs = Model.MyCatalogs, Users = Model.Users, CatalogRoles = Model.CatalogRoles };
-			childModel.Users = user.ChildUsers;
+			var childModel = new CatalogViewModel() { Catalog = Model.Catalog, MyUsers = Model.MyUsers, CatalogRoles = Model.CatalogRoles };
+			childModel.MyUsers = user.ChildUsers;
 			childModel.HierarchyLevel = Model.HierarchyLevel + 1;
 	 %>
-		<% Html.RenderPartial(MVC.CatalogManagement.Views.ctrlUserList, childModel); %>
+		<%: Html.Partial(MVC.CatalogManagement.Views.ctrlUserList, childModel) %>
 		<% childModel = null; %>
 	<% } %>
 <% } %>

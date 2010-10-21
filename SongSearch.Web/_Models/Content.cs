@@ -180,6 +180,9 @@ namespace SongSearch.Web.Data {
 		[DataType(DataType.MultilineText)]
 		public object SoundsLike { get; set; }
 
+		[DisplayName("Media File Date")]
+		public object MediaDate { get; set; }
+
 	}
 
 	[MetadataType(typeof(ContentMediaMetadata))]

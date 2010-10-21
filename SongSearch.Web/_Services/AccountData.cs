@@ -345,7 +345,7 @@ namespace SongSearch.Web {
 						user.IsSuperAdmin() ?
 						users.Where(u => !u.ParentUserId.HasValue) :
 						users.Where(u => u.ParentUserId == user.UserId)
-						).ToList();
+						).OrderBy(x => x.FullName()).ToList();
 
 				return topLevelUsers.AttachChildren(users);
 
@@ -466,7 +466,7 @@ namespace SongSearch.Web {
 		private static IList<User> AttachChildren(this IList<User> parents, IList<User> users) {
 			foreach (var p in parents) {
 				var parent = p;
-				var children = users.Where(u => u.ParentUserId == parent.UserId).ToList();
+				var children = users.Where(u => u.ParentUserId == parent.UserId).OrderBy(x => x.FullName()).ToList();
 				parent.ChildUsers = AttachChildren(children, users);
 			}
 			return parents;

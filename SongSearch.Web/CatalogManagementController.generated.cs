@@ -35,6 +35,11 @@ namespace SongSearch.Web.Controllers {
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Index() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Detail() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Detail);
         }
@@ -67,10 +72,13 @@ namespace SongSearch.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string Copy_of_ctrlCatalogList = "~/Views/CatalogManagement/Copy of ctrlCatalogList.ascx";
             public readonly string ctrlCatalogContentsTable = "~/Views/CatalogManagement/ctrlCatalogContentsTable.ascx";
             public readonly string ctrlCatalogList = "~/Views/CatalogManagement/ctrlCatalogList.ascx";
             public readonly string ctrlDetail = "~/Views/CatalogManagement/ctrlDetail.ascx";
+            public readonly string ctrlLatestContentsTable = "~/Views/CatalogManagement/ctrlLatestContentsTable.ascx";
             public readonly string ctrlUserList = "~/Views/CatalogManagement/ctrlUserList.ascx";
+            public readonly string Detail = "~/Views/CatalogManagement/Detail.aspx";
             public readonly string Index = "~/Views/CatalogManagement/Index.aspx";
         }
     }
@@ -79,8 +87,9 @@ namespace SongSearch.Web.Controllers {
     public class T4MVC_CatalogManagementController: SongSearch.Web.Controllers.CatalogManagementController {
         public T4MVC_CatalogManagementController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index() {
+        public override System.Web.Mvc.ActionResult Index(int? id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
 

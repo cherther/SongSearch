@@ -29,10 +29,7 @@
 		<div class="two column text-top" style="padding-right: 15px;">
 			<%if (Model.MyCatalogs.Count() > 0) { %>
 			<div class = "cw-outl-thick cw-fill cw-padded cw-rounded-corners">
-				
 				<%: Html.Partial(MVC.CatalogManagement.Views.ctrlCatalogList, Model) %>
-				
-				</table>
 			</div>
 			<%} else { %>
 			<div>You do not have any catalogs yet.</div>
@@ -42,20 +39,9 @@
 			<%} %>
 		</div>
 		<div class="seven column text-top">
-			<div id="cw-catalog-detail" class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners" style="display: none">
-			
+			<div id="cw-catalog-detail" class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
+			<%: Html.Partial(MVC.CatalogManagement.Views.ctrlDetail, Model) %>
 			</div>
-			<%
-	   
-				var model = new ContentListViewModel() {
-					List = Model.CatalogContents,
-					ListHeaders = new string[] { "Title", "Artist", "Catalog", "Created On", "Created By" },
-					HeaderActions = new GridAction[] { },
-					GridActions = new GridAction[] { GridAction.ShowDetails },
-					IsSortable = true
-				};
-			%>
-			<%: Html.Partial(MVC.CatalogManagement.Views.ctrlLatestContentsTable, model) %>	
 		</div>
 	</div>
 	<%} %>

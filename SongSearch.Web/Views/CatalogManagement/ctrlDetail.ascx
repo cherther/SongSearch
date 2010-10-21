@@ -1,16 +1,12 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.CatalogViewModel>" %>
 <%
-	var catalog = Model.MyCatalogs.First();
-	var users = Model.Users;// != null ? Model.Users.OrderBy(x => x.FullName()) : null;
+	var catalog = Model.Catalog;
+	var users = Model.MyUsers;// != null ? Model.Users.OrderBy(x => x.FullName()) : null;
 	var roleClasses = new string[] { "cw-black", "cw-orange", "cw-green", "cw-purple", "cw-blue" };
 	var catalogDetailUrl = Request.Url;//String.Concat(Url.Content("/"), Url.Action("Detail", new { id = user.UserId }));
 
 	var catalogSearchUrl = String.Concat("/Search/Results?f[0].P=16&f[0].T=1&f[0].V=", Url.Encode(catalog.CatalogName));
-	var catalogContents = catalog != null ?
-	new PagedList<SongSearch.Web.Data.Content>(
-		catalog.Contents.OrderBy(c => c.Artist).ThenBy(c => c.Title).AsQueryable()
-		, 0, 0)
-		: null;
+	var catalogContents = catalog != null ? Model.CatalogContents : null;
 	var contentListViewModel = new ContentListViewModel() {
 		List = catalogContents,
 		ListHeaders = new string[] { "Title", "Artist", "Year" },

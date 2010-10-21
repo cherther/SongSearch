@@ -45,6 +45,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanBalances", "PlanBalance", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PlanBalance), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentRepresentation_Contents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Content), "ContentRepresentation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRepresentation), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentRepresentationTerritories", "ContentRepresentation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRepresentation), "Territory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Territory))]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Contents_Users_Creators", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), true)]
 
 #endregion
 
@@ -2360,6 +2361,44 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<ContentRepresentation>("SongSearch.Web.Data.Model.FK_ContentRepresentation_Contents", "ContentRepresentation", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Contents_Users_Creators", "User")]
+        public User Creator
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Contents_Users_Creators", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Contents_Users_Creators", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> CreatorReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Contents_Users_Creators", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Contents_Users_Creators", "User", value);
                 }
             }
         }
@@ -6912,6 +6951,28 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PlanBalance>("SongSearch.Web.Data.Model.FK_Users_PlanBalances", "PlanBalance", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Contents_Users_Creators", "Content")]
+        public EntityCollection<Content> CreatedContent
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Content>("SongSearch.Web.Data.Model.FK_Contents_Users_Creators", "Content");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Content>("SongSearch.Web.Data.Model.FK_Contents_Users_Creators", "Content", value);
                 }
             }
         }

@@ -15,7 +15,10 @@ namespace SongSearch.Web.Services {
 
 		
 		//private const string _add = " and ";
-		
+
+		public const int DAYS_LATEST_CONTENT_AGE = 60;
+		public const int MAX_RESULTS_PAGE_SIZE = 50;
+		public const int MAX_SEARCH_PAGE_SIZE = 100;
 
 		// **************************************
 		// GetLookupList: 
@@ -189,6 +192,42 @@ namespace SongSearch.Web.Services {
 		}
 
 		// **************************************
+		// GetLatestContent
+		// **************************************
+		public static IList<Content> GetLatestContent(User user, int? catalogId = null) {
+
+			using (var ctx = new SongSearchContext()) {
+
+				var recent = DateTime.Now.AddDays(-DAYS_LATEST_CONTENT_AGE);
+
+				ctx.ContextOptions.LazyLoadingEnabled = false;
+				
+				var content = ctx.Contents
+					.Include("ContentMedia")
+					.Include("Catalog")
+					.Include("Creator")
+					.Where(c => c.CreatedOn >= recent)
+					.LatestAdditionSort()
+					.AsQueryable();
+
+				if (!user.IsSuperAdmin()) {
+
+					var userAdminCatalogs = user.UserCatalogRoles.Where(c => c.RoleId <= (int)Roles.Admin).Select(c => c.CatalogId);//.ToList();//session.All<UserCatalogRole>();
+
+					content = content.Where(c => userAdminCatalogs.Contains(c.CatalogId));
+
+				}
+
+				if (catalogId.HasValue) {
+					content = content.Where(c => c.CatalogId == catalogId.Value);
+				}
+
+				content.Take(MAX_RESULTS_PAGE_SIZE);
+				return content.ToList();
+			}
+		}
+
+		// **************************************
 		// GetContentSearchResults
 		// **************************************
 		public static PagedList<Content> GetContentSearchResults(
@@ -218,15 +257,9 @@ namespace SongSearch.Web.Services {
 
 				if (!user.IsSuperAdmin()) {
 
-					var userId = user.UserId;
-					var userCatalogs = user.UserCatalogRoles.Select(c => c.CatalogId);//.ToList();//session.All<UserCatalogRole>();
+					var userCatalogs = user.UserCatalogRoles.Select(c => c.CatalogId);
 
 					contentQuery = contentQuery.Where(c => userCatalogs.Contains(c.CatalogId));
-					//contentQuery = from c in contentQuery
-					//               join u in userCatalogs on c.CatalogId equals u.CatalogId
-					//               where u.UserId == userId
-					//               select c;//.Where(c => c.Catalog.UserCatalogRoles.Any(rm => rm.UserId == userId));
-					
 				}
 
 				//System.Diagnostics.Debug.Write(contentQuery.Expression.ToString());
@@ -237,7 +270,7 @@ namespace SongSearch.Web.Services {
 				contentQuery = sortProp != null ? contentQuery.UserSearchSort(sortProp, sortType) : contentQuery.DefaultSearchSort();
 
 				pageIndex = pageIndex ?? 0;
-				pageSize = pageSize ?? 100;
+				pageSize = pageSize ?? MAX_SEARCH_PAGE_SIZE;
 
 				return contentQuery.ToPagedList(pageIndex.Value, pageSize.Value);
 
@@ -538,7 +571,17 @@ namespace SongSearch.Web.Services {
 					.ThenBy(_titleSort)
 					.ThenBy(_artistSort);
 		}
-		
+
+		// **************************************
+		// DefaultSearchSort
+		// **************************************
+		private static IQueryable<Content> LatestAdditionSort(this IQueryable<Content> query) {
+
+			return query
+					.OrderByDescending(c => c.CreatedOn)
+					.ThenBy(_titleSort)
+					.ThenBy(_artistSort);
+		}
 
 		// **************************************
 		// UserSearchSort

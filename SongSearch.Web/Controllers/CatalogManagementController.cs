@@ -23,7 +23,7 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		// URL: /CatalogManagement/
 		// **************************************
-		public virtual ActionResult Index()
+		public virtual ActionResult Index(int? id = null)
 		{
 			try {
 				var vm = new CatalogViewModel();
@@ -32,6 +32,7 @@ namespace SongSearch.Web.Controllers
 				vm.PageTitle = "Catalog Management";
 				vm.NavigationLocation = new string[] { "Admin" };
 				vm.ActiveUserId = Account.User().UserId;
+				vm.CatalogContents = SearchService.GetLatestContent(Account.User(), id);
 
 				return View(vm);
 			}
@@ -48,17 +49,26 @@ namespace SongSearch.Web.Controllers
 		// **************************************
 		public virtual ActionResult Detail(int id) {
 			try {
-				var catalog = CatalogManagementService.GetCatalogDetail(id);
-				var vm = new CatalogViewModel();
 				var user = Account.User();
+				var catalog = CatalogManagementService.GetCatalogDetail(id);
 
-				vm.MyCatalogs = new List<Catalog>() { catalog };
-				vm.Users = user.MyUserHierarchy();
-				vm.Roles = ModelEnums.GetRoles().Where(r => r >= user.RoleId).ToArray();
-				vm.CatalogRoles = user.MyAssignableRoles();
+				var vm = new CatalogViewModel();
+				vm.PageTitle = "Catalog Management";
 				vm.NavigationLocation = new string[] { "Admin" };
 				vm.AllowEdit = user.IsSuperAdmin() || user.IsAtLeastInCatalogRole(Roles.Admin, id);
+				vm.ActiveUserId = Account.User().UserId;
 
+				vm.MyCatalogs = Account.User(false).MyAdminCatalogs(); ;
+				vm.MyUsers = user.MyUserHierarchy();
+				//vm.MyUsers = vm.MyUsers != null ? vm.MyUsers.OrderBy(x => x.FullName()).ToList() : null;
+
+				vm.Roles = ModelEnums.GetRoles().Where(r => r >= user.RoleId).ToArray();
+				vm.CatalogRoles = user.MyAssignableRoles();
+
+				vm.Catalog = catalog;
+				vm.CatalogContents = catalog.Contents.OrderBy(c => c.Artist).ThenBy(c => c.Title).ToList();
+		
+	
 				UserEventLogService.LogUserEvent(UserActions.ViewCatalogDetail);
 
 				if (!user.IsSuperAdmin()) {
@@ -67,7 +77,7 @@ namespace SongSearch.Web.Controllers
 				if (Request.IsAjaxRequest()) {
 					return View(Views.ctrlDetail, vm);
 				} else {
-					return RedirectToAction(Actions.Index()); //return View(vm);
+					return View(Views.Detail, vm); //return View(vm);
 				}
 			}
 			catch (Exception ex) {

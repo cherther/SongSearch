@@ -87,7 +87,7 @@ namespace SongSearch.Web {
 			var controllers = new List<string>();
 			controllers.Add("Admin");
 			controllers.Add("Cart");
-			controllers.Add("CatalogManagement");
+			//controllers.Add("CatalogManagement");
 			controllers.Add("CatalogUpload");
 			controllers.Add("UserManagement");
 			controllers.Add("Error");
@@ -129,6 +129,16 @@ namespace SongSearch.Web {
 				new { controller = "Account", action = "Register" }
 			);
 
+			routes.MapRoute(
+				"Catalog",
+				"Catalog",
+				new { controller = "CatalogManagement", action = "Index", id = UrlParameter.Optional }
+			);
+			routes.MapRoute(
+				"Users",
+				"Users",
+				new { controller = "UserManagement", action = "Index", id = UrlParameter.Optional }
+			);
 			foreach (var ctrl in controllers) {
 
 				routes.MapRoute(
@@ -139,23 +149,23 @@ namespace SongSearch.Web {
 
 			}
 
-			foreach (var ctrl in controllers) {
+			//foreach (var ctrl in controllers) {
 
-				routes.MapRoute(
-					string.Concat(ctrl, "-profile"),
-					String.Concat("{profileName}/", ctrl, "/{action}/{id}"),
-					new { controller = ctrl, action = "Index", id = UrlParameter.Optional }
-				);
+			//    routes.MapRoute(
+			//        string.Concat(ctrl, "-profile"),
+			//        String.Concat("{profileName}/", ctrl, "/{action}/{id}"),
+			//        new { controller = ctrl, action = "Index", id = UrlParameter.Optional }
+			//    );
 
-			}
+			//}
 
 			
-			routes.MapRoute(
-				"Profile",
-				"{profileName}",
-				new { controller = "Home", action = "Profile" }//,
-				//new { profileName = @"\w\s"	}
-			);
+			//routes.MapRoute(
+			//    "Profile",
+			//    "{profileName}",
+			//    new { controller = "Home", action = "Profile" }//,
+			//    //new { profileName = @"\w\s"	}
+			//);
 			
 
 			//routes.MapRoute(

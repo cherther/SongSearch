@@ -597,20 +597,20 @@
 	//***********************************************
 	// Catalog detail link
 	//***********************************************
-	$('.cw-catalog-detail-link').live('click',
-		function (evt) {
+//	$('.cw-catalog-detail-link').live('click',
+//		function (evt) {
 
-			evt.preventDefault();
-			var link = $(this);
-			var url = link[0].href;
-			var listing = link.parents('.cw-catalog-listing'); //???
-			$('.cw-catalog-listing').removeClass('cw-selected');
-			listing.addClass('cw-selected');
-			closeContentPanel();
-			getCatalogDetailAjax(url);
+//			evt.preventDefault();
+//			var link = $(this);
+//			var url = link[0].href;
+//			var listing = link.parents('.cw-catalog-listing'); //???
+//			$('.cw-catalog-listing').removeClass('cw-selected');
+//			listing.addClass('cw-selected');
+//			closeContentPanel();
+//			getCatalogDetailAjax(url);
 
-		}
-	);
+//		}
+//	);
 
 	$('#cw-catalog-contents-show-link').live('click',
 		function (evt) {

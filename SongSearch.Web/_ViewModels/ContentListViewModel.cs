@@ -8,7 +8,7 @@ namespace SongSearch.Web {
 	public class ContentListViewModel : ViewModel {
 
 		public string[] ListHeaders { get; set; }
-		public PagedList<Content> List { get; set; }
+		public IList<Content> List { get; set; }
 		public IList<SearchProperty> SearchMenuProperties { get; set; }
 		
 		public bool IsSortable { get; set; }
