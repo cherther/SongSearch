@@ -1,9 +1,9 @@
 ﻿$(document).ready(function () {
 
-	soundManager.url = '../../Public/Plugins/Flash/';
+	soundManager.url = '/public/flash/';
 	//soundManager.useHTML5Audio = true;
 	soundManager.flashVersion = 9;
-	soundManager.flashLoadTimeout = 5000;
+	//soundManager.flashLoadTimeout = 5000;
 	//soundManager.useFlashBlock = true;
 	soundManager.debugMode = false;
 //	soundManager.useConsole = true;

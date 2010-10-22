@@ -341,14 +341,8 @@
     <Content Include="Public\Css\jquery.gritter.css" />
     <Content Include="Public\Css\prettyLoader.css" />
     <Content Include="Public\Css\tipTip.css" />
-    <Content Include="Public\Javascript\cw.application.js">
-      <DependentUpon>scriptmash.chirp.config</DependentUpon>
-    </Content>
-    <Content Include="Public\Javascript\cw.plugins.js">
-      <DependentUpon>scriptmash.chirp.config</DependentUpon>
-    </Content>
-    <Content Include="Public\Plugins\Flash\soundmanager2_debug.swf" />
-    <Content Include="Public\Plugins\Flash\soundmanager2_flash9_debug.swf" />
+    <Content Include="Public\Flash\soundmanager2_debug.swf" />
+    <Content Include="Public\Flash\soundmanager2_flash9_debug.swf" />
     <Content Include="Public\Images\prettyLoader\ajax-loader.gif" />
     <Content Include="Public\Images\error-500.jpg" />
     <Content Include="Public\Images\error-404.jpg" />
@@ -381,6 +375,12 @@
     <Content Include="Public\Images\logos\universal.jpg" />
     <Content Include="Public\Images\logos\usa.jpg" />
     <Content Include="Public\Images\logos\wb-in-bw.jpg" />
+    <Content Include="Public\Javascript\cw.application.js">
+      <DependentUpon>scriptmash.chirp.config</DependentUpon>
+    </Content>
+    <Content Include="Public\Javascript\cw.plugins.js">
+      <DependentUpon>scriptmash.chirp.config</DependentUpon>
+    </Content>
     <Content Include="robots.txt" />
     <Content Include="Scripts\cw.app.ajax.min.js">
       <DependentUpon>cw.app.ajax.chirp.js</DependentUpon>
@@ -404,10 +404,10 @@
     <Content Include="Scripts\jquery.gritter.js" />
     <Content Include="Scripts\jquery.gritter.min.js" />
     <Content Include="Public\Css\plupload.queue.css" />
-    <Content Include="Public\Plugins\Flash\plupload.flash.swf" />
-    <Content Include="Public\Plugins\Flash\plupload.silverlight.xap" />
-    <Content Include="Public\Plugins\Flash\soundmanager2.swf" />
-    <Content Include="Public\Plugins\Flash\soundmanager2_flash9.swf" />
+    <Content Include="Public\Flash\plupload.flash.swf" />
+    <Content Include="Public\Flash\plupload.silverlight.xap" />
+    <Content Include="Public\Flash\soundmanager2.swf" />
+    <Content Include="Public\Flash\soundmanager2_flash9.swf" />
     <Content Include="Public\Images\backgrounds.gif" />
     <Content Include="Public\Images\buttons-disabled.png" />
     <Content Include="Public\Images\buttons.png" />
@@ -2064,6 +2064,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Public\Plugins\" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="_Infrastructure\Storage\EF\SongSearch.edmx">
@@ -2073,7 +2074,7 @@
     </EntityDeploy>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Public\Plugins\Flash\soundmanager2_flash_xdomain.zip" />
+    <Content Include="Public\Flash\soundmanager2_flash_xdomain.zip" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Print.Master" />

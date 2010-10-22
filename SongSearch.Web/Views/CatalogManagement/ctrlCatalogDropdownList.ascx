@@ -2,15 +2,19 @@
 <%
 	
 	var catsOwned = Model.MyCatalogs.Where(c => c.CreatedByUserId == Model.ActiveUserId)
-		.Select(c => new { CatalogId = c.CatalogId, CatalogName = String.Concat("*", c.CatalogName) }).ToList();
+		.Select(c => new { CatalogId = c.CatalogId, CatalogName = c.CatalogName })
+		.OrderBy(c => c.CatalogName)	
+		.ToList();
 	var catsOther = Model.MyCatalogs.Where(c => c.CreatedByUserId != Model.ActiveUserId)
+		.OrderBy(c => c.CatalogName)
 		.Select(c => new { CatalogId = c.CatalogId, CatalogName = c.CatalogName }).ToList();
-	
-	catsOwned.Add(new { CatalogId = -1, CatalogName = "----------" });
-	
-	var catalogs = catsOwned.Union(catsOther);
 
-	var selectList = new SelectList(catalogs, "CatalogId", "CatalogName", Model.Catalog.CatalogId);
+	if (catsOwned.Count > 0 && catsOther.Count > 0) {
+		catsOwned.Add(new { CatalogId = -1, CatalogName = "----------" });
+	}
+	var catalogs = catsOwned.Union(catsOther);
+	var selectCatalogId = Model.Catalog != null ? Model.Catalog.CatalogId : 0;
+	var selectList = new SelectList(catalogs, "CatalogId", "CatalogName", selectCatalogId);
 	
 
 	
@@ -19,7 +23,9 @@
 	<tr>
 	<%if (Model.MyCatalogs.Count() > 0) {%>
 	<td>
-	<%: Html.DropDownList("CatalogId", selectList, new { id = "cw-catalog-menu" })%>
+	<%using (Html.BeginForm(MVC.CatalogManagement.Detail(), FormMethod.Get)) {  %>
+	<%: Html.DropDownList("id", selectList, "-- Select a Catalog --", new { id = "cw-catalog-menu" })%>
+	<%} %>
 	</td>
 	<%} %>
 <%--	<%if (catsOther.Count() > 0) {%>

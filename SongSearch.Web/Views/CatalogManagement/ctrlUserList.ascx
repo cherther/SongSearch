@@ -22,7 +22,7 @@
 	   %>
 
 	<tr id="<%: rowId%>" class="cw-user-listing <%: rowClass%>">
-		<td>
+		<td style="border-bottom: 1px solid #cecece">
 		<%for (var i = 0; i < Model.HierarchyLevel; i++) {%>
 		&nbsp;&nbsp;
 		<%} %>
@@ -31,7 +31,7 @@
 			<%if (App.IsLicensedVersion && user.IsPlanOwner) {%>
 			<%:userDisplayName%>
 			<%} else {%>
-			&nbsp;-&nbsp;<%:userDisplayName%>
+			<img src="/public/images/icons/arrow.gif" alt="right-arrow"/>&nbsp;&nbsp;<%:userDisplayName%>
 			<%} %>
 		<%} else {%>
 			<strong><%:userDisplayName%></strong>
@@ -40,7 +40,7 @@
 		<%} %>
 		</span>	
 		</td>
-		 <td class="text-center">
+		 <td class="text-center" style="border-bottom: 1px solid #cecece">
 			<%:Html.Hidden(String.Concat("ur-", userId), userCatRoleId)%>
 			<%
 			foreach (var role in Model.CatalogRoles)

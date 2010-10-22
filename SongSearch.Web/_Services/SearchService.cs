@@ -13,13 +13,6 @@ using Ninject;
 namespace SongSearch.Web.Services {
 	public static class SearchService {
 
-		
-		//private const string _add = " and ";
-
-		public const int DAYS_LATEST_CONTENT_AGE = 60;
-		public const int MAX_RESULTS_PAGE_SIZE = 50;
-		public const int MAX_SEARCH_PAGE_SIZE = 100;
-
 		// **************************************
 		// GetLookupList: 
 		//	returns simple listing of table contents
@@ -198,7 +191,7 @@ namespace SongSearch.Web.Services {
 
 			using (var ctx = new SongSearchContext()) {
 
-				var recent = DateTime.Now.AddDays(-DAYS_LATEST_CONTENT_AGE);
+				var recent = DateTime.Now.AddDays(-SystemConfig.DaysLatestContentAge);
 
 				ctx.ContextOptions.LazyLoadingEnabled = false;
 				
@@ -222,7 +215,7 @@ namespace SongSearch.Web.Services {
 					content = content.Where(c => c.CatalogId == catalogId.Value);
 				}
 
-				content.Take(MAX_RESULTS_PAGE_SIZE);
+				content.Take(SystemConfig.ResultsPerPage);
 				return content.ToList();
 			}
 		}
@@ -270,7 +263,7 @@ namespace SongSearch.Web.Services {
 				contentQuery = sortProp != null ? contentQuery.UserSearchSort(sortProp, sortType) : contentQuery.DefaultSearchSort();
 
 				pageIndex = pageIndex ?? 0;
-				pageSize = pageSize ?? MAX_SEARCH_PAGE_SIZE;
+				pageSize = pageSize ?? SystemConfig.SearchResultsPerPage;
 
 				return contentQuery.ToPagedList(pageIndex.Value, pageSize.Value);
 

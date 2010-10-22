@@ -83,14 +83,24 @@
 %>
 <%--<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 --%><script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/public/javascript/cw.plugins.js?v"></script>
 <%if (debug) {%>
+<script type="text/javascript" src="/scripts/MicrosoftAjax.debug.js"></script>
+<script type="text/javascript" src="/Scripts/MicrosoftMvcValidation.debug.js" ></script>
+<script type="text/javascript" src="/Scripts/jquery.form.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.blockUI.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.gritter.js"></script>
+<script type="text/javascript" src="/Scripts/soundmanager2.js"></script>
+<script type="text/javascript" src="/Scripts/plupload.full.min.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.plupload.queue.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.tipTip.js"></script>
+<script type="text/javascript" src="/Scripts/jquery.prettyLoader.js"></script>
 <script type="text/javascript" src="/scripts/cw.app.main.chirp.js<%: d %>" ></script>
 <script type="text/javascript" src="/scripts/cw.app.events.chirp.js<%: d %>" ></script>
 <script type="text/javascript" src="/scripts/cw.app.ajax.chirp.js<%: d %>" ></script>
 <script type="text/javascript" src="/scripts/cw.app.sound.chirp.js<%: d %>" ></script>
 <script type="text/javascript" src="/scripts/cw.app.upload.chirp.js<%: d %>" ></script>
 <%} else {%>
+<script type="text/javascript" src="/public/javascript/cw.plugins.js?v"></script>
 <script type="text/javascript" src="/public/javascript/cw.application.js?v"></script>
 <%} %>
 <script type="text/javascript">

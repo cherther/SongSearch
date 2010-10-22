@@ -18,9 +18,14 @@
 <%--<%if (hasRemoveOption){ %>
 <% Html.BeginForm("RemoveMultiple", "Cart", FormMethod.Post); %>
 <%} %>--%>
-<% if (results.Count > 0) { %>
+<% if (results.Count == 0) { %>
 <div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
-	<h3>New! (Last <%: SongSearch.Web.Services.SearchService.DAYS_LATEST_CONTENT_AGE %> days)</h3>	
+	There were no additions to your catalogs in the last <%: SystemConfig.DaysLatestContentAge %> days.
+	You can easily add new songs with our <%: Html.ActionLink("Catalog Upload Wizard", MVC.CatalogUpload.Upload()) %>.
+</div>
+<%} else { %>
+<div class="cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
+	<h3>New! (Last <%: SystemConfig.DaysLatestContentAge%> days)</h3>	
 	<div>&nbsp;</div>
 	<table class="cw-tbl-catalog-contents">
 		<thead>
@@ -98,7 +103,9 @@
 					<%: artist%>
 				</td>
 				<td>
-					<%: catalog %>
+					<%: catalog%>
+					<a href="<%: String.Format("/CatalogManagement/Detail?id={0}", item.CatalogId)%>" title="Show details for <%: catalog%>">
+					<img src="/public/images/icons/arrow.gif" alt="right-arrow"/></a>
 				</td>
 				<td>
 					<%: item.CreatedOn.ToShortDateString()%>

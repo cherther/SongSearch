@@ -14,8 +14,6 @@ namespace SongSearch.Web.Controllers
 	public partial class SearchController : Controller
 	{
 		
-		private const int _pageSize = 100;
-
 		protected override void Initialize(RequestContext requestContext) {
 			base.Initialize(requestContext);
 		}
@@ -196,7 +194,7 @@ namespace SongSearch.Web.Controllers
 				).ToList();
 
 			
-			var results = SearchService.GetContentSearchResults(searchFields, user, s, o, _pageSize, p);
+			var results = SearchService.GetContentSearchResults(searchFields, user, s, o, SystemConfig.SearchResultsPerPage, p);
 
 			var session = SessionService.Session();
 			var activeCart = Account.CartContents();

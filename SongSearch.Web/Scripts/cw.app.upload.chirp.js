@@ -99,7 +99,7 @@
 					}
 				} else {
 					evt.preventDefault();
-					feedback('error', 'Please select at least ' + min + pluralize(' file', min) + ' to upload.');
+					feedback('info', 'Please select at least ' + min + pluralize(' file', min) + ' to upload.');
 				}
 			}
 		});
@@ -138,9 +138,9 @@ var uploadOptions =
 		// Specify what files to browse for
 		filters: [audioFileFilter], //[{ title: "Audio files", extensions: "mp3"}],
 		// Flash settings
-		flash_swf_url: '/Public/Flash/plupload.flash.swf',
+		flash_swf_url: '/public/flash/plupload.flash.swf',
 		// Silverlight settings
-		silverlight_xap_url: '/Public/Flash/plupload.silverlight.xap'
+		silverlight_xap_url: '/public/flash/plupload.silverlight.xap'
 	};
 
 function turnStepActionButtonOn(on) {
@@ -201,10 +201,10 @@ function handleError(up, error) {
 	if (error != null) {
 		switch (error.code) {
 			case plupload.FILE_SIZE_ERROR:
-				feedback('error', 'Please upload audio files smaller than ' + toFileSizeDescription(up.settings.max_file_size) + ' only.');
+				feedback('info', 'Please upload audio files smaller than ' + toFileSizeDescription(up.settings.max_file_size) + ' only.');
 				break;
 			case plupload.FILE_EXTENSION_ERROR:
-				feedback('error', 'Please upload audio files in MP3 format only.');
+				feedback('info', 'Please upload audio files in MP3 format only.');
 				break;
 			default:
 				feedback('error', 'There was an trying to upload your file (' + error.message + ')');
@@ -234,9 +234,9 @@ function setupMediaUploader(container, browseButton, fileList, mediaVersion, ind
 		// Specify what files to browse for
 		filters: [{ title: "Audio files", extensions: "mp3" }], //[{ title: "Audio files", extensions: "mp3"}],
 		// Flash settings
-		flash_swf_url: '/Public/Plugins/Flash/plupload.flash.swf',
+		flash_swf_url: '/public/flash/plupload.flash.swf',
 		// Silverlight settings
-		silverlight_xap_url: '/Public/Plugins/Flash/plupload.silverlight.xap'
+		silverlight_xap_url: '/public/flash/plupload.silverlight.xap'
 	}
 	);
 

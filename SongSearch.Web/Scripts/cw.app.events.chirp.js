@@ -613,7 +613,8 @@
 	//	);
 	//cw-catalog-menu
 	$('#cw-catalog-menu').change(function (evt) {
-		alert("changed");
+		var form = $(this).parent('form');
+		form.submit();
 	});
 
 	$('#cw-catalog-contents-show-link').live('click',

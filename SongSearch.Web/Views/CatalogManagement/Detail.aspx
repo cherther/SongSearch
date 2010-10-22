@@ -12,9 +12,9 @@
 	<div class="six_column section">
 	<div class="three column text-top">
 			<h2><%: Model.PageTitle %></h2>
-			<div>&nbsp;</div>
-			<h3>Catalogs</h3>
-			<div>&nbsp;</div>
+			<div class="cw-padded">
+			Select a catalog from the list to edit & delete songs, or to assign user permissions for the catalog
+			</div>		
 		</div>
 		<div class="three column text-top">
 			<%if (App.IsLicensedVersion) {%>

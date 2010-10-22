@@ -46,9 +46,8 @@ namespace SongSearch.Web.Controllers {
 			model.Email = model.Email.Trim();
 
 			if (ModelState.IsValid) {
-				if (AccountService.UserIsValid(model.Email, model.Password))
-				//if (_ms.UserIsValid(contentModel.Email, contentModel.Password))
-		{
+				if (AccountService.UserIsValid(model.Email, model.Password)){
+
 					FormsAuthenticationService.SignIn(model.Email, model.RememberMe);
 					
 					SessionService.Session().InitializeSession(model.Email, true);

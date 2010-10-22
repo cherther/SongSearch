@@ -297,6 +297,7 @@ ul.cw-menu-main li.current a
 {
 	background: #B5D2E8; 
 	color: #2C648D; 
+	
 }
 
 ul.cw-menu-main li a:hover, a:active 
@@ -317,7 +318,7 @@ ul.cw-menu-sub
 }
 
 ul.cw-menu-sub li a { color: #2C648D; padding: 5px 21px; }
-ul.cw-menu-sub li.current { font-weight: bold; }
+ul.cw-menu-sub li.current { font-weight: bold;font-size: 1.1em; }
 
 
 ul.cw-list-searchoptions

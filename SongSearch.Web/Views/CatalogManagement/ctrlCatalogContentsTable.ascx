@@ -18,7 +18,7 @@
 <%--<%if (hasRemoveOption){ %>
 <% Html.BeginForm("RemoveMultiple", "Cart", FormMethod.Post); %>
 <%} %>--%>
-<table class="cw-tbl-catalog-contents" style="display: none;">
+<table class="cw-tbl-catalog-contents">
 	<thead>
 	<tr>
 		<td colspan="<%: colCount %>" style="text-align: left; white-space: nowrap; padding-left: 1px">

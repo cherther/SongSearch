@@ -51,6 +51,12 @@ namespace SongSearch.Web.Controllers
 			try {
 				var user = Account.User();
 				var catalog = CatalogManagementService.GetCatalogDetail(id);
+				if (catalog == null) {
+
+					this.FeedbackError("This catalog does not exist or you do not have admin access to it.");
+					return RedirectToAction(Actions.Index());
+
+				}
 
 				var vm = new CatalogViewModel();
 				vm.PageTitle = "Catalog Management";

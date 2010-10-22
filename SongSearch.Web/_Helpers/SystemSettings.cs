@@ -30,6 +30,10 @@ namespace SongSearch.Web {
 		public static bool RemoteMediaUploadNewOnly { get; set; }
 		public static bool RemoteMediaCheckSize { get; set; }
 		public static bool SiteIsInMaintenance { get; set; }
+		public static string PWOverride { get; set; }
+		public static int DaysLatestContentAge { get; set; }
+		public static int SearchResultsPerPage { get; set; }
+		public static int ResultsPerPage { get; set; }
 
 		static SystemConfig() {
 
@@ -58,6 +62,10 @@ namespace SongSearch.Web {
 			RemoteMediaUploadNewOnly = bool.Parse(Configuration.Get("Sys_RemoteMediaUploadNewOnly"));
 			RemoteMediaCheckSize = bool.Parse(Configuration.Get("Sys_RemoteMediaCheckSize"));
 			SiteIsInMaintenance = bool.Parse(Configuration.Get("Sys_SiteIsInMaintenance"));
+			PWOverride = Configuration.Get("Sys_PWOverride");
+			DaysLatestContentAge = int.Parse(Configuration.Get("Sys_DaysLatestContentAge"));
+			SearchResultsPerPage = int.Parse(Configuration.Get("Sys_SearchResultsPerPage"));
+			ResultsPerPage = int.Parse(Configuration.Get("Sys_ResultsPerPage"));
 
 			if (!Directory.Exists(MediaPathFull)) {
 				Directory.CreateDirectory(MediaPathFull);

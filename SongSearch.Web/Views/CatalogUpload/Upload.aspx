@@ -33,11 +33,11 @@
 			<div>&nbsp;</div>
 			<div class="six_column section">
 				<div class="three column text-top">
+					<h3><%: stepStatusMessage %>: <%: Model.PageTitle %></h3>
+					<div>&nbsp;</div>
 					<div id="progressbarWrapper" style="height:16px;width:480px" class="ui-widget-default" title="You're on <%: stepStatusMessage%>">
 						<div id="progressbar" style="height:100%;"></div> 
-					</div>
-					<div>&nbsp;</div>
-					<h3><%: stepStatusMessage %>: <%: Model.PageTitle %></h3>
+					</div>					
 				</div>
 				<div class="three column text-top">
 					<%if (App.IsLicensedVersion) {%>
