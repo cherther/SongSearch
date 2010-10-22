@@ -613,8 +613,10 @@
 	//	);
 	//cw-catalog-menu
 	$('#cw-catalog-menu').change(function (evt) {
-		var form = $(this).parent('form');
-		form.submit();
+		if ($(this).val() > 0) {
+			var form = $(this).parent('form');
+			form.submit();
+		}
 	});
 
 	$('#cw-catalog-contents-show-link').live('click',

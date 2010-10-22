@@ -199,9 +199,7 @@ namespace SongSearch.Web.Services {
 					.Include("ContentMedia")
 					.Include("Catalog")
 					.Include("Creator")
-					.Where(c => c.CreatedOn >= recent)
-					.LatestAdditionSort()
-					.AsQueryable();
+					.Where(c => c.CreatedOn >= recent);
 
 				if (!user.IsSuperAdmin()) {
 
@@ -215,7 +213,10 @@ namespace SongSearch.Web.Services {
 					content = content.Where(c => c.CatalogId == catalogId.Value);
 				}
 
-				content.Take(SystemConfig.ResultsPerPage);
+				content = content
+					.OrderByDescending(c => c.CreatedOn)
+					.OrderByDescending(c => c.ContentId)
+					.Take(SystemConfig.ResultsPerPage);
 				return content.ToList();
 			}
 		}
@@ -572,6 +573,7 @@ namespace SongSearch.Web.Services {
 
 			return query
 					.OrderByDescending(c => c.CreatedOn)
+					.OrderByDescending(c => c.ContentId)
 					.ThenBy(_titleSort)
 					.ThenBy(_artistSort);
 		}

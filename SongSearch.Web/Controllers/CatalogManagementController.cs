@@ -64,7 +64,7 @@ namespace SongSearch.Web.Controllers
 				vm.AllowEdit = user.IsSuperAdmin() || user.IsAtLeastInCatalogRole(Roles.Admin, id);
 				vm.ActiveUserId = Account.User().UserId;
 
-				vm.MyCatalogs = Account.User(false).MyAdminCatalogs(); ;
+				vm.MyCatalogs = Account.User().MyAdminCatalogs(); ;
 				vm.MyUsers = user.MyUserHierarchy();
 				//vm.MyUsers = vm.MyUsers != null ? vm.MyUsers.OrderBy(x => x.FullName()).ToList() : null;
 
