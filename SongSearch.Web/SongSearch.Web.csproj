@@ -236,6 +236,7 @@
     <Compile Include="_Models\ContactInfo.cs" />
     <Compile Include="_Models\Content.cs" />
     <Compile Include="_Models\LogActionEvent.cs" />
+    <Compile Include="_Models\PricingPlan.cs" />
     <Compile Include="_Models\UserBalance.cs" />
     <Compile Include="SearchController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>

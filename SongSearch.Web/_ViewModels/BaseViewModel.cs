@@ -31,18 +31,18 @@ namespace SongSearch.Web {
 			NavigationLocation = new string [] {""};
 		}
 
-		//public class Lookups {
-		private IList<PricingPlan> _pricingPlans;
+		////public class Lookups {
+		//private IList<PricingPlan> _pricingPlans;
 
-		public IList<PricingPlan> PricingPlans {
-			get {
-				return _pricingPlans ?? CacheService.PricingPlans();
-			}
-			set {
-				_pricingPlans = value;
-			}
+		//public IList<PricingPlan> PricingPlans {
+		//    get {
+		//        return _pricingPlans ?? CacheService.PricingPlans();
+		//    }
+		//    set {
+		//        _pricingPlans = value;
+		//    }
 				
-		}
+		//}
 		//}
 	}
 

@@ -387,24 +387,24 @@ namespace SongSearch.Web {
 		// **************************************    
 		public static UserBalances MyBalances(this User user) {
 
-			var quotas = new UserBalances();
+			var balances = new UserBalances();
 			//var planUser = user.IsPlanUser ? user :
 			//    ( user.ParentUser.IsPlanUser ? user.ParentUser : User(user.ParentUser.ParentUserId.Value));
 
 			var planBalance = user.PlanBalance;
 			var plan = planBalance.PricingPlan;
-			
-			quotas.NumberOfSongs.Default = GetDefaultNumberOfSongs();
-			quotas.NumberOfSongs.Allowed = plan.NumberOfSongs;
-			quotas.NumberOfSongs.Used = planBalance.NumberOfSongs;// GetNumberOfSongs();
 
-			quotas.NumberOfInvitedUsers.Allowed = plan.NumberOfInvitedUsers;
-			quotas.NumberOfInvitedUsers.Used = planBalance.NumberOfInvitedUsers; // GetNumberOfUsers();
+			balances.NumberOfSongs.Default = GetDefaultNumberOfSongs();
+			balances.NumberOfSongs.Allowed = plan.NumberOfSongs;
+			balances.NumberOfSongs.Used = planBalance.NumberOfSongs;// GetNumberOfSongs();
 
-			quotas.NumberOfCatalogAdmins.Allowed = plan.NumberOfCatalogAdmins;
-			quotas.NumberOfCatalogAdmins.Used = planBalance.NumberOfCatalogAdmins; // GetNumberOfCatalogAdmins();
+			balances.NumberOfInvitedUsers.Allowed = plan.NumberOfInvitedUsers;
+			balances.NumberOfInvitedUsers.Used = planBalance.NumberOfInvitedUsers; // GetNumberOfUsers();
 
-			return quotas;
+			balances.NumberOfCatalogAdmins.Allowed = plan.NumberOfCatalogAdmins;
+			balances.NumberOfCatalogAdmins.Used = planBalance.NumberOfCatalogAdmins; // GetNumberOfCatalogAdmins();
+
+			return balances;
 		}
 
 		public static int[] MyAssignableRoles(this User user) {

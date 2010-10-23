@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace SongSearch.Web {
+
 	public class UserBalances {
 		public Balance NumberOfSongs { get; set; }
 		public Balance NumberOfInvitedUsers { get; set; }

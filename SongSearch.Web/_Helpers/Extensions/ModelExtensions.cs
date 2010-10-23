@@ -236,9 +236,18 @@ namespace SongSearch.Web {
 		}
 
 		public static string PlanDisplayClass(this PricingPlan plan) {
-			return plan.IsEnabled ? (plan.IsFeatured ? "cell-highlight-yellow" : "") : "cell-disabled";
+			return plan.IsEnabled ? 
+				//(plan.IsFeatured ? "cell-highlight-yellow" : "") 
+				""
+				: "cell-disabled";
 		}
 
+		public static bool IsWithinLimitsOf(this PlanBalance balance, PricingPlan plan) {
+
+			return (plan.NumberOfSongs == null || plan.NumberOfSongs >= balance.NumberOfSongs) &&
+											(plan.NumberOfInvitedUsers == null || plan.NumberOfInvitedUsers >= balance.NumberOfInvitedUsers) &&
+											(plan.NumberOfCatalogAdmins == null || plan.NumberOfCatalogAdmins >= balance.NumberOfCatalogAdmins);
+		}
 		
 	}
 }

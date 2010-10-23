@@ -1,11 +1,6 @@
 ﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<PricingPlansViewModel>" %>
 <%
-//int selectPricingPlan = 0;
-//int.TryParse(ViewData["SelectPricingPlan"].ToString(), out selectPricingPlan);
-var plans = (Model.MyPricingPlan != null ?
-    Model.PricingPlans.Where(p => p.PricingPlanId != Model.MyPricingPlan.PricingPlanId) :
-				Model.PricingPlans)
-	.OrderBy(p => p.PlanCharge).ThenBy(p => p.PricingPlanId);//.Where(p => p.ShowOnSite == true).OrderByDescending(p => p.IsPromo);
+	var plans = Model.PricingPlans;
 	
 var width = (100 - 25) / plans.Count();
 var myPlanClass = "cell-highlight-blue cell-border-blue";
@@ -20,7 +15,13 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	<%} %>
 	<%foreach (var plan in plans) { %>
 	<th class="text-center <%: plan.PlanDisplayClass() %>">
+	<% if(!plan.IsAvailableToUser){%>
+	<span style="color:red;">
+	<%} %>
 	<%: plan.PricingPlanName %>
+	<% if(!plan.IsAvailableToUser){%>
+	</span>
+	<%} %>
 	</th>
 	<%} %>
 </tr>
@@ -56,7 +57,10 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfSongs.ToBalanceDescription()%></td>
 	<%} %>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfSongs.ToBalanceDescription() %></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>">
+	<%: plan.NumberOfSongs.ToBalanceDescription() %>
+	
+	</td>
 	<%} %>
 </tr>
 <tr>
@@ -67,7 +71,9 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfInvitedUsers.ToBalanceDescription()%></td>
 	<%} %>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfInvitedUsers.ToBalanceDescription() %></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>">
+		<%: plan.NumberOfInvitedUsers.ToBalanceDescription() %>
+	</td>
 	<%} %>
 </tr>
 <tr>
@@ -78,7 +84,9 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	<td class="text-center <%: myPlanClass %>"><%: Model.MyPricingPlan.NumberOfCatalogAdmins.ToBalanceDescription()%></td>
 	<%} %>
 	<%foreach (var plan in plans) { %>
-	<td class="text-center <%: plan.PlanDisplayClass() %>"><%: plan.NumberOfCatalogAdmins.ToBalanceDescription() %></td>
+	<td class="text-center <%: plan.PlanDisplayClass() %>">
+		<%: plan.NumberOfCatalogAdmins.ToBalanceDescription() %>
+	</td>
 	<%} %>
 </tr>
 <tr>
@@ -129,7 +137,9 @@ var myPlanClass = "cell-highlight-blue cell-border-blue";
 	</td>
 		<%foreach (var plan in plans) { %>
 		<td class="text-center cell-border-closer <%: plan.PlanDisplayClass() %>">
-			<a href="#" class="cw-button cw-simple cw-medium cw-green" disabled="disabled">Change Plan</a>
+		<%if (Model.ShowChangeButton && plan.IsAvailableToUser) { %>
+			<a href="#" class="cw-button cw-simple cw-medium cw-green" title="Coming soon!">Change Plan</a>
+		<%} %>
 		</td>
 		<%} %>
 	<%} else {%>

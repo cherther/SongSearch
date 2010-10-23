@@ -17,6 +17,10 @@ namespace SongSearch.Web {
 		public PricingPlan MyPricingPlan { get; set; }
 		public UserBalances MyUserBalances { get; set; }
 		public PricingPlans SelectedPricingPlan { get; set; }
+		public IList<PricingPlan> PricingPlans { get; set; }
+		
+		public bool ShowChangeButton { get; set; }
+		
 	}
 
 	

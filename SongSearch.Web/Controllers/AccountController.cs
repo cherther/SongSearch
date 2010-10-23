@@ -540,22 +540,44 @@ namespace SongSearch.Web.Controllers {
 		[RequireAuthorization]
 		[RequiresVersion(MinAppVersion=AppVersion.SongSearch_2_1)]
 		public virtual ActionResult Plan() {
+
+			var user = Account.User();
 			var vm = new PricingPlansViewModel() {
 				NavigationLocation = new string[] { "Account", "Plan" },
 				PageTitle = "My Plan",
-				MyPricingPlan = Account.User().PricingPlan,				
-				MyUserBalances = Account.User().MyBalances()
-
+				MyPricingPlan = user.PricingPlan,				
+				MyUserBalances = user.MyBalances(),
+				ShowChangeButton = !user.IsSuperAdmin()
 			};
-			vm.PricingPlans = User.UserIsSuperAdmin() ? vm.PricingPlans.Where(p => p.PricingPlanId > (int)PricingPlans.Member).ToList() :
-				vm.PricingPlans.Where(p => p.IsEnabled == true 
-					//&& p.PlanCharge >= vm.MyPricingPlan.PlanCharge
-					).OrderByDescending(p => p.IsPromo).ToList();
 
+			var balance = user.PlanBalance;
+			var plans = CacheService.PricingPlans().Where(p => p.PricingPlanId > (int)PricingPlans.Member);
+
+			plans = vm.MyPricingPlan != null ? 
+						plans.Where(p => p.PricingPlanId != vm.MyPricingPlan.PricingPlanId)
+					: plans;
+			
+			if (!user.IsSuperAdmin()) {
+				plans = plans.Where(p => p.IsEnabled == true);
+				plans = vm.MyPricingPlan != null ? plans.Where(p => p.PlanCharge > 0) : plans;				
+			}
+
+			foreach (var plan in plans) {
+				plan.IsAvailableToUser = user.IsSuperAdmin() || balance == null || balance.IsWithinLimitsOf(plan);
+			}
+
+			vm.PricingPlans = plans
+					.OrderByDescending(p => p.IsPromo)
+					.OrderBy(p => p.PlanCharge)
+					.ThenBy(p => p.PricingPlanId)
+					.ToList();
+			
 			vm.SelectedPricingPlan = (PricingPlans)vm.MyPricingPlan.PricingPlanId;
 
 			return View(vm);
 		}
+
+		
 
 	}
 }
