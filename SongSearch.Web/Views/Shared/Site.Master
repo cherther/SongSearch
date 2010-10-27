@@ -39,7 +39,7 @@
 		<div class="three column">
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlHeader); %>
 		</div> 
-		<div class="three column">
+		<div class="three column" style="text-align: right; vertical-align:bottom;">
 			<% Html.RenderPartial(MVC.Shared.Views.ctrlLogIn); %>
 		</div> 
 	 </div>
