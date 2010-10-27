@@ -416,8 +416,9 @@ namespace SongSearch.Web.Services {
 					}
 				}
 
-				if (user.RoleId >= (int)Roles.Admin && roleId == (int)Roles.Admin) {
+				if (!user.IsInRole(Roles.Admin) && roleId == (int)Roles.Admin) {
 					// newly minted admin?
+					user.RoleId = roleId;
 					ctx.AddToAdminBalance(user);
 				}
 				ctx.SaveChanges();
@@ -453,7 +454,7 @@ namespace SongSearch.Web.Services {
 
 				roleId = ModelEnums.GetRoles().GetBestMatchForRole(roleId);
 
-				if (usrCatalog == null && roleId > 0) {
+				if (usrCatalog == null && roleId > 0) { // does not currently have access
 					usrCatalog = new UserCatalogRole {
 						UserId = user.UserId,
 						CatalogId = catalogId,
@@ -461,10 +462,11 @@ namespace SongSearch.Web.Services {
 					};
 					ctx.UserCatalogRoles.AddObject(usrCatalog);
 				} else {
-					if (roleId > 0) {
+					if (roleId > 0) { //does not currently have the desired access level
 						usrCatalog.RoleId = roleId;
-						if (user.RoleId >= (int)Roles.Admin && roleId == (int)Roles.Admin) {
+						if (!user.IsInRole(Roles.Admin) && roleId == (int)Roles.Admin) {
 							// newly minted admin?
+							user.RoleId = roleId;
 							ctx.AddToAdminBalance(user);
 						}
 					} else {

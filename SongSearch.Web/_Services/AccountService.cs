@@ -39,7 +39,6 @@ namespace SongSearch.Web.Services {
 		// **************************************  
 		public static User RegisterUser(User user, Guid invitationCode) {
 
-			// Hook this into the same ctx objects
 			using (var ctx = new SongSearchContext()) {
 				var existing = ctx.GetUser(user);
 				if (existing != null) {
@@ -72,7 +71,9 @@ namespace SongSearch.Web.Services {
 
 							newUser.PlanBalanceId = inv.InvitedByUser.PlanBalance.PlanBalanceId;
 							newUser.PlanUserId = inv.InvitedByUser.UserId;
-							ctx.AddToUserBalance(newUser);							
+							ctx.AddToUserBalance(newUser);
+							ctx.AddToAdminBalance(newUser);
+	
 						}
 
 						// ----------------------------------
@@ -118,8 +119,9 @@ namespace SongSearch.Web.Services {
 				PricingPlanId = pricingPlan.PricingPlanId,
 				PlanBalanceId = inv.InvitedByUser != null ? inv.InvitedByUser.PlanBalanceId : _defaultUserId, //default placeholder;
 
-				// Members are Clients until promoted, new plans are admins from the start:
-				RoleId = inv.IsPlanInvitation ? (int)Roles.Client : (int)Roles.Admin,
+				//// Members are Clients until promoted, new plans are admins from the start:
+				//RoleId = inv.IsPlanInvitation ? (int)Roles.Client : (int)Roles.Admin,
+				RoleId = (int)Roles.Admin, //making all new invitees admins from the start
 
 				//user.PricingPlanId = (int)PricingPlans.Basic;
 				SiteProfileId = inv.InvitedByUser.SiteProfileId,// int.Parse(SystemConfig.DefaultSiteProfileId);
