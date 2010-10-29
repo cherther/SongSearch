@@ -324,7 +324,7 @@ namespace SongSearch.Web.Services {
 				}
 
 				// Add to collection if a new contentRight
-				if (contentRepresentation.ContentRepresentationId == 0 && contentRepresentation.RepresentationShare > 0) {					
+				if (contentRepresentation.ContentRepresentationId == 0 && contentRepresentation.RepresentationShare >= 0) {					
 					content.ContentRepresentations.Add(contentRepresentation);
 				}
 			}

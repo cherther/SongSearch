@@ -84,15 +84,15 @@ namespace SongSearch.Web {
 		public static void RegisterRoutes(RouteCollection routes) {
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-			var controllers = new List<string>();
-			controllers.Add("Admin");
-			controllers.Add("Cart");
-			//controllers.Add("CatalogManagement");
-			controllers.Add("CatalogUpload");
-			controllers.Add("UserManagement");
-			controllers.Add("Error");
-			controllers.Add("Home");
-			controllers.Add("Search");
+			//var controllers = new List<string>();
+			//controllers.Add("Admin");
+			//controllers.Add("Cart");
+			////controllers.Add("CatalogManagement");
+			//controllers.Add("CatalogUpload");
+			//controllers.Add("UserManagement");
+			//controllers.Add("Error");
+			//controllers.Add("Home");
+			//controllers.Add("Search");
 
 
 			routes.MapRoute(
@@ -139,15 +139,15 @@ namespace SongSearch.Web {
 				"Users",
 				new { controller = "UserManagement", action = "Index", id = UrlParameter.Optional }
 			);
-			foreach (var ctrl in controllers) {
+			//foreach (var ctrl in controllers) {
 
-				routes.MapRoute(
-					ctrl,
-					String.Concat(ctrl, "/{action}/{id}"),
-					new { controller = ctrl, action = "Index", id = UrlParameter.Optional }
-				);
+			//    routes.MapRoute(
+			//        ctrl,
+			//        String.Concat(ctrl, "/{action}/{id}"),
+			//        new { controller = ctrl, action = "Index", id = UrlParameter.Optional }
+			//    );
 
-			}
+			//}
 
 			//foreach (var ctrl in controllers) {
 

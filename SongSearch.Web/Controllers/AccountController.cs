@@ -161,6 +161,14 @@ namespace SongSearch.Web.Controllers {
 				SelectedPricingPlan = PricingPlans.Introductory,
 				Invitation = inv
 			};
+			model.PricingPlans = CacheService.PricingPlans()
+				.Where(p => p.PricingPlanId > (int)PricingPlans.Member)
+				.Where(p => p.ShowOnSite == true)
+				.OrderByDescending(p => p.IsPromo)
+				.OrderBy(p => p.PlanCharge)
+				.ThenBy(p => p.PricingPlanId)
+				.ToList();
+			
 			if (inv != null){
 				SetSiteProfileCookie(inv.InvitedByUser.SiteProfileId);
 			}

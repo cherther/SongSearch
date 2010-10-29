@@ -94,7 +94,7 @@
 				<% ViewData["SelectPricingPlan"] = (int)Model.SelectedPricingPlan; %>
 				<% 
 					var vm = new PricingPlansViewModel();
-					vm.PricingPlans = vm.PricingPlans.Where(p => p.ShowOnSite == true).OrderByDescending(p => p.IsPromo).ToList();
+					vm.PricingPlans = Model.PricingPlans;
 					vm.SelectedPricingPlan = Model.SelectedPricingPlan; 
 					%>
 				<% Html.RenderPartial("ctrlPricingPlans", vm); %>

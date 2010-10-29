@@ -120,6 +120,8 @@ namespace SongSearch.Web {
 		public Contact Contact { get; set; }
 
 		public Invitation Invitation { get; set; }
+
+		public IList<PricingPlan> PricingPlans { get; set; }
 	}
 
 	// **************************************
