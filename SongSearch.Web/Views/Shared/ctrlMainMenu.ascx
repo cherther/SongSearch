@@ -30,7 +30,7 @@
 		menu.Add("Account", new string[3] { "Plan", "Account", "My Account" });
 	}
 	menu.Add("Help", new string[3] { "Help", "Home", "Help" });
-	menu.Add("Contact", new string[3] { "Contact", "Home", "Contact Us" });   
+	//menu.Add("Contact", new string[3] { "Contact", "Home", "Contact Us" });   
 	%>
 	
 		<ul id="main-menu" class="cw-menu cw-menu-main cw-rounded-corners-top">

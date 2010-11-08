@@ -17,7 +17,13 @@ namespace SongSearch.Web {
 		// **************************************
 		public static SiteProfile SiteProfile(bool cached = true) {
 			var user = Account.User();
-			return SiteProfile(user.GetSiteProfileId(), cached);
+			var profile = SiteProfile(user.GetSiteProfileId(), cached);
+
+			if (profile == null) {
+				profile = SiteProfile(user.GetSiteProfileId(), cached: false);
+			}
+
+			return profile;
 			//var pricingPlanId = user != null ? user.PricingPlanId : (int)PricingPlans.Level1;
 
 			//switch (pricingPlanId) {

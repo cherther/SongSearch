@@ -351,6 +351,7 @@
     <Content Include="Public\Images\prettyLoader\prettyLoader.png" />
     <Content Include="Public\Images\profiles\hmma.png" />
     <Content Include="Public\Images\profiles\mmi.png" />
+    <Content Include="Public\Images\profiles\worldsend.png" />
     <Content Include="Public\Images\under_construction.jpg" />
     <Content Include="Public\Images\usage_bars.gif" />
     <Content Include="Public\Images\logos\abc-family.jpg" />
