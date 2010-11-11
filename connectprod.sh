@@ -1,0 +1,1 @@
+osql -S "www.worldsongnet.com, 1533" -U deploy -P W@rehous3
