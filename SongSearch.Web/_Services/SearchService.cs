@@ -179,6 +179,7 @@ namespace SongSearch.Web.Services {
 				if (content != null) {
 					content.UserDownloadableName = content.DownloadableName(user.FileSignature(content));
 					content.IsInMyActiveCart = Account.CartContents().Contains(content.ContentId);// myActiveCart != null && myActiveCart.Contents != null && myActiveCart.Contents.Any(c => c.ContentId == contentId);
+					content.LicensingContact = user.GetContactInfo();
 				}
 				return content;
 			}

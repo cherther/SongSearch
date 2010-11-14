@@ -76,9 +76,7 @@
 					<li><a href="#tabs-1">Overview</a></li>
 					<li><a href="#tabs-2">Lyrics</a></li>
 					<li><a href="#tabs-3">Tags</a></li>
-					<%if (Model.SectionsAllowed.Contains("Representation")) { %>
 					<li><a href="#tabs-4">Representation</a></li>
-					<%} %>
 					
 				</ul>
 			<%} %>
@@ -271,7 +269,6 @@
 			</div>
 
 			<%} %>
-			<%if (Model.SectionsAllowed.Contains("Representation")) { %>
 			<%
 				columnOne = "two";
 				columnTwo = "seven";	  
@@ -280,9 +277,11 @@
 			<hr />
 			<%} %>
 			<div id="tabs-4">
-					<div class="<%: sectionSize%>_column section cw-spaced">      
-						<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.ContentId)%></div>
-						<div class="<%: columnTwo%> column"><%: content.ContentId%></div>
+					<div class="<%: sectionSize%>_column section cw-spaced">    
+						<div class="<%: columnOne%> column text-top"><%: Html.LabelFor(m => m.Content.LicensingContact)%></div>
+						<div class="<%: columnTwo%> column">
+							<%: Html.Partial(MVC.Shared.Views.ctrlContactInfoBox, Model.Content.LicensingContact) %>						
+						</div>
 					</div>
 					<%if (Model.SectionsAllowed.Contains("Catalog")) { %>
 					<div class="<%: sectionSize%>_column section cw-spaced">    
@@ -301,6 +300,7 @@
 						<%} %>
 						</div>
 					</div>
+					<%if (Model.SectionsAllowed.Contains("Representation")) { %>
 					<div class="<%: sectionSize%>_column section cw-spaced">    
 						<div class="<%: columnOne%> column"><label>We Represent</label></div>
 						<div class="<%: columnTwo%> column">
@@ -326,9 +326,13 @@
 						<div class="<%: columnOne%> column text-top"><%: Html.LabelFor(m => m.Content.LicensingNotes)%></div>
 						<div class="<%: columnTwo%> column"><%: isEditing ? Html.EditorFor(m => m.Content.LicensingNotes) : Html.DisplayFor(m => m.Content.LicensingNotes)%></div>
 					</div>
-
+					<div class="<%: sectionSize%>_column section cw-spaced">      
+						<div class="<%: columnOne%> column"><%: Html.LabelFor(m => m.Content.ContentId)%></div>
+						<div class="<%: columnTwo%> column"><%: content.ContentId%></div>
+					</div>
+					<%} %>
+					
 			</div>
-			<%} %>
 
 	<%if (isEditing) {%>
 

@@ -13,7 +13,6 @@ namespace SongSearch.Web.Data {
 
 	[MetadataType(typeof(CatalogMetaData))]
 	public partial class Catalog {
-		//public User Owner { get; set; }
 	}
 	public class CatalogMetaData {
 
@@ -31,6 +30,7 @@ namespace SongSearch.Web.Data {
 		public bool IsInMyActiveCart { get; set; }
 		public string UserDownloadableName { get; set; }
 		public List<UploadFile> UploadFiles { get; set; }
+		public Contact LicensingContact { get; set; }
 
 		private bool _hasMediaFullVersion;
 
@@ -182,6 +182,9 @@ namespace SongSearch.Web.Data {
 
 		[DisplayName("Media File Date")]
 		public object MediaDate { get; set; }
+
+		[DisplayName("Licensing Contact")]
+		public object LicensingContact { get; set; }
 
 	}
 

@@ -4,7 +4,7 @@
 	var territories = Model.Territories;
 				
 	 %>
-	<table class="cw-tbl-content-representation" style="width: 95%">
+	<table class="cw-tbl-content-representation">
 	<tr>
 		<th>
 			Rights Type

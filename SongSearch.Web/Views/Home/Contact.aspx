@@ -11,10 +11,11 @@
 	<div>&nbsp;</div>
 
 	<div class="six_column section">
-		<div class="three column">
+		<div class="six column">
 			<div class="cw-outl cw-outl-thick cw-fill-white cw-padded cw-rounded-corners">
 				<h3><%: Model.PageTitle %></h3>
 				<div>&nbsp;</div>
+				(Note: for licensing information, please see the specific contact information for the songs you're interested in)
 				<%if (!String.IsNullOrWhiteSpace(Model.PageMessage)) {%>
 				<div>&nbsp;</div>
 				<div>&nbsp;</div>
@@ -53,7 +54,8 @@
 				<%} %>
 				</div>
 			</div>
-			<div class="three column">
+			
+			<%--<div class="three column">
 				<div class="cw-outl-thick cw-fill-white cw-padded cw-buffered-left cw-rounded-corners">
 					<h3>Contact Information:</h3>
 					<div>&nbsp;</div>
@@ -96,7 +98,7 @@
 					<%} %>
 				</div>
 
-			</div>
+			</div>--%>
 		</div>
 	</div>
 </asp:Content>

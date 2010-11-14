@@ -58,7 +58,7 @@
 				</h3>
 				<ul class="cw-bullet">
 					<li>
-					The <%: Html.ActionLink("Contact Us", MVC.Home.Contact()) %> section of the site shows the licensing contact information for your account.  Call or email the contact entity for licensing information directly.
+					The <strong>Representation</strong> tab in the song's detail section shows the licensing contact information for each song.  Call or email the contact entity for licensing information directly.
 					</li>
 				</ul>
 			</div>

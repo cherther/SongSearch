@@ -1,14 +1,14 @@
-﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.ViewModel>" %>
+﻿<%@ Control Language="C#" Inherits="System.Web.Mvc.ViewUserControl<SongSearch.Web.Data.Contact>" %>
 <%
-	var contact = Html.SiteProfile().GetContactInfo(Account.User());
+	var contact = Model;
 	
 	%>
-<div> <%--class="cw-outl cw-fill cw-rounded-corners">--%>
-	<div class="text-small">For Licensing Contact:</div>
+<div class="cw-outl cw-fill cw-padded cw-rounded-corners" style="width: 60%">
 	<%if (!String.IsNullOrWhiteSpace(contact.ContactName)) {%>
 	<div><strong><%: contact.ContactName%></strong></div>
+		<div>&nbsp;</div>
 	<%} %>
-	<div class="text-small">
+		<div>
 		<%if (!String.IsNullOrWhiteSpace(Html.SiteProfile().CompanyName)) {%>
 		<div><%: contact.CompanyName%></div>
 		<%} %>
@@ -19,6 +19,8 @@
 			,&nbsp;<%: contact.Address2%>
 			<%} %>
 		<%} %>
+		</div>
+		<div>
 		<%if (!String.IsNullOrWhiteSpace(contact.City)) {%>
 			<%if (!String.IsNullOrWhiteSpace(contact.StateRegion)) {%>
 			<%: contact.City%>,&nbsp;<%: contact.StateRegion%>&nbsp;<%: contact.PostalCode%>
@@ -30,6 +32,7 @@
 			<%} %>
 		<%} %>
 		</div>
+		<div>&nbsp;</div>
 		<div><%if (!String.IsNullOrWhiteSpace(contact.Phone1)) {%>
 		Phone: <%: contact.Phone1%>
 		<%} %>
