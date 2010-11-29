@@ -431,22 +431,41 @@ namespace SongSearch.Web {
 
 			if (user == null) { return null; }
 
-			Contact contact = null;
 			// Pluggers and above can set up their own contact info, everyone else inherits down
 			if (user.IsPlanOwner && 
 				user.PricingPlan != null && 
 				user.PricingPlan.CustomContactUs && 
 				user.IsAtLeastInCatalogRole(Roles.Admin)) {
 				
-				contact = user.Contacts.FirstOrDefault(c => c.IsDefault);
-			
-			}
-			return contact ??
-				(checkParent && user.ParentUser != null ?
-					user.ParentUser.GetContactInfo() :
-					null);
+				return user.Contacts.FirstOrDefault(c => c.IsDefault);
+
+			} else if (checkParent && user.ParentUserId.HasValue) {
+				var parent = User(user.ParentUserId.Value);
+				return parent.GetContactInfo();
+
+			} else return null;
 		}
 
+		public static Contact GetCatalogContactInfo(this User user, Catalog catalog, bool checkParent = true) {
+
+			if (user == null) { return null; }
+
+			// Pluggers and above can set up their own contact info, everyone else inherits down
+			if (user.IsPlanOwner &&
+				user.PricingPlan != null &&
+				user.PricingPlan.CustomContactUs &&
+				user.IsAtLeastInCatalogRole(Roles.Admin, catalog)
+				) {
+
+				return user.Contacts.FirstOrDefault(c => c.IsDefault);
+
+			} else if (checkParent && user.ParentUserId.HasValue) {
+				var parent = User(user.ParentUserId.Value);
+				return parent.GetCatalogContactInfo(catalog);
+
+			} else return null;
+			
+		}
 		public static int GetSiteProfileId(this User user) {
 			
 			if (user == null){

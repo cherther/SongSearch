@@ -28,8 +28,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_UsersCatalogs_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "UserCatalogRole", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.UserCatalogRole), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(SongSearch.Web.Data.User), "User1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Catalogs_Creators", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Catalog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Catalog), true)]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "SiteProfilesContacts", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Contact), "SiteProfile", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.SiteProfile))]
-[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "UsersContacts", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Contact), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Subscription), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Users_PlanUsers", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "User1", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.User), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_PricingPlans", "PricingPlan", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.PricingPlan), "Subscription", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Subscription), true)]
@@ -46,6 +44,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_ContentRepresentation_Contents", "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.Content), "ContentRepresentation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRepresentation), true)]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "ContentRepresentationTerritories", "ContentRepresentation", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.ContentRepresentation), "Territory", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Territory))]
 [assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Contents_Users_Creators", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Content", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Content), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "FK_Contacts_Users", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(SongSearch.Web.Data.User), "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Contact), true)]
+[assembly: EdmRelationshipAttribute("SongSearch.Web.Data.Model", "SiteProfilesContacts", "Contact", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.Contact), "SiteProfile", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(SongSearch.Web.Data.SiteProfile))]
 
 #endregion
 
@@ -228,22 +228,6 @@ namespace SongSearch.Web.Data
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<Contact> Contacts
-        {
-            get
-            {
-                if ((_Contacts == null))
-                {
-                    _Contacts = base.CreateObjectSet<Contact>("Contacts");
-                }
-                return _Contacts;
-            }
-        }
-        private ObjectSet<Contact> _Contacts;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<SiteProfile> SiteProfiles
         {
             get
@@ -416,6 +400,22 @@ namespace SongSearch.Web.Data
             }
         }
         private ObjectSet<ContentRepresentation> _ContentRepresentations;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Contact> Contacts
+        {
+            get
+            {
+                if ((_Contacts == null))
+                {
+                    _Contacts = base.CreateObjectSet<Contact>("Contacts");
+                }
+                return _Contacts;
+            }
+        }
+        private ObjectSet<Contact> _Contacts;
 
         #endregion
         #region AddTo Methods
@@ -482,14 +482,6 @@ namespace SongSearch.Web.Data
         public void AddToUserCatalogRoles(UserCatalogRole userCatalogRole)
         {
             base.AddObject("UserCatalogRoles", userCatalogRole);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the Contacts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToContacts(Contact contact)
-        {
-            base.AddObject("Contacts", contact);
         }
     
         /// <summary>
@@ -578,6 +570,14 @@ namespace SongSearch.Web.Data
         public void AddToContentRepresentations(ContentRepresentation contentRepresentation)
         {
             base.AddObject("ContentRepresentations", contentRepresentation);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Contacts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToContacts(Contact contact)
+        {
+            base.AddObject("Contacts", contact);
         }
 
         #endregion
@@ -1138,18 +1138,18 @@ namespace SongSearch.Web.Data
         /// Create a new Contact object.
         /// </summary>
         /// <param name="contactId">Initial value of the ContactId property.</param>
+        /// <param name="userId">Initial value of the UserId property.</param>
+        /// <param name="contactTypeId">Initial value of the ContactTypeId property.</param>
         /// <param name="isDefault">Initial value of the IsDefault property.</param>
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
-        /// <param name="createdByUserId">Initial value of the CreatedByUserId property.</param>
-        /// <param name="contactTypeId">Initial value of the ContactTypeId property.</param>
-        public static Contact CreateContact(global::System.Int32 contactId, global::System.Boolean isDefault, global::System.DateTime createdOn, global::System.Int32 createdByUserId, global::System.Int32 contactTypeId)
+        public static Contact CreateContact(global::System.Int32 contactId, global::System.Int32 userId, global::System.Int32 contactTypeId, global::System.Boolean isDefault, global::System.DateTime createdOn)
         {
             Contact contact = new Contact();
             contact.ContactId = contactId;
+            contact.UserId = userId;
+            contact.ContactTypeId = contactTypeId;
             contact.IsDefault = isDefault;
             contact.CreatedOn = createdOn;
-            contact.CreatedByUserId = createdByUserId;
-            contact.ContactTypeId = contactTypeId;
             return contact;
         }
 
@@ -1182,6 +1182,78 @@ namespace SongSearch.Web.Data
         private global::System.Int32 _ContactId;
         partial void OnContactIdChanging(global::System.Int32 value);
         partial void OnContactIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 UserId
+        {
+            get
+            {
+                return _UserId;
+            }
+            set
+            {
+                OnUserIdChanging(value);
+                ReportPropertyChanging("UserId");
+                _UserId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("UserId");
+                OnUserIdChanged();
+            }
+        }
+        private global::System.Int32 _UserId;
+        partial void OnUserIdChanging(global::System.Int32 value);
+        partial void OnUserIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ContactTypeId
+        {
+            get
+            {
+                return _ContactTypeId;
+            }
+            set
+            {
+                OnContactTypeIdChanging(value);
+                ReportPropertyChanging("ContactTypeId");
+                _ContactTypeId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ContactTypeId");
+                OnContactTypeIdChanged();
+            }
+        }
+        private global::System.Int32 _ContactTypeId;
+        partial void OnContactTypeIdChanging(global::System.Int32 value);
+        partial void OnContactTypeIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsDefault
+        {
+            get
+            {
+                return _IsDefault;
+            }
+            set
+            {
+                OnIsDefaultChanging(value);
+                ReportPropertyChanging("IsDefault");
+                _IsDefault = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsDefault");
+                OnIsDefaultChanged();
+            }
+        }
+        private global::System.Boolean _IsDefault;
+        partial void OnIsDefaultChanging(global::System.Boolean value);
+        partial void OnIsDefaultChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1500,30 +1572,6 @@ namespace SongSearch.Web.Data
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Boolean IsDefault
-        {
-            get
-            {
-                return _IsDefault;
-            }
-            set
-            {
-                OnIsDefaultChanging(value);
-                ReportPropertyChanging("IsDefault");
-                _IsDefault = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("IsDefault");
-                OnIsDefaultChanged();
-            }
-        }
-        private global::System.Boolean _IsDefault;
-        partial void OnIsDefaultChanging(global::System.Boolean value);
-        partial void OnIsDefaultChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
         public global::System.DateTime CreatedOn
         {
             get
@@ -1542,58 +1590,48 @@ namespace SongSearch.Web.Data
         private global::System.DateTime _CreatedOn;
         partial void OnCreatedOnChanging(global::System.DateTime value);
         partial void OnCreatedOnChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 CreatedByUserId
-        {
-            get
-            {
-                return _CreatedByUserId;
-            }
-            set
-            {
-                OnCreatedByUserIdChanging(value);
-                ReportPropertyChanging("CreatedByUserId");
-                _CreatedByUserId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CreatedByUserId");
-                OnCreatedByUserIdChanged();
-            }
-        }
-        private global::System.Int32 _CreatedByUserId;
-        partial void OnCreatedByUserIdChanging(global::System.Int32 value);
-        partial void OnCreatedByUserIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ContactTypeId
-        {
-            get
-            {
-                return _ContactTypeId;
-            }
-            set
-            {
-                OnContactTypeIdChanging(value);
-                ReportPropertyChanging("ContactTypeId");
-                _ContactTypeId = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ContactTypeId");
-                OnContactTypeIdChanged();
-            }
-        }
-        private global::System.Int32 _ContactTypeId;
-        partial void OnContactTypeIdChanging(global::System.Int32 value);
-        partial void OnContactTypeIdChanged();
 
         #endregion
     
         #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Contacts_Users", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Contacts_Users", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Contacts_Users", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("SongSearch.Web.Data.Model.FK_Contacts_Users", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("SongSearch.Web.Data.Model.FK_Contacts_Users", "User", value);
+                }
+            }
+        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1613,28 +1651,6 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SiteProfile>("SongSearch.Web.Data.Model.SiteProfilesContacts", "SiteProfile", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "UsersContacts", "User")]
-        public EntityCollection<User> Users
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<User>("SongSearch.Web.Data.Model.UsersContacts", "User");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<User>("SongSearch.Web.Data.Model.UsersContacts", "User", value);
                 }
             }
         }
@@ -6655,28 +6671,6 @@ namespace SongSearch.Web.Data
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "UsersContacts", "Contact")]
-        public EntityCollection<Contact> Contacts
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Contact>("SongSearch.Web.Data.Model.UsersContacts", "Contact");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Contact>("SongSearch.Web.Data.Model.UsersContacts", "Contact", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Subscriptions_Users", "Subscription")]
         public EntityCollection<Subscription> Subscriptions
         {
@@ -6973,6 +6967,28 @@ namespace SongSearch.Web.Data
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Content>("SongSearch.Web.Data.Model.FK_Contents_Users_Creators", "Content", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("SongSearch.Web.Data.Model", "FK_Contacts_Users", "Contact")]
+        public EntityCollection<Contact> Contacts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Contact>("SongSearch.Web.Data.Model.FK_Contacts_Users", "Contact");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Contact>("SongSearch.Web.Data.Model.FK_Contacts_Users", "Contact", value);
                 }
             }
         }

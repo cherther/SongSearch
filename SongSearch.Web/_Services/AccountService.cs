@@ -260,7 +260,7 @@ namespace SongSearch.Web.Services {
 							new Contact() {
 								ContactTypeId = contact.ContactTypeId > 0 ? contact.ContactTypeId : (int)ContactTypes.Main,
 								//IsDefault = true,
-								CreatedByUserId = dbuser.UserId,
+								UserId = dbuser.UserId,
 								CreatedOn = DateTime.Now
 							};
 
